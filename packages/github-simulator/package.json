@@ -1,0 +1,20 @@
+{
+  "name": "@git-academy/github-simulator",
+  "version": "1.0.0",
+  "private": true,
+  "description": "GitHub collaboration simulator for Git Academy: repos, forks, PRs, code reviews, issues, and merge DAG integration",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@git-academy/shared": "workspace:*",
+    "@git-academy/git-engine": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}

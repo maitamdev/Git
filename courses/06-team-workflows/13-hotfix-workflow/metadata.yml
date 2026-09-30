@@ -1,0 +1,29 @@
+id: 13-hotfix-workflow
+title: Hotfix Workflow
+duration: 30
+xp: 95
+keywords:
+  - hotfix workflow
+  - va loi khan cap
+  - production bug
+  - emergency fix
+  - hotfix dual merge
+  - hotfix branch
+prerequisites:
+  - 12-release-branch
+objectives:
+  - Hiểu rõ bản chất khẩn cấp và các tiêu chí phân loại một sự cố sản xuất
+    (Production Incident) cần kích hoạt Hotfix.
+  - Nắm vững quy trình tách nhánh Hotfix trực tiếp từ commit bị lỗi trên nhánh
+    sản phẩm (`main`).
+  - Thực hiện quy trình hợp nhất kép (Dual-merge) chuẩn xác cho Hotfix vào cả
+    `main` và `develop` để tránh tái phát lỗi.
+  - Áp dụng quy tắc gắn thẻ phiên bản tăng PATCH (ví dụ v1.0.1) và cập nhật tài
+    liệu khắc phục sự cố (Post-mortem).
+commands:
+  - git switch -c hotfix/<ten-loi> main
+  - 'git commit -m "fix(security): patch sql injection vulnerability"'
+  - git switch main && git merge --no-ff hotfix/<ten-loi>
+  - 'git tag -a v1.0.1 -m "Hotfix v1.0.1: security patch"'
+  - git switch develop && git merge --no-ff hotfix/<ten-loi>
+  - git branch -d hotfix/<ten-loi>

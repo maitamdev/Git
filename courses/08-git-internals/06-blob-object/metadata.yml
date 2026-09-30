@@ -1,0 +1,21 @@
+id: 06-blob-object
+title: "Đối tượng Blob: Lưu trữ nội dung nhị phân và tệp tin"
+duration: 30
+xp: 90
+keywords:
+  - blob
+  - binary large object
+  - file content
+  - git objects
+  - metadata exclusion
+prerequisites:
+  - 05-content-addressable-storage
+objectives:
+  - Hiểu rõ bản chất của đối tượng Blob (Binary Large Object) trong Git.
+  - "Nắm vững quy tắc quan trọng: Blob CHỈ lưu trữ nội dung dữ liệu thô, HOÀN
+    TOÀN KHÔNG lưu tên tệp, ngày giờ hay quyền hạn."
+  - Sử dụng các lệnh plumbing để băm, ghi và giải mã một đối tượng Blob.
+commands:
+  - git hash-object -w file.txt
+  - git cat-file -t <hash>
+  - git cat-file -p <hash>

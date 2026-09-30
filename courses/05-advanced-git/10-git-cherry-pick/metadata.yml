@@ -1,0 +1,29 @@
+id: 10-git-cherry-pick
+title: git cherry-pick
+duration: 30
+xp: 95
+keywords:
+  - cherry pick
+  - git cherry-pick
+  - nhat commit
+  - boc commit
+  - hotfix porting
+  - selective commit
+prerequisites:
+  - 07-reflog-recovery
+objectives:
+  - "Hiểu rõ bản chất hoạt động của `git cherry-pick`: sao chép một commit cụ
+    thể từ nhánh này sang nhánh khác."
+  - Sử dụng cherry-pick để đưa các bản vá lỗi cấp bách (hotfix) từ nhánh thử
+    nghiệm sang nhánh production.
+  - Phân biệt rõ ràng giữa việc merge toàn bộ nhánh và việc chọn lọc từng commit
+    đơn lẻ.
+  - Xử lý mâu thuẫn xung đột (conflict) phát sinh trong quá trình cherry-pick
+    commit.
+commands:
+  - git cherry-pick <commit-hash>
+  - git cherry-pick <hash-1> <hash-2>
+  - git cherry-pick <hash-start>..<hash-end>
+  - git cherry-pick -n <commit-hash>
+  - git cherry-pick --continue
+  - git cherry-pick --abort

@@ -1,0 +1,25 @@
+id: 11-pull-request
+title: Khái niệm và quy trình tạo Pull Request (PR)
+duration: 30
+xp: 100
+keywords:
+  - pull request
+  - pr
+  - yeu cau gop code
+  - code contribution
+  - feature branch
+  - github pr
+prerequisites:
+  - 09-fork
+objectives:
+  - Nắm vững khái niệm và ý nghĩa cốt lõi của Pull Request (PR) trong phát triển
+    phần mềm hiện đại.
+  - 'Hiểu rõ thuật ngữ: Vì sao lại gọi là "Pull Request" (yêu cầu người khác kéo
+    code của mình về gộp).'
+  - Thực hiện quy trình tạo một Pull Request hoàn chỉnh trên giao diện web của
+    GitHub.
+  - Viết mô tả PR (PR Description) rõ ràng, súc tích tuân thủ theo biểu mẫu
+    chuẩn (PR Template).
+commands:
+  - git switch -c feat/my-feature
+  - git push -u origin feat/my-feature

@@ -1,0 +1,22 @@
+id: 13-conditional-execution-if
+title: "Thực thi có điều kiện với if: always(), success(), failure()"
+duration: 30
+xp: 90
+keywords:
+  - conditional execution
+  - if statement
+  - status check functions
+  - always
+  - failure
+prerequisites:
+  - 12-job-dependencies-needs
+objectives:
+  - Nắm vững cách sử dụng từ khóa if ở cả cấp độ Job và cấp độ Step để kiểm soát
+    luồng chạy.
+  - "Làm chủ 4 hàm kiểm tra trạng thái cốt lõi: success(), failure(), always(),
+    và cancelled()."
+  - "Hiểu rõ cơ chế mặc định ngầm định: nếu không khai báo hàm trạng thái,
+    GitHub Actions luôn tự động áp dụng success()."
+commands:
+  - echo "Chạy khi có lỗi"
+  - echo "Chạy bất kể kết quả"

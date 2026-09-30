@@ -1,0 +1,23 @@
+id: 17-pull-request-ci
+title: Thiết lập CI Pipeline tự động kiểm thử trên Pull Request
+duration: 35
+xp: 100
+keywords:
+  - pull request ci
+  - pr automation
+  - status checks
+  - branch protection
+  - code quality gate
+prerequisites:
+  - 16-secrets-and-variables
+objectives:
+  - Thiết lập hoàn chỉnh một pipeline CI tự động kích hoạt mỗi khi có Pull
+    Request được mở hoặc cập nhật.
+  - Liên kết chặt chẽ kết quả của GitHub Actions với tính năng Branch Protection
+    Rules (Required Status Checks).
+  - "Trải nghiệm quy trình kiểm soát chất lượng: Khóa nút Merge khi bài test đỏ
+    và Mở khóa khi bài test xanh."
+commands:
+  - 'gh pr create --title "feat: new login"'
+  - gh pr checks
+  - gh pr merge --auto

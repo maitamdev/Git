@@ -1,0 +1,96 @@
+id: quiz-04-07-git-push
+title: "Trắc nghiệm: Đẩy commit với git push"
+questions:
+  - id: q1
+    question: Mục đích cốt lõi của cờ `-u` (hoặc `--set-upstream`) trong câu lệnh
+      `git push -u origin feature` là gì?
+    type: single
+    options:
+      - text: Thiết lập mối quan hệ theo dõi mặc định (tracking) giữa nhánh cục bộ và
+          nhánh từ xa, giúp các lần sau chỉ cần gõ `git push` ngắn gọn
+        correct: true
+      - text: Nâng cấp tài khoản GitHub của bạn lên gói trả phí doanh nghiệp
+        correct: false
+      - text: Tự động mở khóa các tính năng ẩn của trình duyệt web
+        correct: false
+      - text: Ép buộc xóa toàn bộ lịch sử cũ trên máy chủ
+        correct: false
+    explanation: "`-u` cấu hình upstream tracking branch, liên kết nhánh cục bộ với
+      nhánh từ xa tương ứng."
+  - id: q2
+    question: Khi bạn chạy lệnh `git push` và nhận được thông báo lỗi `[rejected -
+      non-fast-forward]`, nguyên nhân chính xác là gì?
+    type: single
+    options:
+      - text: Trên máy chủ từ xa đã có những commit mới do người khác đẩy lên mà máy cục
+          bộ của bạn chưa có
+        correct: true
+      - text: Do máy tính của bạn bị mất bản quyền hệ điều hành
+        correct: false
+      - text: Do tên nhánh của bạn quá dài vượt quá 8 ký tự
+        correct: false
+      - text: Do bạn chưa thanh toán tiền điện thoại di động
+        correct: false
+    explanation: Lỗi rejected xảy ra khi nhánh remote đã tiến xa hơn nhánh local;
+      Git từ chối để tránh ghi đè làm mất commit của người khác.
+  - id: q3
+    question: Giải pháp an toàn và chuẩn mực nhất khi gặp thông báo lỗi `[rejected -
+      non-fast-forward]` là gì?
+    type: single
+    options:
+      - text: Chạy lệnh `git pull` để lấy commit mới về máy, giải quyết xung đột nếu có,
+          rồi mới thực hiện `git push` lại
+        correct: true
+      - text: Gõ lệnh `git push --force` ngay lập tức để đè bẹp code trên server
+        correct: false
+      - text: Xóa toàn bộ dự án và bỏ cuộc
+        correct: false
+      - text: Tạo tài khoản GitHub mới
+        correct: false
+    explanation: "Quy trình chuẩn mực: Pull về -> Merge/Rebase -> Test -> Push lại an toàn."
+  - id: q4
+    question: Tại sao cờ tùy chọn `--force` (hoặc `-f`) trong lệnh git push lại được
+      coi là cực kỳ nguy hiểm trong làm việc nhóm?
+    type: single
+    options:
+      - text: Vì nó cưỡng chế ghi đè lịch sử trên máy chủ, có thể làm biến mất vĩnh viễn
+          các commit mà đồng nghiệp đã đẩy lên trước đó
+        correct: true
+      - text: Vì nó làm tiêu hao toàn bộ bộ nhớ RAM của máy chủ
+        correct: false
+      - text: Vì nó làm thay đổi giao diện đồ họa của hệ điều hành
+        correct: false
+      - text: Vì nó làm tăng gấp đôi kích thước tệp tin mã nguồn
+        correct: false
+    explanation: Push force ép server xóa bỏ lịch sử hiện tại để thay thế bằng lịch
+      sử máy bạn, cực kỳ nguy hiểm trên nhánh chung.
+  - id: q5
+    question: Lệnh nào sau đây dùng để xóa một nhánh có tên `old-feature` trực tiếp
+      trên máy chủ từ xa GitHub?
+    type: single
+    options:
+      - text: git push origin --delete old-feature
+        correct: true
+      - text: git remove remote old-feature
+        correct: false
+      - text: git drop origin old-feature
+        correct: false
+      - text: git erase cloud old-feature
+        correct: false
+    explanation: "`git push origin --delete <nhánh>` gửi chỉ thị xóa con trỏ nhánh
+      trên máy chủ từ xa."
+  - id: q6
+    question: Nếu bạn đã cấu hình upstream tracking cho nhánh hiện tại bằng cờ `-u`,
+      lệnh rút gọn nào dùng để đẩy commit lên server?
+    type: single
+    options:
+      - text: git push
+        correct: true
+      - text: git send
+        correct: false
+      - text: git upload
+        correct: false
+      - text: git sync-up
+        correct: false
+    explanation: Khi đã có upstream, bạn chỉ cần gõ `git push` mà không cần truyền
+      tên remote hay tên branch.

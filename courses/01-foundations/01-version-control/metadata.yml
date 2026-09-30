@@ -1,0 +1,21 @@
+id: 01-version-control
+title: Version Control là gì?
+duration: 20
+xp: 50
+keywords:
+  - vcs
+  - version control
+  - quan ly phien ban
+  - lich su
+  - source code
+prerequisites: []
+objectives:
+  - Hiểu rõ bản chất và lý do ra đời của hệ thống quản lý phiên bản (Version
+    Control System - VCS).
+  - Phân tích được các rủi ro nghiêm trọng khi phát triển phần mềm mà không có
+    công cụ theo dõi lịch sử.
+  - Nắm bắt bức tranh tổng quan về cách các kỹ sư phần mềm chuyên nghiệp lưu vết
+    mã nguồn.
+commands:
+  - git --version
+  - git help

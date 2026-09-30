@@ -1,0 +1,27 @@
+id: 06-git-reflog
+title: git reflog
+duration: 25
+xp: 85
+keywords:
+  - git reflog
+  - reference logs
+  - nhat ky tham chieu
+  - cuu ho git
+  - head history
+  - safety net
+prerequisites:
+  - 04-git-reset-hard
+objectives:
+  - Hiểu rõ bản chất của Reference Logs (`reflog`) như nhật ký ghi lại mọi
+    chuyển động của con trỏ HEAD.
+  - Phân biệt sự khác nhau căn bản giữa nhật ký commit (`git log`) và nhật ký
+    tham chiếu (`git reflog`).
+  - "Đọc hiểu cú pháp định danh vị trí thời gian của reflog: `HEAD@{0}`,
+    `HEAD@{1}`, `HEAD@{2 days ago}`."
+  - Nhận thức tầm quan trọng của reflog như chiếc lưới an toàn tối hậu giúp khôi
+    phục mọi sai lầm trong Git.
+commands:
+  - git reflog
+  - git reflog show HEAD
+  - git reflog show <tên-nhánh>
+  - git reflog --date=relative

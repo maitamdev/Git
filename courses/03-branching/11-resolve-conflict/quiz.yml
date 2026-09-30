@@ -1,0 +1,99 @@
+id: quiz-03-11-resolve-conflict
+title: "Trắc nghiệm: Kỹ thuật Resolve Conflict từng bước"
+questions:
+  - id: q1
+    question: Sau khi bạn đã mở tệp bị xung đột, chỉnh sửa xong nội dung và xóa sạch
+      các vạch conflict markers, bước tiếp theo BẮT BUỘC phải làm là gì?
+    type: single
+    options:
+      - text: Chạy lệnh `git add <tên-tệp>` để đánh dấu cho Git biết tệp đó đã được giải
+          quyết xong (Resolved)
+        correct: true
+      - text: Chạy lệnh `git push` ngay lập tức lên GitHub
+        correct: false
+      - text: Xóa tệp tin đó khỏi ổ cứng máy tính
+        correct: false
+      - text: Khởi động lại máy tính cá nhân
+        correct: false
+    explanation: "`git add <file>` là thao tác kỹ thuật bắt buộc để đưa tệp từ trạng
+      thái Unmerged sang Staged (Resolved)."
+  - id: q2
+    question: Trong trình soạn thảo VS Code, nút tùy chọn "Accept Current Change" có
+      tác dụng gì?
+    type: single
+    options:
+      - text: Chỉ giữ lại đoạn code của nhánh hiện tại bạn đang đứng (HEAD) và xóa bỏ
+          đoạn code của nhánh kia
+        correct: true
+      - text: Chỉ giữ lại đoạn code của nhánh đang được gộp vào
+        correct: false
+      - text: Giữ lại cả hai đoạn code của cả hai nhánh
+        correct: false
+      - text: Xóa sạch toàn bộ tệp tin khỏi dự án
+        correct: false
+    explanation: Current Change là code của nhánh hiện tại (HEAD/Ours); chọn nút này
+      sẽ giữ code hiện tại và bỏ code incoming.
+  - id: q3
+    question: Điều gì sẽ xảy ra nếu bạn cố gắng chạy lệnh `git commit` khi vẫn còn
+      tệp tin nằm trong mục "Unmerged paths"?
+    type: single
+    options:
+      - text: Git sẽ từ chối commit và thông báo bạn cần giải quyết xung đột và git add
+          trước
+        correct: true
+      - text: Git sẽ tự động xóa tất cả các tệp bị xung đột
+        correct: false
+      - text: Git sẽ tự động chọn ngẫu nhiên một nhánh để giữ lại
+        correct: false
+      - text: Git sẽ khóa vĩnh viễn kho lưu trữ của bạn
+        correct: false
+    explanation: "Git bảo vệ an toàn dữ liệu tuyệt đối: chừng nào còn tệp unmerged,
+      Git kiên quyết từ chối cho phép commit."
+  - id: q4
+    question: Nếu logic của cả hai nhánh đều đúng và cần thiết cho hệ thống, giải
+      pháp xử lý conflict chuẩn xác nhất là gì?
+    type: single
+    options:
+      - text: Chọn "Accept Both" hoặc tự tay kết hợp cả hai logic vào cùng một khối code
+          hoàn chỉnh
+        correct: true
+      - text: Xóa bỏ cả hai đoạn code để không ai được dùng
+        correct: false
+      - text: Tạo hai tệp tin mới với hai tên khác nhau
+        correct: false
+      - text: Bỏ qua không thèm sửa và đẩy lỗi lên cho khách hàng
+        correct: false
+    explanation: Nhiều tình huống đòi hỏi kết hợp cả hai chức năng (Accept Both) và
+      chỉnh sửa lại để logic ăn khớp.
+  - id: q5
+    question: Thói quen xấu nào nguy hiểm nhất khi giải quyết conflict trong một đội
+      ngũ đông người?
+    type: single
+    options:
+      - text: Tự ý xóa sạch code của đồng nghiệp mà không hề trao đổi hay hiểu rõ mục
+          đích của đoạn code đó
+        correct: true
+      - text: Hỏi ý kiến đồng nghiệp trước khi đưa ra quyết định
+        correct: false
+      - text: Chạy kiểm thử tự động sau khi giải quyết xong xung đột
+        correct: false
+      - text: Đọc kỹ thông báo git status trước khi gõ lệnh
+        correct: false
+    explanation: "Giao tiếp là chìa khóa: không bao giờ tự ý xóa code của người khác
+      nếu chưa hiểu rõ chức năng."
+  - id: q6
+    question: Sau khi hoàn tất lệnh `git commit` kết thúc quá trình merge conflict,
+      trạng thái của kho lưu trữ sẽ như thế nào?
+    type: single
+    options:
+      - text: Trở về trạng thái sạch sẽ `nothing to commit, working tree clean` và đồ
+          thị xuất hiện Merge Commit mới
+        correct: true
+      - text: Vẫn bị kẹt trong trạng thái conflict mãi mãi
+        correct: false
+      - text: Tất cả các nhánh cũ bị xóa sạch
+        correct: false
+      - text: Mã nguồn bị chuyển sang chế độ chỉ đọc
+        correct: false
+    explanation: Commit thành công sẽ đóng tiến trình merge, đưa Working Tree về
+      trạng thái clean và hoàn tất đồ thị DAG.

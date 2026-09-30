@@ -1,0 +1,64 @@
+id: quiz-05-09-git-stash-advanced
+title: "Trắc nghiệm: git stash nâng cao"
+questions:
+  - id: q1
+    question: Tại sao câu lệnh `git stash` cơ bản có thể bỏ quên các tệp tin mới tạo
+      của bạn?
+    type: single
+    options:
+      - text: Vì theo mặc định git stash chỉ lưu các tệp đã được theo dõi (tracked), cần
+          thêm cờ `-u` để bao gồm cả tệp untracked
+        correct: true
+      - text: Vì các tệp mới tạo có dung lượng quá lớn
+        correct: false
+      - text: Vì tệp mới tạo chưa được đặt tên bằng tiếng Anh
+        correct: false
+      - text: Vì Git không cho phép lưu quá 3 tệp cùng lúc
+        correct: false
+    explanation: Mặc định Git stash bỏ qua untracked files; cờ `-u`
+      (`--include-untracked`) bắt buộc Git phải lưu cả tệp mới.
+  - id: q2
+    question: Sự khác biệt cốt lõi giữa `git stash pop` và `git stash apply` là gì?
+    type: single
+    options:
+      - text: pop khôi phục xong sẽ tự động xóa mẩu stash đó khỏi danh sách, còn apply
+          giữ nguyên mẩu stash trong danh sách
+        correct: true
+      - text: pop chỉ dùng cho nhánh main, còn apply dùng cho mọi nhánh
+        correct: false
+      - text: apply xóa toàn bộ kho chứa, còn pop giữ lại
+        correct: false
+      - text: Hai câu lệnh này hoàn toàn đồng nghĩa không khác gì nhau
+        correct: false
+    explanation: "`pop` = `apply` + `drop`. Dùng apply nếu bạn muốn thử nghiệm trên
+      nhiều nhánh mà không làm mất stash."
+  - id: q3
+    question: Lệnh nào sau đây dùng để tạo một nhánh mới và áp dụng ngay mẩu stash
+      vào nhánh đó, tránh xung đột với nhánh hiện tại?
+    type: single
+    options:
+      - text: git stash branch <tên-nhánh-mới>
+        correct: true
+      - text: git branch --stash <tên-nhánh>
+        correct: false
+      - text: git checkout stash -b <tên-nhánh>
+        correct: false
+      - text: git pop --branch <tên-nhánh>
+        correct: false
+    explanation: "`git stash branch <nhánh>` tạo nhánh từ commit gốc nơi stash được
+      tạo ra và áp dụng thay đổi, ngăn ngừa xung đột hoàn hảo."
+  - id: q4
+    question: Để xóa vĩnh viễn toàn bộ các mẩu stash đang lưu trữ trong ngăn kéo mà
+      không khôi phục, bạn dùng lệnh nào?
+    type: single
+    options:
+      - text: git stash clear
+        correct: true
+      - text: git stash drop --all-force
+        correct: false
+      - text: git reset --stash
+        correct: false
+      - text: git remove --stashes
+        correct: false
+    explanation: "`git stash clear` dọn sạch 100% tất cả các mẩu stash đang có trong
+      kho lưu trữ cục bộ."

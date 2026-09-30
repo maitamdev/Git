@@ -1,0 +1,22 @@
+id: 12-undo-working-tree
+title: Hoàn tác thay đổi Working Tree
+duration: 30
+xp: 90
+keywords:
+  - git restore
+  - hoan tac
+  - undo
+  - working tree
+  - discard changes
+prerequisites:
+  - 11-file-lifecycle
+objectives:
+  - Sử dụng lệnh hiện đại `git restore <file>` để hủy bỏ các sửa đổi dở dang
+    trong Working Tree.
+  - Sử dụng `git restore --staged <file>` để unstage tệp tin an toàn.
+  - Hiểu rõ sự nguy hiểm và tính không thể khôi phục khi hủy bỏ thay đổi chưa
+    commit.
+commands:
+  - git restore <file>
+  - git restore .
+  - git restore --staged <file>

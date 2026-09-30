@@ -1,0 +1,24 @@
+id: 16-object-graph-traversal
+title: Duyệt đồ thị đối tượng có hướng (Directed Acyclic Graph)
+duration: 35
+xp: 100
+keywords:
+  - dag
+  - graph traversal
+  - reachability
+  - dangling objects
+  - git rev-list
+prerequisites:
+  - 15-revision-syntax
+objectives:
+  - Nắm vững bản chất toán học của Git như một Đồ thị có hướng không chu trình
+    (Directed Acyclic Graph - DAG).
+  - "Hiểu rõ khái niệm Reachability (Khả năng tiếp cận): đối tượng nào có thể
+    chạm tới từ các References và đối tượng nào bị mồ côi
+    (Dangling/Unreachable)."
+  - Sử dụng lệnh plumbing git rev-list và git fsck để duyệt toàn bộ đồ thị và
+    phát hiện đối tượng mất kết nối.
+commands:
+  - git rev-list --all --count
+  - git fsck --unreachable
+  - git log --graph --oneline --all

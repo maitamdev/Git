@@ -1,0 +1,26 @@
+id: 05-git-fetch
+title: Cập nhật dữ liệu từ xa với git fetch
+duration: 25
+xp: 85
+keywords:
+  - git fetch
+  - remote-tracking branch
+  - origin/main
+  - cap nhat du lieu
+  - an toan
+prerequisites:
+  - 04-git-clone
+objectives:
+  - Hiểu rõ cơ chế hoạt động an toàn tuyệt đối của câu lệnh `git fetch`.
+  - Phân biệt rõ ràng giữa nhánh theo dõi từ xa (Remote-tracking branch
+    `origin/main`) và nhánh cục bộ (`main`).
+  - Nắm bắt lý do vì sao `git fetch` không bao giờ làm thay đổi hay ghi đè lên
+    Working Directory của bạn.
+  - Sử dụng `git log` và `git diff` để kiểm tra mã nguồn mới tải về trước khi
+    quyết định hợp nhất.
+commands:
+  - git fetch
+  - git fetch origin
+  - git fetch --all
+  - git log HEAD..origin/main --oneline
+  - git diff HEAD..origin/main

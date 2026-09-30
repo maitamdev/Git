@@ -1,0 +1,62 @@
+id: quiz-02-08-git-log
+title: "Trắc nghiệm: Tra cứu lịch sử với git log"
+questions:
+  - id: q1
+    question: Phím nào trên bàn phím dùng để thoát khỏi màn hình hiển thị danh sách
+      git log dài?
+    type: single
+    options:
+      - text: Phím q (quit)
+        correct: true
+      - text: Phím Esc
+        correct: false
+      - text: Phím Ctrl + C
+        correct: false
+      - text: Phím Enter
+        correct: false
+    explanation: Git log sử dụng trình xem văn bản `less` của Unix, nhấn phím `q` để
+      thoát ra dòng lệnh.
+  - id: q2
+    question: Cờ tùy chọn `--oneline` trong lệnh git log mang lại tác dụng gì?
+    type: single
+    options:
+      - text: Rút gọn mỗi commit thành một dòng duy nhất gồm mã hash ngắn và thông điệp
+          commit
+        correct: true
+      - text: Chỉ hiển thị dòng code đầu tiên của tệp tin index.html
+        correct: false
+      - text: Xóa toàn bộ các commit chỉ giữ lại một commit duy nhất
+        correct: false
+      - text: Kết nối mạng Internet để kiểm tra trạng thái online
+        correct: false
+    explanation: "`--oneline` là tùy chọn cực kỳ phổ biến giúp hiển thị lịch sử cô
+      đọng, dễ đọc lướt nhanh."
+  - id: q3
+    question: Lệnh nào sau đây chỉ hiển thị đúng 3 commit gần đây nhất trong lịch sử?
+    type: single
+    options:
+      - text: git log -n 3 hoặc git log -3
+        correct: true
+      - text: git log --limit-top-3
+        correct: false
+      - text: git log --first 3
+        correct: false
+      - text: git show -3 commits
+        correct: false
+    explanation: Cú pháp `-n <số>` hoặc `-<số>` giới hạn số lượng commit được hiển
+      thị trong kết quả log.
+  - id: q4
+    question: Để xem đồ thị phân nhánh trực quan bằng các ký tự ASCII trong
+      terminal, bạn dùng cờ nào?
+    type: single
+    options:
+      - text: --graph
+        correct: true
+      - text: --tree-view
+        correct: false
+      - text: --draw-diagram
+        correct: false
+      - text: --ascii-art
+        correct: false
+    explanation: "`--graph` vẽ các đường nhánh và mốc hợp nhất commit bằng đồ thị ký
+      tự trực quan ngay trong terminal."

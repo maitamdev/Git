@@ -1,0 +1,95 @@
+id: quiz-05-08-commit-amend
+title: "Trắc nghiệm: git commit --amend"
+questions:
+  - id: q1
+    question: Mục đích chính của câu lệnh `git commit --amend` là gì?
+    type: single
+    options:
+      - text: Chỉnh sửa thông điệp hoặc bổ sung tệp tin vào commit gần đây nhất trên
+          nhánh hiện tại
+        correct: true
+      - text: Xóa toàn bộ các commit trong dự án
+        correct: false
+      - text: Tạo một nhánh mới từ commit đầu tiên
+        correct: false
+      - text: Đẩy code trực tiếp lên máy chủ mà không cần mạng
+        correct: false
+    explanation: "`git commit --amend` cho phép cập nhật commit snapshot gần nhất
+      một cách nhanh chóng."
+  - id: q2
+    question: Cờ `--no-edit` trong lệnh `git commit --amend --no-edit` có ý nghĩa gì?
+    type: single
+    options:
+      - text: Gộp các thay đổi đã staged vào commit gần nhất mà giữ nguyên thông điệp
+          commit cũ, không mở trình soạn thảo
+        correct: true
+      - text: Cấm không cho phép chỉnh sửa mã nguồn của dự án nữa
+        correct: false
+      - text: Xóa toàn bộ thông điệp commit trở thành chuỗi rỗng
+        correct: false
+      - text: Khóa tệp tin ở chế độ chỉ đọc
+        correct: false
+    explanation: "`--no-edit` giúp bạn thêm nhanh các tệp bị sót vào commit trước mà
+      không cần nhập lại message."
+  - id: q3
+    question: Điều gì xảy ra với mã băm nhận dạng SHA-1 của commit sau khi bạn thực
+      hiện `git commit --amend`?
+    type: single
+    options:
+      - text: Mã băm SHA-1 luôn luôn bị thay đổi vì nội dung hoặc thông tin commit đã
+          thay đổi (sinh ra commit mới)
+        correct: true
+      - text: Mã băm SHA-1 được giữ nguyên hoàn toàn 100%
+        correct: false
+      - text: Mã băm biến thành một chuỗi số 0
+        correct: false
+      - text: Git không còn sử dụng mã băm nữa
+        correct: false
+    explanation: Vì mã SHA-1 được tính toán từ nội dung và metadata, bất kỳ thay đổi
+      nào cũng tạo ra một mã hash mới.
+  - id: q4
+    question: Quy tắc an toàn quan trọng nhất khi sử dụng `git commit --amend` là gì?
+    type: single
+    options:
+      - text: Chỉ nên dùng cho các commit cục bộ chưa push lên nhánh công khai dùng
+          chung của nhóm
+        correct: true
+      - text: Chỉ được dùng vào các ngày chẵn trong tuần
+        correct: false
+      - text: Bắt buộc phải tắt máy tính sau khi chạy lệnh
+        correct: false
+      - text: Không được phép dùng khi dự án có hơn 10 dòng code
+        correct: false
+    explanation: Amend thay đổi mã hash của commit; nếu đã push lên server thì việc
+      amend sẽ dẫn đến xung đột khi push lại.
+  - id: q5
+    question: Để bổ sung một tệp tin `style.css` vừa sửa vào commit gần nhất bằng
+      amend, quy trình chuẩn gồm những bước nào?
+    type: single
+    options:
+      - text: git add style.css -> git commit --amend --no-edit
+        correct: true
+      - text: git commit --amend style.css -> git push
+        correct: false
+      - text: git reset style.css -> git commit
+        correct: false
+      - text: git restore style.css -> git commit --amend
+        correct: false
+    explanation: Bạn phải đưa tệp vào Staging Area trước (`git add`), sau đó mới gọi
+      commit amend để gộp vào.
+  - id: q6
+    question: Nếu bạn đã lỡ push một commit lên remote branch và sau đó chạy `git
+      commit --amend` ở local, điều gì sẽ xảy ra ở lần push tiếp theo?
+    type: single
+    options:
+      - text: Lệnh push bị từ chối [rejected] vì lịch sử đã bị phân kỳ do mã hash thay
+          đổi
+        correct: true
+      - text: Máy chủ tự động gộp commit cũ và mới một cách êm đẹp
+        correct: false
+      - text: Toàn bộ máy chủ GitHub sẽ bị xóa trắng
+        correct: false
+      - text: Tài khoản của bạn tự động được nâng cấp lên VIP
+        correct: false
+    explanation: Commit hash thay đổi khiến nhánh local và remote bị lệch nhau, Git
+      sẽ từ chối push non-fast-forward.

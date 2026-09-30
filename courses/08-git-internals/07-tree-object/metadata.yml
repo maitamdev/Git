@@ -1,0 +1,23 @@
+id: 07-tree-object
+title: "Đối tượng Tree: Lưu trữ cấu trúc thư mục và quyền tệp"
+duration: 35
+xp: 95
+keywords:
+  - tree object
+  - directory structure
+  - file mode
+  - merkle tree
+  - hierarchy
+prerequisites:
+  - 06-blob-object
+objectives:
+  - Hiểu rõ bản chất của đối tượng Tree như người quản lý cấu trúc thư mục phân
+    cấp trong Git.
+  - "Nắm vững định dạng từng dòng mục (Tree Entry): chế độ quyền tệp (mode),
+    loại đối tượng, mã băm SHA-1 và tên tệp/thư mục."
+  - "Khám phá kiến trúc cây Merkle Tree lồng nhau: một đối tượng Tree có thể
+    chứa các đối tượng Tree con (thư mục con) và Blob (tệp con)."
+commands:
+  - git cat-file -p <tree-hash>
+  - git ls-tree HEAD
+  - git write-tree

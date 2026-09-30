@@ -1,0 +1,24 @@
+id: 20-ci-cd-capstone
+title: "Capstone Project: Xây dựng hoàn chỉnh CI/CD Pipeline cho Web Application"
+duration: 50
+xp: 250
+keywords:
+  - ci cd capstone
+  - enterprise pipeline
+  - end to end devops
+  - production deployment
+  - mastery challenge
+prerequisites:
+  - 19-reusable-workflows
+objectives:
+  - Tổng hợp toàn bộ kiến thức Level 7 để thiết kế một đường ống CI/CD chuẩn
+    doanh nghiệp hoàn chỉnh từ A đến Z.
+  - "Xây dựng quy trình tự động hóa đa tầng: Linting, Unit Testing, Matrix
+    Build, Đóng gói Artifacts và Triển khai có phê duyệt."
+  - Tích hợp bảo vệ nhánh Branch Protection Rules, quản lý Secrets an toàn và xử
+    lý phục hồi lỗi linh hoạt.
+commands:
+  - gh pr create
+  - gh pr checks
+  - gh run watch
+  - git push origin main

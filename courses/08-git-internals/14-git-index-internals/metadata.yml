@@ -1,0 +1,22 @@
+id: 14-git-index-internals
+title: Cấu trúc tệp nhị phân .git/index (Staging Area Internals)
+duration: 35
+xp: 95
+keywords:
+  - git index
+  - staging area
+  - binary index format
+  - dircache
+  - stat cache
+prerequisites:
+  - 13-symbolic-refs-head
+objectives:
+  - Giải phẫu cấu trúc nhị phân của tệp .git/index (DIRC - Directory Cache).
+  - "Hiểu rõ các trường dữ liệu được lưu cho mỗi tệp: ctime, mtime, file size,
+    permissions, SHA-1, và đường dẫn tệp."
+  - Sử dụng lệnh plumbing git ls-files --stage để xem bảng thông tin Staging
+    Area nội bộ.
+commands:
+  - git ls-files --stage
+  - git status --porcelain=v2
+  - git update-index

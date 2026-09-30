@@ -1,0 +1,26 @@
+id: 10-conventional-commits
+title: Conventional Commits
+duration: 25
+xp: 85
+keywords:
+  - conventional commits
+  - quy uoc commit
+  - feat fix chore
+  - semantic commit messages
+  - changelog automation
+  - breaking changes
+prerequisites:
+  - 06-workflow-comparison
+objectives:
+  - Hiểu rõ đặc tả chuẩn Conventional Commits phiên bản 1.0.0 và giá trị to lớn
+    của nó đối với tự động hóa phần mềm.
+  - "Làm chủ cấu trúc chuẩn: `<type>[optional scope]: <description>` cùng các
+    phần tùy chọn tử tế Body và Footer."
+  - "Sử dụng chính xác các tiền tố định danh phổ biến: feat, fix, docs, style,
+    refactor, perf, test, build, ci, chore."
+  - Biểu diễn các thay đổi phá vỡ tính tương thích ngược (BREAKING CHANGE) bằng
+    dấu chấm than `!` hoặc footer chuyên dụng.
+commands:
+  - 'git commit -m "feat(api): add endpoint for user registration"'
+  - 'git commit -m "fix(auth): prevent session timeout during checkout"'
+  - 'git commit -m "feat(core)!: drop support for Node 16"'

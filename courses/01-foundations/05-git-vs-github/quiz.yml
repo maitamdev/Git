@@ -1,0 +1,62 @@
+id: quiz-05-git-vs-github
+title: "Trắc nghiệm: Phân biệt Git và GitHub"
+questions:
+  - id: q1
+    question: Phát biểu nào sau đây miêu tả chính xác nhất bản chất của Git?
+    type: single
+    options:
+      - text: Là công cụ phần mềm quản lý phiên bản phân tán chạy trực tiếp trên máy
+          tính cá nhân
+        correct: true
+      - text: Là một mạng xã hội dành cho các lập trình viên đăng ảnh bài viết
+        correct: false
+      - text: Là một ngôn ngữ lập trình mới dùng để thay thế JavaScript
+        correct: false
+      - text: Là một trang web tuyển dụng việc làm công nghệ thông tin
+        correct: false
+    explanation: Git là phần mềm mã nguồn mở chạy cục bộ để quản lý phiên bản mã nguồn.
+  - id: q2
+    question: GitHub đóng vai trò gì trong hệ sinh thái phát triển phần mềm?
+    type: single
+    options:
+      - text: Là dịch vụ đám mây lưu trữ các kho Git từ xa và hỗ trợ cộng tác nhóm
+          chuyên nghiệp
+        correct: true
+      - text: Là hệ điều hành dùng để cài đặt lên máy chủ thay thế Linux
+        correct: false
+      - text: Là trình duyệt web tốc độ cao cạnh tranh với Google Chrome
+        correct: false
+      - text: Là phần mềm diệt virus bảo vệ mã nguồn máy tính
+        correct: false
+    explanation: GitHub là nền tảng máy chủ đám mây lưu trữ repo Git và bổ sung tính
+      năng cộng tác nhóm.
+  - id: q3
+    question: Nếu bạn làm việc tại một công ty bảo mật không cho phép đưa code lên
+      mạng Internet, bạn sẽ làm gì?
+    type: single
+    options:
+      - text: Vẫn sử dụng Git bình thường và có thể lưu trữ trên máy chủ nội bộ GitLab
+          riêng của công ty
+        correct: true
+      - text: Bắt buộc phải bỏ dùng Git và quay về cách copy paste thủ công
+        correct: false
+      - text: Không thể lập trình được vì Git bắt buộc phải kết nối Internet
+        correct: false
+      - text: Phải xin phép ban quản trị GitHub để mở kênh bí mật
+        correct: false
+    explanation: Git hoạt động độc lập và hoàn toàn có thể tự dựng máy chủ nội bộ
+      (on-premises) bằng GitLab hoặc Gitea.
+  - id: q4
+    question: Dịch vụ nào dưới đây có tính năng tương đương với GitHub?
+    type: single
+    options:
+      - text: GitLab và Bitbucket
+        correct: true
+      - text: Photoshop và Illustrator
+        correct: false
+      - text: VLC Media Player
+        correct: false
+      - text: Microsoft Excel
+        correct: false
+    explanation: GitLab và Bitbucket là hai nền tảng lưu trữ và cộng tác mã nguồn
+      Git tương đương với GitHub.

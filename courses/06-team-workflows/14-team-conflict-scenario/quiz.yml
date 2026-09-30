@@ -1,0 +1,98 @@
+id: quiz-06-14-team-conflict-scenario
+title: "Trắc nghiệm: Kịch bản xung đột nhóm"
+questions:
+  - id: q1
+    question: Nguyên nhân trực tiếp dẫn đến việc một Pull Request bị báo lỗi "Merge
+      conflict" trên GitHub là gì?
+    type: single
+    options:
+      - text: Nhánh chính đã được cập nhật thêm các commit mới sửa đổi cùng vùng mã
+          nguồn với nhánh của bạn
+        correct: true
+      - text: Tài khoản GitHub của bạn đã hết hạn sử dụng
+        correct: false
+      - text: Máy tính của bạn bị mất kết nối mạng Internet
+        correct: false
+      - text: Tên nhánh của bạn có chứa quá nhiều ký tự chữ cái
+        correct: false
+    explanation: Xung đột phát sinh khi Git không thể tự động quyết định xem nên giữ
+      lại đoạn mã nào giữa nhánh của bạn và nhánh chính vừa được cập nhật.
+  - id: q2
+    question: Hành động đầu tiên và chuẩn mực nhất bạn nên làm khi gặp xung đột
+      logic nghiệp vụ phức tạp với code của đồng nghiệp là gì?
+    type: single
+    options:
+      - text: Chủ động trao đổi trực tiếp với đồng nghiệp đã viết đoạn code đó để cùng
+          thống nhất giải pháp kết hợp chuẩn xác
+        correct: true
+      - text: Tự ý xóa sạch toàn bộ đoạn mã của đồng nghiệp để code của mình chạy được
+        correct: false
+      - text: Đóng máy tính đi về và hy vọng sáng mai xung đột sẽ tự biến mất
+        correct: false
+      - text: Tạo tài khoản GitHub mới và nộp đơn xin nghỉ việc
+        correct: false
+    explanation: Giao tiếp trực tiếp giúp làm sáng tỏ ngữ cảnh kinh doanh và bảo đảm
+      việc ghép nối logic không làm hỏng tính năng của cả hai bên.
+  - id: q3
+    question: Tại sao việc giải quyết các xung đột lớn trực tiếp trên giao diện web
+      của GitHub lại bị xem là tiềm ẩn nhiều rủi ro?
+    type: single
+    options:
+      - text: Vì bạn không thể chạy các bài kiểm thử tự động (Unit Test / Build) trên
+          máy tính để xác thực mã nguồn có hoạt động đúng hay không
+        correct: true
+      - text: Vì GitHub sẽ tính thêm phí dịch vụ mỗi lần bấm sửa trên web
+        correct: false
+      - text: Vì giao diện web của GitHub không hỗ trợ màn hình màu
+        correct: false
+      - text: Vì việc đó vi phạm luật pháp quốc tế
+        correct: false
+    explanation: Giải quyết xung đột trên máy cá nhân cho phép bạn biên dịch, chạy
+      thử ứng dụng và kiểm tra kỹ lưỡng trước khi đưa lên máy chủ.
+  - id: q4
+    question: Cờ `--force-with-lease` trong lệnh git push an toàn vượt trội hơn cờ
+      `--force` truyền thống ở điểm nào?
+    type: single
+    options:
+      - text: Nó sẽ từ chối ghi đè nếu phát hiện có người khác vừa đẩy thêm commit mới
+          lên nhánh từ xa trong lúc bạn đang rebase
+        correct: true
+      - text: Nó tự động mã hóa dữ liệu gửi qua mạng bằng thuật toán quân sự
+        correct: false
+      - text: Nó giúp lệnh push chạy nhanh hơn gấp 10 lần
+        correct: false
+      - text: Nó không yêu cầu bạn phải nhập mật khẩu tài khoản
+        correct: false
+    explanation: Cờ `--force-with-lease` kiểm tra xem nhánh remote có đúng ở trạng
+      thái bạn đã biết hay không, ngăn chặn việc vô tình xóa mất commit của đồng
+      nghiệp.
+  - id: q5
+    question: Sau khi giải quyết xong các điểm mốc xung đột trong tệp tin, câu lệnh
+      nào được dùng để xác nhận đã xử lý xong tệp đó trong quá trình rebase?
+    type: single
+    options:
+      - text: git add <tên-tệp>
+        correct: true
+      - text: git commit -m "done"
+        correct: false
+      - text: git push origin main
+        correct: false
+      - text: git checkout --force
+        correct: false
+    explanation: Lệnh `git add` đưa tệp đã xử lý xung đột vào Staging Area để chuẩn
+      bị cho bước `git rebase --continue`.
+  - id: q6
+    question: Lệnh nào sau đây cho phép bạn hủy bỏ toàn bộ quá trình rebase giải
+      quyết xung đột và quay về trạng thái an toàn ban đầu?
+    type: single
+    options:
+      - text: git rebase --abort
+        correct: true
+      - text: git rebase --skip
+        correct: false
+      - text: git rebase --undo
+        correct: false
+      - text: git reset --delete
+        correct: false
+    explanation: Cờ `--abort` là chiếc phao cứu sinh đưa nhánh quay trở về chính xác
+      trạng thái trước khi bạn bắt đầu câu lệnh rebase.

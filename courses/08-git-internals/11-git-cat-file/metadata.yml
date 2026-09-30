@@ -1,0 +1,22 @@
+id: 11-git-cat-file
+title: Giải mã và kiểm tra chi tiết đối tượng với git cat-file
+duration: 30
+xp: 95
+keywords:
+  - git cat-file
+  - inspect object
+  - pretty print
+  - object type
+  - object size
+prerequisites:
+  - 10-git-hash-object
+objectives:
+  - "Làm chủ lệnh plumbing cứu hộ đa năng: git cat-file."
+  - "Sử dụng thành thạo 3 cờ quan sát cốt lõi: -p (pretty-print nội dung), -t
+    (kiểm tra loại đối tượng), và -s (xem kích thước byte)."
+  - Có khả năng kiểm tra bất kỳ đối tượng nhị phân nào trong .git/objects/ chỉ
+    bằng tiền tố mã băm (hash prefix).
+commands:
+  - git cat-file -p <hash>
+  - git cat-file -t <hash>
+  - git cat-file -s <hash>

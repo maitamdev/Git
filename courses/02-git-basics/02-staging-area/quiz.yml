@@ -1,0 +1,62 @@
+id: quiz-02-02-staging-area
+title: "Trắc nghiệm: Staging Area trong Git"
+questions:
+  - id: q1
+    question: Staging Area trong Git đóng vai trò kỹ thuật gì?
+    type: single
+    options:
+      - text: Là vùng đệm trung gian cho phép chọn lọc các thay đổi trước khi ghi vào
+          commit
+        correct: true
+      - text: Là nơi sao lưu dự phòng toàn bộ ổ cứng máy tính
+        correct: false
+      - text: Là máy chủ lưu trữ từ xa trên mạng Internet
+        correct: false
+      - text: Là thùng rác chứa các tệp đã xóa vĩnh viễn
+        correct: false
+    explanation: Staging Area là khu vực chuẩn bị giúp lập trình viên tạo các commit
+      sạch và có tổ chức. Các đáp án B, C, D đều hiểu sai kiến trúc Git.
+  - id: q2
+    question: Tệp tin vật lý nào trong thư mục .git đại diện cho Staging Area?
+    type: single
+    options:
+      - text: .git/index
+        correct: true
+      - text: .git/HEAD
+        correct: false
+      - text: .git/config
+        correct: false
+      - text: .git/COMMIT_EDITMSG
+        correct: false
+    explanation: Tệp `.git/index` là tệp nhị phân lưu trữ trạng thái của Staging
+      Area. `.git/HEAD` là con trỏ nhánh; `.git/config` là tệp cấu hình.
+  - id: q3
+    question: Nếu bạn đã chạy `git add file.txt`, sau đó mở file.txt sửa thêm 3 dòng
+      nhưng chưa add lại, khi commit Git sẽ lưu nội dung nào?
+    type: single
+    options:
+      - text: Nội dung của file.txt tại thời điểm bạn chạy lệnh git add trước đó
+        correct: true
+      - text: Nội dung mới nhất bao gồm cả 3 dòng vừa sửa thêm
+        correct: false
+      - text: Git sẽ báo lỗi cú pháp và hủy bỏ toàn bộ commit
+        correct: false
+      - text: Tệp file.txt sẽ tự động bị xóa khỏi dự án
+        correct: false
+    explanation: Git lưu snapshot của tệp tại chính thời điểm chạy `git add`. Mọi
+      sửa đổi sau đó cần được `git add` lại để cập nhật vào Index.
+  - id: q4
+    question: Lệnh nào dùng để loại bỏ một tệp tin ra khỏi Staging Area mà vẫn giữ
+      nguyên nội dung trong Working Directory?
+    type: single
+    options:
+      - text: git restore --staged <file>
+        correct: true
+      - text: git rm -f <file>
+        correct: false
+      - text: git delete --all
+        correct: false
+      - text: git push --force
+        correct: false
+    explanation: "`git restore --staged <file>` unstage tệp mà không làm mất nội
+      dung code. `git rm -f` xóa hẳn file khỏi ổ đĩa."

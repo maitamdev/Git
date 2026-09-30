@@ -1,0 +1,22 @@
+id: 01-working-directory
+title: Working Directory (Thư mục làm việc)
+duration: 20
+xp: 60
+keywords:
+  - working directory
+  - working tree
+  - thu muc lam viec
+  - untracked
+  - khu vuc git
+prerequisites:
+  - 09-git-init
+objectives:
+  - Hiểu rõ khái niệm và vai trò của Working Directory trong kiến trúc 3 khu vực
+    của Git.
+  - Phân biệt giữa tệp tin được Git theo dõi (Tracked) và tệp tin chưa được theo
+    dõi (Untracked).
+  - Nắm bắt cách các thao tác chỉnh sửa tệp tin bên ngoài terminal ảnh hưởng
+    trực tiếp tới Working Directory.
+commands:
+  - git status
+  - ls -la

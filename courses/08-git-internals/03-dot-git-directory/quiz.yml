@@ -1,0 +1,64 @@
+id: quiz-08-git-internals-03-dot-git-directory
+title: "Trắc nghiệm: Khám phá cấu trúc bên trong thư mục .git"
+questions:
+  - id: q1
+    question: Tệp `.git/HEAD` thường chứa nội dung có định dạng như thế nào khi bạn
+      đang ở trên nhánh main?
+    type: single
+    options:
+      - text: "ref: refs/heads/main"
+        correct: true
+      - text: Dãy số nhị phân không đọc được
+        correct: false
+      - text: Tên tài khoản GitHub của bạn
+        correct: false
+      - text: Mã băm commit của lần đầu tiên tạo repo
+        correct: false
+    explanation: "Tệp `HEAD` là một symbolic reference trỏ tới tệp tham chiếu nhánh
+      hiện tại dưới dạng văn bản: `ref: refs/heads/<branch>`."
+  - id: q2
+    question: Thư mục nào bên trong `.git/` chịu trách nhiệm lưu trữ tất cả các đối
+      tượng Blob, Tree, Commit và Tag?
+    type: single
+    options:
+      - text: .git/objects/
+        correct: true
+      - text: .git/refs/
+        correct: false
+      - text: .git/hooks/
+        correct: false
+      - text: .git/logs/
+        correct: false
+    explanation: Thư mục `objects/` là nơi cư ngụ của Object Database, lưu trữ mọi
+      đối tượng nén bằng thuật toán zlib.
+  - id: q3
+    question: Tệp `.git/index` đại diện cho thành phần kiến trúc nào mà người dùng
+      hay thao tác?
+    type: single
+    options:
+      - text: Staging Area (vùng chuẩn bị commit)
+        correct: true
+      - text: Thư mục thùng rác Recycle Bin
+        correct: false
+      - text: Danh sách các mật khẩu đã lưu
+        correct: false
+      - text: Chỉ mục tìm kiếm của Google
+        correct: false
+    explanation: Tệp nhị phân `index` ghi lại danh sách toàn bộ các tệp tin trong
+      Staging Area cùng mã băm SHA-1 và quyền hạn tệp.
+  - id: q4
+    question: Điều gì sẽ xảy ra nếu một lập trình viên xóa bỏ hoàn toàn thư mục
+      `.git/` khỏi dự án của họ?
+    type: single
+    options:
+      - text: Mã nguồn hiện tại vẫn còn trên đĩa, nhưng toàn bộ lịch sử commit, nhánh và
+          cấu hình Git đều bị xóa sạch
+        correct: true
+      - text: Toàn bộ máy tính sẽ bị cài lại hệ điều hành
+        correct: false
+      - text: Các tệp tin mã nguồn tự động biến mất ngay lập tức
+        correct: false
+      - text: Không có gì thay đổi vì Git lưu dữ liệu ở đám mây
+        correct: false
+    explanation: Working Directory vẫn còn nguyên, nhưng dự án đã mất đi toàn bộ khả
+      năng theo dõi lịch sử vì linh hồn `.git/` đã mất.

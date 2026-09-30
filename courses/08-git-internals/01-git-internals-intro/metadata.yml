@@ -1,0 +1,23 @@
+id: 01-git-internals-intro
+title: Git Internals là gì? Bí mật dưới nắp ca-pô của Git
+duration: 25
+xp: 85
+keywords:
+  - git internals
+  - under the hood
+  - directed acyclic graph
+  - content addressable
+  - architecture
+prerequisites:
+  - 20-ci-cd-capstone
+objectives:
+  - Hiểu rõ lý do tại sao một kỹ sư Git cấp cao cần nắm vững cơ chế bên dưới nắp
+    ca-pô (Under the hood) của Git.
+  - "Nắm bắt bức tranh tổng quan: Git thực chất là một hệ thống tệp tin định
+    danh theo nội dung đơn giản kèm theo giao diện VCS phía trên."
+  - "Làm quen với 4 trụ cột cốt lõi: Object Database, References (Refs), Con trỏ
+    HEAD, và Index (Staging Area)."
+commands:
+  - git rev-parse --git-dir
+  - ls -la .git
+  - find .git/objects -type f

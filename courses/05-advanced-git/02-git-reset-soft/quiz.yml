@@ -1,0 +1,63 @@
+id: quiz-05-02-git-reset-soft
+title: "Trắc nghiệm: git reset --soft"
+questions:
+  - id: q1
+    question: Sau khi chạy lệnh `git reset --soft HEAD~1`, các thay đổi của commit
+      vừa bị rút lại sẽ nằm ở đâu?
+    type: single
+    options:
+      - text: Nằm trong Staging Area (Index) ở trạng thái đã được staged sẵn sàng commit
+        correct: true
+      - text: Bị xóa vĩnh viễn khỏi ổ đĩa cứng không thể phục hồi
+        correct: false
+      - text: Bị đẩy ra Working Directory ở trạng thái chưa staged
+        correct: false
+      - text: Tự động gửi lên hòm thư điện tử của bạn
+        correct: false
+    explanation: Cờ `--soft` chỉ dịch chuyển HEAD, giữ nguyên Staging và Working
+      Tree, nên code nằm sẵn trong Staging.
+  - id: q2
+    question: Mục đích sử dụng phổ biến và hữu ích nhất của `git reset --soft
+      HEAD~1` trong thực tế là gì?
+    type: single
+    options:
+      - text: Rút lại commit gần nhất để chỉnh sửa lại thông điệp commit hoặc bổ sung
+          thêm tệp tin còn thiếu
+        correct: true
+      - text: Xóa toàn bộ dự án để làm lại từ đầu
+        correct: false
+      - text: Tăng gấp đôi tốc độ tải mạng
+        correct: false
+      - text: Chuyển đổi dự án sang nhánh khác
+        correct: false
+    explanation: Reset soft hoàn tác commit nhưng giữ nguyên staged, cho phép bạn
+      commit lại ngay với thông điệp hoặc tệp bổ sung.
+  - id: q3
+    question: Điều gì xảy ra với các tệp tin trong Working Directory khi bạn chạy
+      `git reset --soft`?
+    type: single
+    options:
+      - text: Hoàn toàn không bị ảnh hưởng, giữ nguyên 100% nội dung hiện tại
+        correct: true
+      - text: Bị xóa sạch sẽ không còn dấu vết
+        correct: false
+      - text: Bị khóa quyền đọc và ghi
+        correct: false
+      - text: Tự động chuyển thành file nén ZIP
+        correct: false
+    explanation: Reset soft hoàn toàn không chạm vào Working Directory của lập trình viên.
+  - id: q4
+    question: Nếu muốn gộp 3 commit gần nhất thành 1 commit duy nhất bằng reset
+      soft, bạn sử dụng lệnh nào?
+    type: single
+    options:
+      - text: git reset --soft HEAD~3
+        correct: true
+      - text: git reset --soft HEAD+3
+        correct: false
+      - text: git squash 3 --soft
+        correct: false
+      - text: git merge --soft HEAD~3
+        correct: false
+    explanation: "`git reset --soft HEAD~3` lùi con trỏ nhánh 3 bước và đưa toàn bộ
+      nội dung của 3 commit đó vào Staging để commit 1 lần."

@@ -1,0 +1,93 @@
+id: quiz-02-07-commit-message
+title: "Trắc nghiệm: Chuẩn quy ước Commit Message"
+questions:
+  - id: q1
+    question: Trong quy ước Conventional Commits, tiền tố `feat:` được dùng khi nào?
+    type: single
+    options:
+      - text: Khi bổ sung một tính năng mới cho người dùng hoặc hệ thống
+        correct: true
+      - text: Khi sửa một lỗi phần mềm phát sinh
+        correct: false
+      - text: Khi cập nhật tài liệu hướng dẫn sử dụng README
+        correct: false
+      - text: Khi nâng cấp phiên bản thư viện trong package.json
+        correct: false
+    explanation: "`feat:` (viết tắt của feature) biểu thị việc thêm tính năng mới.
+      `fix:` dùng cho sửa lỗi; `docs:` cho tài liệu; `chore:` cho việc bảo trì."
+  - id: q2
+    question: Tiền tố nào phù hợp nhất khi bạn chỉ sửa đổi tài liệu hướng dẫn trong
+      tệp README.md?
+    type: single
+    options:
+      - text: docs
+        correct: true
+      - text: fix
+        correct: false
+      - text: feat
+        correct: false
+      - text: perf
+        correct: false
+    explanation: "`docs:` là loại commit chuyên biệt cho các thay đổi trên tài liệu
+      văn bản mà không tác động tới mã logic."
+  - id: q3
+    question: Độ dài khuyến nghị tối đa cho dòng tiêu đề đầu tiên của một commit
+      message là bao nhiêu?
+    type: single
+    options:
+      - text: Khoảng 50 đến 72 ký tự
+        correct: true
+      - text: Tối thiểu 500 từ
+        correct: false
+      - text: Không giới hạn, càng dài càng tốt
+        correct: false
+      - text: Chính xác 10 ký tự
+        correct: false
+    explanation: Tiêu đề commit nên ngắn gọn súc tích dưới 50-72 ký tự để hiển thị
+      trọn vẹn trên terminal và giao diện GitHub.
+  - id: q4
+    question: Lợi ích chính của việc cả nhóm cùng tuân thủ Conventional Commits là gì?
+    type: single
+    options:
+      - text: Lịch sử rõ ràng, dễ tìm kiếm, tự động sinh nhật ký thay đổi và nâng
+          version phần mềm
+        correct: true
+      - text: Giúp mã nguồn chạy nhanh hơn gấp đôi mà không cần tối ưu thuật toán
+        correct: false
+      - text: Giúp dung lượng ổ cứng máy tính tăng thêm dung lượng trống
+        correct: false
+      - text: Tránh phải trả tiền bản quyền hàng năm cho Microsoft
+        correct: false
+    explanation: Quy ước commit chuẩn hóa là nền tảng của tự động hóa DevOps, tạo
+      CHANGELOG tự động và nâng version chuẩn.
+  - id: q5
+    question: Phạm vi tùy chọn (scope) trong Conventional Commits như `feat(auth):`
+      có mục đích gì?
+    type: single
+    options:
+      - text: Chỉ định phân hệ, module hoặc thành phần cụ thể trong dự án chịu tác động
+          của commit
+        correct: true
+      - text: Chỉ định địa chỉ IP máy chủ của lập trình viên
+        correct: false
+      - text: Giới hạn số dòng code được phép thay đổi trong commit
+        correct: false
+      - text: Đặt mật khẩu khóa commit không cho người khác xem
+        correct: false
+    explanation: "Scope giúp phân loại chính xác module chịu ảnh hưởng, ví dụ: auth,
+      billing, ui, database."
+  - id: q6
+    question: Theo chuẩn Conventional Commits, ký hiệu nào biểu thị một Breaking
+      Change (thay đổi làm hỏng tương thích ngược)?
+    type: single
+    options:
+      - text: "Dấu chấm than ngay sau type hoặc scope (ví dụ feat!: hoặc feat(api)!:)"
+        correct: true
+      - text: Dấu hỏi chấm ở cuối thông điệp commit
+        correct: false
+      - text: Viết hoa toàn bộ thông điệp commit bằng chữ in hoa
+        correct: false
+      - text: Thêm từ khóa DANGER vào đầu dòng tiêu đề
+        correct: false
+    explanation: Dấu chấm than `!` ngay trước dấu hai chấm biểu thị Breaking Change,
+      kích hoạt nâng MAJOR version trong SemVer.

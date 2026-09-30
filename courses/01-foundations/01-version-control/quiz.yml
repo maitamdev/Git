@@ -1,0 +1,64 @@
+id: quiz-01-version-control
+title: "Trắc nghiệm: Version Control là gì?"
+questions:
+  - id: q1
+    question: Mục đích cốt lõi nhất của một hệ thống quản lý phiên bản (VCS) là gì?
+    type: single
+    options:
+      - text: Theo dõi, ghi nhận và quản lý mọi sự thay đổi của mã nguồn theo thời gian
+        correct: true
+      - text: Biên dịch mã nguồn JavaScript sang mã máy để tăng tốc độ chạy ứng dụng
+        correct: false
+      - text: Tự động sửa lỗi cú pháp trong các tệp tin HTML và CSS
+        correct: false
+      - text: Chạy quét virus và tường lửa ngăn chặn hacker tấn công máy tính
+        correct: false
+    explanation: VCS được thiết kế chuyên biệt để theo dõi lịch sử thay đổi của tệp
+      tin. Việc biên dịch hay bảo mật mạng thuộc về trình biên dịch và phần mềm
+      an ninh.
+  - id: q2
+    question: Điều gì xảy ra khi bạn gặp lỗi nghiêm trọng trong dự án có áp dụng
+      Version Control đúng cách?
+    type: single
+    options:
+      - text: Bạn phải xóa bỏ toàn bộ dự án và viết lại mã nguồn từ đầu
+        correct: false
+      - text: Bạn có thể khôi phục lại mã nguồn về điểm checkpoint ổn định gần nhất
+        correct: true
+      - text: Máy tính sẽ tự động định dạng lại ổ cứng để xóa sạch các lỗi phát sinh
+        correct: false
+      - text: Bạn phải liên hệ với quản trị viên mạng để mở khóa tệp tin
+        correct: false
+    explanation: Ưu điểm lớn nhất của VCS là khả năng khôi phục (rollback) lại trạng
+      thái snapshot ổn định trước đó trong lịch sử dự án.
+  - id: q3
+    question: Vì sao việc đặt tên thư mục kiểu "project_v1", "project_final" lại bị
+      coi là sai lầm trong kỹ nghệ phần mềm?
+    type: single
+    options:
+      - text: Vì hệ điều hành không cho phép đặt tên thư mục có dấu gạch dưới
+        correct: false
+      - text: Vì gây lãng phí dung lượng, dễ nhầm lẫn và không hỗ trợ làm việc nhóm an
+          toàn
+        correct: true
+      - text: Vì Git sẽ từ chối quản lý các thư mục có từ "final"
+        correct: false
+      - text: Vì tệp tin sẽ tự động bị mã hóa và không thể mở lại được
+        correct: false
+    explanation: Quản lý phiên bản thủ công bằng cách copy thư mục gây tốn dung
+      lượng ổ đĩa, dễ nhầm lẫn tệp tin mới/cũ và không thể so sánh chi tiết từng
+      dòng code thay đổi.
+  - id: q4
+    question: Lệnh nào cho phép xem phiên bản phần mềm Git đang chạy trên máy tính?
+    type: single
+    options:
+      - text: git --version
+        correct: true
+      - text: git check-system
+        correct: false
+      - text: git show-update
+        correct: false
+      - text: git status --all
+        correct: false
+    explanation: "`git --version` là câu lệnh chuẩn trong giao diện dòng lệnh để in
+      ra phiên bản cài đặt của công cụ Git."

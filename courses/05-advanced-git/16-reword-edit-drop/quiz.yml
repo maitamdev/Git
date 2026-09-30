@@ -1,0 +1,64 @@
+id: quiz-05-16-reword-edit-drop
+title: "Trắc nghiệm: Reword, Edit và Drop Commit"
+questions:
+  - id: q1
+    question: Chỉ thị nào trong Interactive Rebase cho phép bạn sửa đổi thông điệp
+      của một commit cũ mà KHÔNG làm thay đổi mã nguồn của nó?
+    type: single
+    options:
+      - text: reword (hoặc r)
+        correct: true
+      - text: edit (hoặc e)
+        correct: false
+      - text: drop (hoặc d)
+        correct: false
+      - text: pick (hoặc p)
+        correct: false
+    explanation: "`reword` chỉ dừng lại để mở editor sửa đổi commit message, mã
+      nguồn được bảo toàn nguyên vẹn."
+  - id: q2
+    question: Khi bạn đặt chỉ thị `edit` cho một commit trong Todo List, Git sẽ cư
+      xử như thế nào khi chạy đến commit đó?
+    type: single
+    options:
+      - text: Tạm dừng toàn bộ tiến trình rebase tại commit đó và trả quyền điều khiển
+          về terminal để bạn chỉnh sửa code
+        correct: true
+      - text: Tự động mở trình duyệt web tìm kiếm tài liệu
+        correct: false
+      - text: Xóa commit đó đi và làm tiếp commit sau
+        correct: false
+      - text: Tắt cửa sổ terminal của bạn
+        correct: false
+    explanation: "`edit` đưa bạn về đúng snapshot của commit đó để bạn sửa code, bổ
+      sung file hoặc chạy commit amend."
+  - id: q3
+    question: Sau khi đã chỉnh sửa xong mã nguồn ở trạng thái tạm dừng của lệnh
+      `edit`, câu lệnh nào dùng để tiếp tục tiến trình rebase?
+    type: single
+    options:
+      - text: git rebase --continue
+        correct: true
+      - text: git rebase --next
+        correct: false
+      - text: git resume
+        correct: false
+      - text: git proceed
+        correct: false
+    explanation: "`git rebase --continue` là chỉ thị thông báo cho Git tiếp tục phát
+      lại các commit còn lại trong danh sách."
+  - id: q4
+    question: Hành động nào sau đây có tác dụng tương đương hoàn toàn với chỉ thị
+      `drop` trong Todo List?
+    type: single
+    options:
+      - text: Xóa hoàn toàn dòng chứa commit đó ra khỏi tệp Todo List
+        correct: true
+      - text: Đổi từ pick thành squash
+        correct: false
+      - text: Chuyển dòng đó xuống dưới cùng của tệp
+        correct: false
+      - text: Đổi tên thông điệp commit thành chữ "deleted"
+        correct: false
+    explanation: Xóa dòng trong Todo List và đặt từ khóa `drop` đều chỉ thị cho Git
+      loại bỏ hoàn toàn commit đó khỏi lịch sử.

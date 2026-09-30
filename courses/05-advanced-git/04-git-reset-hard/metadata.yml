@@ -1,0 +1,27 @@
+id: 04-git-reset-hard
+title: git reset --hard
+duration: 30
+xp: 90
+keywords:
+  - git reset --hard
+  - reset hard
+  - xoa commit
+  - nguy hiem git
+  - huy bo thay doi
+  - destructive command
+prerequisites:
+  - 03-git-reset-mixed
+objectives:
+  - Hiểu rõ bản chất mang tính hủy diệt (Destructive) của câu lệnh `git reset
+    --hard`.
+  - "Biết chính xác cơ chế đồng bộ hóa cả 3 cây: HEAD, Staging Area và Working
+    Directory về commit mục tiêu."
+  - Nhận thức rõ nguy cơ mất vĩnh viễn dữ liệu chưa commit trong Working
+    Directory khi chạy lệnh này.
+  - Sử dụng lệnh một cách an toàn và biết cách sao lưu tạm thời trước khi reset
+    hard.
+commands:
+  - git reset --hard HEAD
+  - git reset --hard HEAD~1
+  - git reset --hard <commit-hash>
+  - git status

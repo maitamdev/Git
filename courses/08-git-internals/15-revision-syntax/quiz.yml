@@ -1,0 +1,61 @@
+id: quiz-08-git-internals-15-revision-syntax
+title: "Trắc nghiệm: Cú pháp tra cứu Revision chuyên sâu: HEAD~, HEAD^, HEAD^2"
+questions:
+  - id: q1
+    question: Biểu thức `HEAD~3` tương đương với cách viết nào sau đây?
+    type: single
+    options:
+      - text: HEAD~~~ (đi lùi 3 thế hệ cha liên tiếp)
+        correct: true
+      - text: HEAD^^^3
+        correct: false
+      - text: HEAD trỏ vào nhánh số 3
+        correct: false
+      - text: HEAD nhân với 3
+        correct: false
+    explanation: Toán tử ngã `~3` là cách viết tắt của việc lặp lại 3 lần toán tử
+      ngã đơn `~~~`, tương đương đi lùi 3 đời commit.
+  - id: q2
+    question: Khi đứng tại một Merge Commit, biểu thức `HEAD^2` sẽ trỏ tới commit nào?
+    type: single
+    options:
+      - text: Commit cha thứ hai (commit đầu nhánh phụ được gộp vào)
+        correct: true
+      - text: Commit đi lùi 2 bước trên nhánh chính
+        correct: false
+      - text: Commit của 2 ngày trước
+        correct: false
+      - text: Commit của người review thứ 2
+        correct: false
+    explanation: Số đứng sau dấu mũ `^` chỉ định số thứ tự của commit cha trong danh
+      sách parent của commit hiện tại.
+  - id: q3
+    question: Lệnh Plumbing nào sau đây nhận vào một biểu thức revision và in ra mã
+      băm SHA-1 tương ứng?
+    type: single
+    options:
+      - text: git rev-parse
+        correct: true
+      - text: git hash-parse
+        correct: false
+      - text: git eval-rev
+        correct: false
+      - text: git resolve-commit
+        correct: false
+    explanation: "`git rev-parse` là lệnh phân giải cú pháp tham chiếu cốt lõi được
+      sử dụng rộng rãi trong các kịch bản tự động của Git."
+  - id: q4
+    question: Nếu một commit là commit đơn bình thường (không phải merge commit),
+      điều gì xảy ra nếu bạn gõ `git rev-parse HEAD^2`?
+    type: single
+    options:
+      - text: Báo lỗi vì commit đơn chỉ có duy nhất 1 cha (không có parent 2)
+        correct: true
+      - text: Tự động trỏ về Root commit
+        correct: false
+      - text: Tự động tạo ra một nhánh mới
+        correct: false
+      - text: In ra mã băm của chính nó
+        correct: false
+    explanation: Vì commit không phải là điểm hợp nhất nên chỉ sở hữu parent 1, yêu
+      cầu truy cập parent 2 sẽ bị báo lỗi không tồn tại.

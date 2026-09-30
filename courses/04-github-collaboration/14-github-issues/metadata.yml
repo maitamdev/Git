@@ -1,0 +1,26 @@
+id: 14-github-issues
+title: Quản lý công việc và lỗi với GitHub Issues
+duration: 25
+xp: 80
+keywords:
+  - github issues
+  - issue tracking
+  - quan ly loi
+  - bug report
+  - feature request
+  - closing keywords
+prerequisites:
+  - 01-local-vs-remote
+objectives:
+  - Hiểu rõ vai trò của GitHub Issues trong việc theo dõi lỗi (Bug Tracking) và
+    lập kế hoạch phát triển (Feature Planning).
+  - Biết cách viết một báo cáo lỗi chuẩn mực (Bug Report) với các bước tái hiện
+    chi tiết.
+  - Sử dụng các nhãn (Labels), mốc thời gian (Milestones) và người phụ trách
+    (Assignees) để quản trị công việc.
+  - "Nắm vững các từ khóa liên kết tự động đóng Issue khi merge PR: `Fixes #12`,
+    `Closes #45`."
+commands:
+  - gh issue list
+  - gh issue create
+  - gh issue view <issue-number>

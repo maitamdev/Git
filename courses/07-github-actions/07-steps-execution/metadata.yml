@@ -1,0 +1,22 @@
+id: 07-steps-execution
+title: "Các bước thực thi (Steps): name, id và thứ tự tuần tự"
+duration: 30
+xp: 90
+keywords:
+  - steps execution
+  - step id
+  - sequential
+  - step name
+  - working directory
+prerequisites:
+  - 06-jobs-configuration
+objectives:
+  - Nắm vững cấu trúc danh sách steps trong Job và tính chất thực thi tuần tự
+    nghiêm ngặt.
+  - Hiểu rõ công dụng của thuộc tính name (mô tả trực quan) và thuộc tính id
+    (định danh để tham chiếu output).
+  - Nắm được cơ chế dừng khẩn cấp khi một Step thất bại và cách tiếp tục với
+    continue-on-error.
+commands:
+  - echo "Hello Step"
+  - gh run view --log

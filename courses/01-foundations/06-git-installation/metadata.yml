@@ -1,0 +1,21 @@
+id: 06-git-installation
+title: Cài đặt & Môi trường Git
+duration: 20
+xp: 50
+keywords:
+  - cai dat git
+  - git bash
+  - terminal
+  - cli
+  - moi truong
+prerequisites:
+  - 05-git-vs-github
+objectives:
+  - "Nắm bắt các phương thức cài đặt Git trên các hệ điều hành phổ biến:
+    Windows, macOS, Linux."
+  - Hiểu vai trò của Git Bash trên môi trường Windows.
+  - Làm quen với các tùy chọn cấu hình dòng kết thúc tệp tin (crlf vs lf) khi
+    cài đặt.
+commands:
+  - git --version
+  - git config --system --list

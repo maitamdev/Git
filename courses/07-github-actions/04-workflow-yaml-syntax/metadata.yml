@@ -1,0 +1,22 @@
+id: 04-workflow-yaml-syntax
+title: .github/workflows và cú pháp YAML chuẩn
+duration: 30
+xp: 90
+keywords:
+  - yaml syntax
+  - workflow file
+  - indentation
+  - github workflows directory
+prerequisites:
+  - 03-workflow-architecture
+objectives:
+  - "Nắm vững vị trí bắt buộc của tệp workflow: thư mục .github/workflows/ với
+    phần mở rộng .yml hoặc .yaml."
+  - "Làm chủ các quy tắc định dạng YAML: thụt lề bằng 2 dấu cách, danh sách gạch
+    đầu dòng, cặp key-value."
+  - Nhận biết và khắc phục các lỗi cú pháp thụt lề YAML phổ biến làm workflow bị
+    từ chối biên dịch.
+commands:
+  - mkdir -p .github/workflows
+  - touch .github/workflows/ci.yml
+  - yamllint .github/workflows/ci.yml

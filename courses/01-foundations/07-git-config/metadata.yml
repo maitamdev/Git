@@ -1,0 +1,22 @@
+id: 07-git-config
+title: Cấu hình danh tính Git Config
+duration: 25
+xp: 70
+keywords:
+  - git config
+  - user.name
+  - user.email
+  - danh tinh
+  - author
+prerequisites:
+  - 06-git-installation
+objectives:
+  - "Sử dụng thành thạo lệnh `git config` để thiết lập danh tính lập trình viên:
+    user.name và user.email."
+  - "Phân biệt rõ 3 cấp độ cấu hình: --system, --global, và --local."
+  - Hiểu tầm quan trọng của việc dùng đúng email đồng bộ với tài khoản GitHub để
+    hiển thị đóng góp (contribution).
+commands:
+  - git config --global user.name "Nguyen Van A"
+  - git config --global user.email "vana@example.com"
+  - git config --list

@@ -1,0 +1,28 @@
+id: 17-rebase-conflict
+title: Rebase Conflict
+duration: 35
+xp: 120
+keywords:
+  - rebase conflict
+  - xung dot rebase
+  - rebase continue
+  - rebase skip
+  - rebase abort
+  - conflict resolution
+prerequisites:
+  - 12-git-rebase
+objectives:
+  - Hiểu rõ nguyên nhân và bản chất phát sinh xung đột (Conflict) trong tiến
+    trình Git Rebase.
+  - Nắm vững máy trạng thái tạm dừng (Paused State Machine) của Rebase khi xảy
+    ra xung đột.
+  - "Vận hành chuẩn xác chuỗi 3 bước xử lý: Mở tệp giải quyết xung đột -> `git
+    add` -> `git rebase --continue`."
+  - Phân biệt rõ ràng chức năng và mức độ an toàn của `--continue`, `--abort`,
+    và `--skip`.
+commands:
+  - git status
+  - git add <tên-tệp-đã-sửa>
+  - git rebase --continue
+  - git rebase --abort
+  - git rebase --skip

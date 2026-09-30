@@ -1,0 +1,23 @@
+id: 08-three-way-merge
+title: Hợp nhất rẽ nhánh 3-way merge
+duration: 35
+xp: 100
+keywords:
+  - 3-way merge
+  - merge commit
+  - common ancestor
+  - hop nhat 3 chieu
+  - phan ky
+prerequisites:
+  - 07-fast-forward-merge
+objectives:
+  - Nắm vững thuật toán hợp nhất 3 chiều (Three-way merge) trong Git.
+  - "Nhận diện 3 điểm cốt lõi của thuật toán: Tổ tiên chung (Common Ancestor),
+    đỉnh nhánh hiện tại (HEAD), và đỉnh nhánh được gộp."
+  - Phân biệt rõ ràng giữa hợp nhất thành công tự động và tình huống phát sinh
+    xung đột (Conflict).
+  - Đọc hiểu cấu trúc một Merge Commit đặc biệt có hai commit cha.
+commands:
+  - git switch main
+  - git merge <tên-nhánh-tính-năng>
+  - git log --oneline --graph

@@ -1,0 +1,23 @@
+id: 18-refspec-and-remotes
+title: Cấu trúc Refspec và đồng bộ Remote References
+duration: 30
+xp: 90
+keywords:
+  - refspec
+  - remote references
+  - fetch refspec
+  - push refspec
+  - git config
+prerequisites:
+  - 17-packfiles-and-deltas
+objectives:
+  - "Giải mã cú pháp Refspec bí ẩn trong tệp cấu hình .git/config:
+    `+refs/heads/*:refs/remotes/origin/*`."
+  - Hiểu rõ cơ chế ánh xạ không gian tên (Namespace Mapping) giữa nhánh máy chủ
+    và nhánh theo dõi cục bộ.
+  - Làm chủ quy tắc đồng bộ khi thực hiện git fetch và git push thông qua đặc tả
+    Refspec tùy biến.
+commands:
+  - git config --get remote.origin.fetch
+  - git fetch origin
+  - git push origin main:refs/heads/custom

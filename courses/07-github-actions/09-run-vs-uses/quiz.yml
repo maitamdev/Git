@@ -1,0 +1,62 @@
+id: quiz-07-github-actions-09-run-vs-uses
+title: "Trắc nghiệm: Phân biệt run (shell command) vs uses (prebuilt action)"
+questions:
+  - id: q1
+    question: Từ khóa nào được sử dụng để thực thi một câu lệnh dòng lệnh shell trực
+      tiếp trong Step?
+    type: single
+    options:
+      - text: run
+        correct: true
+      - text: uses
+        correct: false
+      - text: exec
+        correct: false
+      - text: shell
+        correct: false
+    explanation: Từ khóa `run:` cho phép bạn nhập các câu lệnh shell trực tiếp như
+      `npm install` hay `echo "hello"`.
+  - id: q2
+    question: Cú pháp chuẩn để gọi một Action từ GitHub Marketplace là gì?
+    type: single
+    options:
+      - text: "owner/repo@ref (ví dụ: actions/checkout@v4)"
+        correct: true
+      - text: https://github.com/action.zip
+        correct: false
+      - text: import action from marketplace
+        correct: false
+      - text: npm install @actions/checkout
+        correct: false
+    explanation: "GitHub Actions định danh các action bằng đường dẫn kho lưu trữ kèm
+      thẻ phiên bản hoặc commit hash: `owner/repo@ref`."
+  - id: q3
+    question: Từ khóa nào được sử dụng để truyền các tham số đầu vào cho một Action
+      gọi bằng uses?
+    type: single
+    options:
+      - text: with
+        correct: true
+      - text: args
+        correct: false
+      - text: params
+        correct: false
+      - text: inputs
+        correct: false
+    explanation: Khối `with:` chứa danh sách các cặp key-value đóng vai trò là tham
+      số đầu vào (inputs) cung cấp cho Action.
+  - id: q4
+    question: Nếu trong một Job bạn không sử dụng `actions/checkout`, điều gì sẽ xảy
+      ra trong thư mục làm việc của Runner?
+    type: single
+    options:
+      - text: Thư mục làm việc sẽ hoàn toàn trống rỗng, không có mã nguồn của dự án
+        correct: true
+      - text: Toàn bộ mã nguồn tự động xuất hiện sẵn
+        correct: false
+      - text: Máy ảo Runner sẽ tự động tải mã nguồn từ Google Drive
+        correct: false
+      - text: Job sẽ tự động bị từ chối chạy
+        correct: false
+    explanation: Máy ảo Runner khi mới khởi động hoàn toàn sạch sẽ, bạn bắt buộc
+      phải gọi action checkout để kéo mã nguồn về ổ đĩa.

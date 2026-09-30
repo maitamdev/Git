@@ -1,0 +1,25 @@
+id: 08-commit-amend
+title: git commit --amend
+duration: 25
+xp: 80
+keywords:
+  - commit amend
+  - amend commit
+  - sua commit gan nhat
+  - bo sung commit
+  - sua message
+  - replace commit
+prerequisites:
+  - 01-undo-restore-reset-revert
+objectives:
+  - Hiểu rõ cơ chế hoạt động của cờ `--amend` trong câu lệnh `git commit`.
+  - Sử dụng `--amend` để sửa đổi thông điệp của commit gần nhất một cách nhanh
+    chóng.
+  - Bổ sung các tệp tin hoặc dòng code bị bỏ quên vào commit gần nhất mà không
+    sinh ra commit mới.
+  - "Nhận thức rõ bản chất: `--amend` tạo ra một commit hash mới thay thế commit
+    cũ (viết lại lịch sử)."
+commands:
+  - git commit --amend
+  - git commit --amend -m "<thông-điệp-mới>"
+  - git commit --amend --no-edit

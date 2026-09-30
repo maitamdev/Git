@@ -1,0 +1,102 @@
+id: quiz-06-15-professional-team-project
+title: "Trắc nghiệm: Dự án nhóm chuyên nghiệp"
+questions:
+  - id: q1
+    question: Bộ 3 trụ cột kỹ thuật nào sau đây kết hợp với nhau tạo nên nền tảng
+      quản trị mã nguồn vững chắc nhất cho một dự án chuyên nghiệp?
+    type: single
+    options:
+      - text: Protected Branch Rules, tệp phân quyền CODEOWNERS và chuẩn thông điệp
+          Conventional Commits
+        correct: true
+      - text: Tắt kết nối Internet, cấm commit mã nguồn và xóa thư mục .git
+        correct: false
+      - text: Chỉ sử dụng duy nhất một nhánh main và không bao giờ mở Pull Request
+        correct: false
+      - text: Gửi mã nguồn qua Zalo và lưu trữ dự án trên USB
+        correct: false
+    explanation: Ba công cụ này bảo vệ an toàn cho nhánh chính, tự động hóa người
+      kiểm duyệt và chuẩn hóa lịch sử phát triển của toàn đội ngũ.
+  - id: q2
+    question: Khi một dự án áp dụng song song cả Feature Branch và Hotfix Workflow,
+      điều gì bảo đảm không bị mất mã nguồn sửa lỗi?
+    type: single
+    options:
+      - text: Quy trình hợp nhất kép (Dual-merge) đưa bản vá của nhánh hotfix vào cả
+          nhánh main và nhánh develop
+        correct: true
+      - text: Tự động sao lưu mã nguồn ra đĩa mềm 1.44MB
+        correct: false
+      - text: Yêu cầu lập trình viên học thuộc lòng toàn bộ các dòng mã vừa viết
+        correct: false
+      - text: Không bao giờ được phép tắt máy tính tại văn phòng
+        correct: false
+    explanation: Hợp nhất kép là cơ chế then chốt bảo đảm các bản sửa lỗi khẩn cấp
+      trên production luôn có mặt trong các phiên bản tương lai trên develop.
+  - id: q3
+    question: Vai trò lớn nhất của việc thiết lập tệp mẫu Pull Request Template
+      (`.github/pull_request_template.md`) là gì?
+    type: single
+    options:
+      - text: Nhắc nhở tác giả cung cấp đầy đủ thông tin mô tả, bằng chứng kiểm thử và
+          danh sách kiểm tra an toàn trước khi nhờ đồng nghiệp review
+        correct: true
+      - text: Tự động gửi hóa đơn thu tiền người xem Pull Request
+        correct: false
+      - text: Chặn không cho phép bất kỳ ai gửi bình luận phản hồi
+        correct: false
+      - text: Tự động dịch mã nguồn sang ngôn ngữ tiếng Pháp
+        correct: false
+    explanation: Mẫu PR chuẩn hóa giúp nâng cao chất lượng mô tả công việc, giúp
+      người review nắm bắt ngữ cảnh nhanh chóng và không bỏ sót các bước kiểm
+      tra quan trọng.
+  - id: q4
+    question: "Chúc mừng bạn đã hoàn thành xuất sắc Level 6: Team Workflows! Năng
+      lực cốt lõi lớn nhất bạn đã đạt được là gì?"
+    type: single
+    options:
+      - text: Làm chủ toàn diện các mô hình quy trình phân nhánh, kiểm soát an ninh mã
+          nguồn và tự tin cộng tác trong các đội ngũ công nghệ quy mô lớn
+        correct: true
+      - text: Chỉ biết gõ duy nhất một câu lệnh git status
+        correct: false
+      - text: Không còn muốn làm việc với bất kỳ lập trình viên nào khác
+        correct: false
+      - text: Chỉ thích lập trình một mình không theo quy chuẩn nào
+        correct: false
+    explanation: Bạn đã hoàn thiện đầy đủ tư duy và kỹ năng của một kỹ sư Git chuyên
+      nghiệp, sẵn sàng đóng góp xuất sắc vào các dự án phần mềm thực tế!
+  - id: q5
+    question: Trong quy trình CI/CD chuyên nghiệp, công cụ nào sau đây thường được
+      dùng để tự động chặn các commit không tuân thủ Conventional Commits ngay
+      tại máy cá nhân?
+    type: single
+    options:
+      - text: Git Hook (như Husky kết hợp commitlint) chạy kiểm tra định dạng thông điệp
+          trước khi commit được tạo
+        correct: true
+      - text: Chương trình diệt virus Windows Defender
+        correct: false
+      - text: Trình duyệt web Google Chrome
+        correct: false
+      - text: Phần mềm nghe nhạc Spotify
+        correct: false
+    explanation: Husky và commitlint kiểm tra cú pháp commit ngay ở bước commit-msg
+      hook, ngăn chặn thông điệp sai chuẩn trước khi được đẩy lên remote.
+  - id: q6
+    question: Khi vận hành dự án nhóm với hàng chục lập trình viên, chiến lược
+      squash merge khi gộp Pull Request mang lại lợi ích gì cho nhánh main?
+    type: single
+    options:
+      - text: Nén toàn bộ các commit nhỏ thử nghiệm trên nhánh tính năng thành duy nhất
+          1 commit sạch đẹp trên nhánh main
+        correct: true
+      - text: Tự động xóa toàn bộ mã nguồn của dự án
+        correct: false
+      - text: Nhân đôi số lượng commit trên nhánh chính lên gấp mười lần
+        correct: false
+      - text: Làm chậm tốc độ tải trang web của dự án
+        correct: false
+    explanation: Squash merge giúp nhánh chính có lịch sử thẳng tắp, mỗi commit đại
+      diện cho một tính năng hoàn chỉnh, cực kỳ dễ tra cứu và revert khi cần
+      thiết.

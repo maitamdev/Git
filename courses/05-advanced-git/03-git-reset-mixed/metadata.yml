@@ -1,0 +1,25 @@
+id: 03-git-reset-mixed
+title: git reset --mixed
+duration: 25
+xp: 80
+keywords:
+  - git reset --mixed
+  - reset mixed
+  - default reset
+  - unstaging changes
+  - hoan tac staging
+prerequisites:
+  - 02-git-reset-soft
+objectives:
+  - Nắm vững cơ chế hoạt động của chế độ mặc định `git reset --mixed` (hoặc `git
+    reset` không truyền cờ).
+  - Hiểu rõ trạng thái của HEAD, Staging Area và Working Directory sau khi chạy
+    reset mixed.
+  - Sử dụng `git reset` để hủy staged toàn bộ hoặc chọn lọc các tệp tin một cách
+    linh hoạt.
+  - So sánh chi tiết sự khác nhau về hành vi giữa reset mixed và reset soft.
+commands:
+  - git reset HEAD~1
+  - git reset --mixed HEAD~1
+  - git reset <tên-tệp>
+  - git status

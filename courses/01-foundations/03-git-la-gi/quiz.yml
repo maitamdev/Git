@@ -1,0 +1,62 @@
+id: quiz-03-git-la-gi
+title: "Trắc nghiệm: Nguồn gốc và bản chất của Git"
+questions:
+  - id: q1
+    question: Ai là người đã sáng tạo ra hệ thống quản lý phiên bản Git vào năm 2005?
+    type: single
+    options:
+      - text: Linus Torvalds (tác giả nhân Linux)
+        correct: true
+      - text: Bill Gates (người sáng lập Microsoft)
+        correct: false
+      - text: Mark Zuckerberg (người sáng lập Facebook)
+        correct: false
+      - text: Guido van Rossum (tác giả ngôn ngữ Python)
+        correct: false
+    explanation: Linus Torvalds đã viết nên Git vào năm 2005 để phục vụ việc quản lý
+      mã nguồn dự án nhân hệ điều hành Linux.
+  - id: q2
+    question: Cơ chế nào giúp Git đảm bảo rằng nội dung tệp tin trong lịch sử không
+      bao giờ bị can thiệp âm thầm?
+    type: single
+    options:
+      - text: Sử dụng mã băm mật mã học (Cryptographic Hash) để định danh mọi đối tượng
+          dữ liệu
+        correct: true
+      - text: Khóa tệp tin bằng mật khẩu quản trị viên hệ điều hành
+        correct: false
+      - text: Gửi mã nguồn lên máy chủ cảnh sát mạng để xác thực định kỳ
+        correct: false
+      - text: In mã nguồn ra giấy và cất vào két sắt công ty
+        correct: false
+    explanation: Mọi đối tượng commit, tree và blob trong Git đều được băm bằng
+      thuật toán SHA để bảo vệ tính toàn vẹn dữ liệu.
+  - id: q3
+    question: Đặc điểm nào dưới đây KHÔNG PHẢI là mục tiêu thiết kế ban đầu của Git?
+    type: single
+    options:
+      - text: Phụ thuộc chặt chẽ vào một máy chủ trung tâm duy nhất để hoạt động
+        correct: true
+      - text: Tốc độ xử lý cực nhanh ngay cả với dự án khổng lồ
+        correct: false
+      - text: Hỗ trợ mô hình phân nhánh song song phi tuyến tính
+        correct: false
+      - text: Khả năng vận hành offline trơn tru không cần kết nối mạng liên tục
+        correct: false
+    explanation: Git được thiết kế để phân tán phi tập trung, xóa bỏ sự phụ thuộc
+      vào máy chủ trung tâm duy nhất.
+  - id: q4
+    question: Lệnh nào hiển thị tài liệu hướng dẫn tra cứu chi tiết của lệnh `git
+      commit`?
+    type: single
+    options:
+      - text: git commit --help
+        correct: true
+      - text: git commit --manual-search
+        correct: false
+      - text: git find commit documentation
+        correct: false
+      - text: git help-me commit
+        correct: false
+    explanation: Cú pháp `git <command> --help` mở trang hướng dẫn tra cứu chi tiết
+      (man page) của lệnh đó.

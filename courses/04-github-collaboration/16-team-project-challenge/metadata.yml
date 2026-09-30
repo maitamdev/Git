@@ -1,0 +1,27 @@
+id: 16-team-project-challenge
+title: Thử thách dự án nhóm Team Project Challenge
+duration: 45
+xp: 200
+keywords:
+  - team challenge
+  - du an nhom
+  - tong hop level 4
+  - collaboration master
+  - full workflow
+prerequisites:
+  - 15-collaboration-workflow
+objectives:
+  - Áp dụng tổng hợp toàn bộ kỹ năng Level 4 vào một kịch bản dự án cộng tác
+    nhóm hoàn chỉnh.
+  - Đóng vai trò một kỹ sư thực chiến giải quyết Issue, phát triển nhánh tính
+    năng, push và mở PR.
+  - Tham gia đóng vai trò Reviewer để đánh giá mã nguồn, đưa ra phản biện và phê
+    duyệt PR của đồng nghiệp.
+  - Xử lý tình huống xung đột khi merge PR và hoàn tất quy trình phát hành tính
+    năng lên sản phẩm.
+commands:
+  - git switch main
+  - git pull origin main
+  - git switch -c feat/coupon-system
+  - git push -u origin feat/coupon-system
+  - git branch -d feat/coupon-system

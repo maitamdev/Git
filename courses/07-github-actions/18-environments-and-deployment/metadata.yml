@@ -1,0 +1,21 @@
+id: 18-environments-and-deployment
+title: Môi trường triển khai (Environments) & Cổng phê duyệt Protection Rules
+duration: 35
+xp: 110
+keywords:
+  - environments
+  - deployment
+  - protection rules
+  - required reviewers
+  - cd pipeline
+prerequisites:
+  - 17-pull-request-ci
+objectives:
+  - Nắm vững khái niệm Deployment Environments trong GitHub (Production,
+    Staging, Development).
+  - Cấu hình cổng phê duyệt của con người (Required Reviewers) trước khi Job
+    triển khai được phép chạy.
+  - Sử dụng các biến và bí mật riêng biệt theo từng môi trường cụ thể.
+commands:
+  - gh deployment list
+  - echo "Deploying to production server"

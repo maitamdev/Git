@@ -1,0 +1,65 @@
+id: quiz-05-04-git-reset-hard
+title: "Trắc nghiệm: git reset --hard"
+questions:
+  - id: q1
+    question: Điều gì sẽ xảy ra với các tệp tin đang sửa đổi dở dang chưa từng
+      commit khi bạn chạy `git reset --hard`?
+    type: single
+    options:
+      - text: Chúng bị ghi đè và xóa sổ vĩnh viễn, hoàn toàn không thể khôi phục lại
+        correct: true
+      - text: Chúng được tự động lưu vào thùng rác Recycle Bin của hệ điều hành
+        correct: false
+      - text: Chúng được chuyển thành file nén ZIP trong thư mục gốc
+        correct: false
+      - text: Chúng tự động được gửi lên máy chủ GitHub
+        correct: false
+    explanation: Git chỉ bảo vệ các dữ liệu đã từng được commit; những thay đổi chưa
+      commit sẽ bị reset hard ghi đè vĩnh viễn.
+  - id: q2
+    question: Lệnh nào sau đây giúp bạn hủy bỏ toàn bộ chỉnh sửa chưa commit và đưa
+      Working Tree về trạng thái sạch sẽ của HEAD?
+    type: single
+    options:
+      - text: git reset --hard HEAD
+        correct: true
+      - text: git reset --soft HEAD
+        correct: false
+      - text: git clean --soft
+        correct: false
+      - text: git revert HEAD
+        correct: false
+    explanation: "`git reset --hard HEAD` khôi phục cả Staging và Working Tree về
+      trạng thái y hệt như snapshot của commit HEAD hiện tại."
+  - id: q3
+    question: Trước khi chạy một lệnh nguy hiểm như `git reset --hard`, hành động an
+      toàn nhất được khuyến nghị là gì?
+    type: single
+    options:
+      - text: Tạo một nhánh dự phòng tạm thời hoặc lưu thay đổi vào `git stash` để đề
+          phòng
+        correct: true
+      - text: Tắt phần mềm diệt virus trên máy tính
+        correct: false
+      - text: Khởi động lại hệ điều hành
+        correct: false
+      - text: Rút dây mạng Internet ra khỏi máy
+        correct: false
+    explanation: Luôn tạo điểm tựa an toàn bằng `git stash` hoặc nhánh tạm thời
+      trước khi thực hiện các thao tác mang tính hủy diệt.
+  - id: q4
+    question: "So sánh mức độ ảnh hưởng của 3 cờ trong `git reset`: soft, mixed, và
+      hard đối với Working Directory:"
+    type: single
+    options:
+      - text: soft và mixed giữ nguyên Working Directory, còn hard ghi đè và xóa sạch
+          Working Directory
+        correct: true
+      - text: Cả 3 cờ đều xóa sạch Working Directory như nhau
+        correct: false
+      - text: soft xóa sạch, còn mixed và hard giữ nguyên
+        correct: false
+      - text: Không có cờ nào chạm vào Working Directory
+        correct: false
+    explanation: Chỉ có `--hard` là ghi đè lên Working Directory, hai chế độ
+      `--soft` và `--mixed` hoàn toàn bảo tồn Working Tree.

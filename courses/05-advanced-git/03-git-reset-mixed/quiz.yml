@@ -1,0 +1,63 @@
+id: quiz-05-03-git-reset-mixed
+title: "Trắc nghiệm: git reset --mixed"
+questions:
+  - id: q1
+    question: Khi bạn chạy câu lệnh `git reset HEAD~1` mà không truyền bất kỳ cờ tùy
+      chọn nào, Git sẽ chạy ở chế độ nào?
+    type: single
+    options:
+      - text: Chế độ --mixed mặc định
+        correct: true
+      - text: Chế độ --soft
+        correct: false
+      - text: Chế độ --hard
+        correct: false
+      - text: Chế độ --keep
+        correct: false
+    explanation: "`--mixed` là hành vi mặc định của lệnh `git reset` nếu không chỉ định cờ."
+  - id: q2
+    question: Trạng thái của mã nguồn sau khi thực thi `git reset --mixed HEAD~1` sẽ
+      hiển thị như thế nào trong `git status`?
+    type: single
+    options:
+      - text: Mã nguồn nằm trong Working Directory dưới dạng tệp sửa đổi chưa staged
+          (màu đỏ)
+        correct: true
+      - text: Mã nguồn nằm trong Staging Area sẵn sàng commit (màu xanh)
+        correct: false
+      - text: Mã nguồn bị xóa hoàn toàn khỏi đĩa cứng
+        correct: false
+      - text: Mã nguồn tự động biến thành tệp ẩn
+        correct: false
+    explanation: Reset mixed xóa Staging Area nhưng giữ Working Tree, đưa thay đổi
+      về trạng thái unstaged màu đỏ.
+  - id: q3
+    question: Trường hợp nào sau đây là ứng dụng xuất sắc nhất của `git reset --mixed`?
+    type: single
+    options:
+      - text: Khi muốn dỡ bỏ một commit gom quá nhiều việc để chia nhỏ thành các commit
+          riêng lẻ gàng
+        correct: true
+      - text: Khi muốn xóa vĩnh viễn toàn bộ các tệp tin trong dự án
+        correct: false
+      - text: Khi muốn xuất bản code lên GitHub
+        correct: false
+      - text: Khi muốn tải dự án từ máy chủ từ xa về
+        correct: false
+    explanation: Đưa code về Working Tree giúp bạn dễ dàng chọn lọc từng phần để
+      commit thành nhiều mốc lịch sử logic.
+  - id: q4
+    question: Sự khác biệt lớn nhất giữa `git reset --soft` và `git reset --mixed`
+      nằm ở thành phần nào?
+    type: single
+    options:
+      - text: "Staging Area: soft giữ nguyên staged (xanh), còn mixed hủy staged (đỏ)"
+        correct: true
+      - text: "Working Directory: soft xóa file, mixed giữ file"
+        correct: false
+      - text: "Commit history: soft dịch chuyển HEAD, mixed không dịch chuyển HEAD"
+        correct: false
+      - text: Hai lệnh này hoàn toàn giống nhau 100%
+        correct: false
+    explanation: Cả hai đều giữ Working Tree, nhưng `--soft` giữ Staging còn
+      `--mixed` reset luôn cả Staging.

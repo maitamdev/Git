@@ -1,0 +1,26 @@
+id: 01-local-vs-remote
+title: Local vs Remote Repository
+duration: 25
+xp: 75
+keywords:
+  - local repo
+  - remote repo
+  - kho cuc bo
+  - kho tu xa
+  - github cloud
+  - phan tan
+prerequisites:
+  - 06-git-commit
+objectives:
+  - Hiểu rõ sự khác biệt bản chất giữa kho lưu trữ cục bộ (Local Repository) và
+    kho từ xa (Remote Repository).
+  - Nắm bắt vai trò của máy chủ trung tâm (như GitHub, GitLab) trong mô hình
+    kiểm soát phiên bản phân tán.
+  - Giải thích cơ chế đồng bộ hóa dữ liệu hai chiều thông qua các giao thức mạng
+    bảo mật.
+  - Nhận biết lý do vì sao Git vẫn hoạt động 100% công năng ngay cả khi hoàn
+    toàn mất kết nối Internet.
+commands:
+  - git remote -v
+  - git status
+  - git branch -a

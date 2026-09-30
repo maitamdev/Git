@@ -1,0 +1,66 @@
+id: quiz-05-05-git-revert
+title: "Trắc nghiệm: git revert"
+questions:
+  - id: q1
+    question: Bản chất cốt lõi của câu lệnh `git revert <commit-hash>` là gì?
+    type: single
+    options:
+      - text: Tạo một commit mới đảo ngược lại toàn bộ các thay đổi mà commit chỉ định
+          đã thực hiện
+        correct: true
+      - text: Xóa bỏ hoàn toàn commit chỉ định khỏi lịch sử vĩnh viễn
+        correct: false
+      - text: Chuyển đổi commit đó sang một kho lưu trữ khác
+        correct: false
+      - text: Đổi tên tác giả của commit đó
+        correct: false
+    explanation: "`git revert` tiến lên phía trước bằng cách sinh ra commit nghịch
+      đảo chứ không hề xóa bỏ commit trong quá khứ."
+  - id: q2
+    question: Tại sao `git revert` lại là phương pháp hoàn tác bắt buộc trên nhánh
+      `main` của các dự án chuyên nghiệp?
+    type: single
+    options:
+      - text: Vì nó không viết lại lịch sử, tránh gây xung đột cho các thành viên khác
+          và phục vụ tốt việc kiểm toán mã nguồn
+        correct: true
+      - text: Vì lệnh này chạy nhanh hơn tất cả các lệnh khác 100 lần
+        correct: false
+      - text: Vì GitHub không hỗ trợ bất kỳ câu lệnh nào khác
+        correct: false
+      - text: Vì nó tự động sửa lỗi logic của lập trình viên
+        correct: false
+    explanation: Tính bảo tồn lịch sử giúp mọi thành viên kéo code về mà không bị
+      lỗi phân kỳ lịch sử do viết lại cây commit.
+  - id: q3
+    question: Nếu commit bạn muốn revert đang bị mâu thuẫn dòng code với các commit
+      mới hơn, Git sẽ xử lý thế nào?
+    type: single
+    options:
+      - text: Git dừng lại và kích hoạt trạng thái xung đột (conflict) để bạn giải quyết
+          thủ công rồi mới tiếp tục
+        correct: true
+      - text: Git tự động xóa toàn bộ các commit mới hơn để ưu tiên revert
+        correct: false
+      - text: Git hủy bỏ toàn bộ kho lưu trữ trên máy tính
+        correct: false
+      - text: Git tự động chọn ngẫu nhiên một phương án
+        correct: false
+    explanation: Revert thực chất là một phép áp dụng diff nghịch đảo, nếu có xung
+      đột bạn phải xử lý conflict tương tự như khi merge.
+  - id: q4
+    question: Cờ `--no-commit` (hoặc `-n`) trong lệnh `git revert -n <hash>` có tác
+      dụng gì?
+    type: single
+    options:
+      - text: Áp dụng các thay đổi đảo ngược vào Working Tree và Staging nhưng không tự
+          động tạo commit mới ngay lập tức
+        correct: true
+      - text: Cấm không bao giờ cho phép commit lại tệp đó nữa
+        correct: false
+      - text: Xóa commit đó khỏi bộ nhớ cache của CPU
+        correct: false
+      - text: Ngăn không cho Git ghi log lịch sử
+        correct: false
+    explanation: "`--no-commit` cho phép bạn đảo ngược nhiều commit liên tiếp vào
+      Staging rồi mới tự tay gom thành một commit hoàn chỉnh."

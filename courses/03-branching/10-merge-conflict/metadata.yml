@@ -1,0 +1,25 @@
+id: 10-merge-conflict
+title: Xung đột Merge Conflict là gì?
+duration: 30
+xp: 90
+keywords:
+  - merge conflict
+  - xung dot
+  - conflict markers
+  - ours theirs
+  - mau thuan code
+prerequisites:
+  - 08-three-way-merge
+objectives:
+  - Hiểu rõ nguyên nhân căn bản phát sinh xung đột Merge Conflict trong quá
+    trình làm việc nhóm.
+  - "Nhận diện và phân tích cấu trúc của các vạch đánh dấu xung đột (Conflict
+    Markers): `<<<<<<<`, `=======`, `>>>>>>>`."
+  - Phân biệt rõ ràng giữa xung đột nội dung dòng code (Content conflict) và
+    xung đột tệp tin (File rename/delete conflict).
+  - Giữ bình tĩnh và thực hiện quy trình chẩn đoán trạng thái conflict một cách
+    bài bản.
+commands:
+  - git status
+  - git diff
+  - git merge --abort

@@ -1,0 +1,29 @@
+id: 04-git-flow
+title: Git Flow
+duration: 30
+xp: 95
+keywords:
+  - git flow
+  - vincent driessen
+  - develop branch
+  - release branch
+  - hotfix branch
+  - scheduled release
+  - chu ky phat hanh
+prerequisites:
+  - 02-feature-branch-workflow
+objectives:
+  - Nắm bắt toàn diện kiến trúc 5 loại nhánh trong mô hình kinh điển Git Flow do
+    Vincent Driessen đề xuất.
+  - Phân biệt rõ ràng vai trò của 2 nhánh vĩnh cửu (main, develop) và 3 nhánh
+    tạm thời (feature, release, hotfix).
+  - Vận hành chuẩn xác vòng đời của nhánh release và nhánh hotfix từ khi rẽ
+    nhánh đến khi hợp nhất kép (dual-merge).
+  - "Đánh giá được ưu nhược điểm và nhận diện các dự án phù hợp với Git Flow:
+    ứng dụng mobile, phần mềm đóng gói, enterprise."
+commands:
+  - git switch -c release/v1.2.0 develop
+  - git switch main && git merge --no-ff release/v1.2.0
+  - git tag -a v1.2.0 -m "Release v1.2.0"
+  - git switch develop && git merge --no-ff release/v1.2.0
+  - git branch -d release/v1.2.0

@@ -1,0 +1,22 @@
+id: 14-matrix-strategy
+title: Chiến lược ma trận kiểm thử đa môi trường (Matrix Strategy)
+duration: 35
+xp: 100
+keywords:
+  - matrix strategy
+  - test matrix
+  - multi environment
+  - cross platform
+  - combinatorial build
+prerequisites:
+  - 13-conditional-execution-if
+objectives:
+  - Hiểu rõ khái niệm và sức mạnh của Matrix Strategy trong việc mở rộng kiểm
+    thử đa cấu hình tự động.
+  - "Biết cách khai báo ma trận đa chiều: kết hợp nhiều phiên bản ngôn ngữ và
+    nhiều hệ điều hành."
+  - "Sử dụng các thuộc tính nâng cao: include (bổ sung trường hợp đặc biệt),
+    exclude (loại trừ tổ hợp không mong muốn) và max-parallel."
+commands:
+  - npm test
+  - node -v

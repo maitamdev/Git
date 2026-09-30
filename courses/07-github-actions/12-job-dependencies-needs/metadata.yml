@@ -1,0 +1,22 @@
+id: 12-job-dependencies-needs
+title: Quan hệ phụ thuộc giữa các Job với thuộc tính needs
+duration: 30
+xp: 95
+keywords:
+  - job dependencies
+  - needs
+  - dag scheduler
+  - sequential jobs
+  - pipeline flow
+prerequisites:
+  - 11-contexts-and-expressions
+objectives:
+  - Làm chủ thuộc tính needs để thiết lập mối quan hệ phụ thuộc có thứ tự giữa
+    các Job.
+  - Hiểu cách GitHub Actions xây dựng Đồ thị có hướng không chu trình (DAG) từ
+    các khai báo needs.
+  - Biết cách truyền và sử dụng kết quả (needs.<job_id>.result) hoặc dữ liệu đầu
+    ra (outputs) giữa các Job.
+commands:
+  - gh run view --graph
+  - cat .github/workflows/pipeline.yml

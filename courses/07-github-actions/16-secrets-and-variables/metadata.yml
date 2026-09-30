@@ -1,0 +1,22 @@
+id: 16-secrets-and-variables
+title: Bảo mật thông tin nhạy cảm với Secrets và Secret Masking
+duration: 30
+xp: 95
+keywords:
+  - secrets
+  - security
+  - masking
+  - encrypted secrets
+  - credential safety
+prerequisites:
+  - 15-artifacts-sharing
+objectives:
+  - Phân biệt rõ ràng giữa Configuration Variables (thông tin cấu hình mở) và
+    Encrypted Secrets (thông tin bí mật nhạy cảm).
+  - Biết cách cấu hình và gọi Secrets trong tệp YAML qua ngữ cảnh ${{
+    secrets.SECRET_NAME }}.
+  - "Hiểu sâu cơ chế che giấu bí mật (Secret Masking): tự động thay thế bằng ***
+    trong log thực thi."
+commands:
+  - 'echo "Deploying with token: ***"'
+  - gh secret set API_KEY

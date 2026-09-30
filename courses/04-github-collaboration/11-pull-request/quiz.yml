@@ -1,0 +1,99 @@
+id: quiz-04-11-pull-request
+title: "Trắc nghiệm: Quy trình tạo Pull Request (PR)"
+questions:
+  - id: q1
+    question: Vì sao cơ chế này lại được đặt tên là "Pull Request" mà không phải là
+      "Push Request"?
+    type: single
+    options:
+      - text: Vì bạn đang lịch sự gửi yêu cầu đề nghị người bảo trì kho đích hãy kéo
+          (PULL) mã nguồn từ nhánh của bạn về gộp vào kho của họ
+        correct: true
+      - text: Vì từ "Pull" gõ trên bàn phím nhanh hơn từ "Push"
+        correct: false
+      - text: Vì người sáng lập Git thích tập môn thể thao kéo xà đơn (Pull-up)
+        correct: false
+      - text: Vì đây là lỗi đánh máy từ những năm 2008 của lập trình viên GitHub
+        correct: false
+    explanation: 'Bạn đề nghị người quản trị: "Xin hãy PULL các commit của tôi vào
+      nhánh chính của bạn".'
+  - id: q2
+    question: Thực hành nào sau đây được coi là chuẩn mực vàng khi tạo Pull Request
+      trong các công ty chuyên nghiệp?
+    type: single
+    options:
+      - text: Mỗi PR chỉ giải quyết duy nhất một vấn đề cụ thể, có dung lượng vừa phải
+          kèm mô tả rõ ràng và ảnh minh họa
+        correct: true
+      - text: Gộp toàn bộ công việc của cả tháng vào một PR khổng lồ chứa hơn 10.000
+          dòng code
+        correct: false
+      - text: Không cần viết bất kỳ dòng mô tả nào để đồng nghiệp tự đoán ý đồ
+        correct: false
+      - text: Luôn luôn tạo PR trực tiếp từ nhánh main của máy cá nhân
+        correct: false
+    explanation: PR nhỏ gọn (Small PRs) giúp việc review diễn ra nhanh chóng, kỹ
+      lưỡng và giảm thiểu rủi ro lỗi ngầm.
+  - id: q3
+    question: Thao tác tạo Pull Request được thực hiện chủ yếu ở đâu?
+    type: single
+    options:
+      - text: Trên giao diện web của các nền tảng lưu trữ như GitHub, GitLab hoặc qua
+          công cụ GitHub CLI (`gh pr create`)
+        correct: true
+      - text: Gõ lệnh `git pull-request` trong terminal Git cơ bản
+        correct: false
+      - text: Gửi tin nhắn thoại qua ứng dụng Zalo
+        correct: false
+      - text: Gửi bản in giấy mã nguồn qua bưu điện
+        correct: false
+    explanation: Pull Request là tính năng của nền tảng cộng tác
+      (GitHub/GitLab/Bitbucket), không phải lệnh có sẵn của core Git.
+  - id: q4
+    question: Trong giao diện tạo Pull Request trên GitHub, hai thuật ngữ "base
+      branch" và "compare branch" có ý nghĩa gì?
+    type: single
+    options:
+      - text: Base là nhánh đích muốn gộp vào (ví dụ main), Compare là nhánh nguồn chứa
+          tính năng mới của bạn
+        correct: true
+      - text: Base là nhánh của máy tính người review, Compare là nhánh của sếp
+        correct: false
+      - text: Base là nhánh chứa virus, Compare là nhánh an toàn
+        correct: false
+      - text: Hai khái niệm này hoàn toàn đảo ngược nhau
+        correct: false
+    explanation: "Cú pháp: `base: main` ◄── `compare: feature-branch`. Mã nguồn sẽ
+      đi từ compare vào base."
+  - id: q5
+    question: Khi bạn tiếp tục commit và push thêm code lên nhánh tính năng sau khi
+      đã mở Pull Request, điều gì sẽ xảy ra?
+    type: single
+    options:
+      - text: Các commit mới sẽ tự động được bổ sung vào Pull Request đang mở mà không
+          cần bạn phải tạo lại PR mới
+        correct: true
+      - text: Pull Request hiện tại sẽ bị tự động hủy bỏ ngay lập tức
+        correct: false
+      - text: Bạn phải đóng PR cũ và tạo một PR hoàn toàn mới từ đầu
+        correct: false
+      - text: GitHub sẽ gửi thông báo cảnh báo vi phạm bản quyền
+        correct: false
+    explanation: PR theo dõi con trỏ nhánh; mọi commit mới push lên nhánh đó đều tự
+      động xuất hiện trong danh sách commit của PR.
+  - id: q6
+    question: Hệ thống CI/CD (Continuous Integration) thường làm nhiệm vụ tự động gì
+      khi một Pull Request được mở ra?
+    type: single
+    options:
+      - text: Tự động chạy bộ kiểm thử đơn vị (Unit Tests), kiểm tra quy chuẩn mã nguồn
+          (Linter) và biên dịch thử dự án
+        correct: true
+      - text: Tự động chuyển tiền lương vào tài khoản ngân hàng của tác giả PR
+        correct: false
+      - text: Tự động tắt nguồn máy chủ của công ty
+        correct: false
+      - text: Tự động duyệt và merge PR mà không cần con người xem xét
+        correct: false
+    explanation: CI đóng vai trò người gác cổng tự động bảo đảm mã nguồn mới đáp ứng
+      các tiêu chuẩn kỹ thuật trước khi merge.

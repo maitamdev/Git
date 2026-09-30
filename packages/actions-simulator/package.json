@@ -1,0 +1,21 @@
+{
+  "name": "@git-academy/actions-simulator",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Safe, educational GitHub Actions workflow simulator with DAG job runner, safe sandboxed execution, secrets redactor, matrix expansion, and expressions engine",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@git-academy/shared": "workspace:*",
+    "@git-academy/git-engine": "workspace:*",
+    "yaml": "^2.7.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}

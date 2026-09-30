@@ -1,0 +1,27 @@
+id: 03-github-flow
+title: GitHub Flow
+duration: 25
+xp: 85
+keywords:
+  - github flow
+  - continuous delivery
+  - simple git workflow
+  - deploy to production
+  - pull request workflow
+  - lightweight process
+prerequisites:
+  - 02-feature-branch-workflow
+objectives:
+  - Nắm vững triết lý đơn giản, tinh gọn và hướng tới chuyển giao liên tục
+    (Continuous Delivery) của GitHub Flow.
+  - Hiểu rõ 6 bước tuần tự của GitHub Flow từ rẽ nhánh đến triển khai tự động
+    lên môi trường Production.
+  - "Xác định được các dự án phù hợp lý tưởng với GitHub Flow: ứng dụng web,
+    microservices và SaaS."
+  - Phân biệt điểm khác biệt giữa GitHub Flow và các mô hình đa nhánh phức tạp
+    như Git Flow.
+commands:
+  - git switch -c ui/apple-pay
+  - 'git commit -m "feat(checkout): add Apple Pay button"'
+  - git push -u origin ui/apple-pay
+  - 'gh pr create --title "feat: add Apple Pay" --body "Tested on Safari"'

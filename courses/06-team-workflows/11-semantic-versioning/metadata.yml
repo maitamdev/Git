@@ -1,0 +1,27 @@
+id: 11-semantic-versioning
+title: Semantic Versioning
+duration: 25
+xp: 85
+keywords:
+  - semantic versioning
+  - semver
+  - major minor patch
+  - phien ban phan mem
+  - dinh danh phien ban
+  - tuong thich nguoc
+prerequisites:
+  - 10-conventional-commits
+objectives:
+  - "Nắm vững đặc tả Semantic Versioning 2.0.0 (SemVer) với định dạng chuẩn 3
+    con số: MAJOR.MINOR.PATCH."
+  - "Áp dụng chính xác quy tắc tăng số: khi nào tăng PATCH (sửa lỗi), khi nào
+    tăng MINOR (tính năng), khi nào tăng MAJOR (phá vỡ tương thích)."
+  - Hiểu rõ ý nghĩa của các hậu tố tiền phát hành (Pre-release) như `-alpha`,
+    `-beta`, `-rc.1` và thông tin bản dựng (Build metadata).
+  - Tích hợp tư duy SemVer vào quy trình quản lý thẻ Git Tag và phát hành thư
+    viện phần mềm chuyên nghiệp.
+commands:
+  - git tag -a v1.0.0 -m "Release v1.0.0 initial stable release"
+  - 'git tag -a v1.0.1 -m "Release v1.0.1: fix button safari bug"'
+  - 'git tag -a v1.1.0 -m "Release v1.1.0: add datepicker component"'
+  - 'git tag -a v2.0.0 -m "Release v2.0.0: breaking change drop legacy browsers"'

@@ -1,0 +1,23 @@
+id: 11-file-lifecycle
+title: Vòng đời tệp tin trong Git
+duration: 25
+xp: 70
+keywords:
+  - file lifecycle
+  - vong doi tep tin
+  - tracked
+  - untracked
+  - modified
+  - staged
+prerequisites:
+  - 10-gitignore
+objectives:
+  - "Nắm vững toàn diện 4 trạng thái vòng đời của một tệp tin trong Git:
+    Untracked, Unmodified, Modified, Staged."
+  - Vẽ và phân tích được cỗ máy trạng thái (State Machine) chuyển dịch giữa các
+    khu vực.
+  - Dự đoán chính xác trạng thái của tệp tin sau mỗi câu lệnh Git thực thi.
+commands:
+  - git status -s
+  - git add <file>
+  - git commit

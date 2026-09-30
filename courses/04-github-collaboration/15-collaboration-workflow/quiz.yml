@@ -1,0 +1,98 @@
+id: quiz-04-15-collaboration-workflow
+title: "Trắc nghiệm: Feature Branch Workflow"
+questions:
+  - id: q1
+    question: Quy tắc vàng số 1 bất di bất dịch trong quy trình Feature Branch
+      Workflow là gì?
+    type: single
+    options:
+      - text: Tuyệt đối không bao giờ được phép commit hoặc push trực tiếp mã nguồn lên
+          nhánh main
+        correct: true
+      - text: Mọi lập trình viên đều phải dùng chung một máy tính
+        correct: false
+      - text: Không được phép tạo quá 2 nhánh trong suốt vòng đời dự án
+        correct: false
+      - text: Chỉ được phép merge code vào ban đêm
+        correct: false
+    explanation: Nhánh main là linh hồn của sản phẩm, chỉ được phép cập nhật thông
+      qua Pull Request đã qua kiểm duyệt.
+  - id: q2
+    question: Trước khi gõ lệnh `git switch -c feat/new-feature` để bắt đầu làm tính
+      năng mới, thao tác BẮT BUỘC bạn phải làm là gì?
+    type: single
+    options:
+      - text: Chuyển về nhánh main và chạy lệnh `git pull origin main` để bảo đảm nhánh
+          mới được tách từ mốc code mới nhất
+        correct: true
+      - text: Khởi tạo lại toàn bộ kho chứa bằng git init
+        correct: false
+      - text: Xóa toàn bộ các tệp tin trong thư mục dự án
+        correct: false
+      - text: Tắt kết nối mạng Internet
+        correct: false
+    explanation: Luôn cập nhật main mới nhất trước khi tách nhánh để tránh code trên
+      nền tảng lỗi thời dẫn đến xung đột.
+  - id: q3
+    question: Tiền tố quy ước nào thường được sử dụng khi đặt tên nhánh cho các tác
+      vụ sửa lỗi khẩn cấp?
+    type: single
+    options:
+      - text: "fix/ hoặc bugfix/ (ví dụ: fix/login-error)"
+        correct: true
+      - text: temp/ hoặc nhap/
+        correct: false
+      - text: delete/ hoặc remove/
+        correct: false
+      - text: admin/ hoặc root/
+        correct: false
+    explanation: "Quy ước đặt tên chuẩn: `feat/` cho tính năng mới, `fix/` cho sửa
+      lỗi, `docs/` cho tài liệu, `refactor/` cho tái cấu trúc."
+  - id: q4
+    question: Hiện tượng "Merge Hell" (Địa ngục hợp nhất) thường xảy ra do nguyên
+      nhân nào trong quy trình làm việc nhóm?
+    type: single
+    options:
+      - text: Do một nhánh tính năng bị cô lập và kéo dài quá nhiều tuần/tháng mà không
+          thường xuyên đồng bộ code mới từ main về
+        correct: true
+      - text: Do dung lượng ổ cứng máy tính bị đầy
+        correct: false
+      - text: Do sử dụng trình soạn thảo VS Code thay vì Notepad
+        correct: false
+      - text: Do đặt tên nhánh bằng tiếng Anh
+        correct: false
+    explanation: Nhánh sống quá lâu (Long-lived branches) sẽ bị phân kỳ quá xa so
+      với main, tích tụ hàng trăm xung đột nan giải.
+  - id: q5
+    question: Sau khi Pull Request được merge thành công vào nhánh main trên GitHub,
+      bước dọn dẹp vệ sinh kho chứa là gì?
+    type: single
+    options:
+      - text: Xóa nhánh tính năng trên GitHub và chạy `git branch -d` xóa nhánh đó trên
+          máy tính cá nhân
+        correct: true
+      - text: Xóa nhánh main để làm lại từ đầu
+        correct: false
+      - text: Đổi tên tài khoản GitHub của bạn
+        correct: false
+      - text: Khóa toàn bộ dự án lại không cho ai truy cập
+        correct: false
+    explanation: Dọn dẹp các nhánh đã hoàn thành giúp cây lịch sử luôn tinh gọn và
+      tránh nhầm lẫn trong tương lai.
+  - id: q6
+    question: Lợi ích lớn nhất mà Feature Branch Workflow mang lại cho các doanh
+      nghiệp phần mềm là gì?
+    type: single
+    options:
+      - text: Bảo vệ nhánh main luôn trong trạng thái sẵn sàng xuất bản
+          (Production-ready) và kiểm soát chất lượng chặt chẽ
+        correct: true
+      - text: Giúp lập trình viên không bao giờ cần phải viết kiểm thử tự động
+        correct: false
+      - text: Tự động tăng gấp đôi tốc độ xử lý của chip CPU
+        correct: false
+      - text: Miễn phí toàn bộ chi phí thuê máy chủ
+        correct: false
+    explanation: Nhánh main luôn ổn định 100% giúp doanh nghiệp có thể triển khai
+      sản phẩm bất cứ lúc nào khách hàng yêu cầu.

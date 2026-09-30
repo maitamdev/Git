@@ -1,0 +1,97 @@
+id: quiz-04-08-tracking-branch
+title: "Trắc nghiệm: Nhánh theo dõi Tracking Branch"
+questions:
+  - id: q1
+    question: "Khi `git status` thông báo dòng chữ: \"Your branch is ahead of
+      'origin/main' by 2 commits\", điều đó có nghĩa là gì?"
+    type: single
+    options:
+      - text: Bạn đã tạo 2 commit mới trên máy cá nhân mà chưa đẩy (push) lên máy chủ
+          GitHub
+        correct: true
+      - text: Trên GitHub đang có 2 commit mới mà bạn chưa kéo (pull) về máy
+        correct: false
+      - text: Máy tính của bạn đang bị virus tấn công 2 lần
+        correct: false
+      - text: Kho chứa của bạn bị lỗi thừa 2 nhánh
+        correct: false
+    explanation: "`ahead by N` nghĩa là nhánh local của bạn đang đi trước nhánh
+      remote N commit; cần chạy `git push` để đẩy lên."
+  - id: q2
+    question: "Khi `git status` thông báo: \"Your branch is behind 'origin/main' by
+      3 commits\", hành động bạn nên làm là gì?"
+    type: single
+    options:
+      - text: Chạy lệnh `git pull` để kéo 3 commit mới đó từ GitHub về cập nhật vào máy
+          cá nhân
+        correct: true
+      - text: Chạy lệnh `git push --force` để xóa 3 commit đó trên GitHub
+        correct: false
+      - text: Xóa toàn bộ thư mục dự án và tải lại từ đầu
+        correct: false
+      - text: Tắt máy tính đi ngủ
+        correct: false
+    explanation: "`behind by N` nghĩa là server đang có N commit mới mà máy bạn chưa
+      có; cần chạy `git pull` để đồng bộ."
+  - id: q3
+    question: Lệnh nào giúp bạn kiểm tra nhanh mối quan hệ upstream tracking và
+      trạng thái ahead/behind của TẤT CẢ các nhánh cục bộ?
+    type: single
+    options:
+      - text: git branch -vv
+        correct: true
+      - text: git show-all-tracking
+        correct: false
+      - text: git track --list
+        correct: false
+      - text: git status --all-branches
+        correct: false
+    explanation: "`git branch -vv` hiển thị chi tiết tên từng nhánh, commit hash,
+      commit message và upstream tracking branch kèm ahead/behind."
+  - id: q4
+    question: Để thiết lập nhánh `origin/develop` làm upstream cho nhánh cục bộ hiện
+      tại, bạn dùng lệnh nào?
+    type: single
+    options:
+      - text: git branch -u origin/develop
+        correct: true
+      - text: git track set origin/develop
+        correct: false
+      - text: git link-branch origin/develop
+        correct: false
+      - text: git make-upstream origin/develop
+        correct: false
+    explanation: "`git branch -u <remote/branch>` (hoặc `--set-upstream-to`) thiết
+      lập quan hệ tracking cho nhánh hiện tại."
+  - id: q5
+    question: Trạng thái "diverged" (phân kỳ) xảy ra khi nào giữa nhánh cục bộ và
+      nhánh upstream?
+    type: single
+    options:
+      - text: Khi cả bạn và máy chủ đều có những commit mới độc lập kể từ điểm commit
+          chung gần nhất
+        correct: true
+      - text: Khi kho lưu trữ bị mất kết nối mạng cáp quang
+        correct: false
+      - text: Khi hai lập trình viên dùng hai hệ điều hành khác nhau
+        correct: false
+      - text: Khi nhánh bị xóa trên máy tính
+        correct: false
+    explanation: Diverged nghĩa là vừa ahead vừa behind; hai luồng commit đã rẽ
+      thành hình chữ Y và cần merge hoặc rebase để hợp nhất.
+  - id: q6
+    question: Tại sao thông tin ahead/behind trong lệnh `git status` có thể không
+      phản ánh đúng nếu bạn chưa chạy `git fetch`?
+    type: single
+    options:
+      - text: Vì Git status chỉ so sánh nhánh local với con trỏ origin/* lưu trên đĩa
+          chứ không tự động kết nối mạng lên server
+        correct: true
+      - text: Vì Git status luôn tự động xóa bộ nhớ đệm
+        correct: false
+      - text: Vì GitHub không cho phép lệnh status truy cập
+        correct: false
+      - text: Vì lệnh git status chỉ dùng cho các tệp ảnh
+        correct: false
+    explanation: "`git status` hoạt động offline; nó so sánh với bản lưu `origin/*`
+      của lần fetch cuối cùng, nên cần fetch để cập nhật mới nhất."

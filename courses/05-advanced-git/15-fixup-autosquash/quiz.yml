@@ -1,0 +1,65 @@
+id: quiz-05-15-fixup-autosquash
+title: "Trắc nghiệm: Fixup & Autosquash"
+questions:
+  - id: q1
+    question: Thông điệp mặc định của một commit được tạo ra bằng lệnh `git commit
+      --fixup <commit-hash>` có định dạng như thế nào?
+    type: single
+    options:
+      - text: fixup! <tiêu đề của commit mục tiêu>
+        correct: true
+      - text: squash! <tiêu đề của commit mục tiêu>
+        correct: false
+      - text: "auto: sửa đổi commit cũ"
+        correct: false
+      - text: Một chuỗi ngẫu nhiên không có quy luật
+        correct: false
+    explanation: Tiền tố `fixup! ` giúp cờ `--autosquash` nhận biết chính xác commit
+      này cần được gộp vào đâu.
+  - id: q2
+    question: Khi bạn chạy `git rebase -i --autosquash`, Git sẽ tự động làm thao tác
+      nào trong Todo List?
+    type: single
+    options:
+      - text: Tự động di chuyển commit fixup lên ngay dưới commit mục tiêu và đổi chỉ
+          thị thành fixup
+        correct: true
+      - text: Tự động xóa sạch toàn bộ các commit trong danh sách
+        correct: false
+      - text: Tự động gửi email thông báo cho đồng nghiệp
+        correct: false
+      - text: Tự động đẩy code lên máy chủ GitHub
+        correct: false
+    explanation: Autosquash tự động quét các tiền tố `fixup!` và `squash!` để tái
+      cấu trúc Todo list thông minh.
+  - id: q3
+    question: Lệnh cấu hình nào giúp bạn luôn luôn kích hoạt tính năng autosquash mà
+      không cần phải gõ cờ `--autosquash` mỗi lần rebase?
+    type: single
+    options:
+      - text: git config --global rebase.autoSquash true
+        correct: true
+      - text: git config --global git.alwaysFixup true
+        correct: false
+      - text: git set autosquash on
+        correct: false
+      - text: git enable auto-rebase
+        correct: false
+    explanation: Cấu hình `rebase.autoSquash true` trong config toàn cục biến hành
+      vi autosquash thành mặc định.
+  - id: q4
+    question: Trường hợp sử dụng lý tưởng nhất của `git commit --fixup` trong thực
+      tế là gì?
+    type: single
+    options:
+      - text: Khi phát hiện một lỗi nhỏ trong một commit cũ sâu trong lịch sử mà muốn
+          sửa ngay mà không làm xáo trộn công việc
+        correct: true
+      - text: Khi muốn xóa toàn bộ lịch sử của dự án
+        correct: false
+      - text: Khi muốn tạo một nhánh hoàn toàn mới
+        correct: false
+      - text: Khi chuẩn bị tắt máy tính đi về nhà
+        correct: false
+    explanation: Fixup + Autosquash là cặp đôi sửa lỗi hồi tố (retroactive fix)
+      nhanh nhất trong lịch sử Git.

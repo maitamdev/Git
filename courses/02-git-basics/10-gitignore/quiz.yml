@@ -1,0 +1,64 @@
+id: quiz-02-10-gitignore
+title: "Trắc nghiệm: Bỏ qua tệp tin với .gitignore"
+questions:
+  - id: q1
+    question: Mục đích cốt lõi của tệp .gitignore trong một dự án Git là gì?
+    type: single
+    options:
+      - text: Chỉ định danh sách các tệp tin và thư mục mà Git cần bỏ qua không theo dõi
+          và không commit
+        correct: true
+      - text: Tự động xóa vĩnh viễn các tệp mã nguồn bị lỗi cú pháp
+        correct: false
+      - text: Lưu trữ mật khẩu bảo mật của tài khoản GitHub
+        correct: false
+      - text: Chặn quyền truy cập mạng Internet của các thành viên trong nhóm
+        correct: false
+    explanation: "`.gitignore` khai báo các mẫu tệp rác hoặc tệp nhạy cảm mà Git
+      không bao giờ được đưa vào commit."
+  - id: q2
+    question: Quy tắc nào trong .gitignore sẽ bỏ qua toàn bộ các tệp tin có phần mở
+      rộng là `.log`?
+    type: single
+    options:
+      - text: "*.log"
+        correct: true
+      - text: delete.log
+        correct: false
+      - text: /log-all
+        correct: false
+      - text: ignore(.log)
+        correct: false
+    explanation: Dấu sao `*` là ký tự đại diện (wildcard) khớp với mọi chuỗi ký tự,
+      `*.log` bỏ qua mọi tệp đuôi .log.
+  - id: q3
+    question: Nếu một tệp tin bí mật đã lỡ bị commit vào lịch sử Git từ trước, việc
+      chỉ thêm tên tệp đó vào .gitignore có giúp loại bỏ nó khỏi lịch sử không?
+    type: single
+    options:
+      - text: Không, .gitignore chỉ có tác dụng với tệp Untracked; bạn phải dùng git rm
+          --cached để gỡ bỏ
+        correct: true
+      - text: Có, Git sẽ tự động xóa sạch tệp đó khỏi toàn bộ các commit trong quá khứ
+        correct: false
+      - text: Có, tệp đó sẽ tự động được mã hóa bằng mật khẩu quản trị
+        correct: false
+      - text: Git sẽ lập tức báo lỗi và từ chối khởi động
+        correct: false
+    explanation: Tệp đã được track thì .gitignore không có tác dụng; bạn phải chạy
+      `git rm --cached <file>` để ngừng theo dõi tệp.
+  - id: q4
+    question: Quy tắc thư mục nào dưới đây bỏ qua trọn vẹn thư mục `node_modules` ở
+      bất kỳ cấp độ nào?
+    type: single
+    options:
+      - text: node_modules/
+        correct: true
+      - text: <node_modules>
+        correct: false
+      - text: file:node_modules
+        correct: false
+      - text: skip node_modules
+        correct: false
+    explanation: Dấu gạch chéo ở cuối `node_modules/` chỉ định bỏ qua toàn bộ thư
+      mục và mọi nội dung con bên trong nó.

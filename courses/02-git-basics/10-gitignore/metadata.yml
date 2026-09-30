@@ -1,0 +1,22 @@
+id: 10-gitignore
+title: Bỏ qua tệp tin với .gitignore
+duration: 25
+xp: 80
+keywords:
+  - gitignore
+  - ignore files
+  - bo qua tep tin
+  - pattern
+  - node_modules
+prerequisites:
+  - 05-git-add
+objectives:
+  - Hiểu rõ mục đích và tầm quan trọng của tệp tin cấu hình `.gitignore`.
+  - "Nắm bắt các quy tắc mẫu (glob patterns) phổ biến: đuôi tệp, thư mục, ngoại
+    lệ phủ định."
+  - Biết cách xử lý tình huống tệp tin đã vô tình bị theo dõi trước khi thêm vào
+    .gitignore.
+commands:
+  - echo "node_modules/" >> .gitignore
+  - echo ".env" >> .gitignore
+  - git check-ignore -v <file>

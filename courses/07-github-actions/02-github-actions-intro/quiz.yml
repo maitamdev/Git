@@ -1,0 +1,64 @@
+id: quiz-07-github-actions-02-github-actions-intro
+title: "Trắc nghiệm: GitHub Actions là gì? Nền tảng tự động hóa của GitHub"
+questions:
+  - id: q1
+    question: GitHub Actions được lưu trữ và quản lý dưới dạng nào trong dự án?
+    type: single
+    options:
+      - text: Các tệp cấu hình YAML nằm trực tiếp trong kho lưu trữ mã nguồn
+        correct: true
+      - text: Các bảng dữ liệu SQL lưu trữ trên máy chủ nội bộ công ty
+        correct: false
+      - text: Các biểu mẫu cấu hình bằng tay trên một trang web thứ ba
+        correct: false
+      - text: Các tệp hình ảnh nhị phân được mã hóa đặc biệt
+        correct: false
+    explanation: GitHub Actions tuân thủ nguyên lý Configuration as Code, lưu trữ
+      các kịch bản tự động dưới dạng tệp văn bản YAML cùng với mã nguồn.
+  - id: q2
+    question: GitHub Actions có thể được kích hoạt bởi những sự kiện nào?
+    type: single
+    options:
+      - text: "Rất đa dạng: từ push, pull_request, tạo issue, gắn nhãn cho đến lịch định
+          kỳ cron"
+        correct: true
+      - text: Chỉ duy nhất khi người quản trị bấm nút bằng tay
+        correct: false
+      - text: Chỉ khi máy tính của người dùng bị khởi động lại
+        correct: false
+      - text: Chỉ vào đúng lúc 0 giờ đêm mỗi ngày
+        correct: false
+    explanation: GitHub Actions hỗ trợ hơn ba mươi loại sự kiện Webhook khác nhau
+      trong vòng đời của một kho lưu trữ GitHub.
+  - id: q3
+    question: Kho ứng dụng GitHub Marketplace mang lại lợi ích gì cho việc xây dựng
+      workflow?
+    type: single
+    options:
+      - text: Cho phép tái sử dụng hàng nghìn action được đóng gói sẵn từ các nhà phát
+          triển uy tín
+        correct: true
+      - text: Nơi mua bán các đoạn mã nguồn bí mật của công ty
+        correct: false
+      - text: Trang thương mại điện tử bán các thiết bị phần cứng máy chủ
+        correct: false
+      - text: Nơi đăng ký mua tên miền website cá nhân
+        correct: false
+    explanation: Marketplace giúp bạn không phải tự viết lại mọi logic từ đầu, ví dụ
+      như setup-node, checkout, upload-artifact đều đã có sẵn.
+  - id: q4
+    question: So với máy chủ CI tự quản lý như Jenkins, ưu điểm nổi bật của GitHub
+      Actions là gì?
+    type: single
+    options:
+      - text: Không tốn công bảo trì hạ tầng, tích hợp sẵn với tài khoản GitHub và bảo
+          mật mặc định
+        correct: true
+      - text: Hoàn toàn không cần viết bất kỳ dòng mã nào
+        correct: false
+      - text: Có thể chạy khi máy chủ không có nguồn điện
+        correct: false
+      - text: Không giới hạn dung lượng lưu trữ tệp video dung lượng terabyte
+        correct: false
+    explanation: GitHub Actions là dịch vụ SaaS do chính GitHub vận hành và cấp phát
+      máy ảo tự động, giúp kỹ sư tập trung hoàn toàn vào logic nghiệp vụ.

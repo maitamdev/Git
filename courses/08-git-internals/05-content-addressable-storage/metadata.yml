@@ -1,0 +1,22 @@
+id: 05-content-addressable-storage
+title: Bộ nhớ định danh theo nội dung (Content-Addressable Storage)
+duration: 30
+xp: 95
+keywords:
+  - content addressable
+  - cryptographic hashing
+  - sha-1
+  - deduplication
+  - immutability
+prerequisites:
+  - 04-object-database
+objectives:
+  - Hiểu sâu nguyên lý của Bộ nhớ định danh theo nội dung (Content-Addressable
+    Storage - CAS).
+  - "Nắm bắt cơ chế tự động khử trùng lặp (Deduplication) tuyệt hảo: hai tệp có
+    nội dung giống nhau chỉ tạo đúng một đối tượng."
+  - "Làm chủ công thức tiêu đề chuẩn mực của một đối tượng Git: <type>
+    <size>\\0<content>."
+commands:
+  - echo -e "test content\n" | git hash-object --stdin
+  - sha1sum

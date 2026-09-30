@@ -1,0 +1,67 @@
+id: quiz-04-12-code-review
+title: "Trắc nghiệm: Văn hóa và kỹ năng Code Review"
+questions:
+  - id: q1
+    question: Mục tiêu quan trọng và cao cả nhất của hoạt động Code Review trong một
+      nhóm phần mềm là gì?
+    type: single
+    options:
+      - text: Nâng cao chất lượng mã nguồn, phát hiện lỗi sớm và chia sẻ kiến thức
+          chuyên môn giữa các thành viên
+        correct: true
+      - text: Tìm lỗi để trừ lương hoặc hạ bậc khen thưởng của đồng nghiệp
+        correct: false
+      - text: Thể hiện quyền lực và chứng tỏ bản thân giỏi hơn người khác
+        correct: false
+      - text: Làm kéo dài thời gian phát triển dự án để không phải làm việc mới
+        correct: false
+    explanation: Code Review là cơ hội học hỏi và nâng cao chất lượng tập thể, hoàn
+      toàn không phải công cụ đánh giá kỷ luật cá nhân.
+  - id: q2
+    question: Tính năng "Suggested Changes" (Gợi ý thay đổi) trên giao diện GitHub
+      diff cho phép người review làm điều gì tuyệt vời?
+    type: single
+    options:
+      - text: Viết sẵn đoạn code thay thế chính xác để tác giả PR có thể chấp nhận và tự
+          động commit chỉ với một cú nhấp chuột
+        correct: true
+      - text: Tự động xóa tài khoản của người viết code sai
+        correct: false
+      - text: Tự động gửi tin nhắn trừ điểm rèn luyện của sinh viên
+        correct: false
+      - text: Tắt màn hình máy tính của tác giả PR từ xa
+        correct: false
+    explanation: Suggested Changes giúp đề xuất giải pháp trực quan và cho phép áp
+      dụng ngay thành commit mới mà không cần gõ lại.
+  - id: q3
+    question: Lựa chọn phản hồi "Request changes" trên GitHub nên được sử dụng trong
+      trường hợp nào sau đây?
+    type: single
+    options:
+      - text: Khi phát hiện lỗi logic nghiêm trọng, lỗ hổng bảo mật hoặc vi phạm kiến
+          trúc bắt buộc phải sửa trước khi merge
+        correct: true
+      - text: Khi bạn không thích màu hình đại diện đại diện của tác giả PR
+        correct: false
+      - text: Khi tác giả PR từ chối mời bạn đi uống trà sữa
+        correct: false
+      - text: Bất cứ khi nào bạn muốn trêu đùa đồng nghiệp cho vui
+        correct: false
+    explanation: "`Request changes` là rào chắn chặn không cho phép merge cho đến
+      khi tác giả sửa xong các vấn đề cốt lõi."
+  - id: q4
+    question: Thói quen xấu nào sau đây thể hiện sự thiếu trách nhiệm và nguy hại
+      nhất trong văn hóa Code Review?
+    type: single
+    options:
+      - text: Phê duyệt hời hợt (LGTM) mà không hề đọc hay kiểm tra kỹ lưỡng các dòng
+          code thay đổi
+        correct: true
+      - text: Khen ngợi một đoạn thuật toán sáng tạo của đồng nghiệp
+        correct: false
+      - text: Đặt câu hỏi để hiểu rõ hơn lý do lựa chọn giải pháp của tác giả
+        correct: false
+      - text: Chạy thử nghiệm tính năng trên máy cá nhân trước khi duyệt
+        correct: false
+    explanation: Review hời hợt tạo ra ảo tưởng về sự an toàn và là con đường ngắn
+      nhất để lọt các lỗi chết người vào production.

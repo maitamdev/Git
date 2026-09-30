@@ -1,0 +1,61 @@
+id: quiz-07-github-actions-04-workflow-yaml-syntax
+title: "Trắc nghiệm: .github/workflows và cú pháp YAML chuẩn"
+questions:
+  - id: q1
+    question: Tệp workflow của GitHub Actions bắt buộc phải được đặt ở đường dẫn nào
+      trong kho lưu trữ?
+    type: single
+    options:
+      - text: .github/workflows/
+        correct: true
+      - text: .github/actions/
+        correct: false
+      - text: workflows/github/
+        correct: false
+      - text: .ci/workflows/
+        correct: false
+    explanation: GitHub Actions chỉ quét và kích hoạt các workflow nằm chính xác
+      trong thư mục `.github/workflows/` ở nhánh mặc định hoặc nhánh đang xét.
+  - id: q2
+    question: Ký tự nào sau đây bị cấm dùng để thụt lề trong tệp cấu hình YAML chuẩn?
+    type: single
+    options:
+      - text: Ký tự Tab (	)
+        correct: true
+      - text: Dấu cách Space
+        correct: false
+      - text: Dấu hai chấm (:)
+        correct: false
+      - text: Dấu gạch ngang (-)
+        correct: false
+    explanation: Quy chuẩn YAML cấm tuyệt đối việc sử dụng phím Tab để thụt dòng vì
+      độ rộng của Tab có thể khác nhau giữa các hệ điều hành.
+  - id: q3
+    question: Quy ước số lượng dấu cách (Spaces) tiêu chuẩn cho mỗi cấp độ thụt lề
+      trong YAML là bao nhiêu?
+    type: single
+    options:
+      - text: 2 dấu cách (2 spaces)
+        correct: true
+      - text: 1 dấu cách
+        correct: false
+      - text: 5 dấu cách
+        correct: false
+      - text: 8 dấu cách
+        correct: false
+    explanation: Quy ước chuẩn của GitHub Actions và cộng đồng phát triển phần mềm
+      là sử dụng đúng 2 dấu cách cho mỗi tầng thụt lề.
+  - id: q4
+    question: Phần mở rộng nào sau đây là hợp lệ cho một tệp workflow GitHub Actions?
+    type: single
+    options:
+      - text: .yml hoặc .yaml
+        correct: true
+      - text: .json hoặc .xml
+        correct: false
+      - text: .config hoặc .ini
+        correct: false
+      - text: .sh hoặc .bash
+        correct: false
+    explanation: GitHub Actions chấp nhận cả hai định dạng phần mở rộng là `.yml` và
+      `.yaml`.

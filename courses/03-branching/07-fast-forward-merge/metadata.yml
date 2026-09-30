@@ -1,0 +1,26 @@
+id: 07-fast-forward-merge
+title: Hợp nhất nhanh Fast-forward merge
+duration: 30
+xp: 90
+keywords:
+  - fast-forward
+  - ff merge
+  - hop nhat nhanh
+  - git merge
+  - linear history
+prerequisites:
+  - 06-branch-isolation
+objectives:
+  - Hiểu rõ điều kiện cần và đủ để Git kích hoạt cơ chế hợp nhất Fast-forward
+    merge.
+  - Thực hiện câu lệnh `git merge <tên-nhánh>` trên nhánh đích một cách chuẩn
+    xác.
+  - Giải thích vì sao Fast-forward không sinh ra commit hợp nhất mới (merge
+    commit).
+  - Sử dụng cờ `--no-ff` để chủ động tạo merge commit khi muốn lưu vết lịch sử
+    nhánh tính năng.
+commands:
+  - git switch main
+  - git merge <tên-nhánh>
+  - git merge --no-ff <tên-nhánh>
+  - git merge --ff-only <tên-nhánh>

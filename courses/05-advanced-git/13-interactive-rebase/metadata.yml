@@ -1,0 +1,25 @@
+id: 13-interactive-rebase
+title: Interactive Rebase
+duration: 35
+xp: 120
+keywords:
+  - interactive rebase
+  - git rebase -i
+  - rebase tuong tac
+  - chinh sua lich su
+  - bien tap commit
+  - todo list git
+prerequisites:
+  - 12-git-rebase
+objectives:
+  - Hiểu rõ sức mạnh vượt trội của Interactive Rebase (`git rebase -i`) như một
+    công cụ biên tập lịch sử tối thượng.
+  - "Đọc hiểu và sử dụng thành thạo danh sách lệnh Todo của Interactive Rebase:
+    pick, reword, edit, squash, fixup, drop."
+  - Sắp xếp lại thứ tự xuất hiện của các commit trong chuỗi lịch sử cục bộ.
+  - Chuẩn bị một chuỗi commit chuyên nghiệp, sắc nét trước khi mở Pull Request.
+commands:
+  - git rebase -i HEAD~<số-lượng-commit>
+  - git rebase -i <commit-hash-gốc>
+  - git rebase --continue
+  - git rebase --abort

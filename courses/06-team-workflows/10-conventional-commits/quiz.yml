@@ -1,0 +1,96 @@
+id: quiz-06-10-conventional-commits
+title: "Trắc nghiệm: Conventional Commits"
+questions:
+  - id: q1
+    question: Tiền tố type nào sau đây trong Conventional Commits đại diện cho một
+      tính năng mới được thêm vào hệ thống?
+    type: single
+    options:
+      - text: feat
+        correct: true
+      - text: fix
+        correct: false
+      - text: chore
+        correct: false
+      - text: docs
+        correct: false
+    explanation: "`feat` (viết tắt của feature) là định danh chuẩn dùng khi bổ sung
+      một tính năng mới mang lại giá trị cho người dùng."
+  - id: q2
+    question: Khi bạn chỉ sửa đổi tài liệu hướng dẫn sử dụng trong tệp README.md thì
+      nên sử dụng tiền tố nào?
+    type: single
+    options:
+      - text: docs
+        correct: true
+      - text: feat
+        correct: false
+      - text: style
+        correct: false
+      - text: perf
+        correct: false
+    explanation: "`docs` là tiền tố dành riêng cho các thay đổi liên quan đến tài
+      liệu, hướng dẫn hoặc tài liệu API."
+  - id: q3
+    question: Cách thức chuẩn mực nào sau đây được dùng để báo hiệu một thay đổi phá
+      vỡ tính tương thích ngược (Breaking Change)?
+    type: single
+    options:
+      - text: Thêm dấu chấm than `!` ngay sau type/scope hoặc có đoạn `BREAKING CHANGE:`
+          ở phần footer
+        correct: true
+      - text: Gõ toàn bộ commit message bằng chữ in hoa kèm 10 dấu chấm than ở cuối
+        correct: false
+      - text: Xóa toàn bộ các tệp tin cũ trong kho lưu trữ
+        correct: false
+      - text: Gửi tin nhắn cảnh báo qua Zalo cho tất cả khách hàng
+        correct: false
+    explanation: Dấu `!` (ví dụ `feat(api)!:`) hoặc phần footer `BREAKING CHANGE:`
+      là cú pháp chuẩn được đặc tả quy định cho máy tính nhận diện.
+  - id: q4
+    question: Tiền tố `refactor` được sử dụng chính xác trong tình huống nào sau đây?
+    type: single
+    options:
+      - text: Cải tiến và tổ chức lại cấu trúc mã nguồn bên trong mà không làm thay đổi
+          tính năng hay sửa lỗi người dùng
+        correct: true
+      - text: Sửa một lỗi crash hệ thống vừa phát sinh
+        correct: false
+      - text: Viết thêm các bài kiểm thử unit test mới
+        correct: false
+      - text: Cập nhật phiên bản thư viện trong package.json
+        correct: false
+    explanation: "`refactor` chỉ tái cấu trúc mã nguồn để tăng tính dễ đọc và bảo
+      trì mà giữ nguyên vẹn hành vi bên ngoài của phần mềm."
+  - id: q5
+    question: Theo quy chuẩn thực hành tốt nhất của Conventional Commits, dòng tiêu
+      đề đầu tiên nên được viết như thế nào?
+    type: single
+    options:
+      - text: Viết ngắn gọn súc tích ở thể mệnh lệnh, chữ thường và không kết thúc bằng
+          dấu chấm
+        correct: true
+      - text: Viết một đoạn văn dài ít nhất 200 chữ có nhiều dấu chấm cảm
+        correct: false
+      - text: Chỉ cần ghi đúng một con số mã băm hash
+        correct: false
+      - text: Viết bằng bất kỳ biểu tượng cảm xúc emoji nào tùy thích
+        correct: false
+    explanation: Tiêu đề súc tích không có dấu chấm ở cuối giúp hiển thị sạch sẽ
+      trên giao diện GitHub và các công cụ dòng lệnh.
+  - id: q6
+    question: Lợi ích tự động hóa lớn nhất mà Conventional Commits mang lại cho quy
+      trình CI/CD hiện đại là gì?
+    type: single
+    options:
+      - text: Tự động tính toán số phiên bản phát hành mới (SemVer) và tự động tạo tệp
+          CHANGELOG.md chuyên nghiệp
+        correct: true
+      - text: Tự động viết toàn bộ mã nguồn của dự án mà không cần lập trình viên
+        correct: false
+      - text: Tự động thanh toán tiền lương vào tài khoản của tác giả
+        correct: false
+      - text: Tự động phát hiện lỗi chính tả tiếng Việt trong bình luận
+        correct: false
+    explanation: Công cụ tự động có thể quét các commit `feat` để tăng MINOR, commit
+      `fix` để tăng PATCH, và `BREAKING CHANGE` để tăng MAJOR.

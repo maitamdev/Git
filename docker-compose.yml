@@ -1,0 +1,129 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: gitacademy-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER:-gitacademy}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-gitacademy_secret}
+      POSTGRES_DB: ${DB_NAME:-gitacademy_db}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./migrations:/docker-entrypoint-initdb.d:ro
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-gitacademy} -d ${DB_NAME:-gitacademy_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - gitacademy-network
+
+  api:
+    build:
+      context: .
+      dockerfile: infra/docker/api/Dockerfile
+    container_name: gitacademy-api
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 3001
+      DATABASE_URL: postgresql://${DB_USER:-gitacademy}:${DB_PASSWORD:-gitacademy_secret}@postgres:5432/${DB_NAME:-gitacademy_db}
+      AUTH_SECRET: ${AUTH_SECRET:-super-secret-jwt-key-git-academy-2026}
+      APP_URL: ${APP_URL:-http://localhost}
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost}
+    ports:
+      - "3001:3001"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://localhost:3001/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - gitacademy-network
+
+  playground:
+    build:
+      context: .
+      dockerfile: infra/docker/node/Dockerfile
+    container_name: gitacademy-playground
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+    networks:
+      - gitacademy-network
+
+  nginx:
+    image: nginx:alpine
+    container_name: gitacademy-nginx
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./infra/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - api
+      - playground
+    networks:
+      - gitacademy-network
+
+  # Optional Moodle LMS integration service
+  mariadb:
+    image: mariadb:10.11
+    container_name: gitacademy-mariadb
+    restart: always
+    profiles:
+      - with-moodle
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MOODLE_ROOT_PASSWORD:-rootpassword}
+      MYSQL_DATABASE: moodle
+      MYSQL_USER: moodleuser
+      MYSQL_PASSWORD: ${MOODLE_DB_PASSWORD:-moodlepassword}
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - gitacademy-network
+
+  moodle:
+    image: bitnami/moodle:4.4
+    container_name: gitacademy-moodle
+    restart: always
+    profiles:
+      - with-moodle
+    depends_on:
+      - mariadb
+    environment:
+      MARIADB_HOST: mariadb
+      MARIADB_PORT_NUMBER: 3306
+      MOODLE_DATABASE_USER: moodleuser
+      MOODLE_DATABASE_PASSWORD: ${MOODLE_DB_PASSWORD:-moodlepassword}
+      MOODLE_DATABASE_NAME: moodle
+      MOODLE_SITE_NAME: "Git Academy Vietnam LMS"
+      MOODLE_USERNAME: ${MOODLE_ADMIN_USER:-admin}
+      MOODLE_PASSWORD: ${MOODLE_ADMIN_PASSWORD:-AdminPassword123!}
+    volumes:
+      - moodledata:/bitnami/moodledata
+      - moodle_app:/bitnami/moodle
+      - ./platform/moodle/theme/gitacademy:/bitnami/moodle/theme/gitacademy
+      - ./platform/moodle/local/gitacademy:/bitnami/moodle/local/gitacademy
+    networks:
+      - gitacademy-network
+
+volumes:
+  postgres_data:
+  mariadb_data:
+  moodledata:
+  moodle_app:
+
+networks:
+  gitacademy-network:
+    driver: bridge

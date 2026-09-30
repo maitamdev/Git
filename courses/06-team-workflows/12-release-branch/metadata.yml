@@ -1,0 +1,29 @@
+id: 12-release-branch
+title: Release Branch
+duration: 30
+xp: 95
+keywords:
+  - release branch
+  - nhanh phat hanh
+  - feature freeze
+  - dong bang tinh nang
+  - kiem thu hoi quy
+  - hardening sprint
+prerequisites:
+  - 11-semantic-versioning
+objectives:
+  - Nắm vững mục đích và vòng đời chuẩn của nhánh phát hành (Release Branch)
+    trong các quy trình phần mềm chuyên nghiệp.
+  - "Áp dụng quy tắc Đóng băng tính năng (Feature Freeze): nghiêm cấm code tính
+    năng mới, chỉ chấp nhận commit sửa lỗi và tài liệu."
+  - "Thực hiện quy trình hợp nhất kép (Dual-merge): hợp nhất vào main để phát
+    hành và hợp nhất ngược về develop để đồng bộ."
+  - Sử dụng Git Tag để niêm phong cột mốc phát hành chính thức sau khi nhánh
+    release hoàn thành sứ mệnh.
+commands:
+  - git switch -c release/v1.2.0 develop
+  - 'git commit -m "fix(video): resolve autoplay bug on firefox"'
+  - git switch main && git merge --no-ff release/v1.2.0
+  - git tag -a v1.2.0 -m "Release v1.2.0 official"
+  - git switch develop && git merge --no-ff release/v1.2.0
+  - git branch -d release/v1.2.0

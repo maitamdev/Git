@@ -1,0 +1,28 @@
+id: 16-reword-edit-drop
+title: Reword / Edit / Drop Commit
+duration: 30
+xp: 95
+keywords:
+  - reword commit
+  - edit commit
+  - drop commit
+  - sua thong diep
+  - sua noi dung commit
+  - xoa commit
+prerequisites:
+  - 13-interactive-rebase
+objectives:
+  - "Làm chủ 3 chỉ thị quyền năng còn lại của Interactive Rebase: `reword` (sửa
+    thông điệp), `edit` (sửa nội dung) và `drop` (xóa commit)."
+  - Sử dụng `reword` (hoặc `r`) để chuẩn hóa các commit message cũ sâu trong quá
+    khứ.
+  - Sử dụng `edit` (hoặc `e`) để tạm dừng tiến trình rebase, bổ sung thêm file
+    hoặc chia nhỏ commit đó.
+  - Sử dụng `drop` (hoặc `d`) để loại bỏ hoàn toàn các commit thử nghiệm không
+    còn giá trị.
+commands:
+  - r <commit-hash> (hoặc reword)
+  - e <commit-hash> (hoặc edit)
+  - d <commit-hash> (hoặc drop)
+  - git rebase --continue
+  - git reset HEAD~1 (trong lúc edit)

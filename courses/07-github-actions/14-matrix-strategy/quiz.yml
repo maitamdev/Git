@@ -1,0 +1,64 @@
+id: quiz-07-github-actions-14-matrix-strategy
+title: "Trắc nghiệm: Chiến lược ma trận kiểm thử đa môi trường (Matrix Strategy)"
+questions:
+  - id: q1
+    question: "Nếu ma trận khai báo `os: [ubuntu, windows]` và `node: [18, 20, 22]`,
+      có tổng cộng bao nhiêu Job con sẽ được sinh ra?"
+    type: single
+    options:
+      - text: 6 Jobs (2 x 3 = 6)
+        correct: true
+      - text: 5 Jobs (2 + 3 = 5)
+        correct: false
+      - text: 2 Jobs
+        correct: false
+      - text: 3 Jobs
+        correct: false
+    explanation: "Số lượng Job con được tính bằng tích Đề-các giữa số phần tử của
+      các chiều trong ma trận: 2 nhân 3 bằng 6."
+  - id: q2
+    question: "Thuộc tính `fail-fast: true` (mặc định) trong strategy có hành vi như
+      thế nào?"
+    type: single
+    options:
+      - text: Ngay khi một Job con trong ma trận bị lỗi, GitHub Actions lập tức hủy bỏ
+          tất cả các Job con còn lại đang chạy
+        correct: true
+      - text: Tự động sửa lỗi cho các bài kiểm thử
+        correct: false
+      - text: Ép các Job con phải chạy thật nhanh gấp đôi
+        correct: false
+      - text: Bỏ qua hoàn toàn bài test bị lỗi mà không thông báo
+        correct: false
+    explanation: "`fail-fast: true` giúp tiết kiệm chi phí bằng cách dừng ngay toàn
+      bộ ma trận khi đã phát hiện có ít nhất một môi trường bị lỗi."
+  - id: q3
+    question: Cú pháp nào sau đây dùng để truy cập giá trị của biến `version` đang
+      xét trong Step của ma trận?
+    type: single
+    options:
+      - text: ${{ matrix.version }}
+        correct: true
+      - text: ${{ env.version }}
+        correct: false
+      - text: ${{ job.version }}
+        correct: false
+      - text: $MATRIX_VERSION
+        correct: false
+    explanation: Ngữ cảnh `matrix` chứa giá trị hiện tại của các biến ma trận được
+      gán riêng cho từng Job con cụ thể.
+  - id: q4
+    question: Thuộc tính nào cho phép bạn loại bỏ một tổ hợp cụ thể không mong muốn
+      khỏi ma trận?
+    type: single
+    options:
+      - text: exclude
+        correct: true
+      - text: remove
+        correct: false
+      - text: ignore
+        correct: false
+      - text: skip
+        correct: false
+    explanation: Từ khóa `exclude:` trong cấu hình ma trận dùng để định nghĩa các
+      cặp giá trị cần loại trừ khỏi danh sách thực thi.

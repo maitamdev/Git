@@ -1,0 +1,27 @@
+id: 18-git-tag
+title: git tag
+duration: 25
+xp: 80
+keywords:
+  - git tag
+  - lightweight tag
+  - gan the phien ban
+  - danh dau moc
+  - release marker
+  - tag git
+prerequisites:
+  - 08-commit-amend
+objectives:
+  - Hiểu rõ khái niệm và vai trò của Tag trong Git như các mốc đánh dấu phiên
+    bản bất biến.
+  - Phân biệt rõ ràng giữa con trỏ nhánh (Branch - di chuyển liên tục) và con
+    trỏ thẻ (Tag - đứng yên vĩnh viễn).
+  - Tạo và quản lý các thẻ Lightweight Tag (Thẻ nhẹ) nhanh chóng.
+  - Đẩy thẻ lên máy chủ từ xa và xóa thẻ khi không còn sử dụng.
+commands:
+  - git tag
+  - git tag <tên-thẻ>
+  - git tag <tên-thẻ> <commit-hash>
+  - git push origin <tên-thẻ>
+  - git push origin --tags
+  - git tag -d <tên-thẻ>

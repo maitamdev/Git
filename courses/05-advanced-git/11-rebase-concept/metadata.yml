@@ -1,0 +1,25 @@
+id: 11-rebase-concept
+title: Rebase là gì?
+duration: 25
+xp: 85
+keywords:
+  - rebase concept
+  - rebase la gi
+  - rebase vs merge
+  - tuyen tinh hoa lich su
+  - viet lai lich su
+  - base commit
+prerequisites:
+  - 10-git-cherry-pick
+objectives:
+  - Nắm vững khái niệm và triết lý thiết kế cốt lõi của Rebase trong Git.
+  - Hiểu rõ thuật ngữ "Re-base" (thay đổi điểm tựa gốc rễ của nhánh tính năng).
+  - So sánh chi tiết sự khác nhau về triết lý và cấu trúc cây lịch sử giữa Merge
+    và Rebase.
+  - Hiểu rõ khái niệm lịch sử tuyến tính (Linear History) và lợi ích của nó đối
+    với các dự án lớn.
+commands:
+  - git switch <nhánh-tính-năng>
+  - git fetch origin
+  - git rebase origin/main
+  - git log --oneline --graph

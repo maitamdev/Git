@@ -1,0 +1,21 @@
+id: 07-commit-message
+title: Chuẩn quy ước Commit Message
+duration: 20
+xp: 60
+keywords:
+  - commit message
+  - conventional commits
+  - feat
+  - fix
+  - quy uoc
+prerequisites:
+  - 06-git-commit
+objectives:
+  - Nắm vững cấu trúc chuẩn của quy ước Conventional Commits quốc tế.
+  - "Sử dụng thành thạo các tiền tố tiêu chuẩn: feat, fix, docs, style,
+    refactor, test, chore."
+  - Hiểu tầm quan trọng của việc viết thông điệp commit rõ ràng phục vụ việc
+    sinh tự động Changelog.
+commands:
+  - 'git commit -m "feat(scope): short description"'
+  - 'git commit -m "fix: resolve memory leak in worker"'

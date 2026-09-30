@@ -1,0 +1,64 @@
+id: quiz-04-10-upstream
+title: "Trắc nghiệm: Cấu hình Upstream trong Open Source"
+questions:
+  - id: q1
+    question: Trong quy trình đóng góp mã nguồn mở, bí danh remote `upstream` đại
+      diện cho địa chỉ nào?
+    type: single
+    options:
+      - text: Kho lưu trữ gốc ban đầu của tác giả hoặc tổ chức sáng lập dự án
+        correct: true
+      - text: Kho fork trên tài khoản cá nhân của bạn
+        correct: false
+      - text: Một trang web sao lưu đám mây bí mật
+        correct: false
+      - text: Máy chủ kiểm thử nội bộ trong nhà riêng của bạn
+        correct: false
+    explanation: "`upstream` là quy ước đặt tên cho remote trỏ về kho nguồn cội ban
+      đầu (Original Repo)."
+  - id: q2
+    question: Lệnh nào sau đây dùng để thiết lập liên kết remote `upstream` trỏ tới
+      kho gốc của dự án?
+    type: single
+    options:
+      - text: git remote add upstream https://github.com/original-author/repo.git
+        correct: true
+      - text: git link upstream https://github.com/original-author/repo.git
+        correct: false
+      - text: git remote set-parent https://github.com/original-author/repo.git
+        correct: false
+      - text: git upstream connect https://github.com/original-author/repo.git
+        correct: false
+    explanation: "`git remote add <tên> <url>` là cú pháp chuẩn để gắn thêm liên kết
+      remote mới."
+  - id: q3
+    question: Quy trình chuẩn 3 bước để đồng bộ mã nguồn mới nhất từ kho gốc về kho
+      fork cá nhân trên GitHub là gì?
+    type: single
+    options:
+      - text: git fetch upstream -> git merge upstream/main -> git push origin main
+        correct: true
+      - text: git push upstream main -> git pull origin main -> git status
+        correct: false
+      - text: git delete fork -> git clone -> git commit
+        correct: false
+      - text: git reset --hard -> git remote remove -> git clone
+        correct: false
+    explanation: Tải từ gốc (fetch upstream) -> gộp vào máy (merge) -> đẩy lên fork
+      cá nhân (push origin).
+  - id: q4
+    question: Điều gì sẽ xảy ra nếu bạn cố gắng chạy lệnh `git push upstream main`
+      trên một dự án mã nguồn mở lớn?
+    type: single
+    options:
+      - text: Lệnh sẽ bị từ chối với lỗi Permission denied vì bạn không có quyền ghi
+          trực tiếp vào kho của tác giả
+        correct: true
+      - text: Mã nguồn của bạn sẽ tự động ghi đè lên toàn bộ hệ thống của tác giả
+        correct: false
+      - text: GitHub sẽ tự động sa thải tác giả dự án
+        correct: false
+      - text: Máy tính của bạn sẽ bị mất bản quyền Git
+        correct: false
+    explanation: Bạn chỉ có quyền đọc (clone/fetch) kho gốc; quyền ghi chỉ dành cho
+      maintainers của dự án.

@@ -1,0 +1,27 @@
+id: 10-upstream
+title: Cấu hình Upstream cho dự án mã nguồn mở
+duration: 25
+xp: 85
+keywords:
+  - upstream
+  - sync fork
+  - remote upstream
+  - dong bo kho goc
+  - open source workflow
+prerequisites:
+  - 09-fork
+objectives:
+  - Hiểu rõ khái niệm và quy ước đặt tên remote `upstream` trong quy trình làm
+    việc với kho fork.
+  - Cấu hình thêm remote `upstream` trỏ về kho gốc của tác giả bằng câu lệnh
+    `git remote add`.
+  - Đồng bộ hóa mã nguồn mới nhất từ kho gốc về máy cá nhân và cập nhật lên kho
+    fork.
+  - Ngăn ngừa tình trạng kho fork bị phân kỳ quá xa so với tiến độ phát triển
+    của dự án chính.
+commands:
+  - git remote add upstream <url-kho-goc>
+  - git remote -v
+  - git fetch upstream
+  - git merge upstream/main
+  - git push origin main

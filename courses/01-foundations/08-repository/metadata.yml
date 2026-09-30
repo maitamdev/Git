@@ -1,0 +1,22 @@
+id: 08-repository
+title: Repository là gì? Cấu trúc .git
+duration: 20
+xp: 60
+keywords:
+  - repository
+  - kho luu tru
+  - thu muc .git
+  - objects
+  - refs
+  - head
+prerequisites:
+  - 07-git-config
+objectives:
+  - Hiểu rõ bản chất kỹ thuật của Repository (Kho lưu trữ) trong Git.
+  - Khám phá cấu trúc bên trong của thư mục ẩn `.git` (objects, refs, HEAD,
+    config, index).
+  - Nắm được nguyên tắc không chỉnh sửa thủ công các tệp tin bên trong thư mục
+    `.git`.
+commands:
+  - ls -la
+  - git status

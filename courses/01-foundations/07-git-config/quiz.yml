@@ -1,0 +1,61 @@
+id: quiz-07-git-config
+title: "Trắc nghiệm: Cấu hình danh tính với git config"
+questions:
+  - id: q1
+    question: Hai thông số cấu hình tối thiểu bắt buộc phải thiết lập trước khi tạo
+      commit đầu tiên là gì?
+    type: single
+    options:
+      - text: user.name và user.email
+        correct: true
+      - text: user.password và user.token
+        correct: false
+      - text: system.port và network.ip
+        correct: false
+      - text: github.username và github.apikey
+        correct: false
+    explanation: Git yêu cầu tên tác giả (user.name) và email (user.email) để nhúng
+      vào thông tin commit.
+  - id: q2
+    question: Cấp độ cấu hình nào có độ ưu tiên cao nhất trong Git?
+    type: single
+    options:
+      - text: --local (Cấu hình riêng trong repository hiện tại)
+        correct: true
+      - text: --global (Cấu hình cho toàn bộ tài khoản người dùng)
+        correct: false
+      - text: --system (Cấu hình cho toàn bộ máy tính)
+        correct: false
+      - text: Tất cả các cấp độ đều có độ ưu tiên ngang nhau
+        correct: false
+    explanation: Cấu hình `--local` ghi trong `.git/config` có độ ưu tiên cao nhất,
+      đè lên `--global` và `--system`.
+  - id: q3
+    question: Lệnh nào sau đây dùng để xem tất cả các thiết lập cấu hình Git đang có
+      hiệu lực?
+    type: single
+    options:
+      - text: git config --list
+        correct: true
+      - text: git show-config-all
+        correct: false
+      - text: git config --print-screen
+        correct: false
+      - text: git status --config
+        correct: false
+    explanation: "`git config --list` hoặc `git config -l` in ra toàn bộ các cặp
+      key=value đang có hiệu lực."
+  - id: q4
+    question: Thông tin `user.email` trong git config có vai trò gì trên GitHub?
+    type: single
+    options:
+      - text: Dùng để ánh xạ commit vào tài khoản GitHub tương ứng và tính điểm đóng góp
+        correct: true
+      - text: Dùng làm mật khẩu để đăng nhập vào trang web GitHub
+        correct: false
+      - text: Dùng để gửi email thông báo mã nguồn bị lỗi cú pháp
+        correct: false
+      - text: Dùng để thanh toán hóa đơn lưu trữ đám mây hàng tháng
+        correct: false
+    explanation: GitHub đối chiếu email trong tác giả commit với email trong tài
+      khoản để hiển thị avatar và biểu đồ đóng góp.

@@ -1,0 +1,23 @@
+id: 05-git-checkout
+title: Lệnh git checkout và lịch sử
+duration: 20
+xp: 70
+keywords:
+  - git checkout
+  - lich su git
+  - switch vs checkout
+  - da nang
+  - legacy command
+prerequisites:
+  - 04-git-switch
+objectives:
+  - Hiểu bối cảnh lịch sử và tính đa năng của lệnh truyền thống `git checkout`.
+  - "Phân biệt rõ ràng các trường hợp sử dụng của `git checkout`: chuyển nhánh,
+    xem commit cũ, và hoàn tác tệp."
+  - Nắm bắt lý do chuyển dịch sang bộ đôi lệnh hiện đại `git switch` và `git
+    restore`.
+commands:
+  - git checkout <tên-nhánh>
+  - git checkout -b <tên-nhánh-mới>
+  - git checkout <commit-hash>
+  - git checkout -- <tên-tệp>

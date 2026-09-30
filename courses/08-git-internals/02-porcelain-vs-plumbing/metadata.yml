@@ -1,0 +1,23 @@
+id: 02-porcelain-vs-plumbing
+title: Phân biệt Porcelain Commands vs Plumbing Commands
+duration: 25
+xp: 85
+keywords:
+  - porcelain
+  - plumbing
+  - low level commands
+  - high level commands
+  - git architecture
+prerequisites:
+  - 01-git-internals-intro
+objectives:
+  - "Phân biệt rõ ràng giữa hai tầng câu lệnh trong Git: Porcelain (gốm sứ cao
+    cấp) và Plumbing (ống nước ngầm)."
+  - Hiểu cách các lệnh Porcelain thân thiện (git add, git commit) phối hợp nhiều
+    lệnh Plumbing bên dưới.
+  - "Làm quen với các lệnh Plumbing cơ bản: git hash-object, git cat-file, git
+    update-index, git write-tree, git commit-tree."
+commands:
+  - git commit -m "msg"
+  - git write-tree
+  - git commit-tree

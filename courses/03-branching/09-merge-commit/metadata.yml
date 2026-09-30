@@ -1,0 +1,25 @@
+id: 09-merge-commit
+title: Bản chất của Merge commit
+duration: 25
+xp: 80
+keywords:
+  - merge commit
+  - hai commit cha
+  - parents
+  - dag node
+  - linear vs non-linear
+prerequisites:
+  - 08-three-way-merge
+objectives:
+  - Hiểu rõ cấu trúc nội tại của một đối tượng Merge Commit trong cơ sở dữ liệu
+    Git.
+  - Giải thích ý nghĩa của thuộc tính đa phụ huynh (multiple parents) trong đồ
+    thị DAG.
+  - So sánh ưu và nhược điểm giữa chiến lược giữ Merge Commit và chiến lược làm
+    phẳng lịch sử (Rebase/Squash).
+  - Sử dụng lệnh `git show` và `git log` để phân tích các commit cha của một
+    merge commit.
+commands:
+  - git show <merge-commit-hash>
+  - git log --merges --oneline
+  - git log --no-merges --oneline

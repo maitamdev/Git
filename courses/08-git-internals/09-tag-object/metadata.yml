@@ -1,0 +1,23 @@
+id: 09-tag-object
+title: "Đối tượng Tag: Đánh dấu phiên bản có chú thích (Annotated Tag)"
+duration: 30
+xp: 90
+keywords:
+  - tag object
+  - annotated tag
+  - lightweight tag
+  - release milestone
+  - gpg signature
+prerequisites:
+  - 08-commit-object
+objectives:
+  - Phân biệt rõ ràng giữa Lightweight Tag (thẻ rút gọn) và Annotated Tag (thẻ
+    có chú thích lưu thành đối tượng riêng).
+  - "Khám phá cấu trúc của đối tượng Tag trong cơ sở dữ liệu: object trỏ tới,
+    type, tag name, tagger và message."
+  - Sử dụng các lệnh plumbing để kiểm tra tính toàn vẹn và chữ ký số GPG gắn
+    trên đối tượng Tag.
+commands:
+  - git tag -a v1.0.0 -m "Release version 1.0.0"
+  - git cat-file -p refs/tags/v1.0.0
+  - git cat-file -t v1.0.0

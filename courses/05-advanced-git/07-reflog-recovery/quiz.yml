@@ -1,0 +1,66 @@
+id: quiz-05-07-reflog-recovery
+title: "Trắc nghiệm: Cứu hộ commit với reflog"
+questions:
+  - id: q1
+    question: Sau khi xác định được mã hash `c4d5e6f` của commit bị mất trong
+      reflog, câu lệnh an toàn và chuyên nghiệp nhất để hồi sinh commit đó là
+      gì?
+    type: single
+    options:
+      - text: git branch restored-branch c4d5e6f
+        correct: true
+      - text: git delete c4d5e6f
+        correct: false
+      - text: git init --restore c4d5e6f
+        correct: false
+      - text: git push --force c4d5e6f
+        correct: false
+    explanation: "`git branch <tên-nhánh> <hash>` tạo một con trỏ nhánh mới neo giữ
+      commit đó, đưa nó trở lại cây lịch sử hoàn toàn an toàn."
+  - id: q2
+    question: Nếu bạn vừa lỡ tay gõ `git branch -D feature-x` xóa mất nhánh khi chưa
+      merge, bạn có thể cứu lại được không?
+    type: single
+    options:
+      - text: Hoàn toàn cứu được, chỉ cần tìm mã hash của đỉnh nhánh feature-x trong
+          reflog rồi tạo lại nhánh
+        correct: true
+      - text: Không thể cứu được vì cờ -D là xóa vĩnh viễn
+        correct: false
+      - text: Chỉ cứu được nếu có lưu file ra USB bên ngoài
+        correct: false
+      - text: Phải liên hệ với bộ phận hỗ trợ khách hàng của GitHub
+        correct: false
+    explanation: Xóa nhánh chỉ là xóa con trỏ tên nhánh; các commit vẫn nằm nguyên
+      vẹn trong kho và có thể tái tạo lại nhánh dễ dàng qua reflog.
+  - id: q3
+    question: Trong tình huống bạn lỡ tay chạy `git reset --hard HEAD~1`, câu lệnh
+      một dòng nào đưa bạn quay trở lại ngay lập tức trạng thái trước khi reset?
+    type: single
+    options:
+      - text: git reset --hard HEAD@{1}
+        correct: true
+      - text: git undo reset
+        correct: false
+      - text: git revert HEAD
+        correct: false
+      - text: git restore --previous
+        correct: false
+    explanation: Trước khi reset con trỏ ở vị trí `HEAD@{1}`, lệnh `git reset --hard
+      HEAD@{1}` lập tức đưa bạn trở lại vị trí đó.
+  - id: q4
+    question: Tại sao việc giữ bình tĩnh và không gõ bừa bãi các lệnh khác khi phát
+      hiện mất commit lại cực kỳ quan trọng?
+    type: single
+    options:
+      - text: Để tránh việc sinh ra quá nhiều bản ghi mới làm trôi mất vị trí cần tìm
+          trong danh sách reflog
+        correct: true
+      - text: Để máy tính không bị quá tải bộ nhớ RAM
+        correct: false
+      - text: Để hệ điều hành không tự động khóa bàn phím
+        correct: false
+      - text: Vì nếu gõ quá nhanh Git sẽ tự động thoát
+        correct: false
+    explanation: Gõ nhiều lệnh dịch chuyển HEAD sẽ tạo thêm nhiều dòng `HEAD@{n}`,
+      làm phức tạp và đẩy xa vị trí commit cần cứu.

@@ -1,0 +1,23 @@
+id: 10-env-variables
+title: Biến môi trường (Environment Variables) cấp workflow, job và step
+duration: 30
+xp: 90
+keywords:
+  - env variables
+  - environment variables
+  - scope
+  - default env vars
+  - dotenv
+prerequisites:
+  - 09-run-vs-uses
+objectives:
+  - "Làm chủ từ khóa env và cơ chế kế thừa phạm vi (scope): cấp Workflow, cấp
+    Job và cấp Step."
+  - "Sử dụng các biến môi trường mặc định có sẵn của GitHub: GITHUB_SHA,
+    GITHUB_REF, GITHUB_REPOSITORY."
+  - Biết cách đọc biến môi trường trong câu lệnh shell ($ENV_VAR) và truyền biến
+    giữa các bước.
+commands:
+  - echo $GITHUB_SHA
+  - echo $NODE_ENV
+  - printenv

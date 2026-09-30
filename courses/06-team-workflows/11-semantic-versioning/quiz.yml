@@ -1,0 +1,65 @@
+id: quiz-06-11-semantic-versioning
+title: "Trắc nghiệm: Semantic Versioning"
+questions:
+  - id: q1
+    question: Khi bạn chỉ thực hiện sửa lỗi mã nguồn mà không thêm tính năng mới và
+      không làm hỏng tương thích ngược thì con số nào tăng lên?
+    type: single
+    options:
+      - text: PATCH (ví dụ từ 1.0.0 lên 1.0.1)
+        correct: true
+      - text: MINOR (ví dụ từ 1.0.0 lên 1.1.0)
+        correct: false
+      - text: MAJOR (ví dụ từ 1.0.0 lên 2.0.0)
+        correct: false
+      - text: Không được tăng số nào cả
+        correct: false
+    explanation: Chỉ số PATCH dành riêng cho các bản vá lỗi (bug fixes) bảo đảm an
+      toàn và tương thích tuyệt đối cho người dùng.
+  - id: q2
+    question: Khi một thư viện xóa bỏ hoàn toàn một hàm công khai mà khách hàng đang
+      sử dụng, thư viện đó BẮT BUỘC phải tăng con số nào?
+    type: single
+    options:
+      - text: MAJOR vì đây là thay đổi phá vỡ tính tương thích ngược (Breaking Change)
+        correct: true
+      - text: Chỉ cần tăng PATCH để người dùng không chú ý
+        correct: false
+      - text: Tăng MINOR vì đã xóa bớt code cho nhẹ
+        correct: false
+      - text: Giữ nguyên phiên bản cũ
+        correct: false
+    explanation: Bất kỳ thay đổi nào khiến mã nguồn của người dùng hiện tại bị lỗi
+      khi nâng cấp đều bắt buộc phải tăng MAJOR theo chuẩn SemVer.
+  - id: q3
+    question: Sau khi tăng chỉ số MINOR từ phiên bản `1.4.3`, số phiên bản mới chính
+      xác sẽ là gì?
+    type: single
+    options:
+      - text: 1.5.0 (chỉ số PATCH được reset về 0)
+        correct: true
+      - text: 1.5.3 (giữ nguyên chỉ số PATCH cũ)
+        correct: false
+      - text: 2.0.0
+        correct: false
+      - text: 1.4.4
+        correct: false
+    explanation: Theo đặc tả SemVer, khi một con số ở bậc cao hơn tăng lên, tất cả
+      các con số ở bậc thấp hơn phía sau nó bắt buộc phải được reset về số 0.
+  - id: q4
+    question: Các phiên bản có số MAJOR bằng 0 (ví dụ `0.3.2`) mang ý nghĩa quy ước
+      gì trong SemVer?
+    type: single
+    options:
+      - text: Giai đoạn phát triển thử nghiệm ban đầu (Initial Development), API chưa ổn
+          định và có thể thay đổi bất cứ lúc nào
+        correct: true
+      - text: Phiên bản hoàn hảo không bao giờ có lỗi
+        correct: false
+      - text: Phiên bản đã bị tác giả khai tử và không được dùng nữa
+        correct: false
+      - text: Phần mềm chỉ chạy được trên hệ điều hành 32-bit
+        correct: false
+    explanation: Giai đoạn `0.x.x` dành cho các sản phẩm sơ khai đang hoàn thiện
+      kiến trúc, không ràng buộc bởi quy tắc tương thích nghiêm ngặt của phiên
+      bản ổn định 1.0.0.

@@ -1,0 +1,65 @@
+id: quiz-03-04-git-switch
+title: "Trắc nghiệm: Chuyển nhánh với git switch"
+questions:
+  - id: q1
+    question: Lệnh nào dưới đây vừa tạo một nhánh mới có tên `feature-login` vừa
+      chuyển sang nhánh đó ngay lập tức?
+    type: single
+    options:
+      - text: git switch -c feature-login
+        correct: true
+      - text: git switch --make feature-login
+        correct: false
+      - text: git switch feature-login --new
+        correct: false
+      - text: git switch -a feature-login
+        correct: false
+    explanation: Cờ `-c` (viết tắt của create) vừa tạo nhánh mới vừa chuyển HEAD
+      sang nhánh đó ngay.
+  - id: q2
+    question: Cú pháp phím tắt tiện lợi `git switch -` (dấu gạch nối ở cuối) thực
+      hiện hành động gì?
+    type: single
+    options:
+      - text: Chuyển quay trở lại nhánh mà bạn vừa đứng ngay trước đó
+        correct: true
+      - text: Xóa nhánh hiện tại ngay lập tức
+        correct: false
+      - text: Tắt kết nối mạng của Git
+        correct: false
+      - text: Đảo ngược thứ tự các commit trong lịch sử
+        correct: false
+    explanation: Dấu gạch nối `-` đại diện cho nhánh trước đó (tương tự `cd -` trong
+      terminal shell Unix).
+  - id: q3
+    question: Tại sao tổ chức phát triển Git lại giới thiệu lệnh `git switch` tách
+      riêng khỏi lệnh cũ `git checkout`?
+    type: single
+    options:
+      - text: Để phân tách rõ ràng trách nhiệm chuyển nhánh ra khỏi phục hồi tệp tin,
+          tránh tai nạn mất code do gõ nhầm
+        correct: true
+      - text: Vì lệnh git checkout bị công ty đối thủ mua lại bản quyền thương hiệu
+        correct: false
+      - text: Vì lệnh git switch giúp tăng tốc độ mạng Internet lên gấp mười lần
+        correct: false
+      - text: Vì lệnh git checkout không chạy được trên hệ điều hành Linux
+        correct: false
+    explanation: Git 2.23 chia checkout thành `git switch` (cho branch) và `git
+      restore` (cho file) để tránh nhầm lẫn.
+  - id: q4
+    question: Khi bạn chuyển từ nhánh A sang nhánh B, các tệp tin trong Working
+      Directory trên ổ đĩa sẽ như thế nào?
+    type: single
+    options:
+      - text: Git tự động cập nhật nội dung các tệp trên đĩa khớp hoàn toàn với commit
+          đỉnh của nhánh B
+        correct: true
+      - text: Các tệp tin bị xóa sạch hoàn toàn và bạn phải gõ lại code từ đầu
+        correct: false
+      - text: Nội dung các tệp vẫn giữ nguyên 100% của nhánh A mà không có thay đổi nào
+        correct: false
+      - text: Git tự động sao lưu tất cả tệp ra ngoài màn hình Desktop
+        correct: false
+    explanation: Git thay đổi trạng thái Working Directory để phản ánh chính xác
+      snapshot của nhánh bạn vừa chuyển tới.

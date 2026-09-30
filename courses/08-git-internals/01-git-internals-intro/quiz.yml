@@ -1,0 +1,64 @@
+id: quiz-08-git-internals-01-git-internals-intro
+title: "Trắc nghiệm: Git Internals là gì? Bí mật dưới nắp ca-pô của Git"
+questions:
+  - id: q1
+    question: Về mặt bản chất kiến trúc cốt lõi, Git thực sự là gì?
+    type: single
+    options:
+      - text: Một hệ thống tệp tin định danh theo nội dung (Content-Addressable File
+          System)
+        correct: true
+      - text: Một cơ sở dữ liệu quan hệ SQL truyền thống
+        correct: false
+      - text: Một chương trình nén tệp tin đơn thuần như WinRAR
+        correct: false
+      - text: Một dịch vụ lưu trữ đám mây của Microsoft
+        correct: false
+    explanation: Git được thiết kế xoay quanh cơ sở dữ liệu khóa-giá trị, trong đó
+      khóa chính là mã băm SHA-1 của nội dung dữ liệu.
+  - id: q2
+    question: Toàn bộ siêu dữ liệu, lịch sử commit và cấu hình của một kho lưu trữ
+      Git được lưu trữ ở đâu?
+    type: single
+    options:
+      - text: Nằm trọn vẹn trong thư mục ẩn `.git/` tại thư mục gốc của dự án
+        correct: true
+      - text: Lưu trữ trên máy chủ của GitHub tại Mỹ
+        correct: false
+      - text: Lưu trong Registry của hệ điều hành Windows
+        correct: false
+      - text: Lưu rải rác trong từng tệp tin mã nguồn
+        correct: false
+    explanation: Tính phân tán của Git thể hiện ở chỗ toàn bộ lịch sử và đối tượng
+      đều được đóng gói đầy đủ trong thư mục `.git`.
+  - id: q3
+    question: Mô hình lưu trữ dữ liệu của Git khác gì so với các hệ thống VCS đời cũ
+      như SVN hay CVS?
+    type: single
+    options:
+      - text: Git lưu trữ ảnh chụp toàn diện (Snapshot) của toàn bộ dự án, trong khi SVN
+          lưu trữ danh sách các dòng thay đổi (Delta/Diff)
+        correct: true
+      - text: Git chỉ lưu trữ mã nguồn tệp tin dạng văn bản thuần
+        correct: false
+      - text: Git không hỗ trợ lưu trữ tệp hình ảnh
+        correct: false
+      - text: Hai hệ thống có cơ chế lưu trữ hoàn toàn giống hệt nhau
+        correct: false
+    explanation: Mỗi commit trong Git là một snapshot toàn diện của cây thư mục tại
+      thời điểm đó, chứ không phải một chuỗi các bản vá vi phân tích lũy.
+  - id: q4
+    question: Bốn thành phần trụ cột nền tảng của Git Internals bao gồm những thành
+      phần nào?
+    type: single
+    options:
+      - text: Object Database, References (Refs), HEAD pointer, và Index (Staging Area)
+        correct: true
+      - text: CPU, RAM, Ổ cứng và Card mạng
+        correct: false
+      - text: HTML, CSS, JavaScript và TypeScript
+        correct: false
+      - text: Commit, Push, Pull và Merge
+        correct: false
+    explanation: Bốn thực thể này phối hợp với nhau để tạo nên toàn bộ các tính năng
+      phân nhánh, ghi vết và hợp nhất của Git.

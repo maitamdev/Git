@@ -1,0 +1,24 @@
+id: 03-origin-concept
+title: origin trong Git là gì?
+duration: 20
+xp: 70
+keywords:
+  - origin
+  - default remote
+  - ten mac dinh
+  - quy uoc git
+  - remote name
+prerequisites:
+  - 02-git-remote
+objectives:
+  - Giải thích bản chất tên gọi `origin` trong Git như một quy ước đặt tên mặc
+    định.
+  - Hiểu vì sao khi clone một dự án, Git tự động đặt tên remote chính là
+    `origin`.
+  - Biết rằng `origin` hoàn toàn có thể đổi thành bất kỳ tên nào khác tùy thích.
+  - Phân biệt rõ ràng giữa tên gọi `origin` và các từ khóa kỹ thuật bắt buộc của
+    hệ thống.
+commands:
+  - git remote -v
+  - git remote rename origin my-server
+  - git remote rename my-server origin

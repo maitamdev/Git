@@ -1,0 +1,23 @@
+id: 03-head-snapshot
+title: Repository & HEAD Snapshot
+duration: 25
+xp: 70
+keywords:
+  - repository
+  - head
+  - snapshot
+  - commit graph
+  - kho luu tru
+prerequisites:
+  - 02-staging-area
+objectives:
+  - "Hiểu rõ khu vực thứ ba trong kiến trúc Git: Repository và cơ sở dữ liệu đối
+    tượng."
+  - Nắm bắt khái niệm con trỏ HEAD và cách nó trỏ tới commit hiện tại của nhánh
+    làm việc.
+  - Phân biệt snapshot bất biến trong Repository với các tệp tin khả biến trong
+    Working Tree.
+commands:
+  - git log --oneline
+  - git show HEAD
+  - cat .git/HEAD

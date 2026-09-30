@@ -1,0 +1,22 @@
+id: 19-reusable-workflows
+title: Tái sử dụng luồng công việc với Reusable Workflows (workflow_call)
+duration: 35
+xp: 110
+keywords:
+  - reusable workflows
+  - workflow call
+  - modular ci
+  - dry principle
+  - enterprise standard
+prerequisites:
+  - 18-environments-and-deployment
+objectives:
+  - Hiểu rõ sự kiện workflow_call để biến một workflow bình thường thành một
+    mô-đun tái sử dụng.
+  - Áp dụng nguyên lý DRY (Don't Repeat Yourself) để chuẩn hóa quy trình CI/CD
+    trên quy mô toàn doanh nghiệp.
+  - Biết cách định nghĩa và truyền inputs, secrets giữa Caller Workflow và
+    Called Workflow.
+commands:
+  - cat .github/workflows/reusable-build.yml
+  - cat .github/workflows/caller.yml

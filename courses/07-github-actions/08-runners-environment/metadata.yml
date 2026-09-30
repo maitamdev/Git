@@ -1,0 +1,23 @@
+id: 08-runners-environment
+title: "Môi trường thực thi Runners: GitHub-hosted vs Self-hosted"
+duration: 30
+xp: 95
+keywords:
+  - runners
+  - github hosted
+  - self hosted
+  - virtual machines
+  - security isolation
+prerequisites:
+  - 07-steps-execution
+objectives:
+  - "Phân biệt rõ ràng giữa hai mô hình: GitHub-hosted Runners và Self-hosted
+    Runners."
+  - Nắm được các ưu điểm và hạn chế về tài nguyên, chi phí, tốc độ và tính bảo
+    mật của từng loại.
+  - Hiểu rõ các rủi ro bảo mật nghiêm trọng khi sử dụng Self-hosted Runners trên
+    các kho lưu trữ công khai.
+commands:
+  - uname -a
+  - cat /etc/os-release
+  - free -m

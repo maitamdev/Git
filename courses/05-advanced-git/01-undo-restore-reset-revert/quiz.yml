@@ -1,0 +1,64 @@
+id: quiz-05-01-undo-restore-reset-revert
+title: "Trắc nghiệm: Phân biệt restore, reset và revert"
+questions:
+  - id: q1
+    question: Công cụ nào sau đây an toàn nhất để hoàn tác một commit đã được push
+      lên nhánh `main` dùng chung của nhóm?
+    type: single
+    options:
+      - text: git revert <commit-hash>
+        correct: true
+      - text: git reset --hard HEAD~1
+        correct: false
+      - text: git restore --all
+        correct: false
+      - text: Xóa thư mục .git trên máy chủ
+        correct: false
+    explanation: "`git revert` tạo ra một commit mới đảo ngược thay đổi mà không
+      viết lại lịch sử, an toàn tuyệt đối cho nhánh dùng chung."
+  - id: q2
+    question: Lệnh nào sau đây dùng để hủy bỏ các thay đổi chưa commit của một tệp
+      tin trong Working Directory kể từ Git 2.23?
+    type: single
+    options:
+      - text: git restore <tên-tệp>
+        correct: true
+      - text: git reset <tên-tệp>
+        correct: false
+      - text: git revert <tên-tệp>
+        correct: false
+      - text: git clean -f
+        correct: false
+    explanation: "`git restore <tệp>` khôi phục nội dung tệp trong Working Tree về
+      trạng thái đã lưu gần nhất."
+  - id: q3
+    question: Hậu quả nghiêm trọng nhất khi bạn chạy `git reset --hard` trên một
+      nhánh đang có nhiều người cùng làm việc là gì?
+    type: single
+    options:
+      - text: Lịch sử bị viết lại, gây xung đột và từ chối push khi đồng nghiệp cố gắng
+          đồng bộ mã nguồn
+        correct: true
+      - text: Máy chủ GitHub sẽ tự động xóa tài khoản của bạn
+        correct: false
+      - text: Tất cả các máy tính của nhóm sẽ bị tắt nguồn đột ngột
+        correct: false
+      - text: Dự án sẽ tự động chuyển đổi sang ngôn ngữ lập trình khác
+        correct: false
+    explanation: Viết lại lịch sử bằng reset trên nhánh chung phá vỡ mối quan hệ
+      commit của toàn bộ đội ngũ, tạo ra hỗn loạn.
+  - id: q4
+    question: Lệnh nào dùng để đưa một tệp tin đã lỡ `git add` ra khỏi Staging Area
+      mà không làm mất nội dung chỉnh sửa?
+    type: single
+    options:
+      - text: git restore --staged <tên-tệp>
+        correct: true
+      - text: git restore --discard <tên-tệp>
+        correct: false
+      - text: git reset --delete <tên-tệp>
+        correct: false
+      - text: git remove --force <tên-tệp>
+        correct: false
+    explanation: "`git restore --staged <tệp>` bỏ đánh dấu chuẩn bị commit, giữ
+      nguyên trạng thái tệp trong Working Tree."

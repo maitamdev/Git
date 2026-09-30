@@ -1,0 +1,96 @@
+id: quiz-08-git-internals-18-refspec-and-remotes
+title: "Trắc nghiệm: Cấu trúc Refspec và đồng bộ Remote References"
+questions:
+  - id: q1
+    question: "Dấu cộng `+` ở đầu chuỗi Refspec (ví dụ:
+      `+refs/heads/*:refs/remotes/origin/*`) có ý nghĩa gì?"
+    type: single
+    options:
+      - text: Cho phép cập nhật tham chiếu đích kể cả khi thao tác không phải là
+          fast-forward (force update)
+        correct: true
+      - text: Chỉ định kho lưu trữ có tính phí
+        correct: false
+      - text: Yêu cầu mã hóa tệp tin bằng mật khẩu
+        correct: false
+      - text: Cộng thêm 1 commit vào lịch sử
+        correct: false
+    explanation: Dấu `+` tùy chọn ở đầu refspec thông báo cho Git bỏ qua kiểm tra an
+      toàn fast-forward khi cập nhật con trỏ tham chiếu.
+  - id: q2
+    question: Cú pháp lệnh `git push origin :old-branch` (để trống phần nguồn trước
+      dấu hai chấm) có tác dụng gì?
+    type: single
+    options:
+      - text: Xóa nhánh `old-branch` trên máy chủ từ xa
+        correct: true
+      - text: Đổi tên nhánh thành rỗng
+        correct: false
+      - text: Tạo một nhánh mới không có commit
+        correct: false
+      - text: Báo lỗi cú pháp
+        correct: false
+    explanation: Đẩy một tham chiếu rỗng vào nhánh đích tương đương với hành động
+      xóa bỏ hoàn toàn tham chiếu đó trên máy chủ từ xa.
+  - id: q3
+    question: Quy tắc Refspec mặc định khi bạn clone một repository từ GitHub về máy
+      là gì?
+    type: single
+    options:
+      - text: +refs/heads/*:refs/remotes/origin/*
+        correct: true
+      - text: refs/all:refs/all
+        correct: false
+      - text: master:main
+        correct: false
+      - text: remote:local
+        correct: false
+    explanation: Quy tắc mặc định ánh xạ toàn bộ các nhánh `refs/heads/*` trên
+      server thành các nhánh tracking `refs/remotes/origin/*` trên máy cục bộ.
+  - id: q4
+    question: Tại sao các nhánh từ xa (như `origin/main`) lại được đặt trong không
+      gian tên `refs/remotes/` thay vì `refs/heads/`?
+    type: single
+    options:
+      - text: Để cách ly không gian tên, ngăn chặn việc các nhánh theo dõi từ xa ghi đè
+          trực tiếp lên các nhánh làm việc cục bộ của bạn
+        correct: true
+      - text: Do hạn chế về dung lượng ổ đĩa
+        correct: false
+      - text: Để người khác không xem được mã nguồn của bạn
+        correct: false
+      - text: Để máy tính tự động dịch sang tiếng Anh
+        correct: false
+    explanation: Phân tách namespace giúp bạn có thể tự do chỉnh sửa nhánh `main`
+      cục bộ mà không sợ bị xung đột trực tiếp với con trỏ theo dõi
+      `origin/main`.
+  - id: q5
+    question: Khi thực hiện lệnh `git push origin main`, thực chất Git thực thi cú
+      pháp Refspec ngầm định nào?
+    type: single
+    options:
+      - text: refs/heads/main:refs/heads/main
+        correct: true
+      - text: refs/heads/main:refs/remotes/origin/main
+        correct: false
+      - text: HEAD:refs/tags/main
+        correct: false
+      - text: +refs/remotes/*:refs/heads/*
+        correct: false
+    explanation: Lệnh push ngầm định đẩy nhánh cục bộ refs/heads/main lên nhánh cùng
+      tên refs/heads/main trên server từ xa.
+  - id: q6
+    question: Làm thế nào để chỉ fetch duy nhất một nhánh `feature-login` mà không
+      muốn kéo về tất cả các nhánh khác từ origin?
+    type: single
+    options:
+      - text: git fetch origin feature-login:refs/remotes/origin/feature-login
+        correct: true
+      - text: git fetch origin --all --single
+        correct: false
+      - text: git clone origin/feature-login
+        correct: false
+      - text: git pull --only-one
+        correct: false
+    explanation: Bằng cách chỉ định rõ ràng cặp refspec nguồn và đích cho nhánh cụ
+      thể, Git sẽ chỉ đồng bộ duy nhất nhánh đó.

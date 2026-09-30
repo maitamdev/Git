@@ -1,0 +1,27 @@
+id: 08-branch-protection-rules
+title: Branch Protection Rules
+duration: 30
+xp: 95
+keywords:
+  - branch protection rules
+  - quy tac bao ve nhanh
+  - require pull request reviews
+  - status checks
+  - require linear history
+  - ci gate
+prerequisites:
+  - 07-protected-branch
+objectives:
+  - Làm chủ toàn diện các tùy chọn chi tiết trong bộ quy tắc Branch Protection
+    Rules trên GitHub.
+  - "Thiết lập yêu cầu bắt buộc kiểm duyệt mã nguồn: số lượng người phê duyệt
+    tối thiểu (Require approvals) và tự động vô hiệu hóa duyệt khi có commit
+    mới."
+  - Cấu hình cổng kiểm tra trạng thái bắt buộc (Require status checks to pass)
+    tích hợp chặt chẽ với CI/CD.
+  - Áp dụng quy tắc lịch sử tuyến tính (Require linear history) và chữ ký bảo
+    mật (Require signed commits).
+commands:
+  - gh pr checks
+  - gh pr status
+  - git log --oneline --show-signature

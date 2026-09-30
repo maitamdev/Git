@@ -1,0 +1,22 @@
+id: 05-git-vs-github
+title: Phân biệt Git vs GitHub
+duration: 20
+xp: 50
+keywords:
+  - git vs github
+  - phan biet
+  - cloud
+  - hosting
+  - collaboration
+prerequisites:
+  - 04-git-architecture
+objectives:
+  - Phân biệt rạch ròi giữa công cụ dòng lệnh Git và dịch vụ nền tảng lưu trữ
+    đám mây GitHub.
+  - Kể tên các dịch vụ tương đương với GitHub như GitLab, Bitbucket.
+  - Hiểu cách Git và GitHub phối hợp để tạo nên quy trình làm việc nhóm chuyên
+    nghiệp.
+commands:
+  - git remote -v
+  - git push
+  - git pull

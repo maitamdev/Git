@@ -1,0 +1,99 @@
+id: quiz-06-08-branch-protection-rules
+title: "Trắc nghiệm: Branch Protection Rules"
+questions:
+  - id: q1
+    question: Tùy chọn "Require a pull request before merging" kết hợp "Require
+      approvals" mang lại lợi ích gì?
+    type: single
+    options:
+      - text: Bắt buộc mã nguồn phải được ít nhất một số lượng đồng nghiệp chỉ định xem
+          xét và phê duyệt trước khi được phép merge
+        correct: true
+      - text: Tự động gửi tin nhắn SMS thông báo cho toàn bộ công ty
+        correct: false
+      - text: Cho phép bất kỳ ai trên mạng cũng có quyền merge code
+        correct: false
+      - text: Tự động xóa tài khoản của người gửi Pull Request
+        correct: false
+    explanation: Quy tắc này bảo đảm không ai có thể tự biên tự diễn đưa code lên
+      nhánh chính mà không có sự kiểm tra chéo từ đồng nghiệp.
+  - id: q2
+    question: Tính năng "Dismiss stale pull request approvals when new commits are
+      pushed" hoạt động như thế nào?
+    type: single
+    options:
+      - text: Nếu tác giả đẩy thêm commit mới sau khi đã được duyệt, các lượt phê duyệt
+          trước đó sẽ tự động bị hủy và phải duyệt lại
+        correct: true
+      - text: Tự động xóa luôn các commit mới vừa đẩy lên
+        correct: false
+      - text: Chặn không cho phép tác giả sửa lỗi nữa
+        correct: false
+      - text: Tự động chấp nhận ngay lập tức mà không cần kiểm tra
+        correct: false
+    explanation: Tùy chọn này ngăn chặn việc tác giả vô tình hoặc cố ý thêm mã nguồn
+      lỗi hoặc mã độc vào PR sau khi đồng nghiệp đã bấm duyệt.
+  - id: q3
+    question: Quy tắc "Require status checks to pass before merging" có vai trò gì
+      trong đường ống CI/CD?
+    type: single
+    options:
+      - text: Chỉ cho phép merge khi tất cả các bài kiểm tra tự động như Unit Test,
+          Linting và Build đều vượt qua thành công
+        correct: true
+      - text: Kiểm tra xem số dư tài khoản ngân hàng của lập trình viên có đủ không
+        correct: false
+      - text: Kiểm tra tốc độ gõ bàn phím của người viết mã nguồn
+        correct: false
+      - text: Tự động bỏ qua toàn bộ các ca kiểm thử bị lỗi đỏ
+        correct: false
+    explanation: Status checks biến hệ thống kiểm thử tự động thành cổng gác kiên
+      cố, ngăn chặn mã nguồn vỡ build phá hỏng nhánh chính.
+  - id: q4
+    question: Quy tắc "Require conversation resolution before merging" bảo đảm điều
+      gì trong quá trình review?
+    type: single
+    options:
+      - text: Tất cả các bình luận góp ý và thảo luận của đồng nghiệp trên từng dòng
+          code đều phải được phản hồi hoặc đánh dấu giải quyết xong
+        correct: true
+      - text: Bắt buộc lập trình viên phải gọi video call cho người review
+        correct: false
+      - text: Tự động xóa tất cả các bình luận có từ ngữ phê bình tiêu cực
+        correct: false
+      - text: Chỉ cho phép bình luận bằng hình ảnh động GIF
+        correct: false
+    explanation: Bảo đảm mọi thắc mắc, phản biện và yêu cầu chỉnh sửa từ reviewer
+      đều đã được tác giả xử lý thấu đáo trước khi hợp nhất.
+  - id: q5
+    question: Khi quy tắc "Require linear history" được bật, điều gì sẽ bị cấm trên
+      nhánh được bảo vệ?
+    type: single
+    options:
+      - text: Cấm các merge commit rẽ nhánh thông thường, chỉ chấp nhận hợp nhất qua
+          Fast-Forward, Squash hoặc Rebase
+        correct: true
+      - text: Cấm tạo commit vào các ngày thứ bảy và chủ nhật
+        correct: false
+      - text: Cấm viết commit message có độ dài vượt quá 10 ký tự
+        correct: false
+      - text: Cấm sử dụng hình đại diện trên GitHub
+        correct: false
+    explanation: Lịch sử tuyến tính (Linear history) giữ cho cây commit luôn thẳng
+      tắp một hàng dọc, giúp việc tra cứu lịch sử và bisect cực kỳ dễ dàng.
+  - id: q6
+    question: Quy tắc "Require signed commits" yêu cầu lập trình viên phải làm gì
+      khi thực hiện commit mã nguồn?
+    type: single
+    options:
+      - text: Phải ký số điện tử mã hóa bằng khóa bảo mật GPG hoặc SSH để xác thực danh
+          tính chống giả mạo tác giả
+        correct: true
+      - text: Phải in thông điệp commit ra giấy rồi ký tay bằng bút mực
+        correct: false
+      - text: Phải nộp ảnh chụp căn cước công dân vào thư mục gốc của dự án
+        correct: false
+      - text: Phải nhờ người quản lý dự án ký tên trực tiếp lên màn hình máy tính
+        correct: false
+    explanation: Chữ ký số GPG chứng thực người commit chính là chủ nhân thực sự của
+      khóa bảo mật, ngăn chặn hành vi giả mạo email người khác trong Git.

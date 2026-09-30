@@ -1,0 +1,63 @@
+id: quiz-04-03-origin-concept
+title: "Trắc nghiệm: Bản chất origin trong Git"
+questions:
+  - id: q1
+    question: Từ ngữ `origin` trong câu lệnh `git push origin main` có bản chất thực
+      sự là gì?
+    type: single
+    options:
+      - text: Là tên định danh (bí danh alias) quy ước đại diện cho địa chỉ URL của kho
+          lưu trữ từ xa
+        correct: true
+      - text: Là một câu lệnh bắt buộc của nhân hệ điều hành Linux
+        correct: false
+      - text: Là tên tài khoản người sáng lập ra hệ thống Git
+        correct: false
+      - text: Là giao thức truyền file bí mật qua Internet
+        correct: false
+    explanation: "`origin` chỉ là bí danh đặt tên cho URL của server từ xa, hoàn
+      toàn có thể đổi sang tên khác nếu muốn."
+  - id: q2
+    question: Khi bạn chạy lệnh `git clone <url>`, tên remote mặc định mà Git tự
+      động tạo cho kho vừa tải về là gì?
+    type: single
+    options:
+      - text: origin
+        correct: true
+      - text: master
+        correct: false
+      - text: github
+        correct: false
+      - text: remote-server
+        correct: false
+    explanation: Git clone tự động đặt tên cho remote kết nối tới nguồn gốc là `origin`.
+  - id: q3
+    question: Bạn có thể đổi tên `origin` thành một tên khác như `my-github` được
+      hay không?
+    type: single
+    options:
+      - text: Hoàn toàn được, bằng câu lệnh `git remote rename origin my-github`
+        correct: true
+      - text: Không bao giờ được, Git sẽ báo lỗi hỏng kho chứa ngay
+        correct: false
+      - text: Chỉ được đổi khi trả phí bản quyền cho GitHub
+        correct: false
+      - text: Chỉ được đổi trên máy tính chạy macOS
+        correct: false
+    explanation: Bạn có toàn quyền đổi tên remote bằng lệnh `git remote rename`.
+  - id: q4
+    question: Tại sao các kỹ sư phần mềm trên thế giới hầu như đều giữ nguyên tên
+      `origin` thay vì đổi tên khác?
+    type: single
+    options:
+      - text: Để tuân thủ chuẩn mực quy ước toàn cầu, giúp tài liệu, đồng nghiệp và công
+          cụ CI/CD hoạt động thống nhất
+        correct: true
+      - text: Vì nếu đổi tên thì dung lượng dự án sẽ tăng gấp mười lần
+        correct: false
+      - text: Vì luật pháp quốc tế bắt buộc phải dùng chữ origin
+        correct: false
+      - text: Vì bàn phím máy tính không gõ được chữ khác
+        correct: false
+    explanation: Quy ước chung giúp tiết kiệm thời gian giải thích và tránh lỗi cấu
+      hình trong các quy trình tự động.

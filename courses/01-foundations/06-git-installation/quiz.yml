@@ -1,0 +1,62 @@
+id: quiz-06-git-installation
+title: "Trắc nghiệm: Cài đặt và môi trường Git"
+questions:
+  - id: q1
+    question: Lệnh nào dùng để kiểm tra xem Git đã được cài đặt thành công trên máy
+      tính hay chưa?
+    type: single
+    options:
+      - text: git --version
+        correct: true
+      - text: git --verify-install
+        correct: false
+      - text: git ping
+        correct: false
+      - text: git test-connection
+        correct: false
+    explanation: "`git --version` kiểm tra sự tồn tại của file thực thi git trong
+      PATH và in ra số hiệu phiên bản."
+  - id: q2
+    question: Git Bash trên hệ điều hành Windows cung cấp môi trường gì cho người dùng?
+    type: single
+    options:
+      - text: Môi trường giả lập shell Unix cho phép chạy các lệnh bash tiêu chuẩn
+        correct: true
+      - text: Trình chỉnh sửa ảnh đồ họa chuyên nghiệp cho tệp tin README
+        correct: false
+      - text: Trình biên dịch mã nguồn Java sang mã máy
+        correct: false
+      - text: Phần mềm phát video trực tuyến từ YouTube
+        correct: false
+    explanation: Git Bash mang toàn bộ các tiện ích dòng lệnh quen thuộc của Unix
+      (ls, rm, cat, echo) lên Windows.
+  - id: q3
+    question: 'Lỗi "git: command not found" thường xuất phát từ nguyên nhân nào?'
+    type: single
+    options:
+      - text: Git chưa được cài đặt hoặc đường dẫn chưa được thêm vào biến môi trường
+          PATH
+        correct: true
+      - text: Máy tính của bạn chưa cắm dây mạng Internet
+        correct: false
+      - text: Màn hình máy tính bị thiếu độ phân giải cao
+        correct: false
+      - text: Bạn chưa tạo tài khoản người dùng trên GitHub
+        correct: false
+    explanation: Lỗi `command not found` xuất hiện khi shell không tìm thấy tệp thực
+      thi git trong các thư mục của biến PATH.
+  - id: q4
+    question: Ký tự kết thúc dòng (Line Ending) mặc định trên Windows và Linux lần
+      lượt là gì?
+    type: single
+    options:
+      - text: Windows dùng CRLF, Linux dùng LF
+        correct: true
+      - text: Windows dùng LF, Linux dùng CRLF
+        correct: false
+      - text: Cả hai hệ điều hành đều dùng chung một chuẩn không phân biệt
+        correct: false
+      - text: Windows dùng XML, Linux dùng JSON
+        correct: false
+    explanation: "Windows sử dụng cặp ký tự Carriage Return + Line Feed (CRLF:
+      \\r\\n), trong khi Unix/Linux/macOS dùng Line Feed (LF: \\n)."

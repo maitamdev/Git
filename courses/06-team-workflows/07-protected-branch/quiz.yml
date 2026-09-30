@@ -1,0 +1,97 @@
+id: quiz-06-07-protected-branch
+title: "Trắc nghiệm: Protected Branch"
+questions:
+  - id: q1
+    question: Mục đích chính quan trọng nhất của việc kích hoạt Protected Branch là gì?
+    type: single
+    options:
+      - text: Ngăn chặn việc commit/push trực tiếp, cấm force-push và cấm xóa các nhánh
+          trọng yếu của dự án
+        correct: true
+      - text: Tự động tăng tốc độ mạng Internet khi tải mã nguồn
+        correct: false
+      - text: Mã hóa toàn bộ mã nguồn để không ai đọc được nữa
+        correct: false
+      - text: Xóa toàn bộ các tệp tin không phải là code JavaScript
+        correct: false
+    explanation: Protected Branch là lá chắn bảo vệ an ninh mã nguồn, ngăn chặn các
+      thao tác phá hủy vô ý hoặc cố ý lên các nhánh quan trọng.
+  - id: q2
+    question: Điều gì sẽ xảy ra khi một lập trình viên cố tình thực hiện `git push
+      --force origin main` lên nhánh đã được bảo vệ?
+    type: single
+    options:
+      - text: Máy chủ Git từ xa sẽ từ chối lệnh và thông báo lỗi Protected branch update
+          failed
+        correct: true
+      - text: Lệnh sẽ thành công và ghi đè lịch sử bình thường
+        correct: false
+      - text: Máy tính của lập trình viên sẽ tự động khởi động lại
+        correct: false
+      - text: GitHub sẽ xóa tài khoản cá nhân của lập trình viên đó ngay lập tức
+        correct: false
+    explanation: Protected Branch mặc định cấm hoàn toàn thao tác force-push nhằm
+      bảo vệ lịch sử commit không bị viết lại.
+  - id: q3
+    question: Con đường hợp lệ DUY NHẤT để đưa mã nguồn mới vào một nhánh đã được
+      cấu hình Protected Branch là gì?
+    type: single
+    options:
+      - text: Tạo nhánh tính năng, đẩy lên remote và mở Pull Request để kiểm duyệt trước
+          khi hợp nhất
+        correct: true
+      - text: Commit trực tiếp vào nhánh đó bằng cờ --admin
+        correct: false
+      - text: Gửi email chứa tệp zip cho nhân viên hỗ trợ của GitHub
+        correct: false
+      - text: Tải code lên Google Drive rồi dẫn link vào README
+        correct: false
+    explanation: Pull Request là cổng kiểm soát duy nhất cho phép mã nguồn được xem
+      xét, kiểm thử và hợp nhất an toàn vào nhánh bảo vệ.
+  - id: q4
+    question: Ai là người có quyền cấu hình bật/tắt hoặc chỉnh sửa các quy tắc
+      Protected Branch trên GitHub Repository?
+    type: single
+    options:
+      - text: Chủ sở hữu kho lưu trữ (Owner) hoặc người dùng có quyền Quản trị viên
+          (Admin)
+        correct: true
+      - text: Bất kỳ người dùng nào có quyền xem (Read access)
+        correct: false
+      - text: Tất cả mọi người dùng trên Internet
+        correct: false
+      - text: Chỉ có kỹ sư của công ty Microsoft
+        correct: false
+    explanation: Chỉ có cấp quyền Admin hoặc Repository Owner mới có thẩm quyền
+      thiết lập các chính sách an ninh chi phối toàn bộ dự án.
+  - id: q5
+    question: Lựa chọn "Do not allow bypassing the above settings" trong cài đặt
+      Protected Branch có ý nghĩa gì?
+    type: single
+    options:
+      - text: Áp dụng các quy tắc bảo vệ bình đẳng lên tất cả mọi người, kể cả Quản trị
+          viên (Administrators)
+        correct: true
+      - text: Cho phép bất kỳ ai cũng có thể ghi đè quy tắc
+        correct: false
+      - text: Tắt toàn bộ hệ thống kiểm tra an ninh
+        correct: false
+      - text: Tự động cấp quyền quản trị cho tất cả các commit mới
+        correct: false
+    explanation: "Tùy chọn này bảo đảm nguyên tắc công bằng: không một cá nhân nào
+      kể cả sếp hay admin được quyền phá vỡ quy trình an toàn chung."
+  - id: q6
+    question: Ngoài nhánh `main`, những nhánh nào sau đây cũng thường xuyên được
+      thiết lập là Protected Branch?
+    type: single
+    options:
+      - text: Các nhánh vĩnh cửu như develop, staging và các nhánh phát hành production
+        correct: true
+      - text: Các nhánh thử nghiệm ngắn hạn do lập trình viên thực tập tạo ra
+        correct: false
+      - text: Tất cả các nhánh feature ngắn hạn trong dự án
+        correct: false
+      - text: Các nhánh đã bị xóa trong thùng rác
+        correct: false
+    explanation: Mọi nhánh đại diện cho môi trường vận hành thực tế hoặc môi trường
+      tích hợp chung đều cần được bảo vệ cẩn mật.

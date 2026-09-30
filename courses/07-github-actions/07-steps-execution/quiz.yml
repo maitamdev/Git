@@ -1,0 +1,63 @@
+id: quiz-07-github-actions-07-steps-execution
+title: "Trắc nghiệm: Các bước thực thi (Steps): name, id và thứ tự tuần tự"
+questions:
+  - id: q1
+    question: Thứ tự thực thi của các Step bên trong một Job được quyết định như thế nào?
+    type: single
+    options:
+      - text: Tuần tự lần lượt từ trên xuống dưới theo thứ tự khai báo trong tệp YAML
+        correct: true
+      - text: Chạy song song cùng lúc
+        correct: false
+      - text: Theo thứ tự bảng chữ cái của tên Step
+        correct: false
+      - text: Ngẫu nhiên tùy theo tải của máy chủ
+        correct: false
+    explanation: Các Step trong một Job luôn tuân thủ nguyên tắc thực thi tuần tự từ
+      trên xuống dưới.
+  - id: q2
+    question: Điều gì xảy ra với các Step phía sau nếu một Step bị lỗi (exit code
+      khác 0)?
+    type: single
+    options:
+      - text: Mặc định toàn bộ các Step phía sau sẽ bị hủy bỏ (skipped) và Job báo thất
+          bại
+        correct: true
+      - text: Hệ thống tự động khởi động lại máy tính của lập trình viên
+        correct: false
+      - text: Các Step phía sau vẫn chạy bình thường như không có gì xảy ra
+        correct: false
+      - text: Toàn bộ kho lưu trữ GitHub bị khóa tạm thời
+        correct: false
+    explanation: "GitHub Actions có cơ chế Fail-fast: khi một bước bị lỗi, các bước
+      sau sẽ không được chạy để tránh hậu quả sai lệch."
+  - id: q3
+    question: Thuộc tính nào giúp một Step vẫn tiếp tục chạy mà không làm dừng Job
+      kể cả khi lệnh bên trong bị lỗi?
+    type: single
+    options:
+      - text: "continue-on-error: true"
+        correct: true
+      - text: "ignore-failure: true"
+        correct: false
+      - text: "allow-crash: true"
+        correct: false
+      - text: "force-run: true"
+        correct: false
+    explanation: "`continue-on-error: true` cho phép Job tiếp tục chạy các bước sau
+      dù bước hiện tại trả về mã lỗi thất bại."
+  - id: q4
+    question: Mục đích chính của thuộc tính `id` trong một Step là gì?
+    type: single
+    options:
+      - text: Đặt tên định danh để các Step sau có thể truy cập biến đầu ra (outputs)
+          của Step này
+        correct: true
+      - text: Để GitHub trừ tiền vào tài khoản người dùng
+        correct: false
+      - text: Để mã hóa tệp tin chứa mã nguồn
+        correct: false
+      - text: Bắt buộc phải có thì Step mới chạy được
+        correct: false
+    explanation: Gán `id` cho Step giúp bạn có thể tham chiếu các giá trị output qua
+      cú pháp `${{ steps.my_id.outputs.my_var }}`.

@@ -1,0 +1,28 @@
+id: 20-git-bisect
+title: git bisect
+duration: 35
+xp: 120
+keywords:
+  - git bisect
+  - binary search git
+  - tim loi nhi phan
+  - debug commit
+  - truy tim bug
+  - bisect automation
+prerequisites:
+  - 18-git-tag
+objectives:
+  - Nắm vững nguyên lý tìm kiếm nhị phân (Binary Search) được áp dụng trong câu
+    lệnh `git bisect`.
+  - "Vận hành quy trình 4 bước truy tìm thủ phạm gây lỗi: `start` -> đánh dấu
+    `bad`/`good` -> thử nghiệm -> `reset`."
+  - "Hiểu rõ hiệu quả toán học: Tìm ra commit lỗi trong 1000 commit chỉ với
+    khoảng 10 lần kiểm tra (O(log N))."
+  - Tự động hóa hoàn toàn quá trình tìm lỗi bằng câu lệnh `git bisect run
+    <script-test>`.
+commands:
+  - git bisect start
+  - git bisect bad
+  - git bisect good <commit-hoặc-tag>
+  - git bisect reset
+  - git bisect run <file-chay-kiem-thu>

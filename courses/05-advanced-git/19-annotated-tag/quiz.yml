@@ -1,0 +1,65 @@
+id: quiz-05-19-annotated-tag
+title: "Trắc nghiệm: Annotated Tag"
+questions:
+  - id: q1
+    question: Cờ tùy chọn nào trong lệnh `git tag` được sử dụng để tạo một thẻ chú
+      giải Annotated Tag?
+    type: single
+    options:
+      - text: -a (viết tắt của --annotate)
+        correct: true
+      - text: -l (viết tắt của --lightweight)
+        correct: false
+      - text: -m (chỉ có duy nhất -m là đủ)
+        correct: false
+      - text: -f (viết tắt của --full)
+        correct: false
+    explanation: Cờ `-a` chỉ thị cho Git tạo một đối tượng tag đầy đủ (Annotated
+      tag) trong cơ sở dữ liệu.
+  - id: q2
+    question: Thông tin nào sau đây ĐƯỢC LƯU TRỮ bên trong một Annotated Tag mà
+      Lightweight Tag KHÔNG CÓ?
+    type: single
+    options:
+      - text: Tên người tạo thẻ, email, thời gian tạo thẻ, thông điệp phát hành và chữ
+          ký số GPG
+        correct: true
+      - text: Mã commit hash mà thẻ trỏ tới
+        correct: false
+      - text: Tên của thẻ tag
+        correct: false
+      - text: Không có thông tin nào khác biệt
+        correct: false
+    explanation: Lightweight tag chỉ là một con trỏ lưu mã hash; Annotated tag là
+      đối tượng lưu đầy đủ metadata tác giả và thông điệp.
+  - id: q3
+    question: Lệnh nào sau đây dùng để xem chi tiết toàn bộ siêu dữ liệu (metadata)
+      và thông điệp của một Annotated Tag?
+    type: single
+    options:
+      - text: git show <tên-thẻ>
+        correct: true
+      - text: git tag --info <tên-thẻ>
+        correct: false
+      - text: git view <tên-thẻ>
+        correct: false
+      - text: git inspect-tag <tên-thẻ>
+        correct: false
+    explanation: "`git show <tag-name>` in ra thông tin chi tiết về Tagger, Date,
+      Message và diff của commit được gắn thẻ."
+  - id: q4
+    question: Tại sao trong các dự án thương mại, lập trình viên được yêu cầu PHẢI
+      sử dụng Annotated Tag cho các bản phát hành Production?
+    type: single
+    options:
+      - text: Để đảm bảo tính xác thực, lưu vết kiểm toán rõ ràng về người phê duyệt và
+          thời điểm phát hành
+        correct: true
+      - text: Vì Lightweight tag sẽ tự động bị xóa sau 24 giờ
+        correct: false
+      - text: Vì nếu không dùng cờ -a thì mã nguồn sẽ bị lỗi biên dịch
+        correct: false
+      - text: Vì GitHub không cho phép hiển thị Lightweight tag
+        correct: false
+    explanation: Tính toàn vẹn và trách nhiệm giải trình của bản phát hành được đảm
+      bảo nhờ siêu dữ liệu của Annotated tag.

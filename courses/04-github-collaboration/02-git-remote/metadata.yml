@@ -1,0 +1,28 @@
+id: 02-git-remote
+title: Quản lý remote với git remote
+duration: 25
+xp: 80
+keywords:
+  - git remote
+  - remote add
+  - remote remove
+  - remote set-url
+  - origin
+  - lien ket kho
+prerequisites:
+  - 01-local-vs-remote
+objectives:
+  - Sử dụng thành thạo câu lệnh `git remote` để quản trị danh sách các kho lưu
+    trữ từ xa.
+  - Biết cách liên kết một kho cục bộ vừa tạo với kho từ xa trên GitHub bằng
+    `git remote add`.
+  - Đổi tên và thay đổi đường dẫn URL của remote an toàn khi dự án đổi tên miền
+    hoặc tổ chức.
+  - Xóa bỏ các liên kết remote không còn sử dụng bằng lệnh `git remote remove`.
+commands:
+  - git remote
+  - git remote -v
+  - git remote add <tên-bí-danh> <url>
+  - git remote rename <tên-cũ> <tên-mới>
+  - git remote set-url <tên-bí-danh> <url-mới>
+  - git remote remove <tên-bí-danh>

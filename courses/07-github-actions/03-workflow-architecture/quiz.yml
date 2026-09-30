@@ -1,0 +1,63 @@
+id: quiz-07-github-actions-03-workflow-architecture
+title: "Trắc nghiệm: Kiến trúc Workflow: Events, Jobs, Steps và Runners"
+questions:
+  - id: q1
+    question: Mặc định, các Job trong cùng một Workflow của GitHub Actions sẽ thực
+      thi như thế nào?
+    type: single
+    options:
+      - text: Thực thi song song (Parallel) cùng lúc trên các Runner riêng biệt
+        correct: true
+      - text: Thực thi tuần tự từng Job một theo thứ tự từ trên xuống dưới
+        correct: false
+      - text: Chỉ thực thi ngẫu nhiên một Job duy nhất rồi dừng lại
+        correct: false
+      - text: Chờ người quản trị bấm kích hoạt từng Job một cách thủ công
+        correct: false
+    explanation: GitHub Actions tối ưu hóa thời gian thực thi bằng cách khởi chạy
+      tất cả các Job độc lập song song với nhau.
+  - id: q2
+    question: Các Step bên trong cùng một Job có đặc điểm thực thi như thế nào?
+    type: single
+    options:
+      - text: Thực thi tuần tự lần lượt từ trên xuống dưới trên cùng một máy ảo Runner
+        correct: true
+      - text: Mỗi Step được cấp một máy ảo riêng biệt và chạy song song
+        correct: false
+      - text: Thực thi đảo ngược từ dưới lên trên
+        correct: false
+      - text: Chỉ Step nào có từ khóa async mới được thực thi
+        correct: false
+    explanation: Các Step trong một Job chạy tuần tự và có thể đọc, ghi chung các
+      tệp tin trong thư mục làm việc của Runner đó.
+  - id: q3
+    question: Nếu Job A tạo ra một tệp tin build/app.js, Job B có thể truy cập trực
+      tiếp tệp tin đó từ ổ đĩa không?
+    type: single
+    options:
+      - text: Không, vì mỗi Job chạy trên một máy ảo hoàn toàn cách ly, cần dùng
+          Artifact để truyền dữ liệu
+        correct: true
+      - text: Có, toàn bộ các Job luôn dùng chung một ổ đĩa cứng vật lý
+        correct: false
+      - text: Có, chỉ cần ghi đúng đường dẫn tương đối
+        correct: false
+      - text: Có, nếu hai Job cùng chạy hệ điều hành Ubuntu
+        correct: false
+    explanation: Mỗi Job chạy trên một Runner độc lập, bộ nhớ và ổ đĩa của chúng bị
+      cô lập hoàn toàn với nhau.
+  - id: q4
+    question: Thành phần nào sau đây đóng vai trò là môi trường máy ảo thực tế thực
+      hiện công việc?
+    type: single
+    options:
+      - text: Runner
+        correct: true
+      - text: Event
+        correct: false
+      - text: Workflow
+        correct: false
+      - text: Context
+        correct: false
+    explanation: Runner là máy chủ (máy ảo Ubuntu, Windows, macOS) do GitHub quản lý
+      hoặc tự host để chạy các lệnh trong Job.

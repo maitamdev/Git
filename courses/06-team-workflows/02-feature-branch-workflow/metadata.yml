@@ -1,0 +1,27 @@
+id: 02-feature-branch-workflow
+title: Feature Branch Workflow
+duration: 25
+xp: 85
+keywords:
+  - feature branch workflow
+  - nhanh tinh nang
+  - feat branch
+  - quy trinh feature
+  - cach ly ma nguon
+  - pull request flow
+prerequisites:
+  - 01-why-team-workflow
+objectives:
+  - "Nắm vững nguyên lý cốt lõi của mô hình Feature Branch Workflow: cô lập hoàn
+    toàn từng tính năng trên một nhánh riêng."
+  - "Thực hiện chuẩn xác quy trình 5 bước: tạo nhánh -> phát triển -> push
+    remote -> mở Pull Request -> hợp nhất."
+  - Áp dụng quy ước đặt tên nhánh tính năng chuyên nghiệp (feat/user-auth,
+    fix/cart-total).
+  - Giải thích được vì sao mô hình này là nền tảng cơ sở của tất cả các mô hình
+    workflow phức tạp khác.
+commands:
+  - git switch -c feat/<ten-tinh-nang>
+  - git push -u origin feat/<ten-tinh-nang>
+  - git switch main && git pull origin main
+  - git branch -d feat/<ten-tinh-nang>

@@ -1,0 +1,22 @@
+id: 09-run-vs-uses
+title: Phân biệt run (shell command) vs uses (prebuilt action)
+duration: 30
+xp: 90
+keywords:
+  - run
+  - uses
+  - action
+  - shell command
+  - marketplace
+prerequisites:
+  - 08-runners-environment
+objectives:
+  - Phân biệt rõ ràng mục đích sử dụng giữa lệnh shell tự do (run) và hành động
+    đóng gói sẵn (uses).
+  - "Hiểu cú pháp tham chiếu action với phiên bản: owner/repo@version (ví dụ:
+    actions/checkout@v4)."
+  - Biết cách truyền tham số cấu hình cho Action thông qua từ khóa with.
+commands:
+  - git clone
+  - node --version
+  - npm test

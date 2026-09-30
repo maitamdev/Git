@@ -1,0 +1,67 @@
+id: quiz-04-09-fork
+title: "Trắc nghiệm: Cơ chế Fork trên GitHub"
+questions:
+  - id: q1
+    question: Thao tác "Fork" trong hệ sinh thái GitHub thực chất là gì?
+    type: single
+    options:
+      - text: Tạo một bản sao độc lập của kho lưu trữ người khác vào tài khoản GitHub
+          của chính bạn ở phía máy chủ
+        correct: true
+      - text: Một câu lệnh gõ trong terminal shell của máy tính cá nhân
+        correct: false
+      - text: Xóa bỏ vĩnh viễn dự án của tác giả ban đầu
+        correct: false
+      - text: Tải toàn bộ mã nguồn về ổ đĩa cứng dưới dạng file Word
+        correct: false
+    explanation: Fork là thao tác server-side clone do GitHub cung cấp, tạo bản sao
+      kho trên máy chủ thuộc quyền sở hữu của bạn.
+  - id: q2
+    question: Tại sao các dự án mã nguồn mở lại yêu cầu cộng đồng lập trình viên
+      phải Fork dự án trước khi đóng góp?
+    type: single
+    options:
+      - text: Để bảo vệ an ninh dự án, chỉ những người bảo trì chính mới có quyền ghi
+          trực tiếp vào kho nguồn gốc
+        correct: true
+      - text: Vì GitHub giới hạn mỗi dự án chỉ được có tối đa 3 lập trình viên
+        correct: false
+      - text: Vì nếu không fork thì mã nguồn sẽ tự động bị mã hóa biến mất
+        correct: false
+      - text: Vì fork giúp máy tính của tác giả chạy nhanh hơn
+        correct: false
+    explanation: Fork cho phép bất kỳ ai cũng đóng góp được mà không cần cấp quyền
+      push trực tiếp vào kho mã nguồn nhạy cảm.
+  - id: q3
+    question: Sau khi đã Fork một dự án trên giao diện web của GitHub, bước tiếp
+      theo bạn cần làm để bắt đầu viết code là gì?
+    type: single
+    options:
+      - text: Clone kho fork từ tài khoản cá nhân của bạn về máy tính bằng lệnh `git
+          clone`
+        correct: true
+      - text: Chạy lệnh git push ngay lập tức khi chưa có code
+        correct: false
+      - text: Xóa tài khoản GitHub vừa tạo
+        correct: false
+      - text: Tắt màn hình máy tính và chờ đợi tác giả gửi mã nguồn qua email
+        correct: false
+    explanation: Bạn clone kho fork của mình về máy tính, khi đó remote origin sẽ
+      trỏ vào kho bạn có quyền push.
+  - id: q4
+    question: Mối quan hệ giữa kho gốc (upstream) và kho bạn vừa Fork về tài khoản
+      cá nhân là như thế nào?
+    type: single
+    options:
+      - text: Hai kho hoàn toàn độc lập, mọi sửa đổi trên kho fork không làm ảnh hưởng
+          gì tới kho gốc trừ khi tác giả chấp nhận Pull Request
+        correct: true
+      - text: Bất kỳ dòng code nào bạn gõ trên máy cá nhân sẽ tự động xuất hiện trên kho
+          gốc ngay lập tức
+        correct: false
+      - text: Kho gốc sẽ tự động bị biến mất sau 30 ngày
+        correct: false
+      - text: Hai kho bị khóa quyền truy cập của tất cả mọi người
+        correct: false
+    explanation: Kho fork là không gian an toàn biệt lập 100%; tác giả kho gốc chỉ
+      nhận code khi duyệt Pull Request.

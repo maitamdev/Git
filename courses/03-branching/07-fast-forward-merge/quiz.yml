@@ -1,0 +1,95 @@
+id: quiz-03-07-fast-forward-merge
+title: "Trắc nghiệm: Hợp nhất nhanh Fast-forward merge"
+questions:
+  - id: q1
+    question: Điều kiện tiên quyết để Git có thể thực hiện Fast-forward merge là gì?
+    type: single
+    options:
+      - text: Nhánh đích (ví dụ main) không có bất kỳ commit mới nào kể từ khi nhánh
+          tính năng được tách ra
+        correct: true
+      - text: Dự án phải có dung lượng dưới 10 megabyte
+        correct: false
+      - text: Cả hai lập trình viên phải sử dụng cùng một phiên bản hệ điều hành
+        correct: false
+      - text: Lệnh phải được thực thi vào lúc 12 giờ đêm
+        correct: false
+    explanation: Nếu nhánh đích không có commit mới, con đường lịch sử là hoàn toàn
+      tuyến tính và Git có thể tua nhanh con trỏ.
+  - id: q2
+    question: Trong quá trình thực hiện Fast-forward merge thành công, Git có sinh
+      ra một commit mới hay không?
+    type: single
+    options:
+      - text: Không, Git chỉ đơn thuần dịch chuyển con trỏ của nhánh đích tiến lên chỉ
+          vào commit đỉnh của nhánh tính năng
+        correct: true
+      - text: Có, Git luôn luôn bắt buộc tạo ra một commit có hai cha
+        correct: false
+      - text: Có, nhưng commit đó sẽ tự động bị ẩn đi sau 1 giờ
+        correct: false
+      - text: Git sẽ xóa toàn bộ các commit cũ và thay bằng một commit duy nhất
+        correct: false
+    explanation: Fast-forward không tạo commit mới, chỉ di chuyển con trỏ tiến lên
+      phía trước.
+  - id: q3
+    question: Trước khi chạy lệnh `git merge feature-login` để gộp tính năng vào
+      nhánh chính, bạn bắt buộc phải làm gì?
+    type: single
+    options:
+      - text: Chuyển về nhánh đích đón nhận code bằng lệnh `git switch main`
+        correct: true
+      - text: Xóa nhánh feature-login trước
+        correct: false
+      - text: Tắt kết nối mạng Internet
+        correct: false
+      - text: Đóng trình duyệt web
+        correct: false
+    explanation: Bạn luôn phải đứng ở nhánh đích (nơi muốn nhận code) trước khi ra
+      lệnh merge nhánh nguồn vào.
+  - id: q4
+    question: Cờ tùy chọn nào ép buộc Git tạo một Merge Commit mới ngay cả khi đủ
+      điều kiện thực hiện Fast-forward?
+    type: single
+    options:
+      - text: --no-ff
+        correct: true
+      - text: --force-merge
+        correct: false
+      - text: --create-commit
+        correct: false
+      - text: --always-new
+        correct: false
+    explanation: "`--no-ff` (no fast-forward) bắt buộc tạo một merge commit riêng
+      biệt để lưu lại bằng chứng của nhánh tính năng."
+  - id: q5
+    question: Cờ `--ff-only` trong lệnh git merge mang lại sự an toàn nào cho quy
+      trình CI/CD?
+    type: single
+    options:
+      - text: Từ chối hợp nhất và báo lỗi nếu nhánh đích bị phân kỳ, bảo đảm lịch sử dự
+          án luôn là một đường thẳng
+        correct: true
+      - text: Tự động chấp nhận tất cả các lỗi xung đột code mà không hỏi người dùng
+        correct: false
+      - text: Xóa bỏ tất cả các bài kiểm tra tự động
+        correct: false
+      - text: Tự động tăng số sao trên GitHub của dự án
+        correct: false
+    explanation: "`--ff-only` ngăn chặn việc vô tình sinh ra merge commit khi lịch
+      sử đã bị phân kỳ."
+  - id: q6
+    question: Khi quan sát `git log --graph --oneline` sau một Fast-forward merge,
+      đồ thị nhánh sẽ có dạng gì?
+    type: single
+    options:
+      - text: Một đường thẳng tắp duy nhất không có bất kỳ nút giao rẽ nhánh nào
+        correct: true
+      - text: Một vòng tròn khép kín vô tận
+        correct: false
+      - text: Một hình sao năm cánh phức tạp
+        correct: false
+      - text: Đồ thị bị biến mất hoàn toàn không xem được
+        correct: false
+    explanation: Do không có merge commit, các commit nối tiếp nhau trên một đường
+      thẳng duy nhất.

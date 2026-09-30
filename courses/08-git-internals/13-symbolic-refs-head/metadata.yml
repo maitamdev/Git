@@ -1,0 +1,23 @@
+id: 13-symbolic-refs-head
+title: Con trỏ HEAD & Symbolic References trong .git/HEAD
+duration: 30
+xp: 90
+keywords:
+  - HEAD pointer
+  - symbolic ref
+  - detached head
+  - git symbolic-ref
+  - active branch
+prerequisites:
+  - 12-references-and-heads
+objectives:
+  - Nắm vững bản chất của con trỏ HEAD như chiếc la bàn chỉ định vị trí làm việc
+    hiện tại của bạn trong Git.
+  - "Hiểu rõ khái niệm Tham chiếu biểu tượng (Symbolic Reference): HEAD trỏ tới
+    một nhánh chứ không trỏ thẳng vào commit."
+  - "Giải mã tường tận hiện tượng Detached HEAD dưới góc nhìn nhị phân: khi HEAD
+    trỏ trực tiếp vào commit SHA-1."
+commands:
+  - cat .git/HEAD
+  - git symbolic-ref HEAD
+  - git checkout --detach HEAD

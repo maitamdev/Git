@@ -1,0 +1,62 @@
+id: quiz-07-github-actions-13-conditional-execution-if
+title: "Trắc nghiệm: Thực thi có điều kiện với if: always(), success(), failure()"
+questions:
+  - id: q1
+    question: Hàm trạng thái nào giúp một Step chỉ chạy khi có ít nhất một bước
+      trước đó trong Job bị thất bại?
+    type: single
+    options:
+      - text: failure()
+        correct: true
+      - text: error()
+        correct: false
+      - text: failed()
+        correct: false
+      - text: on_error()
+        correct: false
+    explanation: Hàm `failure()` trả về giá trị `true` khi bất kỳ bước tiên quyết
+      nào trong Job trước đó gặp sự cố thất bại.
+  - id: q2
+    question: Điều kiện mặc định cho một Step nếu bạn không khai báo thuộc tính
+      `if:` là gì?
+    type: single
+    options:
+      - text: success()
+        correct: true
+      - text: always()
+        correct: false
+      - text: failure()
+        correct: false
+      - text: cancelled()
+        correct: false
+    explanation: Mặc định, GitHub Actions luôn tự động áp dụng `success()`, nghĩa là
+      chỉ chạy khi tất cả các bước trước đó đều thành công.
+  - id: q3
+    question: Để một bước dọn dẹp luôn luôn được chạy dù các bước trước thành công,
+      thất bại hay bị hủy, ta dùng hàm nào?
+    type: single
+    options:
+      - text: always()
+        correct: true
+      - text: forever()
+        correct: false
+      - text: force()
+        correct: false
+      - text: run_anyway()
+        correct: false
+    explanation: Hàm `always()` ép buộc bước thực thi trong mọi tình huống, rất lý
+      tưởng cho các tác vụ giải phóng tài nguyên và dọn dẹp.
+  - id: q4
+    question: "Biểu thức `if: github.event_name == 'push' && success()` có ý nghĩa gì?"
+    type: single
+    options:
+      - text: Chỉ chạy khi sự kiện kích hoạt là push và các bước trước đó đều thành công
+        correct: true
+      - text: Chạy mỗi khi có người mở Pull Request
+        correct: false
+      - text: Chạy bất kể sự kiện nào nhưng chỉ khi có lỗi
+        correct: false
+      - text: Từ chối mọi sự kiện push
+        correct: false
+    explanation: Biểu thức kết hợp điều kiện loại sự kiện (`push`) và trạng thái
+      thành công của các bước đi trước bằng toán tử logic `&&`.

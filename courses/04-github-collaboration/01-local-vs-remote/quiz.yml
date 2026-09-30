@@ -1,0 +1,98 @@
+id: quiz-04-01-local-vs-remote
+title: "Trắc nghiệm: Local vs Remote Repository"
+questions:
+  - id: q1
+    question: 'Khi bạn chạy lệnh `git commit -m "feat: add payment"` trên máy tính
+      cá nhân, snapshot commit mới được lưu ở đâu?'
+    type: single
+    options:
+      - text: Chỉ lưu trong Local Repository nằm trong thư mục .git trên ổ cứng máy tính
+          cá nhân của bạn
+        correct: true
+      - text: Tự động gửi ngay lập tức lên máy chủ GitHub qua đường truyền Internet
+        correct: false
+      - text: Tự động tải lên trang chủ của tổ chức Git quốc tế
+        correct: false
+      - text: Lưu vào bộ nhớ đám mây Google Drive của bạn
+        correct: false
+    explanation: "Git là hệ thống phân tán: commit chỉ lưu cục bộ vào thư mục .git
+      trên máy cá nhân cho đến khi bạn push."
+  - id: q2
+    question: Khi máy tính của bạn hoàn toàn bị mất kết nối mạng Internet, bạn CÓ
+      THỂ làm được thao tác nào sau đây với Git?
+    type: single
+    options:
+      - text: Tạo nhánh mới, chuyển nhánh, xem lịch sử git log, tạo commit và giải quyết
+          conflict trên máy cục bộ
+        correct: true
+      - text: Đẩy code lên GitHub bằng git push
+        correct: false
+      - text: Kéo code mới nhất của đồng nghiệp về máy bằng git pull
+        correct: false
+      - text: Tạo Pull Request trên giao diện web của GitHub
+        correct: false
+    explanation: Mọi tính năng quản lý lịch sử (branch, commit, log, merge) đều hoạt
+      động offline 100% trên Local Repo.
+  - id: q3
+    question: Vai trò cốt lõi của Remote Repository đặt trên GitHub trong một dự án
+      phần mềm là gì?
+    type: single
+    options:
+      - text: Đóng vai trò điểm tập kết trung tâm để các thành viên chia sẻ mã nguồn,
+          sao lưu và kích hoạt CI/CD
+        correct: true
+      - text: Tự động sửa lỗi cú pháp trong mã nguồn của lập trình viên
+        correct: false
+      - text: Cung cấp kết nối mạng Internet tốc độ cao miễn phí cho máy tính
+        correct: false
+      - text: Thay thế hoàn toàn hệ điều hành trên máy tính của bạn
+        correct: false
+    explanation: Remote Repo là cầu nối trung gian giúp các lập trình viên đồng bộ
+      công việc và tự động hóa quy trình.
+  - id: q4
+    question: Lệnh nào cho phép bạn kiểm tra danh sách các máy chủ từ xa đang được
+      cấu hình liên kết với kho cục bộ?
+    type: single
+    options:
+      - text: git remote -v
+        correct: true
+      - text: git check-network
+        correct: false
+      - text: git view-cloud
+        correct: false
+      - text: git server-list
+        correct: false
+    explanation: "`git remote -v` hiển thị tên định danh remote (như origin) kèm
+      theo URL fetch và push cụ thể."
+  - id: q5
+    question: Điều gì xảy ra nếu máy chủ từ xa trên GitHub bị mất điện hoặc ngừng
+      hoạt động tạm thời?
+    type: single
+    options:
+      - text: Bạn vẫn tiếp tục lập trình, tạo nhánh và commit bình thường trên máy cá
+          nhân không hề bị gián đoạn
+        correct: true
+      - text: Toàn bộ mã nguồn trên máy tính của bạn sẽ bị tự động khóa lại
+        correct: false
+      - text: Bạn phải cài đặt lại hệ điều hành từ đầu
+        correct: false
+      - text: Mọi commit trước đó trên máy cá nhân sẽ bị xóa sạch
+        correct: false
+    explanation: Nhờ kiến trúc phân tán, mỗi máy cá nhân là một bản sao trọn vẹn,
+      không phụ thuộc vào tình trạng máy chủ.
+  - id: q6
+    question: Thao tác nào bắt buộc phải có kết nối mạng Internet để thực hiện thành
+      công?
+    type: single
+    options:
+      - text: Đồng bộ hóa dữ liệu với máy chủ từ xa thông qua lệnh `git push` hoặc `git
+          pull`
+        correct: true
+      - text: Xem lại nhật ký các commit bằng lệnh `git log`
+        correct: false
+      - text: Tạo một nhánh mới bằng lệnh `git branch`
+        correct: false
+      - text: Kiểm tra trạng thái tệp tin bằng lệnh `git status`
+        correct: false
+    explanation: Chỉ các lệnh trao đổi qua giao thức mạng (push, fetch, pull, clone)
+      mới cần kết nối Internet.

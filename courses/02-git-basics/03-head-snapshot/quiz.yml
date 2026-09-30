@@ -1,0 +1,63 @@
+id: quiz-02-03-head-snapshot
+title: "Trắc nghiệm: Repository & HEAD Snapshot"
+questions:
+  - id: q1
+    question: Con trỏ HEAD trong Git đóng vai trò chính là gì?
+    type: single
+    options:
+      - text: Chỉ định vị trí commit hoặc nhánh mà bạn đang làm việc trực tiếp hiện tại
+        correct: true
+      - text: Lưu trữ mật khẩu đăng nhập vào máy chủ GitHub
+        correct: false
+      - text: Là commit đầu tiên khi khởi tạo dự án
+        correct: false
+      - text: Tự động biên dịch mã nguồn thành file chạy
+        correct: false
+    explanation: HEAD luôn là con trỏ trỏ tới vị trí làm việc hiện tại của Working
+      Tree trong đồ thị lịch sử commit.
+  - id: q2
+    question: Khi bạn tạo một commit mới trong trạng thái bình thường, điều gì sẽ
+      xảy ra với HEAD?
+    type: single
+    options:
+      - text: Nhánh hiện tại và HEAD sẽ tự động di chuyển tiến lên chỉ vào commit mới
+          vừa tạo
+        correct: true
+      - text: HEAD sẽ bị xóa bỏ và bạn phải khởi động lại máy tính
+        correct: false
+      - text: HEAD vẫn đứng yên ở commit đầu tiên của dự án
+        correct: false
+      - text: HEAD sẽ nhảy sang kho lưu trữ của người khác
+        correct: false
+    explanation: Khi commit mới sinh ra, nhánh hiện tại nhận commit đó làm đỉnh mới
+      và HEAD tự động di chuyển theo.
+  - id: q3
+    question: Snapshot trong Repository của Git có đặc tính cốt lõi nào dưới đây?
+    type: single
+    options:
+      - text: Tính bất biến (Immutable), không thể bị thay đổi âm thầm nhờ mã băm bảo
+          mật SHA
+        correct: true
+      - text: Tự động biến mất sau 30 ngày nếu không có kết nối mạng
+        correct: false
+      - text: Có thể chỉnh sửa trực tiếp nội dung bằng phần mềm Word
+        correct: false
+      - text: Chỉ lưu lại các tệp tin có dung lượng dưới 1 kilobyte
+        correct: false
+    explanation: Cơ sở dữ liệu commit của Git là bất biến; bất kỳ thay đổi nào cũng
+      sẽ sinh ra một mã hash hoàn toàn mới.
+  - id: q4
+    question: Lệnh nào cho phép bạn xem nội dung chi tiết của commit mà HEAD đang
+      trỏ vào?
+    type: single
+    options:
+      - text: git show HEAD
+        correct: true
+      - text: git delete HEAD
+        correct: false
+      - text: git clear HEAD
+        correct: false
+      - text: git push HEAD --now
+        correct: false
+    explanation: "`git show HEAD` in ra toàn bộ siêu dữ liệu và diff chi tiết của
+      commit hiện tại."

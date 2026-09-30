@@ -1,0 +1,66 @@
+id: quiz-05-11-rebase-concept
+title: "Trắc nghiệm: Khái niệm Git Rebase"
+questions:
+  - id: q1
+    question: Thuật ngữ "Re-base" trong Git phản ánh hành động cốt lõi nào của câu lệnh?
+    type: single
+    options:
+      - text: Thay đổi điểm tựa gốc ban đầu (base commit) của nhánh tính năng sang một
+          commit đỉnh mới
+        correct: true
+      - text: Xóa toàn bộ cơ sở dữ liệu database của dự án
+        correct: false
+      - text: Đổi tên kho lưu trữ trên máy chủ GitHub
+        correct: false
+      - text: Cài đặt lại Git từ đầu
+        correct: false
+    explanation: Re-base có nghĩa là đặt lại gốc (base) của nhánh tính năng lên đỉnh
+      mới nhất của nhánh đích.
+  - id: q2
+    question: Lợi ích thẩm mỹ và kỹ thuật lớn nhất mà Git Rebase mang lại so với Git
+      Merge là gì?
+    type: single
+    options:
+      - text: Tạo ra lịch sử tuyến tính thẳng tắp (Linear History), loại bỏ hoàn toàn
+          các commit merge rác không cần thiết
+        correct: true
+      - text: Giúp mã nguồn chạy nhanh hơn gấp 10 lần trong môi trường runtime
+        correct: false
+      - text: Tự động sửa lỗi cú pháp lập trình JavaScript
+        correct: false
+      - text: Giảm 50% dung lượng tệp tin video trong kho chứa
+        correct: false
+    explanation: Lịch sử dạng đường thẳng tuyến tính giúp việc đọc hiểu dòng thời
+      gian và tìm lỗi bằng bisect thuận tiện hơn rất nhiều.
+  - id: q3
+    question: Khi bạn rebase nhánh `feature` lên nhánh `main`, các commit trên nhánh
+      `feature` sẽ như thế nào?
+    type: single
+    options:
+      - text: Chúng được tính toán lại diff và tạo thành các commit hoàn toàn mới (mã
+          SHA-1 mới) trên đỉnh của main
+        correct: true
+      - text: Chúng giữ nguyên mã SHA-1 cũ 100%
+        correct: false
+      - text: Chúng bị xóa sạch và chỉ giữ lại commit của main
+        correct: false
+      - text: Chúng tự động chuyển thành tệp ZIP
+        correct: false
+    explanation: Vì parent commit thay đổi nên Git tái tạo các commit mới với mã
+      hash mới tương ứng.
+  - id: q4
+    question: Triết lý cốt lõi của những người ủng hộ trường phái Rebase coi lịch sử
+      Git là gì?
+    type: single
+    options:
+      - text: Lịch sử là một câu chuyện được biên tập chỉn chu và có trật tự để người
+          khác đọc hiểu
+        correct: true
+      - text: Lịch sử là cuốn nhật ký thô sơ ghi lại mọi hành động dù lộn xộn đến đâu
+        correct: false
+      - text: Lịch sử không có giá trị gì sau khi xuất bản
+        correct: false
+      - text: Lịch sử do phần mềm diệt virus kiểm soát
+        correct: false
+    explanation: Trường phái Rebase coi lịch sử như một tác phẩm hoàn chỉnh cần được
+      biên tập gọn gàng trước khi xuất bản.

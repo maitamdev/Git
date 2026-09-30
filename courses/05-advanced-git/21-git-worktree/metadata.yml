@@ -1,0 +1,27 @@
+id: 21-git-worktree
+title: git worktree
+duration: 30
+xp: 90
+keywords:
+  - git worktree
+  - multiple working trees
+  - da thu muc lam viec
+  - chuyen nhanh khong stash
+  - parallel branches
+prerequisites:
+  - 18-git-tag
+objectives:
+  - "Hiểu rõ sự đột phá của tính năng `git worktree`: làm việc đồng thời trên
+    nhiều nhánh ở nhiều thư mục khác nhau."
+  - "Khắc phục triệt để hạn chế của quy trình truyền thống: không cần phải stash
+    hay commit dở để chuyển nhánh."
+  - Sử dụng `git worktree add` để mở một không gian làm việc song song chỉ trong
+    vài giây.
+  - Quản lý danh sách và dọn dẹp an toàn các worktree bằng `git worktree list`
+    và `git worktree remove`.
+commands:
+  - git worktree add <đường-dẫn-thư-mục> <tên-nhánh>
+  - git worktree add -b <nhánh-mới> <đường-dẫn>
+  - git worktree list
+  - git worktree remove <đường-dẫn-thư-mục>
+  - git worktree prune

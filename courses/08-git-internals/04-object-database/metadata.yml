@@ -1,0 +1,22 @@
+id: 04-object-database
+title: Cơ sở dữ liệu đối tượng Git (Object Database)
+duration: 35
+xp: 100
+keywords:
+  - object database
+  - git objects
+  - zlib compression
+  - loose objects
+  - packfiles
+prerequisites:
+  - 03-dot-git-directory
+objectives:
+  - Nắm vững bản chất của Git Object Database như một kho lưu trữ Key-Value
+    Store đơn giản và thanh lịch.
+  - "Hiểu rõ 4 loại đối tượng cơ bản trong Git: blob (nội dung), tree (thư mục),
+    commit (lịch sử) và tag (chú thích)."
+  - "Khám phá cơ chế lưu trữ Loose Objects: cấu trúc phân chia thư mục 2 ký tự
+    đầu và 38 ký tự sau (.git/objects/xx/yyyy)."
+commands:
+  - find .git/objects -type f
+  - git count-objects -v

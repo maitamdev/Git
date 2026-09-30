@@ -1,0 +1,65 @@
+id: quiz-08-git-internals-04-object-database
+title: "Trắc nghiệm: Cơ sở dữ liệu đối tượng Git (Object Database)"
+questions:
+  - id: q1
+    question: Trong Git Object Database, Khóa (Key) dùng để định danh và tra cứu một
+      đối tượng được tạo ra như thế nào?
+    type: single
+    options:
+      - text: Là mã băm mật mã học (SHA-1/SHA-256) được tính toán từ nội dung của đối
+          tượng đó
+        correct: true
+      - text: "Là số thứ tự tăng dần tự động (Auto-increment ID: 1, 2, 3)"
+        correct: false
+      - text: Là tên của tệp tin do người dùng đặt
+        correct: false
+      - text: Là ngày giờ tạo ra tệp tin
+        correct: false
+    explanation: Git sử dụng mã băm nội dung (Content Hash) làm khóa định danh duy
+      nhất, đảm bảo tính toàn vẹn và bất biến.
+  - id: q2
+    question: Git sử dụng thuật toán nén dữ liệu nào cho các đối tượng lưu trữ dạng
+      rời rạc (Loose Objects)?
+    type: single
+    options:
+      - text: zlib (Deflate)
+        correct: true
+      - text: mp3
+        correct: false
+      - text: jpeg
+        correct: false
+      - text: rar
+        correct: false
+    explanation: Git sử dụng thư viện nén zlib tiêu chuẩn để nén tiêu đề và nội dung
+      của mọi đối tượng trước khi ghi xuống đĩa.
+  - id: q3
+    question: Bốn loại đối tượng cơ bản duy nhất tồn tại trong cơ sở dữ liệu của Git
+      là gì?
+    type: single
+    options:
+      - text: blob, tree, commit, và tag
+        correct: true
+      - text: file, folder, branch, và remote
+        correct: false
+      - text: text, image, audio, và video
+        correct: false
+      - text: user, pass, token, và key
+        correct: false
+    explanation: "Mọi cấu trúc phức tạp của Git đều được quy tụ về đúng 4 khối hình
+      học cơ bản: blob, tree, commit và tag."
+  - id: q4
+    question: "Tại sao Git lại chia mã băm 40 ký tự thành thư mục con 2 ký tự và tệp
+      38 ký tự (ví dụ: objects/4b/825de8)?"
+    type: single
+    options:
+      - text: Để tránh việc có quá nhiều tệp tin nằm trong cùng một thư mục làm giảm tốc
+          độ của hệ thống tệp tin hệ điều hành
+        correct: true
+      - text: Để mã hóa thông tin chống người khác đọc trộm
+        correct: false
+      - text: Để tiết kiệm dung lượng pin máy tính
+        correct: false
+      - text: Do quy định bắt buộc của ngôn ngữ C
+        correct: false
+    explanation: Việc chia thành 256 thư mục con (từ 00 đến ff) giúp phân tán số
+      lượng tệp, tối ưu hóa tốc độ tìm kiếm và mở tệp của OS.

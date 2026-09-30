@@ -1,0 +1,29 @@
+id: 09-git-stash-advanced
+title: git stash nâng cao
+duration: 30
+xp: 90
+keywords:
+  - git stash
+  - stash pop
+  - stash apply
+  - stash branch
+  - stash untracked
+  - ngan ke tam thoi
+prerequisites:
+  - 08-commit-amend
+objectives:
+  - Làm chủ toàn diện hệ thống ngăn kéo tạm thời với các câu lệnh nâng cao của
+    `git stash`.
+  - Phân biệt rõ ràng sự khác nhau giữa `git stash pop` (áp dụng và xóa) và `git
+    stash apply` (áp dụng giữ lại).
+  - "Sử dụng các cờ quan trọng: `-u` (`--include-untracked`) và `-a` (`--all`)
+    để lưu cả tệp mới và tệp bị bỏ qua."
+  - Đặt tên mô tả tường minh cho từng mẩu stash và tạo nhánh mới trực tiếp từ
+    một mẩu stash.
+commands:
+  - git stash push -u -m "<ghi-chú-mô-tả>"
+  - git stash list
+  - git stash apply stash@{n}
+  - git stash pop
+  - git stash drop stash@{n}
+  - git stash branch <nhánh-mới> stash@{n}

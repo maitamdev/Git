@@ -1,0 +1,93 @@
+id: quiz-03-01-branch-concept
+title: "Trắc nghiệm: Bản chất của Branch trong Git"
+questions:
+  - id: q1
+    question: Về mặt bản chất kỹ thuật lưu trữ bên trong Git, một Branch thực chất là gì?
+    type: single
+    options:
+      - text: Một con trỏ di động 41 byte trỏ trực tiếp vào một commit snapshot cụ thể
+        correct: true
+      - text: Một bản sao chép đầy đủ toàn bộ thư mục mã nguồn sang ổ đĩa khác
+        correct: false
+      - text: Một tệp tin nén zip chứa lịch sử của tháng trước
+        correct: false
+      - text: Một tài khoản người dùng độc lập trên máy chủ GitHub
+        correct: false
+    explanation: Git Branch chỉ là một con trỏ lưu trong tệp văn bản 41 byte tại
+      .git/refs/heads/<tên-nhánh>.
+  - id: q2
+    question: Lệnh nào dưới đây chỉ tạo một nhánh mới mà KHÔNG chuyển sang nhánh đó
+      ngay lập tức?
+    type: single
+    options:
+      - text: git branch <tên-nhánh>
+        correct: true
+      - text: git switch -c <tên-nhánh>
+        correct: false
+      - text: git checkout -b <tên-nhánh>
+        correct: false
+      - text: git jump <tên-nhánh>
+        correct: false
+    explanation: "`git branch <name>` tạo con trỏ nhánh mới; để vừa tạo vừa chuyển
+      sang nhánh mới phải dùng `switch -c` hoặc `checkout -b`."
+  - id: q3
+    question: Tại sao việc tạo nhánh trong Git lại nhanh hơn gấp nhiều lần so với
+      các hệ thống VCS tập trung như SVN?
+    type: single
+    options:
+      - text: Vì Git chỉ ghi 40 ký tự hash vào một tệp nhỏ thay vì sao chép toàn bộ cây
+          mã nguồn
+        correct: true
+      - text: Vì Git sử dụng trí tuệ nhân tạo để đoán trước tương lai của dự án
+        correct: false
+      - text: Vì Git bắt buộc máy tính phải có card đồ họa chuyên dụng cao cấp
+        correct: false
+      - text: Vì Git bỏ qua hoàn toàn các bài kiểm tra an toàn dữ liệu
+        correct: false
+    explanation: Tạo branch trong Git chỉ mất thao tác ghi 41 byte vào đĩa, bất kể
+      dự án nặng hàng gigabyte.
+  - id: q4
+    question: Ký tự nào đứng trước tên nhánh trong kết quả lệnh `git branch` để chỉ
+      ra nhánh hiện tại?
+    type: single
+    options:
+      - text: Dấu sao (*)
+        correct: true
+      - text: Dấu thăng (#)
+        correct: false
+      - text: Dấu chấm than (!)
+        correct: false
+      - text: Dấu ngã (~)
+        correct: false
+    explanation: Dấu sao `*` màu xanh lục đánh dấu nhánh mà con trỏ HEAD đang gắn vào.
+  - id: q5
+    question: Tên quy ước chuẩn quốc tế phổ biến cho nhánh chứa mã nguồn sẵn sàng
+      đưa vào vận hành thực tế là gì?
+    type: single
+    options:
+      - text: main (hoặc master trong các dự án cũ)
+        correct: true
+      - text: draft-temp
+        correct: false
+      - text: scratchpad
+        correct: false
+      - text: junk-box
+        correct: false
+    explanation: "`main` là tên nhánh chính mặc định hiện đại theo chuẩn quốc tế của
+      Git và GitHub."
+  - id: q6
+    question: Khi bạn tạo một commit mới trên nhánh hiện tại, điều gì sẽ xảy ra với
+      con trỏ của nhánh đó?
+    type: single
+    options:
+      - text: Con trỏ nhánh tự động di chuyển tiến lên chỉ vào commit snapshot mới vừa
+          tạo
+        correct: true
+      - text: Con trỏ nhánh đứng yên ở vị trí commit ban đầu
+        correct: false
+      - text: Con trỏ nhánh bị xóa bỏ và bạn phải gõ lệnh tạo lại
+        correct: false
+      - text: Con trỏ nhánh sẽ nhảy lùi về commit đầu tiên của dự án
+        correct: false
+    explanation: Mỗi khi commit sinh ra, con trỏ nhánh hiện tại tự động cập nhật mã
+      hash của commit mới đó.

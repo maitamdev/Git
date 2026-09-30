@@ -1,0 +1,26 @@
+id: 15-collaboration-workflow
+title: Quy trình cộng tác nhóm tiêu chuẩn (Feature Branch Workflow)
+duration: 35
+xp: 110
+keywords:
+  - collaboration workflow
+  - feature branch workflow
+  - quy trinh nhom
+  - teamwork git
+  - github flow
+prerequisites:
+  - 13-merge-pull-request
+objectives:
+  - "Nắm vững toàn bộ bức tranh quy trình cộng tác nhóm chuẩn mực quốc tế:
+    Feature Branch Workflow."
+  - "Tuân thủ nghiêm ngặt quy tắc vàng: Tuyệt đối không bao giờ commit hay push
+    trực tiếp vào nhánh `main`."
+  - Vận hành trơn tru chuỗi 7 bước từ nhận nhiệm vụ, tạo nhánh, lập trình, tạo
+    PR, review cho đến khi xuất bản tính năng.
+  - Tự tin tham gia vào các dự án phần mềm chuyên nghiệp quy mô vừa và lớn.
+commands:
+  - git switch main
+  - git pull origin main
+  - git switch -c feat/<tên-tính-năng>
+  - git push -u origin feat/<tên-tính-năng>
+  - git branch -d feat/<tên-tính-năng>

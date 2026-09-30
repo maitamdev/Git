@@ -1,0 +1,66 @@
+id: quiz-06-03-github-flow
+title: "Trắc nghiệm: GitHub Flow"
+questions:
+  - id: q1
+    question: Nguyên tắc bất di bất dịch cốt lõi của mô hình GitHub Flow là gì?
+    type: single
+    options:
+      - text: Mã nguồn trên nhánh main luôn luôn ở trạng thái sẵn sàng triển khai lên
+          Production
+        correct: true
+      - text: Bắt buộc phải có ít nhất 5 nhánh phụ trước khi merge vào main
+        correct: false
+      - text: Chỉ được phép deploy sản phẩm vào lúc 12 giờ đêm
+        correct: false
+      - text: Không được phép sử dụng lệnh git push lên máy chủ
+        correct: false
+    explanation: Nguyên lý trung tâm của GitHub Flow là tính sẵn sàng triển khai
+      liên tục của nhánh main ở bất kỳ thời điểm nào trong ngày.
+  - id: q2
+    question: Mô hình GitHub Flow phù hợp lý tưởng nhất với loại hình dự án phần mềm nào?
+    type: single
+    options:
+      - text: Ứng dụng web, kiến trúc microservices và phần mềm dạng dịch vụ SaaS có chu
+          kỳ phát hành nhanh
+        correct: true
+      - text: Hệ điều hành nhúng trên vệ tinh không gian chỉ cập nhật 5 năm một lần
+        correct: false
+      - text: Các phần mềm đóng gói trên đĩa CD-ROM bán ngoài cửa hàng
+        correct: false
+      - text: Các bài tập cá nhân không có nhu cầu chia sẻ mã nguồn
+        correct: false
+    explanation: GitHub Flow sinh ra để phục vụ việc phát hành phần mềm liên tục và
+      tức thì trên nền tảng đám mây và web hiện đại.
+  - id: q3
+    question: Trong GitHub Flow, bước nào sau đây diễn ra TRƯỚC KHI nhánh tính năng
+      được hợp nhất vào nhánh main?
+    type: single
+    options:
+      - text: Mở Pull Request, thảo luận, kiểm duyệt code và thử nghiệm tính năng trên
+          môi trường kiểm thử
+        correct: true
+      - text: Xóa toàn bộ kho lưu trữ trên máy chủ GitHub
+        correct: false
+      - text: Bắt buộc đổi mật khẩu tài khoản của toàn bộ lập trình viên
+        correct: false
+      - text: Chạy lệnh git reset --hard trên nhánh main
+        correct: false
+    explanation: Thảo luận, review và xác nhận hoạt động ổn định trên môi trường thử
+      nghiệm là điều kiện bắt buộc trước khi merge code vào main trong GitHub
+      Flow.
+  - id: q4
+    question: So với Git Flow cổ điển, GitHub Flow đã lược bỏ những loại nhánh nào
+      để trở nên tinh gọn?
+    type: single
+    options:
+      - text: Lược bỏ nhánh develop dài hạn và các nhánh trung gian cồng kềnh như
+          release branches
+        correct: true
+      - text: Lược bỏ hoàn toàn nhánh main
+        correct: false
+      - text: Cấm tạo nhánh tính năng feature branch
+        correct: false
+      - text: Loại bỏ hoàn toàn hệ thống kiểm tra Pull Request
+        correct: false
+    explanation: GitHub Flow đơn giản hóa cấu trúc bằng cách chỉ giữ lại một nhánh
+      dài hạn duy nhất là main, bỏ qua nhánh develop và release.

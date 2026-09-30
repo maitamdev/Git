@@ -1,0 +1,24 @@
+id: 08-git-log
+title: Tra cứu lịch sử với git log
+duration: 25
+xp: 80
+keywords:
+  - git log
+  - lich su
+  - oneline
+  - graph
+  - tra cuu commit
+prerequisites:
+  - 06-git-commit
+objectives:
+  - Sử dụng thành thạo câu lệnh `git log` để tra cứu lịch sử commit của kho lưu
+    trữ.
+  - "Tùy biến hiển thị lịch sử với các cờ mạnh mẽ: `--oneline`, `--graph`, `-n
+    <số-lượng>`, `--author`."
+  - Đọc hiểu mã băm commit, tác giả, ngày giờ và mối liên kết phân nhánh trực
+    quan.
+commands:
+  - git log
+  - git log --oneline
+  - git log --graph --oneline --all
+  - git log -n 5

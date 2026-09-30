@@ -1,0 +1,62 @@
+id: quiz-02-05-git-add
+title: "Trắc nghiệm: Sử dụng lệnh git add"
+questions:
+  - id: q1
+    question: Lệnh nào dưới đây đưa một tệp tin cụ thể mang tên `main.js` vào
+      Staging Area?
+    type: single
+    options:
+      - text: git add main.js
+        correct: true
+      - text: git stage-create main.js
+        correct: false
+      - text: git push main.js
+        correct: false
+      - text: git commit main.js
+        correct: false
+    explanation: "`git add <tên-tệp>` là cú pháp chuẩn xác để đưa tệp vào Staging Area."
+  - id: q2
+    question: Lệnh `git add .` thực hiện hành động gì?
+    type: single
+    options:
+      - text: Thêm tất cả các tệp tin bị thay đổi hoặc tạo mới trong thư mục hiện tại
+          vào Staging Area
+        correct: true
+      - text: Xóa sạch tất cả các tệp tin trong thư mục hiện tại
+        correct: false
+      - text: Tải toàn bộ mã nguồn trên GitHub về thư mục hiện tại
+        correct: false
+      - text: Đóng cửa sổ dòng lệnh terminal ngay lập tức
+        correct: false
+    explanation: Dấu chấm `.` đại diện cho thư mục hiện tại, `git add .` thêm toàn
+      bộ thay đổi từ thư mục đó trở xuống.
+  - id: q3
+    question: Cờ tùy chọn nào của git add cho phép bạn xem và chọn lọc từng khối
+      dòng code (hunk) để stage?
+    type: single
+    options:
+      - text: -p (viết tắt của --patch)
+        correct: true
+      - text: -f (force)
+        correct: false
+      - text: -d (delete)
+        correct: false
+      - text: -m (message)
+        correct: false
+    explanation: "`git add -p` mở chế độ tương tác patch mode cho phép duyệt và
+      stage từng khối dòng code riêng lẻ."
+  - id: q4
+    question: Tại sao các kỹ sư phần mềm khuyến cáo không nên lạm dụng lệnh git add .?
+    type: single
+    options:
+      - text: Dễ vô tình đưa các tệp tin bí mật như mật khẩu, file log và tài nguyên rác
+          vào commit
+        correct: true
+      - text: Vì lệnh này làm hỏng ổ cứng máy tính ngay lập tức
+        correct: false
+      - text: Vì lệnh này chỉ chạy được duy nhất một lần trong đời dự án
+        correct: false
+      - text: Vì lệnh này bị cấm bởi tổ chức tiêu chuẩn quốc tế ISO
+        correct: false
+    explanation: "`git add .` gom bừa toàn bộ mọi thứ, rất dễ làm rò rỉ tệp chứa
+      khóa bí mật hoặc làm loãng lịch sử."

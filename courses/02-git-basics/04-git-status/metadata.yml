@@ -1,0 +1,23 @@
+id: 04-git-status
+title: Kiểm tra trạng thái với git status
+duration: 25
+xp: 80
+keywords:
+  - git status
+  - trang thai
+  - kiem tra
+  - short format
+  - porcelain
+prerequisites:
+  - 03-head-snapshot
+objectives:
+  - Đọc và phân tích thành thạo toàn bộ các phần thông tin hiển thị bởi lệnh
+    `git status`.
+  - Phân biệt rõ ràng giữa Changes to be committed, Changes not staged for
+    commit, và Untracked files.
+  - Sử dụng định dạng ngắn gọn `git status -s` để quan sát trạng thái nhanh
+    chóng.
+commands:
+  - git status
+  - git status -s
+  - git status --short

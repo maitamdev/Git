@@ -1,0 +1,23 @@
+id: 19-reflog-internals
+title: Cơ chế lưu trữ và phục hồi của .git/logs (Reflog Internals)
+duration: 35
+xp: 100
+keywords:
+  - reflog internals
+  - git logs directory
+  - history of heads
+  - recovery safety net
+  - commit salvage
+prerequisites:
+  - 18-refspec-and-remotes
+objectives:
+  - Giải mã cấu trúc bên trong thư mục nhật ký .git/logs/ (gồm logs/HEAD và
+    logs/refs/heads/).
+  - "Hiểu rõ định dạng văn bản của từng dòng bản ghi Reflog: old-hash, new-hash,
+    committer, timestamp, và lý do thay đổi."
+  - Sử dụng kiến thức Reflog Internals để giải cứu mã nguồn khi mọi lệnh
+    Porcelain đều từ chối hoạt động.
+commands:
+  - cat .git/logs/HEAD
+  - git reflog
+  - git log -g

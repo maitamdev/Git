@@ -1,0 +1,21 @@
+id: 17-packfiles-and-deltas
+title: Đóng gói Packfiles và nén sai biệt Delta Compression
+duration: 35
+xp: 95
+keywords:
+  - packfiles
+  - delta compression
+  - loose objects
+  - git pack
+  - storage optimization
+prerequisites:
+  - 16-object-graph-traversal
+objectives:
+  - Hiểu rõ sự khác biệt giữa Loose Objects (đối tượng rời rạc) và Packed
+    Objects (đối tượng đóng gói trong Packfile).
+  - "Làm chủ cơ chế nén sai biệt Delta Compression: lưu một phiên bản gốc (base)
+    và các bản vi phân chênh lệch nhỏ."
+  - "Sử dụng các lệnh kiểm tra và tạo gói: git verify-pack và git pack-objects."
+commands:
+  - git verify-pack -v .git/objects/pack/*.pack
+  - git count-objects -v

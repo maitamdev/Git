@@ -1,0 +1,26 @@
+id: 02-head-pointer
+title: Con trỏ HEAD & Detached HEAD
+duration: 25
+xp: 80
+keywords:
+  - head
+  - detached head
+  - con tro head
+  - checkout commit
+  - symbolic ref
+prerequisites:
+  - 01-branch-concept
+objectives:
+  - Hiểu rõ cơ chế hoạt động của Symbolic Reference HEAD trong việc định vị
+    không gian làm việc.
+  - Giải thích hiện tượng Detached HEAD state và nguyên nhân kích hoạt trạng
+    thái này.
+  - Biết cách thoát khỏi Detached HEAD an toàn mà không làm thất lạc các commit
+    thử nghiệm.
+  - Sử dụng lệnh git checkout hoặc git switch để điều hướng con trỏ HEAD chính
+    xác.
+commands:
+  - git status
+  - git checkout <commit-hash>
+  - git switch <tên-nhánh>
+  - git switch -c <nhánh-mới>

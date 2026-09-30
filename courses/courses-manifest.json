@@ -1,0 +1,2294 @@
+{
+  "curriculum": [
+    {
+      "id": "01-foundations",
+      "title": "Level 1: Git Foundations",
+      "description": "Nền tảng về Version Control, Git vs GitHub, cài đặt và khởi tạo kho chứa",
+      "status": "active",
+      "lessons": [
+        {
+          "id": "01-version-control",
+          "title": "Version Control là gì?",
+          "duration": 20,
+          "xp": 50,
+          "prerequisites": [],
+          "labIds": [
+            "first-repository"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "02-vcs-types",
+          "title": "Local / Centralized / Distributed VCS",
+          "duration": 25,
+          "xp": 60,
+          "prerequisites": [
+            "01-version-control"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "03-git-la-gi",
+          "title": "Git là gì? Kiến trúc phân tán",
+          "duration": 25,
+          "xp": 60,
+          "prerequisites": [
+            "02-vcs-types"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "04-git-architecture",
+          "title": "Git hoạt động như thế nào?",
+          "duration": 25,
+          "xp": 70,
+          "prerequisites": [
+            "03-git-la-gi"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "05-git-vs-github",
+          "title": "Phân biệt Git vs GitHub",
+          "duration": 20,
+          "xp": 50,
+          "prerequisites": [
+            "04-git-architecture"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "06-git-installation",
+          "title": "Cài đặt & Môi trường Git",
+          "duration": 20,
+          "xp": 50,
+          "prerequisites": [
+            "05-git-vs-github"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "07-git-config",
+          "title": "Cấu hình danh tính Git Config",
+          "duration": 25,
+          "xp": 70,
+          "prerequisites": [
+            "06-git-installation"
+          ],
+          "labIds": [
+            "git-config-lab"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "08-repository",
+          "title": "Repository là gì? Cấu trúc .git",
+          "duration": 20,
+          "xp": 60,
+          "prerequisites": [
+            "07-git-config"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "09-git-init",
+          "title": "Khởi tạo kho chứa với git init",
+          "duration": 25,
+          "xp": 75,
+          "prerequisites": [
+            "08-repository"
+          ],
+          "labIds": [
+            "first-repository"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "labs": [
+              "first-repository"
+            ],
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "02-git-basics",
+      "title": "Level 2: Git Basics",
+      "description": "3 khu vực của Git, theo dõi trạng thái, add, commit, diff, log, .gitignore và hoàn tác working tree",
+      "status": "active",
+      "lessons": [
+        {
+          "id": "01-working-directory",
+          "title": "Working Directory (Thư mục làm việc)",
+          "duration": 20,
+          "xp": 60,
+          "prerequisites": [
+            "09-git-init"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "02-staging-area",
+          "title": "Staging Area (Vùng chuẩn bị)",
+          "duration": 25,
+          "xp": 70,
+          "prerequisites": [
+            "01-working-directory"
+          ],
+          "labIds": [
+            "track-file"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "labs": [
+              "track-file"
+            ],
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "03-head-snapshot",
+          "title": "Repository & HEAD Snapshot",
+          "duration": 25,
+          "xp": 70,
+          "prerequisites": [
+            "02-staging-area"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "04-git-status",
+          "title": "Kiểm tra trạng thái với git status",
+          "duration": 25,
+          "xp": 80,
+          "prerequisites": [
+            "03-head-snapshot"
+          ],
+          "labIds": [
+            "track-file"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "labs": [
+              "track-file"
+            ],
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "05-git-add",
+          "title": "Đưa tệp vào staging với git add",
+          "duration": 25,
+          "xp": 80,
+          "prerequisites": [
+            "04-git-status"
+          ],
+          "labIds": [
+            "track-file"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "labs": [
+              "track-file"
+            ],
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "06-git-commit",
+          "title": "Lưu snapshot với git commit",
+          "duration": 30,
+          "xp": 100,
+          "prerequisites": [
+            "05-git-add"
+          ],
+          "labIds": [
+            "first-commit"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "labs": [
+              "first-commit"
+            ],
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "07-commit-message",
+          "title": "Chuẩn quy ước Commit Message",
+          "duration": 20,
+          "xp": 60,
+          "prerequisites": [
+            "06-git-commit"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "08-git-log",
+          "title": "Tra cứu lịch sử với git log",
+          "duration": 25,
+          "xp": 80,
+          "prerequisites": [
+            "06-git-commit"
+          ],
+          "labIds": [
+            "inspect-history"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "labs": [
+              "inspect-history"
+            ],
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "09-git-diff",
+          "title": "So sánh khác biệt với git diff",
+          "duration": 30,
+          "xp": 90,
+          "prerequisites": [
+            "08-git-log"
+          ],
+          "labIds": [
+            "inspect-diff"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "labs": [
+              "inspect-diff"
+            ],
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "10-gitignore",
+          "title": "Bỏ qua tệp tin với .gitignore",
+          "duration": 25,
+          "xp": 80,
+          "prerequisites": [
+            "05-git-add"
+          ],
+          "labIds": [
+            "gitignore-lab"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "11-file-lifecycle",
+          "title": "Vòng đời tệp tin trong Git",
+          "duration": 25,
+          "xp": 70,
+          "prerequisites": [
+            "10-gitignore"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "12-undo-working-tree",
+          "title": "Hoàn tác thay đổi Working Tree",
+          "duration": 30,
+          "xp": 90,
+          "prerequisites": [
+            "11-file-lifecycle"
+          ],
+          "labIds": [
+            "undo-working-tree-lab"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "labs": [
+              "undo-working-tree-lab"
+            ],
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "03-branching",
+      "title": "Level 3: Branching & Merging",
+      "description": "Nhánh, con trỏ HEAD, chuyển nhánh, cách ly, merge fast-forward, 3-way, xung đột và giải quyết conflict",
+      "status": "active",
+      "lessons": [
+        {
+          "id": "01-branch-concept",
+          "title": "Khái niệm Branch trong Git",
+          "duration": 25,
+          "xp": 80,
+          "prerequisites": [
+            "06-git-commit"
+          ],
+          "labIds": [
+            "create-branch"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "labs": [
+              "create-branch"
+            ],
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "02-head-pointer",
+          "title": "Con trỏ HEAD & Detached HEAD",
+          "duration": 25,
+          "xp": 80,
+          "prerequisites": [
+            "01-branch-concept"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "03-git-branch",
+          "title": "Quản lý nhánh với git branch",
+          "duration": 25,
+          "xp": 80,
+          "prerequisites": [
+            "01-branch-concept"
+          ],
+          "labIds": [
+            "create-branch"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "labs": [
+              "create-branch"
+            ],
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "04-git-switch",
+          "title": "Chuyển nhánh với git switch",
+          "duration": 25,
+          "xp": 80,
+          "prerequisites": [
+            "03-git-branch"
+          ],
+          "labIds": [
+            "switch-branch"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "labs": [
+              "switch-branch"
+            ],
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "05-git-checkout",
+          "title": "Lệnh git checkout và lịch sử",
+          "duration": 20,
+          "xp": 70,
+          "prerequisites": [
+            "04-git-switch"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "06-branch-isolation",
+          "title": "Nguyên lý cách ly không gian Branch Isolation",
+          "duration": 25,
+          "xp": 80,
+          "prerequisites": [
+            "04-git-switch"
+          ],
+          "labIds": [
+            "branch-isolation"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "07-fast-forward-merge",
+          "title": "Hợp nhất nhanh Fast-forward merge",
+          "duration": 30,
+          "xp": 90,
+          "prerequisites": [
+            "06-branch-isolation"
+          ],
+          "labIds": [
+            "fast-forward"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "labs": [
+              "fast-forward"
+            ],
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "08-three-way-merge",
+          "title": "Hợp nhất rẽ nhánh 3-way merge",
+          "duration": 35,
+          "xp": 100,
+          "prerequisites": [
+            "07-fast-forward-merge"
+          ],
+          "labIds": [
+            "three-way-merge"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "labs": [
+              "three-way-merge"
+            ],
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "09-merge-commit",
+          "title": "Bản chất của Merge commit",
+          "duration": 25,
+          "xp": 80,
+          "prerequisites": [
+            "08-three-way-merge"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "10-merge-conflict",
+          "title": "Xung đột Merge Conflict là gì?",
+          "duration": 30,
+          "xp": 90,
+          "prerequisites": [
+            "08-three-way-merge"
+          ],
+          "labIds": [
+            "merge-conflict"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "labs": [
+              "merge-conflict"
+            ],
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "11-resolve-conflict",
+          "title": "Kỹ thuật Resolve Conflict từng bước",
+          "duration": 35,
+          "xp": 120,
+          "prerequisites": [
+            "10-merge-conflict"
+          ],
+          "labIds": [
+            "resolve-conflict"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "labs": [
+              "resolve-conflict"
+            ],
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "12-merge-abort",
+          "title": "Hủy bỏ quá trình merge với git merge --abort",
+          "duration": 25,
+          "xp": 80,
+          "prerequisites": [
+            "11-resolve-conflict"
+          ],
+          "labIds": [
+            "merge-abort"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "13-delete-rename-branch",
+          "title": "Xóa và đổi tên nhánh an toàn",
+          "duration": 25,
+          "xp": 80,
+          "prerequisites": [
+            "03-git-branch"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "14-branching-challenge",
+          "title": "Thử thách tổng hợp Branching Master",
+          "duration": 40,
+          "xp": 150,
+          "prerequisites": [
+            "11-resolve-conflict"
+          ],
+          "labIds": [
+            "branching-challenge"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "labs": [
+              "branching-challenge"
+            ],
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "04-github-collaboration",
+      "title": "Level 4: GitHub Collaboration",
+      "description": "Kho chứa từ xa, clone, fetch, pull, push, tracking branch, fork, pull request, code review và teamwork thực chiến",
+      "status": "active",
+      "lessons": [
+        {
+          "id": "01-local-vs-remote",
+          "title": "Local vs Remote Repository",
+          "duration": 25,
+          "xp": 75,
+          "prerequisites": [
+            "06-git-commit"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "02-git-remote",
+          "title": "Quản lý remote với git remote",
+          "duration": 25,
+          "xp": 80,
+          "prerequisites": [
+            "01-local-vs-remote"
+          ],
+          "labIds": [
+            "upstream-setup"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "labs": [
+              "upstream-setup"
+            ],
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "03-origin-concept",
+          "title": "origin trong Git là gì?",
+          "duration": 20,
+          "xp": 70,
+          "prerequisites": [
+            "02-git-remote"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "04-git-clone",
+          "title": "Tải dự án về máy với git clone",
+          "duration": 25,
+          "xp": 80,
+          "prerequisites": [
+            "03-origin-concept"
+          ],
+          "labIds": [
+            "clone-remote"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "labs": [
+              "clone-remote"
+            ],
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "05-git-fetch",
+          "title": "Cập nhật dữ liệu từ xa với git fetch",
+          "duration": 25,
+          "xp": 85,
+          "prerequisites": [
+            "04-git-clone"
+          ],
+          "labIds": [
+            "fetch-remote"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "labs": [
+              "fetch-remote"
+            ],
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "06-git-pull",
+          "title": "Đồng bộ và gộp code với git pull",
+          "duration": 30,
+          "xp": 90,
+          "prerequisites": [
+            "05-git-fetch"
+          ],
+          "labIds": [
+            "pull-remote"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "labs": [
+              "pull-remote"
+            ],
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "07-git-push",
+          "title": "Đẩy commit lên server với git push",
+          "duration": 30,
+          "xp": 95,
+          "prerequisites": [
+            "04-git-clone"
+          ],
+          "labIds": [
+            "push-remote"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "labs": [
+              "push-remote"
+            ],
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "08-tracking-branch",
+          "title": "Nhánh theo dõi Tracking Branch",
+          "duration": 25,
+          "xp": 80,
+          "prerequisites": [
+            "07-git-push"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "09-fork",
+          "title": "Cơ chế Fork trên GitHub",
+          "duration": 25,
+          "xp": 80,
+          "prerequisites": [
+            "04-git-clone"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "10-upstream",
+          "title": "Cấu hình Upstream cho dự án mã nguồn mở",
+          "duration": 25,
+          "xp": 85,
+          "prerequisites": [
+            "09-fork"
+          ],
+          "labIds": [
+            "upstream-setup"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "11-pull-request",
+          "title": "Khái niệm và quy trình tạo Pull Request (PR)",
+          "duration": 30,
+          "xp": 100,
+          "prerequisites": [
+            "09-fork"
+          ],
+          "labIds": [
+            "create-pr"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "labs": [
+              "create-pr"
+            ],
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "12-code-review",
+          "title": "Văn hóa và kỹ năng Code Review trên GitHub",
+          "duration": 25,
+          "xp": 85,
+          "prerequisites": [
+            "11-pull-request"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "13-merge-pull-request",
+          "title": "Quy trình Merge Pull Request",
+          "duration": 30,
+          "xp": 100,
+          "prerequisites": [
+            "12-code-review"
+          ],
+          "labIds": [
+            "merge-pr"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "labs": [
+              "merge-pr"
+            ],
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "14-github-issues",
+          "title": "Quản lý công việc và lỗi với GitHub Issues",
+          "duration": 25,
+          "xp": 80,
+          "prerequisites": [
+            "01-local-vs-remote"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "15-collaboration-workflow",
+          "title": "Quy trình cộng tác nhóm tiêu chuẩn (Feature Branch Workflow)",
+          "duration": 35,
+          "xp": 110,
+          "prerequisites": [
+            "13-merge-pull-request"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "16-team-project-challenge",
+          "title": "Thử thách dự án nhóm Team Project Challenge",
+          "duration": 45,
+          "xp": 200,
+          "prerequisites": [
+            "15-collaboration-workflow"
+          ],
+          "labIds": [
+            "team-project-simulation"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "labs": [
+              "team-project-simulation"
+            ],
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "05-advanced-git",
+      "title": "Level 5: Advanced Git",
+      "description": "Rebase, Cherry-pick, Interactive Rebase, Bisect và cứu hộ lịch sử với Reflog",
+      "status": "active",
+      "lessons": [
+        {
+          "id": "01-undo-restore-reset-revert",
+          "title": "Undo trong Git: restore/reset/revert khác nhau",
+          "duration": 25,
+          "xp": 80,
+          "prerequisites": [
+            "16-team-project-challenge"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "02-git-reset-soft",
+          "title": "git reset --soft",
+          "duration": 25,
+          "xp": 80,
+          "prerequisites": [
+            "01-undo-restore-reset-revert"
+          ],
+          "labIds": [
+            "reset-soft-lab"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "03-git-reset-mixed",
+          "title": "git reset --mixed",
+          "duration": 25,
+          "xp": 80,
+          "prerequisites": [
+            "02-git-reset-soft"
+          ],
+          "labIds": [
+            "reset-mixed-lab"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "04-git-reset-hard",
+          "title": "git reset --hard",
+          "duration": 30,
+          "xp": 90,
+          "prerequisites": [
+            "03-git-reset-mixed"
+          ],
+          "labIds": [
+            "reset-hard"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "05-git-revert",
+          "title": "git revert",
+          "duration": 25,
+          "xp": 85,
+          "prerequisites": [
+            "04-git-reset-hard"
+          ],
+          "labIds": [
+            "revert-commit-lab"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "06-git-reflog",
+          "title": "git reflog",
+          "duration": 25,
+          "xp": 85,
+          "prerequisites": [
+            "04-git-reset-hard"
+          ],
+          "labIds": [
+            "reflog-explore-lab"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "07-reflog-recovery",
+          "title": "Khôi phục commit bị mất bằng reflog",
+          "duration": 35,
+          "xp": 110,
+          "prerequisites": [
+            "06-git-reflog"
+          ],
+          "labIds": [
+            "reflog-recovery-scenario"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "08-commit-amend",
+          "title": "git commit --amend",
+          "duration": 25,
+          "xp": 80,
+          "prerequisites": [
+            "01-undo-restore-reset-revert"
+          ],
+          "labIds": [
+            "commit-amend-lab"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "09-git-stash-advanced",
+          "title": "git stash nâng cao",
+          "duration": 30,
+          "xp": 90,
+          "prerequisites": [
+            "08-commit-amend"
+          ],
+          "labIds": [
+            "stash-advanced-lab"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "10-git-cherry-pick",
+          "title": "git cherry-pick",
+          "duration": 30,
+          "xp": 95,
+          "prerequisites": [
+            "07-reflog-recovery"
+          ],
+          "labIds": [
+            "cherry-pick-scenario"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "11-rebase-concept",
+          "title": "Rebase là gì?",
+          "duration": 25,
+          "xp": 85,
+          "prerequisites": [
+            "10-git-cherry-pick"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "12-git-rebase",
+          "title": "git rebase",
+          "duration": 35,
+          "xp": 110,
+          "prerequisites": [
+            "11-rebase-concept"
+          ],
+          "labIds": [
+            "rebase-basic-scenario"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "13-interactive-rebase",
+          "title": "Interactive Rebase",
+          "duration": 35,
+          "xp": 120,
+          "prerequisites": [
+            "12-git-rebase"
+          ],
+          "labIds": [
+            "interactive-rebase-scenario"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "14-squash-commit",
+          "title": "Squash Commit",
+          "duration": 30,
+          "xp": 95,
+          "prerequisites": [
+            "13-interactive-rebase"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "15-fixup-autosquash",
+          "title": "Fixup & Autosquash",
+          "duration": 30,
+          "xp": 95,
+          "prerequisites": [
+            "14-squash-commit"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "16-reword-edit-drop",
+          "title": "Reword / Edit / Drop Commit",
+          "duration": 30,
+          "xp": 95,
+          "prerequisites": [
+            "13-interactive-rebase"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "17-rebase-conflict",
+          "title": "Rebase Conflict",
+          "duration": 35,
+          "xp": 120,
+          "prerequisites": [
+            "12-git-rebase"
+          ],
+          "labIds": [
+            "rebase-conflict-scenario"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "18-git-tag",
+          "title": "git tag",
+          "duration": 25,
+          "xp": 80,
+          "prerequisites": [
+            "08-commit-amend"
+          ],
+          "labIds": [
+            "tag-basic-lab"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "19-annotated-tag",
+          "title": "Annotated Tag",
+          "duration": 25,
+          "xp": 80,
+          "prerequisites": [
+            "18-git-tag"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "20-git-bisect",
+          "title": "git bisect",
+          "duration": 35,
+          "xp": 120,
+          "prerequisites": [
+            "18-git-tag"
+          ],
+          "labIds": [
+            "bisect-scenario"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "21-git-worktree",
+          "title": "git worktree",
+          "duration": 30,
+          "xp": 90,
+          "prerequisites": [
+            "18-git-tag"
+          ],
+          "labIds": [
+            "worktree-lab"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "22-advanced-git-challenge",
+          "title": "Advanced Git Challenge",
+          "duration": 45,
+          "xp": 200,
+          "prerequisites": [
+            "17-rebase-conflict",
+            "20-git-bisect"
+          ],
+          "labIds": [
+            "advanced-git-master-challenge"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "06-team-workflows",
+      "title": "Level 6: Team Workflows",
+      "description": "GitFlow, GitHub Flow, Trunk-based Development và quy ước nhóm chuyên nghiệp",
+      "status": "active",
+      "lessons": [
+        {
+          "id": "01-why-team-workflow",
+          "title": "Vì sao team cần workflow?",
+          "duration": 20,
+          "xp": 70,
+          "prerequisites": [
+            "22-advanced-git-challenge"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "02-feature-branch-workflow",
+          "title": "Feature Branch Workflow",
+          "duration": 25,
+          "xp": 85,
+          "prerequisites": [
+            "01-why-team-workflow"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "03-github-flow",
+          "title": "GitHub Flow",
+          "duration": 25,
+          "xp": 85,
+          "prerequisites": [
+            "02-feature-branch-workflow"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "04-git-flow",
+          "title": "Git Flow",
+          "duration": 30,
+          "xp": 95,
+          "prerequisites": [
+            "02-feature-branch-workflow"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "05-trunk-based-development",
+          "title": "Trunk-Based Development",
+          "duration": 25,
+          "xp": 90,
+          "prerequisites": [
+            "02-feature-branch-workflow"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "06-workflow-comparison",
+          "title": "So sánh GitHub Flow / Git Flow / Trunk-Based",
+          "duration": 30,
+          "xp": 100,
+          "prerequisites": [
+            "03-github-flow",
+            "04-git-flow",
+            "05-trunk-based-development"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "07-protected-branch",
+          "title": "Protected Branch",
+          "duration": 25,
+          "xp": 85,
+          "prerequisites": [
+            "06-workflow-comparison"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "08-branch-protection-rules",
+          "title": "Branch Protection Rules",
+          "duration": 30,
+          "xp": 95,
+          "prerequisites": [
+            "07-protected-branch"
+          ],
+          "labIds": [
+            "branch-protection-scenario"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "09-codeowners",
+          "title": "CODEOWNERS",
+          "duration": 25,
+          "xp": 85,
+          "prerequisites": [
+            "08-branch-protection-rules"
+          ],
+          "labIds": [
+            "codeowners-scenario"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "10-conventional-commits",
+          "title": "Conventional Commits",
+          "duration": 25,
+          "xp": 85,
+          "prerequisites": [
+            "06-workflow-comparison"
+          ],
+          "labIds": [
+            "conventional-commits-lab"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "11-semantic-versioning",
+          "title": "Semantic Versioning",
+          "duration": 25,
+          "xp": 85,
+          "prerequisites": [
+            "10-conventional-commits"
+          ],
+          "labIds": [
+            "semver-calc-lab"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "12-release-branch",
+          "title": "Release Branch",
+          "duration": 30,
+          "xp": 95,
+          "prerequisites": [
+            "11-semantic-versioning"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "13-hotfix-workflow",
+          "title": "Hotfix Workflow",
+          "duration": 30,
+          "xp": 95,
+          "prerequisites": [
+            "12-release-branch"
+          ],
+          "labIds": [
+            "hotfix-scenario"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "14-team-conflict-scenario",
+          "title": "Team Conflict Scenario",
+          "duration": 35,
+          "xp": 110,
+          "prerequisites": [
+            "08-branch-protection-rules"
+          ],
+          "labIds": [
+            "team-conflict-sim-scenario"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "15-professional-team-project",
+          "title": "Professional Team Project",
+          "duration": 50,
+          "xp": 250,
+          "prerequisites": [
+            "13-hotfix-workflow",
+            "14-team-conflict-scenario"
+          ],
+          "labIds": [
+            "capstone-ecommerce-team-scenario"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "07-github-actions",
+      "title": "Level 7: GitHub Actions & CI/CD",
+      "description": "Tự động hóa kiểm thử, build pipeline và deploy sản phẩm với GitHub Actions",
+      "status": "active",
+      "lessons": [
+        {
+          "id": "01-ci-cd-concept",
+          "title": "CI/CD là gì? Tự động hóa tích hợp & chuyển giao liên tục",
+          "duration": 25,
+          "xp": 80,
+          "prerequisites": [
+            "15-professional-team-project"
+          ],
+          "labIds": [
+            "first-workflow"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "02-github-actions-intro",
+          "title": "GitHub Actions là gì? Nền tảng tự động hóa của GitHub",
+          "duration": 25,
+          "xp": 80,
+          "prerequisites": [
+            "01-ci-cd-concept"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "03-workflow-architecture",
+          "title": "Kiến trúc Workflow: Events, Jobs, Steps và Runners",
+          "duration": 30,
+          "xp": 90,
+          "prerequisites": [
+            "02-github-actions-intro"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "04-workflow-yaml-syntax",
+          "title": ".github/workflows và cú pháp YAML chuẩn",
+          "duration": 30,
+          "xp": 90,
+          "prerequisites": [
+            "03-workflow-architecture"
+          ],
+          "labIds": [
+            "first-workflow"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "05-events-and-triggers",
+          "title": "Sự kiện kích hoạt (Events & Triggers: push, pull_request, workflow_dispatch)",
+          "duration": 30,
+          "xp": 90,
+          "prerequisites": [
+            "04-workflow-yaml-syntax"
+          ],
+          "labIds": [
+            "push-trigger"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "06-jobs-configuration",
+          "title": "Cấu hình Jobs: runs-on, phân tách độc lập và môi trường",
+          "duration": 30,
+          "xp": 95,
+          "prerequisites": [
+            "05-events-and-triggers"
+          ],
+          "labIds": [
+            "multi-job"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "07-steps-execution",
+          "title": "Các bước thực thi (Steps): name, id và thứ tự tuần tự",
+          "duration": 30,
+          "xp": 90,
+          "prerequisites": [
+            "06-jobs-configuration"
+          ],
+          "labIds": [
+            "failing-test"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "08-runners-environment",
+          "title": "Môi trường thực thi Runners: GitHub-hosted vs Self-hosted",
+          "duration": 30,
+          "xp": 95,
+          "prerequisites": [
+            "07-steps-execution"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "09-run-vs-uses",
+          "title": "Phân biệt run (shell command) vs uses (prebuilt action)",
+          "duration": 30,
+          "xp": 90,
+          "prerequisites": [
+            "08-runners-environment"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "10-env-variables",
+          "title": "Biến môi trường (Environment Variables) cấp workflow, job và step",
+          "duration": 30,
+          "xp": 90,
+          "prerequisites": [
+            "09-run-vs-uses"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "11-contexts-and-expressions",
+          "title": "Contexts & Expressions: ${{ github.ref }}, matrix và toán tử",
+          "duration": 30,
+          "xp": 95,
+          "prerequisites": [
+            "10-env-variables"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "12-job-dependencies-needs",
+          "title": "Quan hệ phụ thuộc giữa các Job với thuộc tính needs",
+          "duration": 30,
+          "xp": 95,
+          "prerequisites": [
+            "11-contexts-and-expressions"
+          ],
+          "labIds": [
+            "job-needs"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "13-conditional-execution-if",
+          "title": "Thực thi có điều kiện với if: always(), success(), failure()",
+          "duration": 30,
+          "xp": 90,
+          "prerequisites": [
+            "12-job-dependencies-needs"
+          ],
+          "labIds": [
+            "conditional-step"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "14-matrix-strategy",
+          "title": "Chiến lược ma trận kiểm thử đa môi trường (Matrix Strategy)",
+          "duration": 35,
+          "xp": 100,
+          "prerequisites": [
+            "13-conditional-execution-if"
+          ],
+          "labIds": [
+            "matrix-build"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "15-artifacts-sharing",
+          "title": "Lưu trữ và chia sẻ sản phẩm build với Artifacts",
+          "duration": 30,
+          "xp": 95,
+          "prerequisites": [
+            "14-matrix-strategy"
+          ],
+          "labIds": [
+            "artifact-sharing"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "16-secrets-and-variables",
+          "title": "Bảo mật thông tin nhạy cảm với Secrets và Secret Masking",
+          "duration": 30,
+          "xp": 95,
+          "prerequisites": [
+            "15-artifacts-sharing"
+          ],
+          "labIds": [
+            "secret-redaction"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "17-pull-request-ci",
+          "title": "Thiết lập CI Pipeline tự động kiểm thử trên Pull Request",
+          "duration": 35,
+          "xp": 100,
+          "prerequisites": [
+            "16-secrets-and-variables"
+          ],
+          "labIds": [
+            "pr-ci",
+            "protected-branch-check"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "18-environments-and-deployment",
+          "title": "Môi trường triển khai (Environments) & Cổng phê duyệt Protection Rules",
+          "duration": 35,
+          "xp": 110,
+          "prerequisites": [
+            "17-pull-request-ci"
+          ],
+          "labIds": [
+            "environment-deploy"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "19-reusable-workflows",
+          "title": "Tái sử dụng luồng công việc với Reusable Workflows (workflow_call)",
+          "duration": 35,
+          "xp": 110,
+          "prerequisites": [
+            "18-environments-and-deployment"
+          ],
+          "labIds": [
+            "reusable-workflow"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "20-ci-cd-capstone",
+          "title": "Capstone Project: Xây dựng hoàn chỉnh CI/CD Pipeline cho Web Application",
+          "duration": 50,
+          "xp": 250,
+          "prerequisites": [
+            "18-environments-and-deployment",
+            "19-reusable-workflows"
+          ],
+          "labIds": [
+            "release-pipeline",
+            "ci-cd-capstone"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "08-git-internals",
+      "title": "Level 8: Git Internals",
+      "description": "Đối tượng Blob, Tree, Commit, Tag, Packed references và các lệnh Plumbing tầng sâu",
+      "status": "active",
+      "lessons": [
+        {
+          "id": "01-git-internals-intro",
+          "title": "Git Internals là gì? Bí mật dưới nắp ca-pô của Git",
+          "duration": 25,
+          "xp": 85,
+          "prerequisites": [
+            "20-ci-cd-capstone"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "02-porcelain-vs-plumbing",
+          "title": "Phân biệt Porcelain Commands vs Plumbing Commands",
+          "duration": 25,
+          "xp": 85,
+          "prerequisites": [
+            "01-git-internals-intro"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "03-dot-git-directory",
+          "title": "Khám phá cấu trúc bên trong thư mục .git",
+          "duration": 30,
+          "xp": 90,
+          "prerequisites": [
+            "02-porcelain-vs-plumbing"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "04-object-database",
+          "title": "Cơ sở dữ liệu đối tượng Git (Object Database)",
+          "duration": 35,
+          "xp": 100,
+          "prerequisites": [
+            "03-dot-git-directory"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "05-content-addressable-storage",
+          "title": "Bộ nhớ định danh theo nội dung (Content-Addressable Storage)",
+          "duration": 30,
+          "xp": 95,
+          "prerequisites": [
+            "04-object-database"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "06-blob-object",
+          "title": "Đối tượng Blob: Lưu trữ nội dung nhị phân và tệp tin",
+          "duration": 30,
+          "xp": 90,
+          "prerequisites": [
+            "05-content-addressable-storage"
+          ],
+          "labIds": [
+            "hash-object-lab"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "07-tree-object",
+          "title": "Đối tượng Tree: Lưu trữ cấu trúc thư mục và quyền tệp",
+          "duration": 35,
+          "xp": 95,
+          "prerequisites": [
+            "06-blob-object"
+          ],
+          "labIds": [
+            "write-tree-lab"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "08-commit-object",
+          "title": "Đối tượng Commit: Ghi lại snapshot lịch sử và metadata tác giả",
+          "duration": 35,
+          "xp": 100,
+          "prerequisites": [
+            "07-tree-object"
+          ],
+          "labIds": [
+            "commit-tree-lab"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "09-tag-object",
+          "title": "Đối tượng Tag: Đánh dấu phiên bản có chú thích (Annotated Tag)",
+          "duration": 30,
+          "xp": 90,
+          "prerequisites": [
+            "08-commit-object"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "10-git-hash-object",
+          "title": "Tạo và băm đối tượng thủ công với git hash-object",
+          "duration": 35,
+          "xp": 100,
+          "prerequisites": [
+            "09-tag-object"
+          ],
+          "labIds": [
+            "hash-object-lab"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "11-git-cat-file",
+          "title": "Giải mã và kiểm tra chi tiết đối tượng với git cat-file",
+          "duration": 30,
+          "xp": 95,
+          "prerequisites": [
+            "10-git-hash-object"
+          ],
+          "labIds": [
+            "cat-file-lab"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "12-references-and-heads",
+          "title": "Cơ chế References (Refs): heads, tags và remotes",
+          "duration": 30,
+          "xp": 90,
+          "prerequisites": [
+            "11-git-cat-file"
+          ],
+          "labIds": [
+            "update-ref-lab"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "13-symbolic-refs-head",
+          "title": "Con trỏ HEAD & Symbolic References trong .git/HEAD",
+          "duration": 30,
+          "xp": 90,
+          "prerequisites": [
+            "12-references-and-heads"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "14-git-index-internals",
+          "title": "Cấu trúc tệp nhị phân .git/index (Staging Area Internals)",
+          "duration": 35,
+          "xp": 95,
+          "prerequisites": [
+            "13-symbolic-refs-head"
+          ],
+          "labIds": [
+            "update-index-lab"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "15-revision-syntax",
+          "title": "Cú pháp tra cứu Revision chuyên sâu: HEAD~, HEAD^, HEAD^2",
+          "duration": 35,
+          "xp": 95,
+          "prerequisites": [
+            "14-git-index-internals"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "16-object-graph-traversal",
+          "title": "Duyệt đồ thị đối tượng có hướng (Directed Acyclic Graph)",
+          "duration": 35,
+          "xp": 100,
+          "prerequisites": [
+            "15-revision-syntax"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "17-packfiles-and-deltas",
+          "title": "Đóng gói Packfiles và nén sai biệt Delta Compression",
+          "duration": 35,
+          "xp": 95,
+          "prerequisites": [
+            "16-object-graph-traversal"
+          ],
+          "labIds": [
+            "git-gc-pack-lab"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "18-refspec-and-remotes",
+          "title": "Cấu trúc Refspec và đồng bộ Remote References",
+          "duration": 30,
+          "xp": 90,
+          "prerequisites": [
+            "17-packfiles-and-deltas"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "19-reflog-internals",
+          "title": "Cơ chế lưu trữ và phục hồi của .git/logs (Reflog Internals)",
+          "duration": 35,
+          "xp": 100,
+          "prerequisites": [
+            "18-refspec-and-remotes"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        },
+        {
+          "id": "20-build-commit-manually-capstone",
+          "title": "Capstone: Tự tay tạo Commit hoàn chỉnh chỉ bằng Plumbing Commands",
+          "duration": 50,
+          "xp": 250,
+          "prerequisites": [
+            "18-refspec-and-remotes",
+            "19-reflog-internals"
+          ],
+          "labIds": [
+            "internals-manual-commit-capstone"
+          ],
+          "completion": {
+            "theoryViewed": true,
+            "quiz": {
+              "minimumScore": 75
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

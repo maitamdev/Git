@@ -1,0 +1,97 @@
+id: quiz-08-git-internals-20-build-commit-manually-capstone
+title: "Trắc nghiệm: Capstone: Tự tay tạo Commit hoàn chỉnh chỉ bằng Plumbing
+  Commands"
+questions:
+  - id: q1
+    question: Lệnh Plumbing nào dùng để đưa một đối tượng Blob vào Staging Area (tệp
+      .git/index) mà không dùng `git add`?
+    type: single
+    options:
+      - text: git update-index --add --cacheinfo 100644 <hash> <path>
+        correct: true
+      - text: git stage-blob <hash>
+        correct: false
+      - text: git put-index <hash>
+        correct: false
+      - text: git insert-cache <hash>
+        correct: false
+    explanation: "`git update-index --add --cacheinfo` cho phép bạn đăng ký trực
+      tiếp một Blob đã băm vào Staging Area mà không cần đọc lại từ Working
+      Directory."
+  - id: q2
+    question: Sau khi đã đưa các tệp vào Index, lệnh Plumbing nào dùng để đóng gói
+      cấu trúc thư mục thành đối tượng Tree?
+    type: single
+    options:
+      - text: git write-tree
+        correct: true
+      - text: git build-tree
+        correct: false
+      - text: git make-tree
+        correct: false
+      - text: git save-tree
+        correct: false
+    explanation: "`git write-tree` đọc nội dung hiện tại của tệp `.git/index` và ghi
+      ra đối tượng Tree tương ứng trong Object Store."
+  - id: q3
+    question: Lệnh Plumbing nào nhận vào mã băm của đối tượng Tree và tạo ra đối
+      tượng Commit?
+    type: single
+    options:
+      - text: git commit-tree
+        correct: true
+      - text: git create-commit
+        correct: false
+      - text: git make-commit
+        correct: false
+      - text: git hash-commit
+        correct: false
+    explanation: "`git commit-tree` là lệnh bậc thấp tạo ra đối tượng Commit từ một
+      Tree và danh sách các commit cha."
+  - id: q4
+    question: Bước cuối cùng để một commit mới hiển thị trên nhánh `main` khi dùng
+      lệnh plumbing là gì?
+    type: single
+    options:
+      - text: Cập nhật con trỏ nhánh bằng lệnh `git update-ref refs/heads/main
+          <commit-hash>`
+        correct: true
+      - text: Khởi động lại máy tính
+        correct: false
+      - text: Xóa tệp .git/index
+        correct: false
+      - text: Chạy lệnh git pull
+        correct: false
+    explanation: Nếu không cập nhật con trỏ nhánh bằng `git update-ref`, commit mới
+      sẽ là commit mồ côi không có nhánh nào trỏ tới.
+  - id: q5
+    question: Đối số `--cacheinfo 100644` trong lệnh `git update-index` đại diện cho
+      điều gì?
+    type: single
+    options:
+      - text: Chế độ quyền tệp tin (File Mode) chuẩn cho tệp văn bản thông thường không
+          thực thi
+        correct: true
+      - text: Mã băm SHA-1 rút gọn của tệp
+        correct: false
+      - text: Kích thước tối đa của tệp tính bằng byte
+        correct: false
+      - text: Số dòng tối đa được phép lưu trong index
+        correct: false
+    explanation: 100644 là file mode bát phân theo chuẩn POSIX đại diện cho regular
+      non-executable file trong Git index.
+  - id: q6
+    question: Khi tạo commit thứ hai bằng `git commit-tree`, tùy chọn nào là bắt
+      buộc để nối commit mới với commit trước đó trong đồ thị DAG?
+    type: single
+    options:
+      - text: -p <parent-commit-hash>
+        correct: true
+      - text: --link-to <hash>
+        correct: false
+      - text: --after <hash>
+        correct: false
+      - text: -c <previous-hash>
+        correct: false
+    explanation: Cờ `-p` (viết tắt của parent) chỉ định commit cha mà commit mới sẽ
+      trỏ về, đảm bảo tính liên tục của chuỗi lịch sử.

@@ -1,0 +1,64 @@
+id: quiz-07-github-actions-19-reusable-workflows
+title: "Trắc nghiệm: Tái sử dụng luồng công việc với Reusable Workflows
+  (workflow_call)"
+questions:
+  - id: q1
+    question: Sự kiện kích hoạt nào bắt buộc phải có để một workflow có thể được gọi
+      lại từ một workflow khác?
+    type: single
+    options:
+      - text: workflow_call
+        correct: true
+      - text: workflow_dispatch
+        correct: false
+      - text: repository_dispatch
+        correct: false
+      - text: external_call
+        correct: false
+    explanation: "`workflow_call` là sự kiện đặc thù được GitHub thiết kế riêng để
+      biến workflow thành Reusable Workflow."
+  - id: q2
+    question: Để gọi một Reusable Workflow nằm trong cùng kho lưu trữ, cú pháp
+      `uses:` nào sau đây là chính xác?
+    type: single
+    options:
+      - text: "uses: ./.github/workflows/my-reusable.yml"
+        correct: true
+      - text: "uses: local/my-reusable"
+        correct: false
+      - text: "import: my-reusable.yml"
+        correct: false
+      - text: "include: ./.github/workflows/my-reusable.yml"
+        correct: false
+    explanation: Với các workflow tái sử dụng trong cùng một kho lưu trữ, bạn sử
+      dụng đường dẫn tương đối bắt đầu bằng `./.github/workflows/`.
+  - id: q3
+    question: Tùy chọn nào giúp tự động chuyển toàn bộ các biến bí mật (Secrets) từ
+      Caller Workflow sang Reusable Workflow?
+    type: single
+    options:
+      - text: "secrets: inherit"
+        correct: true
+      - text: "secrets: all"
+        correct: false
+      - text: "pass_secrets: true"
+        correct: false
+      - text: "share_all_secrets: true"
+        correct: false
+    explanation: "Từ khóa `secrets: inherit` giúp kế thừa toàn bộ Secrets có sẵn mà
+      không cần phải ánh xạ thủ công từng biến một."
+  - id: q4
+    question: Số cấp độ lồng nhau tối đa (nesting depth) mà GitHub Actions cho phép
+      đối với Reusable Workflows là bao nhiêu?
+    type: single
+    options:
+      - text: Tối đa 4 cấp độ (workflow A gọi B, B gọi C, C gọi D)
+        correct: true
+      - text: Không giới hạn số cấp độ
+        correct: false
+      - text: Chỉ duy nhất 1 cấp độ
+        correct: false
+      - text: Tối đa 100 cấp độ
+        correct: false
+    explanation: GitHub Actions giới hạn tối đa 4 tầng lồng nhau để ngăn chặn nguy
+      cơ vòng lặp vô hạn và làm phức tạp hóa pipeline.

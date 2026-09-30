@@ -1,0 +1,65 @@
+id: quiz-03-02-head-pointer
+title: "Trắc nghiệm: Con trỏ HEAD và Detached HEAD"
+questions:
+  - id: q1
+    question: Trong trạng thái làm việc bình thường, tệp tin `.git/HEAD` chứa thông
+      tin gì?
+    type: single
+    options:
+      - text: "Đường dẫn tham chiếu tượng trưng tới nhánh hiện tại (ví dụ: ref:
+          refs/heads/main)"
+        correct: true
+      - text: Mật khẩu mã hóa của toàn bộ kho lưu trữ Git
+        correct: false
+      - text: Danh sách các lập trình viên bị cấm truy cập dự án
+        correct: false
+      - text: Toàn bộ mã nguồn của trang chủ website
+        correct: false
+    explanation: "Tệp .git/HEAD chứa dòng `ref: refs/heads/<nhánh>` chỉ định nhánh
+      hiện tại đang được kích hoạt."
+  - id: q2
+    question: Hiện tượng "Detached HEAD" xảy ra khi nào?
+    type: single
+    options:
+      - text: Khi con trỏ HEAD trỏ trực tiếp vào một mã băm commit cụ thể thay vì trỏ
+          vào một nhánh
+        correct: true
+      - text: Khi máy tính bị mất kết nối mạng cáp quang quốc tế
+        correct: false
+      - text: Khi ổ cứng máy tính bị đầy dung lượng không thể ghi thêm
+        correct: false
+      - text: Khi bạn gõ sai mật khẩu đăng nhập vào máy tính
+        correct: false
+    explanation: Detached HEAD xuất hiện khi bạn checkout trực tiếp tới một commit
+      hoặc tag thay vì một branch.
+  - id: q3
+    question: Nếu bạn lỡ tạo một số commit quan trọng trong trạng thái Detached
+      HEAD, làm thế nào để lưu giữ chúng an toàn?
+    type: single
+    options:
+      - text: Chạy lệnh `git switch -c <tên-nhánh-mới>` để tạo ngay một nhánh mới giữ
+          lấy commit đó
+        correct: true
+      - text: Tắt máy tính và khởi động lại ngay lập tức
+        correct: false
+      - text: Xóa toàn bộ thư mục dự án và tải lại từ đầu
+        correct: false
+      - text: Bấm tổ hợp phím Ctrl + Z trên bàn phím mười lần
+        correct: false
+    explanation: "`git switch -c <name>` gắn một con trỏ nhánh mới vào commit hiện
+      tại, cứu commit không bị mồ côi."
+  - id: q4
+    question: Lệnh nào là cách hiện đại và an toàn nhất để đưa HEAD thoát khỏi
+      Detached HEAD quay về nhánh main?
+    type: single
+    options:
+      - text: git switch main
+        correct: true
+      - text: git delete head
+        correct: false
+      - text: git reset --everything
+        correct: false
+      - text: git close-all
+        correct: false
+    explanation: "`git switch main` là câu lệnh hiện đại (từ Git 2.23) chuyên trách
+      chuyển về nhánh chỉ định."

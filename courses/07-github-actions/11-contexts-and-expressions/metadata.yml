@@ -1,0 +1,23 @@
+id: 11-contexts-and-expressions
+title: "Contexts & Expressions: ${{ github.ref }}, matrix và toán tử"
+duration: 30
+xp: 95
+keywords:
+  - contexts
+  - expressions
+  - github context
+  - operators
+  - template syntax
+prerequisites:
+  - 10-env-variables
+objectives:
+  - "Hiểu rõ khái niệm Contexts trong GitHub Actions: github, env, vars,
+    secrets, matrix, steps, runner."
+  - Sử dụng cú pháp biểu thức ${{ <expression> }} để tính toán và truy xuất dữ
+    liệu động trong YAML.
+  - "Làm chủ các toán tử so sánh (==, !=), logic (&&, ||, !) và hàm chuỗi:
+    contains, startsWith, endsWith."
+commands:
+  - echo "${{ github.repository }}"
+  - echo "${{ github.actor }}"
+  - echo "${{ github.event_name }}"

@@ -1,0 +1,24 @@
+id: 09-fork
+title: Cơ chế Fork trên GitHub
+duration: 25
+xp: 80
+keywords:
+  - fork
+  - github fork
+  - sao chep kho
+  - dong gop ma nguon mo
+  - upstream
+  - open source
+prerequisites:
+  - 04-git-clone
+objectives:
+  - Hiểu rõ bản chất cơ chế Fork trên máy chủ GitHub như một bản sao phía server.
+  - Phân biệt rõ ràng giữa thao tác Fork (trên GitHub) và thao tác Clone (về máy
+    cá nhân).
+  - Nắm bắt quy trình đóng góp mã nguồn mở kinh điển thông qua mô hình Fork &
+    Pull Request.
+  - Quản lý và đồng bộ kho fork cá nhân với kho gốc của dự án.
+commands:
+  - git clone <url-kho-fork-cua-ban>
+  - git remote -v
+  - git remote add upstream <url-kho-goc>

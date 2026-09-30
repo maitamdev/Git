@@ -1,0 +1,26 @@
+id: 11-resolve-conflict
+title: Kỹ thuật Resolve Conflict từng bước
+duration: 35
+xp: 120
+keywords:
+  - resolve conflict
+  - giai quyet xung dot
+  - accept current
+  - accept incoming
+  - git add resolve
+prerequisites:
+  - 10-merge-conflict
+objectives:
+  - Nắm vững quy trình chuẩn 4 bước giải quyết xung đột Merge Conflict trong môi
+    trường chuyên nghiệp.
+  - "Sử dụng thành thạo các tùy chọn giải quyết: Accept Current Change, Accept
+    Incoming Change, hoặc Accept Both."
+  - Hiểu rõ tầm quan trọng sống còn của thao tác `git add <file>` sau khi sửa
+    xong conflict.
+  - Biết cách trao đổi với đồng nghiệp trước khi đưa ra quyết định giữ lại dòng
+    code nào.
+commands:
+  - git status
+  - git add <tên-tệp-đã-sửa>
+  - git commit
+  - 'git commit -m "merge: resolved conflict in <tên-tệp>"'

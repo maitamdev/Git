@@ -1,0 +1,96 @@
+id: quiz-06-02-feature-branch-workflow
+title: "Trắc nghiệm: Feature Branch Workflow"
+questions:
+  - id: q1
+    question: Quy tắc vàng quan trọng nhất trong mô hình Feature Branch Workflow là gì?
+    type: single
+    options:
+      - text: Mọi tính năng mới đều phải được phát triển trên một nhánh riêng và nhánh
+          main chỉ chứa code ổn định
+        correct: true
+      - text: Tất cả lập trình viên chỉ được làm việc trên nhánh main duy nhất
+        correct: false
+      - text: Không được phép xóa bất kỳ nhánh nào dù đã merge xong
+        correct: false
+      - text: Chỉ được phép tạo nhánh mới vào ngày đầu tuần
+        correct: false
+    explanation: Tách biệt nhánh tính năng giúp bảo vệ tính toàn vẹn của nhánh chính
+      và hỗ trợ nhiều người cùng làm việc song song mà không giẫm chân lên nhau.
+  - id: q2
+    question: Quy ước đặt tên nhánh nào sau đây thể hiện rõ ràng và chuyên nghiệp
+      nhất cho tính năng giỏ hàng?
+    type: single
+    options:
+      - text: feat/shopping-cart
+        correct: true
+      - text: code_moi_nhat_2026
+        correct: false
+      - text: test1234
+        correct: false
+      - text: dung-xoa-nhe
+        correct: false
+    explanation: Tiền tố `feat/` kết hợp với mô tả ngắn gọn bằng tiếng Anh theo dạng
+      kebab-case là chuẩn mực phổ biến nhất trong các dự án công nghệ.
+  - id: q3
+    question: Sau khi một nhánh tính năng đã được hợp nhất thành công vào nhánh main
+      trên GitHub, bước tiếp theo nên làm gì?
+    type: single
+    options:
+      - text: Xóa nhánh tính năng đó trên cả GitHub và máy cục bộ để giữ kho lưu trữ gọn
+          gàng
+        correct: true
+      - text: Tiếp tục dùng nhánh đó để phát triển một tính năng hoàn toàn khác
+        correct: false
+      - text: Xóa toàn bộ kho lưu trữ trên máy và clone lại từ đầu
+        correct: false
+      - text: Tắt máy tính và không bao giờ đồng bộ mã nguồn nữa
+        correct: false
+    explanation: Xóa nhánh tính năng đã hoàn thành giúp cây thư mục gọn gàng, tránh
+      nhầm lẫn và giảm tải chi phí quản lý nhánh.
+  - id: q4
+    question: Tại sao việc gộp nhiều tính năng độc lập vào một nhánh tính năng duy
+      nhất lại bị xem là phản mẫu (anti-pattern)?
+    type: single
+    options:
+      - text: Vì Pull Request sẽ quá lớn, khó kiểm duyệt chi tiết và khó cô lập khi phát
+          sinh lỗi cần hoàn tác
+        correct: true
+      - text: Vì Git không cho phép một nhánh chứa quá 3 commit
+        correct: false
+      - text: Vì máy chủ GitHub sẽ từ chối nhận các nhánh có tên dài
+        correct: false
+      - text: Vì việc đó vi phạm bản quyền phần mềm mã nguồn mở
+        correct: false
+    explanation: Nhánh tính năng quá lớn khiến người review bị quá tải, tăng nguy cơ
+      sót lỗi ngầm và rất khó revert nếu một trong các tính năng gặp sự cố.
+  - id: q5
+    question: Lệnh nào sau đây vừa tạo nhánh mới vừa kích hoạt con trỏ HEAD làm việc
+      trên nhánh đó ngay lập tức?
+    type: single
+    options:
+      - text: git switch -c feat/dark-mode
+        correct: true
+      - text: git branch feat/dark-mode
+        correct: false
+      - text: git checkout feat/dark-mode
+        correct: false
+      - text: git commit -b feat/dark-mode
+        correct: false
+    explanation: Cờ `-c` trong lệnh hiện đại `git switch` thực hiện hành động tạo
+      nhánh mới và chuyển sang nhánh đó trong một bước duy nhất.
+  - id: q6
+    question: Trước khi bắt đầu rẽ nhánh tính năng mới từ nhánh main, bạn luôn luôn
+      nên thực hiện thao tác gì?
+    type: single
+    options:
+      - text: Chuyển về nhánh main và chạy git pull để bảo đảm đang rẽ nhánh từ phiên
+          bản mã nguồn mới nhất
+        correct: true
+      - text: Xóa sạch toàn bộ lịch sử commit trong thư mục .git
+        correct: false
+      - text: Chạy lệnh git reset --hard để đưa máy về trạng thái xuất xưởng
+        correct: false
+      - text: Đổi tên tài khoản GitHub của bạn sang tên khác
+        correct: false
+    explanation: Luôn cập nhật nhánh main mới nhất trước khi rẽ nhánh giúp giảm
+      thiểu tối đa nguy cơ gặp xung đột mã nguồn sau này khi mở Pull Request.

@@ -1,0 +1,25 @@
+id: 19-annotated-tag
+title: Annotated Tag
+duration: 25
+xp: 80
+keywords:
+  - annotated tag
+  - the chu giai
+  - git tag -a
+  - gpg sign tag
+  - semantic release tag
+  - full tag object
+prerequisites:
+  - 18-git-tag
+objectives:
+  - Phân biệt rõ ràng giữa Lightweight Tag (thẻ nhẹ) và Annotated Tag (thẻ chú
+    giải đầy đủ).
+  - Tạo thẻ Annotated Tag chứa đầy đủ tên tác giả, email, ngày giờ và thông điệp
+    phát hành bằng cờ `-a`.
+  - Kiểm tra thông tin chi tiết của một thẻ chú giải bằng câu lệnh `git show`.
+  - Hiểu rõ vì sao các bản phát hành sản phẩm chính thức (Production Releases)
+    luôn bắt buộc dùng Annotated Tag.
+commands:
+  - git tag -a <tên-thẻ> -m "<thông-điệp-phát-hành>"
+  - git tag -s <tên-thẻ> -m "<thông-điệp>"
+  - git show <tên-thẻ>

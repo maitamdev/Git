@@ -1,0 +1,63 @@
+id: quiz-04-git-architecture
+title: "Trắc nghiệm: Kiến trúc lưu trữ của Git"
+questions:
+  - id: q1
+    question: Git lưu trữ dữ liệu của các mốc lịch sử theo mô hình nào dưới đây?
+    type: single
+    options:
+      - text: Các ảnh chụp tức thời hoàn chỉnh (Snapshots)
+        correct: true
+      - text: Danh sách các dòng code thay đổi khác biệt (Deltas)
+        correct: false
+      - text: Các tệp tin nén zip chứa toàn bộ hệ điều hành
+        correct: false
+      - text: Bảng dữ liệu quan hệ SQL theo từng cột dòng
+        correct: false
+    explanation: Git coi dữ liệu như một chuỗi các snapshot của hệ thống tệp tin tại
+      từng thời điểm commit.
+  - id: q2
+    question: Điều gì xảy ra khi bạn tạo một commit mới nhưng có rất nhiều tệp tin
+      không hề bị chỉnh sửa?
+    type: single
+    options:
+      - text: Git chỉ lưu một con trỏ tham chiếu trỏ lại tệp tin cũ đã có trong cơ sở dữ
+          liệu
+        correct: true
+      - text: Git nhân bản toàn bộ các tệp tin đó sang thư mục mới gây tốn dung lượng
+        correct: false
+      - text: Git tự động xóa bỏ các tệp tin không bị chỉnh sửa khỏi dự án
+        correct: false
+      - text: Git báo lỗi từ chối commit vì tệp tin không có sự thay đổi
+        correct: false
+    explanation: Để tối ưu tốc độ và dung lượng, Git tái sử dụng con trỏ tới các
+      blob tệp tin cũ không có thay đổi.
+  - id: q3
+    question: Cấu trúc dữ liệu nào được Git sử dụng để tổ chức mối liên kết lịch sử
+      giữa các commit?
+    type: single
+    options:
+      - text: Directed Acyclic Graph - DAG (Đồ thị có hướng không chu trình)
+        correct: true
+      - text: Mảng một chiều tuyến tính cố định kích thước
+        correct: false
+      - text: Ngăn xếp theo nguyên lý vào trước ra trước (FIFO Queue)
+        correct: false
+      - text: Bảng băm đơn cấp không có con trỏ cha con
+        correct: false
+    explanation: Lịch sử Git là một DAG (Directed Acyclic Graph), trong đó mỗi
+      commit trỏ về một hoặc nhiều commit cha của nó.
+  - id: q4
+    question: Mã băm SHA của một commit trong Git được sinh ra dựa trên những yếu tố nào?
+    type: single
+    options:
+      - text: Nội dung cây thư mục, thông điệp commit, tác giả, thời gian và mã hash của
+          commit cha
+        correct: true
+      - text: Chỉ dựa trên số thứ tự commit do người dùng tự nhập
+        correct: false
+      - text: Tên của máy tính và địa chỉ IP kết nối mạng của bạn
+        correct: false
+      - text: Số lượng dòng code có trong tệp tin lớn nhất của dự án
+        correct: false
+    explanation: Mã băm SHA là hàm mật mã học tính toán từ toàn bộ dữ liệu nội dung,
+      siêu dữ liệu tác giả, ngày giờ và cha của commit.

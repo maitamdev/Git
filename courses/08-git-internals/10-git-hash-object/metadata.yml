@@ -1,0 +1,21 @@
+id: 10-git-hash-object
+title: Tạo và băm đối tượng thủ công với git hash-object
+duration: 35
+xp: 100
+keywords:
+  - git hash-object
+  - plumbing command
+  - sha-1 calculation
+  - write object
+  - hands-on lab
+prerequisites:
+  - 09-tag-object
+objectives:
+  - "Làm chủ lệnh plumbing quan trọng hàng đầu: git hash-object."
+  - "Sử dụng các cờ cốt lõi: -w (write to database), --stdin (đọc từ luồng tiêu
+    chuẩn), -t (chỉ định loại đối tượng)."
+  - Tự tay tạo ra một đối tượng Blob hợp lệ trong thư mục .git/objects/ mà không
+    cần dùng git add hay git commit.
+commands:
+  - echo "Hello Internals" | git hash-object -w --stdin
+  - git hash-object -w myfile.txt

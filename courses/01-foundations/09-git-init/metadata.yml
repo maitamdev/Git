@@ -1,0 +1,22 @@
+id: 09-git-init
+title: Khởi tạo kho chứa với git init
+duration: 25
+xp: 75
+keywords:
+  - git init
+  - khoi tao
+  - new repo
+  - initialize
+  - first repository
+prerequisites:
+  - 08-repository
+objectives:
+  - Sử dụng thành thạo câu lệnh `git init` để biến một thư mục thông thường
+    thành một Git repository.
+  - "Hiểu các hành vi ngầm của Git khi khởi tạo: tạo thư mục `.git`, thiết lập
+    nhánh mặc định."
+  - Biết cách khởi tạo kho chứa với tên nhánh mặc định tùy chỉnh như `main`.
+commands:
+  - git init
+  - git init -b main
+  - git status

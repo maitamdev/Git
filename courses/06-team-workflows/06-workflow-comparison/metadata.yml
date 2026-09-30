@@ -1,0 +1,26 @@
+id: 06-workflow-comparison
+title: So sánh GitHub Flow / Git Flow / Trunk-Based
+duration: 30
+xp: 100
+keywords:
+  - so sanh workflow
+  - git flow vs github flow
+  - trunk based vs git flow
+  - chon workflow phu hop
+  - ma tran quy trinh
+  - branching tradeoffs
+prerequisites:
+  - 03-github-flow
+  - 04-git-flow
+  - 05-trunk-based-development
+objectives:
+  - Lập bảng ma trận so sánh chi tiết ưu nhược điểm, độ phức tạp và trường hợp
+    sử dụng của 3 mô hình workflow hàng đầu.
+  - Hiểu rõ sự đánh đổi (Trade-offs) giữa tính linh hoạt tốc độ cao và mức độ
+    kiểm soát an toàn nghiêm ngặt.
+  - "Phân tích được các tiêu chí cốt lõi để lựa chọn workflow phù hợp: loại sản
+    phẩm, quy mô đội ngũ, chu kỳ phát hành, độ chín CI/CD."
+  - Tự tin tư vấn và thiết lập quy trình phân nhánh tối ưu cho một dự án thực tế.
+commands:
+  - git log --oneline --graph --all
+  - git branch --list

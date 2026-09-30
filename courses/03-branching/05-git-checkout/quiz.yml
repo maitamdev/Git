@@ -1,0 +1,66 @@
+id: quiz-03-05-git-checkout
+title: "Trắc nghiệm: Lệnh truyền thống git checkout"
+questions:
+  - id: q1
+    question: Lệnh truyền thống `git checkout -b feature` tương đương với lệnh hiện
+      đại nào sau đây?
+    type: single
+    options:
+      - text: git switch -c feature
+        correct: true
+      - text: git restore --branch feature
+        correct: false
+      - text: git branch --create-jump feature
+        correct: false
+      - text: git commit -b feature
+        correct: false
+    explanation: Lệnh truyền thống `git checkout -b <name>` thực hiện chính xác hành
+      động vừa tạo nhánh mới vừa chuyển nhánh tương đương hoàn toàn với `git
+      switch -c <name>` hiện đại.
+  - id: q2
+    question: Lệnh `git checkout -- index.html` thực hiện thao tác gì trên dự án?
+    type: single
+    options:
+      - text: Hủy bỏ các sửa đổi chưa staged trong tệp index.html (tương đương git
+          restore index.html)
+        correct: true
+      - text: Tạo một nhánh mới có tên là index.html
+        correct: false
+      - text: Đẩy tệp index.html lên máy chủ GitHub
+        correct: false
+      - text: Biên dịch tệp index.html thành ứng dụng di động
+        correct: false
+    explanation: "`git checkout -- <file>` là cú pháp cũ dùng để hủy bỏ sửa đổi trên
+      tệp trong Working Tree."
+  - id: q3
+    question: Dấu hai gạch ngang `--` trong lệnh `git checkout -- <file>` đóng vai
+      trò gì?
+    type: single
+    options:
+      - text: Phân tách rõ ràng giữa danh sách tùy chọn/nhánh và danh sách đường dẫn tệp
+          tin để tránh trùng lặp tên
+        correct: true
+      - text: Là cú pháp bắt buộc của ngôn ngữ lập trình C++
+        correct: false
+      - text: Tự động kích hoạt tính năng nén tệp tin tốc độ cao
+        correct: false
+      - text: Tự động kiểm tra lỗi chính tả trong mã nguồn
+        correct: false
+    explanation: Dấu `--` báo cho Git biết mọi đối số phía sau chắc chắn là đường
+      dẫn tệp tin, không phải tên nhánh.
+  - id: q4
+    question: Lời khuyên tốt nhất dành cho các kỹ sư phần mềm khi viết mã nguồn và
+      dự án mới hiện nay là gì?
+    type: single
+    options:
+      - text: Sử dụng git switch cho nhánh và git restore cho tệp tin để mã lệnh an toàn
+          và rõ nghĩa
+        correct: true
+      - text: Chỉ được dùng git checkout và cấm dùng git switch
+        correct: false
+      - text: Không được tạo bất kỳ nhánh nào trong suốt vòng đời dự án
+        correct: false
+      - text: Chỉ commit code vào ngày cuối cùng của tháng
+        correct: false
+    explanation: Các lệnh mới chuyên biệt giúp quy trình rõ ràng và loại bỏ hoàn
+      toàn các lỗi thao tác nhầm lẫn.

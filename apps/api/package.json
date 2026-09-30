@@ -1,0 +1,27 @@
+{
+  "name": "@git-academy/api",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx watch src/index.ts"
+  },
+  "dependencies": {
+    "@git-academy/auth": "workspace:*",
+    "@git-academy/gradebook": "workspace:*",
+    "@git-academy/shared": "workspace:*",
+    "bcryptjs": "^3.0.3",
+    "pg": "^8.23.0",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^3.0.0",
+    "@types/node": "^22.10.2",
+    "@types/pg": "^8.23.1",
+    "typescript": "^5.7.2"
+  }
+}

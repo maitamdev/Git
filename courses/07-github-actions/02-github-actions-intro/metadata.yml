@@ -1,0 +1,22 @@
+id: 02-github-actions-intro
+title: GitHub Actions là gì? Nền tảng tự động hóa của GitHub
+duration: 25
+xp: 80
+keywords:
+  - github actions
+  - automation
+  - marketplace
+  - workflow engine
+  - saas ci
+prerequisites:
+  - 01-ci-cd-concept
+objectives:
+  - Hiểu rõ GitHub Actions là gì và vị thế của nó trong hệ sinh thái GitHub.
+  - "Nắm bắt các tính năng chính: tích hợp sâu với Git events, kho ứng dụng
+    Actions Marketplace phong phú."
+  - Phân biệt mô hình SaaS tích hợp sẵn so với việc tự dựng và vận hành máy chủ
+    Jenkins truyền thống.
+commands:
+  - gh workflow list
+  - gh run list
+  - gh auth status

@@ -1,0 +1,22 @@
+id: 02-vcs-types
+title: Local / Centralized / Distributed VCS
+duration: 25
+xp: 60
+keywords:
+  - cvcs
+  - dvcs
+  - local vcs
+  - centralized
+  - distributed
+  - kien truc
+prerequisites:
+  - 01-version-control
+objectives:
+  - "Phân biệt rõ 3 thế hệ kiến trúc VCS: Cục bộ (Local), Tập trung
+    (Centralized), và Phân tán (Distributed)."
+  - Đánh giá được ưu nhược điểm cốt lõi của SVN so với Git.
+  - Hiểu vì sao mô hình phân tán (DVCS) trở thành tiêu chuẩn thống trị ngành
+    công nghiệp phần mềm hiện đại.
+commands:
+  - git log
+  - git status

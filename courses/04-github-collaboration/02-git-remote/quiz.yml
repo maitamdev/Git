@@ -1,0 +1,95 @@
+id: quiz-04-02-git-remote
+title: "Trắc nghiệm: Quản lý remote với git remote"
+questions:
+  - id: q1
+    question: Lệnh nào sau đây dùng để liên kết kho lưu trữ cục bộ với một kho trên
+      GitHub có tên bí danh là `origin`?
+    type: single
+    options:
+      - text: git remote add origin https://github.com/user/repo.git
+        correct: true
+      - text: git connect github https://github.com/user/repo.git
+        correct: false
+      - text: git link cloud origin https://github.com/user/repo.git
+        correct: false
+      - text: git push --set-remote https://github.com/user/repo.git
+        correct: false
+    explanation: "`git remote add <tên> <url>` là cú pháp chuẩn để thiết lập liên
+      kết với kho từ xa."
+  - id: q2
+    question: Cờ tùy chọn `-v` trong câu lệnh `git remote -v` có ý nghĩa là gì?
+    type: single
+    options:
+      - text: "Verbose: Hiển thị chi tiết địa chỉ URL đầy đủ cho cả hai chiều fetch và
+          push"
+        correct: true
+      - text: "Verify: Tự động kiểm tra mật khẩu tài khoản người dùng"
+        correct: false
+      - text: "Version: Hiển thị phiên bản phần mềm Git đang cài trên máy tính"
+        correct: false
+      - text: "Virtual: Tạo một kho lưu trữ ảo trong bộ nhớ RAM"
+        correct: false
+    explanation: "`-v` (verbose) yêu cầu Git in ra đầy đủ chi tiết đường dẫn URL của
+      từng remote."
+  - id: q3
+    question: Nếu công ty của bạn chuyển đổi tên miền máy chủ và bạn cần cập nhật
+      URL mới cho `origin`, bạn dùng lệnh nào?
+    type: single
+    options:
+      - text: git remote set-url origin <url-mới>
+        correct: true
+      - text: git remote update-domain origin <url-mới>
+        correct: false
+      - text: git change origin <url-mới>
+        correct: false
+      - text: git url reset origin <url-mới>
+        correct: false
+    explanation: "`git remote set-url <tên> <url-mới>` thay đổi trực tiếp URL đích
+      mà không cần xóa đi tạo lại."
+  - id: q4
+    question: Điều gì thực sự xảy ra khi bạn chạy lệnh `git remote remove origin`
+      trên máy tính cá nhân?
+    type: single
+    options:
+      - text: Chỉ có dòng cấu hình liên kết origin bị xóa khỏi tệp .git/config cục bộ,
+          kho trên GitHub vẫn an toàn 100%
+        correct: true
+      - text: Toàn bộ kho chứa của công ty trên GitHub sẽ bị xóa vĩnh viễn
+        correct: false
+      - text: Mã nguồn trong Working Directory bị biến mất hoàn toàn
+        correct: false
+      - text: Tài khoản GitHub của bạn bị khóa vĩnh viễn
+        correct: false
+    explanation: Lệnh này chỉ gỡ bỏ cấu hình định danh cục bộ, hoàn toàn không tác
+      động đến dữ liệu trên máy chủ remote.
+  - id: q5
+    question: Thông tin cấu hình của các remote được Git lưu trữ nội bộ tại tệp tin
+      nào trong dự án?
+    type: single
+    options:
+      - text: .git/config
+        correct: true
+      - text: .git/remotes.json
+        correct: false
+      - text: package.json
+        correct: false
+      - text: README.md
+        correct: false
+    explanation: Các khối cấu hình `[remote "origin"]` được ghi trực tiếp vào tệp
+      văn bản cấu hình `.git/config`.
+  - id: q6
+    question: Một kho lưu trữ Git cục bộ có thể liên kết tới bao nhiêu kho từ xa
+      (remotes) cùng lúc?
+    type: single
+    options:
+      - text: Không giới hạn, bạn có thể thêm nhiều remote khác nhau như origin,
+          upstream, backup
+        correct: true
+      - text: Duy nhất chỉ một remote mà thôi
+        correct: false
+      - text: Tối đa hai remote cho hai lập trình viên
+        correct: false
+      - text: Tối đa mười remote
+        correct: false
+    explanation: Git hỗ trợ liên kết với bao nhiêu remote tùy ý, cực kỳ phổ biến
+      trong mô hình fork/upstream.

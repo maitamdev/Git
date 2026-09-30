@@ -1,0 +1,29 @@
+id: 15-professional-team-project
+title: Professional Team Project
+duration: 50
+xp: 250
+keywords:
+  - professional team project
+  - du an nhom chuyen nghiep
+  - capstone level 6
+  - branch protection simulation
+  - codeowners review
+  - tong hop level 6
+prerequisites:
+  - 13-hotfix-workflow
+  - 14-team-conflict-scenario
+objectives:
+  - Tổng hợp toàn bộ các kỹ năng và kiến thức đã học trong Level 6 vào một dự án
+    mô phỏng thực chiến quy mô doanh nghiệp.
+  - "Thiết lập hoàn chỉnh cấu trúc dự án chuẩn mực: Protected Branch, Branch
+    Protection Rules, tệp CODEOWNERS và mẫu PR Template."
+  - Vận hành trơn tru quy trình Feature Branch kết hợp Conventional Commits và
+    Semantic Versioning.
+  - Xử lý thành công tình huống khẩn cấp Hotfix trên môi trường sản xuất song
+    song với việc phát triển tính năng mới.
+commands:
+  - git tag -a v1.0.0 -m "Release v1.0.0 initial baseline"
+  - git switch -c feat/order-service
+  - 'git commit -m "feat(order): implement order placement logic"'
+  - git switch -c hotfix/v1.0.1 main
+  - 'git commit -m "fix(order): prevent duplicate checkout charges"'

@@ -1,0 +1,66 @@
+id: quiz-04-04-git-clone
+title: "Trắc nghiệm: Tải dự án với git clone"
+questions:
+  - id: q1
+    question: Lệnh `git clone` khác biệt căn bản so với việc tải tệp nén "Download
+      ZIP" từ GitHub ở điểm nào?
+    type: single
+    options:
+      - text: Clone tải về toàn bộ kho lưu trữ bao gồm thư mục .git, đầy đủ lịch sử
+          commit và liên kết remote origin
+        correct: true
+      - text: Clone chỉ tải về đúng một tệp tin duy nhất
+        correct: false
+      - text: Download ZIP giữ lại được toàn bộ các nhánh còn clone thì không
+        correct: false
+      - text: Download ZIP tự động tạo commit mới trên máy tính
+        correct: false
+    explanation: Download ZIP chỉ chứa mã nguồn phẳng tại thời điểm hiện tại, hoàn
+      toàn không có lịch sử Git hay liên kết remote.
+  - id: q2
+    question: Lệnh nào sau đây cho phép bạn clone dự án về nhưng đặt tên thư mục
+      trên máy tính là `my-custom-app`?
+    type: single
+    options:
+      - text: git clone https://github.com/org/app.git my-custom-app
+        correct: true
+      - text: git clone https://github.com/org/app.git --rename-to my-custom-app
+        correct: false
+      - text: git clone --name my-custom-app https://github.com/org/app.git
+        correct: false
+      - text: git clone -dir my-custom-app https://github.com/org/app.git
+        correct: false
+    explanation: Đối số thứ hai phía sau URL trong lệnh `git clone <url> <dir>`
+      chính là tên thư mục đích.
+  - id: q3
+    question: Tùy chọn `--depth 1` trong câu lệnh `git clone` mang lại lợi ích lớn
+      nhất nào sau đây?
+    type: single
+    options:
+      - text: Chỉ tải về duy nhất một snapshot commit mới nhất, giúp tốc độ tải cực
+          nhanh và tiết kiệm dung lượng ổ cứng
+        correct: true
+      - text: Tự động kiểm tra lỗi bảo mật của toàn bộ mã nguồn
+        correct: false
+      - text: Tự động nâng cấp phiên bản ngôn ngữ lập trình của dự án
+        correct: false
+      - text: Xóa bỏ tất cả các bài kiểm tra tự động trong kho
+        correct: false
+    explanation: Shallow clone với `--depth 1` chỉ lấy commit đỉnh, cực kỳ hữu dụng
+      trong CI/CD pipeline để tăng tốc build.
+  - id: q4
+    question: Sau khi chạy lệnh `git clone` thành công, thao tác đầu tiên bạn cần
+      làm trong terminal để bắt đầu làm việc là gì?
+    type: single
+    options:
+      - text: Chuyển thư mục dòng lệnh vào bên trong thư mục dự án vừa được tạo ra bằng
+          lệnh `cd <tên-thư-mục>`
+        correct: true
+      - text: Khởi tạo lại bằng lệnh git init một lần nữa
+        correct: false
+      - text: Chạy lệnh git delete để làm sạch màn hình
+        correct: false
+      - text: Rút dây mạng Internet ra khỏi máy tính
+        correct: false
+    explanation: Git clone tạo ra một thư mục con; bạn phải dùng lệnh `cd` đi vào
+      bên trong thư mục đó mới dùng được các lệnh Git.

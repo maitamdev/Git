@@ -1,0 +1,66 @@
+id: quiz-04-14-github-issues
+title: "Trắc nghiệm: Quản lý công việc với GitHub Issues"
+questions:
+  - id: q1
+    question: GitHub Issues được thiết kế nhằm phục vụ mục đích cốt lõi nào trong dự án?
+    type: single
+    options:
+      - text: Theo dõi lỗi phần mềm (bug tracking), quản lý yêu cầu tính năng mới và tổ
+          chức công việc của nhóm
+        correct: true
+      - text: Lưu trữ tệp video dung lượng lớn của công ty
+        correct: false
+      - text: Tự động biên dịch mã nguồn thành file thực thi
+        correct: false
+      - text: Quản lý tài khoản ngân hàng của lập trình viên
+        correct: false
+    explanation: GitHub Issues đóng vai trò hệ thống quản lý công việc, theo dõi lỗi
+      và thảo luận kỹ thuật tập trung.
+  - id: q2
+    question: "Khi bạn viết câu cú pháp `Fixes #25` trong phần mô tả của một Pull
+      Request, điều kỳ diệu gì sẽ xảy ra?"
+    type: single
+    options:
+      - text: Khi Pull Request đó được merge thành công vào nhánh main, Issue số 25 sẽ
+          tự động được chuyển sang trạng thái Closed
+        correct: true
+      - text: Issue số 25 sẽ bị xóa vĩnh viễn khỏi lịch sử
+        correct: false
+      - text: Toàn bộ mã nguồn của commit 25 sẽ bị quay ngược lại
+        correct: false
+      - text: Người tạo Issue 25 sẽ bị khóa tài khoản
+        correct: false
+    explanation: "Closing keywords như `Fixes #ID`, `Closes #ID` tự động đóng Issue
+      liên kết ngay khi PR được merge."
+  - id: q3
+    question: Tính năng "Labels" trong GitHub Issues mang lại lợi ích gì cho việc
+      quản trị dự án?
+    type: single
+    options:
+      - text: Phân loại công việc theo màu sắc và danh mục (như bug, enhancement,
+          documentation) để lọc tìm kiếm dễ dàng
+        correct: true
+      - text: Tự động tính tiền thưởng cho từng nhiệm vụ
+        correct: false
+      - text: Tăng tốc độ kết nối mạng của máy tính
+        correct: false
+      - text: Bảo vệ kho chứa khỏi các cuộc tấn công mạng
+        correct: false
+    explanation: Labels giúp phân loại, sắp xếp độ ưu tiên và lọc các tác vụ theo
+      chủ đề một cách nhanh chóng.
+  - id: q4
+    question: Một bản báo cáo lỗi (Bug Report) chất lượng cao và chuyên nghiệp bắt
+      buộc phải có thông tin nào?
+    type: single
+    options:
+      - text: Các bước cụ thể để tái hiện lỗi (Steps to reproduce), kết quả thực tế gặp
+          phải, kết quả kỳ vọng và ảnh chụp/mã lỗi
+        correct: true
+      - text: Chỉ cần một câu ngắn gọn như "Web bị hỏng rồi"
+        correct: false
+      - text: Số điện thoại cá nhân của người tìm ra lỗi
+        correct: false
+      - text: Mật khẩu đăng nhập tài khoản máy tính của người báo cáo
+        correct: false
+    explanation: Các bước tái hiện rõ ràng là yếu tố tiên quyết để kỹ sư khác có thể
+      kiểm tra và sửa lỗi triệt để.

@@ -1,0 +1,92 @@
+id: quiz-07-github-actions-11-contexts-and-expressions
+title: "Trắc nghiệm: Contexts & Expressions: ${{ github.ref }}, matrix và toán tử"
+questions:
+  - id: q1
+    question: Ngữ cảnh nào sau đây chứa thông tin về tác giả đã thực hiện hành động
+      kích hoạt workflow?
+    type: single
+    options:
+      - text: github.actor
+        correct: true
+      - text: runner.user
+        correct: false
+      - text: env.AUTHOR
+        correct: false
+      - text: steps.author.name
+        correct: false
+    explanation: "`github.actor` luôn chứa tên đăng nhập (username) của người dùng
+      đã thực hiện push commit hoặc mở Pull Request."
+  - id: q2
+    question: Biểu thức nào sau đây kiểm tra xem tên nhánh có bắt đầu bằng tiền tố
+      "release/" hay không?
+    type: single
+    options:
+      - text: startsWith(github.ref_name, 'release/')
+        correct: true
+      - text: github.ref_name.has('release/')
+        correct: false
+      - text: like(github.ref_name, 'release/*')
+        correct: false
+      - text: matches(github.ref_name, '^release')
+        correct: false
+    explanation: Hàm `startsWith(string, searchString)` là hàm chuỗi tích hợp sẵn
+      trong bộ xử lý biểu thức của GitHub Actions.
+  - id: q3
+    question: Khi sử dụng biểu thức bên trong mệnh đề điều kiện `if:`, điều nào sau
+      đây là đúng?
+    type: single
+    options:
+      - text: Bạn có thể lược bỏ cặp dấu ${{ }} mà biểu thức vẫn được phân tích hợp lệ
+        correct: true
+      - text: Bắt buộc phải có dấu ngoặc nhọn nếu không sẽ bị báo lỗi cú pháp
+        correct: false
+      - text: Chỉ được phép so sánh các số nguyên, không so sánh được chuỗi
+        correct: false
+      - text: Phải viết bằng cú pháp ngôn ngữ C++
+        correct: false
+    explanation: GitHub Actions tự động coi toàn bộ giá trị trong thuộc tính `if:`
+      là một biểu thức logic, do đó việc bọc `${{ }}` là tùy chọn.
+  - id: q4
+    question: Hàm `contains('hello world', 'world')` sẽ trả về kết quả nào?
+    type: single
+    options:
+      - text: "true"
+        correct: true
+      - text: "false"
+        correct: false
+      - text: undefined
+        correct: false
+      - text: Lỗi biên dịch
+        correct: false
+    explanation: Hàm `contains()` kiểm tra xem chuỗi con có nằm trong chuỗi mẹ hay
+      không và trả về giá trị boolean `true` hoặc `false`.
+  - id: q5
+    question: Biểu thức nào sau đây kiểm tra xem commit hiện tại có thuộc nhánh main
+      VÀ bước trước đó đã thành công hay không?
+    type: single
+    options:
+      - text: github.ref == 'refs/heads/main' && success()
+        correct: true
+      - text: github.ref == 'refs/heads/main' || failure()
+        correct: false
+      - text: github.branch == 'main' & pass()
+        correct: false
+      - text: ref === 'main' and ok()
+        correct: false
+    explanation: Toán tử logic `&&` kết hợp cùng hàm điều kiện `success()` đảm bảo
+      bước này chỉ chạy khi ở nhánh main và không có lỗi nào trước đó.
+  - id: q6
+    question: Đối tượng ngữ cảnh nào sau đây cho phép truy cập danh sách bí mật mã
+      hóa đã cấu hình trong kho lưu trữ?
+    type: single
+    options:
+      - text: secrets
+        correct: true
+      - text: credentials
+        correct: false
+      - text: env.SECRETS
+        correct: false
+      - text: runner.passwords
+        correct: false
+    explanation: Ngữ cảnh `secrets` chứa các khóa bí mật được mã hóa an toàn như
+      `secrets.DEPLOY_TOKEN` hoặc `secrets.GITHUB_TOKEN`.

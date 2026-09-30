@@ -1,0 +1,23 @@
+id: 05-git-add
+title: Đưa tệp vào staging với git add
+duration: 25
+xp: 80
+keywords:
+  - git add
+  - staging
+  - stage changes
+  - chon loc thay doi
+  - patch mode
+prerequisites:
+  - 04-git-status
+objectives:
+  - "Sử dụng thành thạo câu lệnh `git add` với các cú pháp: tệp chỉ định, thư
+    mục, và `git add .`."
+  - Hiểu rõ sự khác biệt và rủi ro tiềm ẩn giữa `git add <file>` có chọn lọc và
+    `git add .`.
+  - Làm quen với kỹ thuật stage từng khối dòng code bằng cờ `-p` (patch mode).
+commands:
+  - git add <file>
+  - git add .
+  - git add -A
+  - git add -p

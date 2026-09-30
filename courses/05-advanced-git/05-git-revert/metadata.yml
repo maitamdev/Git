@@ -1,0 +1,27 @@
+id: 05-git-revert
+title: git revert
+duration: 25
+xp: 85
+keywords:
+  - git revert
+  - revert commit
+  - dao nguoc commit
+  - hoan tac an toan
+  - public undo
+  - non-destructive
+prerequisites:
+  - 04-git-reset-hard
+objectives:
+  - Nắm vững nguyên lý hoạt động của `git revert` như một thao tác hoàn tác tiến
+    lên phía trước (Forward-moving undo).
+  - Hiểu rõ sự khác biệt bản chất giữa việc xóa lịch sử (reset) và việc ghi nhận
+    lịch sử đảo ngược (revert).
+  - Sử dụng `git revert` để hủy bỏ an toàn các commit lỗi trên môi trường
+    production và nhánh dùng chung.
+  - Xử lý tình huống giải quyết xung đột có thể phát sinh trong quá trình revert
+    commit.
+commands:
+  - git revert <commit-hash>
+  - git revert HEAD
+  - git revert HEAD~2..HEAD
+  - git revert --no-commit <commit-hash>

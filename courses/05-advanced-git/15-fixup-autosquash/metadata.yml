@@ -1,0 +1,25 @@
+id: 15-fixup-autosquash
+title: Fixup & Autosquash
+duration: 30
+xp: 95
+keywords:
+  - fixup
+  - autosquash
+  - git commit --fixup
+  - git rebase --autosquash
+  - tu dong gop commit
+  - fast editing
+prerequisites:
+  - 14-squash-commit
+objectives:
+  - Hiểu rõ sự tiện lợi vượt trội của chỉ thị `fixup` so với `squash` khi không
+    cần giữ lại thông điệp thừa.
+  - Sử dụng câu lệnh `git commit --fixup <commit-hash>` để tự động tạo commit
+    sửa lỗi gắn nhãn.
+  - Kích hoạt tính năng kỳ diệu `git rebase -i --autosquash` để Git tự động sắp
+    xếp và gộp commit tự động.
+  - Cấu hình Git tự động bật autosquash vĩnh viễn trong tệp `.gitconfig`.
+commands:
+  - git commit --fixup <commit-hash>
+  - git rebase -i --autosquash <base-hash>
+  - git config --global rebase.autoSquash true

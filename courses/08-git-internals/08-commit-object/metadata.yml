@@ -1,0 +1,23 @@
+id: 08-commit-object
+title: "Đối tượng Commit: Ghi lại snapshot lịch sử và metadata tác giả"
+duration: 35
+xp: 100
+keywords:
+  - commit object
+  - parent commit
+  - author
+  - committer
+  - commit message
+  - dag node
+prerequisites:
+  - 07-tree-object
+objectives:
+  - Giải phẫu cấu trúc định dạng nội dung của một đối tượng Commit trong Git.
+  - "Hiểu rõ 4 thành phần bắt buộc bên trong Commit: con trỏ tree, con trỏ
+    commit cha (parent), thông tin tác giả/người commit, và commit message."
+  - Nắm bắt bản chất của lịch sử Git như một Đồ thị có hướng không chu trình
+    (DAG) liên kết bởi các con trỏ parent.
+commands:
+  - git cat-file -p HEAD
+  - git cat-file -t HEAD
+  - git log -1 --raw

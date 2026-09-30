@@ -1,0 +1,83 @@
+# Bảng thuật ngữ Git thống nhất (Git Academy Vietnam)
+# Định nghĩa các thuật ngữ chuẩn tiếng Việt và tiếng Anh dùng xuyên suốt toàn bộ giáo trình.
+# Không dịch các câu lệnh (command) và flag của Git.
+
+repository:
+  vi: kho lưu trữ
+  preferred: "Repository (kho lưu trữ)"
+  description: "Cơ sở dữ liệu chứa toàn bộ lịch sử commit, nhánh và đối tượng của dự án."
+
+working-tree:
+  vi: thư mục làm việc
+  preferred: "Working Tree (thư mục làm việc)"
+  description: "Thư mục vật lý trên ổ đĩa chứa các file bạn đang trực tiếp xem và chỉnh sửa."
+
+staging-area:
+  vi: vùng chuẩn bị
+  preferred: "Staging Area (vùng chuẩn bị)"
+  description: "Khu vực trung gian (index) lưu lại các thay đổi đã chọn lọc sẵn sàng để commit."
+
+branch:
+  vi: nhánh
+  preferred: "Nhánh (branch)"
+  description: "Con trỏ có thể di chuyển trỏ tới một commit cụ thể trong đồ thị DAG."
+
+commit:
+  vi: commit
+  preferred: "Commit (ảnh chụp snapshot)"
+  description: "Ảnh chụp toàn bộ trạng thái repository tại một thời điểm xác định."
+
+merge:
+  vi: hợp nhất
+  preferred: "Merge (hợp nhất)"
+  description: "Quá trình gộp lịch sử và thay đổi của hai nhánh lại với nhau."
+
+remote:
+  vi: kho từ xa
+  preferred: "Remote (kho từ xa)"
+  description: "Bản sao repository được lưu trữ trên máy chủ từ xa như GitHub, GitLab."
+
+clone:
+  vi: nhân bản
+  preferred: "Clone (nhân bản kho chứa)"
+  description: "Tải toàn bộ repository từ remote về máy cục bộ kèm đầy đủ lịch sử."
+
+fetch:
+  vi: lấy dữ liệu
+  preferred: "Fetch (lấy dữ liệu từ xa)"
+  description: "Tải các commit và ref từ remote về nhưng chưa gộp vào nhánh cục bộ."
+
+pull:
+  vi: kéo và gộp
+  preferred: "Pull (kéo và gộp code)"
+  description: "Tải về và tự động gộp các thay đổi từ remote vào nhánh làm việc hiện tại."
+
+push:
+  vi: đẩy dữ liệu
+  preferred: "Push (đẩy commit lên remote)"
+  description: "Đưa các commit từ nhánh cục bộ lên nhánh tương ứng trên server từ xa."
+
+rebase:
+  vi: tái thiết lập gốc
+  preferred: "Rebase (tái cấu trúc lịch sử)"
+  description: "Di chuyển hoặc phát lại một chuỗi commit lên trên một commit gốc mới."
+
+cherry-pick:
+  vi: chọn lọc commit
+  preferred: "Cherry-pick (chọn lọc commit)"
+  description: "Trích xuất thay đổi của một commit cụ thể và áp dụng nó lên nhánh hiện tại."
+
+reflog:
+  vi: nhật ký tham chiếu
+  preferred: "Reflog (nhật ký tham chiếu)"
+  description: "Nhật ký ghi lại mọi chuyển động của HEAD và các nhánh trên máy cục bộ."
+
+tag:
+  vi: thẻ đánh dấu
+  preferred: "Tag (thẻ phiên bản)"
+  description: "Mốc đánh dấu tĩnh không đổi trỏ đến một commit quan trọng (thường dùng cho release)."
+
+pull-request:
+  vi: yêu cầu kéo code
+  preferred: "Pull Request (yêu cầu kéo/gộp code)"
+  description: "Đề xuất gộp các thay đổi từ một nhánh vào nhánh chính trên GitHub kèm thảo luận."

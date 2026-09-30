@@ -1,0 +1,62 @@
+id: quiz-02-09-git-diff
+title: "Trắc nghiệm: So sánh khác biệt với git diff"
+questions:
+  - id: q1
+    question: Lệnh `git diff` không có tham số so sánh sự khác nhau giữa hai khu vực nào?
+    type: single
+    options:
+      - text: Working Directory và Staging Area (những sửa đổi chưa được git add)
+        correct: true
+      - text: Staging Area và commit gần nhất tại HEAD
+        correct: false
+      - text: Nhánh main cục bộ và nhánh main trên GitHub
+        correct: false
+      - text: Hai máy tính khác nhau trong cùng mạng LAN
+        correct: false
+    explanation: "`git diff` mặc định hiển thị những thay đổi đang nằm dở dang ở
+      Working Directory mà chưa được đưa vào Staging Area."
+  - id: q2
+    question: Sau khi bạn đã chạy `git add .`, lệnh nào sẽ giúp bạn xem lại chi tiết
+      nội dung những thay đổi đã được staged?
+    type: single
+    options:
+      - text: git diff --staged (hoặc git diff --cached)
+        correct: true
+      - text: git diff
+        correct: false
+      - text: git log --diff-only
+        correct: false
+      - text: git status --show-lines
+        correct: false
+    explanation: "`git diff --staged` (đồng nghĩa với `--cached`) so sánh nội dung
+      trong Staging Area với snapshot HEAD gần nhất."
+  - id: q3
+    question: Trong kết quả hiển thị của git diff, một dòng bắt đầu bằng dấu cộng
+      `+` màu xanh lá có ý nghĩa gì?
+    type: single
+    options:
+      - text: Dòng code đó vừa mới được bổ sung thêm vào tệp tin
+        correct: true
+      - text: Dòng code đó đã bị xóa bỏ khỏi dự án
+        correct: false
+      - text: Dòng code đó bị lỗi cú pháp lập trình
+        correct: false
+      - text: Dòng code đó được tải về từ kho lưu trữ của đối thủ
+        correct: false
+    explanation: Quy ước Unified Diff sử dụng dấu cộng `+` để biểu diễn dòng văn bản
+      mới được thêm vào.
+  - id: q4
+    question: Tại sao lập trình viên nên chạy git diff trước khi commit code?
+    type: single
+    options:
+      - text: Để tự kiểm tra lại từng dòng code thay đổi, loại bỏ dòng nháp thừa và
+          tránh commit nhầm
+        correct: true
+      - text: Để Git tự động chỉnh sửa lỗi ngữ pháp tiếng Anh trong mã nguồn
+        correct: false
+      - text: Để giải phóng dung lượng bộ nhớ RAM máy tính
+        correct: false
+      - text: Để kích hoạt bản quyền dùng thử miễn phí của phần mềm
+        correct: false
+    explanation: Tự duyệt diff là bước tự kiểm tra (Self-review) quan trọng hàng đầu
+      của một kỹ sư phần mềm cẩn trọng.

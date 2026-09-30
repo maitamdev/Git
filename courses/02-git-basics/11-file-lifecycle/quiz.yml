@@ -1,0 +1,62 @@
+id: quiz-02-11-file-lifecycle
+title: "Trắc nghiệm: Vòng đời trạng thái của File"
+questions:
+  - id: q1
+    question: Một tệp tin đã từng được commit vào lịch sử, nếu bạn mở ra sửa thêm
+      một dòng code, tệp đó sẽ ở trạng thái nào?
+    type: single
+    options:
+      - text: Modified (Đã bị sửa đổi)
+        correct: true
+      - text: Untracked (Chưa được theo dõi)
+        correct: false
+      - text: Staged (Đã nằm trong vùng chuẩn bị)
+        correct: false
+      - text: Deleted (Đã bị xóa)
+        correct: false
+    explanation: Tệp tin đã có trong commit trước đó khi bị thay đổi nội dung trong
+      Working Tree sẽ chuyển sang trạng thái Modified.
+  - id: q2
+    question: Trạng thái Unmodified của một tệp tin có ý nghĩa kỹ thuật gì?
+    type: single
+    options:
+      - text: Nội dung tệp trong Working Tree đang trùng khớp hoàn toàn 100% với
+          snapshot gần nhất trong commit
+        correct: true
+      - text: Tệp tin đó đã bị khóa và không ai được phép sửa đổi nữa
+        correct: false
+      - text: Tệp tin đó bị Git từ chối không theo dõi
+        correct: false
+      - text: Tệp tin bị lỗi cú pháp chưa biên dịch được
+        correct: false
+    explanation: Unmodified nghĩa là nội dung trong Working Tree hoàn toàn giống với
+      commit gần nhất, không có thay đổi nào dở dang.
+  - id: q3
+    question: Lệnh nào đưa một tệp tin từ trạng thái Modified sang trạng thái Staged?
+    type: single
+    options:
+      - text: git add <tên-tệp>
+        correct: true
+      - text: git commit
+        correct: false
+      - text: git switch
+        correct: false
+      - text: git branch
+        correct: false
+    explanation: "`git add` lấy nội dung tệp Modified và đưa snapshot vào Staging
+      Area, chuyển tệp thành Staged."
+  - id: q4
+    question: Trong lệnh `git status -s`, ký hiệu `MM` ở đầu một dòng hiển thị điều gì?
+    type: single
+    options:
+      - text: Tệp đã được đưa vào Staging Area nhưng sau đó lại bị sửa tiếp trong
+          Working Directory
+        correct: true
+      - text: Tệp tin có dung lượng lớn gấp đôi bình thường
+        correct: false
+      - text: Tệp tin được viết bằng ngôn ngữ Markdown
+        correct: false
+      - text: Tệp tin bị mất cả hai mã băm mật mã học
+        correct: false
+    explanation: Ký tự M thứ nhất là Staged, ký tự M thứ hai là Modified trong
+      Working Tree; nghĩa là tệp đã add nhưng sau đó lại bị sửa tiếp.

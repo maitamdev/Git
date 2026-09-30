@@ -1,0 +1,64 @@
+id: quiz-05-06-git-reflog
+title: "Trắc nghiệm: git reflog"
+questions:
+  - id: q1
+    question: Điểm khác biệt căn bản nhất giữa `git log` và `git reflog` là gì?
+    type: single
+    options:
+      - text: git log hiển thị lịch sử commit của nhánh, còn reflog ghi lại mọi hành
+          động di chuyển của con trỏ HEAD trên máy cục bộ
+        correct: true
+      - text: git log dùng cho máy Mac, còn reflog dùng cho máy Windows
+        correct: false
+      - text: reflog tự động đồng bộ lên GitHub, còn log chỉ lưu trên máy cá nhân
+        correct: false
+      - text: git log chỉ xem được tệp ảnh, reflog xem được tệp văn bản
+        correct: false
+    explanation: "`reflog` ghi nhận mọi thao tác cục bộ làm đổi vị trí HEAD (commit,
+      checkout, reset...), kể cả các commit đã bị tách rời khỏi nhánh."
+  - id: q2
+    question: Cú pháp `HEAD@{1}` trong kết quả xuất ra của `git reflog` có ý nghĩa là gì?
+    type: single
+    options:
+      - text: Vị trí của con trỏ HEAD ở trạng thái ngay trước thao tác dịch chuyển gần
+          đây nhất
+        correct: true
+      - text: Nhánh số 1 trên máy chủ GitHub
+        correct: false
+      - text: Commit đầu tiên trong lịch sử dự án
+        correct: false
+      - text: Một lỗi cú pháp của Git
+        correct: false
+    explanation: "`HEAD@{n}` đại diện cho vị trí của con trỏ HEAD cách đây `n` bước
+      di chuyển."
+  - id: q3
+    question: Nhật ký `reflog` có được đẩy lên máy chủ từ xa khi bạn chạy `git push`
+      hay không?
+    type: single
+    options:
+      - text: Hoàn toàn không, reflog chỉ là dữ liệu nội bộ riêng tư tồn tại duy nhất
+          trên máy tính cá nhân của bạn
+        correct: true
+      - text: Có, reflog được công khai cho tất cả mọi người trên mạng
+        correct: false
+      - text: Chỉ đẩy lên nếu bạn có tài khoản GitHub trả phí
+        correct: false
+      - text: Chỉ đẩy lên khi sử dụng cờ --force
+        correct: false
+    explanation: Reflog là nhật ký nội bộ của client Git cá nhân, không thuộc cấu
+      trúc chia sẻ của giao thức remote.
+  - id: q4
+    question: Trường hợp nào sau đây KHÔNG THỂ cứu lại được bằng `git reflog`?
+    type: single
+    options:
+      - text: Các thay đổi trong tệp tin mới tạo chưa từng được gõ lệnh `git commit` bao
+          giờ
+        correct: true
+      - text: Một commit bị mất do lỡ tay gõ `git reset --hard`
+        correct: false
+      - text: Một nhánh đã bị xóa bằng `git branch -D`
+        correct: false
+      - text: Một commit bị ghi đè do rebase thất bại
+        correct: false
+    explanation: Git chỉ có thể bảo vệ và ghi vết những gì đã từng được đóng dấu
+      commit; tệp chưa commit không nằm trong cơ sở dữ liệu Git.

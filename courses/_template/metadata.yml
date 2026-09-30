@@ -1,0 +1,11 @@
+id: lesson-template
+title: Tiêu đề bài học
+level: beginner
+duration: 30
+xp: 100
+
+prerequisites: []
+
+objectives:
+  - Mục tiêu 1
+  - Mục tiêu 2

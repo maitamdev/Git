@@ -1,0 +1,94 @@
+id: quiz-04-05-git-fetch
+title: "Trắc nghiệm: Cập nhật dữ liệu với git fetch"
+questions:
+  - id: q1
+    question: Điều gì xảy ra với các tệp tin trong Working Directory của bạn khi bạn
+      chạy lệnh `git fetch origin`?
+    type: single
+    options:
+      - text: Hoàn toàn không có bất kỳ tệp tin nào bị thay đổi hay ghi đè, Working
+          Directory được giữ nguyên vẹn 100%
+        correct: true
+      - text: Các tệp tin tự động được cập nhật theo phiên bản mới nhất trên GitHub
+        correct: false
+      - text: Toàn bộ các tệp tin chưa commit sẽ bị xóa sạch
+        correct: false
+      - text: Các tệp tin bị khóa lại và chuyển sang chế độ chỉ đọc
+        correct: false
+    explanation: "`git fetch` chỉ tải dữ liệu về kho ngầm và cập nhật con trỏ
+      `origin/*`, tuyệt đối không tác động lên Working Tree."
+  - id: q2
+    question: Con trỏ tham chiếu `origin/main` trong Git đại diện cho điều gì?
+    type: single
+    options:
+      - text: Nhánh theo dõi từ xa (Remote-tracking branch) phản ánh vị trí commit đỉnh
+          của nhánh main trên server ở lần fetch gần nhất
+        correct: true
+      - text: Nhánh làm việc chính của riêng máy tính cá nhân bạn
+        correct: false
+      - text: Một tệp tin văn bản chứa mật khẩu của GitHub
+        correct: false
+      - text: Một nhánh thử nghiệm do AI tự động tạo ra
+        correct: false
+    explanation: "`origin/main` là con trỏ chỉ đọc (read-only) ghi nhận trạng thái
+      của nhánh main trên máy chủ remote."
+  - id: q3
+    question: Lệnh nào cho phép bạn xem danh sách các commit mà đồng nghiệp đã đẩy
+      lên `origin/main` nhưng máy bạn chưa có?
+    type: single
+    options:
+      - text: git log HEAD..origin/main --oneline
+        correct: true
+      - text: git show --cloud-commits
+        correct: false
+      - text: git view server-log
+        correct: false
+      - text: git diff --names-only
+        correct: false
+    explanation: "`HEAD..origin/main` lọc ra toàn bộ các commit có trên remote
+      tracking branch nhưng chưa nằm trong nhánh hiện tại."
+  - id: q4
+    question: Sau khi chạy lệnh `git fetch`, để đưa các thay đổi từ `origin/main`
+      vào nhánh `main` hiện tại của bạn, bạn cần chạy tiếp lệnh gì?
+    type: single
+    options:
+      - text: git merge origin/main
+        correct: true
+      - text: git finish fetch
+        correct: false
+      - text: git update local
+        correct: false
+      - text: git copy origin/main
+        correct: false
+    explanation: Sau khi fetch, bạn dùng lệnh merge để tích hợp con trỏ
+      remote-tracking vào nhánh cục bộ.
+  - id: q5
+    question: Lợi ích lớn nhất của việc chạy `git fetch` trước khi thực hiện merge là gì?
+    type: single
+    options:
+      - text: Cho phép bạn kiểm tra mã nguồn, đọc diff và đánh giá nguy cơ xung đột một
+          cách hoàn toàn chủ động và an toàn
+        correct: true
+      - text: Giúp máy tính tiết kiệm 50% điện năng tiêu thụ
+        correct: false
+      - text: Tự động sửa các lỗi chính tả trong thông điệp commit
+        correct: false
+      - text: Tự động gửi email thông báo cho toàn công ty
+        correct: false
+    explanation: Fetch cho phép kiểm toán và đánh giá an toàn trước khi thay đổi
+      trạng thái không gian làm việc.
+  - id: q6
+    question: Lệnh `git fetch --all` thực hiện hành vi nào sau đây?
+    type: single
+    options:
+      - text: Liên hệ và tải toàn bộ dữ liệu mới từ tất cả các remote đang được cấu hình
+          trong dự án (ví dụ origin, upstream)
+        correct: true
+      - text: Tải toàn bộ Internet về ổ cứng máy tính
+        correct: false
+      - text: Xóa toàn bộ các nhánh cục bộ cũ
+        correct: false
+      - text: Đẩy tất cả các nhánh lên máy chủ
+        correct: false
+    explanation: "`--all` yêu cầu Git duyệt qua tất cả các remote đã khai báo và
+      fetch dữ liệu mới từ từng remote đó."

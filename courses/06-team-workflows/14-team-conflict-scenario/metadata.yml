@@ -1,0 +1,29 @@
+id: 14-team-conflict-scenario
+title: Team Conflict Scenario
+duration: 35
+xp: 110
+keywords:
+  - team conflict scenario
+  - kich ban xung dot nhom
+  - giai quyet xung dot pull request
+  - rebase onto main
+  - conflict resolution strategy
+  - team collaboration
+prerequisites:
+  - 08-branch-protection-rules
+objectives:
+  - Phân tích nguyên nhân gốc rễ gây ra xung đột hợp nhất (Merge Conflict) trong
+    môi trường làm việc nhóm thực tế.
+  - Làm chủ quy trình xử lý xung đột an toàn tại máy cục bộ (Local Resolution)
+    trước khi cập nhật lại Pull Request.
+  - Sử dụng kỹ thuật `git fetch` và `git rebase origin/main` để đưa nhánh tính
+    năng lên đầu lịch sử mới nhất.
+  - Giao tiếp hiệu quả và phối hợp nhịp nhàng với đồng nghiệp khi gặp xung đột
+    logic kinh doanh phức tạp.
+commands:
+  - git fetch origin
+  - git rebase origin/main
+  - git status
+  - git add <tệp-đã-sửa>
+  - git rebase --continue
+  - git push --force-with-lease origin <tên-nhánh>

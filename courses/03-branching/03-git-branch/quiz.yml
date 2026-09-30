@@ -1,0 +1,96 @@
+id: quiz-03-03-git-branch
+title: "Trắc nghiệm: Quản lý nhánh với git branch"
+questions:
+  - id: q1
+    question: Điều gì sẽ xảy ra nếu bạn cố gắng chạy lệnh `git branch -d feature`
+      khi bạn đang đứng trực tiếp trên nhánh `feature`?
+    type: single
+    options:
+      - text: Git sẽ báo lỗi từ chối xóa vì không thể xóa nhánh mà con trỏ HEAD đang
+          đứng trực tiếp
+        correct: true
+      - text: Git sẽ tự động xóa nhánh và thoát khỏi terminal ngay lập tức
+        correct: false
+      - text: Git sẽ tự động chuyển bạn về nhánh main rồi mới xóa
+        correct: false
+      - text: Git sẽ xóa toàn bộ ổ cứng máy tính để làm sạch
+        correct: false
+    explanation: "Bạn không thể xóa nhánh hiện tại; bạn phải chuyển sang nhánh khác
+      (ví dụ: git switch main) rồi mới xóa."
+  - id: q2
+    question: Sự khác biệt cốt lõi giữa hai cờ xóa nhánh `git branch -d` và `git
+      branch -D` là gì?
+    type: single
+    options:
+      - text: "`-d` có cơ chế bảo vệ an toàn (chỉ xóa khi đã merge), còn `-D` cưỡng chế
+          xóa bất kể code chưa được merge"
+        correct: true
+      - text: "`-d` dùng cho hệ điều hành Windows, `-D` dùng cho hệ điều hành macOS"
+        correct: false
+      - text: "`-d` chỉ xóa trên máy tính cá nhân, `-D` xóa luôn cả máy chủ GitHub"
+        correct: false
+      - text: Hai cờ này hoàn toàn giống nhau 100% không có khác biệt nào
+        correct: false
+    explanation: "`-D` là viết tắt của `--delete --force`, ép buộc xóa bỏ nhánh ngay
+      cả khi có commit chưa hợp nhất."
+  - id: q3
+    question: Lệnh nào sau đây dùng để đổi tên nhánh hiện tại bạn đang đứng thành
+      tên mới `feature-auth`?
+    type: single
+    options:
+      - text: git branch -m feature-auth
+        correct: true
+      - text: git branch --rename feature-auth
+        correct: false
+      - text: git name-change feature-auth
+        correct: false
+      - text: git update-title feature-auth
+        correct: false
+    explanation: Cờ `-m` (viết tắt của move/rename) đổi tên nhánh; nếu không truyền
+      tên cũ thì đổi tên nhánh hiện tại.
+  - id: q4
+    question: Cờ tùy chọn nào của lệnh git branch giúp hiển thị tất cả các nhánh bao
+      gồm cả nhánh từ xa trên GitHub?
+    type: single
+    options:
+      - text: -a (hoặc --all)
+        correct: true
+      - text: -r-only
+        correct: false
+      - text: --global-branch
+        correct: false
+      - text: -f (full)
+        correct: false
+    explanation: "`git branch -a` liệt kê toàn bộ nhánh cục bộ và nhánh theo dõi từ
+      xa (dạng remotes/origin/main)."
+  - id: q5
+    question: Để lọc ra danh sách các nhánh tính năng đã được hợp nhất an toàn vào
+      nhánh hiện tại, bạn dùng cờ nào?
+    type: single
+    options:
+      - text: --merged
+        correct: true
+      - text: --done
+        correct: false
+      - text: --finished
+        correct: false
+      - text: --safe-delete
+        correct: false
+    explanation: "`git branch --merged` chỉ liệt kê các nhánh mà toàn bộ commit đã
+      nằm trong nhánh hiện tại."
+  - id: q6
+    question: Khi bạn chạy lệnh `git branch -vv`, thông tin bổ sung quan trọng nào
+      được hiển thị?
+    type: single
+    options:
+      - text: Mã commit đỉnh, thông điệp commit và trạng thái so sánh đi trước/sau với
+          nhánh remote tracking
+        correct: true
+      - text: Địa chỉ nhà riêng và số tài khoản ngân hàng của tác giả
+        correct: false
+      - text: Dung lượng RAM đang tiêu tốn của hệ điều hành
+        correct: false
+      - text: Tốc độ quay của quạt tản nhiệt máy tính
+        correct: false
+    explanation: "`-vv` (very verbose) hiển thị chi tiết commit hash, subject và
+      tracking branch kèm trạng thái ahead/behind."

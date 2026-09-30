@@ -1,0 +1,24 @@
+id: 05-events-and-triggers
+title: "Sự kiện kích hoạt (Events & Triggers: push, pull_request, workflow_dispatch)"
+duration: 30
+xp: 90
+keywords:
+  - events
+  - triggers
+  - push
+  - pull request
+  - workflow dispatch
+  - cron schedule
+prerequisites:
+  - 04-workflow-yaml-syntax
+objectives:
+  - Làm chủ thuộc tính on trong workflow để cấu hình các sự kiện kích hoạt tự
+    động.
+  - Sử dụng bộ lọc nhánh (branches) và bộ lọc đường dẫn tệp tin (paths) để tối
+    ưu thời điểm kích hoạt.
+  - Thành thạo sự kiện kích hoạt thủ công workflow_dispatch và lập lịch tự động
+    schedule cron.
+commands:
+  - gh workflow run ci.yml
+  - git push origin main
+  - git push origin feature/login

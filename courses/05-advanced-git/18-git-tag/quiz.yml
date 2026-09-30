@@ -1,0 +1,64 @@
+id: quiz-05-18-git-tag
+title: "Trắc nghiệm: git tag cơ bản"
+questions:
+  - id: q1
+    question: Điểm khác biệt căn bản nhất giữa một con trỏ nhánh (Branch) và một con
+      trỏ thẻ (Tag) là gì?
+    type: single
+    options:
+      - text: Nhánh tự động di chuyển tiến lên khi có commit mới, còn Tag đứng yên vĩnh
+          viễn tại commit được gắn
+        correct: true
+      - text: Tag chỉ dùng được trên máy chủ GitHub, còn nhánh chỉ dùng trên máy cá nhân
+        correct: false
+      - text: Tag tự động xóa sau 30 ngày, còn nhánh tồn tại mãi mãi
+        correct: false
+      - text: Hai khái niệm này hoàn toàn giống hệt nhau không khác gì
+        correct: false
+    explanation: Branch là con trỏ động di chuyển theo commit mới; Tag là con trỏ
+      tĩnh cố định đóng vai trò mốc tham chiếu.
+  - id: q2
+    question: Khi bạn chạy câu lệnh `git push origin main`, các thẻ Tag mới tạo ở
+      máy cục bộ có được tự động đẩy lên GitHub không?
+    type: single
+    options:
+      - text: Không, theo mặc định Git không tự động đẩy tag lên server khi push nhánh
+        correct: true
+      - text: Có, toàn bộ tag luôn được đẩy lên cùng lúc
+        correct: false
+      - text: Chỉ đẩy lên nếu tag có chứa chữ "release"
+        correct: false
+      - text: Chỉ đẩy lên vào ngày cuối tuần
+        correct: false
+    explanation: Git bảo vệ tag; bạn phải chỉ định rõ `git push origin <tag>` hoặc
+      `git push origin --tags` để đẩy lên server.
+  - id: q3
+    question: Lệnh nào sau đây dùng để đẩy đồng loạt TẤT CẢ các thẻ tag cục bộ lên
+      máy chủ từ xa?
+    type: single
+    options:
+      - text: git push origin --tags
+        correct: true
+      - text: git push --all-tags-force
+        correct: false
+      - text: git tag --push-all
+        correct: false
+      - text: git upload tags
+        correct: false
+    explanation: "`git push origin --tags` đẩy toàn bộ các thẻ tag chưa có trên
+      server lên kho lưu trữ từ xa."
+  - id: q4
+    question: Lệnh nào dùng để xóa một thẻ tag có tên `v1.0.0` ngay trên máy tính cá
+      nhân của bạn?
+    type: single
+    options:
+      - text: git tag -d v1.0.0
+        correct: true
+      - text: git tag --remove v1.0.0
+        correct: false
+      - text: git drop tag v1.0.0
+        correct: false
+      - text: git delete v1.0.0
+        correct: false
+    explanation: "`git tag -d <tên-thẻ>` (hoặc `--delete`) xóa con trỏ thẻ chỉ định
+      trên máy cục bộ."

@@ -1,0 +1,64 @@
+id: quiz-07-github-actions-16-secrets-and-variables
+title: "Trắc nghiệm: Bảo mật thông tin nhạy cảm với Secrets và Secret Masking"
+questions:
+  - id: q1
+    question: Khi một câu lệnh vô tình in giá trị của một GitHub Secret ra màn hình,
+      hệ thống log sẽ hiển thị nội dung gì?
+    type: single
+    options:
+      - text: Chuỗi ba dấu sao (***)
+        correct: true
+      - text: Nguyên văn giá trị bí mật
+        correct: false
+      - text: Dòng chữ "PASSWORD DETECTED"
+        correct: false
+      - text: Màn hình bị đen toàn bộ
+        correct: false
+    explanation: GitHub Actions tích hợp sẵn bộ lọc Secret Masking tự động nhận diện
+      và thay thế mọi chuỗi ký tự khớp với secret thành `***`.
+  - id: q2
+    question: Sự khác biệt chính giữa GitHub Variables và GitHub Secrets là gì?
+    type: single
+    options:
+      - text: Variables là thông tin cấu hình không mã hóa (hiển thị rõ), còn Secrets
+          được mã hóa an toàn và bị che trong log
+        correct: true
+      - text: Variables chỉ dùng được trên hệ điều hành Windows
+        correct: false
+      - text: Secrets chỉ tồn tại trong đúng 24 giờ
+        correct: false
+      - text: Không có bất kỳ sự khác biệt nào
+        correct: false
+    explanation: Variables dùng cho các cấu hình mở như PORT, DOMAIN; Secrets dùng
+      cho dữ liệu nhạy cảm như khóa API, mật khẩu.
+  - id: q3
+    question: Cú pháp nào sau đây là chuẩn mực để truyền một bí mật vào biến môi
+      trường của Step?
+    type: single
+    options:
+      - text: "env: { API_KEY: ${{ secrets.MY_API_KEY }} }"
+        correct: true
+      - text: "env: { API_KEY: $MY_API_KEY }"
+        correct: false
+      - text: import secret MY_API_KEY
+        correct: false
+      - text: read_secret("MY_API_KEY")
+        correct: false
+    explanation: Bạn sử dụng ngữ cảnh `secrets` kết hợp với cú pháp biểu thức `${{
+      secrets.<NAME> }}` để gán giá trị vào biến môi trường.
+  - id: q4
+    question: Tại sao các workflow chạy trên Pull Request từ một kho Fork bên ngoài
+      mặc định không được truy cập Secrets?
+    type: single
+    options:
+      - text: Để ngăn chặn kẻ tấn công gửi PR chứa mã độc nhằm in hoặc đánh cắp bí mật
+          của dự án gốc
+        correct: true
+      - text: Do máy chủ GitHub bị quá tải
+        correct: false
+      - text: Vì người dùng Fork không có tài khoản ngân hàng
+        correct: false
+      - text: Vì GitHub không hỗ trợ tính năng Fork
+        correct: false
+    explanation: Đây là chốt chặn an ninh tối quan trọng nhằm bảo vệ các dự án mã
+      nguồn mở khỏi các cuộc tấn công khai thác bí mật.

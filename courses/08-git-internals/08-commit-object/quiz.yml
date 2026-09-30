@@ -1,0 +1,99 @@
+id: quiz-08-git-internals-08-commit-object
+title: "Trắc nghiệm: Đối tượng Commit: Ghi lại snapshot lịch sử và metadata tác giả"
+questions:
+  - id: q1
+    question: Dòng đầu tiên bên trong nội dung thô của một đối tượng Commit luôn
+      luôn là con trỏ nào?
+    type: single
+    options:
+      - text: tree <mã-băm-tree>
+        correct: true
+      - text: parent <mã-băm-commit>
+        correct: false
+      - text: author <tên-tác-giả>
+        correct: false
+      - text: message <nội-dung>
+        correct: false
+    explanation: Đối tượng Commit bắt buộc phải bắt đầu bằng dòng trỏ tới đối tượng
+      Tree đại diện cho snapshot dự án.
+  - id: q2
+    question: Sự khác biệt giữa thông tin `author` và `committer` trong đối tượng
+      Commit là gì?
+    type: single
+    options:
+      - text: Author là người viết đoạn mã ban đầu, Committer là người áp dụng commit
+          vào kho lưu trữ (ví dụ khi rebase/cherry-pick)
+        correct: true
+      - text: Author là giám đốc công ty, Committer là nhân viên thực tập
+        correct: false
+      - text: Author là máy tính, Committer là con người
+        correct: false
+      - text: Hai thông tin này hoàn toàn là một và không bao giờ khác nhau
+        correct: false
+    explanation: Khi một lập trình viên gửi bản vá và người bảo trì dùng lệnh rebase
+      để gộp mã, thông tin author được giữ nguyên nhưng committer đổi thành
+      người gộp.
+  - id: q3
+    question: Một Commit phát sinh từ một thao tác hợp nhất nhánh (3-way Merge
+      Commit) sẽ có bao nhiêu con trỏ `parent`?
+    type: single
+    options:
+      - text: Có ít nhất 2 con trỏ parent trở lên
+        correct: true
+      - text: Chỉ duy nhất 1 con trỏ parent
+        correct: false
+      - text: Hoàn toàn không có parent nào
+        correct: false
+      - text: Có đúng 10 con trỏ parent
+        correct: false
+    explanation: Merge commit nối hai nhánh lịch sử lại với nhau nên sở hữu tối
+      thiểu 2 commit cha (parent 1 của nhánh hiện tại, parent 2 của nhánh được
+      gộp).
+  - id: q4
+    question: Commit đầu tiên trong một kho lưu trữ Git (Root Commit) có điểm gì đặc
+      biệt về cấu trúc?
+    type: single
+    options:
+      - text: Hoàn toàn không có dòng `parent` nào
+        correct: true
+      - text: Không có dòng `tree`
+        correct: false
+      - text: Không có thông điệp commit
+        correct: false
+      - text: Không có mã băm SHA-1
+        correct: false
+    explanation: Vì là commit khởi thủy không có ai đi trước, Root commit không có
+      bất kỳ con trỏ parent nào.
+  - id: q5
+    question: Nếu hai người dùng khác nhau tạo ra hai commit có cùng đối tượng Tree,
+      cùng commit cha và cùng commit message, tại sao mã băm commit của họ vẫn
+      khác nhau?
+    type: single
+    options:
+      - text: Do dấu thời gian (timestamp) hoặc thông tin tác giả/người commit khác nhau
+        correct: true
+      - text: Do Git tự động gắn số ngẫu nhiên bí mật
+        correct: false
+      - text: Do địa chỉ IP mạng của hai máy tính khác nhau
+        correct: false
+      - text: Do thuật toán SHA-1 không hỗ trợ trùng lặp
+        correct: false
+    explanation: Mã băm commit được tính toán trên toàn bộ nội dung bao gồm thông
+      tin author, committer và timestamp chính xác đến từng giây.
+  - id: q6
+    question: Tại sao việc thay đổi một commit cũ trong lịch sử lại làm thay đổi mã
+      băm của toàn bộ các commit nối tiếp phía sau nó?
+    type: single
+    options:
+      - text: Vì mỗi commit con đều lưu mã băm của commit cha bên trong nội dung con trỏ
+          parent của mình
+        correct: true
+      - text: Vì Git tự động xóa và tạo lại toàn bộ repository
+        correct: false
+      - text: Vì hệ thống tệp tin bị phân mảnh
+        correct: false
+      - text: Vì máy chủ GitHub bắt buộc phải cấp phát ID mới
+        correct: false
+    explanation: Do tính chất mật mã học của DAG, việc đổi hash của commit cha làm
+      thay đổi nội dung của commit con, kéo theo sự thay đổi chuỗi hash dây
+      chuyền.

@@ -1,0 +1,66 @@
+id: quiz-02-01-working-directory
+title: "Trắc nghiệm: Working Directory trong Git"
+questions:
+  - id: q1
+    question: Working Directory (hay Working Tree) trong Git là gì?
+    type: single
+    options:
+      - text: Thư mục vật lý trên ổ cứng chứa các tệp mã nguồn mà bạn trực tiếp mở và
+          chỉnh sửa
+        correct: true
+      - text: Máy chủ đám mây của GitHub lưu trữ bản sao lưu dự án
+        correct: false
+      - text: Bộ nhớ RAM tạm thời của vi xử lý máy tính
+        correct: false
+      - text: Khu vực lưu trữ các commit đã được đóng gói hoàn thiện
+        correct: false
+    explanation: Working Directory là nơi làm việc thực tế ngoài đời của lập trình
+      viên trên hệ thống tệp tin. Đáp án B sai vì đó là Remote Server; C sai vì
+      Git lưu trên ổ cứng; D sai vì đó là Repository.
+  - id: q2
+    question: Một tệp mới vừa được tạo trong Working Directory ban đầu sẽ có trạng
+      thái nào đối với Git?
+    type: single
+    options:
+      - text: Untracked (Chưa được theo dõi)
+        correct: true
+      - text: Staged (Đã nằm trong vùng chuẩn bị)
+        correct: false
+      - text: Committed (Đã lưu vào lịch sử vĩnh viễn)
+        correct: false
+      - text: Ignored (Bị bỏ qua tự động)
+        correct: false
+    explanation: Tệp mới tạo chưa từng được git add sẽ luôn ở trạng thái Untracked.
+      Đáp án B sai vì cần chạy git add; C sai vì cần commit; D sai vì chỉ
+      ignored nếu có trong .gitignore.
+  - id: q3
+    question: Khi bạn chỉnh sửa một dòng code trong tệp đã được theo dõi và bấm phím
+      lưu, thay đổi đó nằm ở đâu?
+    type: single
+    options:
+      - text: Nằm trong Working Directory ở trạng thái Modified
+        correct: true
+      - text: Tự động tạo ra một commit mới trong Repository
+        correct: false
+      - text: Tự động đẩy thẳng lên máy chủ từ xa GitHub
+        correct: false
+      - text: Biến mất ngay lập tức khi tắt terminal
+        correct: false
+    explanation: Lưu tệp chỉ cập nhật nội dung trên Working Directory và chuyển
+      trạng thái tệp thành Modified. Các đáp án khác sai vì Git không tự động
+      commit hay push ngầm.
+  - id: q4
+    question: Khu vực nào tiếp nhận dữ liệu ngay sau khi tệp tin rời khỏi Working
+      Directory qua lệnh git add?
+    type: single
+    options:
+      - text: Staging Area (Vùng chuẩn bị)
+        correct: true
+      - text: Remote Repository trên GitHub
+        correct: false
+      - text: Thùng rác hệ điều hành Recycle Bin
+        correct: false
+      - text: Thư mục cấu hình toàn cục Global Config
+        correct: false
+    explanation: Lệnh `git add` chuyển tệp từ Working Directory sang Staging Area
+      (Index). Đáp án B sai vì cần git push; C và D hoàn toàn sai lệch bản chất.

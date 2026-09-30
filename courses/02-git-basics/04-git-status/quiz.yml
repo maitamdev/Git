@@ -1,0 +1,64 @@
+id: quiz-02-04-git-status
+title: "Trắc nghiệm: Kiểm tra trạng thái với git status"
+questions:
+  - id: q1
+    question: Mục "Changes to be committed" trong kết quả lệnh git status cho biết
+      điều gì?
+    type: single
+    options:
+      - text: Danh sách các thay đổi đã nằm trong Staging Area và sẽ được đưa vào commit
+          kế tiếp
+        correct: true
+      - text: Các commit đã được đẩy thành công lên máy chủ GitHub
+        correct: false
+      - text: Các tệp tin bị lỗi chính tả cần sửa lại ngay
+        correct: false
+      - text: Các tệp tin bị xóa vĩnh viễn khỏi ổ đĩa máy tính
+        correct: false
+    explanation: "`Changes to be committed` đại diện cho các thay đổi đã được staged
+      bằng lệnh git add và sẵn sàng commit."
+  - id: q2
+    question: Trong định dạng ngắn gọn `git status -s`, ký hiệu `??` biểu thị trạng
+      thái nào?
+    type: single
+    options:
+      - text: Tệp tin Untracked (chưa từng được Git theo dõi trong lịch sử)
+        correct: true
+      - text: Tệp tin bị xung đột merge nghiêm trọng không thể sửa
+        correct: false
+      - text: Git đang bị mất kết nối mạng Internet
+        correct: false
+      - text: Tệp tin có virus bị hệ điều hành cách ly
+        correct: false
+    explanation: Ký hiệu `??` là quy ước quốc tế trong định dạng short của git
+      status để chỉ các tệp Untracked.
+  - id: q3
+    question: Mục "Changes not staged for commit" có ý nghĩa gì?
+    type: single
+    options:
+      - text: Các tệp tin đã được Git theo dõi từ trước, hiện đang có sửa đổi mới trong
+          Working Tree nhưng chưa chạy git add
+        correct: true
+      - text: Các tệp tin bị hỏng dữ liệu không thể mở được bằng VS Code
+        correct: false
+      - text: Các tệp tin đã được đưa vào Staging Area thành công
+        correct: false
+      - text: Các commit cũ đã được xóa bỏ khỏi kho chứa
+        correct: false
+    explanation: Đây là những thay đổi trên tệp Tracked đang nằm ở Working Directory
+      mà bạn chưa đưa vào Staging Area.
+  - id: q4
+    question: Lợi ích lớn nhất của việc chạy git status thường xuyên là gì?
+    type: single
+    options:
+      - text: Giúp lập trình viên nắm rõ ngữ cảnh, tránh commit nhầm file rác và phát
+          hiện tệp chưa được lưu vết
+        correct: true
+      - text: Tự động tăng tốc độ xử lý của card màn hình máy tính
+        correct: false
+      - text: Tự động viết mã nguồn hoàn chỉnh cho tính năng
+        correct: false
+      - text: Thay thế hoàn toàn sự cần thiết của việc viết kiểm thử
+        correct: false
+    explanation: Kiểm tra trạng thái liên tục giúp bạn kiểm soát tuyệt đối mã nguồn
+      trước khi ghi lại vào lịch sử.

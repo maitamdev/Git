@@ -1,0 +1,62 @@
+id: quiz-09-git-init
+title: "Trắc nghiệm: Khởi tạo kho chứa với git init"
+questions:
+  - id: q1
+    question: Lệnh nào dùng để khởi tạo một Git repository mới trong thư mục hiện tại?
+    type: single
+    options:
+      - text: git init
+        correct: true
+      - text: git start
+        correct: false
+      - text: git create-repo
+        correct: false
+      - text: git new
+        correct: false
+    explanation: "`git init` là câu lệnh chuẩn của Git để khởi tạo kho lưu trữ mới."
+  - id: q2
+    question: Sau khi chạy lệnh `git init` thành công, thư mục ẩn nào sẽ xuất hiện
+      trong dự án?
+    type: single
+    options:
+      - text: .git
+        correct: true
+      - text: .github
+        correct: false
+      - text: .svn
+        correct: false
+      - text: .repository
+        correct: false
+    explanation: Lệnh `git init` tạo ra thư mục ẩn `.git` chứa toàn bộ cơ sở dữ liệu
+      của kho lưu trữ.
+  - id: q3
+    question: Điều gì sẽ xảy ra nếu bạn chạy `git init` trong một thư mục đã có sẵn
+      các tệp mã nguồn HTML và CSS?
+    type: single
+    options:
+      - text: Git an toàn tạo thư mục `.git` và giữ nguyên toàn bộ các tệp HTML/CSS hiện
+          có
+        correct: true
+      - text: Toàn bộ các tệp HTML/CSS sẽ bị xóa sạch để làm mới
+        correct: false
+      - text: Git sẽ mã hóa các tệp tin và bắt buộc nhập mật khẩu để mở
+        correct: false
+      - text: Lệnh sẽ báo lỗi và từ chối chạy trên thư mục không rỗng
+        correct: false
+    explanation: "`git init` hoàn toàn an toàn, chỉ khởi tạo hạ tầng quản lý phiên
+      bản mà không xâm phạm tệp tin sẵn có."
+  - id: q4
+    question: Cờ tùy chọn nào cho phép bạn chỉ định tên nhánh khởi tạo ban đầu (ví
+      dụ `main`) khi chạy `git init`?
+    type: single
+    options:
+      - text: -b <tên-nhánh> hoặc --initial-branch=<tên-nhánh>
+        correct: true
+      - text: --name=<tên-nhánh>
+        correct: false
+      - text: --set-branch-first
+        correct: false
+      - text: -m <tên-nhánh>
+        correct: false
+    explanation: Cú pháp `git init -b main` hoặc `git init --initial-branch=main`
+      thiết lập tên nhánh mặc định ngay khi khởi tạo.

@@ -1,0 +1,66 @@
+id: quiz-06-06-workflow-comparison
+title: "Trắc nghiệm: So sánh các mô hình Workflow"
+questions:
+  - id: q1
+    question: Một công ty khởi nghiệp gồm 4 lập trình viên đang xây dựng một ứng
+      dụng web SaaS cần deploy nhiều lần mỗi ngày thì nên chọn mô hình nào?
+    type: single
+    options:
+      - text: GitHub Flow vì tính tinh gọn, đơn giản và hỗ trợ triển khai liên tục hoàn
+          hảo
+        correct: true
+      - text: Git Flow vì nó có đủ 5 loại nhánh phức tạp
+        correct: false
+      - text: Không dùng Git mà gửi code qua email cá nhân
+        correct: false
+      - text: Mô hình thác nước cổ điển Waterfall không phân nhánh
+        correct: false
+    explanation: GitHub Flow là lựa chọn lý tưởng nhất cho các nhóm web nhỏ cần sự
+      linh hoạt, tránh các tầng thủ tục rườm rà không cần thiết.
+  - id: q2
+    question: Mô hình nào sau đây đòi hỏi hệ thống kiểm thử tự động (Automated
+      Testing / CI) ở mức độ hoàn thiện cao nhất để hoạt động an toàn?
+    type: single
+    options:
+      - text: Trunk-Based Development
+        correct: true
+      - text: Git Flow
+        correct: false
+      - text: GitHub Flow
+        correct: false
+      - text: Lập trình một mình không chia sẻ
+        correct: false
+    explanation: Trunk-Based Development hợp nhất code liên tục vào Trunk, do đó nếu
+      không có CI cực mạnh để phát hiện lỗi ngay lập tức thì nhánh chính sẽ liên
+      tục bị gãy.
+  - id: q3
+    question: Dự án nào sau đây phù hợp nhất với mô hình Git Flow truyền thống?
+    type: single
+    options:
+      - text: Ứng dụng ngân hàng di động trên iOS/Android phát hành định kỳ mỗi tháng
+          một lần và cần kiểm định an ninh nghiêm ngặt
+        correct: true
+      - text: Một trang blog cá nhân cập nhật bài viết mỗi giờ
+        correct: false
+      - text: Một landing page quảng cáo sự kiện tồn tại trong 3 ngày
+        correct: false
+      - text: Một kịch bản tự động hóa sao lưu dữ liệu đơn giản
+        correct: false
+    explanation: Git Flow rất mạnh ở khâu đóng băng phiên bản (Release Freeze) để QA
+      kiểm thử hồi quy và hỗ trợ bảo trì nhiều phiên bản cũ.
+  - id: q4
+    question: Điểm chung quan trọng nhất giữa cả 3 mô hình GitHub Flow, Git Flow và
+      Trunk-Based Development là gì?
+    type: single
+    options:
+      - text: Đều hướng tới việc giữ cho nhánh chính (main/trunk) luôn ổn định và sử
+          dụng quy trình kiểm duyệt trước khi hợp nhất
+        correct: true
+      - text: Đều bắt buộc phải có nhánh develop
+        correct: false
+      - text: Đều bắt buộc các nhánh phải tồn tại ít nhất 30 ngày
+        correct: false
+      - text: Đều cấm sử dụng câu lệnh git merge
+        correct: false
+    explanation: Dù cách thức phân nhánh khác nhau, mục tiêu tối thượng của mọi
+      workflow chuyên nghiệp đều là bảo vệ chất lượng mã nguồn trên nhánh chính.

@@ -1,0 +1,23 @@
+id: 03-workflow-architecture
+title: "Kiến trúc Workflow: Events, Jobs, Steps và Runners"
+duration: 30
+xp: 90
+keywords:
+  - workflow architecture
+  - event
+  - job
+  - step
+  - runner
+  - dag
+prerequisites:
+  - 02-github-actions-intro
+objectives:
+  - "Nắm rõ cấu trúc phân tầng 4 cấp bậc của một Workflow: Event -> Jobs ->
+    Steps -> Actions/Commands."
+  - Hiểu bản chất chạy song song (Parallel) mặc định của các Job và chạy tuần tự
+    (Sequential) của các Step.
+  - Nắm vững vai trò của Runner như một môi trường máy ảo cách ly độc lập chứa
+    toàn bộ phiên làm việc.
+commands:
+  - cat .github/workflows/ci.yml
+  - tree .github

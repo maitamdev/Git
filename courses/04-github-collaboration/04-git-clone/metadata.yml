@@ -1,0 +1,25 @@
+id: 04-git-clone
+title: Tải dự án về máy với git clone
+duration: 25
+xp: 80
+keywords:
+  - git clone
+  - tai du an
+  - nhan ban kho
+  - clone repo
+  - bat dau du an
+prerequisites:
+  - 03-origin-concept
+objectives:
+  - Sử dụng câu lệnh `git clone` để tải toàn bộ một dự án từ GitHub về máy tính
+    cá nhân.
+  - "Hiểu rõ các hành động ngầm mà Git tự động thực hiện trong quá trình clone:
+    khởi tạo, liên kết remote, fetch dữ liệu và checkout nhánh mặc định."
+  - Tùy chỉnh tên thư mục đích khi clone dự án về ổ đĩa.
+  - Sử dụng cờ `--depth 1` (shallow clone) để tải nhanh các dự án có kích thước
+    khổng lồ.
+commands:
+  - git clone <url-kho-chứa>
+  - git clone <url-kho-chứa> <tên-thư-mục-mới>
+  - git clone --depth 1 <url-kho-chứa>
+  - git clone --branch <tên-nhánh> <url-kho-chứa>

@@ -1,0 +1,26 @@
+id: 09-codeowners
+title: CODEOWNERS
+duration: 25
+xp: 85
+keywords:
+  - codeowners
+  - chu so huu ma nguon
+  - tu dong gan review
+  - phan quyen thu muc
+  - github codeowners
+  - team ownership
+prerequisites:
+  - 08-branch-protection-rules
+objectives:
+  - Hiểu rõ khái niệm và lợi ích của tệp tin đặc biệt CODEOWNERS trong việc xác
+    định quyền sở hữu từng module mã nguồn.
+  - Nắm vững cú pháp khai báo đường dẫn tệp tin và chỉ định người phụ trách cá
+    nhân (@username) hoặc nhóm (@org/team-name).
+  - Kích hoạt tính năng bắt buộc chủ sở hữu mã nguồn phê duyệt (Require review
+    from Code Owners) trong Branch Protection.
+  - Tổ chức cấu trúc tệp CODEOWNERS theo thứ tự ưu tiên từ trên xuống dưới một
+    cách chuẩn xác.
+commands:
+  - cat .github/CODEOWNERS
+  - git add .github/CODEOWNERS
+  - 'git commit -m "chore: setup CODEOWNERS file for security and billing"'

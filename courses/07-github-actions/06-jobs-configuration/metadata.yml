@@ -1,0 +1,22 @@
+id: 06-jobs-configuration
+title: "Cấu hình Jobs: runs-on, phân tách độc lập và môi trường"
+duration: 30
+xp: 95
+keywords:
+  - job configuration
+  - runs on
+  - ubuntu latest
+  - isolation
+  - concurrency
+prerequisites:
+  - 05-events-and-triggers
+objectives:
+  - Nắm vững cú pháp khai báo Job và thuộc tính bắt buộc runs-on để chỉ định môi
+    trường điều hành.
+  - Hiểu rõ nguyên lý cô lập hoàn toàn giữa các Job về hệ thống tệp tin, biến
+    môi trường và tiến trình.
+  - Biết cách đặt tên định danh cho Job (job id) và hiển thị tên thân thiện
+    (name) trên giao diện.
+commands:
+  - cat .github/workflows/multi-job.yml
+  - gh run view

@@ -1,0 +1,26 @@
+id: 12-code-review
+title: Văn hóa và kỹ năng Code Review trên GitHub
+duration: 25
+xp: 85
+keywords:
+  - code review
+  - review code
+  - phe duyet
+  - comment diff
+  - van hoa ky thuat
+  - chat luong ma
+prerequisites:
+  - 11-pull-request
+objectives:
+  - Hiểu rõ mục đích và tầm quan trọng sống còn của hoạt động Code Review đối
+    với sự phát triển của đội ngũ.
+  - "Sử dụng thành thạo các công cụ review trên GitHub: bình luận từng dòng
+    (line comments), tạo đề xuất sửa code (Suggested Changes), và phê duyệt
+    (Approve)."
+  - Xây dựng văn hóa nhận xét mang tính xây dựng, tôn trọng và đồng cảm (Empathy
+    in Code Review).
+  - "Phân biệt rõ ràng giữa 3 trạng thái phản hồi: Comment, Approve, và Request
+    Changes."
+commands:
+  - gh pr checkout <pr-number>
+  - git log -p

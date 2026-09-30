@@ -1,0 +1,64 @@
+id: quiz-05-10-git-cherry-pick
+title: "Trắc nghiệm: git cherry-pick"
+questions:
+  - id: q1
+    question: Chức năng cốt lõi của câu lệnh `git cherry-pick <commit-hash>` là gì?
+    type: single
+    options:
+      - text: Sao chép duy nhất thay đổi của commit chỉ định từ một nhánh khác để tạo
+          commit mới trên nhánh hiện tại
+        correct: true
+      - text: Gộp toàn bộ tất cả các commit của nhánh đó vào nhánh hiện tại
+        correct: false
+      - text: Xóa vĩnh viễn commit đó khỏi lịch sử kho chứa
+        correct: false
+      - text: Đổi tên tác giả của commit đó thành tên của bạn
+        correct: false
+    explanation: "`git cherry-pick` cho phép nhặt chọn lọc một commit đơn lẻ mà
+      không cần merge toàn bộ nhánh."
+  - id: q2
+    question: Sau khi cherry-pick thành công, commit mới trên nhánh hiện tại có mối
+      quan hệ thế nào với commit gốc?
+    type: single
+    options:
+      - text: Có nội dung và thông điệp giống nhau nhưng mang mã băm SHA-1 mới hoàn toàn
+        correct: true
+      - text: Có mã băm SHA-1 giống hệt 100% không đổi
+        correct: false
+      - text: Commit gốc sẽ tự động bị xóa sổ biến mất
+        correct: false
+      - text: Hai commit tự động kết nối thành một commit duy nhất
+        correct: false
+    explanation: Vì commit mới có commit cha (parent) khác và thời gian tạo khác nên
+      mã SHA-1 được tính toán lại mới hoàn toàn.
+  - id: q3
+    question: Nếu trong quá trình cherry-pick phát sinh xung đột (conflict) dòng mã,
+      lệnh nào dùng để tiếp tục sau khi đã sửa xong và add?
+    type: single
+    options:
+      - text: git cherry-pick --continue
+        correct: true
+      - text: git cherry-pick --proceed
+        correct: false
+      - text: git merge --continue
+        correct: false
+      - text: git commit --amend
+        correct: false
+    explanation: "`git cherry-pick --continue` hoàn tất quá trình áp dụng commit sau
+      khi bạn đã đánh dấu resolved bằng `git add`."
+  - id: q4
+    question: Tùy chọn `-n` (hoặc `--no-commit`) trong câu lệnh `git cherry-pick -n
+      <hash>` có tác dụng gì?
+    type: single
+    options:
+      - text: Áp dụng các thay đổi của commit vào thư mục làm việc và Staging Area nhưng
+          không tự động tạo commit mới
+        correct: true
+      - text: Không kiểm tra quyền truy cập mạng Internet
+        correct: false
+      - text: Không cho phép người khác nhìn thấy mã nguồn
+        correct: false
+      - text: Bỏ qua toàn bộ các kiểm thử tự động
+        correct: false
+    explanation: "`--no-commit` cho phép bạn nhặt nhiều thay đổi về Staging Area để
+      kiểm tra hoặc gộp chung trước khi commit."

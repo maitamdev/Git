@@ -1,0 +1,25 @@
+id: 07-protected-branch
+title: Protected Branch
+duration: 25
+xp: 85
+keywords:
+  - protected branch
+  - bao ve nhanh
+  - khoa nhanh main
+  - force push prevention
+  - chan push direct
+  - security policy
+prerequisites:
+  - 06-workflow-comparison
+objectives:
+  - Hiểu rõ khái niệm và tầm quan trọng sống còn của Protected Branch (Nhánh
+    được bảo vệ) trên các nền tảng Git từ xa.
+  - "Nhận diện các mối nguy hiểm bị loại bỏ hoàn toàn bởi Protected Branch: xóa
+    nhầm nhánh, force push đè lịch sử, push trực tiếp code lỗi."
+  - "Nắm bắt các chính sách bảo vệ cơ bản: bắt buộc mở Pull Request, cấm ghi đè
+    lịch sử, yêu cầu quyền quản trị."
+  - Cấu hình kích hoạt tính năng bảo vệ nhánh trên giao diện cài đặt của GitHub.
+commands:
+  - git push origin main
+  - git push origin --delete main
+  - git push --force origin main

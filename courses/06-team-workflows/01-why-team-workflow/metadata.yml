@@ -1,0 +1,26 @@
+id: 01-why-team-workflow
+title: Vì sao team cần workflow?
+duration: 20
+xp: 70
+keywords:
+  - team workflow
+  - quy trinh nhom
+  - quy uoc git
+  - git branch strategy
+  - hop tac phat trien
+  - chat luong ma nguon
+prerequisites:
+  - 22-advanced-git-challenge
+objectives:
+  - Hiểu rõ sự khác biệt bản chất giữa lập trình cá nhân và phát triển phần mềm
+    theo đội ngũ chuyên nghiệp.
+  - Nhận diện các rủi ro thảm họa khi đội ngũ không có quy trình phân nhánh và
+    tích hợp mã nguồn rõ ràng.
+  - "Nắm bắt các lợi ích cốt lõi của một Git Workflow chuẩn: giảm xung đột, bảo
+    đảm chất lượng, tự động hóa phát hành."
+  - Sẵn sàng tiếp cận các mô hình workflow chuẩn mực trong ngành công nghiệp
+    phần mềm hiện đại.
+commands:
+  - git status
+  - git branch -a
+  - git log --oneline --graph

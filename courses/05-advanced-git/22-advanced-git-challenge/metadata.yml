@@ -1,0 +1,28 @@
+id: 22-advanced-git-challenge
+title: Advanced Git Challenge
+duration: 45
+xp: 200
+keywords:
+  - advanced challenge
+  - git master
+  - tong hop level 5
+  - reflog rebase bisect
+  - thu thach chuyen gia
+prerequisites:
+  - 17-rebase-conflict
+  - 20-git-bisect
+objectives:
+  - Tổng hợp toàn bộ các kỹ thuật Git nâng cao đã học vào một kịch bản thử thách
+    thực chiến phức tạp.
+  - Cứu hộ thành công một commit bị mất bằng reflog sau một thao tác phá hủy mô
+    phỏng.
+  - Biên tập dọn dẹp chuỗi commit bằng Interactive Rebase (squash, fixup,
+    reword).
+  - Sử dụng bisect để truy tìm một commit gây lỗi ngầm và gắn thẻ Annotated Tag
+    đánh dấu phiên bản hoàn thiện.
+commands:
+  - git reflog
+  - git branch rescue-branch <commit-hash>
+  - git rebase -i HEAD~<n>
+  - git bisect start && git bisect bad && git bisect good <hash>
+  - git tag -a v2.0.0 -m "<thông-điệp-phát-hành>"

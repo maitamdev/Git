@@ -1,0 +1,28 @@
+id: 07-git-push
+title: Đẩy commit lên server với git push
+duration: 30
+xp: 95
+keywords:
+  - git push
+  - day code
+  - push origin
+  - upstream tracking
+  - -u flag
+  - rejected
+prerequisites:
+  - 04-git-clone
+objectives:
+  - Sử dụng câu lệnh `git push` để đẩy các commit cục bộ lên máy chủ từ xa
+    GitHub.
+  - Hiểu rõ ý nghĩa của cờ `-u` (`--set-upstream`) trong lần push đầu tiên của
+    một nhánh mới.
+  - Chẩn đoán và xử lý tình huống bị máy chủ từ chối đẩy code (`[rejected -
+    non-fast-forward]`).
+  - Nhận thức rõ mức độ nguy hiểm và quy tắc cấm kỵ đối với cờ cưỡng chế
+    `--force` trên các nhánh dùng chung.
+commands:
+  - git push
+  - git push origin <tên-nhánh>
+  - git push -u origin <tên-nhánh>
+  - git push origin --all
+  - git push origin --delete <tên-nhánh>

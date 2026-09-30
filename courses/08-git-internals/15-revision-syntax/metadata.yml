@@ -1,0 +1,23 @@
+id: 15-revision-syntax
+title: "Cú pháp tra cứu Revision chuyên sâu: HEAD~, HEAD^, HEAD^2"
+duration: 35
+xp: 95
+keywords:
+  - revision syntax
+  - tilde operator
+  - caret operator
+  - git rev-parse
+  - dag navigation
+prerequisites:
+  - 14-git-index-internals
+objectives:
+  - "Phân biệt tuyệt đối và chính xác giữa hai toán tử điều hướng commit: dấu
+    ngã (~) và dấu mũ (^)."
+  - "Hiểu quy tắc: HEAD~n là đi lùi n thế hệ tổ tiên theo nhánh chính; HEAD^n là
+    chọn commit cha thứ n trong Merge Commit."
+  - Sử dụng lệnh plumbing git rev-parse để phân giải mọi cú pháp revision phức
+    tạp thành mã băm SHA-1 duy nhất.
+commands:
+  - git rev-parse HEAD~1
+  - git rev-parse HEAD^2
+  - git rev-parse main@{yesterday}

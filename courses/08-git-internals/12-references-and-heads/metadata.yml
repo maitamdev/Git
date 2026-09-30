@@ -1,0 +1,25 @@
+id: 12-references-and-heads
+title: "Cơ chế References (Refs): heads, tags và remotes"
+duration: 30
+xp: 90
+keywords:
+  - references
+  - refs
+  - heads
+  - branches
+  - tags
+  - remotes
+  - pointers
+prerequisites:
+  - 11-git-cat-file
+objectives:
+  - "Hiểu rõ bản chất của một Nhánh (Branch) trong Git: thực chất chỉ là một tệp
+    văn bản nhỏ 41 bytes chứa mã băm SHA-1."
+  - "Khám phá cấu trúc thư mục .git/refs/ bao gồm: refs/heads/ (nhánh cục bộ),
+    refs/tags/ (thẻ), và refs/remotes/ (nhánh từ xa)."
+  - Sử dụng lệnh plumbing git update-ref để tạo và điều khiển con trỏ nhánh trực
+    tiếp.
+commands:
+  - cat .git/refs/heads/main
+  - git show-ref
+  - git update-ref refs/heads/test HEAD

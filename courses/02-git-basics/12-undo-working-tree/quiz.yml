@@ -1,0 +1,62 @@
+id: quiz-02-12-undo-working-tree
+title: "Trắc nghiệm: Hoàn tác thay đổi Working Tree"
+questions:
+  - id: q1
+    question: Lệnh Git hiện đại nào được khuyến nghị sử dụng để hủy bỏ các sửa đổi
+      chưa staged trong Working Tree?
+    type: single
+    options:
+      - text: git restore <tên-tệp>
+        correct: true
+      - text: git delete <tên-tệp>
+        correct: false
+      - text: git cancel-all
+        correct: false
+      - text: git remove --unstage
+        correct: false
+    explanation: "`git restore <tên-tệp>` là lệnh chuyên trách từ Git 2.23 để hoàn
+      tác thay đổi trong thư mục làm việc."
+  - id: q2
+    question: Điều gì sẽ xảy ra với các dòng code bạn vừa viết thêm trong tệp nếu
+      bạn chạy lệnh `git restore <file>` khi chưa từng commit chúng?
+    type: single
+    options:
+      - text: Các dòng code đó sẽ bị xóa vĩnh viễn và không thể khôi phục lại bằng Git
+        correct: true
+      - text: Git sẽ tự động lưu các dòng đó vào hòm thư điện tử cá nhân
+        correct: false
+      - text: Git sẽ chuyển các dòng code đó lên máy chủ GitHub
+        correct: false
+      - text: Các dòng đó sẽ được cất vào thùng rác máy tính để phục hồi sau
+        correct: false
+    explanation: Git chỉ có thể phục hồi những gì đã từng được lưu vào cơ sở dữ liệu
+      commit; thay đổi chưa commit sẽ mất vĩnh viễn.
+  - id: q3
+    question: Lệnh `git restore --staged index.html` thực hiện hành động gì?
+    type: single
+    options:
+      - text: Rút tệp index.html ra khỏi Staging Area nhưng vẫn giữ nguyên toàn bộ code
+          đã sửa trong Working Directory
+        correct: true
+      - text: Xóa sạch tệp index.html khỏi ổ cứng máy tính
+        correct: false
+      - text: Tạo một commit mới có tên là staged
+        correct: false
+      - text: Đẩy tệp index.html lên nhánh chính của máy chủ từ xa
+        correct: false
+    explanation: Cờ `--staged` chỉ hủy bỏ việc stage trong Index, không làm mất bất
+      kỳ dòng code nào bạn đã gõ trong Working Tree.
+  - id: q4
+    question: Lệnh nào sau đây hủy bỏ tất cả các thay đổi chưa staged trên toàn bộ
+      các tệp tin trong thư mục hiện tại?
+    type: single
+    options:
+      - text: git restore .
+        correct: true
+      - text: git restore --everything-delete
+        correct: false
+      - text: git undo -all
+        correct: false
+      - text: git clear-tree
+        correct: false
+    explanation: "`git restore .` áp dụng hoàn tác cho toàn bộ thư mục hiện tại trở xuống."

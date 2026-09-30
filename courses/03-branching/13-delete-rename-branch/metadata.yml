@@ -1,0 +1,26 @@
+id: 13-delete-rename-branch
+title: Xóa và đổi tên nhánh an toàn
+duration: 25
+xp: 80
+keywords:
+  - delete branch
+  - rename branch
+  - git branch -d
+  - git branch -m
+  - don dep nhanh
+prerequisites:
+  - 03-git-branch
+objectives:
+  - Nắm vững kỹ thuật dọn dẹp và bảo trì hệ thống nhánh sau khi hoàn tất tính
+    năng.
+  - Sử dụng thành thạo cú pháp đổi tên nhánh hiện tại và đổi tên nhánh bất kỳ từ
+    xa.
+  - Phân biệt rõ ràng giữa cờ an toàn `-d` và cờ cưỡng chế `-D` khi xóa nhánh.
+  - Hiểu cách xóa nhánh trên máy chủ từ xa thông qua lệnh `git push origin
+    --delete <nhánh>`.
+commands:
+  - git branch -m <tên-mới>
+  - git branch -m <tên-cũ> <tên-mới>
+  - git branch -d <tên-nhánh>
+  - git branch -D <tên-nhánh>
+  - git push origin --delete <tên-nhánh>

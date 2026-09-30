@@ -1,0 +1,26 @@
+id: 12-git-rebase
+title: git rebase
+duration: 35
+xp: 110
+keywords:
+  - git rebase
+  - rebase branch
+  - rebase upstream
+  - quy tac vang rebase
+  - golden rule rebase
+prerequisites:
+  - 11-rebase-concept
+objectives:
+  - Thực thi thành thạo câu lệnh `git rebase <upstream>` để đồng bộ nhánh tính
+    năng với nhánh chính.
+  - 'Khắc cốt ghi tâm "Quy tắc vàng của Rebase" (The Golden Rule of Rebasing):
+    Không bao giờ rebase trên nhánh công khai.'
+  - Hiểu rõ quy trình xử lý khi cần cập nhật nhánh sau khi đã rebase bằng `git
+    push --force-with-lease`.
+  - Định hình thói quen giữ lịch sử dự án luôn tinh gọn trước khi tạo Pull
+    Request.
+commands:
+  - git fetch origin
+  - git rebase origin/main
+  - git push --force-with-lease origin <tên-nhánh>
+  - git rebase --abort

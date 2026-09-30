@@ -1,0 +1,95 @@
+id: quiz-03-12-merge-abort
+title: "Trắc nghiệm: Hủy bỏ quá trình merge"
+questions:
+  - id: q1
+    question: Lệnh `git merge --abort` được sử dụng trong trường hợp nào là phù hợp nhất?
+    type: single
+    options:
+      - text: Khi quá trình merge đang gặp xung đột (conflict) hoặc khi bạn lỡ merge
+          nhầm nhánh và muốn quay lại ban đầu
+        correct: true
+      - text: Khi bạn muốn xóa vĩnh viễn toàn bộ kho chứa Git
+        correct: false
+      - text: Khi bạn muốn đẩy code lên máy chủ GitHub
+        correct: false
+      - text: Khi bạn muốn tạo một commit mới
+        correct: false
+    explanation: "`--abort` là chiếc phanh an toàn giúp hủy bỏ tiến trình merge dở
+      dang và quay về trạng thái sạch ban đầu."
+  - id: q2
+    question: Sau khi chạy lệnh `git merge --abort`, các tệp tin trong Working
+      Directory sẽ như thế nào?
+    type: single
+    options:
+      - text: Được phục hồi nguyên vẹn 100% về trạng thái trước khi bạn thực hiện câu
+          lệnh git merge
+        correct: true
+      - text: Bị xóa sạch toàn bộ khỏi ổ cứng
+        correct: false
+      - text: Vẫn giữ nguyên các vạch đánh dấu xung đột conflict markers
+        correct: false
+      - text: Tự động được tải lên trang web của công ty
+        correct: false
+    explanation: Git dọn dẹp sạch sẽ các conflict markers và trả lại trạng thái
+      trước khi ra lệnh merge.
+  - id: q3
+    question: Điều gì sẽ xảy ra nếu bạn chạy `git merge --abort` khi kho lưu trữ
+      đang ở trạng thái bình thường (không có merge dở dang)?
+    type: single
+    options:
+      - text: "Git sẽ in thông báo lỗi: `fatal: There is no merge to abort`"
+        correct: true
+      - text: Git sẽ tự động tạo một merge commit ngẫu nhiên
+        correct: false
+      - text: Máy tính sẽ tự động tắt nguồn
+        correct: false
+      - text: Toàn bộ lịch sử commit bị xóa sạch
+        correct: false
+    explanation: Lệnh abort chỉ có hiệu lực khi đang tồn tại một tiến trình merge dở
+      dang (có tệp .git/MERGE_HEAD).
+  - id: q4
+    question: Tại sao `git merge --abort` lại được khuyến nghị sử dụng hơn là `git
+      reset --hard` khi muốn thoát merge conflict?
+    type: single
+    options:
+      - text: Vì nó là lệnh chuyên trách rõ nghĩa, an toàn và bảo vệ các thay đổi chưa
+          commit từ trước tốt hơn
+        correct: true
+      - text: Vì git reset --hard chỉ chạy được trên máy tính chạy hệ điều hành macOS
+        correct: false
+      - text: Vì git reset --hard bắt buộc phải có kết nối mạng Internet
+        correct: false
+      - text: Vì git merge --abort tự động giải quyết xung đột bằng trí tuệ nhân tạo
+        correct: false
+    explanation: "`--abort` được thiết kế chuyên biệt cho ngữ cảnh merge, tránh các
+      rủi ro xóa nhầm dữ liệu của reset hard."
+  - id: q5
+    question: Dấu hiệu nào trong thư mục `.git` cho biết hệ thống đang ở giữa một
+      tiến trình merge dở dang?
+    type: single
+    options:
+      - text: Sự tồn tại của tệp `.git/MERGE_HEAD` chứa mã băm của commit đang được gộp
+        correct: true
+      - text: Tệp tin `.git/PASSWORDS` bị rò rỉ
+        correct: false
+      - text: Thư mục `.git` bị biến mất hoàn toàn
+        correct: false
+      - text: Đèn bàn phím máy tính nhấp nháy liên tục
+        correct: false
+    explanation: Git tạo tệp tin `.git/MERGE_HEAD` để ghi nhận commit đang merge;
+      khi abort hoặc commit xong, tệp này bị xóa đi.
+  - id: q6
+    question: Lệnh `git merge --quit` khác với `git merge --abort` ở điểm cơ bản nào?
+    type: single
+    options:
+      - text: "`--quit` hủy bỏ trạng thái merge nhưng vẫn giữ nguyên các thay đổi hiện
+          tại trong thư mục làm việc"
+        correct: true
+      - text: "`--quit` tự động tắt màn hình máy tính"
+        correct: false
+      - text: "`--quit` xóa sạch tất cả các commit cũ"
+        correct: false
+      - text: Hai cờ này hoàn toàn giống nhau không có khác biệt nào
+        correct: false
+    explanation: "`--abort` hoàn tác cả Working Tree và Staging Area về ban đầu,
+      trong khi `--quit` chỉ dọn trạng thái merge mà để lại file dở dang."

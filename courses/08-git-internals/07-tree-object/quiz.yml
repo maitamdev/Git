@@ -1,0 +1,63 @@
+id: quiz-08-git-internals-07-tree-object
+title: "Trắc nghiệm: Đối tượng Tree: Lưu trữ cấu trúc thư mục và quyền tệp"
+questions:
+  - id: q1
+    question: Đối tượng Tree trong cơ sở dữ liệu của Git đại diện cho thành phần nào
+      trong hệ thống tệp tin?
+    type: single
+    options:
+      - text: Một thư mục (Directory)
+        correct: true
+      - text: Một tệp tin văn bản
+        correct: false
+      - text: Một con trỏ nhánh
+        correct: false
+      - text: Một bài kiểm thử tự động
+        correct: false
+    explanation: Đối tượng Tree ánh xạ trực tiếp tới một thư mục, chứa danh sách các
+      tệp (blobs) và thư mục con (sub-trees).
+  - id: q2
+    question: Mã chế độ quyền tệp tin (File Mode) `100755` trong đối tượng Tree biểu
+      thị điều gì?
+    type: single
+    options:
+      - text: Tệp tin thông thường có quyền thực thi (Executable file / script)
+        correct: true
+      - text: Thư mục con
+        correct: false
+      - text: Tệp tin chỉ đọc
+        correct: false
+      - text: Tệp tin đã bị xóa
+        correct: false
+    explanation: Git theo dõi cờ thực thi qua mã mode `100755`, trong khi tệp thường
+      không thực thi mang mã `100644`.
+  - id: q3
+    question: Lệnh Git nào sau đây cho phép xem nội dung của một đối tượng Tree dưới
+      dạng bảng danh sách tệp trực quan?
+    type: single
+    options:
+      - text: git ls-tree
+        correct: true
+      - text: git tree-view
+        correct: false
+      - text: git list-folder
+        correct: false
+      - text: git show-dir
+        correct: false
+    explanation: "`git ls-tree` là lệnh chuyên dụng để phân tích và in ra bảng danh
+      mục của một đối tượng Tree."
+  - id: q4
+    question: Tại sao Git không thể theo dõi một thư mục rỗng?
+    type: single
+    options:
+      - text: Vì Git theo dõi dữ liệu dựa trên nội dung tệp tin; một thư mục rỗng không
+          có đối tượng Blob nào để tham chiếu
+        correct: true
+      - text: Vì Git bị lỗi phần mềm chưa khắc phục được
+        correct: false
+      - text: Vì hệ điều hành Linux cấm tạo thư mục rỗng
+        correct: false
+      - text: Vì thư mục rỗng làm hỏng thuật toán SHA-1
+        correct: false
+    explanation: Một đối tượng Tree chỉ được tạo ra khi có ít nhất một entry hợp lệ;
+      thư mục rỗng không sinh ra blob nên không thể tạo tree.

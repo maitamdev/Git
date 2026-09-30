@@ -1,0 +1,22 @@
+id: 09-git-diff
+title: So sánh khác biệt với git diff
+duration: 30
+xp: 90
+keywords:
+  - git diff
+  - so sanh
+  - khac biet
+  - patch
+  - staged diff
+prerequisites:
+  - 08-git-log
+objectives:
+  - Đọc hiểu cú pháp hiển thị khác biệt theo từng dòng code của `git diff`.
+  - Phân biệt rõ ràng giữa so sánh Working Tree (`git diff`) và so sánh Staging
+    Area (`git diff --staged`).
+  - So sánh sự khác biệt giữa hai commit hoặc hai nhánh bất kỳ.
+commands:
+  - git diff
+  - git diff --staged
+  - git diff HEAD
+  - git diff <commit1> <commit2>

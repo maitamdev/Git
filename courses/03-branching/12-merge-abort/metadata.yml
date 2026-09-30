@@ -1,0 +1,22 @@
+id: 12-merge-abort
+title: Hủy bỏ quá trình merge với git merge --abort
+duration: 25
+xp: 80
+keywords:
+  - git merge --abort
+  - huy bo merge
+  - rollback merge
+  - safety brake
+  - abort conflict
+prerequisites:
+  - 11-resolve-conflict
+objectives:
+  - Hiểu rõ cơ chế hoạt động của lệnh cứu hộ khẩn cấp `git merge --abort`.
+  - Nhận biết các tình huống thực tế nên chủ động hủy bỏ quá trình merge.
+  - Khôi phục Working Tree và con trỏ HEAD về chính xác trạng thái sạch sẽ trước
+    khi merge.
+  - Tự tin xử lý tình huống merge nhầm nhánh mà không làm hỏng dữ liệu.
+commands:
+  - git merge --abort
+  - git status
+  - git merge --quit

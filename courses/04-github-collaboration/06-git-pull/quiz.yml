@@ -1,0 +1,97 @@
+id: quiz-04-06-git-pull
+title: "Trắc nghiệm: Đồng bộ code với git pull"
+questions:
+  - id: q1
+    question: Về mặt bản chất kỹ thuật, câu lệnh `git pull` tương đương hoàn toàn
+      với sự kết hợp tuần tự của hai câu lệnh nào?
+    type: single
+    options:
+      - text: git fetch kết hợp với git merge
+        correct: true
+      - text: git add kết hợp với git commit
+        correct: false
+      - text: git checkout kết hợp với git push
+        correct: false
+      - text: git branch kết hợp với git status
+        correct: false
+    explanation: "`git pull` là câu lệnh tắt: đầu tiên tải dữ liệu bằng `fetch`, sau
+      đó gộp vào bằng `merge`."
+  - id: q2
+    question: Điều gì sẽ xảy ra nếu cả bạn và đồng nghiệp cùng chỉnh sửa một dòng
+      code trong cùng một tệp tin khi bạn thực hiện `git pull`?
+    type: single
+    options:
+      - text: Git sẽ phát hiện Merge Conflict, tạm dừng quá trình gộp và chèn các vạch
+          đánh dấu xung đột vào tệp để bạn xử lý
+        correct: true
+      - text: Git sẽ tự động xóa code của bạn và lấy code của đồng nghiệp
+        correct: false
+      - text: Git sẽ xóa toàn bộ kho lưu trữ trên máy tính của bạn
+        correct: false
+      - text: Máy chủ GitHub sẽ tự động tắt nguồn
+        correct: false
+    explanation: Vì pull có chứa pha merge nên nếu có mâu thuẫn dòng code, Git sẽ
+      kích hoạt quy trình giải quyết conflict.
+  - id: q3
+    question: Lợi ích của việc sử dụng câu lệnh `git pull --rebase` thay vì `git
+      pull` thông thường là gì?
+    type: single
+    options:
+      - text: Tránh việc sinh ra các commit merge rác không cần thiết, giúp lịch sử dự
+          án luôn là một đường thẳng tuyến tính
+        correct: true
+      - text: Tăng gấp đôi tốc độ tải mạng Internet
+        correct: false
+      - text: Tự động kiểm tra lỗi logic lập trình trong mã nguồn
+        correct: false
+      - text: Bảo vệ máy tính khỏi các cuộc tấn công mạng
+        correct: false
+    explanation: "`--rebase` đặt các commit của bạn lên trên đỉnh của các commit mới
+      kéo về, loại bỏ commit merge thừa."
+  - id: q4
+    question: Thời điểm vàng được các chuyên gia khuyến nghị luôn luôn nên thực hiện
+      câu lệnh `git pull` là khi nào?
+    type: single
+    options:
+      - text: Đầu mỗi buổi sáng khi bắt đầu làm việc hoặc trước khi chuẩn bị tạo một
+          nhánh tính năng mới
+        correct: true
+      - text: Chỉ thực hiện một lần duy nhất khi dự án kết thúc bàn giao
+        correct: false
+      - text: Chỉ thực hiện vào các ngày cuối tuần
+        correct: false
+      - text: Khi máy tính sắp hết pin
+        correct: false
+    explanation: Luôn kéo code mới nhất về trước khi code giúp bạn làm việc trên nền
+      tảng mới nhất và giảm thiểu nguy cơ xung đột.
+  - id: q5
+    question: Cờ `--ff-only` trong lệnh `git pull --ff-only` có tác dụng bảo vệ nào?
+    type: single
+    options:
+      - text: Chỉ cho phép kéo code về nếu có thể tua nhanh Fast-forward, từ chối pull
+          nếu phát sinh nút giao rẽ nhánh
+        correct: true
+      - text: Ép buộc máy tính phải khởi động lại sau khi pull
+        correct: false
+      - text: Tự động xóa tất cả các nhánh con đã hoàn thành
+        correct: false
+      - text: Chỉ tải về các tệp tin có dung lượng dưới 1 kilobyte
+        correct: false
+    explanation: "`--ff-only` ngăn chặn việc vô tình sinh ra commit merge khi lịch
+      sử của bạn và server đã bị phân kỳ."
+  - id: q6
+    question: Nếu trong Working Directory của bạn đang có tệp sửa đổi dở dang chưa
+      commit mà bị conflict khi pull, hành động an toàn nên làm trước là gì?
+    type: single
+    options:
+      - text: Lưu tạm thay đổi vào bộ nhớ đệm bằng lệnh `git stash` hoặc commit tạm thời
+          trước khi pull
+        correct: true
+      - text: Xóa vĩnh viễn tệp tin đó đi
+        correct: false
+      - text: Tắt phần mềm diệt virus trên máy tính
+        correct: false
+      - text: Đổi tên tài khoản người dùng máy tính
+        correct: false
+    explanation: "`git stash` giúp cất gọn gàng các thay đổi chưa xong, đưa Working
+      Tree về trạng thái sạch sẽ an toàn để pull."

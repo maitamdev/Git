@@ -1,0 +1,23 @@
+id: 01-ci-cd-concept
+title: CI/CD là gì? Tự động hóa tích hợp & chuyển giao liên tục
+duration: 25
+xp: 80
+keywords:
+  - ci cd
+  - continuous integration
+  - continuous delivery
+  - automation
+  - pipeline
+prerequisites:
+  - 15-professional-team-project
+objectives:
+  - Nắm vững bản chất cốt lõi của Continuous Integration (CI) và Continuous
+    Delivery/Deployment (CD).
+  - Hiểu rõ sự khác biệt giữa quy trình kiểm thử thủ công rủi ro và đường ống tự
+    động hóa.
+  - "Nhận thức các lợi ích then chốt: giảm thiểu lỗi hồi quy, phát hành phiên
+    bản nhanh và phản hồi sớm."
+commands:
+  - npm test
+  - npm run build
+  - git push origin main

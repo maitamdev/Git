@@ -1,0 +1,66 @@
+id: quiz-02-vcs-types
+title: "Trắc nghiệm: Phân loại kiến trúc VCS"
+questions:
+  - id: q1
+    question: Điểm khác biệt căn bản nhất giữa Distributed VCS (như Git) và
+      Centralized VCS (như SVN) là gì?
+    type: single
+    options:
+      - text: Mỗi máy trạm trong DVCS đều có một bản sao đầy đủ của toàn bộ kho lưu trữ
+          và lịch sử dự án
+        correct: true
+      - text: DVCS chỉ hoạt động trên hệ điều hành Linux còn CVCS chỉ chạy trên Windows
+        correct: false
+      - text: CVCS lưu code trên đám mây còn DVCS lưu code trên thẻ nhớ rời
+        correct: false
+      - text: DVCS yêu cầu phải trả phí bản quyền hàng tháng còn CVCS hoàn toàn miễn phí
+        correct: false
+    explanation: Trong DVCS, mỗi client clone về một kho chứa đầy đủ 100% lịch sử và
+      đối tượng dữ liệu, không phụ thuộc vào server để thực hiện các thao tác
+      thường ngày.
+  - id: q2
+    question: Nếu máy chủ trung tâm bị mất kết nối mạng Internet, lập trình viên sử
+      dụng Git có thể làm những gì?
+    type: single
+    options:
+      - text: Vẫn có thể commit, tạo nhánh, kiểm tra diff và xem lịch sử bình thường
+          trên máy cục bộ
+        correct: true
+      - text: Không thể làm bất cứ thao tác gì vì Git sẽ bị khóa hoàn toàn
+        correct: false
+      - text: Mọi dữ liệu trên máy tính sẽ tự động bị xóa sạch
+        correct: false
+      - text: Chỉ có thể đọc code chứ không được phép chỉnh sửa tệp tin
+        correct: false
+    explanation: Vì sở hữu trọn vẹn bản sao kho lưu trữ cục bộ, lập trình viên có
+      thể thực hiện mọi tác vụ quản lý phiên bản hoàn toàn offline.
+  - id: q3
+    question: Khái niệm "Single Point of Failure" (Điểm nghẽn đơn độc) phản ánh
+      nhược điểm nguy hiểm của mô hình nào?
+    type: single
+    options:
+      - text: Centralized VCS (Hệ thống quản lý phiên bản tập trung)
+        correct: true
+      - text: Distributed VCS (Hệ thống quản lý phiên bản phân tán)
+        correct: false
+      - text: Cả hai mô hình đều không bị ảnh hưởng
+        correct: false
+      - text: Mô hình điện toán đám mây hiện đại
+        correct: false
+    explanation: Trong CVCS, nếu server trung tâm bị hỏng thì toàn bộ dự án và lịch
+      sử bị tê liệt hoặc biến mất nếu không có backup.
+  - id: q4
+    question: Đại diện tiêu biểu nhất của hệ thống quản lý phiên bản phân tán hiện
+      nay là phần mềm nào?
+    type: single
+    options:
+      - text: Git
+        correct: true
+      - text: Subversion (SVN)
+        correct: false
+      - text: CVS
+        correct: false
+      - text: Microsoft Word Track Changes
+        correct: false
+    explanation: Git do Linus Torvalds sáng lập năm 2005 là đại diện tiêu biểu và
+      phổ biến nhất của kiến trúc DVCS.

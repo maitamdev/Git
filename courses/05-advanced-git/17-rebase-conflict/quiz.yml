@@ -1,0 +1,95 @@
+id: quiz-05-17-rebase-conflict
+title: "Trắc nghiệm: Xử lý Rebase Conflict"
+questions:
+  - id: q1
+    question: Sau khi mở tệp tin bị xung đột, chỉnh sửa xong xuôi và chạy lệnh `git
+      add <tệp>`, câu lệnh ĐÚNG tiếp theo bạn phải chạy là gì?
+    type: single
+    options:
+      - text: git rebase --continue
+        correct: true
+      - text: git commit -m "fixed conflict"
+        correct: false
+      - text: git push origin main
+        correct: false
+      - text: git merge --continue
+        correct: false
+    explanation: Trong quy trình rebase, sau khi add tệp resolved bạn BẮT BUỘC dùng
+      `git rebase --continue` để Git tự động tạo commit tiếp.
+  - id: q2
+    question: Điều gì sẽ xảy ra nếu bạn chạy câu lệnh `git rebase --skip` khi đang ở
+      trạng thái xung đột commit?
+    type: single
+    options:
+      - text: Git sẽ bỏ qua hoàn toàn commit đang bị xung đột (vứt bỏ các thay đổi của
+          nó) và nhảy sang commit tiếp theo
+        correct: true
+      - text: Git sẽ tự động sửa hết lỗi xung đột cho bạn
+        correct: false
+      - text: Git sẽ hủy bỏ phiên rebase và quay về ban đầu
+        correct: false
+      - text: Git sẽ xóa toàn bộ nhánh main
+        correct: false
+    explanation: "`--skip` bỏ qua commit hiện tại, chỉ dùng khi bạn thực sự muốn vứt
+      bỏ toàn bộ thay đổi của commit đó."
+  - id: q3
+    question: Nếu gặp phải một xung đột quá nan giải trong rebase và bạn muốn hủy bỏ
+      toàn bộ để quay về trạng thái an toàn ban đầu, bạn dùng lệnh nào?
+    type: single
+    options:
+      - text: git rebase --abort
+        correct: true
+      - text: git rebase --cancel
+        correct: false
+      - text: git undo --all
+        correct: false
+      - text: git reset --force
+        correct: false
+    explanation: "`git rebase --abort` hủy phiên rebase và hoàn nguyên trạng thái
+      nhánh về y hệt lúc trước khi gõ lệnh."
+  - id: q4
+    question: Tại sao Rebase Conflict có thể phải giải quyết nhiều lần liên tiếp,
+      trong khi Merge Conflict thông thường chỉ giải quyết 1 lần?
+    type: single
+    options:
+      - text: Vì Rebase áp dụng lần lượt từng commit đơn lẻ, mỗi commit đều có khả năng
+          gây xung đột độc lập
+        correct: true
+      - text: Vì Git bị lỗi vòng lặp vô tận
+        correct: false
+      - text: Do máy chủ GitHub gửi yêu cầu kiểm tra lại nhiều lần
+        correct: false
+      - text: Vì rebase làm tăng kích thước tệp tin
+        correct: false
+    explanation: Rebase là chuỗi các thao tác cherry-pick liên tiếp; mỗi commit được
+      replay đều có thể chạm vào vùng code xung đột.
+  - id: q5
+    question: Lệnh nào giúp bạn kiểm tra danh sách chính xác các tệp tin đang bị
+      xung đột khi Git đang ở trạng thái tạm dừng rebase?
+    type: single
+    options:
+      - text: git status
+        correct: true
+      - text: git show-conflicts
+        correct: false
+      - text: git list-broken
+        correct: false
+      - text: git check-files
+        correct: false
+    explanation: '`git status` hiển thị chi tiết trạng thái rebase đang tạm dừng tại
+      commit nào và liệt kê các tệp "both modified".'
+  - id: q6
+    question: Sai lầm tai hại nhất mà lập trình viên mới học hay mắc phải khi giải
+      quyết conflict trong rebase là gì?
+    type: single
+    options:
+      - text: Gõ lệnh `git commit` thay vì gõ `git rebase --continue`
+        correct: true
+      - text: Mở tệp tin bằng trình soạn thảo mã nguồn
+        correct: false
+      - text: Trao đổi với đồng nghiệp viết đoạn code xung đột
+        correct: false
+      - text: Kiểm tra trạng thái bằng git status
+        correct: false
+    explanation: Gõ `git commit` thủ công sẽ phá vỡ tiến trình máy trạng thái của
+      rebase và tạo ra commit thừa không mong muốn.

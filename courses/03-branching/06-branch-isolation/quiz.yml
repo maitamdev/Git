@@ -1,0 +1,96 @@
+id: quiz-03-06-branch-isolation
+title: "Trắc nghiệm: Nguyên lý cách ly không gian Branch Isolation"
+questions:
+  - id: q1
+    question: Nguyên lý Branch Isolation trong Git mang lại lợi ích lớn nhất nào sau đây?
+    type: single
+    options:
+      - text: Cho phép lập trình viên tự do thử nghiệm và thay đổi mã nguồn mà không sợ
+          ảnh hưởng tới nhánh chính
+        correct: true
+      - text: Giúp mã nguồn tự động biên dịch thành file exe mà không cần trình biên
+          dịch
+        correct: false
+      - text: Giúp tự động sửa các lỗi cú pháp ngữ pháp tiếng Anh trong mã nguồn
+        correct: false
+      - text: Tăng tốc độ truy cập mạng Internet của văn phòng công ty
+        correct: false
+    explanation: Tính cách ly độc lập bảo vệ nhánh chính an toàn trước mọi thử
+      nghiệm và lỗi phát sinh trên nhánh phụ.
+  - id: q2
+    question: Nếu bạn commit một tệp mới trên nhánh `feature` rồi chuyển về nhánh
+      `main`, tệp đó trên ổ đĩa sẽ ra sao?
+    type: single
+    options:
+      - text: Tệp đó sẽ tự động biến mất khỏi Working Directory trên main và chỉ xuất
+          hiện lại khi quay về feature
+        correct: true
+      - text: Tệp đó sẽ tự động được gửi qua email cho sếp
+        correct: false
+      - text: Tệp đó sẽ bị xóa vĩnh viễn khỏi toàn bộ lịch sử Git
+        correct: false
+      - text: Tệp đó sẽ tự động được đưa vào nhánh main mà không cần merge
+        correct: false
+    explanation: Git cập nhật Working Directory theo snapshot của nhánh hiện tại;
+      tệp của nhánh con sẽ được cất đi an toàn.
+  - id: q3
+    question: Khi hai lập trình viên tạo hai nhánh khác nhau từ cùng một commit trên
+      main và cùng commit code mới, hình thái lịch sử sẽ như thế nào?
+    type: single
+    options:
+      - text: Lịch sử sẽ phân kỳ (divergent) thành hai nhánh rẽ độc lập hình chữ Y từ
+          mốc commit chung ban đầu
+        correct: true
+      - text: Lịch sử sẽ bị khóa lại và không ai được commit tiếp
+        correct: false
+      - text: Một trong hai nhánh sẽ bị xóa ngẫu nhiên để tránh xung đột
+        correct: false
+      - text: Toàn bộ mã nguồn của cả hai người sẽ bị hòa tan thành một tệp duy nhất
+        correct: false
+    explanation: Đồ thị commit DAG sẽ phân nhánh độc lập từ commit cha chung tạo
+      thành hình thái phân kỳ.
+  - id: q4
+    question: Để xem biểu đồ phân kỳ trực quan của tất cả các nhánh trong terminal,
+      bạn dùng câu lệnh nào?
+    type: single
+    options:
+      - text: git log --graph --oneline --all
+        correct: true
+      - text: git show --branches-only
+        correct: false
+      - text: git view --diagram
+        correct: false
+      - text: git chart --divergent
+        correct: false
+    explanation: "`git log --graph --oneline --all` vẽ các nhánh phân kỳ bằng ký tự
+      ASCII trực quan tuyệt đẹp."
+  - id: q5
+    question: Một tính năng thử nghiệm trên nhánh phụ bị thất bại hoàn toàn, thao
+      tác xử lý chuẩn mực là gì?
+    type: single
+    options:
+      - text: Chuyển về nhánh main và xóa bỏ nhánh thử nghiệm đó bằng lệnh git branch -D
+        correct: true
+      - text: Phải cài lại hệ điều hành Windows từ đầu
+        correct: false
+      - text: Gửi đơn xin nghỉ việc tại công ty
+        correct: false
+      - text: Xóa toàn bộ kho chứa của công ty trên GitHub
+        correct: false
+    explanation: Nhờ tính cách ly, bạn chỉ việc xóa nhánh thất bại là dự án trở về
+      trạng thái hoàn hảo ban đầu.
+  - id: q6
+    question: Các commit trên một nhánh tính năng có thể đến được nhánh main thông
+      qua cơ chế nào?
+    type: single
+    options:
+      - text: Thông qua thao tác hợp nhất có chủ đích (Merge hoặc Rebase)
+        correct: true
+      - text: Tự động hòa nhập sau 24 giờ đồng hồ nếu không có lỗi
+        correct: false
+      - text: Tự động hòa nhập khi bạn tắt máy tính đi ngủ
+        correct: false
+      - text: Thông qua việc cắm cáp USB nối giữa hai máy tính
+        correct: false
+    explanation: Git chỉ hòa nhập mã nguồn khi có lệnh chỉ định rõ ràng của lập
+      trình viên (Merge hoặc Rebase).

@@ -1,0 +1,66 @@
+id: quiz-05-13-interactive-rebase
+title: "Trắc nghiệm: Interactive Rebase"
+questions:
+  - id: q1
+    question: Thứ tự sắp xếp các commit trong tệp Todo List khi bạn chạy `git rebase
+      -i HEAD~3` là như thế nào?
+    type: single
+    options:
+      - text: Theo thứ tự thời gian từ cũ nhất ở trên đỉnh xuống mới nhất ở dưới đáy
+          (ngược lại với git log)
+        correct: true
+      - text: Commit mới nhất luôn ở trên đỉnh
+        correct: false
+      - text: Sắp xếp ngẫu nhiên không có thứ tự
+        correct: false
+      - text: Sắp xếp theo thứ tự bảng chữ cái của thông điệp
+        correct: false
+    explanation: Todo list hiển thị từ quá khứ đến hiện tại để Git có thể phát lại
+      (replay) từng commit từ trên xuống dưới.
+  - id: q2
+    question: Nếu bạn vô tình xóa hẳn một dòng commit trong tệp Todo List rồi lưu
+      lại và đóng trình soạn thảo, Git sẽ làm gì?
+    type: single
+    options:
+      - text: Git hiểu rằng bạn muốn loại bỏ (drop) commit đó và sẽ xóa hoàn toàn commit
+          đó khỏi nhánh
+        correct: true
+      - text: Git sẽ báo lỗi cú pháp và bắt bạn nhập lại
+        correct: false
+      - text: Git tự động nhân đôi commit đó lên
+        correct: false
+      - text: Không có chuyện gì xảy ra cả
+        correct: false
+    explanation: "Xóa dòng trong todo list tương đương với chỉ thị `drop`: Git sẽ bỏ
+      qua commit đó khi tái tạo lịch sử."
+  - id: q3
+    question: Lệnh nào sau đây dùng để mở phiên Interactive Rebase biên tập lại 5
+      commit gần nhất?
+    type: single
+    options:
+      - text: git rebase -i HEAD~5
+        correct: true
+      - text: git rebase --interactive 5
+        correct: false
+      - text: git edit-history HEAD~5
+        correct: false
+      - text: git interactive 5
+        correct: false
+    explanation: "`git rebase -i HEAD~5` là cú pháp chuẩn mực để biên tập 5 commit
+      gần nhất."
+  - id: q4
+    question: Làm thế nào để thay đổi thứ tự xuất hiện của hai commit bằng
+      Interactive Rebase?
+    type: single
+    options:
+      - text: Chỉ cần hoán đổi vị trí của hai dòng tương ứng trong tệp Todo List rồi lưu
+          lại
+        correct: true
+      - text: Gõ lệnh git swap-commits
+        correct: false
+      - text: Thay đổi ngày giờ của hệ điều hành máy tính
+        correct: false
+      - text: Đổi tên nhánh rồi đổi ngược lại
+        correct: false
+    explanation: Git áp dụng commit theo thứ tự từ trên xuống dưới trong Todo list;
+      đổi vị trí dòng là đổi thứ tự commit.

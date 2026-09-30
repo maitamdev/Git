@@ -1,0 +1,25 @@
+id: 03-dot-git-directory
+title: Khám phá cấu trúc bên trong thư mục .git
+duration: 30
+xp: 90
+keywords:
+  - dot git directory
+  - HEAD
+  - config
+  - index
+  - objects
+  - refs
+  - hooks
+prerequisites:
+  - 02-porcelain-vs-plumbing
+objectives:
+  - Giải mã toàn bộ các tệp tin và thư mục cốt lõi bên trong thư mục quản trị
+    .git/.
+  - "Hiểu rõ chức năng của từng thành phần: HEAD, config, description, index,
+    objects/, refs/, hooks/, info/."
+  - Nhận thức được rằng một kho lưu trữ Git hoàn chỉnh chỉ là một thư mục bình
+    thường chứa thư mục con .git/.
+commands:
+  - ls -la .git
+  - cat .git/config
+  - cat .git/HEAD

@@ -1,0 +1,67 @@
+id: quiz-07-github-actions-01-ci-cd-concept
+title: "Trắc nghiệm: CI/CD là gì? Tự động hóa tích hợp & chuyển giao liên tục"
+questions:
+  - id: q1
+    question: Chữ cái CI trong cụm từ CI/CD là viết tắt của thuật ngữ nào?
+    type: single
+    options:
+      - text: Continuous Integration
+        correct: true
+      - text: Code Inspection
+        correct: false
+      - text: Centralized Information
+        correct: false
+      - text: Cloud Infrastructure
+        correct: false
+    explanation: CI là viết tắt của Continuous Integration, nghĩa là quá trình tích
+      hợp liên tục mã nguồn của các lập trình viên vào kho lưu trữ chung.
+  - id: q2
+    question: Lợi ích lớn nhất mà Continuous Integration mang lại cho nhóm phát
+      triển là gì?
+    type: single
+    options:
+      - text: Phát hiện sớm lỗi hồi quy và xung đột tích hợp ngay khi mã nguồn vừa được
+          đẩy lên
+        correct: true
+      - text: Giúp máy tính của lập trình viên chạy nhanh hơn gấp đôi
+        correct: false
+      - text: Tự động viết toàn bộ mã nguồn thay cho con người
+        correct: false
+      - text: Xóa bỏ hoàn toàn nhu cầu về hệ thống kiểm soát phiên bản
+        correct: false
+    explanation: Nhờ tự động kiểm thử và biên dịch mỗi khi có commit mới, CI giúp
+      nhóm phát hiện lỗi ngay từ trứng nước thay vì đợi đến ngày phát hành.
+  - id: q3
+    question: Điểm khác nhau cốt lõi giữa Continuous Delivery và Continuous
+      Deployment là gì?
+    type: single
+    options:
+      - text: Continuous Delivery yêu cầu sự phê duyệt thủ công trước khi đẩy lên
+          production, trong khi Continuous Deployment tự động hóa 100%
+        correct: true
+      - text: Continuous Delivery chỉ áp dụng cho ngôn ngữ Python, còn Deployment cho
+          JavaScript
+        correct: false
+      - text: Continuous Delivery không bao gồm công đoạn kiểm thử tự động
+        correct: false
+      - text: Hai khái niệm này hoàn toàn đồng nghĩa và không có bất kỳ khác biệt nào
+        correct: false
+    explanation: Continuous Delivery tạo ra sản phẩm sẵn sàng triển khai nhưng cần
+      một nút bấm xác nhận từ con người, còn Continuous Deployment tự động triển
+      khai thẳng lên production nếu qua hết test.
+  - id: q4
+    question: Hiện tượng Integration Hell trong phát triển phần mềm thường bắt nguồn
+      từ nguyên nhân nào?
+    type: single
+    options:
+      - text: Các nhánh làm việc riêng lẻ quá lâu mà không tích hợp thường xuyên vào
+          nhánh chính
+        correct: true
+      - text: Do máy chủ GitHub bị mất kết nối mạng Internet
+        correct: false
+      - text: Do cài đặt quá nhiều tiện ích mở rộng trên trình soạn thảo code
+        correct: false
+      - text: Do sử dụng bàn phím cơ thay vì bàn phím thông thường
+        correct: false
+    explanation: Khi các nhánh phát triển độc lập trong nhiều tuần hoặc tháng, các
+      thay đổi tích tụ sẽ gây ra vô số xung đột phức tạp khi gộp lại.

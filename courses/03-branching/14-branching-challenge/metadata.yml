@@ -1,0 +1,26 @@
+id: 14-branching-challenge
+title: Thử thách tổng hợp Branching Master
+duration: 40
+xp: 150
+keywords:
+  - challenge
+  - branching master
+  - tong hop
+  - conflict resolution
+  - workflow
+prerequisites:
+  - 11-resolve-conflict
+objectives:
+  - Áp dụng tổng hợp toàn bộ kỹ năng Level 3 vào một kịch bản phát triển phần
+    mềm đa nhánh thực chiến.
+  - Thực hiện tạo nhánh tính năng, chuyển nhánh, tạo commit độc lập, và phát
+    hiện xung đột.
+  - Giải quyết thành công xung đột Merge Conflict và tạo Merge Commit chuẩn hóa.
+  - Dọn dẹp hệ thống nhánh sạch sẽ sau khi hoàn thành nhiệm vụ.
+commands:
+  - git switch -c feature-challenge
+  - git merge main
+  - git status
+  - git add <resolved-file>
+  - git commit
+  - git branch -d feature-challenge
