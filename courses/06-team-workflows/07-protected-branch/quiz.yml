@@ -5,8 +5,7 @@ questions:
     question: Mục đích chính quan trọng nhất của việc kích hoạt Protected Branch là gì?
     type: single
     options:
-      - text: Ngăn chặn việc commit/push trực tiếp, cấm force-push và cấm xóa các nhánh
-          trọng yếu của dự án
+      - text: Áp dụng những điều kiện đã cấu hình cho nhánh, như yêu cầu PR hoặc chặn force push/xóa nhánh
         correct: true
       - text: Tự động tăng tốc độ mạng Internet khi tải mã nguồn
         correct: false
@@ -14,15 +13,12 @@ questions:
         correct: false
       - text: Xóa toàn bộ các tệp tin không phải là code JavaScript
         correct: false
-    explanation: Protected Branch là lá chắn bảo vệ an ninh mã nguồn, ngăn chặn các
-      thao tác phá hủy vô ý hoặc cố ý lên các nhánh quan trọng.
+    explanation: Nhánh được bảo vệ chỉ thực thi các điều kiện đã bật; điều kiện và quyền bypass quyết định thao tác nào bị chặn.
   - id: q2
-    question: Điều gì sẽ xảy ra khi một lập trình viên cố tình thực hiện `git push
-      --force origin main` lên nhánh đã được bảo vệ?
+    question: Điều gì thường xảy ra khi tài khoản không có quyền bypass chạy `git push --force origin main` lên nhánh được bảo vệ?
     type: single
     options:
-      - text: Máy chủ Git từ xa sẽ từ chối lệnh và thông báo lỗi Protected branch update
-          failed
+      - text: Máy chủ từ chối nếu rule đang chặn force push; thông báo tùy nền tảng
         correct: true
       - text: Lệnh sẽ thành công và ghi đè lịch sử bình thường
         correct: false
@@ -30,11 +26,9 @@ questions:
         correct: false
       - text: GitHub sẽ xóa tài khoản cá nhân của lập trình viên đó ngay lập tức
         correct: false
-    explanation: Protected Branch mặc định cấm hoàn toàn thao tác force-push nhằm
-      bảo vệ lịch sử commit không bị viết lại.
+    explanation: Rule bảo vệ thường chặn force push; người có quyền bypass hoặc cấu hình ngoại lệ có thể thay đổi kết quả.
   - id: q3
-    question: Con đường hợp lệ DUY NHẤT để đưa mã nguồn mới vào một nhánh đã được
-      cấu hình Protected Branch là gì?
+    question: Nếu rule của nhánh yêu cầu Pull Request và bạn không thuộc nhóm bypass, cách cập nhật nhánh nào đáp ứng điều kiện đó?
     type: single
     options:
       - text: Tạo nhánh tính năng, đẩy lên remote và mở Pull Request để kiểm duyệt trước
@@ -46,8 +40,7 @@ questions:
         correct: false
       - text: Tải code lên Google Drive rồi dẫn link vào README
         correct: false
-    explanation: Pull Request là cổng kiểm soát duy nhất cho phép mã nguồn được xem
-      xét, kiểm thử và hợp nhất an toàn vào nhánh bảo vệ.
+    explanation: Khi bật yêu cầu PR, cần mở PR và thỏa các điều kiện đã đặt trước khi merge; một cấu hình khác có thể cho phép cách cập nhật khác.
   - id: q4
     question: Ai là người có quyền cấu hình bật/tắt hoặc chỉnh sửa các quy tắc
       Protected Branch trên GitHub Repository?
@@ -69,8 +62,7 @@ questions:
       Protected Branch có ý nghĩa gì?
     type: single
     options:
-      - text: Áp dụng các quy tắc bảo vệ bình đẳng lên tất cả mọi người, kể cả Quản trị
-          viên (Administrators)
+      - text: Không cho các tài khoản thuộc diện quản trị bỏ qua những điều kiện bảo vệ đã bật
         correct: true
       - text: Cho phép bất kỳ ai cũng có thể ghi đè quy tắc
         correct: false
@@ -78,14 +70,13 @@ questions:
         correct: false
       - text: Tự động cấp quyền quản trị cho tất cả các commit mới
         correct: false
-    explanation: "Tùy chọn này bảo đảm nguyên tắc công bằng: không một cá nhân nào
-      kể cả sếp hay admin được quyền phá vỡ quy trình an toàn chung."
+    explanation: Khi bật tùy chọn này, các quản trị viên thuộc phạm vi áp dụng cũng phải tuân theo điều kiện; hãy kiểm tra ngoại lệ và quyền bypass trong cấu hình cụ thể.
   - id: q6
     question: Ngoài nhánh `main`, những nhánh nào sau đây cũng thường xuyên được
       thiết lập là Protected Branch?
     type: single
     options:
-      - text: Các nhánh vĩnh cửu như develop, staging và các nhánh phát hành production
+      - text: Nhánh dùng chung hoặc nhánh phát hành mà nhóm muốn áp dụng quy tắc bảo vệ
         correct: true
       - text: Các nhánh thử nghiệm ngắn hạn do lập trình viên thực tập tạo ra
         correct: false
@@ -93,5 +84,4 @@ questions:
         correct: false
       - text: Các nhánh đã bị xóa trong thùng rác
         correct: false
-    explanation: Mọi nhánh đại diện cho môi trường vận hành thực tế hoặc môi trường
-      tích hợp chung đều cần được bảo vệ cẩn mật.
+    explanation: Nhóm chọn các nhánh cần bảo vệ theo quy trình; không phải nhánh dùng chung nào cũng nhất thiết cần cùng một bộ rule.

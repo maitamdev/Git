@@ -31,7 +31,7 @@ questions:
     question: Điều gì xảy ra với hệ thống tệp tin sau khi một Job kết thúc phiên chạy của mình?
     type: single
     options:
-      - text: Máy ảo Runner bị hủy hoàn toàn cùng toàn bộ dữ liệu tạm thời trên ổ đĩa
+      - text: GitHub-hosted runner thường được làm mới; self-hosted có thể giữ lại tệp và trạng thái
         correct: true
       - text: Hệ thống tự động lưu toàn bộ ổ cứng vào tài khoản Google Drive của bạn
         correct: false
@@ -39,7 +39,7 @@ questions:
         correct: false
       - text: Dữ liệu tự động chuyển sang máy tính cá nhân của lập trình viên
         correct: false
-    explanation: Các Runner do GitHub lưu trữ (GitHub-hosted) hoạt động theo mô hình phi trạng thái (ephemeral), máy ảo bị xóa sạch ngay sau khi Job kết thúc.
+    explanation: GitHub-hosted runners tiêu chuẩn thường dùng môi trường mới cho mỗi Job; self-hosted runners có thể được tái sử dụng và cần tự dọn dẹp.
   - id: q4
     question: Mục đích của việc đặt trường `name:` bên trong cấu hình Job là gì?
     type: single
@@ -65,4 +65,4 @@ questions:
         correct: false
       - text: Tạm dừng kết nối Internet của kho lưu trữ trong một khoảng thời gian
         correct: false
-    explanation: Cài đặt timeout-minutes giúp bảo vệ tài khoản khỏi các lỗi treo vô tận, tránh làm cạn kiệt hạn mức phút miễn phí của GitHub Actions.
+    explanation: Giới hạn thời gian giúp dừng Job bị treo; quota và chi phí phụ thuộc loại runner, repo và gói dịch vụ hiện hành.

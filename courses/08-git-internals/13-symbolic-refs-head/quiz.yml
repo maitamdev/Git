@@ -2,10 +2,10 @@ id: quiz-08-git-internals-13-symbolic-refs-head
 title: "Trắc nghiệm: Con trỏ HEAD & Symbolic References trong .git/HEAD"
 questions:
   - id: q1
-    question: "Bản chất của tệp tin .git/HEAD trong trạng thái hoạt động bình thường là gì?"
+    question: "HEAD thường hoạt động như thế nào khi bạn đang ở một nhánh local?"
     type: single
     options:
-      - text: "Một tham chiếu biểu tượng (Symbolic Reference) trỏ tới một tệp nhánh, ví dụ ref: refs/heads/main"
+      - text: "Một symbolic ref trỏ tới tên ref của nhánh, ví dụ refs/heads/main"
         correct: true
       - text: "Một tệp ảnh chụp toàn bộ khuôn mặt người dùng"
         correct: false
@@ -13,12 +13,12 @@ questions:
         correct: false
       - text: "Một cơ sở dữ liệu chứa toàn bộ commit"
         correct: false
-    explanation: "HEAD đóng vai trò là con trỏ gián tiếp (Symbolic Ref), trỏ tới con trỏ nhánh đang hoạt động."
+    explanation: "Khi ở trên nhánh, HEAD thường là symbolic ref tới ref nhánh; đường dẫn Git directory có thể khác giữa các loại repository."
   - id: q2
     question: "Dưới góc nhìn Git Internals, trạng thái Detached HEAD thể hiện qua nội dung tệp .git/HEAD như thế nào?"
     type: single
     options:
-      - text: "Tệp .git/HEAD chứa trực tiếp chuỗi băm SHA-1 (40 ký tự) thay vì tiền tố ref: refs/heads/<branch>"
+      - text: "HEAD trỏ trực tiếp tới object ID của commit thay vì symbolic ref tới branch"
         correct: true
       - text: "Tệp .git/HEAD hoàn toàn trống rỗng không có byte nào"
         correct: false
@@ -26,7 +26,7 @@ questions:
         correct: false
       - text: "Tệp .git/HEAD chứa đường dẫn URL tới GitHub"
         correct: false
-    explanation: "Khi detached, Git ghi trực tiếp mã SHA-1 của commit vào .git/HEAD thay vì lưu dạng symbolic reference trỏ tới một nhánh."
+    explanation: "Detached HEAD trỏ trực tiếp tới commit, còn độ dài object ID phụ thuộc hash format của repository."
   - id: q3
     question: "Lệnh Plumbing nào sau đây cho phép kiểm tra hoặc thiết lập an toàn một Symbolic Reference?"
     type: single
@@ -44,7 +44,7 @@ questions:
     question: "Nếu bạn vô tình tạo 3 commit mới khi đang ở trạng thái Detached HEAD, làm sao để giữ lại chúng an toàn?"
     type: single
     options:
-      - text: "Chạy lệnh git branch <tên-nhánh-mới> ngay tại vị trí hiện tại trước khi chuyển đi nơi khác"
+      - text: "Chạy git branch <tên-nhánh-mới> ở vị trí commit hiện tại trước khi chuyển đi nơi khác"
         correct: true
       - text: "Khởi động lại máy tính"
         correct: false
@@ -52,7 +52,7 @@ questions:
         correct: false
       - text: "Không thể cứu vãn được, chúng sẽ bị xóa ngay lập tức"
         correct: false
-    explanation: "Tạo một nhánh mới trỏ vào commit hiện tại sẽ gắn một con trỏ tham chiếu vĩnh viễn vào chuỗi commit đó."
+    explanation: "Branch mới giữ commit hiện tại reachable; vẫn có thể xóa branch sau này, nên không nên gọi ref là vĩnh viễn."
   - id: q5
     question: "Lệnh nào sau đây đọc trực tiếp giá trị của symbolic reference HEAD mà không cần mở tệp bằng cat?"
     type: single

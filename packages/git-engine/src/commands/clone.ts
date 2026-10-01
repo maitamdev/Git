@@ -22,6 +22,16 @@ export class CloneCommand implements GitCommand {
       };
     }
 
+    // This simulator models one working repository at a time. Replacing its
+    // state during a lesson would silently discard the learner's current lab.
+    if (ctx.stateManager.isInitialized()) {
+      return {
+        stdout: '',
+        stderr: 'fatal: clone is disabled while a repository is active in this single-repository simulator; use a real terminal and a separate directory to keep the current lab safe.',
+        exitCode: 1,
+      };
+    }
+
     const url = args[0];
     const net = RemoteNetworkRegistry.getInstance();
     let remoteRepo = net.get(url);
@@ -57,6 +67,8 @@ export class CloneCommand implements GitCommand {
     // 4. Create tracking branch origin/defaultBranch and local branch
     if (remoteHeadHash) {
       ctx.stateManager.setRemoteTrackingBranch(`origin/${defaultBranch}`, remoteHeadHash);
+      ctx.stateManager.setConfig(`branch.${defaultBranch}.remote`, 'origin');
+      ctx.stateManager.setConfig(`branch.${defaultBranch}.merge`, `refs/heads/${defaultBranch}`);
 
       const localBranch = ctx.stateManager.getBranch(defaultBranch);
       if (localBranch) {

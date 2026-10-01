@@ -1,5 +1,7 @@
 # Đồng bộ Tiến độ & Xử lý Xung đột (Progress Sync & Conflict Resolution) — Git Academy Vietnam (Sprint 6)
 
+> **Ghi chú trạng thái:** Tài liệu này mô tả thiết kế LMS có tài khoản/API của Sprint 6. Luồng tự học hiện tại không yêu cầu đăng nhập và chỉ lưu tiến độ trong browser đang dùng; chưa triển khai đồng bộ tiến độ cho luồng này. Xem [cấu trúc khóa học hiện tại](guided-course-structure.md) và [hướng dẫn public frontend](deploy-vercel.md).
+
 ## 1. Kiến trúc Đồng bộ Ngoại tuyến Ưu tiên (Offline-First Sync)
 
 Git Academy Vietnam được thiết kế theo triết lý **Offline-First**, giúp sinh viên có thể học tập liên tục trong các phòng thực hành có kết nối mạng chập chờn mà không bị mất dữ liệu.

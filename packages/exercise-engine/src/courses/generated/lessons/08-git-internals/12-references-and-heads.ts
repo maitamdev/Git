@@ -13,8 +13,8 @@ export const lesson: CourseLesson = {
       "11-git-cat-file"
     ],
     "objectives": [
-      "Hiểu rõ bản chất của một Nhánh (Branch) trong Git: thực chất chỉ là một tệp văn bản nhỏ 41 bytes chứa mã băm SHA-1.",
-      "Khám phá cấu trúc thư mục .git/refs/ bao gồm: refs/heads/ (nhánh cục bộ), refs/tags/ (thẻ), và refs/remotes/ (nhánh từ xa).",
+      "Hiểu nhánh local là ref trong namespace refs/heads/ trỏ tới commit; cách lưu vật lý và độ dài object ID phụ thuộc repository.",
+      "Phân biệt các namespace refs/heads/, refs/tags/ và refs/remotes/.",
       "Sử dụng lệnh plumbing git update-ref để tạo và điều khiển con trỏ nhánh trực tiếp."
     ],
     "completion": {
@@ -33,23 +33,23 @@ export const lesson: CourseLesson = {
       "pointers"
     ],
     "commands": [
-      "cat .git/refs/heads/main",
+      "git show-ref --verify refs/heads/main",
       "git show-ref",
       "git update-ref refs/heads/test HEAD"
     ]
   },
-  "content": "# Cơ chế References (Refs): heads, tags và remotes\n\n---\n\n## 🎯 Mục tiêu\n- Hiểu rõ bản chất của một Nhánh (Branch) trong Git: thực chất chỉ là một tệp văn bản nhỏ 41 bytes chứa mã băm SHA-1.\n- Khám phá cấu trúc thư mục `.git/refs/` bao gồm: `refs/heads/` (nhánh cục bộ), `refs/tags/` (thẻ), và `refs/remotes/` (nhánh từ xa).\n- Sử dụng lệnh plumbing `git update-ref` để tạo và điều khiển con trỏ nhánh trực tiếp.\n- Hiểu tại sao thao tác rẽ nhánh và xóa nhánh trong Git diễn ra gần như tức thì với chi phí tài nguyên bằng không.\n\n---\n\n## 🧩 Từ khóa hôm nay\n\n### Git References (Refs)\n- **Nói dễ hiểu**: Các con trỏ thân thiện với con người đại diện cho các mã băm commit phức tạp trong Git.\n- **Ví dụ**: Nhãn nhánh `main` hay thẻ tag `v1.0` giúp bạn không cần phải nhớ chuỗi mã băm 40 ký tự.\n- **Đừng nhầm**: Không phải bản sao mã nguồn; refs chỉ là các tệp văn bản tĩnh chứa chuỗi SHA-1.\n\n### refs/heads/ Directory\n- **Nói dễ hiểu**: Thư mục bên trong `.git/refs/` chuyên lưu giữ các con trỏ của tất cả các nhánh cục bộ trong kho lưu trữ.\n- **Ví dụ**: Tệp `.git/refs/heads/main` chứa duy nhất mã băm của commit đầu nhánh `main`.\n- **Đừng nhầm**: Khác với `refs/remotes/` là nhánh chỉ đọc ghi nhận từ máy chủ remote; nhánh trong `refs/heads/` có thể được commit và sửa đổi tự do.\n\n### git update-ref Command\n- **Nói dễ hiểu**: Lệnh plumbing chuẩn mực và an toàn dùng để tạo mới hoặc di chuyển một con trỏ tham chiếu tới một commit cụ thể.\n- **Ví dụ**: Chạy `git update-ref refs/heads/feature-x HEAD` để tạo nhánh mới trỏ tới commit hiện tại.\n- **Đừng nhầm**: Không dùng text editor để sửa trực tiếp file ref; lệnh `git update-ref` có cơ chế khóa file (file locking) chống xung đột tiến trình.\n\n---\n\n## 📖 Định nghĩa\nReferences (thường gọi tắt là Refs) là các con trỏ thân thiện với con người trỏ tới các đối tượng commit trong Git. Thay vì bắt người dùng phải ghi nhớ dãy mã băm 40 ký tự khó nhớ như `7a8b9c4d`, Git lưu trữ các tên gọi gợi nhớ (như `main`, `feature/login`, `v1.0.0`) dưới dạng các tệp văn bản tĩnh nằm trong thư mục `.git/refs/`. Bên trong mỗi tệp văn bản này chỉ chứa duy nhất một dòng văn bản gồm 40 ký tự hexa của commit mục tiêu kèm một ký tự xuống dòng (đúng 41 bytes).\n\n---\n\n## 💡 Tại sao cần\nNhiều hệ thống quản lý phiên bản khác (như SVN) xem một nhánh là một bản sao chép vật lý toàn bộ cây thư mục, khiến việc tạo nhánh mất nhiều thời gian và tốn hàng trăm megabyte. Trong Git, một nhánh chỉ là một con trỏ văn bản nặng 41 byte. Việc tạo nhánh, chuyển nhánh hay xóa nhánh diễn ra với tốc độ ánh sáng (dưới 1 phần nghìn giây) vì Git thực chất chỉ tạo hoặc xóa một tệp văn bản nhỏ xíu.\n\n---\n\n## 🧠 Mental Model\nHãy tưởng tượng bạn đang đọc một cuốn sách dày 1000 trang (lịch sử commit). Bạn không thể nhớ cuốn sách đang mở đến trang thứ 872 (mã SHA-1). Bạn lấy một chiếc kẹp sách bằng nhựa nhỏ có dán nhãn chữ \"main\" kẹp vào trang 872 (Refs). Khi bạn đọc thêm một trang mới 873 (commit mới), bạn chỉ việc rút chiếc kẹp sách \"main\" ra và kẹp nó vào trang 873. Chiếc kẹp sách siêu nhẹ và việc di chuyển nó hoàn toàn không tốn chút sức lực nào.\n\n---\n\n## 📊 Sơ đồ minh họa\n```text\nBản chất cấu trúc của References trong .git/refs/:\n.git/refs/\n├── heads/                 <── Nhánh cục bộ\n│   ├── main               <── Tệp văn bản chứa: \"7a8b9c4d3e2f\\n\" (41 bytes)\n│   └── feature            <── Tệp văn bản chứa: \"1f2e3d4c5b6a\\n\"\n├── tags/                  <── Thẻ phiên bản\n│   └── v1.0.0             <── Tệp văn bản chứa mã băm của Commit hoặc Tag\n└── remotes/               <── Nhánh theo dõi từ xa\n    └── origin/\n        └── main           <── Tệp văn bản ghi vết trạng thái trên server\n```\n\n---\n\n## 🏢 Ví dụ thực tế\nMột kỹ sư muốn kiểm chứng xem tạo nhánh trong Git có thực sự chỉ là tạo tệp văn bản hay không. Kỹ sư mở terminal và chạy lệnh: `cat .git/refs/heads/main`. Màn hình in ra chuỗi mã băm: `c5d4e3f2a1b09876543210fedcba9876543210fe`. Sau đó, thay vì gõ lệnh thông thường `git branch new-feature`, kỹ sư sử dụng lệnh echo để tạo tệp thủ công: `echo \"c5d4e3f2a1b09876543210fedcba9876543210fe\" > .git/refs/heads/new-feature`. Ngay lập tức, kỹ sư gõ `git branch` để kiểm tra: danh sách nhánh hiện ra ngay lập tức nhánh `new-feature` mới tinh trỏ đúng vào commit của main. Thao tác hoàn toàn thành công mà không cần qua bất kỳ công cụ phức tạp nào.\n\n---\n\n## 💻 Command & Cú pháp\n```bash\n# Xem nội dung mã băm bên trong nhánh main\ncat .git/refs/heads/main\n\n# Liệt kê tất cả các tham chiếu trong kho\ngit show-ref\n\n# Tạo hoặc cập nhật con trỏ nhánh bằng lệnh plumbing an toàn\ngit update-ref refs/heads/hotfix-123 HEAD\n\n# Xóa tham chiếu nhánh bằng lệnh plumbing\ngit update-ref -d refs/heads/hotfix-123\n```\n\n---\n\n## 🔍 Giải thích command\n- `cat .git/refs/heads/main`: Đọc tệp văn bản 41 byte để lấy mã commit mới nhất của nhánh `main`.\n- `git show-ref`: Liệt kê tất cả các mã SHA-1 gắn liền với từng ref trong `heads`, `tags` và `remotes`.\n- `git update-ref <ref> <sha>`: Cập nhật tham chiếu tới mã băm mới có cơ chế khóa file bảo vệ an toàn.\n- `git update-ref -d <ref>`: Xóa bỏ tệp tham chiếu mà không ảnh hưởng tới dữ liệu commit trong database.\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Nghĩ rằng xóa một nhánh sẽ xóa các commit**: Xóa nhánh chỉ xóa con trỏ 41 byte; commit vẫn nằm nguyên vẹn trong `.git/objects/` và có thể phục hồi qua reflog.\n2. **Sửa tệp trong `.git/refs/` thủ công**: Dễ vô tình làm mất ký tự hoặc thêm khoảng trắng khiến mã băm bị sai lệch độ dài 40 ký tự.\n3. **Nhầm lẫn giữa `heads` và `remotes`**: `refs/heads/` là nhánh cục bộ bạn thao tác trực tiếp, còn `refs/remotes/` là nhánh phản ánh trạng thái trên máy chủ từ xa khi bạn fetch.\n\n---\n\n## 🧪 Lab thực hành\nBài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.\n\n1. **Bước 1**: Xem nội dung của tệp nhánh hiện tại bằng lệnh `cat .git/refs/heads/<tên_nhánh>`.\n2. **Bước 2**: Sử dụng lệnh plumbing `git update-ref refs/heads/manual-branch HEAD` để tạo nhánh mới.\n3. **Bước 3**: Chạy lệnh `git branch` để kiểm chứng xem nhánh `manual-branch` đã xuất hiện trong danh sách hay chưa.\n4. **Bước 4**: Chạy `cat .git/refs/heads/manual-branch` để so sánh mã SHA-1 với commit hiện tại.\n\n---\n\n## 💡 Hint & mẹo\n> Lệnh `git update-ref` là phương pháp chuẩn an toàn để thao tác với refs vì nó có cơ chế kiểm tra khóa tệp tin (lockfile) tránh việc hai tiến trình ghi đè đồng thời.\n\n---\n\n## ✅ Validation & Kết quả mong đợi\n- Tệp `.git/refs/heads/manual-branch` được tạo thành công với dung lượng 41 bytes.\n- Lệnh `git branch` hiển thị nhánh mới tạo trỏ đúng vào commit hiện tại.\n\n---\n\n## ❓ Quiz nhanh\nHãy kiểm tra kiến thức về cơ chế con trỏ References trong Git qua các câu hỏi trong phần trắc nghiệm bên dưới.\n\n---\n\n## 🚀 Thử thách nâng cao\nLàm thế nào mà tệp `.git/packed-refs` giúp tối ưu hóa hiệu năng khi kho lưu trữ có tới hàng chục nghìn nhánh và thẻ tag? Hãy giải thích cơ chế nén tham chiếu của lệnh `git gc`.\n\n---\n\n## 📝 Tổng kết\n- Một nhánh trong Git thực chất chỉ là một tệp văn bản 41 bytes chứa mã băm SHA-1 của commit mới nhất.\n- Tất cả tham chiếu được tổ chức ngăn nắp trong `.git/refs/` (`heads/`, `tags/`, `remotes/`).\n- Việc tạo, chuyển và xóa nhánh trong Git có chi phí tài nguyên gần như bằng 0.\n- Lệnh `git update-ref` là công cụ chuẩn mực của tầng Plumbing để quản trị tham chiếu an toàn.\n",
+  "content": "# Cơ chế References (Refs): heads, tags và remotes\n\n---\n\n## 🎯 Mục tiêu\n- Hiểu nhánh là một ref thuộc `refs/heads/` trỏ tới commit; không giả định ref luôn là file rời hay ID có độ dài cố định.\n- Phân biệt các namespace logic `refs/heads/`, `refs/tags/` và `refs/remotes/`.\n- Sử dụng lệnh plumbing `git update-ref` để tạo và điều khiển con trỏ nhánh trực tiếp.\n- Hiểu tại sao thao tác rẽ nhánh và xóa nhánh trong Git diễn ra gần như tức thì với chi phí tài nguyên bằng không.\n\n---\n\n## 🧩 Từ khóa hôm nay\n\n### Git References (Refs)\n- **Nói dễ hiểu**: Ref là tên có thể tra ra object ID; local branch trỏ tới commit, tag có thể trỏ tới nhiều loại object.\n- **Ví dụ**: `main` thường được viết đầy đủ là `refs/heads/main` và chỉ tới commit đầu nhánh.\n- **Đừng nhầm**: Ref là một tên logic; Git có thể lưu ref riêng, trong `packed-refs` hoặc bằng backend refs khác.\n\n### refs/heads/ Directory\n- **Nói dễ hiểu**: Namespace `refs/heads/` dành cho các nhánh local.\n- **Ví dụ**: `refs/heads/main` đặt tên ref của nhánh `main`; dùng `git show-ref --verify refs/heads/main` để tra cứu.\n- **Đừng nhầm**: Remote-tracking branch phản ánh lần fetch gần nhất; nó không tự cập nhật từ server khi chưa fetch.\n\n### git update-ref Command\n- **Nói dễ hiểu**: Lệnh plumbing chuẩn mực và an toàn dùng để tạo mới hoặc di chuyển một con trỏ tham chiếu tới một commit cụ thể.\n- **Ví dụ**: Chạy `git update-ref refs/heads/feature-x HEAD` để tạo nhánh mới trỏ tới commit hiện tại.\n- **Đừng nhầm**: Không dùng text editor để sửa trực tiếp file ref; lệnh `git update-ref` có cơ chế khóa file (file locking) chống xung đột tiến trình.\n\n---\n\n## 📖 Định nghĩa\nRef là tên logic ánh xạ tới object. Nhánh local thuộc `refs/heads/`; remote-tracking ref thuộc `refs/remotes/`; tag thuộc `refs/tags/`. Cách lưu vật lý có thể là loose ref, `packed-refs` hoặc backend khác, và object ID có độ dài tùy hash format.\n\n---\n\n## 💡 Tại sao cần\nMột nhánh Git là một tên ref trỏ tới commit, không phải bản sao riêng của toàn bộ working tree. Vì thế việc tạo nhánh thường nhẹ và nhanh; tốc độ cụ thể phụ thuộc repository và hệ thống, còn ref có thể không được lưu thành file riêng.\n\n---\n\n## 🧠 Mental Model\nHãy tưởng tượng bạn đang đọc một cuốn sách dày 1000 trang (lịch sử commit). Bạn không thể nhớ cuốn sách đang mở đến trang thứ 872 (mã SHA-1). Bạn lấy một chiếc kẹp sách bằng nhựa nhỏ có dán nhãn chữ \"main\" kẹp vào trang 872 (Refs). Khi bạn đọc thêm một trang mới 873 (commit mới), bạn chỉ việc rút chiếc kẹp sách \"main\" ra và kẹp nó vào trang 873. Chiếc kẹp sách siêu nhẹ và việc di chuyển nó hoàn toàn không tốn chút sức lực nào.\n\n---\n\n## 📊 Sơ đồ minh họa\n```text\nBản chất cấu trúc của References trong .git/refs/:\n.git/refs/\n├── heads/                 <── Nhánh cục bộ\n│   ├── main               <── Tên ref logic; có thể loose hoặc packed\n│   └── feature            <── Không cần có một tệp riêng trên mọi backend\n├── tags/                  <── Thẻ phiên bản\n│   └── v1.0.0             <── Tệp văn bản chứa mã băm của Commit hoặc Tag\n└── remotes/               <── Nhánh theo dõi từ xa\n    └── origin/\n        └── main           <── Ref local ghi nhận lần fetch gần nhất\n```\n\n---\n\n## 🏢 Ví dụ thực tế\nĐể quan sát một ref mà không phụ thuộc cách lưu vật lý, người học chạy `git show-ref --verify refs/heads/main` và `git rev-parse refs/heads/main`. Trong một repository thử nghiệm có commit, có thể tạo rồi xóa ref riêng bằng `git update-ref refs/heads/ref-lab HEAD` và `git update-ref -d refs/heads/ref-lab`. Không tự tạo hoặc sửa tệp bên trong `.git/refs/`: refs có thể đã được pack hoặc lưu bằng backend khác.\n\n---\n\n## 💻 Command & Cú pháp\n```bash\n# Xác minh nhánh local và xem commit mà nhánh trỏ tới\ngit show-ref --verify refs/heads/main\ngit rev-parse refs/heads/main\n\n# Liệt kê tất cả các tham chiếu trong kho\ngit show-ref\n\n# Tạo hoặc cập nhật con trỏ nhánh bằng lệnh plumbing an toàn\ngit update-ref refs/heads/hotfix-123 HEAD\n\n# Xóa tham chiếu nhánh bằng lệnh plumbing\ngit update-ref -d refs/heads/hotfix-123\n```\n\n---\n\n## 🔍 Giải thích command\n- `git show-ref --verify refs/heads/main`: Xác minh ref `main` tồn tại và in object ID.\n- `git rev-parse refs/heads/main`: Phân giải ref thành object ID theo hash format hiện tại.\n- `git update-ref <ref> <object>`: Tạo/cập nhật ref với cơ chế khóa; vì lệnh này có thể di chuyển ref đã tồn tại, hãy kiểm tra đích hoặc dùng old-value guard khi cần.\n- `git update-ref -d <ref>`: Xóa ref; object có thể còn được giữ một thời gian nhưng không được bảo đảm tồn tại sau garbage collection.\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Nghĩ rằng xóa một nhánh đồng nghĩa commit biến mất ngay**: Commit có thể còn trong database và reflog một thời gian; object không còn tham chiếu có thể bị garbage collection dọn.\n2. **Sửa tệp ref nội bộ bằng tay**: Ref có thể được pack hoặc dùng backend khác; dùng lệnh Git để tra cứu và cập nhật.\n3. **Nhầm lẫn giữa `heads` và `remotes`**: `refs/heads/` là nhánh cục bộ bạn thao tác trực tiếp, còn `refs/remotes/` là nhánh phản ánh trạng thái trên máy chủ từ xa khi bạn fetch.\n\n---\n\n## 🧪 Lab thực hành\nBài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.\n\n1. Trong repository thực hành có commit, chạy `git show-ref --verify refs/heads/main` hoặc thay `main` bằng tên nhánh hiện tại.\n2. Tạo ref thử bằng `git update-ref refs/heads/manual-branch HEAD`.\n3. Xác minh bằng `git show-ref --verify refs/heads/manual-branch` và `git branch --list manual-branch`.\n4. Xóa ref thử bằng `git update-ref -d refs/heads/manual-branch`; không sửa trực tiếp `.git/refs/`.\n\n---\n\n## 💡 Hint & mẹo\n> Lệnh `git update-ref` cập nhật refs an toàn và hỗ trợ kiểm tra giá trị cũ để tránh ghi đè thay đổi ngoài ý muốn. Dùng cẩn thận: xóa hoặc di chuyển ref có thể làm commit không còn được tham chiếu.\n\n---\n\n## ✅ Validation & Kết quả mong đợi\n- `git show-ref --verify refs/heads/manual-branch` thấy ref thử trỏ tới cùng commit với HEAD.\n- Sau lệnh xóa, `git show-ref --verify refs/heads/manual-branch` không còn tìm thấy ref.\n\n---\n\n## ❓ Quiz nhanh\nHãy kiểm tra kiến thức về cơ chế con trỏ References trong Git qua các câu hỏi trong phần trắc nghiệm bên dưới.\n\n---\n\n## 🚀 Thử thách nâng cao\nLàm thế nào mà tệp `.git/packed-refs` giúp tối ưu hóa hiệu năng khi kho lưu trữ có tới hàng chục nghìn nhánh và thẻ tag? Hãy giải thích cơ chế nén tham chiếu của lệnh `git gc`.\n\n---\n\n## 📝 Tổng kết\n- Nhánh local là ref thuộc `refs/heads/` trỏ tới commit; cách lưu vật lý có thể loose, packed hoặc dùng backend khác.\n- Các namespace chính gồm `refs/heads/`, `refs/tags/` và `refs/remotes/`.\n- Nhánh là ref nhỏ so với các object lịch sử; thao tác với ref thường nhẹ nhưng vẫn chịu tác động của repository và hệ thống.\n- Lệnh `git update-ref` là công cụ chuẩn mực của tầng Plumbing để quản trị tham chiếu an toàn.\n",
   "quiz": {
     "id": "quiz-08-git-internals-12-references-and-heads",
     "title": "Trắc nghiệm: Cơ chế References (Refs): heads, tags và remotes",
     "questions": [
       {
         "id": "q1",
-        "question": "Về mặt vật lý trên ổ đĩa, một nhánh Git (Branch) được lưu trữ dưới hình thức nào?",
+        "question": "Nhận định nào đúng về một nhánh local Git?",
         "type": "single",
         "options": [
           {
-            "text": "Một tệp văn bản nhỏ 41 bytes chứa duy nhất mã băm SHA-1 của commit đầu nhánh",
+            "text": "Một ref trong namespace refs/heads/ trỏ tới commit; cách lưu vật lý và độ dài ID phụ thuộc repository",
             "correct": true
           },
           {
@@ -65,7 +65,7 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "Một nhánh chỉ là một con trỏ văn bản tĩnh trỏ tới một commit; nó cực kỳ nhẹ và không tốn dung lượng ổ đĩa."
+        "explanation": "Branch là tên ref trỏ tới commit, không phải bản sao working tree; Git có thể lưu ref rời, packed hoặc bằng backend khác."
       },
       {
         "id": "q2",
@@ -73,7 +73,7 @@ export const lesson: CourseLesson = {
         "type": "single",
         "options": [
           {
-            "text": ".git/refs/heads/",
+            "text": "refs/heads/",
             "correct": true
           },
           {
@@ -89,7 +89,7 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "Thư mục refs/heads/ là nơi chứa tất cả các tệp con trỏ nhánh cục bộ của kho lưu trữ."
+        "explanation": "`refs/heads/` là namespace của nhánh local; Git không nhất thiết lưu từng nhánh thành file riêng trong thư mục này."
       },
       {
         "id": "q3",
@@ -121,7 +121,7 @@ export const lesson: CourseLesson = {
         "type": "single",
         "options": [
           {
-            "text": "Git chỉ đơn giản là xóa tệp văn bản .git/refs/heads/feature khỏi đĩa",
+            "text": "Git xóa ref feature khỏi kho tham chiếu; commit không bị xóa ngay chỉ vì ref bị xóa",
             "correct": true
           },
           {
@@ -137,7 +137,7 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "Xóa nhánh chỉ là xóa con trỏ; các đối tượng commit thực sự vẫn nằm an toàn trong cơ sở dữ liệu cho đến khi bị dọn rác."
+        "explanation": "Xóa nhánh bỏ ref trỏ tới commit; object có thể còn truy cập qua ref khác hoặc reflog, nhưng object không còn tham chiếu có thể bị GC dọn."
       },
       {
         "id": "q5",
@@ -145,7 +145,7 @@ export const lesson: CourseLesson = {
         "type": "single",
         "options": [
           {
-            "text": "Gom hàng ngàn tệp tin ref riêng lẻ vào một tệp văn bản duy nhất để tối ưu hóa hệ thống tệp",
+            "text": "Lưu nhiều ref phù hợp trong một tệp packed-refs để giảm số lượng ref loose",
             "correct": true
           },
           {
@@ -161,7 +161,7 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "Khi chạy git gc, Git nén các tệp rời rạc trong refs/heads và refs/tags vào một tệp duy nhất tên là packed-refs để giảm số lượng tệp nhỏ trên đĩa."
+        "explanation": "`git pack-refs` có thể chuyển nhiều ref phù hợp sang `packed-refs`; một số ref vẫn loose và backend lưu trữ có thể khác."
       }
     ]
   }

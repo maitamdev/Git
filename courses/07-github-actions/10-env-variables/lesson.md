@@ -13,7 +13,7 @@
 
 ### Default Variables
 - **Nói dễ hiểu**: Các biến môi trường có sẵn do GitHub tự động tiêm vào máy ảo Runner mà không cần bạn khai báo.
-- **Ví dụ**: Biến `$GITHUB_SHA` chứa mã băm 40 ký tự của commit vừa kích hoạt workflow.
+- **Ví dụ**: Biến `$GITHUB_SHA` chứa mã SHA của commit liên quan đến sự kiện kích hoạt workflow; giá trị cụ thể tùy loại sự kiện.
 - **Đừng nhầm**: Đây là các biến chỉ đọc (read-only); bạn không thể thay đổi giá trị của chúng trong khi chạy.
 
 ### $GITHUB_ENV File
@@ -55,7 +55,7 @@ echo "RELEASE_TAG=v1.2.0" >> $GITHUB_ENV
 ```
 
 ## 🔍 Giải thích command
-- `echo $GITHUB_SHA`: Đọc biến môi trường mặc định chứa mã định danh duy nhất của commit đang được chạy.
+- `echo $GITHUB_SHA`: Đọc biến môi trường mặc định chứa SHA của commit liên quan đến sự kiện kích hoạt workflow. SHA ví dụ trong tài liệu có 40 ký tự, nhưng không nên dựa vào độ dài cố định trong bài học.
 - `echo $NODE_ENV`: Đọc giá trị biến môi trường tùy chỉnh được khai báo trong khối `env`.
 - `echo "KEY=val" >> $GITHUB_ENV`: Ghi thêm cặp khóa giá trị vào tệp biến môi trường của GitHub Actions để truyền sang các step sau.
 

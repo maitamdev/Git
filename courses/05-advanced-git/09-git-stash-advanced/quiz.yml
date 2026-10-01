@@ -15,14 +15,12 @@ questions:
         correct: false
       - text: Vì Git không cho phép lưu quá 3 tệp cùng lúc
         correct: false
-    explanation: Mặc định Git stash bỏ qua untracked files; cờ `-u`
-      (`--include-untracked`) bắt buộc Git phải lưu cả tệp mới.
+    explanation: Mặc định stash không cất untracked files. Dùng `-u` khi bạn muốn cất cả các file mới chưa được theo dõi.
   - id: q2
     question: Sự khác biệt cốt lõi giữa `git stash pop` và `git stash apply` là gì?
     type: single
     options:
-      - text: pop khôi phục xong sẽ tự động xóa mẩu stash đó khỏi danh sách, còn apply
-          giữ nguyên mẩu stash trong danh sách
+      - text: pop xóa entry sau khi áp dụng thành công; apply giữ entry lại
         correct: true
       - text: pop chỉ dùng cho nhánh main, còn apply dùng cho mọi nhánh
         correct: false
@@ -30,14 +28,12 @@ questions:
         correct: false
       - text: Hai câu lệnh này hoàn toàn đồng nghĩa không khác gì nhau
         correct: false
-    explanation: "`pop` = `apply` + `drop`. Dùng apply nếu bạn muốn thử nghiệm trên
-      nhiều nhánh mà không làm mất stash."
+    explanation: "`pop` gỡ entry sau khi áp dụng thành công; nếu có conflict, entry được giữ lại. `apply` luôn giữ entry để bạn có thể dùng lại."
   - id: q3
-    question: Lệnh nào sau đây dùng để tạo một nhánh mới và áp dụng ngay mẩu stash
-      vào nhánh đó, tránh xung đột với nhánh hiện tại?
+    question: Lệnh nào cất cả thay đổi đã theo dõi lẫn file untracked vào stash?
     type: single
     options:
-      - text: git stash branch <tên-nhánh-mới>
+      - text: git stash push -u -m "work in progress"
         correct: true
       - text: git branch --stash <tên-nhánh>
         correct: false
@@ -45,14 +41,12 @@ questions:
         correct: false
       - text: git pop --branch <tên-nhánh>
         correct: false
-    explanation: "`git stash branch <nhánh>` tạo nhánh từ commit gốc nơi stash được
-      tạo ra và áp dụng thay đổi, ngăn ngừa xung đột hoàn hảo."
+    explanation: "`-u` (hoặc `--include-untracked`) thêm file untracked vào stash. Simulator hỗ trợ tùy chọn này; `stash branch` cần dùng Git thật."
   - id: q4
-    question: Để xóa vĩnh viễn toàn bộ các mẩu stash đang lưu trữ trong ngăn kéo mà
-      không khôi phục, bạn dùng lệnh nào?
+    question: Để xóa một entry cụ thể khỏi stash list mà không khôi phục thay đổi, bạn dùng lệnh nào?
     type: single
     options:
-      - text: git stash clear
+      - text: git stash drop stash@{0}
         correct: true
       - text: git stash drop --all-force
         correct: false
@@ -60,8 +54,7 @@ questions:
         correct: false
       - text: git remove --stashes
         correct: false
-    explanation: "`git stash clear` dọn sạch 100% tất cả các mẩu stash đang có trong
-      kho lưu trữ cục bộ."
+    explanation: "`git stash drop stash@{0}` xóa entry đầu tiên khỏi danh sách stash mà không áp dụng các thay đổi của entry đó."
   - id: q5
     question: Cú pháp chuẩn hiện đại nào giúp bạn lưu stash kèm theo thông điệp mô
       tả rõ ràng để dễ nhận diện trong `git stash list`?
@@ -77,4 +70,3 @@ questions:
         correct: false
     explanation: Cú pháp `git stash push -m '<message>'` gắn nhãn ghi chú cho mẩu stash,
       giúp phân biệt dễ dàng giữa nhiều mẩu lưu tạm.
-

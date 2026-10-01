@@ -30,7 +30,7 @@
 ---
 
 ## 📖 Định nghĩa
-`git reset --mixed <commit-target>` (cú pháp ngắn gọn `git reset <commit-target>`) là chế độ mặc định của lệnh reset trong Git. Khi chạy, Git di chuyển con trỏ HEAD và nhánh hiện tại lùi về commit mục tiêu, đồng thời xóa trạng thái staged trong Staging Area nhưng bảo toàn 100% nội dung trong Working Directory.
+`git reset --mixed <commit-target>` (cũng là mặc định khi bỏ cờ chế độ) di chuyển nhánh hiện tại về commit mục tiêu, cập nhật Staging Area theo commit đó và không chủ động sửa nội dung file trong Working Tree. Vì vậy, file đã có ở commit cũ nhưng không có ở mục tiêu thường trở thành untracked; file đã được theo dõi và thay đổi sẽ hiện là modified.
 
 ---
 
@@ -78,7 +78,7 @@ git status
 ## 🔍 Giải thích command
 - `git reset HEAD~1`: Cú pháp mặc định tương đương `--mixed`, đưa thay đổi của commit gần nhất về Working Directory.
 - `git reset --mixed <hash>`: Lùi lịch sử về commit chỉ định và đồng bộ lại Staging Area theo commit đó.
-- `git reset <tệp>`: Bỏ staged một tệp tin cụ thể (chức năng tương đương `git restore --staged`).
+- `git reset -- <tệp>`: Bỏ stage một tệp cụ thể mà không di chuyển `HEAD` (tương đương `git restore --staged <tệp>`).
 - `git status`: Quan sát các tệp tin xuất hiện ở trạng thái màu đỏ chưa staged.
 
 ---
@@ -92,21 +92,21 @@ git status
 
 ## 🧪 Lab thực hành
 Bài học này là bài tự kiểm tra: bạn thao tác reset --mixed và bóc tách commit trên terminal.
-1. Tạo 2 tệp mới `a.txt` và `b.txt`, đưa vào staging bằng `git add .` và commit.
-2. Chạy lệnh `git reset HEAD~1` để hoàn tác commit ở chế độ mặc định mixed.
-3. Gõ `git status` và quan sát 2 tệp xuất hiện ở trạng thái Untracked/Modified màu đỏ.
-4. Lần lượt `git add a.txt` và commit riêng, sau đó làm tương tự với `b.txt`.
+1. Trong kho thử nghiệm riêng, tạo và commit `notes.txt` với nội dung `ban dau` để có commit nền.
+2. Sửa `notes.txt`, tạo thêm `a.txt` và `b.txt`, rồi stage cả ba file và commit bằng thông điệp `thu nghiem`.
+3. Chạy `git reset --mixed HEAD~1`, rồi `git status`. `notes.txt` hiện modified; `a.txt` và `b.txt` hiện untracked vì commit nền chưa từng chứa chúng.
+4. Stage riêng `notes.txt` và `a.txt`, kiểm tra bằng `git status`, rồi commit. Stage `b.txt` và commit riêng.
 
 ---
 
 ## 💡 Hint & mẹo
-> Gõ `git reset` không kèm cờ thì Git sẽ luôn luôn mặc định sử dụng chế độ `--mixed`.
+> Với cú pháp reset nhắm vào commit, nếu không chọn `--soft` hay `--hard`, Git dùng `--mixed`. Dùng dấu `--` trước tên file để chỉ nhắm vào file và không di chuyển nhánh.
 
 ---
 
 ## ✅ Validation & Kết quả mong đợi
-- Toàn bộ thay đổi của commit trước quay trở về trạng thái unstaged (màu đỏ) trong `git status`.
-- Working Directory giữ nguyên vẹn nội dung file mà không bị mất mát dữ liệu.
+- Phần thay đổi so với commit mục tiêu không còn staged; file có thể hiện modified hoặc untracked tùy file đó đã có trong commit mục tiêu chưa.
+- Nội dung đang có trong Working Tree vẫn còn sau thao tác mixed reset.
 
 ---
 

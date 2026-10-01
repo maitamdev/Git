@@ -14,7 +14,7 @@ objectives:
   - Phân biệt rõ ràng mục đích sử dụng giữa lệnh shell tự do (run) và hành động
     đóng gói sẵn (uses).
   - "Hiểu cú pháp tham chiếu action với phiên bản: owner/repo@version (ví dụ:
-    actions/checkout@v4)."
+    actions/checkout@v7)."
   - Biết cách truyền tham số cấu hình cho Action thông qua từ khóa with.
 commands:
   - git clone

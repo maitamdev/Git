@@ -2,96 +2,80 @@ id: quiz-04-06-git-pull
 title: "Trắc nghiệm: Đồng bộ code với git pull"
 questions:
   - id: q1
-    question: Về mặt bản chất kỹ thuật, câu lệnh `git pull` tương đương hoàn toàn
-      với sự kết hợp tuần tự của hai câu lệnh nào?
+    question: "Trong cấu hình pull dùng merge, lệnh `git pull` thường làm những việc nào?"
     type: single
     options:
-      - text: git fetch kết hợp với git merge
+      - text: Tải thông tin từ remote rồi tích hợp thay đổi vào nhánh hiện tại bằng merge
         correct: true
-      - text: git add kết hợp với git commit
+      - text: Chỉ xem trạng thái file mà không kết nối remote
         correct: false
-      - text: git checkout kết hợp với git push
+      - text: Đẩy commit của máy lên remote
         correct: false
-      - text: git branch kết hợp với git status
+      - text: Xóa nhánh hiện tại và tạo nhánh mới
         correct: false
-    explanation: "`git pull` là câu lệnh tắt: đầu tiên tải dữ liệu bằng `fetch`, sau
-      đó gộp vào bằng `merge`."
+    explanation: "Pull fetch dữ liệu trước rồi tích hợp; cấu hình Git có thể chọn cách tích hợp khác."
   - id: q2
-    question: Điều gì sẽ xảy ra nếu cả bạn và đồng nghiệp cùng chỉnh sửa một dòng
-      code trong cùng một tệp tin khi bạn thực hiện `git pull`?
+    question: "Bạn đang ở nhánh `feature` và chạy `git pull origin main`. Thay đổi từ đâu được tích hợp vào đâu?"
     type: single
     options:
-      - text: Git sẽ phát hiện Merge Conflict, tạm dừng quá trình gộp và chèn các vạch
-          đánh dấu xung đột vào tệp để bạn xử lý
+      - text: Từ nhánh `main` trên remote `origin` vào nhánh local hiện tại `feature`
         correct: true
-      - text: Git sẽ tự động xóa code của bạn và lấy code của đồng nghiệp
+      - text: Từ nhánh local `feature` lên nhánh `main` trên remote
         correct: false
-      - text: Git sẽ xóa toàn bộ kho lưu trữ trên máy tính của bạn
+      - text: Từ remote `origin` vào tất cả nhánh local cùng lúc
         correct: false
-      - text: Máy chủ GitHub sẽ tự động tắt nguồn
+      - text: Từ nhánh `main` sang nhánh `feature` trên GitHub bằng cách tạo PR
         correct: false
-    explanation: Vì pull có chứa pha merge nên nếu có mâu thuẫn dòng code, Git sẽ
-      kích hoạt quy trình giải quyết conflict.
+    explanation: "Lệnh pull tích hợp ref được chỉ định vào nhánh đang checkout, không tự tạo PR."
   - id: q3
-    question: Lợi ích của việc sử dụng câu lệnh `git pull --rebase` thay vì `git
-      pull` thông thường là gì?
+    question: "Nếu Git không thể tự kết hợp các thay đổi khi pull, điều gì có thể xảy ra?"
     type: single
     options:
-      - text: Tránh việc sinh ra các commit merge rác không cần thiết, giúp lịch sử dự
-          án luôn là một đường thẳng tuyến tính
+      - text: Pull dừng ở trạng thái conflict để bạn kiểm tra và giải quyết các file liên quan
         correct: true
-      - text: Tăng gấp đôi tốc độ tải mạng Internet
+      - text: Git tự chọn phiên bản của người có quyền cao hơn
         correct: false
-      - text: Tự động kiểm tra lỗi logic lập trình trong mã nguồn
+      - text: Git xóa nhánh local và tạo lại từ remote
         correct: false
-      - text: Bảo vệ máy tính khỏi các cuộc tấn công mạng
+      - text: Git tự đóng repository để tránh sửa thêm
         correct: false
-    explanation: "`--rebase` đặt các commit của bạn lên trên đỉnh của các commit mới
-      kéo về, loại bỏ commit merge thừa."
+    explanation: "Conflict nghĩa là Git cần bạn chọn cách kết hợp nội dung trước khi hoàn tất tích hợp."
   - id: q4
-    question: Thời điểm vàng được các chuyên gia khuyến nghị luôn luôn nên thực hiện
-      câu lệnh `git pull` là khi nào?
+    question: "Trước khi pull trong repository đang có thay đổi chưa commit, bước nào giúp bạn quyết định an toàn?"
     type: single
     options:
-      - text: Đầu mỗi buổi sáng khi bắt đầu làm việc hoặc trước khi chuẩn bị tạo một
-          nhánh tính năng mới
+      - text: Chạy `git status`, xem các thay đổi và commit hoặc stash nếu phù hợp với quy trình nhóm
         correct: true
-      - text: Chỉ thực hiện một lần duy nhất khi dự án kết thúc bàn giao
+      - text: Chạy `git reset --hard` để xóa mọi thay đổi trước khi kiểm tra
         correct: false
-      - text: Chỉ thực hiện vào các ngày cuối tuần
+      - text: Dùng `git push --force` để đảm bảo pull thành công
         correct: false
-      - text: Khi máy tính sắp hết pin
+      - text: Xóa thư mục `.git` rồi chạy pull lại
         correct: false
-    explanation: Luôn kéo code mới nhất về trước khi code giúp bạn làm việc trên nền
-      tảng mới nhất và giảm thiểu nguy cơ xung đột.
+    explanation: "`git status` cho bạn biết thay đổi nào chưa lưu vào commit trước khi tích hợp code."
   - id: q5
-    question: Cờ `--ff-only` trong lệnh `git pull --ff-only` có tác dụng bảo vệ nào?
+    question: "Nếu `git pull` báo local branch chưa có upstream, bạn nên làm gì?"
     type: single
     options:
-      - text: Chỉ cho phép kéo code về nếu có thể tua nhanh Fast-forward, từ chối pull
-          nếu phát sinh nút giao rẽ nhánh
+      - text: Xác nhận đúng remote và nhánh đích, rồi chỉ định rõ chúng hoặc thiết lập upstream theo hướng dẫn dự án
         correct: true
-      - text: Ép buộc máy tính phải khởi động lại sau khi pull
+      - text: Dùng `git pull --force` để Git tự tìm mọi repository
         correct: false
-      - text: Tự động xóa tất cả các nhánh con đã hoàn thành
+      - text: Đổi tên nhánh local thành `origin/main` để tạo upstream
         correct: false
-      - text: Chỉ tải về các tệp tin có dung lượng dưới 1 kilobyte
+      - text: Xóa remote để Git tự chọn lại
         correct: false
-    explanation: "`--ff-only` ngăn chặn việc vô tình sinh ra commit merge khi lịch
-      sử của bạn và server đã bị phân kỳ."
+    explanation: "Pull cần biết nguồn thay đổi; hãy kiểm tra đúng URL và nhánh trước khi cấu hình upstream."
   - id: q6
-    question: Nếu trong Working Directory của bạn đang có tệp sửa đổi dở dang chưa
-      commit mà bị conflict khi pull, hành động an toàn nên làm trước là gì?
+    question: "Khi nào nên dùng `git fetch` trước để xem thay đổi thay vì chạy pull ngay?"
     type: single
     options:
-      - text: Lưu tạm thay đổi vào bộ nhớ đệm bằng lệnh `git stash` hoặc commit tạm thời
-          trước khi pull
+      - text: Khi muốn xem commit hoặc diff mới trước khi quyết định cách tích hợp chúng
         correct: true
-      - text: Xóa vĩnh viễn tệp tin đó đi
+      - text: Khi muốn tự động merge mà không kiểm tra trạng thái
         correct: false
-      - text: Tắt phần mềm diệt virus trên máy tính
+      - text: Khi muốn xóa commit local mà không để lại dấu vết
         correct: false
-      - text: Đổi tên tài khoản người dùng máy tính
+      - text: Khi muốn tạo một repository GitHub mới
         correct: false
-    explanation: "`git stash` giúp cất gọn gàng các thay đổi chưa xong, đưa Working
-      Tree về trạng thái sạch sẽ an toàn để pull."
+    explanation: "Fetch cập nhật refs từ remote nhưng chưa tích hợp chúng vào nhánh local hiện tại."

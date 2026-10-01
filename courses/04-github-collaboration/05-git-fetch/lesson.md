@@ -3,9 +3,9 @@
 ---
 
 ## 🎯 Mục tiêu
-- Hiểu rõ cơ chế hoạt động an toàn tuyệt đối của câu lệnh `git fetch`.
+- Hiểu `git fetch` tải dữ liệu và cập nhật nhánh theo dõi từ xa mà không tích hợp vào nhánh hiện tại.
 - Phân biệt rõ ràng giữa nhánh theo dõi từ xa (Remote-tracking branch `origin/main`) và nhánh cục bộ (`main`).
-- Nắm bắt lý do vì sao `git fetch` không bao giờ làm thay đổi hay ghi đè lên Working Directory của bạn.
+- Phân biệt dữ liệu đã fetch với các file trong Working Directory và nhánh hiện tại.
 - Sử dụng `git log` và `git diff` để kiểm tra mã nguồn mới tải về trước khi quyết định hợp nhất.
 
 ---
@@ -23,14 +23,14 @@
 - **Đừng nhầm**: Bạn không thể trực tiếp gõ lệnh chuyển vào nhánh này để commit; Git tự động quản lý nó.
 
 ### behind commit
-- **Nói dễ hiểu**: Trạng thái nhánh cục bộ của bạn đang bị thiếu các commit mà trên máy chủ đã có.
-- **Ví dụ**: `Your branch is behind 'origin/main' by 2 commits` nghĩa là server đang có 2 commit mới hơn máy bạn.
+- **Nói dễ hiểu**: Theo thông tin Git đã fetch, nhánh local chưa có một số commit đang có trên nhánh được theo dõi.
+- **Ví dụ**: `Your branch is behind 'origin/main' by 2 commits` nghĩa là ref `origin/main` ở lần fetch gần nhất đi trước local 2 commit.
 - **Đừng nhầm**: Không có nghĩa là code của bạn bị lỗi; chỉ cần gộp (merge/pull) để đưa 2 commit đó vào nhánh cá nhân.
 
 ---
 
 ## 📖 Định nghĩa
-`git fetch` là câu lệnh đồng bộ an toàn của Git, có nhiệm vụ liên hệ với kho từ xa và tải về toàn bộ các commit, nhánh mới mà máy cục bộ chưa có. Điểm then chốt: `git fetch` chỉ cập nhật các con trỏ nhánh theo dõi từ xa (như `origin/main`) mà không bao giờ tự ý sửa đổi file trong Working Directory.
+`git fetch` liên hệ với remote và tải các object/ref cần thiết theo cấu hình fetch. Nó cập nhật remote-tracking refs như `origin/main`, nhưng không tích hợp các commit đó vào nhánh đang checkout.
 
 ---
 
@@ -64,7 +64,6 @@ Lập trình viên Lan đang viết dở tính năng đặt hàng trên nhánh m
 ```bash
 git fetch
 git fetch origin
-git fetch --all
 git log HEAD..origin/main --oneline
 git diff HEAD..origin/main
 ```
@@ -74,7 +73,6 @@ git diff HEAD..origin/main
 ## 🔍 Giải thích command
 - `git fetch`: Tải về các thay đổi mới từ remote mặc định gắn với nhánh hiện tại.
 - `git fetch origin`: Chỉ định rõ ràng tải về từ máy chủ remote mang tên origin.
-- `git fetch --all`: Tải về dữ liệu mới từ tất cả các remote đang được cấu hình trong dự án.
 - `git log HEAD..origin/main`: Liệt kê các commit mới trên server mà máy cục bộ của bạn chưa có.
 - `git diff HEAD..origin/main`: So sánh chi tiết từng dòng code khác biệt giữa mã nguồn của bạn và mã nguồn trên server.
 
@@ -82,28 +80,28 @@ git diff HEAD..origin/main
 
 ## ⚠️ Sai lầm phổ biến
 1. **Nghĩ chạy git fetch xong là file trong editor tự đổi**: Fetch chỉ tải dữ liệu về kho ngầm `.git`, cần gộp vào nhánh mới thấy thay đổi trong editor.
-2. **Lo sợ git fetch làm mất code đang sửa**: Fetch không bao giờ ghi đè lên Working Directory, hoàn toàn an toàn khi đang code dở.
+2. **Nhầm fetch với pull**: Fetch thông thường không cập nhật file đang checkout; nó vẫn có thể cập nhật dữ liệu Git và các remote-tracking refs.
 3. **Bỏ qua bước so sánh diff trước khi gộp**: Không kiểm tra `git diff HEAD..origin/main` khiến bạn bị bất ngờ khi xảy ra xung đột mã nguồn.
 
 ---
 
 ## 🧪 Lab thực hành
 Bài học này là bài tự kiểm tra: bạn thao tác tải dữ liệu từ remote và đối chiếu con trỏ theo dõi từ xa.
-1. Chạy lệnh `git fetch origin` để đồng bộ dữ liệu mới nhất từ remote.
-2. Quan sát thông báo cập nhật các nhánh `origin/*`.
-3. Dùng lệnh `git log origin/main --oneline -n 5` để xem các commit mới nhất trên server.
-4. Chạy `git status` để xem thông tin nhánh của bạn đang behind bao nhiêu commit so với remote.
+1. Đảm bảo kho có remote tên `origin` và nhánh theo dõi đã được thiết lập. Nếu đang dùng GitHub thật, remote phải trỏ tới kho bạn có quyền đọc; simulator dùng remote giả lập.
+2. Chạy `git fetch origin`. Nếu remote chưa có commit hoặc chưa thay đổi, không có nhánh nào mới là kết quả bình thường.
+3. Nếu `origin/main` tồn tại, chạy `git log origin/main --oneline -n 5` để xem lịch sử mà lần fetch vừa ghi nhận.
+4. Chạy `git status`. ahead/behind được tính so với remote-tracking ref gần nhất, không phải trạng thái trực tiếp của máy chủ.
 
 ---
 
 ## 💡 Hint & mẹo
-> Ghi nhớ quy tắc: `git fetch` = Tải dữ liệu về kho nhưng chưa gộp; an toàn tuyệt đối 100%.
+> Ghi nhớ: `git fetch` tải dữ liệu và cập nhật remote-tracking refs; bạn vẫn tự chọn thời điểm tích hợp.
 
 ---
 
 ## ✅ Validation & Kết quả mong đợi
-- Nhánh `origin/main` trỏ tới commit mới nhất trên remote.
-- Toàn bộ file và thay đổi chưa commit trong Working Directory được giữ nguyên vẹn.
+- Các remote-tracking refs được cập nhật theo phản hồi lần fetch này.
+- Fetch không tích hợp commit vào nhánh đang checkout; sau đó bạn có thể xem diff trước khi merge.
 
 ---
 
@@ -113,11 +111,11 @@ Hãy hoàn thành các câu hỏi trắc nghiệm dưới đây để củng c�
 ---
 
 ## 🚀 Thử thách nâng cao
-Sử dụng câu lệnh `git diff HEAD..origin/main` để xem chi tiết từng dòng code sắp được tích hợp vào dự án của bạn.
+Nếu `origin/main` tồn tại, dùng `git diff HEAD..origin/main` để xem khác biệt so với nhánh hiện tại. Lệnh chỉ xem; chưa merge các thay đổi.
 
 ---
 
 ## 📝 Tổng kết
 - `git fetch` tải các commit mới từ remote về cơ sở dữ liệu cục bộ.
 - Chỉ cập nhật nhánh theo dõi từ xa `origin/main`, không chạm vào Working Directory.
-- Là thao tác an toàn tuyệt đối để xem trước thay đổi trước khi quyết định tích hợp.
+- Là bước tải về hữu ích trước khi xem lịch sử hoặc diff rồi chọn cách tích hợp.

@@ -13,13 +13,12 @@ keywords:
 prerequisites:
   - 02-porcelain-vs-plumbing
 objectives:
-  - Giải mã toàn bộ các tệp tin và thư mục cốt lõi bên trong thư mục quản trị
-    .git/.
+  - Nhận biết Git directory và cách Git tìm đường dẫn metadata thực tế.
   - "Hiểu rõ chức năng của từng thành phần: HEAD, config, description, index,
     objects/, refs/, hooks/, info/."
-  - Nhận thức được rằng một kho lưu trữ Git hoàn chỉnh chỉ là một thư mục bình
-    thường chứa thư mục con .git/.
+  - Biết dùng lệnh Git để xem HEAD, remote và index mà không phụ thuộc vào vị trí
+    file .git.
 commands:
-  - ls -la .git
-  - cat .git/config
-  - cat .git/HEAD
+  - git rev-parse --git-dir
+  - git rev-parse --git-path HEAD
+  - git ls-files --stage

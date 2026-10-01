@@ -6,7 +6,7 @@
 - Hiểu rõ sự tiện lợi vượt trội của chỉ thị `fixup` so với `squash` khi không cần giữ lại thông điệp thừa.
 - Sử dụng câu lệnh `git commit --fixup <commit-hash>` để tự động tạo commit sửa lỗi gắn nhãn.
 - Kích hoạt tính năng kỳ diệu `git rebase -i --autosquash` để Git tự động sắp xếp và gộp commit tự động.
-- Cấu hình Git tự động bật autosquash vĩnh viễn trong tệp cấu hình toàn cục.
+- Có thể bật autosquash cho kho hiện tại bằng cấu hình cục bộ nếu muốn dùng mặc định.
 
 ---
 
@@ -30,12 +30,12 @@
 ---
 
 ## 📖 Định nghĩa
-`fixup` và `autosquash` là cặp tính năng tự động hóa trong Git giúp sửa lỗi commit cũ: `fixup` đánh dấu commit vá lỗi cần gộp, còn `autosquash` tự động định vị và gộp thẳng vào commit gốc mà không cần chỉnh sửa thủ công.
+`git commit --fixup <commit>` tạo commit vá có thông điệp bắt đầu bằng `fixup!` và tiêu đề của commit mục tiêu, ví dụ `fixup! feat: add validation`. `git rebase -i --autosquash <base>` sắp xếp commit đó cạnh commit đích và đổi hành động trong todo list thành `fixup`; bạn vẫn xem lại và lưu todo list trước khi Git viết lại lịch sử.
 
 ---
 
 ## 💡 Tại sao cần
-Khi phát hiện lỗi trong một commit cũ sâu trong lịch sử, thay vì phải rebase rồi tự tay kéo dòng commit và đổi lệnh bằng tay, cặp đôi này làm toàn bộ quy trình chỉ trong một câu lệnh với độ chính xác tuyệt đối.
+Khi phát hiện lỗi trong commit cũ, `git commit --fixup <hash>` tạo commit có thông điệp liên kết tới commit mục tiêu. Khi chạy `git rebase -i --autosquash <base>`, Git sắp xếp lại todo list; bạn vẫn cần xem lại danh sách trước khi lưu và hoàn tất rebase.
 
 ---
 
@@ -61,7 +61,7 @@ Quy trình tự động hóa với Autosquash:
 ---
 
 ## 🏢 Ví dụ thực tế
-Kỹ sư Linh sửa một lỗi chính tả trong commit có mã `d3e4f5a`. Linh gõ `git commit --fixup d3e4f5a`, rồi chạy `git rebase -i --autosquash d3e4f5a~1`. Git tự động kéo commit vá lỗi vào ngay sau commit tính thuế và đổi thành `fixup`. Linh chỉ cần lưu lại là lịch sử sạch sẽ hoàn toàn.
+Kỹ sư Linh tìm thấy lỗi trong commit `d3e4f5a`. Linh tạo commit vá bằng `git commit --fixup d3e4f5a`, rồi chạy `git rebase -i --autosquash d3e4f5a~1`. Git đặt commit vá cạnh commit đích và đánh dấu `fixup`; Linh kiểm tra todo list rồi mới lưu để chạy rebase.
 
 ---
 
@@ -69,43 +69,43 @@ Kỹ sư Linh sửa một lỗi chính tả trong commit có mã `d3e4f5a`. Linh
 ```bash
 git commit --fixup <commit-hash>
 git rebase -i --autosquash <base-hash>
-git config --global rebase.autoSquash true
+git config rebase.autoSquash true
 ```
 
 ---
 
 ## 🔍 Giải thích command
 - `git commit --fixup <hash>`: Tạo commit với tiền tố đặc biệt `fixup! <thông-điệp-cũ>` trỏ thẳng tới commit cần sửa.
-- `git rebase -i --autosquash <base>`: Kích hoạt rebase tự động nhận diện các commit fixup và sắp xếp vị trí tương ứng.
-- `git config --global rebase.autoSquash true`: Cấu hình Git luôn tự động bật tính năng autosquash mỗi khi chạy interactive rebase.
+- `git rebase -i --autosquash <base>`: Sắp xếp commit fixup cạnh commit đích và đổi hành động trong todo list.
+- `git config rebase.autoSquash true`: Bật mặc định cho kho hiện tại; bỏ `--global` để không đổi cấu hình mọi dự án trên máy.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Quên cờ `--autosquash` khi chạy rebase**: Khiến commit fixup nằm nguyên ở đuôi danh sách như commit thông thường nếu chưa bật config toàn cục.
+1. **Quên `--autosquash` khi chưa bật config**: Commit fixup có thể không được đưa cạnh commit đích trong todo list.
 2. **Truyền nhầm commit hash**: Chỉ định sai hash khiến bản vá bị gộp nhầm vào một tính năng không liên quan.
 3. **Rebase trên commit đã push**: Tránh viết lại lịch sử commit đã được chia sẻ công khai lên nhánh chính của cả đội.
 
 ---
 
 ## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác trực tiếp trên terminal của máy tính để làm quen với công cụ.
+Bài thực hành này cần Git thật vì simulator chưa hỗ trợ interactive rebase/autosquash. Dùng repo thử nghiệm riêng và không dùng nhánh đã chia sẻ.
 1. Tạo commit A, commit B, commit C liên tiếp trên kho chứa thử nghiệm.
 2. Sửa đổi nội dung tệp tin liên quan đến commit A.
 3. Chạy `git commit --fixup <hash-của-commit-A>`.
-4. Chạy `git rebase -i --autosquash HEAD~4`. Quan sát Git tự động sắp xếp vị trí và chuyển lệnh thành fixup.
+4. Chạy `git rebase -i --autosquash HEAD~4`. Kiểm tra todo list xem commit vá đã được xếp cạnh commit đích với hành động `fixup` chưa.
 5. Lưu file và dùng `git log --oneline` để xác nhận commit A đã được vá tự động.
 
 ---
 
 ## 💡 Hint & mẹo
-> Chạy `git config --global rebase.autoSquash true` một lần để không bao giờ phải gõ cờ `--autosquash` dài dòng trong mỗi lần rebase nữa.
+> Muốn đặt mặc định, chạy `git config rebase.autoSquash true` trong kho thử nghiệm. Kiểm tra todo list trước khi lưu vì autosquash vẫn cần rebase chạy.
 
 ---
 
 ## ✅ Validation & Kết quả mong đợi
-- Vận hành thành thạo bộ đôi `git commit --fixup` và `git rebase --autosquash` để sửa nhanh commit cũ.
-- Tự động hóa quy trình dọn dẹp lịch sử một cách chính xác mà không cần thao tác biên tập thủ công.
+- Tạo commit vá bằng `git commit --fixup` và nhận biết vị trí/action do `--autosquash` gợi ý.
+- Kiểm tra todo list trước khi lưu; xử lý conflict nếu Git dừng trong lúc phát lại commit.
 
 ---
 

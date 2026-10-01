@@ -14,12 +14,10 @@ prerequisites:
 objectives:
   - Nắm vững quy trình hợp nhất (Merge) một Pull Request hoàn chỉnh vào nhánh
     chính trên GitHub.
-  - "Phân biệt rõ ràng 3 chiến lược merge được GitHub cung cấp: Create a merge
-    commit, Squash and merge, và Rebase and merge."
+  - Phân biệt merge commit, squash merge và rebase merge nếu repository bật các phương thức đó.
   - Hiểu rõ ưu và nhược điểm của từng chiến lược đối với đồ thị lịch sử của dự
     án.
-  - Thực hiện thao tác dọn dẹp xóa nhánh tính năng sau khi PR đã được merge
-    thành công.
+  - Cập nhật nhánh local sau khi merge và chỉ xóa nhánh nếu không còn cần dùng.
 commands:
   - git switch main
   - git pull origin main

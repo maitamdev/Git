@@ -12,12 +12,11 @@ keywords:
 prerequisites:
   - 02-github-actions-intro
 objectives:
-  - "Nắm rõ cấu trúc phân tầng 4 cấp bậc của một Workflow: Event -> Jobs ->
-    Steps -> Actions/Commands."
-  - Hiểu bản chất chạy song song (Parallel) mặc định của các Job và chạy tuần tự
-    (Sequential) của các Step.
-  - Nắm vững vai trò của Runner như một môi trường máy ảo cách ly độc lập chứa
-    toàn bộ phiên làm việc.
+  - Hiểu Event có thể kích hoạt Workflow; Workflow chứa Jobs, mỗi Job chạy trên
+    Runner và có các Steps.
+  - Phân biệt Step gọi Action bằng uses với Step chạy lệnh shell bằng run.
+  - Hiểu các Job không phụ thuộc có thể chạy song song, còn các Step trong một
+    Job chạy theo thứ tự.
 commands:
   - cat .github/workflows/ci.yml
   - tree .github

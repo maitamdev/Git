@@ -1,11 +1,10 @@
-# Repository & HEAD Snapshot
+# Repository, commit và vị trí HEAD
 
 ---
 
 ## 🎯 Mục tiêu
 - Nhận biết `HEAD` là vị trí hiện tại trong lịch sử Git.
 - Phân biệt tệp đang sửa với trạng thái đã lưu trong commit.
-- Dùng `git show HEAD` để xem commit hiện tại.
 
 ---
 
@@ -34,7 +33,7 @@ Repository là nơi Git giữ các commit đã tạo. `HEAD` cho Git biết bạ
 ---
 
 ## 🤔 Tại sao cần?
-Biết `HEAD` đang chỉ vào đâu giúp bạn đọc `git status`, `git log` và hiểu commit mới được tạo ở vị trí nào. Hôm nay chỉ cần nhận diện vị trí hiện tại; các cách di chuyển lịch sử sẽ học sau.
+Biết `HEAD` giúp bạn hiểu Git đang làm việc trên nhánh nào và commit mới sẽ nối vào đâu. Nếu repository chưa có commit đầu tiên, lịch sử vẫn rỗng và chưa có commit để HEAD trỏ tới; bạn sẽ tạo mốc đầu tiên ở bài 6.
 
 ---
 
@@ -55,35 +54,33 @@ Mô hình con trỏ HEAD trong Repository:
 ---
 
 ## 🌎 Ví dụ thực tế
-Sau khi tạo commit, chạy `git show HEAD` để xem mốc mới nhất mà nhánh hiện tại đang trỏ tới.
+Giả sử dự án đã có ba commit. Nhánh `main` trỏ tới commit mới nhất; khi bạn đang làm trên nhánh này, HEAD theo `main`. Nếu đây là dự án mới chưa có commit, chưa có snapshot nào để xem — đó là trạng thái bình thường.
 
 ---
 
 ## 💻 Command
-```bash
-git log --oneline
-git show HEAD
-```
+Bài này chỉ xây mô hình bằng sơ đồ, chưa cần chạy lệnh. Sau khi tạo commit đầu tiên ở bài 6, bạn sẽ dùng `git log` và `git show` để quan sát lịch sử thật.
 
 ---
 
 ## 🔍 Giải thích command
-- `git log --oneline`: Hiển thị lịch sử commit; `HEAD` đánh dấu vị trí hiện tại.
-- `git show HEAD`: Hiển thị thông tin và thay đổi của commit hiện tại.
+Chưa có lệnh thực hành ở bài này. Không chạy `git log` hoặc `git show HEAD` trong repository chưa có commit: Git chưa có lịch sử để hiển thị.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
 1. **Nhầm HEAD với tên nhánh**:  `main` là tên nhánh; HEAD chỉ vị trí đang được chọn.
-2. **Nghĩ `git show HEAD` sẽ sửa dự án**:  Lệnh này chỉ hiển thị thông tin.
+2. **Tưởng repository mới đã có commit để xem**:  Lịch sử chỉ bắt đầu sau khi tạo commit đầu tiên.
 3. **Tự chuyển HEAD về commit cũ khi chưa học cách quay lại**:  Hãy chỉ xem commit cũ trong bài này.
 
 ---
 
 ## 🧪 Lab
-1. Chạy lệnh `git log --oneline` để quan sát vị trí xuất hiện của nhãn `HEAD -> main`.
-2. Chạy lệnh `git show HEAD` để xem chi tiết snapshot commit mới nhất.
-3. Xác định HEAD đang theo nhánh hiện tại trong kết quả.
+Đọc sơ đồ ở trên và trả lời:
+1. Commit nào là mốc mới nhất trong ví dụ?
+2. Nhánh `main` đang trỏ tới commit nào?
+3. HEAD đang theo nhánh hay trỏ thẳng vào commit?
+4. Nếu repository chưa có commit nào, bạn có thể xem `git show HEAD` chưa? Vì sao?
 
 ---
 
@@ -93,7 +90,8 @@ git show HEAD
 ---
 
 ## ✅ Validation
-- Xác định được commit mà HEAD đang trỏ tới thông qua git log.
+- Bạn xác định được HEAD theo `main` và nhánh `main` trỏ tới Commit C trong ví dụ.
+- Bạn giải thích được repository mới chưa có commit để hiển thị bằng `git show HEAD`.
 
 ---
 
@@ -109,5 +107,5 @@ Nêu sự khác nhau giữa con trỏ nhánh bình thường và con trỏ HEAD 
 
 ## 📚 Tổng kết
 - HEAD cho biết nhánh hoặc commit đang được chọn.
-- `git show HEAD` xem commit hiện tại mà không sửa tệp.
+- Repository chưa có commit thì chưa có snapshot nào để xem.
 - Commit mới trên nhánh làm nhánh đó chuyển sang commit mới.

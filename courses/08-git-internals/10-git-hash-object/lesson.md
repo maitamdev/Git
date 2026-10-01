@@ -13,12 +13,12 @@
 ## 🧩 Từ khóa hôm nay
 
 ### git hash-object Command
-- **Nói dễ hiểu**: Lệnh plumbing cơ bản nhận dữ liệu, tính toán mã băm SHA-1 theo chuẩn tiêu đề Git (`<type> <size>\0<content>`) và in ra màn hình.
-- **Ví dụ**: Chạy `git hash-object README.md` để xem mã băm SHA-1 mà file này sẽ nhận được khi lưu vào Git.
+- **Nói dễ hiểu**: Lệnh plumbing nhận dữ liệu, tính object ID theo hash format của repository và in kết quả.
+- **Ví dụ**: Chạy `git hash-object README.md` để xem object ID của nội dung file trong repository hiện tại.
 - **Đừng nhầm**: Không làm thay đổi staging area; lệnh này hoạt động độc lập và không đụng tới tệp `.git/index`.
 
 ### -w (Write Flag)
-- **Nói dễ hiểu**: Tùy chọn yêu cầu Git nén dữ liệu bằng zlib và ghi tệp đối tượng vào đúng thư mục con tương ứng trong `.git/objects/`.
+- **Nói dễ hiểu**: Tùy chọn yêu cầu Git ghi object vào object database; object ID vẫn phụ thuộc nội dung và hash format của repository.
 - **Ví dụ**: Chạy `git hash-object -w README.md` thực sự tạo ra tệp nhị phân trên đĩa.
 - **Đừng nhầm**: Nếu quên cờ `-w`, Git chỉ in mã băm ra terminal mà không lưu bất kỳ dữ liệu nào vào kho đối tượng.
 
@@ -30,7 +30,7 @@
 ---
 
 ## 📖 Định nghĩa
-`git hash-object` là một lệnh Plumbing cơ bản nhận một tệp tin hoặc luồng dữ liệu đầu vào, tính toán mã băm mật mã học (SHA-1 hoặc SHA-256) của đối tượng đó theo đúng công thức tiêu đề của Git (`<type> <size>\0<content>`), và in mã băm 40 ký tự ra màn hình. Khi kèm theo tùy chọn `-w` (write), lệnh này sẽ trực tiếp nén dữ liệu bằng zlib và ghi tệp đối tượng vào đúng vị trí trong thư mục `.git/objects/`.
+`git hash-object` nhận một tệp hoặc luồng dữ liệu, ghép header `<type> <size>\0`, rồi tính object ID bằng hash format của repository (SHA-1 hoặc SHA-256). Khi thêm `-w`, Git ghi object vào object database; lệnh không cập nhật index hay branch ref. Object không được tham chiếu có thể bị garbage collection thu gom về sau.
 
 ---
 
@@ -40,24 +40,26 @@ Lệnh `git hash-object` là viên gạch đầu tiên giúp bạn phá vỡ ả
 ---
 
 ## 🧠 Mental Model
-Hãy tưởng tượng bạn đang cầm trên tay một chiếc máy dập mã vạch và đóng gói chân không công nghiệp trong một dây chuyền tự động. Bạn đưa một bức thư vào máy. Chiếc máy tự động đếm số lượng ký tự, dán một nhãn tiêu chuẩn lên đầu bức thư, hút chân không túi nhựa bảo quản (tương đương nén zlib), in ra một mã số băm SHA-1 40 ký tự độc nhất và cất chiếc túi vào đúng ngăn kệ lưu trữ trong kho hàng theo 2 ký tự đầu của mã số.
+Hãy tưởng tượng máy nhận byte dữ liệu, gắn nhãn cho biết loại và kích thước, rồi tính ID từ cả nhãn lẫn nội dung. Khi dùng `-w`, Git ghi object; nếu repo SHA-1, ID thường có 40 ký tự, còn repo SHA-256 có 64.
 
 ---
 
 ## 📊 Sơ đồ minh họa
 ```text
 Quy trình vận hành của lệnh git hash-object -w:
-Chuỗi văn bản ──► [Gắn Header: "blob 15\0"] ──► [Hàm băm SHA-1] ──► Mã băm 40 ký tự
-                                                          │
-                                                          ▼ [Nén zlib]
-                                                Ghi tệp đối tượng vào:
-                                                .git/objects/xx/yyyyzz
+ Payload bytes ──► [Header: "blob <byte-count>\0" + payload]
+                              │
+                              ▼ [Hash theo định dạng của repository]
+                         Object ID
+                              │
+                              ▼ [Ghi object]
+       Loose path (nếu loose) hoặc packfile (nếu được đóng gói)
 ```
 
 ---
 
 ## 🏢 Ví dụ thực tế
-Một kỹ sư muốn tạo đối tượng lưu trữ chuỗi văn bản "Hello World" trực tiếp từ dòng lệnh mà không cần tạo tệp trên đĩa cứng. Kỹ sư chạy câu lệnh terminal: `echo "Hello World" | git hash-object -w --stdin`. Git xử lý tức thì và trả về chuỗi mã băm: `557db03de997c86a4a028e1ebd3a1ceb225be238`. Ngay sau đó, kỹ sư kiểm tra thư mục nội tạng `.git/objects/55/` và phát hiện một tệp tin nhị phân mới tinh có tên `7db03de997c86a4a028e1ebd3a1ceb225be238` đã được ghi xuống đĩa thành công. Bằng một lệnh duy nhất, dữ liệu văn bản đã được đóng gói và bảo toàn vĩnh cửu trong cơ sở dữ liệu của Git mà không cần dùng đến lệnh `git add`.
+Trong repository SHA-1, chạy `echo "Hello World" | git hash-object -w --stdin` trong Bash để hash nội dung `Hello World` kèm newline sẽ in `557db03de997c86a4a028e1ebd3a1ceb225be238`. Khi loose, object có thể nằm dưới `objects/55/`; dùng `git cat-file -p <object-id>` để kiểm tra. Lệnh không stage nội dung và object không được tham chiếu có thể bị thu gom về sau.
 
 ---
 
@@ -76,9 +78,9 @@ git hash-object myfile.txt
 ---
 
 ## 🔍 Giải thích command
-- `echo "Hello Internals" | git hash-object -w --stdin`: Đọc chuỗi qua đường ống pipe, gắn tiêu đề `blob 16\0`, băm SHA-1 và ghi vào `.git/objects/`.
+- `echo "Hello Internals" | git hash-object -w --stdin`: Trong Bash, `echo` thêm newline nên phần blob có 16 byte; Git tính object ID theo repo và ghi object vào database.
 - `git hash-object -w myfile.txt`: Đọc trực tiếp từ tệp tin vật lý, tính kích thước và lưu đối tượng blob vào database.
-- Không có cờ `-w`: Git chỉ in mã băm 40 ký tự ra stdout mà không đụng chạm đến ổ đĩa.
+- Không có cờ `-w`: Git chỉ in object ID ra stdout mà không ghi object mới vào database.
 
 ---
 
@@ -92,21 +94,21 @@ git hash-object myfile.txt
 ## 🧪 Lab thực hành
 Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
 
-1. **Bước 1**: Tạo một tệp tin mới `secret.txt` chứa nội dung "Top secret data".
-2. **Bước 2**: Chạy lệnh `git hash-object -w secret.txt` và sao chép lại mã băm 40 ký tự hiển thị trên màn hình.
-3. **Bước 3**: Mở thư mục `.git/objects/` và xác nhận sự tồn tại của thư mục con 2 ký tự đầu tương ứng.
-4. **Bước 4**: Chạy `git cat-file -p <mã_băm>` để kiểm tra nội dung được khôi phục từ object store.
+1. Trong repository thực hành, tạo `blob-demo.txt` với nội dung không nhạy cảm.
+2. Chạy `git hash-object -w blob-demo.txt` và lưu object ID được in ra (độ dài tùy hash format).
+3. Dùng `git rev-parse --git-path objects` để xem đường dẫn object store mà Git đang dùng.
+4. Chạy `git cat-file -t <object-id>` và `git cat-file -p <object-id>` để xác nhận loại và nội dung. Xóa file thử không xóa object ngay; object chưa được tham chiếu không phải bản sao lưu.
 
 ---
 
 ## 💡 Hint & mẹo
-> Ghi nhớ: cờ `-w` viết tắt của "write". Nếu không có cờ `-w`, lệnh hoạt động ở chế độ chỉ đọc mô phỏng.
+> `-w` viết tắt của “write”. Không có `-w`, lệnh chỉ tính object ID và không ghi object mới.
 
 ---
 
 ## ✅ Validation & Kết quả mong đợi
-- Tệp đối tượng nhị phân xuất hiện chính xác trong thư mục `.git/objects/xx/` sau khi thực thi lệnh có cờ `-w`.
-- Lệnh `git cat-file -p` đọc thành công chuỗi "Top secret data" từ mã SHA-1 đó.
+- `git cat-file -t <object-id>` trả về `blob` và `git cat-file -p <object-id>` in nội dung đã hash.
+- `git hash-object` không cập nhật Staging Area; cần `git add` riêng nếu muốn đưa file vào index.
 
 ---
 
@@ -116,12 +118,12 @@ Hãy kiểm tra kỹ năng sử dụng lệnh plumbing git hash-object qua các 
 ---
 
 ## 🚀 Thử thách nâng cao
-Làm thế nào để sử dụng tùy chọn `-t` của `git hash-object` để băm một tệp tin dưới dạng đối tượng Tree hoặc Commit thay vì mặc định là Blob?
+Vì sao `git hash-object -t tree file.txt` không tự biến file văn bản thành Tree hợp lệ? Nêu lệnh phù hợp để tạo tree từ index và commit từ tree.
 
 ---
 
 ## 📝 Tổng kết
-- `git hash-object` tính toán mã băm SHA-1 theo chuẩn định dạng đối tượng của Git.
+- `git hash-object` tính object ID theo chuẩn header và hash format của repository.
 - Thêm cờ `-w` để ghi đối tượng nén zlib vào thư mục `.git/objects/`.
 - Cờ `--stdin` cho phép đọc dữ liệu trực tiếp từ đường ống pipe của terminal.
 - Là viên gạch nền tảng để tạo Blob thủ công mà không cần qua lệnh Porcelain `git add`.

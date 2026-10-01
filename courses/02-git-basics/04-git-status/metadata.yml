@@ -16,4 +16,3 @@ objectives:
 commands:
   - git status
   - git status -s
-  - git status --short

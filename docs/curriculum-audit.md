@@ -1,166 +1,46 @@
-# Kiểm Kê Cấu Trúc Giáo Trình — Git Academy
+# Curriculum and Release Audit — Git Academy
 
-Tài liệu này là bảng kiểm kê tự động 128 bài học, 588 câu hỏi quiz, 76 bài có lab và 77 scenario. Bảng xác nhận dữ liệu có thể nạp và một số thuộc tính cấu trúc; nó **không xác nhận** độ chính xác kỹ thuật của toàn bộ nội dung, chất lượng sư phạm, tính đúng của đáp án hoặc khả năng hoàn thành mọi lab.
+Last updated: 2026-10-01. This file records the current course inventory and the limits of the checks. Automated structural checks are not proof that every explanation is correct for every learner or that all third-party services are available.
 
-## 1. Tổng quan & Phương pháp Audit
+## Inventory
 
-- **Đã kiểm tra bằng máy**: số lượng bài, tải lesson/quiz YAML, số slide do parser tạo, và liên kết scenario có khai báo trong manifest.
-- **Chưa được xác nhận ở bảng này**: tính đúng của nội dung Git, câu trả lời quiz, chất lượng giảng dạy từng slide, mọi đường thao tác của 77 scenario, và luồng chạy trên API thật.
-- Mọi bài có trạng thái **Chưa kiểm chứng** cần được người rà soát kiểm tra nội dung và lab, ghi bằng chứng cụ thể rồi mới đổi trạng thái.
+| Level | Topic | Lessons | Simulator labs |
+| ---: | --- | ---: | ---: |
+| 1 | Git Foundations | 9 | 3 |
+| 2 | Git Basics | 12 | 8 |
+| 3 | Branching and Merging | 14 | 10 |
+| 4 | GitHub Collaboration | 16 | 9 |
+| 5 | Advanced Git | 22 | 16 |
+| 6 | Team Workflows | 15 | 7 |
+| 7 | GitHub Actions and CI/CD | 20 | 14 |
+| 8 | Git Internals | 20 | 9 |
+| **Total** | **8 levels** | **128** | **76** |
 
----
+All 128 lessons have a quiz and a challenge. The remaining 52 lessons have guided self-check activities rather than an automatically graded Git simulator. There are 77 registered scenarios.
 
-## 2. Thống kê theo Level
+## Release checks
 
-| Level | Tên Level | Số bài | Số bài có Lab | Tổng số Quiz | Trạng thái |
-| :---: | :--- | :---: | :---: | :---: | :---: |
-| 1 | Level 1: Git Foundations (`01-foundations`) | 9 | 3 | 36 | 2 có thay đổi ghi nhận; 7 chưa kiểm chứng nội dung |
-| 2 | Level 2: Git Basics (`02-git-basics`) | 12 | 8 | 62 | 0 có thay đổi ghi nhận; 12 chưa kiểm chứng nội dung |
-| 3 | Level 3: Branching & Merging (`03-branching`) | 14 | 10 | 78 | 0 có thay đổi ghi nhận; 14 chưa kiểm chứng nội dung |
-| 4 | Level 4: GitHub Collaboration (`04-github-collaboration`) | 16 | 9 | 84 | 0 có thay đổi ghi nhận; 16 chưa kiểm chứng nội dung |
-| 5 | Level 5: Advanced Git (`05-advanced-git`) | 22 | 16 | 94 | 0 có thay đổi ghi nhận; 22 chưa kiểm chứng nội dung |
-| 6 | Level 6: Team Workflows (`06-team-workflows`) | 15 | 7 | 74 | 0 có thay đổi ghi nhận; 15 chưa kiểm chứng nội dung |
-| 7 | Level 7: GitHub Actions & CI/CD (`07-github-actions`) | 20 | 14 | 84 | 0 có thay đổi ghi nhận; 20 chưa kiểm chứng nội dung |
-| 8 | Level 8: Git Internals (`08-git-internals`) | 20 | 9 | 86 | 9 có thay đổi ghi nhận; 11 chưa kiểm chứng nội dung |
-| **Tổng** | **Toàn bộ 8 Level** | **128** | **76** | **598** | **11 có thay đổi ghi nhận; 117 chưa kiểm chứng nội dung** |
+| Check | Current result | What it verifies |
+| --- | --- | --- |
+| `pnpm generate:courses` | PASS, 128 lessons generated | Authored lesson data compiles into app course data. |
+| `pnpm validate:content` | PASS, 128/128 | Required content and quiz structure. |
+| `pnpm validate:courses` | PASS, 128/128 | Manifest, lesson folders, prerequisite graph and required sections. |
+| `pnpm validate:scenarios` | PASS, 77/77 | Scenario definitions and manifest references are valid. |
+| `pnpm audit:content` | PASS | Every lesson has a quiz and challenge; reports simulator coverage. |
+| `pnpm audit:curriculum` | PASS | Manifest, files, generated course data, DAG, search index, quizzes and challenges agree. |
+| `pnpm test` | PASS, 63 files / 1,036 tests | Unit and integration suites, including simulator, course progression and all 8 level content checks. |
+| Vercel-style filtered build | PASS | `pnpm --filter playground... build` from `apps/playground` builds the frontend and its workspace dependencies. |
+| Browser smoke test | PASS for lesson 1 | Anonymous entry; 5/5 quiz answers; completion screen; next lesson unlock; progress retained after reload. Production bundle opens the map and lazy-loads Lesson 1. |
 
----
+## Learner access and progress
 
-## 3. Bảng Kiểm Kê Từng Bài (128/128 Bài)
+Learners enter directly into the course map without an account. Lessons and levels are presented in course order; completing a lesson advances the learner to the next available lesson. Progress is stored in the current browser on the current device. It does not sync across browsers or devices and can be lost if site data is cleared.
 
-| Level | STT | Mã bài (Lesson ID) | Tên bài học | Slides | Lab thực hành | Quiz | Trạng thái | Đánh giá & Ghi chú kỹ thuật |
-| :---: | :---: | :--- | :--- | :---: | :--- | :---: | :---: | :--- |
-| L1 | 1 | `01-version-control` | Version Control là gì? | 12 | `first-repository` | 4 câu | **Đã sửa** | Đã chuẩn hóa tiêu đề màn hình hook: "Vì sao cần lưu phiên bản?", chia 6 màn trực quan, quiz gắn liền với tình huống. |
-| L1 | 2 | `02-vcs-types` | Local / Centralized / Distributed VCS | 14 | — | 4 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 14 màn, 4 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L1 | 3 | `03-git-la-gi` | Git là gì? Kiến trúc phân tán | 14 | — | 4 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 14 màn, 4 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L1 | 4 | `04-git-architecture` | Git hoạt động như thế nào? | 13 | — | 4 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 13 màn, 4 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L1 | 5 | `05-git-vs-github` | Phân biệt Git vs GitHub | 14 | — | 4 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 14 màn, 4 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L1 | 6 | `06-git-installation` | Cài đặt & Môi trường Git | 14 | — | 4 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 14 màn, 4 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L1 | 7 | `07-git-config` | Cấu hình danh tính Git Config | 15 | `git-config-lab` | 4 câu | **Đã sửa** | Đã bổ sung ràng buộc thực thi lệnh git config user.name/email trong validator để tránh auto-pass từ trạng thái mặc định. |
-| L1 | 8 | `08-repository` | Repository là gì? Cấu trúc .git | 14 | — | 4 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 14 màn, 4 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L1 | 9 | `09-git-init` | Khởi tạo kho chứa với git init | 14 | `first-repository` *(Bắt buộc)* | 4 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Khởi tạo Repository đầu tiên; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L2 | 1 | `01-working-directory` | Working Directory (Thư mục làm việc) | 13 | — | 5 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 13 màn, 5 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L2 | 2 | `02-staging-area` | Staging Area (Vùng chuẩn bị) | 13 | `track-file` | 5 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Theo dõi tệp tin với git add; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L2 | 3 | `03-head-snapshot` | Repository & HEAD Snapshot | 13 | — | 5 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 13 màn, 5 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L2 | 4 | `04-git-status` | Kiểm tra trạng thái với git status | 14 | `track-file` | 5 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Theo dõi tệp tin với git add; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L2 | 5 | `05-git-add` | Đưa tệp vào staging với git add | 14 | `track-file` | 5 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Theo dõi tệp tin với git add; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L2 | 6 | `06-git-commit` | Lưu snapshot với git commit | 13 | `first-commit` | 6 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Tạo Commit Đầu Tiên; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L2 | 7 | `07-commit-message` | Chuẩn quy ước Commit Message | 15 | — | 6 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 15 màn, 6 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L2 | 8 | `08-git-log` | Tra cứu lịch sử với git log | 15 | `inspect-history` | 5 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Xem lịch sử commit với git log; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L2 | 9 | `09-git-diff` | So sánh khác biệt với git diff | 13 | `inspect-diff` | 5 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Kiểm tra khác biệt với git diff; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L2 | 10 | `10-gitignore` | Bỏ qua tệp tin với .gitignore | 14 | `gitignore-lab` | 5 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Bỏ qua tệp tin với .gitignore; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L2 | 11 | `11-file-lifecycle` | Vòng đời tệp tin trong Git | 14 | — | 5 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 14 màn, 5 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L2 | 12 | `12-undo-working-tree` | Hoàn tác thay đổi Working Tree | 13 | `undo-working-tree-lab` *(Bắt buộc)* | 5 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Hoàn tác tệp tin trong Working Tree; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L3 | 1 | `01-branch-concept` | Khái niệm Branch trong Git | 10 | `create-branch` | 6 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Tạo nhánh mới với git branch; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L3 | 2 | `02-head-pointer` | Con trỏ HEAD & Detached HEAD | 10 | — | 4 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 4 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L3 | 3 | `03-git-branch` | Quản lý nhánh với git branch | 10 | `create-branch` | 6 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Tạo nhánh mới với git branch; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L3 | 4 | `04-git-switch` | Chuyển nhánh với git switch | 10 | `switch-branch` | 4 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Chuyển nhánh với git switch; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L3 | 5 | `05-git-checkout` | Lệnh git checkout và lịch sử | 10 | — | 4 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 4 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L3 | 6 | `06-branch-isolation` | Nguyên lý cách ly không gian Branch Isolation | 10 | `branch-isolation` | 6 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Nguyên lý cách ly không gian Branch Isolation; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L3 | 7 | `07-fast-forward-merge` | Hợp nhất nhanh Fast-forward merge | 10 | `fast-forward` | 6 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Hợp nhất nhánh Fast-Forward; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L3 | 8 | `08-three-way-merge` | Hợp nhất rẽ nhánh 3-way merge | 10 | `three-way-merge` | 6 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Hợp nhất rẽ nhánh 3-way merge; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L3 | 9 | `09-merge-commit` | Bản chất của Merge commit | 10 | — | 6 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 6 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L3 | 10 | `10-merge-conflict` | Xung đột Merge Conflict là gì? | 10 | `merge-conflict` | 6 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Giải quyết xung đột Merge Conflict; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L3 | 11 | `11-resolve-conflict` | Kỹ thuật Resolve Conflict từng bước | 10 | `resolve-conflict` | 6 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Kỹ thuật Resolve Conflict từng bước; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L3 | 12 | `12-merge-abort` | Hủy bỏ quá trình merge với git merge --abort | 10 | `merge-abort` | 6 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Hủy bỏ quá trình merge với git merge --abort; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L3 | 13 | `13-delete-rename-branch` | Xóa và đổi tên nhánh an toàn | 10 | — | 6 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 6 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L3 | 14 | `14-branching-challenge` | Thử thách tổng hợp Branching Master | 10 | `branching-challenge` *(Bắt buộc)* | 6 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Thử thách tổng hợp Branching Master; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L4 | 1 | `01-local-vs-remote` | Local vs Remote Repository | 10 | — | 6 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 6 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L4 | 2 | `02-git-remote` | Quản lý remote với git remote | 10 | `upstream-setup` | 6 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Cấu hình Upstream cho dự án mã nguồn mở; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L4 | 3 | `03-origin-concept` | origin trong Git là gì? | 10 | — | 4 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 4 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L4 | 4 | `04-git-clone` | Tải dự án về máy với git clone | 10 | `clone-remote` | 4 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Tải dự án về máy với git clone; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L4 | 5 | `05-git-fetch` | Cập nhật dữ liệu từ xa với git fetch | 10 | `fetch-remote` | 6 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Cập nhật dữ liệu từ xa với git fetch; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L4 | 6 | `06-git-pull` | Đồng bộ và gộp code với git pull | 10 | `pull-remote` | 6 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Đồng bộ và gộp code với git pull; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L4 | 7 | `07-git-push` | Đẩy commit lên server với git push | 10 | `push-remote` | 6 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Đẩy commit lên server với git push; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L4 | 8 | `08-tracking-branch` | Nhánh theo dõi Tracking Branch | 10 | — | 6 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 6 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L4 | 9 | `09-fork` | Cơ chế Fork trên GitHub | 10 | — | 4 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 4 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L4 | 10 | `10-upstream` | Cấu hình Upstream cho dự án mã nguồn mở | 10 | `upstream-setup` | 4 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Cấu hình Upstream cho dự án mã nguồn mở; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L4 | 11 | `11-pull-request` | Khái niệm và quy trình tạo Pull Request (PR) | 10 | `create-pr` | 6 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Quy trình tạo Pull Request (PR); cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L4 | 12 | `12-code-review` | Văn hóa và kỹ năng Code Review trên GitHub | 10 | — | 4 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 4 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L4 | 13 | `13-merge-pull-request` | Quy trình Merge Pull Request | 10 | `merge-pr` | 6 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Quy trình Merge Pull Request; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L4 | 14 | `14-github-issues` | Quản lý công việc và lỗi với GitHub Issues | 10 | — | 4 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 4 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L4 | 15 | `15-collaboration-workflow` | Quy trình cộng tác nhóm tiêu chuẩn (Feature Branch Workflow) | 10 | — | 6 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 6 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L4 | 16 | `16-team-project-challenge` | Thử thách dự án nhóm Team Project Challenge | 10 | `team-project-simulation` *(Bắt buộc)* | 6 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Thử thách dự án nhóm Team Project Simulation; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L5 | 1 | `01-undo-restore-reset-revert` | Undo trong Git: restore/reset/revert khác nhau | 10 | — | 4 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 4 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L5 | 2 | `02-git-reset-soft` | git reset --soft | 10 | `reset-soft-lab` | 4 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario git reset --soft: Rút lại commit giữ nguyên Staging; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L5 | 3 | `03-git-reset-mixed` | git reset --mixed | 10 | `reset-mixed-lab` | 4 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario git reset --mixed: Rút lại commit và unstage; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L5 | 4 | `04-git-reset-hard` | git reset --hard | 10 | `reset-hard` | 4 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Khôi phục triệt để với git reset --hard; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L5 | 5 | `05-git-revert` | git revert | 10 | `revert-commit-lab` | 4 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Hoàn tác an toàn trên nhánh chung với git revert; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L5 | 6 | `06-git-reflog` | git reflog | 10 | `reflog-explore-lab` | 4 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Khám phá nhật ký tham chiếu git reflog; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L5 | 7 | `07-reflog-recovery` | Khôi phục commit bị mất bằng reflog | 10 | `reflog-recovery-scenario` | 4 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Khôi phục commit bị mất bằng reflog; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L5 | 8 | `08-commit-amend` | git commit --amend | 10 | `commit-amend-lab` | 6 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Chỉnh sửa commit gần nhất với git commit --amend; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L5 | 9 | `09-git-stash-advanced` | git stash nâng cao | 10 | `stash-advanced-lab` | 4 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario git stash nâng cao: Tạm cất có thông điệp và khôi phục; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L5 | 10 | `10-git-cherry-pick` | git cherry-pick | 10 | `cherry-pick-scenario` | 4 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Nhặt chọn commit với git cherry-pick; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L5 | 11 | `11-rebase-concept` | Rebase là gì? | 10 | — | 4 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 4 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L5 | 12 | `12-git-rebase` | git rebase | 10 | `rebase-basic-scenario` | 4 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Tái cơ sở nhánh với git rebase; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L5 | 13 | `13-interactive-rebase` | Interactive Rebase | 10 | `interactive-rebase-scenario` | 4 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Dọn dẹp lịch sử với Interactive Rebase; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L5 | 14 | `14-squash-commit` | Squash Commit | 10 | — | 6 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 6 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L5 | 15 | `15-fixup-autosquash` | Fixup & Autosquash | 10 | — | 4 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 4 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L5 | 16 | `16-reword-edit-drop` | Reword / Edit / Drop Commit | 10 | — | 4 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 4 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L5 | 17 | `17-rebase-conflict` | Rebase Conflict | 10 | `rebase-conflict-scenario` | 6 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Xử lý xung đột trong quá trình Rebase; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L5 | 18 | `18-git-tag` | git tag | 10 | `tag-basic-lab` | 4 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Đánh dấu cột mốc phiên bản với git tag; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L5 | 19 | `19-annotated-tag` | Annotated Tag | 10 | — | 4 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 4 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L5 | 20 | `20-git-bisect` | git bisect | 10 | `bisect-scenario` | 4 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Truy tìm commit gây lỗi với git bisect; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L5 | 21 | `21-git-worktree` | git worktree | 10 | `worktree-lab` | 4 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Đa nhiệm không gian làm việc với git worktree; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L5 | 22 | `22-advanced-git-challenge` | Advanced Git Challenge | 10 | `advanced-git-master-challenge` *(Bắt buộc)* | 4 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Thử thách tổng hợp Chuyên gia Git Nâng cao; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L6 | 1 | `01-why-team-workflow` | Vì sao team cần workflow? | 10 | — | 4 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 4 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L6 | 2 | `02-feature-branch-workflow` | Feature Branch Workflow | 10 | — | 6 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 6 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L6 | 3 | `03-github-flow` | GitHub Flow | 10 | — | 4 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 4 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L6 | 4 | `04-git-flow` | Git Flow | 10 | — | 4 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 4 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L6 | 5 | `05-trunk-based-development` | Trunk-Based Development | 10 | — | 4 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 4 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L6 | 6 | `06-workflow-comparison` | So sánh GitHub Flow / Git Flow / Trunk-Based | 10 | — | 4 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 4 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L6 | 7 | `07-protected-branch` | Protected Branch | 10 | — | 6 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 6 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L6 | 8 | `08-branch-protection-rules` | Branch Protection Rules | 10 | `branch-protection-scenario` | 6 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Thiết lập quy tắc bảo vệ nhánh Branch Protection Rules; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L6 | 9 | `09-codeowners` | CODEOWNERS | 10 | `codeowners-scenario` | 4 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Phân quyền sở hữu mã nguồn với tệp CODEOWNERS; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L6 | 10 | `10-conventional-commits` | Conventional Commits | 10 | `conventional-commits-lab` | 6 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Viết thông điệp chuẩn Conventional Commits; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L6 | 11 | `11-semantic-versioning` | Semantic Versioning | 10 | `semver-calc-lab` | 4 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Tính toán và gắn thẻ Semantic Versioning; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L6 | 12 | `12-release-branch` | Release Branch | 10 | — | 6 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 6 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L6 | 13 | `13-hotfix-workflow` | Hotfix Workflow | 10 | `hotfix-scenario` | 4 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Quy trình giải cứu sản xuất Hotfix Workflow; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L6 | 14 | `14-team-conflict-scenario` | Team Conflict Scenario | 10 | `team-conflict-sim-scenario` | 6 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Mô phỏng giải quyết xung đột nhóm đa nhà phát triển; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L6 | 15 | `15-professional-team-project` | Professional Team Project | 10 | `capstone-ecommerce-team-scenario` *(Bắt buộc)* | 6 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Dự án thực chiến Capstone E-Commerce Team Simulation; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L7 | 1 | `01-ci-cd-concept` | CI/CD là gì? Tự động hóa tích hợp & chuyển giao liên tục | 10 | `first-workflow` | 4 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Khởi tạo Workflow GitHub Actions đầu tiên; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L7 | 2 | `02-github-actions-intro` | GitHub Actions là gì? Nền tảng tự động hóa của GitHub | 10 | — | 4 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 4 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L7 | 3 | `03-workflow-architecture` | Kiến trúc Workflow: Events, Jobs, Steps và Runners | 10 | — | 4 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 4 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L7 | 4 | `04-workflow-yaml-syntax` | .github/workflows và cú pháp YAML chuẩn | 10 | `first-workflow` | 4 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Khởi tạo Workflow GitHub Actions đầu tiên; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L7 | 5 | `05-events-and-triggers` | Sự kiện kích hoạt (Events & Triggers: push, pull_request, workflow_dispatch) | 10 | `push-trigger` | 4 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Cấu hình Trigger Push trên nhánh main; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L7 | 6 | `06-jobs-configuration` | Cấu hình Jobs: runs-on, phân tách độc lập và môi trường | 10 | `multi-job` | 4 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Cấu hình nhiều Job chạy song song; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L7 | 7 | `07-steps-execution` | Các bước thực thi (Steps): name, id và thứ tự tuần tự | 10 | `failing-test` | 4 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Chẩn đoán và khắc phục bài kiểm thử thất bại; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L7 | 8 | `08-runners-environment` | Môi trường thực thi Runners: GitHub-hosted vs Self-hosted | 10 | — | 4 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 4 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L7 | 9 | `09-run-vs-uses` | Phân biệt run (shell command) vs uses (prebuilt action) | 10 | — | 4 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 4 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L7 | 10 | `10-env-variables` | Biến môi trường (Environment Variables) cấp workflow, job và step | 10 | — | 4 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 4 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L7 | 11 | `11-contexts-and-expressions` | Contexts & Expressions: ${{ github.ref }}, matrix và toán tử | 10 | — | 6 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 6 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L7 | 12 | `12-job-dependencies-needs` | Quan hệ phụ thuộc giữa các Job với thuộc tính needs | 10 | `job-needs` | 4 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Thiết lập phụ thuộc Job với thuộc tính needs; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L7 | 13 | `13-conditional-execution-if` | Thực thi có điều kiện với if: always(), success(), failure() | 10 | `conditional-step` | 4 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Thực thi có điều kiện với if: always(); cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L7 | 14 | `14-matrix-strategy` | Chiến lược ma trận kiểm thử đa môi trường (Matrix Strategy) | 10 | `matrix-build` | 4 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Thiết lập ma trận kiểm thử đa phiên bản Node.js; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L7 | 15 | `15-artifacts-sharing` | Lưu trữ và chia sẻ sản phẩm build với Artifacts | 10 | `artifact-sharing` | 4 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Lưu trữ và chia sẻ sản phẩm build với Artifacts; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L7 | 16 | `16-secrets-and-variables` | Bảo mật thông tin nhạy cảm với Secrets và Secret Masking | 10 | `secret-redaction` | 4 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Truyền và che giấu bí mật với GitHub Secrets; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L7 | 17 | `17-pull-request-ci` | Thiết lập CI Pipeline tự động kiểm thử trên Pull Request | 10 | `pr-ci` | 6 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Thiết lập CI Pipeline trên Pull Request; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L7 | 18 | `18-environments-and-deployment` | Môi trường triển khai (Environments) & Cổng phê duyệt Protection Rules | 10 | `environment-deploy` | 4 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Triển khai có kiểm duyệt với Deployment Environment; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L7 | 19 | `19-reusable-workflows` | Tái sử dụng luồng công việc với Reusable Workflows (workflow_call) | 10 | `reusable-workflow` | 4 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Mô-đun hóa đường ống với Reusable Workflow; cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L7 | 20 | `20-ci-cd-capstone` | Capstone Project: Xây dựng hoàn chỉnh CI/CD Pipeline cho Web Application | 10 | `release-pipeline` *(Bắt buộc)* | 4 câu | **Chưa kiểm chứng** | Đã liên kết tới scenario Đường ống tự động hóa phát hành phiên bản (Release Pipeline); cần chạy toàn bộ thao tác của người học để xác nhận lab hoàn thành được. |
-| L8 | 1 | `01-git-internals-intro` | Git Internals là gì? Bí mật dưới nắp ca-pô của Git | 10 | — | 4 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 4 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L8 | 2 | `02-porcelain-vs-plumbing` | Phân biệt Porcelain Commands vs Plumbing Commands | 10 | — | 4 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 4 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L8 | 3 | `03-dot-git-directory` | Khám phá cấu trúc bên trong thư mục .git | 10 | — | 4 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 4 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L8 | 4 | `04-object-database` | Cơ sở dữ liệu đối tượng Git (Object Database) | 10 | — | 4 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 4 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L8 | 5 | `05-content-addressable-storage` | Bộ nhớ định danh theo nội dung (Content-Addressable Storage) | 10 | — | 4 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 4 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L8 | 6 | `06-blob-object` | Đối tượng Blob: Lưu trữ nội dung nhị phân và tệp tin | 10 | `hash-object-lab` | 4 câu | **Đã sửa** | Tích hợp GuidedPlumbingSession hỗ trợ các plumbing command (hash-object, update-index, write-tree, commit-tree, update-ref). |
-| L8 | 7 | `07-tree-object` | Đối tượng Tree: Lưu trữ cấu trúc thư mục và quyền tệp | 10 | `write-tree-lab` | 4 câu | **Đã sửa** | Tích hợp GuidedPlumbingSession hỗ trợ các plumbing command (hash-object, update-index, write-tree, commit-tree, update-ref). |
-| L8 | 8 | `08-commit-object` | Đối tượng Commit: Ghi lại snapshot lịch sử và metadata tác giả | 10 | `commit-tree-lab` | 6 câu | **Đã sửa** | Tích hợp GuidedPlumbingSession hỗ trợ các plumbing command (hash-object, update-index, write-tree, commit-tree, update-ref). |
-| L8 | 9 | `09-tag-object` | Đối tượng Tag: Đánh dấu phiên bản có chú thích (Annotated Tag) | 10 | — | 4 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 4 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L8 | 10 | `10-git-hash-object` | Tạo và băm đối tượng thủ công với git hash-object | 10 | `hash-object-lab` | 4 câu | **Đã sửa** | Tích hợp GuidedPlumbingSession hỗ trợ các plumbing command (hash-object, update-index, write-tree, commit-tree, update-ref). |
-| L8 | 11 | `11-git-cat-file` | Giải mã và kiểm tra chi tiết đối tượng với git cat-file | 10 | `cat-file-lab` | 4 câu | **Đã sửa** | Tích hợp GuidedPlumbingSession hỗ trợ các plumbing command (hash-object, update-index, write-tree, commit-tree, update-ref). |
-| L8 | 12 | `12-references-and-heads` | Cơ chế References (Refs): heads, tags và remotes | 10 | `update-ref-lab` | 4 câu | **Đã sửa** | Tích hợp GuidedPlumbingSession hỗ trợ các plumbing command (hash-object, update-index, write-tree, commit-tree, update-ref). |
-| L8 | 13 | `13-symbolic-refs-head` | Con trỏ HEAD & Symbolic References trong .git/HEAD | 10 | — | 4 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 4 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L8 | 14 | `14-git-index-internals` | Cấu trúc tệp nhị phân .git/index (Staging Area Internals) | 10 | `update-index-lab` | 4 câu | **Đã sửa** | Tích hợp GuidedPlumbingSession hỗ trợ các plumbing command (hash-object, update-index, write-tree, commit-tree, update-ref). |
-| L8 | 15 | `15-revision-syntax` | Cú pháp tra cứu Revision chuyên sâu: HEAD~, HEAD^, HEAD^2 | 10 | — | 4 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 4 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L8 | 16 | `16-object-graph-traversal` | Duyệt đồ thị đối tượng có hướng (Directed Acyclic Graph) | 10 | — | 4 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 4 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L8 | 17 | `17-packfiles-and-deltas` | Đóng gói Packfiles và nén sai biệt Delta Compression | 10 | `git-gc-pack-lab` | 4 câu | **Đã sửa** | Tích hợp GuidedPlumbingSession hỗ trợ các plumbing command (hash-object, update-index, write-tree, commit-tree, update-ref). |
-| L8 | 18 | `18-refspec-and-remotes` | Cấu trúc Refspec và đồng bộ Remote References | 10 | — | 6 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 6 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L8 | 19 | `19-reflog-internals` | Cơ chế lưu trữ và phục hồi của .git/logs (Reflog Internals) | 10 | — | 4 câu | **Chưa kiểm chứng** | Kiểm tra cấu trúc tự động: 10 màn, 4 câu quiz. Độ chính xác nội dung, chất lượng sư phạm và đáp án chưa được người rà soát xác nhận. |
-| L8 | 20 | `20-build-commit-manually-capstone` | Capstone: Tự tay tạo Commit hoàn chỉnh chỉ bằng Plumbing Commands | 10 | `internals-manual-commit-capstone` *(Bắt buộc)* | 6 câu | **Đã sửa** | Tích hợp GuidedPlumbingSession hỗ trợ các plumbing command (hash-object, update-index, write-tree, commit-tree, update-ref). |
+## Limits of the audit
 
----
+- The 77-scenario validator checks definitions and references; it does not execute every lab through the UI. Engine tests cover implemented Git operations, but this audit is not a manual completion record for all labs.
+- The browser smoke test covers the first lesson, not all 128 lessons or every device and browser combination.
+- No student pilot or independent instructional-design review has been run. The course is suitable for an initial public self-study release with feedback, not a claim of experimentally validated teaching outcomes.
+- Local tests and build cannot confirm that a Vercel project is connected to this repository, that its settings match, or that the production deployment is live. Verify the Vercel deployment after pushing.
 
-## 4. Trạng thái nghiệm thu
-
-Đây chưa phải biên bản nghiệm thu phát hành. Những thay đổi như Guided Course và plumbing session cần được kiểm thử riêng; các dòng có trạng thái **Chưa kiểm chứng** vẫn cần rà nội dung và thực hành. Không dùng tài liệu này làm bằng chứng rằng ứng dụng đã chạy với database bền vững hoặc staging thật.
+See [teaching-quality-audit.md](teaching-quality-audit.md) for the content review and teaching structure details. See [deploy-vercel.md](deploy-vercel.md) for anonymous frontend deployment settings.

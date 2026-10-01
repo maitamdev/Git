@@ -41,6 +41,59 @@ describe('Advanced Git Commands & VFS Operations', () => {
     });
   });
 
+  describe('branch switching and detached HEAD', () => {
+    it('checks out an older commit without moving the branch and switches back safely', () => {
+      engine.getFileSystem().writeFile('app.js', 'version one');
+      engine.execute('git add app.js');
+      engine.execute('git commit -m "first version"');
+      const firstCommit = engine.getState().commits[0];
+
+      engine.getFileSystem().writeFile('app.js', 'version two');
+      engine.execute('git add app.js');
+      engine.execute('git commit -m "second version"');
+
+      const detached = engine.execute(`git checkout ${firstCommit.shortHash}`);
+      expect(detached.success).toBe(true);
+      expect(engine.getState().head.type).toBe('detached');
+      expect(engine.getFileSystem().readFile('app.js')).toBe('version one');
+      expect(engine.execute('git status').stdout).toContain('HEAD detached at');
+
+      const backToMain = engine.execute('git switch main');
+      expect(backToMain.success).toBe(true);
+      expect(engine.getState().head).toEqual({ type: 'branch', ref: 'main' });
+      expect(engine.getFileSystem().readFile('app.js')).toBe('version two');
+    });
+
+    it('refuses a branch switch that would overwrite local changes', () => {
+      engine.getFileSystem().writeFile('app.js', 'base');
+      engine.execute('git add app.js');
+      engine.execute('git commit -m "base"');
+      engine.execute('git switch -c feature');
+      engine.getFileSystem().writeFile('app.js', 'feature version');
+      engine.execute('git add app.js');
+      engine.execute('git commit -m "feature change"');
+      engine.execute('git switch main');
+      engine.getFileSystem().writeFile('app.js', 'uncommitted local edit');
+
+      const switched = engine.execute('git switch feature');
+      expect(switched.success).toBe(false);
+      expect(switched.stderr).toContain('would be overwritten');
+      expect(engine.getState().currentBranch).toBe('main');
+      expect(engine.getFileSystem().readFile('app.js')).toBe('uncommitted local edit');
+    });
+
+    it('maps legacy checkout -- file syntax to git restore', () => {
+      engine.getFileSystem().writeFile('app.js', 'committed');
+      engine.execute('git add app.js');
+      engine.execute('git commit -m "save file"');
+      engine.getFileSystem().writeFile('app.js', 'local edit');
+
+      const restored = engine.execute('git checkout -- app.js');
+      expect(restored.success).toBe(true);
+      expect(engine.getFileSystem().readFile('app.js')).toBe('committed');
+    });
+  });
+
   describe('git restore', () => {
     it('should discard unstaged changes in working tree', () => {
       engine.getFileSystem().writeFile('file.txt', 'clean content');
@@ -98,6 +151,42 @@ describe('Advanced Git Commands & VFS Operations', () => {
   });
 
   describe('git merge', () => {
+    it('creates a merge commit when --no-ff is requested for a fast-forwardable branch', () => {
+      engine.getFileSystem().writeFile('base.txt', 'base');
+      engine.execute('git add base.txt');
+      engine.execute('git commit -m "base"');
+      engine.execute('git switch -c feature');
+      engine.getFileSystem().writeFile('feature.txt', 'feature');
+      engine.execute('git add feature.txt');
+      engine.execute('git commit -m "feature"');
+      engine.execute('git switch main');
+
+      const merged = engine.execute('git merge --no-ff feature');
+      expect(merged.success).toBe(true);
+      expect(merged.stdout).toContain('Merge made by');
+      expect(engine.getState().commits).toHaveLength(3);
+      expect(engine.getState().commits.at(-1)?.parents).toHaveLength(2);
+    });
+
+    it('rejects --ff-only when both branches have unique commits', () => {
+      engine.getFileSystem().writeFile('base.txt', 'base');
+      engine.execute('git add base.txt');
+      engine.execute('git commit -m "base"');
+      engine.execute('git switch -c feature');
+      engine.getFileSystem().writeFile('feature.txt', 'feature');
+      engine.execute('git add feature.txt');
+      engine.execute('git commit -m "feature"');
+      engine.execute('git switch main');
+      engine.getFileSystem().writeFile('main.txt', 'main');
+      engine.execute('git add main.txt');
+      engine.execute('git commit -m "main update"');
+
+      const merged = engine.execute('git merge --ff-only feature');
+      expect(merged.success).toBe(false);
+      expect(merged.stderr).toContain('Not possible to fast-forward');
+      expect(engine.getState().commits).toHaveLength(3);
+    });
+
     it('should perform fast-forward merge when branch is direct descendant', () => {
       engine.getFileSystem().writeFile('base.txt', 'base');
       engine.execute('git add base.txt');
@@ -211,6 +300,59 @@ describe('Advanced Git Commands & VFS Operations', () => {
       expect(engine.getState().merge).toBeNull();
       expect(engine.getFileSystem().readFile('conflict.txt')).toBe('main');
     });
+
+    it('shows unmerged paths until they are resolved and staged', () => {
+      engine.getFileSystem().writeFile('conflict.txt', 'base');
+      engine.execute('git add conflict.txt');
+      engine.execute('git commit -m "base"');
+      engine.execute('git switch -c feature');
+      engine.getFileSystem().writeFile('conflict.txt', 'feature version');
+      engine.execute('git add conflict.txt');
+      engine.execute('git commit -m "feature version"');
+      engine.execute('git switch main');
+      engine.getFileSystem().writeFile('conflict.txt', 'main version');
+      engine.execute('git add conflict.txt');
+      engine.execute('git commit -m "main version"');
+      engine.execute('git merge feature');
+
+      const unresolved = engine.execute('git status');
+      expect(unresolved.stdout).toContain('You have unmerged paths.');
+      expect(unresolved.stdout).toContain('both modified:   conflict.txt');
+
+      engine.getFileSystem().writeFile('conflict.txt', 'combined version');
+      engine.execute('git add conflict.txt');
+      const stagedResolution = engine.execute('git status');
+      expect(stagedResolution.stdout).toContain('All conflicts fixed but you are still merging.');
+      expect(stagedResolution.stdout).toContain('modified:   conflict.txt');
+
+      engine.execute('git commit -m "resolve conflict"');
+      expect(engine.execute('git status').stdout).toContain('nothing to commit, working tree clean');
+    });
+
+    it('filters merge commits in git log and shows their parent commits', () => {
+      engine.getFileSystem().writeFile('base.txt', 'base');
+      engine.execute('git add base.txt');
+      engine.execute('git commit -m "base"');
+      engine.execute('git switch -c feature');
+      engine.getFileSystem().writeFile('feature.txt', 'feature work');
+      engine.execute('git add feature.txt');
+      engine.execute('git commit -m "feature work"');
+      engine.execute('git switch main');
+      engine.getFileSystem().writeFile('main.txt', 'main work');
+      engine.execute('git add main.txt');
+      engine.execute('git commit -m "main work"');
+      engine.execute('git merge feature');
+
+      const merges = engine.execute('git log --merges --oneline');
+      const nonMerges = engine.execute('git log --no-merges --oneline');
+      const show = engine.execute('git show HEAD');
+      const mergeLine = show.stdout.split('\n').find((line) => line.startsWith('Merge:'));
+
+      expect(merges.stdout).toContain('Merge branch');
+      expect(nonMerges.stdout).not.toContain('Merge branch');
+      expect(mergeLine).toBeDefined();
+      expect(mergeLine?.trim().split(/\s+/)).toHaveLength(3);
+    });
   });
 
   describe('git reset', () => {
@@ -234,6 +376,25 @@ describe('Advanced Git Commands & VFS Operations', () => {
       expect(engine.getState().stagingArea.length).toBe(0);
       expect(engine.getFileSystem().exists('f2.txt')).toBe(false);
       expect(engine.getFileSystem().exists('f1.txt')).toBe(true);
+    });
+
+    it('keeps unrelated untracked files when using --hard', () => {
+      engine.getFileSystem().writeFile('tracked.txt', 'committed version');
+      engine.execute('git add tracked.txt');
+      engine.execute('git commit -m "base"');
+
+      engine.getFileSystem().writeFile('tracked.txt', 'unsaved tracked edit');
+      engine.getFileSystem().writeFile('staged-new.txt', 'staged addition');
+      engine.execute('git add staged-new.txt');
+      engine.getFileSystem().writeFile('scratch.txt', 'untracked note');
+
+      const reset = engine.execute('git reset --hard HEAD');
+
+      expect(reset.success).toBe(true);
+      expect(engine.getFileSystem().readFile('tracked.txt')).toBe('committed version');
+      expect(engine.getFileSystem().exists('staged-new.txt')).toBe(false);
+      expect(engine.getFileSystem().readFile('scratch.txt')).toBe('untracked note');
+      expect(engine.execute('git status').stdout).toContain('scratch.txt');
     });
   });
 
@@ -269,6 +430,45 @@ describe('Advanced Git Commands & VFS Operations', () => {
       expect(popRes.success).toBe(true);
       expect(engine.getFileSystem().readFile('file.txt')).toBe('dirty work');
       expect(engine.getState().stash.length).toBe(0);
+    });
+
+    it('leaves untracked files in place unless -u is requested', () => {
+      engine.getFileSystem().writeFile('tracked.txt', 'base');
+      engine.execute('git add tracked.txt');
+      engine.execute('git commit -m "base"');
+      engine.getFileSystem().writeFile('tracked.txt', 'edited');
+      engine.getFileSystem().writeFile('scratch.txt', 'keep me');
+
+      const stash = engine.execute('git stash push -m "tracked edit"');
+      expect(stash.success).toBe(true);
+      expect(engine.getFileSystem().readFile('tracked.txt')).toBe('base');
+      expect(engine.getFileSystem().readFile('scratch.txt')).toBe('keep me');
+      expect(engine.getState().stash).toHaveLength(1);
+
+      const pop = engine.execute('git stash pop');
+      expect(pop.success).toBe(true);
+      expect(engine.getFileSystem().readFile('tracked.txt')).toBe('edited');
+      expect(engine.getFileSystem().readFile('scratch.txt')).toBe('keep me');
+    });
+
+    it('stores and restores untracked files with git stash push -u -m', () => {
+      engine.getFileSystem().writeFile('tracked.txt', 'base');
+      engine.execute('git add tracked.txt');
+      engine.execute('git commit -m "base"');
+      engine.getFileSystem().writeFile('tracked.txt', 'edited');
+      engine.getFileSystem().writeFile('new.txt', 'new work');
+
+      const stash = engine.execute('git stash push -u -m "include new file"');
+      expect(stash.success).toBe(true);
+      expect(engine.getFileSystem().readFile('tracked.txt')).toBe('base');
+      expect(engine.getFileSystem().exists('new.txt')).toBe(false);
+      expect(engine.execute('git stash list').stdout).toContain('include new file');
+
+      const pop = engine.execute('git stash pop');
+      expect(pop.success).toBe(true);
+      expect(engine.getFileSystem().readFile('tracked.txt')).toBe('edited');
+      expect(engine.getFileSystem().readFile('new.txt')).toBe('new work');
+      expect(engine.getState().stash).toHaveLength(0);
     });
   });
 

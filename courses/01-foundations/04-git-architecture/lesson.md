@@ -1,112 +1,124 @@
-# Git hoạt động như thế nào?
+# Git hoạt động như thế nào? Snapshot và Diff
 
 ---
 
 ## 🎯 Mục tiêu
-- Giải thích được Git lưu các mốc dự án theo cách nào ở mức khái niệm.
-- Phân biệt “một mốc đã lưu” với “danh sách khác biệt giữa hai mốc”.
-- Nhận ra tên như Blob, Tree và Commit sẽ được học sâu hơn sau này.
+- Giải thích commit ghi nhận trạng thái dự án tại một thời điểm.
+- Phân biệt Snapshot (trạng thái đã lưu) với Diff (phần khác nhau).
+- So sánh hai phiên bản mẫu để chỉ ra thay đổi cụ thể.
 
 ---
 
 ## 🧩 Từ khóa hôm nay
 
 ### Snapshot — ảnh chụp trạng thái
-- **Nói dễ hiểu:** Cách hình dung một mốc lưu như trạng thái của dự án tại thời điểm bạn tạo commit.
-- **Ví dụ:** Sau khi trang giới thiệu chạy đúng, bạn lưu một mốc để có thể xem lại phiên bản đó.
-- **Đừng nhầm:** Đây là cách hiểu khái niệm; Git không tạo một bản sao nguyên vẹn riêng cho mọi tệp không đổi.
+- **Nói dễ hiểu:** Cách hình dung trạng thái các tệp trong dự án tại lúc bạn lưu một commit.
+- **Ví dụ:** Sau khi trang giới thiệu chạy đúng, commit ghi nhận dự án ở trạng thái đó.
+- **Đừng nhầm:** Đây là mô hình để hiểu kết quả; Git không tạo một thư mục sao chép riêng cho mỗi commit.
 
 ### Diff — phần khác nhau
-- **Nói dễ hiểu:** Bản so sánh cho biết những dòng hoặc tệp đã đổi giữa hai trạng thái.
-- **Ví dụ:** Diff có thể chỉ ra nút “Gửi” được đổi thành “Đăng ký”.
-- **Đừng nhầm:** Diff là thứ Git trình bày để bạn xem thay đổi; nó không phải cách duy nhất để hiểu Git lưu lịch sử.
+- **Nói dễ hiểu:** Bản so sánh chỉ ra nội dung thay đổi giữa hai phiên bản.
+- **Ví dụ:** Nếu dòng cũ là “Xin chào” và dòng mới là “Xin chào Git”, phần thêm là từ “Git”.
+- **Đừng nhầm:** Diff giúp nhìn thấy thay đổi; nó không tự lưu một commit mới.
 
 ### Commit — mốc đã lưu
-- **Nói dễ hiểu:** Bản ghi trong lịch sử Git đại diện cho trạng thái dự án mà bạn chọn lưu.
-- **Ví dụ:** “Thêm trang giới thiệu” là lời nhắn của một commit.
-- **Đừng nhầm:** Sửa tệp chưa tự tạo commit; bạn cần thực hiện thao tác lưu mốc.
-
----
-
-## 📖 Định nghĩa
-Ở mức dễ hình dung, mỗi commit cho biết dự án ở trạng thái nào tại một mốc. Khi cần, Git cũng cho xem phần khác nhau giữa hai mốc. Các chi tiết về cách những mốc này nối với nhau và Git lưu dữ liệu bên trong sẽ được học ở Level 8.
+- **Nói dễ hiểu:** Bản ghi trong lịch sử Git đại diện cho trạng thái dự án bạn chọn lưu.
+- **Ví dụ:** Commit “Thêm lời chào” ghi nhận phiên bản có dòng “Xin chào Git”.
+- **Đừng nhầm:** Sửa tệp sau khi commit không tự cập nhật mốc đã lưu.
 
 ---
 
 ## 🤔 Tại sao cần?
-Khi sửa một tệp, bạn thường muốn biết chính xác điều gì đã đổi. Git giúp lưu các mốc dự án và so sánh chúng. Hôm nay chỉ cần nắm hai ý: Snapshot là trạng thái đã lưu; Diff cho thấy phần khác nhau.
+Chỉ biết dự án hiện tại có những tệp nào chưa đủ để hiểu điều gì vừa đổi. Snapshot giúp bạn gọi tên trạng thái đã lưu ở mỗi commit. Diff giúp bạn so sánh hai trạng thái để tìm phần được thêm, xóa hoặc sửa.
+
+---
+
+## 📖 Định nghĩa
+Ở mức khái niệm, một commit cho biết trạng thái các tệp trong dự án tại thời điểm bạn lưu nó; đó là Snapshot. Diff là phần khác nhau khi so sánh hai phiên bản. Git có thể dùng lại dữ liệu không đổi để tiết kiệm chỗ, nên Snapshot không có nghĩa là tạo một bản sao thư mục mới cho mỗi commit.
 
 ---
 
 ## 🧠 Mental Model (Mô hình tư duy)
-Hãy tưởng tượng bạn chụp lại bàn học ở hai thời điểm: trước và sau khi sắp xếp. Mỗi ảnh là một Snapshot. Đặt hai ảnh cạnh nhau để tìm điểm khác nhau chính là Diff.
+Hãy tưởng tượng bạn chụp hai bức ảnh bàn học: một ảnh trước khi sắp xếp và một ảnh sau đó. Mỗi ảnh là một Snapshot. Đặt hai ảnh cạnh nhau để chỉ ra đồ vật được chuyển đi chính là Diff.
 
 ---
 
 ## 🖼 Sơ đồ
 ```text
-Tệp trước khi sửa:   "Xin chào"
-Tệp sau khi sửa:    "Xin chào Git"
-Diff:               thêm chữ "Git"
-Snapshot:           trạng thái dự án được ghi thành một mốc
+Snapshot A: README có dòng “Xin chào”
+Snapshot B: README có dòng “Xin chào Git”
+
+Diff: thêm từ “Git” vào cuối dòng
 ```
 
 ---
 
 ## 🌎 Ví dụ thực tế
-Bạn sửa một dòng trong `README.md`. Khi tạo commit, Git ghi lại trạng thái dự án ở mốc đó. Nếu muốn biết dòng nào vừa sửa, bạn xem Diff giữa bản đang làm và mốc đã lưu. Git tối ưu cách giữ dữ liệu bên trong; người mới chưa cần học chi tiết đó.
+Trước khi sửa README, bạn đã lưu commit có dòng “Xin chào”. Sau đó bạn sửa thành “Xin chào Git”. Nếu lưu commit mới, lịch sử sẽ có hai trạng thái. So sánh hai trạng thái cho thấy chính xác từ nào được thêm. Cách xem khác biệt bằng lệnh sẽ được học sau khi các bước lưu tệp đã được giới thiệu.
 
 ---
 
 ## 💻 Command
-```bash
-git status
-git log --oneline
-```
+Bài này dùng hai phiên bản văn bản mẫu để luyện phân biệt Snapshot và Diff; chưa cần chạy lệnh.
 
 ---
 
 ## 🔍 Giải thích command
-- `git status`: Cho biết tệp nào mới hoặc đã sửa trong thư mục dự án.
-- `git log --oneline`: Liệt kê các mốc commit đã lưu, mỗi mốc gói gọn trên một dòng.
+Git có lệnh để so sánh phiên bản, nhưng bài này chưa yêu cầu dùng lệnh đó. Trước tiên hãy chắc rằng bạn phân biệt được trạng thái đã lưu với phần nội dung thay đổi.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Nhầm Snapshot với Diff**: Snapshot là trạng thái đã lưu; Diff là phần dùng để so sánh.
-2. **Tưởng sửa tệp là đã tạo commit**: Bạn cần chủ động tạo commit ở bước học sau.
-3. **Cố học cấu trúc bên trong ngay bây giờ**: Blob, Tree và cách Git nối lịch sử sẽ được học ở Level 8.
+1. **Gọi phần khác nhau là Snapshot:** Snapshot mô tả trạng thái; Diff mô tả phần thay đổi giữa hai trạng thái.
+2. **Nghĩ lưu tệp đồng nghĩa với tạo commit:** Commit là mốc lịch sử riêng; sửa hoặc lưu tệp không tự tạo mốc.
+3. **Nghĩ Git chép cả thư mục thành nhiều bản:** Snapshot mô tả trạng thái dự án; Git có thể dùng lại dữ liệu không đổi.
 
 ---
 
 ## 🧪 Lab
-1. Chạy `git status` và ghi lại tên tệp đang được báo là đã sửa.
-2. Chạy `git log --oneline` để xem các mốc đã lưu.
-3. Nói thành một câu sự khác nhau giữa Snapshot và Diff.
+So sánh hai phiên bản README sau:
+
+**Phiên bản A**
+```text
+Tên câu lạc bộ: Sao Mai
+Lịch sinh hoạt: Thứ Sáu
+```
+
+**Phiên bản B**
+```text
+Tên câu lạc bộ: Sao Mai
+Lịch sinh hoạt: Thứ Bảy
+```
+
+1. Nêu dòng không thay đổi.
+2. Viết phần Diff bằng lời: điều gì đã được sửa?
+3. Nếu bạn sửa tiếp nhưng chưa tạo commit, phiên bản B đã lưu có tự đổi không?
 
 ---
 
 ## 💡 Hint
-> Snapshot là trạng thái đã lưu; Diff là phần khác nhau giữa hai trạng thái.
+Đọc từng dòng: dòng nào giống nhau, dòng nào đổi? Diff chỉ mô tả phần khác; Snapshot là toàn bộ trạng thái tại một mốc.
 
 ---
 
 ## ✅ Validation
-- Giải thích được Snapshot và Diff bằng ví dụ về một tệp đã sửa.
+- Chỉ ra được dòng không đổi và dòng thay đổi giữa hai phiên bản.
+- Giải thích được Snapshot là trạng thái đã lưu, còn Diff là phần khác nhau.
+- Nói đúng rằng sửa tệp chưa tự cập nhật commit cũ.
 
 ---
 
 ## ❓ Quiz
-Hoàn thành các câu hỏi dưới đây để kiểm tra kiến thức về kiến trúc Snapshot của Git.
+Trả lời các câu hỏi sau. Khi sai, dùng ví dụ trong Lab để tự kiểm tra lại.
 
 ---
 
 ## 🔥 Challenge
-Sửa một câu trong README, sau đó mô tả đâu là nội dung mới và mốc nào vẫn chưa được lưu.
+Tự viết hai phiên bản ngắn của một thông báo. Gạch chân phần Diff và mô tả mỗi phiên bản là một Snapshot riêng.
 
 ---
 
 ## 📚 Tổng kết
-- Commit ghi lại trạng thái dự án ở một mốc.
-- Diff giúp xem phần khác nhau giữa hai trạng thái.
-- Cấu trúc bên trong của Git sẽ học ở Level 8.
+- Snapshot mô tả trạng thái dự án tại một mốc đã lưu.
+- Diff chỉ ra phần khác nhau giữa hai phiên bản.
+- Sửa tệp sau khi tạo commit không tự thay đổi Snapshot đã lưu.

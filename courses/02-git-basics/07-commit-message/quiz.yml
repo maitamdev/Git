@@ -73,16 +73,16 @@ questions:
     explanation: "Scope giúp phân loại chính xác module chịu ảnh hưởng, ví dụ: auth,
       billing, ui, database."
   - id: q6
-    question: Theo chuẩn Conventional Commits, ký hiệu nào biểu thị một Breaking
-      Change (thay đổi làm hỏng tương thích ngược)?
+    question: Git có bắt buộc mọi dự án phải dùng đúng cú pháp Conventional Commits không?
     type: single
     options:
-      - text: "Dấu chấm than ngay sau type hoặc scope (ví dụ feat!: hoặc feat(api)!:)"
+      - text: Không; đây là quy ước, trừ khi dự án cài công cụ để kiểm tra
         correct: true
-      - text: Dấu hỏi chấm ở cuối thông điệp commit
+      - text: Có; Git từ chối mọi message không có dấu hai chấm
         correct: false
-      - text: Viết hoa toàn bộ thông điệp commit bằng chữ in hoa
+      - text: Có; Git tự sửa message sai thành `feat`
         correct: false
-      - text: Thêm từ khóa DANGER vào đầu dòng tiêu đề
+      - text: Không; vì commit message không được lưu cùng commit
         correct: false
-    explanation: Dấu `!` trước dấu hai chấm báo có Breaking Change; công cụ có thể xử lý theo cấu hình.
+    explanation: >-
+      Git chấp nhận nhiều dạng message; dự án có thể thêm công cụ riêng để yêu cầu định dạng.

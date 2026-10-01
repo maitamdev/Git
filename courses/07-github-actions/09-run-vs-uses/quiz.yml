@@ -18,7 +18,7 @@ questions:
     question: Cú pháp chuẩn để gọi một Action từ GitHub Marketplace là gì?
     type: single
     options:
-      - text: "owner/repo@ref (ví dụ: actions/checkout@v4)"
+      - text: "owner/repo@ref (ví dụ: actions/checkout@v7)"
         correct: true
       - text: https://github.com/action.zip
         correct: false
@@ -44,7 +44,7 @@ questions:
     question: Nếu trong một Job bạn không sử dụng `actions/checkout`, điều gì sẽ xảy ra trong thư mục làm việc của Runner?
     type: single
     options:
-      - text: Thư mục làm việc sẽ hoàn toàn trống rỗng, không có mã nguồn của dự án
+      - text: Mã nguồn của repo không được checkout tự động; nếu cần đọc code, phải checkout hoặc tải theo cách khác
         correct: true
       - text: Toàn bộ mã nguồn tự động xuất hiện sẵn
         correct: false
@@ -52,7 +52,7 @@ questions:
         correct: false
       - text: Job sẽ tự động bị từ chối chạy
         correct: false
-    explanation: Máy ảo Runner khi mới khởi động hoàn toàn sạch sẽ, bạn bắt buộc phải gọi action checkout để kéo mã nguồn về ổ đĩa.
+    explanation: GitHub Actions không tự checkout repository cho mỗi Job; dùng action checkout nếu các bước cần source code.
   - id: q5
     question: Để viết nhiều dòng lệnh shell liên tiếp trong một Step sử dụng từ khóa `run:`, bạn sử dụng ký tự nào trong cú pháp YAML?
     type: single

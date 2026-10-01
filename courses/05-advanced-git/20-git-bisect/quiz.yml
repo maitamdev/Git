@@ -28,7 +28,7 @@ questions:
         correct: false
     explanation: Nhờ tính chất lũy thừa cơ số 2 của thuật toán nhị phân, 1.000 commit chỉ cần tối đa khoảng 10 bước kiểm thử.
   - id: q3
-    question: Sau khi đã tìm ra chính xác commit gây lỗi bằng `git bisect`, câu lệnh BẮT BUỘC bạn phải chạy để quay về nhánh làm việc ban đầu là gì?
+    question: Khi muốn kết thúc phiên bisect và quay về vị trí trước đó, nên chạy lệnh nào?
     type: single
     options:
       - text: git bisect reset
@@ -44,7 +44,7 @@ questions:
     question: Tính năng tự động hóa tối thượng `git bisect run <script>` xác định commit là Good hay Bad dựa trên tiêu chí nào của script?
     type: single
     options:
-      - text: "Mã thoát (Exit code) của script: mã 0 là Good, mã khác 0 (từ 1 đến 127) là Bad"
+      - text: "Mã thoát của script: 0 là Good; 1–127 là Bad, trừ 125 dùng để skip; mã khác làm dừng quy trình"
         correct: true
       - text: Dung lượng của tệp script tính bằng kilobyte
         correct: false
@@ -52,7 +52,7 @@ questions:
         correct: false
       - text: Màu sắc hiển thị trên màn hình terminal
         correct: false
-    explanation: Theo chuẩn POSIX, exit code 0 biểu thị thành công (Good), các mã lỗi khác 0 biểu thị thất bại (Bad).
+    explanation: Theo Git, 0 đánh dấu Good; 1–127 đánh dấu Bad, trừ 125 để bỏ qua commit không thể kiểm tra. Mã khác khiến bisect run dừng.
   - id: q5
     question: Câu lệnh nào sau đây dùng để đánh dấu commit hiện tại là commit chứa lỗi trong phiên làm việc với git bisect?
     type: single

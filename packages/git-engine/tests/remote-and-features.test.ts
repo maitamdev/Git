@@ -151,6 +151,10 @@ describe('Remote Git Engine: remote, clone, fetch, pull, push', () => {
     const verboseRes = engine.execute('git remote -v');
     expect(verboseRes.stdout).toContain('origin\thttps://gitacademy.local/repo.git (fetch)');
 
+    const setUrlRes = engine.execute('git remote set-url origin https://gitacademy.local/renamed.git');
+    expect(setUrlRes.success).toBe(true);
+    expect(engine.execute('git remote -v').stdout).toContain('origin\thttps://gitacademy.local/renamed.git (fetch)');
+
     const renameRes = engine.execute('git remote rename origin upstream');
     expect(renameRes.success).toBe(true);
     expect(engine.execute('git remote').stdout.trim()).toBe('upstream');
@@ -194,6 +198,22 @@ describe('Remote Git Engine: remote, clone, fetch, pull, push', () => {
     expect(state.commits.length).toBe(1);
     expect(studentEngine.getFileSystem().readFile('index.html')).toBe('<h1>Git Academy</h1>');
     expect(state.remoteTrackingBranches?.['origin/main']).toBe(commitHash);
+    expect(state.config['branch.main.remote']).toBe('origin');
+    expect(state.config['branch.main.merge']).toBe('refs/heads/main');
+    expect(studentEngine.execute('git status').stdout).toContain("Your branch is up to date with 'origin/main'.");
+  });
+
+  it('refuses to overwrite an active simulator repository when cloning', () => {
+    engine.getFileSystem().writeFile('keep-me.md', 'Current lesson work');
+    const stateBefore = engine.getState();
+
+    const cloneRes = engine.execute('git clone https://gitacademy.local/other-repo.git');
+
+    expect(cloneRes.success).toBe(false);
+    expect(cloneRes.stderr).toContain('single-repository simulator');
+    expect(engine.getFileSystem().readFile('keep-me.md')).toBe('Current lesson work');
+    expect(engine.getState().branches).toEqual(stateBefore.branches);
+    expect(engine.getState().commits).toEqual(stateBefore.commits);
   });
 
   it('handles git fetch without merging into local working branch', () => {
@@ -229,6 +249,8 @@ describe('Remote Git Engine: remote, clone, fetch, pull, push', () => {
     expect(stateAfterFetch.remoteTrackingBranches?.['origin/main']).toBe(remoteCommitHash);
     // Working tree must NOT have teammate.txt yet
     expect(engine.getFileSystem().exists('teammate.txt')).toBe(false);
+    expect(engine.execute('git log HEAD..origin/main --oneline').stdout).toContain('Teammate update');
+    expect(engine.execute('git diff HEAD..origin/main').stdout).toContain('+Teammate feature');
   });
 
   it('handles git push to remote with fast-forward and updates tracking branch', () => {
@@ -244,6 +266,45 @@ describe('Remote Git Engine: remote, clone, fetch, pull, push', () => {
     const remote = net.get('https://gitacademy.local/shop.git')!;
     expect(remote.branches['main']).toBe(engine.getState().commits[0].hash);
     expect(engine.getState().remoteTrackingBranches?.['origin/main']).toBe(engine.getState().commits[0].hash);
+  });
+
+  it('shows and manages upstream status for local branches', () => {
+    engine.execute('git remote add origin https://gitacademy.local/tracking.git');
+    engine.getFileSystem().writeFile('base.txt', 'base');
+    engine.execute('git add base.txt');
+    engine.execute('git commit -m "base"');
+    engine.execute('git push -u origin main');
+
+    engine.getFileSystem().writeFile('local.txt', 'local change');
+    engine.execute('git add local.txt');
+    engine.execute('git commit -m "local change"');
+    expect(engine.execute('git status').stdout).toContain("ahead of 'origin/main' by 1 commit");
+    expect(engine.execute('git branch -vv').stdout).toContain('[origin/main: ahead 1]');
+
+    const branches = engine.execute('git branch -a').stdout;
+    expect(branches).toContain('* main');
+    expect(branches).toContain('remotes/origin/main');
+
+    engine.execute('git push origin main');
+    const remote = net.get('https://gitacademy.local/tracking.git')!;
+    const currentHash = engine.getState().branches.find((branch) => branch.name === 'main')!.commitHash!;
+    const nextHash = GitObjectHasher.hash('remote update');
+    remote.commits[nextHash] = {
+      hash: nextHash,
+      shortHash: nextHash.slice(0, 7),
+      message: 'remote update',
+      author: { name: 'Colleague', email: 'colleague@example.com' },
+      timestamp: Date.now(),
+      parents: [currentHash],
+      tree: { 'base.txt': 'base', 'local.txt': 'local change', 'remote.txt': 'remote change' },
+    };
+    remote.branches.main = nextHash;
+    engine.execute('git fetch origin');
+    expect(engine.execute('git status').stdout).toContain("behind 'origin/main' by 1 commit");
+
+    engine.execute('git branch --unset-upstream');
+    expect(engine.getState().config['branch.main.remote']).toBeUndefined();
+    expect(engine.execute('git status').stdout).not.toContain("ahead of 'origin/main'");
   });
 
   it('rejects git push when remote has non-fast-forward divergent commits', () => {

@@ -28,7 +28,7 @@ questions:
         correct: false
     explanation: "Đối tượng Tree đóng vai trò như một thư mục, ánh xạ tên tệp tin với mã băm Blob tương ứng."
   - id: q3
-    question: "Lệnh nào sau đây dùng để xem loại của một đối tượng Git từ mã băm SHA-1 của nó?"
+    question: "Lệnh nào sau đây dùng để xem loại của một object khi bạn có object ID?"
     type: single
     options:
       - text: "git cat-file -t <hash>"

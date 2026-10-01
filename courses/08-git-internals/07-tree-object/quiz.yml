@@ -52,7 +52,7 @@ questions:
         correct: false
       - text: "Vì thư mục rỗng làm hỏng thuật toán SHA-1"
         correct: false
-    explanation: "Một đối tượng Tree chỉ được tạo ra khi có ít nhất một entry hợp lệ; thư mục rỗng không sinh ra blob nên không thể tạo tree."
+    explanation: "Git không giữ thư mục làm việc rỗng như một đường dẫn riêng trong snapshot; muốn bảo toàn thư mục, stage ít nhất một file bên trong."
   - id: q5
     question: "Một đối tượng Tree có thể chứa các thành phần (entries) nào sau đây bên trong nó?"
     type: single

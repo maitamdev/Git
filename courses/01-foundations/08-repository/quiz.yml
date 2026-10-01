@@ -1,55 +1,82 @@
 id: quiz-08-repository
-title: "Trắc nghiệm: Repository và cấu trúc .git"
+title: "Trắc nghiệm: Repository, Working Tree và .git"
 questions:
   - id: q1
-    question: Thư mục nào do Git tạo để giữ dữ liệu quản lý repository?
+    question: "Trong một repository Git thông thường, `.git` dùng để làm gì?"
     type: single
     options:
-      - text: Thư mục ẩn `.git`
+      - text: "Giữ dữ liệu nội bộ Git dùng để quản lý repository và lịch sử"
         correct: true
-      - text: Tệp tin `node_modules` chứa các thư viện JavaScript
+      - text: "Chứa toàn bộ mã nguồn để thay thế các tệp trong dự án"
         correct: false
-      - text: Thư mục `C:\Windows\System32`
+      - text: "Lưu thông tin tài khoản GitHub của mọi thành viên"
         correct: false
-      - text: Tệp tin `package.json` nằm ở ngoài cùng
+      - text: "Là thư mục cài đặt Git trên máy tính"
         correct: false
-    explanation: Git tạo `.git` để giữ dữ liệu nội bộ, chẳng hạn cấu hình và lịch sử.
+    explanation: >-
+      `.git` chứa dữ liệu nội bộ Git cần để quản lý repository.
+      Các tệp dự án mà bạn sửa thường nằm bên ngoài thư mục đó.
+
   - id: q2
-    question: Nếu xóa `.git`, điều gì thường còn lại trong thư mục dự án?
+    question: "Bạn xóa `.git` trong một repository chỉ có trên laptop. Điều gì thường xảy ra?"
     type: single
     options:
-      - text: Các tệp hiện tại còn lại, nhưng repository và lịch sử Git cục bộ không còn
+      - text: "Các tệp dự án còn lại nhưng lịch sử Git cục bộ có thể mất"
         correct: true
-      - text: Toàn bộ code trong dự án sẽ tự động bị biên dịch sang ngôn ngữ C++
+      - text: "Các tệp dự án tự chuyển sang một repository trực tuyến"
         correct: false
-      - text: Git sẽ tự động tải lại thư mục đó từ Google Drive về máy
+      - text: "Git tạo lại toàn bộ lịch sử từ các tên tệp hiện có"
         correct: false
-      - text: Máy tính sẽ bị khóa màn hình và yêu cầu khởi động lại
+      - text: "Mọi tệp dự án đều bị xóa cùng `.git`"
         correct: false
-    explanation: "`.git` chứa dữ liệu Git cục bộ; xóa nó không tự xóa các tệp dự án khác."
+    explanation: >-
+      `.git` giữ dữ liệu quản lý và lịch sử cục bộ. Xóa nó thường để lại
+      các tệp khác nhưng không tự khôi phục lịch sử đã mất.
+
   - id: q3
-    question: "`Working Tree` là tên gọi của phần nào?"
+    question: "Working Tree là phần nào của repository?"
     type: single
     options:
-      - text: Các tệp dự án mà bạn đang xem và sửa
+      - text: "Các tệp dự án mà bạn đang xem và sửa trực tiếp"
         correct: true
-      - text: Nơi GitHub lưu ảnh đại diện
+      - text: "Toàn bộ commit đã lưu trong lịch sử Git"
         correct: false
-      - text: Thư mục lưu bản cài Git
+      - text: "Bản cài đặt Git được dùng để chạy lệnh"
         correct: false
-      - text: Tên khác của lịch sử commit
+      - text: "Một bản sao trực tuyến của repository"
         correct: false
-    explanation: Working Tree là các tệp của dự án mà bạn mở và sửa trực tiếp.
+    explanation: >-
+      Working Tree là các tệp dự án hiện có để bạn mở và sửa.
+      Chỉnh sửa chúng chưa tự tạo commit mới.
+
   - id: q4
-    question: "Tệp `HEAD` bên trong thư mục `.git` đóng vai trò gì?"
+    question: "Trong repository thông thường, `.git/HEAD` giúp Git biết điều gì?"
     type: single
     options:
-      - text: Giúp Git biết nhánh hoặc commit hiện tại bạn đang làm việc
+      - text: "Vị trí hiện tại, thường là nhánh đang được chọn"
         correct: true
-      - text: Lưu tiêu đề trang web HTML của dự án
+      - text: "Tệp nào trong Working Tree đang mở trên màn hình"
         correct: false
-      - text: Chứa ảnh đại diện của người sáng lập dự án
+      - text: "Tài khoản nào được phép đăng nhập GitHub"
         correct: false
-      - text: Lưu mật khẩu mã hóa của kho chứa
+      - text: "Câu lệnh nào sẽ được chạy tiếp theo trong terminal"
         correct: false
-    explanation: "`HEAD` cho Git biết vị trí hiện tại, thường là nhánh đang được chọn."
+    explanation: >-
+      `HEAD` cho biết vị trí Git đang làm việc, thường thông qua nhánh hiện tại.
+      Cách nó có thể trỏ thẳng tới commit sẽ học ở bài nâng cao.
+
+  - id: q5
+    question: "Trong Windows PowerShell, lệnh nào hiển thị cả thư mục ẩn `.git`?"
+    type: single
+    options:
+      - text: "`Get-ChildItem -Force`"
+        correct: true
+      - text: "`git status`"
+        correct: false
+      - text: "`dir /a`"
+        correct: false
+      - text: "`git config --list`"
+        correct: false
+    explanation: >-
+      `Get-ChildItem -Force` hiển thị cả mục ẩn trong PowerShell.
+      `dir /a` là cú pháp của Command Prompt, không phải tham số PowerShell.

@@ -11,14 +11,11 @@ keywords:
 prerequisites:
   - 09-fork
 objectives:
-  - Hiểu rõ khái niệm và quy ước đặt tên remote `upstream` trong quy trình làm
-    việc với kho fork.
+  - Hiểu cách nhóm thường dùng remote `upstream` trong quy trình fork.
   - Cấu hình thêm remote `upstream` trỏ về kho gốc của tác giả bằng câu lệnh
     `git remote add`.
-  - Đồng bộ hóa mã nguồn mới nhất từ kho gốc về máy cá nhân và cập nhật lên kho
-    fork.
-  - Ngăn ngừa tình trạng kho fork bị phân kỳ quá xa so với tiến độ phát triển
-    của dự án chính.
+  - Fetch cập nhật từ kho gốc và tích hợp theo quy trình của repository.
+  - Xác nhận URL và quyền trước khi push lên fork.
 commands:
   - git remote add upstream <url-kho-goc>
   - git remote -v

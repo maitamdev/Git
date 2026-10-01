@@ -1,118 +1,114 @@
-# Git là gì?
+# Git là gì? VCS phân tán trên máy bạn
 
 ---
 
 ## 🎯 Mục tiêu
-- Giải thích Git là một hệ thống quản lý phiên bản phân tán.
-- Phân biệt Git (công cụ) với GitHub (dịch vụ lưu trữ và cộng tác).
-- Nói được việc nào Git làm trên máy và việc nào cần kết nối Internet.
+- Nói được Git là phần mềm quản lý phiên bản theo mô hình phân tán.
+- Giải thích repository Git trên máy giữ những gì ở mức cơ bản.
+- Dùng `git status` để xem trạng thái repository hiện tại.
 
 ---
 
 ## 🧩 Từ khóa hôm nay
 
 ### Git — công cụ quản lý phiên bản
-- **Nói dễ hiểu:** Phần mềm ghi lại các mốc thay đổi của dự án để bạn xem, so sánh và làm việc trên nhiều nhánh.
-- **Ví dụ:** Dùng Git để lưu các bước làm bài nhóm rồi xem lại ai đã thay đổi gì trong từng mốc.
-- **Đừng nhầm:** Git là công cụ chạy trên máy của bạn; không đồng nghĩa với GitHub.
+- **Nói dễ hiểu:** Phần mềm ghi lại các mốc dự án bạn chọn để xem và so sánh về sau.
+- **Ví dụ:** Bạn dùng Git trên laptop để quản lý lịch sử một bài tập.
+- **Đừng nhầm:** Git là công cụ chạy trên máy; nó không tự tạo hoặc gửi commit nếu bạn chưa yêu cầu.
+
+### DVCS — hệ thống quản lý phiên bản phân tán
+- **Nói dễ hiểu:** Mô hình mà mỗi bản sao đầy đủ của kho thường mang theo lịch sử để làm việc độc lập.
+- **Ví dụ:** Git cho phép bạn đọc lịch sử đã có và tạo commit trên máy khi offline.
+- **Đừng nhầm:** Có lịch sử cục bộ không có nghĩa là các máy tự đồng bộ với nhau.
 
 ### Repository (repo) — kho Git của dự án
-- **Nói dễ hiểu:** Nơi Git quản lý tệp và lưu lịch sử của một dự án. Thư mục `.git` là phần dữ liệu Git dùng để làm việc đó.
-- **Ví dụ:** Sau khi khởi tạo hoặc clone, thư mục dự án có thể trở thành một repository.
-- **Đừng nhầm:** Repository không nhất thiết nằm trên Internet; nó có thể ở trên máy tính của bạn.
-
-### GitHub — dịch vụ cộng tác trực tuyến
-- **Nói dễ hiểu:** Một dịch vụ lưu kho Git trên Internet và cung cấp công cụ để nhóm chia sẻ, xem xét và quản lý công việc.
-- **Ví dụ:** Nhóm push các commit lên GitHub để cùng xem và mở Pull Request.
-- **Đừng nhầm:** GitHub không phải Git; Git có thể dùng trên máy mà không cần GitHub.
-
-### Commit — một mốc đã lưu
-- **Nói dễ hiểu:** Bản ghi có lời nhắn, đại diện cho trạng thái dự án mà bạn đã chọn lưu trong Git.
-- **Ví dụ:** Commit “Tạo trang giới thiệu” giúp nhóm nhận ra mốc nào thêm trang đó.
-- **Đừng nhầm:** Commit chỉ tồn tại trong kho nơi bạn tạo nó cho đến khi bạn chia sẻ lên remote.
+- **Nói dễ hiểu:** Dữ liệu Git gắn với dự án, gồm lịch sử phiên bản và thông tin để Git quản lý các tệp.
+- **Ví dụ:** Sau khi tạo hoặc clone một dự án, Git có một repository trên máy để làm việc.
+- **Đừng nhầm:** Repository Git có thể nằm trên máy bạn; không bắt buộc phải ở trên Internet.
 
 ---
 
 ## 🤔 Tại sao cần?
-Git giúp bạn làm việc với lịch sử dự án ngay trên máy: lưu commit, xem lịch sử và tạo nhánh. GitHub thường được dùng để chia sẻ kho và cộng tác với người khác. Vì vậy, khi không có Internet, bạn vẫn có thể làm nhiều việc trong Git cục bộ nhưng chưa thể trao đổi commit với GitHub.
+Git giữ lịch sử ngay trong repository trên máy. Vì vậy, sau khi có một bản sao đầy đủ của dự án, bạn có thể xem lịch sử đã tải về và lưu commit cục bộ mà không cần kết nối liên tục. Điều này hữu ích khi mạng chập chờn hoặc bạn muốn làm việc một mình trước khi chia sẻ.
 
 ---
 
 ## 📖 Định nghĩa
-Git là một hệ thống quản lý phiên bản phân tán (DVCS). Nó giúp lưu và đọc lại lịch sử dự án trong kho cục bộ. Git được tạo ra năm 2005 để hỗ trợ phát triển Linux. GitHub là một dịch vụ trực tuyến có thể lưu kho Git và hỗ trợ cộng tác.
+Git là một hệ thống quản lý phiên bản phân tán (DVCS). Nó dùng repository để quản lý tệp và lịch sử của dự án. Một repository Git đầy đủ thông thường có thể lưu và xem các commit trên máy mà không cần máy chủ trực tuyến.
 
 ---
 
 ## 🧠 Mental Model (Mô hình tư duy)
-Hãy tách thành hai phần: **Git** là bộ dụng cụ quản lý lịch sử; **GitHub** là một nơi trực tuyến để chia sẻ kho và phối hợp với nhóm. Bạn có thể dùng bộ dụng cụ trên máy trước, rồi kết nối với nơi chia sẻ khi cần.
+Hãy tưởng tượng Git là người quản lý cuốn sổ lịch sử trên máy bạn. Repository là dữ liệu dự án đi cùng cuốn sổ đó. Bạn chọn lúc nào lưu một trạng thái; các máy khác chỉ nhận được commit sau khi bạn chủ động chia sẻ bằng cách sẽ học ở bài sau.
 
 ---
 
 ## 🖼 Sơ đồ
 ```text
-Trên máy bạn                         Trên Internet
-[Git + kho cục bộ]  ── push ──►  [Kho trên GitHub]
-[Git + kho cục bộ]  ◄─ pull ───  [Kho trên GitHub]
-
-Lưu commit cục bộ: thường không cần Internet.
-Gửi/nhận commit từ GitHub: cần kết nối và quyền truy cập phù hợp.
+Laptop của bạn
+┌─────────────────────────────────────┐
+│ Git                                 │
+│  └── Repository của dự án           │
+│       ├── các tệp dự án             │
+│       └── lịch sử các commit đã lưu │
+└─────────────────────────────────────┘
 ```
 
 ---
 
 ## 🌎 Ví dụ thực tế
-Bạn làm bài nhóm trên laptop. Git lưu các mốc bạn tạo trong kho cục bộ. Khi có mạng, bạn gửi các mốc đó lên GitHub; bạn cùng nhóm lấy chúng về để xem hoặc tiếp tục làm. Nếu chưa gửi lên nơi khác, lịch sử vẫn chỉ nằm trên laptop này.
+Bạn clone đầy đủ bài tập về laptop trước khi lên xe buýt. Không có mạng, bạn vẫn mở tệp và xem lịch sử đã có trong repository. Nếu cần lưu một mốc mới, Git ghi commit trong repository cục bộ; việc gửi mốc đó cho người khác là một bước riêng.
 
 ---
 
 ## 💻 Command
 ```bash
-git --version
 git status
 ```
 
 ---
 
 ## 🔍 Giải thích command
-- `git --version`: xác nhận công cụ Git đã cài và xem số phiên bản.
-- `git status`: đọc trạng thái của kho Git hiện tại trên máy. Lệnh cần được chạy bên trong một repository.
+`git status` đọc repository hiện tại và cho biết tệp nào mới hoặc đã sửa. Lệnh này không tạo commit và không gửi dữ liệu qua mạng.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Gọi GitHub là Git:** Git là công cụ; GitHub là một dịch vụ trực tuyến có dùng Git.
-2. **Cho rằng commit tự động xuất hiện trên GitHub:** Cần gửi commit lên remote bằng lệnh phù hợp.
-3. **Tin rằng commit là bản sao lưu không thể mất:** Hãy đẩy dữ liệu quan trọng lên nơi khác và dùng quy trình sao lưu của nhóm.
+1. **Nghĩ Git chỉ chạy khi có mạng:** Nhiều thao tác trên repository đầy đủ đang ở máy vẫn thực hiện được offline.
+2. **Nghĩ Git tự lưu mọi lần sửa tệp:** Bạn phải chủ động tạo commit để lưu một mốc vào lịch sử.
+3. **Nghĩ mỗi repository Git đều nằm trên máy chủ:** Kho Git có thể chỉ nằm trên máy cá nhân.
 
 ---
 
 ## 🧪 Lab
-Xếp bốn thẻ sau vào hai cột **Git trên máy** và **GitHub qua mạng**: tạo commit, xem lịch sử đã clone, push commit, mở Pull Request. Giải thích một lựa chọn của bạn.
+1. Chạy `git status` trong terminal mô phỏng.
+2. Ghi lại một thông tin lệnh cho biết về tệp trong repository.
+3. Trả lời: lệnh vừa chạy có lưu commit hoặc gửi dữ liệu qua mạng không? Vì sao?
 
 ---
 
 ## 💡 Hint
-Nếu thao tác chỉ cần kho đã có trên máy, thường có thể làm offline. Nếu thao tác gửi/nhận dữ liệu hoặc mở trang cộng tác, cần kết nối.
+`git status` chỉ báo tình trạng hiện tại; nó không ghi mốc mới và không trao đổi với máy chủ.
 
 ---
 
 ## ✅ Validation
-- Nói được Git là công cụ, GitHub là dịch vụ trực tuyến.
-- Phân loại đúng commit cục bộ và thao tác trao đổi qua mạng.
+- Nêu được Git là DVCS và repository có thể nằm trên máy cá nhân.
+- Giải thích được `git status` chỉ đọc trạng thái, không tạo commit.
 
 ---
 
 ## ❓ Quiz
-Trả lời các câu hỏi sau; đọc giải thích nếu cần phân biệt Git với GitHub.
+Trả lời các câu hỏi sau. Khi sai, đọc lời giải thích rồi thử lại.
 
 ---
 
 ## 🔥 Challenge
-Giải thích cho bạn học: “Tôi đã commit rồi nhưng bạn tôi chưa thấy trên GitHub” có thể là vì sao?
+Giải thích bằng một ví dụ vì sao Git vẫn hữu ích khi laptop tạm thời không có Internet.
 
 ---
 
 ## 📚 Tổng kết
-- Git quản lý lịch sử phiên bản trong repository trên máy và hỗ trợ làm việc phân tán.
-- GitHub là một dịch vụ để lưu kho từ xa và cộng tác; nó không phải tên khác của Git.
-- Commit cục bộ chưa tự xuất hiện trên GitHub; bạn cần gửi nó lên remote.
+- Git là công cụ quản lý phiên bản theo mô hình phân tán.
+- Repository Git đầy đủ thông thường có thể lưu lịch sử trên máy.
+- `git status` xem trạng thái hiện tại, không tạo commit.

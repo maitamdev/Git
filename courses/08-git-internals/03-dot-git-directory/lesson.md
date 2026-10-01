@@ -5,8 +5,8 @@
 ## 🎯 Mục tiêu
 - Giải mã toàn bộ các tệp tin và thư mục cốt lõi bên trong thư mục quản trị `.git/`.
 - Hiểu rõ chức năng của từng thành phần: `HEAD`, `config`, `description`, `index`, `objects/`, `refs/`, `hooks/`, `info/`.
-- Nhận thức được rằng một kho lưu trữ Git hoàn chỉnh chỉ là một thư mục bình thường chứa thư mục con `.git/`.
-- Tự tin kiểm tra và điều chỉnh các thiết lập cục bộ trực tiếp trong tệp cấu hình.
+- Nhận thức rằng Git directory có thể là thư mục riêng hoặc được trỏ tới bởi file `.git`, tùy kiểu repo/worktree.
+- Biết dùng lệnh Git để xem metadata; tránh sửa trực tiếp file nội bộ khi chưa hiểu ảnh hưởng.
 
 ---
 
@@ -14,28 +14,28 @@
 
 ### HEAD Reference File
 - **Nói dễ hiểu**: Tệp văn bản thuần ASCII nằm tại `.git/HEAD` ghi lại con trỏ hiện tại đang kiểm xuất (checkout) nhánh nào hoặc commit nào.
-- **Ví dụ**: Khi ở trên nhánh `main`, mở tệp sẽ thấy đúng một dòng: `ref: refs/heads/main`.
+- **Ví dụ**: Khi HEAD đang gắn với nhánh `main`, `git symbolic-ref HEAD` in `refs/heads/main`.
 - **Đừng nhầm**: Không phải file nhị phân; bạn hoàn toàn có thể dùng lệnh `cat` hoặc text editor để xem nội dung bên trong.
 
 ### Local Repository Config (.git/config)
 - **Nói dễ hiểu**: Tệp cấu hình dạng INI lưu trữ toàn bộ thiết lập cụ thể cho riêng repository hiện tại (như URL remote, tracking branch).
-- **Ví dụ**: Khối `[remote "origin"] url = git@github.com:user/repo.git` chỉ định địa chỉ đẩy mã nguồn.
+- **Ví dụ**: Khối `[remote "origin"] url = https://github.com/owner/repo.git` khai báo URL remote; phương thức xác thực được cấu hình riêng.
 - **Đừng nhầm**: Không ghi đè vĩnh viễn cấu hình toàn cục `~/.gitconfig`; cấu hình cục bộ chỉ có hiệu lực trong phạm vi repo này và có độ ưu tiên cao hơn.
 
 ### Binary Staging Index (.git/index)
-- **Nói dễ hiểu**: Tệp nhị phân lưu trữ trạng thái hiện thời của Staging Area (danh sách tệp tin đã `git add`, mã băm SHA-1 và thời gian sửa đổi).
-- **Ví dụ**: Khi gõ `git add file.txt`, Git ghi lại đường dẫn `file.txt` và mã blob tương ứng vào tệp `.git/index`.
+- **Nói dễ hiểu**: Index là cấu trúc dữ liệu nhị phân lưu trạng thái đã stage cùng metadata cần thiết; vị trí của nó được Git xác định cho worktree hiện tại.
+- **Ví dụ**: Khi gõ `git add file.txt`, Git cập nhật entry cho `file.txt` trong index với object ID của nội dung đã stage.
 - **Đừng nhầm**: Không phải tệp văn bản đọc được bằng `cat`; cần dùng lệnh plumbing `git ls-files --stage` để kiểm tra.
 
 ---
 
 ## 📖 Định nghĩa
-Thư mục `.git/` là trái tim và linh hồn của mọi kho lưu trữ Git. Đây là một thư mục ẩn nằm ở vị trí cao nhất của cây thư mục làm việc, chứa toàn bộ siêu dữ liệu, lịch sử commit, các đối tượng nhị phân, cấu hình người dùng và con trỏ nhánh. Nếu bạn xóa thư mục `.git/`, toàn bộ lịch sử quản lý phiên bản sẽ biến mất và dự án của bạn trở thành một thư mục tệp tin thông thường không có Version Control.
+Git directory chứa metadata của repository như HEAD, refs, index và object database. Trong linked worktree hoặc submodule, mục `.git` ở gốc worktree có thể là file chỉ đường tới Git directory; bare repository không có worktree. Nếu xóa nhầm Git directory thật, bạn có thể mất metadata/lịch sử cục bộ, nên không sửa/xóa thủ công khi chưa có bản sao an toàn.
 
 ---
 
 ## 💡 Tại sao cần
-Hầu hết các kỹ sư xem thư mục `.git/` như một chiếc hộp đen ma thuật cấm kỵ và không bao giờ dám mở ra xem. Tuy nhiên, khi bạn thấu hiểu tường tận từng tệp tin và thư mục bên trong chiếc hộp đen đó: bạn biết cách sửa tệp `.git/config` để đổi URL remote mà không cần gõ lệnh dài dòng, biết đọc tệp `.git/HEAD` để biết chính xác con trỏ đang ở đâu, và biết cách sao lưu toàn vẹn toàn bộ dự án bằng cách nén duy nhất thư mục `.git/`. Nhờ đó, bạn hoàn toàn làm chủ hệ thống lưu trữ và tự tin ứng phó với mọi tình huống khẩn cấp.
+Hiểu các thành phần nội bộ giúp bạn đọc trạng thái repo và chẩn đoán vấn đề. Dùng lệnh như `git remote -v`, `git symbolic-ref HEAD` và `git ls-files --stage` thay vì sửa tay config, HEAD hoặc index. Cách bố trí thay đổi theo bare repo, submodule và linked worktree nên hãy hỏi Git đường dẫn thực tế.
 
 ---
 
@@ -65,37 +65,40 @@ Cấu trúc giải phẫu thư mục .git/:
 ---
 
 ## 🏢 Ví dụ thực tế
-Một kỹ sư clone một dự án mã nguồn mở có dung lượng mã nguồn là 10 MB nhưng nhận thấy thư mục `.git/` nặng tới 200 MB. Tò mò mở khám phá cấu trúc bên trong, kỹ sư kiểm tra thư mục `.git/objects/pack/` và phát hiện một tệp `.pack` khổng lồ. Sử dụng các công cụ kiểm tra, kỹ sư phát hiện ra rằng trong quá khứ, một lập trình viên cũ đã vô tình commit một tệp video demo nặng 150 MB rồi sau đó xóa đi bằng lệnh `git rm`. Vì Git không bao giờ tự động xóa lịch sử, tệp video đó vẫn nằm nguyên vẹn trong thư mục `.git/objects/`. Kỹ sư đã tiến hành dọn dẹp và giảm 90% dung lượng kho lưu trữ.
+Một clone có thư mục mã nguồn nhỏ nhưng Git directory lớn. `git count-objects -v` cho thấy dữ liệu đã nằm trong packfile; một file lớn từng được commit vẫn chiếm chỗ nếu commit còn trong lịch sử, dù file đã bị xóa ở commit mới hơn. Giảm dung lượng thường cần viết lại lịch sử bằng công cụ chuyên dụng, phối hợp với nhóm và dọn object sau đó; không có mức giảm cố định và việc viết lại làm đổi commit ID.
 
 ---
 
 ## 💻 Command & Cú pháp
 ```bash
-# Kiểm tra danh sách tệp tin trong thư mục .git
-ls -la .git
+# Xem Git directory thực tế
+git rev-parse --git-dir
 
-# Đọc cấu hình cục bộ của kho lưu trữ
-cat .git/config
+# Hỏi Git đường dẫn các thành phần quản trị
+git rev-parse --git-path config
+git rev-parse --git-path HEAD
+git rev-parse --git-path index
+git rev-parse --git-path objects
 
-# Đọc con trỏ nhánh hiện tại
-cat .git/HEAD
-
-# Liệt kê các nhánh cục bộ được lưu trong thư mục refs
-ls -la .git/refs/heads
+# Dùng lệnh chuyên biệt để đọc thông tin, không sửa file nội bộ trực tiếp
+git remote -v
+git symbolic-ref -q HEAD
+git ls-files --stage
 ```
 
 ---
 
 ## 🔍 Giải thích command
-- `ls -la .git`: Liệt kê danh sách toàn bộ cấu trúc nội tạng của kho lưu trữ, bao gồm cả các tệp ẩn.
-- `cat .git/config`: Đọc nội dung tệp cấu hình INI, cho biết các nhánh tracking và URL remote đang kết nối.
-- `cat .git/HEAD`: In ra đường dẫn tham chiếu của nhánh đang được kiểm xuất (ví dụ: `ref: refs/heads/main`).
-- `ls -la .git/refs/heads`: Liệt kê các tệp đại diện cho các nhánh cục bộ có trong kho.
+- `git rev-parse --git-dir`: In Git directory; có thể khác thư mục `.git` nhìn thấy ở gốc worktree.
+- `git rev-parse --git-path <path>`: Hỏi Git vị trí hiệu lực của từng tệp/thư mục metadata.
+- `git remote -v`: Đọc danh sách remote và URL bằng lệnh Porcelain.
+- `git symbolic-ref -q HEAD`: In ref mà HEAD trỏ tới khi đang ở branch; detached HEAD không có symbolic branch.
+- `git ls-files --stage`: Xem entry của index, gồm mode, object ID và stage.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Xóa nhầm thư mục `.git/` khi muốn dọn dẹp**: Làm mất vĩnh viễn toàn bộ lịch sử commit và các nhánh cục bộ chưa đẩy lên remote.
+1. **Xóa nhầm Git directory khi muốn dọn dẹp**: Có thể làm mất metadata, lịch sử và nhánh chưa đẩy; trước khi thao tác phải xác định đúng đường dẫn và có bản sao lưu.
 2. **Commit nhầm thư mục `.git/` của repo con vào repo cha**: Gây ra tình trạng repo lồng nhau bị lỗi (corrupted submodule indicator).
 3. **Chỉnh sửa tệp nhị phân `.git/index` bằng text editor**: Định dạng nhị phân sẽ bị hỏng khiến lệnh `git status` báo lỗi index corrupted.
 
@@ -104,21 +107,21 @@ ls -la .git/refs/heads
 ## 🧪 Lab thực hành
 Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
 
-1. **Bước 1**: Mở terminal trong một kho lưu trữ Git và chạy lệnh `ls -la .git` để quan sát toàn bộ các tệp tin và thư mục con.
-2. **Bước 2**: Chạy lệnh `cat .git/HEAD` để xem nội dung văn bản bên trong con trỏ HEAD.
-3. **Bước 3**: Chạy lệnh `cat .git/config` để xem cách Git lưu trữ thông tin user, repository format và các nhánh.
-4. **Bước 4**: Tạo nhánh mới `git branch feature-test`, sau đó chạy `cat .git/refs/heads/feature-test` để thấy mã SHA-1 của commit đầu nhánh.
+1. Chạy `git rev-parse --git-dir` và ghi lại Git directory.
+2. Chạy `git symbolic-ref -q HEAD`; nếu lệnh không in kết quả, chạy `git rev-parse HEAD` để nhận diện detached HEAD.
+3. Chạy `git remote -v` và `git ls-files --stage` để xem remote và trạng thái index bằng các lệnh hỗ trợ.
+4. Tạo nhánh thử `git branch feature-test`, xác minh bằng `git show-ref --verify refs/heads/feature-test`, rồi xóa nhánh thử bằng `git branch -d feature-test` nếu đã tạo thành công.
 
 ---
 
 ## 💡 Hint & mẹo
-> Bạn có thể xem tệp `.git/HEAD` hoàn toàn bằng lệnh đọc văn bản thông thường như `cat` vì nó là tệp văn bản ASCII thuần túy chỉ chứa một dòng ngắn gọn.
+> `.git/HEAD` thường là symbolic ref dạng văn bản khi đang trên branch, nhưng linked worktree có Git directory riêng. Dùng `git symbolic-ref` và `git rev-parse` để tránh phụ thuộc vào vị trí file.
 
 ---
 
 ## ✅ Validation & Kết quả mong đợi
-- Lệnh `cat .git/HEAD` trả về chuỗi có định dạng `ref: refs/heads/<tên_nhánh>`.
-- Tệp `.git/refs/heads/feature-test` hiển thị đúng mã SHA-1 40 ký tự trùng khớp với commit mới nhất trên `git log -1`.
+- `git symbolic-ref -q HEAD` trả tên ref khi HEAD đang gắn với branch; `git rev-parse HEAD` trả object ID của commit hiện tại.
+- `git show-ref --verify refs/heads/feature-test` xác minh nhánh thử tồn tại; không cần dựa vào file ref riêng vì refs có thể được pack.
 
 ---
 
@@ -128,7 +131,7 @@ Hãy kiểm tra mức độ nắm bắt của bạn về giải phẫu thư mụ
 ---
 
 ## 🚀 Thử thách nâng cao
-Nếu bạn sao chép duy nhất thư mục `.git/` sang một máy tính hoàn toàn mới (thư mục rỗng) và chạy lệnh `git checkout -f main` hoặc `git restore .`, điều kỳ diệu gì sẽ xảy ra? Hãy giải thích cơ chế phục hồi toàn bộ code từ cơ sở dữ liệu đối tượng.
+Vì sao không nên sao chép thủ công riêng `.git/` để làm bản sao lưu? Nêu một lựa chọn an toàn hơn và giải thích khác biệt giữa Git directory với worktree.
 
 ---
 

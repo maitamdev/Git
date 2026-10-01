@@ -15,8 +15,7 @@ questions:
         correct: false
       - text: Tên nhánh của bạn có chứa quá nhiều ký tự chữ cái
         correct: false
-    explanation: Xung đột phát sinh khi Git không thể tự động quyết định xem nên giữ
-      lại đoạn mã nào giữa nhánh của bạn và nhánh chính vừa được cập nhật.
+    explanation: Git báo conflict khi không thể tự kết hợp thay đổi; xung đột logic có thể tồn tại dù không có conflict marker.
   - id: q2
     question: Hành động đầu tiên và chuẩn mực nhất bạn nên làm khi gặp xung đột
       logic nghiệp vụ phức tạp với code của đồng nghiệp là gì?
@@ -38,8 +37,7 @@ questions:
       của GitHub lại bị xem là tiềm ẩn nhiều rủi ro?
     type: single
     options:
-      - text: Vì bạn không thể chạy các bài kiểm thử tự động (Unit Test / Build) trên
-          máy tính để xác thực mã nguồn có hoạt động đúng hay không
+      - text: Với thay đổi phức tạp, xử lý local giúp đọc đầy đủ ngữ cảnh và chạy kiểm tra phù hợp trước khi push
         correct: true
       - text: Vì GitHub sẽ tính thêm phí dịch vụ mỗi lần bấm sửa trên web
         correct: false
@@ -47,15 +45,13 @@ questions:
         correct: false
       - text: Vì việc đó vi phạm luật pháp quốc tế
         correct: false
-    explanation: Giải quyết xung đột trên máy cá nhân cho phép bạn biên dịch, chạy
-      thử ứng dụng và kiểm tra kỹ lưỡng trước khi đưa lên máy chủ.
+    explanation: Web có thể xử lý conflict đơn giản; local hữu ích khi cần editor, test hoặc build của dự án.
   - id: q4
     question: Cờ `--force-with-lease` trong lệnh git push an toàn vượt trội hơn cờ
       `--force` truyền thống ở điểm nào?
     type: single
     options:
-      - text: Nó sẽ từ chối ghi đè nếu phát hiện có người khác vừa đẩy thêm commit mới
-          lên nhánh từ xa trong lúc bạn đang rebase
+      - text: Nó kiểm tra remote ref so với giá trị mong đợi và thường từ chối nếu remote đã thay đổi
         correct: true
       - text: Nó tự động mã hóa dữ liệu gửi qua mạng bằng thuật toán quân sự
         correct: false
@@ -63,9 +59,7 @@ questions:
         correct: false
       - text: Nó không yêu cầu bạn phải nhập mật khẩu tài khoản
         correct: false
-    explanation: Cờ `--force-with-lease` kiểm tra xem nhánh remote có đúng ở trạng
-      thái bạn đã biết hay không, ngăn chặn việc vô tình xóa mất commit của đồng
-      nghiệp.
+    explanation: Lease giảm nguy cơ ghi đè thay đổi chưa biết, nhưng không thay thế phối hợp khi rebase một nhánh dùng chung.
   - id: q5
     question: Sau khi giải quyết xong các điểm mốc xung đột trong tệp tin, câu lệnh
       nào được dùng để xác nhận đã xử lý xong tệp đó trong quá trình rebase?
@@ -94,5 +88,4 @@ questions:
         correct: false
       - text: git reset --delete
         correct: false
-    explanation: Cờ `--abort` là chiếc phao cứu sinh đưa nhánh quay trở về chính xác
-      trạng thái trước khi bạn bắt đầu câu lệnh rebase.
+    explanation: Khi rebase đang dừng vì conflict, `--abort` hủy thao tác và cố đưa nhánh về trạng thái trước khi rebase.

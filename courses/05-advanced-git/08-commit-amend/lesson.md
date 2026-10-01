@@ -79,7 +79,7 @@ git commit --amend --no-edit
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Chạy commit amend sau khi đã push lên GitHub**: Khiến mã hash trên máy khác với trên server, dẫn đến bị từ chối non-fast-forward khi push.
+1. **Amend commit mà người khác đã dựa vào**: `amend` tạo commit mới; remote có thể từ chối lần push thường vì lịch sử đã khác. Hãy phối hợp với nhóm trước khi cập nhật nhánh từ xa.
 2. **Nghĩ rằng amend sửa trực tiếp trên commit cũ**: Thực chất Git tạo ra một commit snapshot mới với mã SHA hoàn toàn mới.
 3. **Quên git add file cần bổ sung trước khi amend**: Khiến commit mới tạo ra vẫn thiếu file mà bạn mong muốn kẹp thêm vào.
 

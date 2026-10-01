@@ -65,4 +65,4 @@ questions:
         correct: false
       - text: "Vì Plumbing commands không yêu cầu quyền administrator"
         correct: false
-    explanation: "Porcelain commands được thiết kế cho con người đọc và có thể đổi định dạng hiển thị, trong khi Plumbing commands cam kết tính tương thích ngược và định dạng phân tích cú pháp ổn định cho script."
+    explanation: "Lệnh plumbing thường có giao diện phù hợp cho script; một số porcelain cũng có chế độ máy ổn định, như `git status --porcelain`, nên cần chọn đúng chế độ thay vì phân tích văn bản mặc định."

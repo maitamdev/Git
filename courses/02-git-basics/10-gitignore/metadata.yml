@@ -1,5 +1,5 @@
 id: 10-gitignore
-title: Bỏ qua tệp tin với .gitignore
+title: Bỏ qua tệp chưa cần đưa vào Git bằng .gitignore
 duration: 25
 xp: 80
 keywords:
@@ -11,13 +11,9 @@ keywords:
 prerequisites:
   - 05-git-add
 objectives:
-  - Hiểu rõ mục đích và tầm quan trọng của tệp tin cấu hình `.gitignore`.
-  - "Nắm bắt các quy tắc mẫu (glob patterns) phổ biến: đuôi tệp, thư mục, ngoại
-    lệ phủ định."
-  - Biết cách xử lý tình huống tệp tin đã vô tình bị theo dõi trước khi thêm vào
-    .gitignore.
+  - Tạo quy tắc đơn giản để Git bỏ qua tệp chưa được theo dõi.
+  - Dùng git check-ignore -v để tìm quy tắc khớp.
+  - Nhận biết .gitignore không ảnh hưởng tệp đã tracked hay xóa bí mật khỏi lịch sử cũ.
 commands:
-  - echo "node_modules/" >> .gitignore
-  - echo ".env" >> .gitignore
+  - git status
   - git check-ignore -v <file>
-  - git rm --cached <file>

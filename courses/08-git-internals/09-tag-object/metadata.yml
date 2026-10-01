@@ -15,9 +15,9 @@ objectives:
     có chú thích lưu thành đối tượng riêng).
   - "Khám phá cấu trúc của đối tượng Tag trong cơ sở dữ liệu: object trỏ tới,
     type, tag name, tagger và message."
-  - Sử dụng các lệnh plumbing để kiểm tra tính toàn vẹn và chữ ký số GPG gắn
-    trên đối tượng Tag.
+  - Kiểm tra annotated tag; hiểu cách ký và xác minh chữ ký khi repository đã
+    cấu hình khóa tin cậy.
 commands:
   - git tag -a v1.0.0 -m "Release version 1.0.0"
-  - git cat-file -p refs/tags/v1.0.0
+  - git cat-file -p v1.0.0
   - git cat-file -t v1.0.0

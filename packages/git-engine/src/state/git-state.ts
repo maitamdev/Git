@@ -118,6 +118,8 @@ export class GitStateManager {
     if (branch && branch.commitHash) {
       return branch.commitHash;
     }
+    const remoteTrackingHash = this.state.remoteTrackingBranches?.[ref];
+    if (remoteTrackingHash) return remoteTrackingHash;
     // Check tag
     const tag = this.getTag(ref);
     if (tag && tag.commitHash) {
@@ -219,6 +221,7 @@ export class GitStateManager {
   }
 
   public switchBranch(name: string): void {
+    const fromBranch = this.state.currentBranch;
     this.state.currentBranch = name;
     this.state.head = {
       type: 'branch',
@@ -226,7 +229,7 @@ export class GitStateManager {
     };
     const targetBranch = this.getBranch(name);
     const targetHash = targetBranch?.commitHash || '0000000';
-    this.addReflog('checkout', null, targetHash, `moving from ${this.state.currentBranch} to ${name}`);
+    this.addReflog('checkout', null, targetHash, `moving from ${fromBranch} to ${name}`);
   }
 
   public setStagingArea(files: { path: string; content: string }[]): void {
@@ -335,6 +338,10 @@ export class GitStateManager {
       this.state.config = {};
     }
     this.state.config[key] = value;
+  }
+
+  public unsetConfig(key: string): void {
+    if (this.state.config) delete this.state.config[key];
   }
 
   public getAllConfig(): Record<string, string> {

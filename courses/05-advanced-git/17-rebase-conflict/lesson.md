@@ -25,7 +25,7 @@
 ### Rebase Abort vs Skip
 - **Nói dễ hiểu**: Hai phương án xử lý sự cố trong rebase: `--abort` hủy toàn bộ quay về an toàn, còn `--skip` vứt bỏ riêng commit đang lỗi để đi tiếp.
 - **Ví dụ**: Gõ `git rebase --abort` nếu conflict quá phức tạp và bạn muốn bình tĩnh bàn bạc lại với đồng nghiệp.
-- **Đừng nhầm**: Lạm dụng `--skip` sẽ làm mất vĩnh viễn toàn bộ nội dung mã nguồn của commit bị bỏ qua.
+- **Đừng nhầm**: `--skip` bỏ việc phát lại commit hiện tại trong lần rebase này; commit gốc có thể còn trong reflog. Chỉ dùng nếu xác nhận muốn bỏ phần thay đổi đó.
 
 ---
 
@@ -90,30 +90,30 @@ git rebase --skip
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Gõ lệnh `git commit` sau khi sửa conflict**: Trong rebase bạn bắt buộc phải dùng `git rebase --continue` sau khi add file, không được tự ý gõ commit thủ công.
-2. **Lạm dụng lệnh `git rebase --skip`**: Bỏ qua commit xung đột đồng nghĩa với việc xóa bỏ toàn bộ nội dung mã nguồn của commit đó.
-3. **Hoảng loạn xóa thư mục dự án**: Hãy nhớ câu lệnh cứu cánh `git rebase --abort` luôn sẵn sàng hoàn nguyên nhánh về trạng thái ban đầu an toàn 100%.
+1. **Quên tiếp tục rebase sau khi sửa conflict**: Theo quy trình thông thường, sau khi sửa file và stage phần đã giải quyết, chạy `git rebase --continue`; làm theo hướng dẫn Git nếu có tình huống đặc biệt.
+2. **Dùng `git rebase --skip` để né conflict mà chưa xem diff**: Git sẽ không phát lại thay đổi của commit hiện tại vào nhánh mới.
+3. **Bắt đầu rebase khi còn thay đổi dở**: Nên commit hoặc cất riêng công việc và kiểm tra `git status` trước để dễ hiểu trạng thái nếu cần abort.
 
 ---
 
 ## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác trực tiếp trên terminal của máy tính để làm quen với công cụ.
-1. Tạo nhánh `conflict-demo` từ main, sửa dòng 1 của tệp `app.js` và commit.
-2. Chuyển về `main`, sửa cùng dòng 1 của tệp `app.js` với nội dung khác và commit.
-3. Chuyển lại sang `conflict-demo` và chạy `git rebase main` để chủ động tạo conflict.
-4. Mở `app.js`, chọn nội dung phù hợp, xóa các vạch ngăn cách conflict và lưu lại.
-5. Chạy `git add app.js` rồi gõ `git rebase --continue` để hoàn tất rebase thành công.
+Làm trong kho thử nghiệm riêng, và bắt đầu từ Working Tree sạch.
+1. Trên `main`, tạo `app.js` có dòng `mode=base`, stage và commit.
+2. Chạy `git switch -c conflict-demo`, đổi dòng thành `mode=feature`, rồi commit.
+3. Chạy `git switch main`, đổi cùng dòng thành `mode=main`, rồi commit.
+4. Chạy `git switch conflict-demo` và `git rebase main`. Khi conflict xuất hiện, chạy `git status`, mở `app.js`, chọn nội dung hợp nhất rồi xóa các dấu conflict.
+5. Chạy `git add app.js`, `git rebase --continue`, rồi `git status` và `git log --oneline --graph` để xác nhận rebase hoàn tất.
 
 ---
 
 ## 💡 Hint & mẹo
-> Sau khi giải quyết xong conflict và `git add`, câu lệnh tiếp theo LUÔN LUÔN là `git rebase --continue`. Tuyệt đối không gõ `git commit`.
+> Trong quy trình rebase thông thường, sau khi sửa và stage conflict, chạy `git rebase --continue` để Git tiếp tục phát lại commit.
 
 ---
 
 ## ✅ Validation & Kết quả mong đợi
-- Giải quyết thành thạo xung đột trong quá trình rebase bằng `git add` và `git rebase --continue`.
-- Nắm vững cách dùng `git rebase --abort` khi muốn dừng phiên rebase mà không sợ hỏng lịch sử.
+- Sau khi sửa conflict và stage file, `git rebase --continue` hoàn tất việc phát lại commit.
+- `git rebase --abort` hủy phiên đang chạy và đưa nhánh về điểm bắt đầu; kiểm tra lại `git status` sau đó.
 
 ---
 

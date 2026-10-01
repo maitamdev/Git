@@ -1,112 +1,119 @@
-# Vì sao cần lưu phiên bản?
+# Version Control là gì?
 
 ---
 
 ## 🎯 Mục tiêu
-- Nói được bằng lời của mình hệ thống quản lý phiên bản giúp giải quyết việc gì.
-- Nhận ra vì sao các bản `final`, `final-2`, `final-moi-nhat` dễ gây nhầm.
-- Phân biệt mốc đã lưu trong Git với tệp đang sửa dở.
+- Giải thích bằng ví dụ vấn đề mà quản lý phiên bản giúp giải quyết.
+- Nêu được vì sao đặt nhiều bản sao tên `final` dễ gây nhầm.
+- Phân biệt phần đang sửa với một mốc đã lưu trong lịch sử Git.
 
 ---
 
 ## 🧩 Từ khóa hôm nay
 
 ### Version Control — quản lý phiên bản
-- **Nói dễ hiểu:** Cách lưu lại các mốc thay đổi để sau này xem lại, so sánh hoặc quay về một mốc đã lưu.
-- **Ví dụ:** Trước khi sửa bài thuyết trình, bạn lưu một mốc “bản đã được giảng viên duyệt”. Nếu lần sửa sau làm hỏng bố cục, bạn có thể đối chiếu với mốc đó.
-- **Đừng nhầm:** Git không tự chụp mọi lần bạn gõ phím. Bạn phải chủ động yêu cầu Git lưu một mốc.
+- **Nói dễ hiểu:** Cách ghi lại những phiên bản bạn chọn để sau này xem lại, so sánh hoặc lấy lại nội dung cũ.
+- **Ví dụ:** Trước khi sửa bài thuyết trình, bạn lưu một mốc “bản đã được giảng viên duyệt”. Nếu lần sửa sau làm lệch bố cục, bạn có thể so sánh với mốc đó.
+- **Đừng nhầm:** Git không tự lưu mọi lần bạn gõ phím. Bạn phải chủ động chọn lúc lưu một mốc.
 
 ### VCS (Version Control System) — hệ thống quản lý phiên bản
-- **Nói dễ hiểu:** Tên gọi chung cho phần mềm giúp lưu và xem lịch sử thay đổi của tệp. Git là một VCS.
-- **Ví dụ:** Git có thể theo dõi mã nguồn; một VCS khác cũng có thể theo dõi tài liệu hoặc hình ảnh.
-- **Đừng nhầm:** VCS không tự sửa lỗi chương trình và không thay thế bản sao lưu cho mọi tình huống.
+- **Nói dễ hiểu:** Phần mềm giúp ghi lại và xem lịch sử thay đổi của tệp. Git là một VCS.
+- **Ví dụ:** Git thường được dùng cho mã nguồn, nhưng cũng có thể theo dõi tài liệu hoặc hình ảnh.
+- **Đừng nhầm:** VCS không tự sửa lỗi chương trình và không thay thế bản sao lưu ở nơi khác.
+
+### Commit — mốc đã lưu trong Git
+- **Nói dễ hiểu:** Một bản ghi về trạng thái dự án mà bạn chủ động đưa vào lịch sử Git.
+- **Ví dụ:** Sau khi hoàn thành phần đầu trang, bạn lưu một commit với lời nhắn “Tạo phần đầu trang”.
+- **Đừng nhầm:** Commit không lưu từng lần gõ phím và cũng không tự gửi dữ liệu sang máy khác.
 
 ### History — lịch sử thay đổi
-- **Nói dễ hiểu:** Danh sách các mốc mà bạn đã yêu cầu Git lưu, thường kèm người lưu, thời điểm và lời nhắn.
-- **Ví dụ:** “Tạo trang giới thiệu” → “Sửa lỗi nút gửi” là hai mốc có thể đọc lại.
-- **Đừng nhầm:** Tệp bạn mới sửa nhưng chưa lưu thành mốc chưa xuất hiện như một commit trong lịch sử.
+- **Nói dễ hiểu:** Danh sách các commit đã lưu, được xếp theo quan hệ trước sau.
+- **Ví dụ:** Bạn có thể đọc các lời nhắn “Tạo phần đầu trang” rồi “Sửa nút gửi” để biết dự án đã thay đổi ra sao.
+- **Đừng nhầm:** Phần bạn mới sửa nhưng chưa lưu thành commit chưa xuất hiện trong lịch sử Git.
 
 ---
 
 ## 🤔 Tại sao cần?
-Bạn và một bạn cùng làm bài tập web. Hôm qua trang chạy tốt. Hôm nay bạn sửa phần đăng nhập rồi trang lỗi. Nếu chỉ có một thư mục, bạn khó biết chính xác phần nào đã đổi và bản chạy tốt nằm ở đâu. Đặt thêm tên `final-v2` cũng không nói rõ bản nào là bản tốt.
+Bạn sửa bài tập web và vô tình làm hỏng trang từng chạy tốt. Nếu chỉ còn tệp hiện tại, bạn khó biết phần nào vừa đổi và không có mốc rõ ràng để so sánh. Tạo nhiều bản `final`, `final-2`, `final-moi-nhat` có thể giữ lại vài bản, nhưng tên tệp không cho biết chính xác chúng khác nhau ở đâu hoặc bản nào đã được kiểm tra.
 
-Git giúp bạn lưu các mốc có lời nhắn, xem khác biệt giữa hai mốc và chọn lại nội dung cũ khi cần. Bạn vẫn phải chủ động lưu mốc; Git không tự quyết định thay bạn.
+Version Control ghi lại những mốc bạn chọn. Nhờ vậy, bạn có thể xem khác biệt giữa các mốc và lấy lại nội dung từ một mốc cũ. Công cụ không tự biết bản nào tốt nhất; bạn cần chọn mốc có ý nghĩa và ghi lời nhắn dễ hiểu.
 
 ---
 
 ## 📖 Định nghĩa
-Version Control là cách ghi lại các phiên bản đã chọn của tệp theo thời gian. Phần mềm thực hiện việc đó được gọi là Version Control System (VCS). Git là một VCS thường dùng trong phát triển phần mềm.
+Version Control là cách ghi lại các phiên bản đã chọn của một hay nhiều tệp theo thời gian. Phần mềm dùng để quản lý lịch sử đó được gọi là Version Control System (VCS). Trong Git, một trạng thái được lưu vào lịch sử gọi là commit.
 
 ---
 
 ## 🧠 Mental Model (Mô hình tư duy)
-Hãy nghĩ về các mốc như những bản lưu riêng trong một cuốn sổ tiến độ. Mỗi khi hoàn thành một phần có ý nghĩa, bạn ghi lại một mốc và đặt tên cho nó. Nếu lần sau có lỗi, bạn có thể mở mốc cũ để so sánh hoặc khôi phục phần cần thiết.
-
-Điểm cần nhớ: cuốn sổ chỉ có những mốc bạn đã chủ động ghi; nó không tự lưu từng thao tác gõ phím.
+Hãy hình dung lịch sử Git như một cuốn sổ có các mốc bạn tự chọn. Mỗi commit ghi nhận trạng thái dự án tại một thời điểm; những lần sửa sau vẫn nằm ngoài lịch sử cho đến khi bạn chủ động lưu thành mốc mới.
 
 ---
 
 ## 🖼 Sơ đồ
 ```text
-Bạn chủ động lưu:   [Bản chạy được] ──> [Thêm trang giới thiệu] ──> [Sửa nút gửi]
-                       mốc 1                 mốc 2                  mốc 3
+Trong lịch sử:  [Commit 1: trang chạy tốt] ───> [Commit 2: thêm trang giới thiệu]
+                                                     |
+Bạn đang sửa:                                        └──> sửa nút gửi, chưa lưu thành commit
 ```
-Mỗi mốc ghi lại một trạng thái bạn muốn giữ. Git không tự tạo mốc khi bạn chỉ sửa tệp.
+Chỉ hai ô `Commit` là mốc đã lưu. Phần sửa nút gửi chưa nằm trong lịch sử.
 
 ---
 
 ## 🌎 Ví dụ thực tế
-Một nhóm sinh viên làm chung trang giới thiệu câu lạc bộ. Sau khi phần đầu trang chạy đúng, nhóm lưu mốc “Tạo phần đầu trang”. Hôm sau một thay đổi làm lệch giao diện, nhóm so sánh với mốc trước để tìm đoạn vừa đổi. Các bạn vẫn cần lưu mốc và viết lời nhắn rõ ràng; Git không tự biết thay đổi nào là tốt.
+Nhóm sinh viên hoàn thành phần đầu trang câu lạc bộ và lưu commit “Tạo phần đầu trang”. Hôm sau một lần sửa làm lệch giao diện. Nhóm có thể so sánh phần đang sửa với commit trước đó để tìm thay đổi liên quan, rồi lấy lại nội dung cần thiết. Git cho nhóm lịch sử để tra cứu; các bạn vẫn phải tự kiểm tra và quyết định cách sửa.
 
 ---
 
 ## 💻 Command
-```bash
-git --version
-```
+Bài này chưa cần chạy lệnh Git; trước tiên hãy hiểu vấn đề mà lịch sử phiên bản giải quyết.
 
 ---
 
 ## 🔍 Giải thích command
-`git --version` chỉ kiểm tra Git đã được cài và in số phiên bản. Lệnh này chưa tạo kho lưu trữ và chưa lưu thay đổi nào.
+Đây là bài nhập môn về ý tưởng quản lý phiên bản, chưa hướng dẫn thao tác bằng lệnh. Bạn sẽ bắt đầu dùng lệnh Git ở các bài tiếp theo.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Tin rằng Git tự lưu mọi lần gõ:** Git chỉ đưa thay đổi vào lịch sử sau khi bạn thực hiện các bước lưu mốc.
-2. **Đặt tên thư mục `final`, `final2`, `final-mới`:** Tên không giải thích nội dung nào đã đổi hoặc bản nào còn đúng.
-3. **Coi Git như bản sao lưu duy nhất:** Nếu máy hỏng trước khi bạn đẩy dữ liệu lên nơi khác, bản trên máy vẫn có thể mất.
+1. **Nghĩ Git tự lưu mọi lần gõ:** Chỉ những trạng thái bạn chủ động lưu thành commit mới được ghi vào lịch sử.
+2. **Dùng nhiều bản `final` thay cho lịch sử:** Các bản sao không tự cho biết chính xác từng thay đổi và lý do thay đổi.
+3. **Coi Git trên một máy là bản sao lưu đầy đủ:** Nếu thiết bị hỏng, dữ liệu Git chỉ nằm trên thiết bị đó vẫn có thể mất.
 
 ---
 
 ## 🧪 Lab
-Chọn một tình huống làm bạn dễ mất công nhất: không biết bản nào chạy được, không biết ai sửa phần nào, hay lỡ tay ghi đè bài của bạn cùng nhóm. Sau đó giải thích bằng một câu mốc lưu nào của Version Control sẽ giúp bạn xử lý tình huống đó.
+Một nhóm có ba tệp `bai-final.docx`, `bai-final-2.docx` và `bai-final-moi-nhat.docx`. Một tệp có phần sửa mới nhất, nhưng nhóm không nhớ tệp nào đã được giảng viên duyệt.
+
+1. Viết một câu nêu thông tin mà tên ba tệp chưa cho bạn biết.
+2. Chọn một trạng thái đáng lưu thành commit trước khi sửa tiếp và giải thích vì sao.
+3. Giả sử lần sửa tiếp theo làm hỏng nội dung: nói cách lịch sử phiên bản giúp nhóm tìm phần cần xem lại.
 
 ---
 
 ## 💡 Hint
-Hãy kể theo thứ tự: “Trước khi lỗi xảy ra, tôi muốn lưu lại ___; khi lỗi xảy ra, tôi sẽ so sánh với ___.”
+Hãy tự hỏi: “Tôi muốn giữ lại trạng thái nào?”, “Tôi cần biết hai trạng thái khác nhau ở đâu?” và “Phần sửa chưa lưu có nằm trong lịch sử chưa?”
 
 ---
 
 ## ✅ Validation
-- Giải thích được VCS giúp lưu và xem lại các mốc thay đổi.
-- Nhắc được rằng Git không tự lưu mọi lần gõ phím.
+- Nêu được VCS ghi lại các phiên bản đã chọn để xem lại hoặc so sánh.
+- Giải thích được commit là một mốc chủ động lưu vào lịch sử Git.
+- Phân biệt được phần đang sửa với phần đã lưu thành commit.
 
 ---
 
 ## ❓ Quiz
-Trả lời các câu hỏi sau. Khi sai, đọc phần giải thích rồi thử lại.
+Trả lời các câu hỏi sau. Nếu chọn sai, đọc phần giải thích rồi thử lại.
 
 ---
 
 ## 🔥 Challenge
-Nói cho một bạn chưa dùng Git hiểu vì sao đặt tên thư mục `bai-final-2` không đáng tin bằng việc lưu một mốc có lời nhắn.
+Giải thích cho một bạn chưa dùng Git vì sao lịch sử các mốc có lời nhắn giúp nhóm tìm lại thay đổi dễ hơn những bản sao tên `bai-final-2`.
 
 ---
 
 ## 📚 Tổng kết
-- **Version Control** là cách lưu và xem lại các phiên bản đã chọn.
-- **VCS** là phần mềm giúp quản lý lịch sử thay đổi; Git là một VCS.
-- Mốc chỉ xuất hiện khi bạn chủ động lưu; Git không tự lưu từng lần gõ.
+- Version Control giúp lưu các phiên bản đã chọn để xem lại, so sánh hoặc lấy lại nội dung cũ.
+- Trong Git, commit là một mốc trạng thái được chủ động ghi vào lịch sử.
+- Thay đổi chưa lưu thành commit chưa có trong lịch sử; Git cũng không tự tạo bản sao lưu ở nơi khác.

@@ -13,10 +13,9 @@ export const lesson: CourseLesson = {
       "06-git-reflog"
     ],
     "objectives": [
-      "Thành thạo quy trình 4 bước cứu hộ commit bị mất: Kiểm tra reflog -> Xác định tọa độ -> Tạo nhánh cứu hộ -> Hợp nhất.",
+      "Tìm commit trong reflog rồi tạo nhánh mới trỏ tới commit đó.",
       "Khôi phục thành công một commit vừa bị xóa do câu lệnh `git reset --hard`.",
-      "Hồi sinh nguyên vẹn một nhánh tính năng vừa bị lỡ tay xóa cưỡng chế bằng `git branch -D`.",
-      "Xây dựng tâm lý bình tĩnh, tự tin xử lý mọi sự cố mất mát mã nguồn trong dự án."
+      "Hiểu reflog chỉ tìm lại commit còn được ghi nhận; nó không khôi phục file chưa commit."
     ],
     "completion": {
       "theoryViewed": true,
@@ -35,11 +34,10 @@ export const lesson: CourseLesson = {
     "commands": [
       "git reflog",
       "git branch <tên-nhánh-cứu-hộ> <commit-hash>",
-      "git reset --hard HEAD@{n}",
-      "git checkout -b <nhánh-mới> HEAD@{n}"
+      "git log --oneline"
     ]
   },
-  "content": "# Khôi phục commit bị mất bằng reflog\n\n---\n\n## 🎯 Mục tiêu\n- Thành thạo quy trình 4 bước cứu hộ commit bị mất: Kiểm tra reflog -> Xác định tọa độ -> Tạo nhánh cứu hộ -> Hợp nhất.\n- Khôi phục thành công một commit vừa bị xóa do câu lệnh `git reset --hard`.\n- Hồi sinh nguyên vẹn một nhánh tính năng vừa bị lỡ tay xóa cưỡng chế bằng `git branch -D`.\n- Xây dựng tâm lý bình tĩnh, tự tin xử lý mọi sự cố mất mát mã nguồn trong dự án.\n\n---\n\n## 🧩 Từ khóa hôm nay\n\n### reflog recovery\n- **Nói dễ hiểu**: Kỹ thuật tìm lại mã hash từ nhật ký reflog để gắn nhánh mới và cứu lại các commit bị mất.\n- **Ví dụ**: Tra reflog thấy commit `a9c8b7d` và chạy `git branch rescue a9c8b7d` để hồi sinh code.\n- **Đừng nhầm**: Không tạo ra commit mới; kỹ thuật này chỉ nối lại con trỏ nhánh vào commit cũ đang trôi nổi.\n\n### dangling commit\n- **Nói dễ hiểu**: Commit mồ côi trôi nổi tự do trong cơ sở dữ liệu ngầm mà không có con trỏ nhánh nào trỏ tới.\n- **Ví dụ**: Sau khi chạy `git reset --hard HEAD~1`, commit đỉnh cũ trở thành dangling commit.\n- **Đừng nhầm**: Không hề bị xóa ngay lập tức; Git bảo tồn các commit này trong kho ngầm ít nhất 30 ngày.\n\n### rescue branch\n- **Nói dễ hiểu**: Nhánh mới được tạo ra cắm chốt ngay tại vị trí commit mồ côi để đưa nó trở lại cây lịch sử.\n- **Ví dụ**: `git branch rescue-feature <commit-hash>` giúp bạn xem lại và merge code an toàn.\n- **Đừng nhầm**: Là phương án an toàn nhất; không làm thay đổi hay ghi đè lên nhánh bạn đang đứng.\n\n---\n\n## 📖 Định nghĩa\nKhôi phục commit bằng reflog (Reflog Recovery) là kỹ thuật cứu hộ cấp cao trong Git, cho phép tái kết nối và hồi sinh các commit bị cô lập (Dangling Commits) trở lại cây lịch sử làm việc. Trong Git, commit bị xóa khỏi nhánh không biến mất ngay mà vẫn nằm trong cơ sở dữ liệu ngầm; reflog cung cấp mã hash chính xác để gắn lại nhánh mới.\n\n---\n\n## 💡 Tại sao cần\nKhông gì tồi tệ hơn việc nhìn thấy công sức lập trình biến mất vì một lệnh gõ sai. Kỹ năng cứu hộ bằng reflog là tấm khiên bảo vệ bạn trong mọi tình huống. Nắm vững reflog recovery giúp bạn luôn giữ sự điềm tĩnh phi thường khi xảy ra sự cố và tự tin xử lý những ca mất code phức tạp nhất.\n\n---\n\n## 🧠 Mental Model\nHãy hình dung khinh khí cầu đang bay trên trời được neo vào đất bằng một sợi dây thừng (nhánh main). Khi bạn lỡ tay cắt đứt sợi dây (reset hard hoặc xóa nhánh), khinh khí cầu không hề nổ tung mà chỉ trôi lơ lửng giữa tầng mây (Dangling Commit). `git reflog` là ống nhòm định vị tọa độ, và bạn phóng một sợi dây neo mới (`git branch rescue <hash>`) để kéo nó về đất an toàn.\n\n---\n\n## 📊 Sơ đồ minh họa\n```text\nQuy trình hồi sinh commit mồ côi:\nTrạng thái mồ côi:\nC1 ──► C2 (main)\n        └──► C3 (Trôi nổi cô lập vì bị reset hard lùi về C2!)\n\nHồi sinh bằng nhánh mới:\ngit branch rescue C3\nC1 ──► C2 (main)\n        └──► C3 (rescue - Đã được kết nối trở lại an toàn!)\n```\n\n---\n\n## 🏢 Ví dụ thực tế\nKỹ sư Mai lỡ tay gõ `git branch -D feat-ai-chat` xóa mất nhánh chứa 15 commit chưa push lên GitHub. Không hoảng loạn, Mai mở terminal gõ `git reflog` và thấy dòng sự kiện trước đó: `a9c8b7d HEAD@{3}: commit: feat: complete streaming`. Mai lập tức gõ lệnh hồi sinh `git branch feat-ai-chat a9c8b7d`. Toàn bộ 15 commit sống lại nguyên vẹn không thiếu một dòng code nào trong sự thán phục của đồng đội.\n\n---\n\n## 💻 Command & Cú pháp\n```bash\ngit reflog\ngit branch <tên-nhánh-cứu-hộ> <commit-hash>\ngit reset --hard HEAD@{n}\ngit checkout -b <nhánh-mới> HEAD@{n}\n```\n\n---\n\n## 🔍 Giải thích command\n- `git reflog`: Bước 1 tra cứu tọa độ hash của commit trước khi tai nạn xảy ra.\n- `git branch <nhánh-mới> <hash>`: Cách an toàn nhất: tạo một nhánh mới cắm chốt ngay tại commit vừa tìm thấy.\n- `git reset --hard HEAD@{n}`: Cách dịch chuyển trực tiếp con trỏ nhánh hiện tại quay về vị trí reflog chỉ định.\n- `git checkout -b <nhánh> HEAD@{n}`: Tạo nhánh mới và chuyển ngay sang mốc commit cần cứu hộ.\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Hoảng loạn gõ thêm nhiều lệnh reset lung tung**: Làm bảng reflog bị tràn các sự kiện mới và đẩy vị trí commit cần cứu đi xa.\n2. **Tắt máy tính hoặc xóa thư mục dự án khi vừa lỡ gõ sai**: Khiến các tiến trình Git bị ngắt quãng không cần thiết; dữ liệu vẫn nằm an toàn trong thư mục `.git`.\n3. **Cố tình dùng reset hard để cứu hộ thay vì tạo nhánh mới**: Tạo nhánh mới luôn an toàn nhất vì không làm xáo trộn nhánh hiện tại.\n\n---\n\n## 🧪 Lab thực hành\nBài học này là bài tự kiểm tra: bạn thực hành cứu hộ commit mồ côi trên terminal.\n1. Tạo commit thử nghiệm có nội dung `secret-data` trong tệp `secret.txt`.\n2. Chạy `git reset --hard HEAD~1` và kiểm tra thấy commit biến mất khỏi `git log`.\n3. Mở `git reflog` để tìm mã hash của commit vừa bị tách rời.\n4. Tạo nhánh cứu hộ bằng lệnh `git branch rescue <hash-tìm-thấy>`.\n5. Chuyển sang nhánh `rescue` và xác nhận tệp `secret.txt` đã trở lại nguyên vẹn.\n\n---\n\n## 💡 Hint & mẹo\n> Phương pháp an toàn nhất để cứu commit mồ côi luôn là dùng `git branch <tên-nhánh-mới> <commit-hash>`.\n\n---\n\n## ✅ Validation & Kết quả mong đợi\n- Nhánh cứu hộ mới được tạo trỏ đúng vào commit bị mất trước đó.\n- Lịch sử `git log` trên nhánh mới hiển thị đầy đủ các commit tưởng chừng đã bị xóa sổ.\n\n---\n\n## ❓ Quiz nhanh\nHãy làm bài kiểm tra trắc nghiệm dưới đây về kỹ năng cứu hộ dữ liệu với reflog.\n\n---\n\n## 🚀 Thử thách nâng cao\nKhám phá lệnh `git fsck --lost-found` để quét toàn bộ cơ sở dữ liệu và tìm ra tất cả các blob và commit mồ côi (dangling objects) trong kho lưu trữ.\n\n---\n\n## 📝 Tổng kết\n- Commit bị mất trong Git thực chất chỉ bị ngắt kết nối con trỏ chứ chưa bị xóa vật lý.\n- Sử dụng `git reflog` để định vị chính xác mã hash của commit trước thời điểm tai nạn.\n- Hồi sinh dữ liệu an toàn tuyệt đối bằng câu lệnh `git branch <tên-nhánh> <commit-hash>`.\n",
+  "content": "# Khôi phục commit bị mất bằng reflog\n\n---\n\n## 🎯 Mục tiêu\n- Thực hành tìm commit bằng reflog rồi tạo nhánh mới để giữ một tham chiếu tới commit đó.\n- Tạo nhánh cứu hộ trỏ tới commit đã tìm thấy sau một lần `git reset --hard`.\n- Hiểu cách áp dụng cùng quy trình khi xóa nhánh, nếu tìm được commit và object còn tồn tại.\n- Nhận biết reflog không khôi phục được file chưa commit và entry có thể hết hạn.\n\n---\n\n## 🧩 Từ khóa hôm nay\n\n### reflog recovery\n- **Nói dễ hiểu**: Kỹ thuật tìm lại mã hash từ nhật ký reflog để gắn nhánh mới và cứu lại các commit bị mất.\n- **Ví dụ**: Tra reflog thấy commit `a9c8b7d` và chạy `git branch rescue a9c8b7d` để hồi sinh code.\n- **Đừng nhầm**: Không tạo ra commit mới; kỹ thuật này chỉ nối lại con trỏ nhánh vào commit cũ đang trôi nổi.\n\n### dangling commit\n- **Nói dễ hiểu**: Commit không còn nằm trên lịch sử các nhánh hiện tại; hash của nó có thể vẫn còn trong reflog một thời gian.\n- **Ví dụ**: Sau khi chạy `git reset --hard HEAD~1`, commit đỉnh cũ trở thành dangling commit.\n- **Đừng nhầm**: Không được bảo đảm còn mãi. Reflog hết hạn và garbage collection có thể dọn object không còn được tham chiếu.\n\n### rescue branch\n- **Nói dễ hiểu**: Nhánh mới được tạo ra cắm chốt ngay tại vị trí commit mồ côi để đưa nó trở lại cây lịch sử.\n- **Ví dụ**: `git branch rescue-feature <commit-hash>` giúp bạn xem lại và merge code an toàn.\n- **Đừng nhầm**: Là phương án an toàn nhất; không làm thay đổi hay ghi đè lên nhánh bạn đang đứng.\n\n---\n\n## 📖 Định nghĩa\nKhôi phục commit bằng reflog là cách tìm một commit từng được tham chiếu rồi tạo ref mới, chẳng hạn nhánh, trỏ đến commit đó. Cách này hữu ích sau reset hoặc xóa nhánh khi reflog và object commit còn tồn tại; không khôi phục thay đổi chưa commit.\n\n---\n\n## 💡 Tại sao cần\nReflog hữu ích khi cần tìm lại commit sau thao tác nhầm. Trước tiên dừng các lệnh ghi, kiểm tra trạng thái repo, tìm hash phù hợp, rồi tạo nhánh cứu hộ để giữ commit đó.\n\n---\n\n## 🧠 Mental Model\nHãy hình dung nhánh là nhãn chỉ tới commit. Khi nhãn bị di chuyển hoặc xóa, reflog có thể còn ghi hash trước đó. Tạo nhánh cứu hộ (`git branch rescue <hash>`) sẽ thêm một nhãn mới trỏ tới commit đó.\n\n---\n\n## 📊 Sơ đồ minh họa\n```text\nQuy trình hồi sinh commit mồ côi:\nTrạng thái mồ côi:\nC1 ──► C2 (main)\n        └──► C3 (Trôi nổi cô lập vì bị reset hard lùi về C2!)\n\nHồi sinh bằng nhánh mới:\ngit branch rescue C3\nC1 ──► C2 (main)\n        └──► C3 (rescue - Đã được kết nối trở lại an toàn!)\n```\n\n---\n\n## 🏢 Ví dụ thực tế\nKỹ sư Mai xóa nhánh `feat-ai-chat` chưa push. Mai kiểm tra `git reflog`, tìm hash của commit cuối nhánh và xác minh đó đúng là commit cần giữ. Nếu hash và object còn tồn tại, Mai tạo lại nhánh bằng `git branch feat-ai-chat <hash>`. Reflog không khôi phục được thay đổi chưa commit.\n\n---\n\n## 💻 Command & Cú pháp\n```bash\ngit reflog\ngit branch <tên-nhánh-cứu-hộ> <commit-hash>\n```\n\nTrong Git thật có thể reset tới một entry reflog hoặc tạo nhánh trực tiếp từ entry đó. Các lệnh này có thể ghi đè file chưa commit; bài thực hành dùng cách ít rủi ro hơn là tạo nhánh theo hash đã kiểm tra.\n\n---\n\n## 🔍 Giải thích command\n- `git reflog`: Bước 1 tra cứu tọa độ hash của commit trước khi tai nạn xảy ra.\n- `git branch <nhánh-mới> <hash>`: Cách an toàn nhất: tạo một nhánh mới cắm chốt ngay tại commit vừa tìm thấy.\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Chạy thêm reset trước khi kiểm tra**: Có thể làm khó việc đọc lịch sử gần nhất; dừng và xem `git reflog` trước khi thay đổi ref thêm.\n2. **Cho rằng mọi commit sẽ luôn còn trong kho**: Reflog có thể hết hạn và object unreachable có thể bị dọn dẹp; sao lưu hoặc hỏi quản trị viên nếu dữ liệu quan trọng.\n3. **Cố tình dùng reset hard để cứu hộ thay vì tạo nhánh mới**: Tạo nhánh mới luôn an toàn nhất vì không làm xáo trộn nhánh hiện tại.\n\n---\n\n## 🧪 Lab thực hành\nBài này thao tác reset trên kho thử nghiệm riêng; không dùng file chứa mật khẩu hoặc dữ liệu thật.\n1. Tạo commit nền có `README.md`, sau đó tạo commit `demo-note` thêm `demo-note.txt`.\n2. Ghi lại mã commit `demo-note` bằng `git log --oneline -2`.\n3. Chạy `git reset --hard HEAD~1`. File demo biến khỏi Working Tree và commit không còn trên nhánh hiện tại.\n4. Chạy `git reflog`, tìm mã commit `demo-note`, rồi chạy `git branch rescue <hash>`.\n5. Chạy `git switch rescue` và xác nhận `demo-note.txt` xuất hiện. Nếu chưa thấy commit trong reflog, dừng; đừng đoán hash.\n\n---\n\n## 💡 Hint & mẹo\n> Khi đã xác minh hash, tạo nhánh cứu hộ thường ít rủi ro hơn việc di chuyển nhánh hiện tại bằng `reset --hard`.\n\n---\n\n## ✅ Validation & Kết quả mong đợi\n- Nhánh `rescue` trỏ đúng commit `demo-note` và file đã commit xuất hiện trên nhánh đó.\n- Không suy ra từ kết quả này rằng reflog có thể cứu file chưa commit hoặc mọi commit vô thời hạn.\n\n---\n\n## ❓ Quiz nhanh\nHãy làm bài kiểm tra trắc nghiệm dưới đây về kỹ năng cứu hộ dữ liệu với reflog.\n\n---\n\n## 🚀 Thử thách nâng cao\nKhám phá lệnh `git fsck --lost-found` để quét toàn bộ cơ sở dữ liệu và tìm ra tất cả các blob và commit mồ côi (dangling objects) trong kho lưu trữ.\n\n---\n\n## 📝 Tổng kết\n- Commit bị mất trong Git thực chất chỉ bị ngắt kết nối con trỏ chứ chưa bị xóa vật lý.\n- Sử dụng `git reflog` để định vị chính xác mã hash của commit trước thời điểm tai nạn.\n- Tạo nhánh trỏ tới commit tìm được bằng `git branch <tên-nhánh> <commit-hash>`; xác minh hash trước khi chạy.\n",
   "quiz": {
     "id": "quiz-05-07-reflog-recovery",
     "title": "Trắc nghiệm: Cứu hộ commit với reflog",
@@ -66,7 +64,7 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "`git branch <tên-nhánh> <hash>` tạo một con trỏ nhánh mới neo giữ commit đó, đưa nó trở lại cây lịch sử hoàn toàn an toàn."
+        "explanation": "`git branch <tên-nhánh> <hash>` tạo ref mới trỏ tới commit. Hãy xác minh hash và tên nhánh trước khi chạy."
       },
       {
         "id": "q2",
@@ -74,7 +72,7 @@ export const lesson: CourseLesson = {
         "type": "single",
         "options": [
           {
-            "text": "Hoàn toàn cứu được, chỉ cần tìm mã hash của đỉnh nhánh feature-x trong reflog rồi tạo lại nhánh",
+            "text": "Có thể cứu nếu tìm được commit đỉnh nhánh trong reflog và object vẫn còn; hãy tạo nhánh mới trỏ tới commit đó",
             "correct": true
           },
           {
@@ -90,15 +88,15 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "Xóa nhánh chỉ là xóa con trỏ tên nhánh; các commit vẫn nằm nguyên vẹn trong kho và có thể tái tạo lại nhánh dễ dàng qua reflog."
+        "explanation": "Xóa nhánh bỏ ref của nhánh. Nếu reflog còn entry và commit object chưa bị dọn, có thể tạo ref mới trỏ tới commit đó."
       },
       {
         "id": "q3",
-        "question": "Trong tình huống bạn lỡ tay chạy `git reset --hard HEAD~1`, câu lệnh một dòng nào đưa bạn quay trở lại ngay lập tức trạng thái trước khi reset?",
+        "question": "Sau khi tìm được commit bị mất trong reflog, cách nào giữ commit đó mà không di chuyển nhánh hiện tại?",
         "type": "single",
         "options": [
           {
-            "text": "git reset --hard HEAD@{1}",
+            "text": "git branch rescue <commit-hash>",
             "correct": true
           },
           {
@@ -114,7 +112,7 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "Trước khi reset con trỏ ở vị trí `HEAD@{1}`, lệnh `git reset --hard HEAD@{1}` lập tức đưa bạn trở lại vị trí đó."
+        "explanation": "Tạo nhánh mới lưu một tham chiếu tới commit tìm được. Trước khi dùng reset hard, hãy kiểm tra trạng thái làm việc vì lệnh có thể ghi đè chỉnh sửa chưa commit."
       },
       {
         "id": "q4",
@@ -138,7 +136,7 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "Gõ nhiều lệnh dịch chuyển HEAD sẽ tạo thêm nhiều dòng `HEAD@{n}`, làm phức tạp và đẩy xa vị trí commit cần cứu."
+        "explanation": "Reflog được đánh số theo thứ tự mới đến cũ; thao tác làm đổi ref có thể đổi số thứ tự. Hãy đọc và ghi lại hash cần tìm trước khi làm bước tiếp theo."
       },
       {
         "id": "q5",
@@ -162,7 +160,7 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "Lệnh `git branch <tên> <hash>` là thao tác an toàn 100%, chỉ tạo thêm con trỏ tham chiếu mà không chạm vào nhánh làm việc hiện tại."
+        "explanation": "Lệnh này tạo thêm ref và không di chuyển ref của nhánh hiện tại. Kiểm tra hash trước để tránh neo nhánh mới vào commit nhầm."
       }
     ]
   }

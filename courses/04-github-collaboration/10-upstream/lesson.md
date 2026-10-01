@@ -25,17 +25,17 @@
 ### two-remote model
 - **Nói dễ hiểu**: Mô hình cấu hình đồng thời 2 máy chủ từ xa: origin để đẩy code và upstream để nhận cập nhật.
 - **Ví dụ**: `git remote -v` hiển thị cả cặp origin và upstream trong cùng một kho cục bộ.
-- **Đừng nhầm**: Hai remote này hoàn toàn độc lập; bạn chỉ đẩy code lên origin và chỉ kéo cập nhật từ upstream.
+- **Đừng nhầm**: `origin` và `upstream` chỉ là tên thường dùng. Git không giới hạn lệnh theo tên; hãy chọn đúng URL và quyền trước khi fetch hoặc push.
 
 ---
 
 ## 📖 Định nghĩa
-`upstream` là tên bí danh quy ước quốc tế dùng để chỉ kho lưu trữ từ xa gốc (Original Repository) của dự án. Trong mô hình Forking Workflow, `origin` trỏ về bản sao trên tài khoản cá nhân, còn `upstream` trỏ về nguồn cội ban đầu để bạn liên tục kéo các cập nhật mới về máy.
+Trong quy trình fork, nhóm thường đặt `origin` cho fork cá nhân và `upstream` cho kho gốc. Đây là quy ước tên, không phải từ khóa đặc biệt của Git. Trước khi chạy lệnh, kiểm tra `git remote -v` để biết mỗi bí danh thực sự trỏ tới đâu.
 
 ---
 
 ## 💡 Tại sao cần
-Trong các dự án mã nguồn mở, kho gốc liên tục đón nhận các bản sửa lỗi và tính năng mới. Nếu kho fork của bạn không cấu hình `upstream` để đồng bộ thường xuyên, mã nguồn sẽ nhanh chóng lỗi thời. Khi tạo Pull Request, bạn sẽ gặp xung đột mã nguồn phức tạp và dễ bị từ chối duyệt.
+Kho gốc có thể tiếp tục nhận thay đổi sau khi bạn fork. Fetch từ kho gốc giúp bạn xem các cập nhật mới; khi cần, tích hợp chúng vào nhánh làm việc theo quy định của dự án. Đồng bộ giảm nguy cơ làm việc trên lịch sử cũ nhưng không đảm bảo loại bỏ mọi conflict.
 
 ---
 
@@ -93,21 +93,22 @@ git push origin main
 
 ## 🧪 Lab thực hành
 Bài học này là bài tự kiểm tra: bạn thao tác cấu hình remote upstream và đối chiếu danh sách remote.
-1. Thêm remote upstream trỏ tới kho mẫu bằng `git remote add upstream https://github.com/git-academy/original-project.git`.
-2. Kiểm tra danh sách bằng `git remote -v` và xác nhận có cả origin và upstream.
-3. Chạy `git fetch upstream` để tải các commit mới nhất từ kho gốc.
-4. Gộp cập nhật vào nhánh main bằng `git merge upstream/main`.
+1. Trong một fork thật mà bạn đã clone, chạy `git remote -v` và xác nhận URL của `origin` trước khi tiếp tục.
+2. Thêm URL kho gốc thật bằng `git remote add upstream <url-kho-goc>`; đừng dùng URL ví dụ chưa tồn tại.
+3. Chạy `git fetch upstream`, rồi `git branch -r` để xem tên nhánh remote-tracking đã tải về.
+4. Nếu nhánh gốc tên `main`, chuyển sang local `main` sau khi bảo đảm không có thay đổi chưa commit: `git switch main`.
+5. Chạy `git merge upstream/main` chỉ khi chính sách dự án cho phép đồng bộ theo cách này. Nếu thành công và muốn cập nhật fork, dùng `git push origin main` khi có quyền ghi.
 
 ---
 
 ## 💡 Hint & mẹo
-> Ghi nhớ quy tắc vàng: Luôn kéo (pull/fetch) từ `upstream` về máy, và chỉ đẩy (push) lên `origin` của chính bạn.
+> Trong quy trình fork phổ biến, thường fetch từ `upstream` và push lên `origin`. Trước mỗi lần push, xác nhận URL đích và quyền của bạn.
 
 ---
 
 ## ✅ Validation & Kết quả mong đợi
 - Danh sách `git remote -v` hiển thị đầy đủ cả hai remote origin và upstream.
-- Nhánh main cục bộ cập nhật ngang bằng commit mới nhất của `upstream/main`.
+- Nếu merge thành công, local `main` chứa cập nhật đã fetch từ upstream; nhánh có thể vẫn khác nếu dự án có commit riêng.
 
 ---
 

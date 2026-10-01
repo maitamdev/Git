@@ -1,34 +1,48 @@
-# Kiểm kê khả năng dạy thuật ngữ — 2026-10-01
+# Kiểm toán khả năng dạy — Git Academy
 
-Đây là kiểm kê cấu trúc, không phải xác nhận nội dung của cả khóa học đã đúng hoặc dễ hiểu. Một bài được tính là có thẻ thuật ngữ khi có 2–5 thẻ; mỗi thẻ giải thích theo cách dễ hiểu, có ví dụ và chỉ ra điều dễ nhầm.
+Cập nhật: 2026-10-01. Tài liệu này ghi lại tình trạng nội dung và bằng chứng đã kiểm tra; các cổng tự động là kiểm tra cấu trúc, không thay thế đánh giá của giảng viên hoặc thử nghiệm với sinh viên.
 
-| Level | Số bài | Bài có thẻ thuật ngữ |
-| --- | ---: | ---: |
-| 1 · Git Foundations | 9 | 9 |
-| 2 · Git Basics | 12 | 12 |
-| 3 · Branching & Merging | 14 | 14 |
-| 4 · GitHub Collaboration | 16 | 16 |
-| 5 · Advanced Git | 22 | 22 |
-| 6 · Team Workflows | 15 | 15 |
-| 7 · GitHub Actions & CI/CD | 20 | 20 |
-| 8 · Git Internals | 20 | 20 |
-| **Tổng** | **128** | **128** |
+## Phạm vi khóa học
 
-## Đã thay đổi
+| Level | Chủ đề | Bài học | Bài có Git simulator |
+| --- | --- | ---: | ---: |
+| 1 | Nền tảng Git | 9 | 3 |
+| 2 | Git căn bản | 12 | 8 |
+| 3 | Nhánh và hợp nhất | 14 | 10 |
+| 4 | Cộng tác trên GitHub | 16 | 9 |
+| 5 | Git nâng cao | 22 | 16 |
+| 6 | Quy trình làm việc nhóm | 15 | 7 |
+| 7 | GitHub Actions và CI/CD | 20 | 14 |
+| 8 | Bên trong Git | 20 | 9 |
+| **Tổng** | **Toàn khóa** | **128** | **76** |
 
-- Bỏ đăng nhập khỏi lối vào học viên; khóa học mở thẳng. Tiến độ chỉ lưu trong trình duyệt đang dùng, không đồng bộ giữa thiết bị.
-- Cả 9 bài Level 1 có thẻ từ khóa riêng; các bài 4–9 đã được sửa phần giải thích và quiz để tránh yêu cầu kiến thức chưa dạy.
-- Cả 12 bài Level 2 có 3–5 thẻ từ khóa, phần thực hành hoặc thao tác tự kiểm tra, và ít nhất 5 câu quiz có giải thích đáp án. Đã sửa các quiz YAML khiến câu hỏi bị bỏ khi sinh dữ liệu.
-- Rút gọn những đoạn dài ở các bài Working Directory, Staging Area, HEAD, Commit Message, `git log` và vòng đời tệp; bỏ lệnh nâng cao khỏi bài `git log` và `git diff` trước khi chúng được dạy.
-- Phần đọc Level 1 được rút gọn theo thứ tự: tình huống → thẻ từ khóa → giải thích → ví dụ → bài tự thử và đối chiếu → quiz.
-- Level 2 tiếp tục cùng trình tự và nhấn vào làm thử từng lệnh, kiểm tra bằng `git status`/`git diff`, rồi làm quiz.
-- Nội dung `Lab` bằng văn bản được chuyển thành màn thử làm nếu bài chưa có lab mô phỏng. Màn này yêu cầu người học nhập câu trả lời rồi tự so với tiêu chí; nó không thay thế một lab Git có kiểm tra tự động.
-- Cổng kiểm tra cũ đòi mỗi đoạn định nghĩa 80–100 từ đã được thay bằng kiểm tra cấu trúc thẻ từ khóa. Độ dài văn bản chỉ còn là thông tin tham khảo, không còn được xem là bằng chứng chất lượng.
-- Course Health hiển thị số bài có bộ thẻ từ khóa; không còn tuyên bố toàn khóa “100% đạt” dựa trên số từ.
+52 bài còn lại có hướng dẫn tự làm và tiêu chí tự đối chiếu; đó không phải là bài thực hành được simulator tự chấm. Khóa cũng có 77 scenario đăng ký; cổng scenario xác nhận cấu trúc và liên kết, còn các bài test engine kiểm tra hành vi simulator.
 
-## Còn phải làm trước khi gọi khóa học hoàn chỉnh
+## Cách nội dung được tổ chức
 
-1. Biên tập 107 bài còn lại theo Level 3–8. Level 1–2 đã qua rà cấu trúc và sửa các điểm nội dung thấy được trong lần đọc này; độ dễ hiểu với sinh viên vẫn cần thử nghiệm người học thật.
-2. Soát tính đúng của định nghĩa, ví dụ, lệnh và quiz bằng nguồn Git đáng tin; đặc biệt kiểm tra lời giải có dạy lý do thay vì chỉ báo đáp án.
-3. Gắn mỗi mục tiêu học với một nhiệm vụ làm được. Bài chưa có lab mô phỏng hiện chỉ có câu trả lời tự đối chiếu, chưa được thực thi và chấm trong Git simulator.
-4. Sau khi sửa nội dung, chạy lại kiểm tra từng level và thử luồng học trên trình duyệt từ đầu đến cuối.
+- Bài học dùng các màn ngắn theo thứ tự: tình huống hoặc mục tiêu → giải thích từng khái niệm → ví dụ → tự làm hoặc lab → phản hồi/tiêu chí kiểm tra → quiz và tổng kết.
+- 128/128 bài có mục từ khóa. Thẻ thuật ngữ giải nghĩa bằng lời đơn giản, đưa ví dụ và nêu điểm dễ nhầm.
+- 128/128 bài có quiz và thử thách. Câu hỏi có phản hồi giải thích để người học hiểu vì sao đáp án đúng.
+- Những điểm nội dung đã được chỉnh trong đợt rà soát gồm thuật ngữ, thứ tự dạy trước/sau, ví dụ và lệnh Git, quiz YAML, nội dung Git internals và GitHub Actions, cùng các kịch bản simulator.
+- Không đăng nhập để vào học. Tiến độ lưu trong trình duyệt hiện tại; không đồng bộ qua thiết bị hoặc trình duyệt khác.
+
+## Bằng chứng kiểm tra hiện tại
+
+- `pnpm generate:courses`: sinh thành công dữ liệu cho 128 bài.
+- `pnpm validate:content`: 128/128 bài qua các kiểm tra nội dung tự động.
+- `pnpm validate:courses`: 128/128 bài vật lý, manifest và dependency graph hợp lệ.
+- `pnpm validate:scenarios`: 77/77 scenario và tham chiếu lab hợp lệ.
+- `pnpm audit:content`: 128/128 quiz và thử thách; 76/128 bài có Git simulator.
+- `pnpm audit:curriculum`: số bài trong manifest, filesystem, dữ liệu sinh, DAG, search index, quiz và thử thách đồng nhất.
+- `pnpm test`: 63 file test, 1.035 test đều qua; các test hướng dẫn kiểm tra nội dung của cả 8 level.
+- `pnpm --filter playground... build` chạy từ `apps/playground`: build thành công theo dependency workspace mà Vercel cần.
+- Kiểm tra giao diện local: vào thẳng khóa học không cần tài khoản; hoàn thành quiz bài 1 với 5/5 câu; màn kết quả ghi nhận bài hoàn tất; bài 2 được mở; tiến độ 1/128 còn sau khi tải lại trang. Bản build production local cũng mở được bản đồ và tải bài 1.
+
+## Giới hạn còn phải biết trước khi mở public
+
+- Chưa có buổi thử nghiệm quan sát sinh viên mới học độc lập. Vì vậy chưa có bằng chứng thực nghiệm rằng mọi thuật ngữ, nhịp bài và thời lượng đều phù hợp với mọi nhóm người học.
+- Chưa chạy thủ công toàn bộ 77 scenario như một học viên. Kết quả cổng scenario không khẳng định từng hướng dẫn ngoài simulator, tài khoản GitHub thật hoặc dịch vụ ngoài hoạt động.
+- Tiến độ được lưu ở localStorage. Xóa dữ liệu trang hoặc đổi thiết bị/trình duyệt sẽ không mang theo tiến độ.
+- Build local và các bài test không chứng minh Vercel đã được kết nối hoặc deployment production đã hoàn tất. Cần xác nhận trạng thái deployment trên Vercel sau khi push.
+
+Kết luận phù hợp: đủ bằng chứng kỹ thuật để phát hành bản public đầu tiên cho người học tự học và thu phản hồi; không nên quảng bá đây là giáo trình đã được kiểm chứng thực nghiệm với sinh viên.

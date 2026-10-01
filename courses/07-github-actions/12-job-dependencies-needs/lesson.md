@@ -43,21 +43,24 @@ Một công ty tài chính thiết lập pipeline phát hành cổng thanh toán
 
 ## 💻 Command & Cú pháp
 ```bash
-# Xem đồ thị phụ thuộc giữa các job trong terminal
-gh run view --graph
+# Xem tóm tắt một lần chạy trong terminal (cần GitHub CLI đã đăng nhập)
+gh run view
+
+# Mở lần chạy trong trình duyệt để xem đồ thị Job
+gh run view --web
 
 # Kiểm tra cú pháp pipeline phụ thuộc trong file workflow
 cat .github/workflows/pipeline.yml
 ```
 
 ## 🔍 Giải thích command
-- `gh run view --graph`: Hiển thị đồ thị DAG các Job kèm mũi tên phụ thuộc và trạng thái thành công hay thất bại trên giao diện terminal.
+- `gh run view`: Hiển thị tóm tắt lần chạy workflow; có thể thêm `--web` để mở trang run và xem đồ thị Job.
 - `cat .github/workflows/pipeline.yml`: Đọc nội dung tệp để kiểm tra các danh sách mảng `needs` có khớp đúng tên `job_id` hay không.
 
 ## ⚠️ Sai lầm phổ biến
 - Tạo ra vòng lặp phụ thuộc (Circular Dependency) ví dụ A cần B và B cần A khiến workflow bị khóa và báo lỗi xác thực.
 - Khai báo sai tên định danh `job_id` trong mảng `needs` (gõ sai chữ hoa, chữ thường hoặc nhầm với thuộc tính `name`).
-- Kỳ vọng Job phụ thuộc vẫn chạy khi Job trước bị lỗi mà không sử dụng hàm trạng thái `always()` hoặc `if: failure()`.
+- Kỳ vọng Job phụ thuộc tự chạy sau khi Job trước thất bại; mặc định các Job phụ thuộc sẽ bị bỏ qua nếu dependency không thành công. Chỉ thêm điều kiện trạng thái khi có lý do rõ ràng.
 
 ## 🧪 Lab thực hành
 Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
@@ -86,7 +89,7 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
 3. Truy cập tab Actions và chiêm ngưỡng đồ thị các đường nối mũi tên trực quan giữa `setup` -> `test` -> `deploy`.
 
 ## 💡 Hint & mẹo
-- Nếu một Job phụ thuộc vào nhiều Job tiên quyết cùng lúc, hãy truyền danh sách mảng: `needs: [job1, job2]`.
+- Nếu một Job phụ thuộc vào nhiều Job tiên quyết cùng lúc, hãy truyền danh sách: `needs: [job1, job2]`.
 - Bạn có thể đọc kết quả của Job trước thông qua biểu thức `needs.<job_id>.result` để xử lý logic rẽ nhánh.
 
 ## ✅ Validation & Kết quả mong đợi
@@ -97,7 +100,7 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
 Hãy hoàn thành bài trắc nghiệm bên dưới để kiểm tra khả năng thiết kế quan hệ phụ thuộc giữa các Job bằng thuộc tính `needs`.
 
 ## 🚀 Thử thách nâng cao
-Thiết kế một Job dọn dẹp tài nguyên (cleanup) có khai báo `needs: [test, build]` nhưng vẫn luôn luôn chạy ở cuối cùng kể cả khi bài test bị lỗi bằng cách dùng biểu thức `if: always()`.
+Thiết kế một Job dọn dẹp tài nguyên có `needs: [test, build]` và điều kiện `if: ${{ !cancelled() }}` để chạy sau khi dependency thành công hoặc thất bại, nhưng không bắt đầu khi toàn bộ workflow đã bị hủy. Dùng `always()` chỉ khi cần chạy cả sau khi hủy và cân nhắc khả năng bước cleanup bị treo.
 
 ## 📝 Tổng kết
 - Thuộc tính `needs` dùng để xác định các Job tiên quyết phải chạy xong trước khi Job hiện tại bắt đầu.

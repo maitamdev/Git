@@ -13,19 +13,19 @@
 ## 🧩 Từ khóa hôm nay
 
 ### team simulation
-- **Nói dễ hiểu**: Kịch bản mô phỏng toàn diện môi trường làm việc nhóm thực tế với đầy đủ các vai trò kỹ sư và reviewer.
-- **Ví dụ**: Nhận Issue được giao, tách nhánh tính năng, đẩy code và mở PR chờ đồng nghiệp duyệt.
-- **Đừng nhầm**: Không chỉ là gõ lệnh một mình; đây là bài tập rèn luyện kỹ năng phối hợp và tuân thủ quy trình nhóm.
+- **Nói dễ hiểu**: Bài tập nhập vai để tự làm các bước của người viết và tự kiểm tra như reviewer.
+- **Ví dụ**: Đọc yêu cầu, tạo nhánh, sửa file, commit và dùng checklist xem lại diff.
+- **Đừng nhầm**: Một mình không thể thực sự nhận review/approval từ người khác; có thể mời bạn học làm reviewer ở phần mở rộng.
 
-### reviewer checklist
-- **Nói dễ hiểu**: Danh sách các tiêu chí kiểm tra mà người đánh giá dùng để soi xét chất lượng PR trước khi duyệt.
-- **Ví dụ**: Kiểm tra xem code có chạy qua bài test không, có bị lộ mật khẩu không và có viết tài liệu đầy đủ không.
-- **Đừng nhầm**: Không nhằm mục đích gây khó dễ; checklist bảo vệ cả nhóm khỏi các lỗi nghiêm trọng lọt vào production.
+### acceptance criteria — tiêu chí hoàn thành
+- **Nói dễ hiểu**: Danh sách kết quả cụ thể dùng để quyết định nhiệm vụ đã làm xong chưa.
+- **Ví dụ**: README có hướng dẫn, thay đổi được commit, diff không chứa thông tin bí mật.
+- **Đừng nhầm**: “Đã push” không tự chứng minh tính năng đúng; cần đối chiếu yêu cầu và kiểm tra thay đổi.
 
-### release integration
-- **Nói dễ hiểu**: Thao tác hòa nhập tính năng đã được kiểm duyệt và gộp vào nhánh chính để sẵn sàng phát hành.
-- **Ví dụ**: Squash-merge nhánh `feat/coupon` vào nhánh `main` và kích hoạt luồng đóng gói phiên bản mới.
-- **Đừng nhầm**: Không dừng lại ở việc gộp code; bạn còn cần xóa nhánh cũ và kéo cập nhật mới về máy cá nhân.
+### self-review — tự rà thay đổi
+- **Nói dễ hiểu**: Tự đọc diff trước khi chia sẻ để phát hiện lỗi hoặc thay đổi ngoài ý muốn.
+- **Ví dụ**: Kiểm tra README đã có ví dụ và không chứa token/mật khẩu.
+- **Đừng nhầm**: Tự review không thay thế review độc lập nếu dự án yêu cầu người khác duyệt.
 
 ---
 
@@ -93,12 +93,14 @@ git branch -d feat/coupon-system
 ---
 
 ## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn vận hành chu trình phối hợp nhóm hoàn chỉnh từ tiếp nhận Issue đến đóng PR.
-1. Khởi động kịch bản mô phỏng dự án nhóm trong môi trường làm việc.
-2. Đọc kỹ yêu cầu trong Issue được giao và tạo nhánh tính năng tương ứng.
-3. Viết code giải quyết bài toán và tạo commit chuẩn quy ước Conventional Commits.
-4. Mở Pull Request, đọc nhận xét của Reviewer và thực hiện chỉnh sửa bổ sung.
-5. Hoàn tất merge PR và xác nhận Issue được đóng tự động.
+**Nhiệm vụ:** cập nhật README cho tính năng mã giảm giá trong kho thử nghiệm. Làm trong Git Academy simulator hoặc bản sao local riêng; không push lên dự án thật nếu chưa được phép.
+1. Viết ba tiêu chí hoàn thành: README có mục “Mã giảm giá”, có một ví dụ sử dụng, và không chứa thông tin bí mật.
+2. Tạo nhánh `feat/coupon-readme` bằng `git switch -c feat/coupon-readme`.
+3. Sửa README bằng editor, thêm mục và ví dụ; lưu file.
+4. Chạy `git status` và `git diff` để xem đúng nội dung vừa sửa.
+5. Chạy `git add README.md`, rồi `git commit -m "docs: explain coupon feature"`.
+6. Tự review bằng checklist: đủ ba tiêu chí chưa, diff có thay đổi ngoài ý muốn hoặc secret không? Nếu cần, sửa và tạo commit bổ sung.
+7. Trong simulator, push chỉ cập nhật remote giả lập. Với GitHub thật, push lên kho thử nghiệm bạn có quyền, tạo PR và mời bạn học review; chỉ merge khi có quyền.
 
 ---
 
@@ -108,8 +110,8 @@ Bài học này là bài tự kiểm tra: bạn vận hành chu trình phối h�
 ---
 
 ## ✅ Validation & Kết quả mong đợi
-- Toàn bộ chu trình từ Issue đến PR Merged được hoàn thành trơn tru.
-- Nhánh tính năng được dọn dẹp sạch sẽ và nhánh main cục bộ đồng bộ hoàn toàn với remote.
+- Có nhánh riêng, thay đổi README, diff đã kiểm tra và commit rõ nội dung.
+- Nếu mở PR thử nghiệm, mô tả nêu mục tiêu và cách kiểm tra; review/merge chỉ thực hiện nếu có quyền.
 
 ---
 
@@ -119,11 +121,11 @@ Làm bài trắc nghiệm tổng kết để hoàn tất toàn bộ Level 4: Git
 ---
 
 ## 🚀 Thử thách nâng cao
-Mô phỏng lại toàn bộ quy trình này với một người bạn học cùng bằng cách tạo repository thật trên GitHub và phân vai review chéo cho nhau.
+Làm theo cặp trên một repository thử nghiệm: một người tạo PR, người kia kiểm tra diff bằng checklist và để lại một góp ý cụ thể; tác giả cập nhật commit rồi cả hai xác nhận tiêu chí đã đạt. Cần tài khoản GitHub và quyền truy cập vào repository.
 
 ---
 
 ## 📝 Tổng kết
-- Làm chủ toàn diện kỹ năng cộng tác: Clone, Fetch, Pull, Push, Fork, PR và Code Review.
-- Feature Branch Workflow là kim chỉ nam cho mọi hoạt động phát triển phần mềm nhóm.
-- Giao tiếp văn minh, viết mô tả rõ ràng và tôn trọng quy trình là chìa khóa của sự thành công.
+- Có thể đọc một nhiệm vụ, làm thay đổi trên nhánh riêng, kiểm tra diff và tạo commit.
+- PR, fork, review và merge diễn ra trên nền tảng cộng tác; quyền và cách làm tùy dự án.
+- Giao tiếp rõ ràng và làm theo quy trình của nhóm giúp người khác kiểm tra thay đổi.

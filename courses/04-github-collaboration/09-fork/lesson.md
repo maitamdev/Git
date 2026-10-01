@@ -13,9 +13,9 @@
 ## 🧩 Từ khóa hôm nay
 
 ### fork
-- **Nói dễ hiểu**: Thao tác tạo một bản sao độc lập của dự án người khác vào tài khoản GitHub cá nhân của bạn.
+- **Nói dễ hiểu**: Tạo một repository thuộc tài khoản hoặc tổ chức của bạn, dựa trên repository khác.
 - **Ví dụ**: Bấm nút "Fork" trên repo `facebook/react` để có một bản `your-username/react`.
-- **Đừng nhầm**: Không phải là câu lệnh gõ trong terminal; đây là tính năng trên nền tảng web GitHub.
+- **Đừng nhầm**: Fork không cấp quyền ghi vào kho gốc; chính sách tổ chức có thể giới hạn việc fork.
 
 ### server-side clone
 - **Nói dễ hiểu**: Quá trình nhân bản diễn ra hoàn toàn giữa các máy chủ đám mây của GitHub mà không qua máy bạn.
@@ -30,7 +30,7 @@
 ---
 
 ## 📖 Định nghĩa
-Fork trên GitHub là thao tác nhân bản phía máy chủ (server-side clone), tạo ra một bản sao độc lập hoàn chỉnh của kho lưu trữ người khác vào tài khoản cá nhân của bạn. Bạn có toàn quyền ghi vào bản sao này để sửa lỗi hay thêm tính năng mà không ảnh hưởng tới dự án gốc.
+Fork tạo một repository thuộc tài khoản của bạn dựa trên repository gốc. Bạn có quyền làm việc trong fork theo quyền của tài khoản mình, nhưng quyền và cài đặt kho gốc vẫn do chủ sở hữu quản lý. Trên GitHub, các repository trong cùng fork network có thể chia sẻ dữ liệu Git; fork không đồng nghĩa với một bản độc lập hoàn toàn.
 
 ---
 
@@ -88,10 +88,10 @@ git remote add upstream <url-kho-goc>
 
 ## 🧪 Lab thực hành
 Bài học này là bài tự kiểm tra: bạn thực hành thao tác fork trên giao diện GitHub và clone về máy cá nhân.
-1. Mở trang web GitHub của dự án mẫu và nhấn nút `Fork`.
-2. Sao chép URL của kho fork trên tài khoản cá nhân của bạn.
-3. Mở terminal và thực thi `git clone` kho fork về máy tính.
-4. Chạy `git remote -v` để xác nhận origin trỏ đúng vào tài khoản của bạn.
+1. Dùng tài khoản GitHub của bạn để mở một repository công khai cho phép fork; nếu nút Fork không có, chính sách kho hoặc tổ chức có thể không cho phép.
+2. Tạo fork từ giao diện GitHub và kiểm tra chủ sở hữu/URL của fork.
+3. Clone URL của fork vào thư mục riêng trên máy thật; không clone trong terminal mô phỏng của khóa học.
+4. Chạy `git remote -v` để kiểm tra `origin` trỏ tới fork của bạn. Fork/clone cần tài khoản hoặc quyền phù hợp với repository.
 
 ---
 
@@ -101,7 +101,7 @@ Bài học này là bài tự kiểm tra: bạn thực hành thao tác fork trê
 ---
 
 ## ✅ Validation & Kết quả mong đợi
-- Bản sao kho lưu trữ xuất hiện trên tài khoản GitHub cá nhân của bạn.
+- Repository fork xuất hiện dưới tài khoản của bạn nếu thao tác được phép.
 - Kho trên máy tính có remote origin trỏ về kho fork cá nhân.
 
 ---
@@ -117,6 +117,6 @@ Khám phá tính năng "Sync fork" ngay trên giao diện web của GitHub để
 ---
 
 ## 📝 Tổng kết
-- Fork tạo bản sao kho từ xa trên GitHub về tài khoản cá nhân của bạn.
-- Cung cấp toàn quyền chỉnh sửa và thử nghiệm mà không ảnh hưởng tới kho gốc.
+- Fork tạo repository mới dựa trên kho gốc trong fork network của GitHub.
+- Bạn làm việc trên fork theo quyền của mình; việc đó không tự cấp quyền sửa kho gốc.
 - Là nền tảng cốt lõi của quy trình đóng góp mã nguồn mở trên toàn cầu.

@@ -157,6 +157,13 @@ export const stashScenario: Scenario = {
   initialState: {
     repositoryInitialized: true,
     branch: 'main',
+    commits: [
+      {
+        message: 'Add starter work file',
+        branch: 'main',
+        files: { 'wip.js': 'const workInProgress = false;' },
+      },
+    ],
     files: [{ path: 'wip.js', content: 'const workInProgress = true;', status: 'modified' }],
   },
   goal: {

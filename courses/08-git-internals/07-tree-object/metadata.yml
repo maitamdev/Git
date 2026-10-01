@@ -13,11 +13,10 @@ prerequisites:
 objectives:
   - Hiểu rõ bản chất của đối tượng Tree như người quản lý cấu trúc thư mục phân
     cấp trong Git.
-  - "Nắm vững định dạng từng dòng mục (Tree Entry): chế độ quyền tệp (mode),
-    loại đối tượng, mã băm SHA-1 và tên tệp/thư mục."
+  - Nắm các trường Tree Entry gồm mode, loại object, object ID và tên.
   - "Khám phá kiến trúc cây Merkle Tree lồng nhau: một đối tượng Tree có thể
     chứa các đối tượng Tree con (thư mục con) và Blob (tệp con)."
 commands:
-  - git cat-file -p <tree-hash>
+  - git cat-file -p "HEAD^{tree}"
   - git ls-tree HEAD
   - git write-tree

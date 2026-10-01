@@ -6,16 +6,14 @@ keywords:
   - git log
   - lich su
   - oneline
-  - graph
   - tra cuu commit
 prerequisites:
   - 06-git-commit
 objectives:
   - Dùng `git log` để xem các commit trong lịch sử nhánh hiện tại.
-  - Dùng `--oneline` và `--graph` để thay đổi cách hiển thị.
+  - Dùng `--oneline` để rút gọn và `-n` để giới hạn số commit.
   - Giới hạn số kết quả bằng `-n`.
 commands:
   - git log
   - git log --oneline
-  - git log --graph --oneline
   - git log -n 5

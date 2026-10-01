@@ -1,9 +1,9 @@
 # Kiến trúc Workflow: Events, Jobs, Steps và Runners
 
 ## 🎯 Mục tiêu
-- Nắm rõ cấu trúc phân tầng 4 cấp bậc của một Workflow: Event -> Jobs -> Steps -> Actions/Commands.
-- Hiểu bản chất chạy song song (Parallel) mặc định của các Job và chạy tuần tự (Sequential) của các Step.
-- Nắm vững vai trò của Runner như một môi trường máy ảo cách ly độc lập chứa toàn bộ phiên làm việc.
+- Hiểu luồng từ Event kích hoạt Workflow; Workflow chứa Jobs, mỗi Job chạy trên Runner và gồm các Steps.
+- Hiểu các Job độc lập có thể chạy song song mặc định và các Step trong một Job chạy tuần tự.
+- Phân biệt runner do GitHub quản lý với runner tự quản lý; không phải runner nào cũng là máy ảo sạch.
 
 ## 🧩 Từ khóa hôm nay
 ### Event
@@ -12,20 +12,20 @@
 - **Đừng nhầm**: Không chỉ giới hạn trong thao tác Git; sự kiện có thể là tạo nhãn, mở issue hay chạy định kỳ theo giờ.
 
 ### Job
-- **Nói dễ hiểu**: Một khối công việc lớn trong workflow, mặc định chạy độc lập và song song trên một máy ảo riêng.
+- **Nói dễ hiểu**: Một khối công việc trong workflow, có thể chạy song song với Job khác nếu không khai báo phụ thuộc.
 - **Ví dụ**: Job `build` và Job `lint` chạy cùng lúc trên hai máy ảo Ubuntu khác nhau.
 - **Đừng nhầm**: Các Job không dùng chung ổ cứng; file tạo ra ở Job này không tự xuất hiện ở Job khác trừ khi dùng Artifact.
 
 ### Runner
-- **Nói dễ hiểu**: Máy chủ hoặc máy ảo do GitHub cấp phát để trực tiếp thực thi các câu lệnh trong Job.
+- **Nói dễ hiểu**: Máy hoặc môi trường chạy GitHub Actions Runner để thực thi một Job.
 - **Ví dụ**: Máy ảo chạy hệ điều hành Ubuntu mới nhất (`runs-on: ubuntu-latest`).
-- **Đừng nhầm**: Không phải một tiến trình chạy nền vĩnh viễn; mỗi Job được cấp một máy ảo sạch và bị hủy sau khi hoàn thành.
+- **Đừng nhầm**: Runner GitHub-hosted thường được làm mới sau Job; self-hosted có thể là máy lâu dài và giữ lại trạng thái.
 
 ## 📖 Định nghĩa
-Kiến trúc GitHub Actions được xây dựng theo mô hình phân tầng chặt chẽ: Sự kiện (Event) kích hoạt Luồng công việc (Workflow); mỗi Workflow bao gồm một hoặc nhiều Tác vụ (Job) chạy song song trên các Máy chạy (Runner) ảo hóa độc lập; bên trong mỗi Job là danh sách các Bước (Step) thực thi tuần tự từ trên xuống dưới.
+Event có thể kích hoạt một Workflow. Workflow khai báo một hay nhiều Job; mỗi Job chọn Runner bằng `runs-on` và chứa các Step. Step có thể gọi Action bằng `uses` hoặc chạy lệnh shell bằng `run`. Các Job không phụ thuộc có thể chạy song song; `needs` tạo thứ tự phụ thuộc. Các Step trong Job chạy theo thứ tự khai báo và dùng chung workspace của Job đó.
 
 ## 💡 Tại sao cần
-Hiểu sai kiến trúc phân tầng sẽ dẫn đến những lỗi cơ bản: cố gắng đọc file của Job khác từ ổ cứng mà không qua Artifact, hoặc tưởng nhầm các Step chạy song song. Phân biệt rõ ranh giới giữa Job (chạy song song cách ly) và Step (chạy tuần tự chung máy) là nền tảng để thiết kế pipeline tối ưu và tin cậy.
+Hiểu ranh giới giữa Job và Step giúp bạn biết file nào có thể dùng lại. Workspace được chia sẻ giữa các Step trong Job; Job khác thường có runner riêng, nên cần Artifact, cache hoặc truyền dữ liệu qua outputs phù hợp.
 
 ## 🧠 Mental Model
 Hãy tưởng tượng một nhà hàng tiệc cưới. Event là tiếng chuông báo khách đã vào sảnh. Workflow là toàn bộ thực đơn tiệc. Các Job là các quầy bếp riêng: Quầy khai vị, Quầy món chính và Quầy tráng miệng hoạt động song song ở các góc bếp riêng (`Runners`). Bên trong mỗi quầy, đầu bếp làm từng thao tác tuần tự (`Steps`): rửa rau, thái thịt, nấu sốt.
@@ -36,14 +36,13 @@ flowchart TD
     Event[Event: push code] --> Workflow[Workflow: CI Pipeline]
     Workflow --> Job1[Job 1: Lint trên Ubuntu Runner]
     Workflow --> Job2[Job 2: Test trên Ubuntu Runner]
-    Workflow --> Job3[Job 3: Build trên macOS Runner]
     Job2 --> Step1[Step 1: actions/checkout]
     Step1 --> Step2[Step 2: actions/setup-node]
     Step2 --> Step3[Step 3: npm test]
 ```
 
 ## 🏢 Ví dụ thực tế
-Trong dự án ứng dụng di động Flutter, khi có Pull Request, Workflow kích hoạt hai Job cùng lúc: Job thứ nhất chạy trên Runner Linux để kiểm tra định dạng code và chạy linter; Job thứ hai chạy trên Runner macOS để biên dịch gói iOS. Mỗi Job được cấp máy ảo riêng sạch sẽ, thực thi lần lượt các Step cài Flutter SDK, tải thư viện và biên dịch mà không làm ảnh hưởng lẫn nhau.
+Trong dự án ứng dụng di động Flutter, khi có Pull Request, Workflow có thể kích hoạt hai Job: một Job chạy linter trên Linux, Job kia biên dịch iOS trên macOS. Mỗi Job chọn một Runner riêng theo cấu hình. Runner GitHub-hosted thường là môi trường mới cho mỗi Job; self-hosted có thể giữ trạng thái từ lần chạy trước.
 
 ## 💻 Command & Cú pháp
 ```bash
@@ -87,5 +86,5 @@ Nếu bạn có 100 bài kiểm thử mất 20 phút để chạy trên một m�
 
 ## 📝 Tổng kết
 - Workflow được kích hoạt bởi Event và chứa một tập hợp các Jobs.
-- Jobs mặc định thực thi song song trên các máy ảo Runner hoàn toàn độc lập.
-- Steps bên trong một Job luôn thực thi tuần tự và chia sẻ chung hệ thống tệp tin của Runner đó.
+- Các Job không phụ thuộc có thể chạy song song; `needs` tạo thứ tự phụ thuộc.
+- Các Step trong một Job chạy theo thứ tự và dùng chung workspace của Job đó.

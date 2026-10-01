@@ -13,8 +13,8 @@ prerequisites:
   - 07-tree-object
 objectives:
   - Giải phẫu cấu trúc định dạng nội dung của một đối tượng Commit trong Git.
-  - "Hiểu rõ 4 thành phần bắt buộc bên trong Commit: con trỏ tree, con trỏ
-    commit cha (parent), thông tin tác giả/người commit, và commit message."
+  - Hiểu các trường cốt lõi gồm tree, author, committer và message; parent có
+    thể không có (root), một (commit thường) hoặc nhiều (merge).
   - Nắm bắt bản chất của lịch sử Git như một Đồ thị có hướng không chu trình
     (DAG) liên kết bởi các con trỏ parent.
 commands:

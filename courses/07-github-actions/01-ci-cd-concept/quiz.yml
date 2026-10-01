@@ -31,7 +31,7 @@ questions:
     question: Điểm khác nhau cốt lõi giữa Continuous Delivery và Continuous Deployment là gì?
     type: single
     options:
-      - text: Continuous Delivery yêu cầu sự phê duyệt thủ công trước khi đẩy lên production, trong khi Continuous Deployment tự động hóa 100%
+      - text: Continuous Delivery giữ phần mềm sẵn sàng phát hành; Continuous Deployment tự động phát hành thay đổi đạt điều kiện đã cấu hình
         correct: true
       - text: Continuous Delivery chỉ áp dụng cho ngôn ngữ Python, còn Deployment cho JavaScript
         correct: false
@@ -39,7 +39,7 @@ questions:
         correct: false
       - text: Hai khái niệm này hoàn toàn đồng nghĩa và không có bất kỳ khác biệt nào
         correct: false
-    explanation: Continuous Delivery tạo ra sản phẩm sẵn sàng triển khai nhưng cần một nút bấm xác nhận từ con người, còn Continuous Deployment tự động triển khai thẳng lên production nếu qua hết test.
+    explanation: Delivery tập trung giữ phiên bản có thể phát hành; Deployment tự động đưa thay đổi đạt điều kiện đã đặt ra tới môi trường phát hành.
   - id: q4
     question: Hiện tượng Integration Hell trong phát triển phần mềm thường bắt nguồn từ nguyên nhân nào?
     type: single

@@ -1,73 +1,73 @@
 id: quiz-02-10-gitignore
-title: "Trắc nghiệm: Bỏ qua tệp tin với .gitignore"
+title: "Trắc nghiệm: Bỏ qua tệp với .gitignore"
 questions:
   - id: q1
-    question: Mục đích cốt lõi của tệp .gitignore trong một dự án Git là gì?
-    type: single
-    options:
-      - text: Chỉ định mẫu để Git bỏ qua các đường dẫn chưa được theo dõi
-        correct: true
-      - text: Tự động xóa vĩnh viễn các tệp mã nguồn bị lỗi cú pháp
-        correct: false
-      - text: Lưu trữ mật khẩu bảo mật của tài khoản GitHub
-        correct: false
-      - text: Chặn quyền truy cập mạng Internet của các thành viên trong nhóm
-        correct: false
-    explanation: "`.gitignore` giúp bỏ qua tệp chưa tracked; nó không ngăn mọi cách thêm tệp vào commit."
-  - id: q2
-    question: Quy tắc nào trong .gitignore sẽ bỏ qua toàn bộ các tệp tin có phần mở
-      rộng là `.log`?
+    question: Một dự án tạo nhiều tệp có đuôi `.log`. Bạn muốn bỏ qua các tệp log mới. Nên thêm dòng nào vào `.gitignore`?
     type: single
     options:
       - text: "*.log"
         correct: true
-      - text: delete.log
+      - text: debug.log
+        correct: false
+      - text: git ignore .log
         correct: false
       - text: /log-all
         correct: false
-      - text: ignore(.log)
+    explanation: >-
+      `*.log` dùng ký tự đại diện để khớp các tên kết thúc bằng `.log`.
+  - id: q2
+    question: Sau khi tạo `debug.log` và thêm `*.log` vào `.gitignore`, điều gì sẽ xảy ra?
+    type: single
+    options:
+      - text: Tệp vẫn nằm trên máy nhưng không hiện như tệp Untracked trong `git status`
+        correct: true
+      - text: Tệp bị xóa khỏi máy tính
         correct: false
-    explanation: Dấu sao `*` là ký tự đại diện (wildcard) khớp với mọi chuỗi ký tự,
-      `*.log` bỏ qua mọi tệp đuôi .log.
+      - text: Tệp tự được commit
+        correct: false
+      - text: Tệp được gửi lên GitHub
+        correct: false
+    explanation: >-
+      Quy tắc ignore ẩn tệp chưa tracked khỏi danh sách thay đổi; nó không xóa tệp hay tạo commit.
   - id: q3
-    question: Nếu một tệp tin bí mật đã lỡ bị commit vào lịch sử Git từ trước, việc
-      chỉ thêm tên tệp đó vào .gitignore có giúp loại bỏ nó khỏi lịch sử không?
+    question: Lệnh nào cho biết vì sao `debug.log` bị bỏ qua?
     type: single
     options:
-      - text: Không; `git rm --cached` có thể ngừng theo dõi cho commit sau, còn commit cũ vẫn còn
+      - text: "`git check-ignore -v debug.log`"
         correct: true
-      - text: Có, Git sẽ tự động xóa sạch tệp đó khỏi toàn bộ các commit trong quá khứ
+      - text: "`git log debug.log`"
         correct: false
-      - text: Có, tệp đó sẽ tự động được mã hóa bằng mật khẩu quản trị
+      - text: "`git diff debug.log`"
         correct: false
-      - text: Git sẽ lập tức báo lỗi và từ chối khởi động
+      - text: "`git commit debug.log`"
         correct: false
-    explanation: Tệp tracked không bị ignore; `git rm --cached` ngừng theo dõi về sau nhưng không xóa lịch sử cũ.
+    explanation: >-
+      Tùy chọn `-v` cho biết quy tắc và dòng trong `.gitignore` đã khớp với tệp.
   - id: q4
-    question: Quy tắc thư mục nào dưới đây bỏ qua trọn vẹn thư mục `node_modules` ở
-      bất kỳ cấp độ nào?
+    question: Một tệp đã được commit trước khi bạn thêm tên của nó vào `.gitignore`. Git sẽ làm gì?
     type: single
     options:
-      - text: node_modules/
+      - text: Tiếp tục theo dõi tệp đó; `.gitignore` không xóa nội dung trong commit cũ
         correct: true
-      - text: <node_modules>
+      - text: Xóa tệp khỏi tất cả commit trước đó
         correct: false
-      - text: file:node_modules
+      - text: Tự mã hóa nội dung tệp
         correct: false
-      - text: skip node_modules
+      - text: Chặn mọi người mở repository
         correct: false
-    explanation: Dấu gạch chéo ở cuối `node_modules/` chỉ định bỏ qua toàn bộ thư
-      mục và mọi nội dung con bên trong nó.
+    explanation: >-
+      `.gitignore` chủ yếu áp dụng cho đường dẫn chưa tracked; tệp đã tracked cần được xử lý riêng.
   - id: q5
-    question: Một tệp đã được Git theo dõi từ trước có tự bị bỏ qua chỉ vì bạn thêm nó vào `.gitignore` không?
+    question: Vì sao không nên coi `.gitignore` là cách bảo vệ mật khẩu đã commit?
     type: single
     options:
-      - text: Không; `.gitignore` không ngừng theo dõi một tệp đã tracked
+      - text: Quy tắc không xóa bí mật khỏi lịch sử cũ; cần thay bí mật đã lộ
         correct: true
-      - text: Có; Git xóa tệp khỏi mọi commit cũ ngay lập tức
+      - text: "`.gitignore` chỉ hoạt động khi không có mật khẩu"
         correct: false
-      - text: Có; nội dung tệp tự được mã hóa
+      - text: Mật khẩu sẽ tự hiện lại sau một ngày
         correct: false
-      - text: Không; `.gitignore` chỉ dùng khi có kết nối Internet
+      - text: Mọi tệp ignore đều được gửi tự động lên máy chủ
         correct: false
-    explanation: "`.gitignore` áp dụng với đường dẫn chưa được theo dõi; cần hành động riêng để ngừng track tệp đã tracked."
+    explanation: >-
+      Thêm quy tắc không thay đổi commit trước; bí mật đã lộ cần được thay và xử lý lịch sử riêng.

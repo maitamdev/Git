@@ -2,31 +2,31 @@
 
 ## 🎯 Mục tiêu
 - Hiểu rõ bản chất khẩn cấp và các tiêu chí phân loại một sự cố sản xuất (Production Incident) cần kích hoạt Hotfix.
-- Nắm vững quy trình tách nhánh Hotfix trực tiếp từ commit bị lỗi trên nhánh sản phẩm (`main`).
-- Thực hiện quy trình hợp nhất kép (Dual-merge) chuẩn xác cho Hotfix vào cả `main` và `develop` để tránh tái phát lỗi.
-- Áp dụng quy tắc gắn thẻ phiên bản tăng PATCH (ví dụ v1.0.1) và cập nhật tài liệu khắc phục sự cố.
+- Biết tách nhánh hotfix từ commit/nhánh đang đại diện cho phiên bản production bị lỗi.
+- Thực hiện quy trình của Git Flow để đưa bản vá vào nhánh phát hành và đồng bộ về `develop` nếu nhóm duy trì nhánh đó.
+- Chọn tag phiên bản theo chính sách release; bản sửa chỉ là PATCH khi tương thích ngược và dự án dùng SemVer.
 
 ## 🧩 Từ khóa hôm nay
 ### Hotfix Branch
-- **Nói dễ hiểu**: Nhánh cứu hộ khẩn cấp được tách trực tiếp từ nhánh sản xuất `main` để sửa lỗi nghiêm trọng đang xảy ra.
+- **Nói dễ hiểu**: Nhánh tạm để sửa lỗi cần phát hành khẩn cấp, bắt đầu từ mã nguồn đang đại diện cho phiên bản production bị lỗi.
 - **Ví dụ**: Tạo nhánh `hotfix/v1.0.1` để sửa gấp lỗi không thanh toán được bằng thẻ tín dụng.
-- **Đừng nhầm**: Không tách từ `develop` vì `develop` đang chứa nhiều code mới chưa qua kiểm duyệt đầy đủ.
+- **Đừng nhầm**: Trong Git Flow thường tách từ `main`; nếu production đang chạy tag/nhánh khác, hãy xác định chính xác commit đang triển khai.
 
 ### Production Incident
 - **Nói dễ hiểu**: Sự cố lỗi phần mềm phát sinh trực tiếp trên môi trường người dùng thật gây gián đoạn dịch vụ.
 - **Ví dụ**: Người dùng nhận thông báo lỗi 500 khi bấm nút đăng nhập vào giờ cao điểm.
-- **Đừng nhầm**: Không phải lỗi nhỏ về giao diện có thể chờ đợt phát hành định kỳ vào cuối tuần.
+- **Đừng nhầm**: Nhóm xác định mức độ khẩn cấp theo tác động và khả năng giảm thiểu; không phải mọi lỗi production đều cần hotfix.
 
 ### Dual-merge
-- **Nói dễ hiểu**: Việc đưa bản sửa lỗi hotfix vào cả nhánh `main` để sửa lỗi ngay và nhánh `develop` để không tái phát lỗi sau này.
+- **Nói dễ hiểu**: Trong Git Flow, tích hợp bản sửa vào `main` để phát hành rồi đồng bộ vào `develop` nếu nhánh này còn được dùng.
 - **Ví dụ**: Khi sửa xong mã thanh toán, merge vào `main` để deploy liền và merge về `develop` để sprint tới vẫn có code sửa này.
-- **Đừng nhầm**: Nếu quên merge về `develop`, khi đợt phát hành tiếp theo diễn ra thì lỗi cũ sẽ bị đè lại lên máy chủ.
+- **Đừng nhầm**: Nếu `develop` tồn tại, hãy bảo đảm bản sửa được đưa vào đó; merge không phải cách duy nhất, có thể dùng cherry-pick theo chính sách nhóm.
 
 ## 📖 Định nghĩa
-Hotfix Workflow là cơ chế phản ứng nhanh nhằm sửa chữa các lỗi khẩn cấp phát sinh đột ngột trên môi trường sản xuất. Nhánh Hotfix được tách trực tiếp từ commit đang chạy thực tế trên `main`, chỉ chứa các thay đổi tối thiểu cần thiết để dập lỗi, và ngay sau đó được hợp nhất kép vào cả `main` lẫn `develop`.
+Trong Git Flow, Hotfix Branch là nhánh sửa một vấn đề khẩn cấp trên bản phát hành production, thường được tách từ `main`. Nếu production đang chạy commit được đánh dấu bằng tag hoặc nhánh khác, nhóm cần bắt đầu từ commit đó. Sau khi kiểm tra và phát hành bản sửa, nhóm đưa thay đổi về `develop` hoặc nhánh phát triển tương ứng. Đây là quy trình nhóm lựa chọn, không phải tính năng tự động của Git.
 
 ## 💡 Tại sao cần
-Khi hệ thống gặp lỗi nghiêm trọng như rò rỉ dữ liệu hoặc hỏng cổng thanh toán, mỗi phút trôi qua đều gây thiệt hại tài chính nặng nề. Bạn không thể chờ đợt phát hành tiếp theo trên `develop` vì nhánh đó đang chứa nhiều tính năng dang dở. Nhánh Hotfix cho phép vá lỗi trực tiếp trên phiên bản đang chạy trong thời gian ngắn nhất.
+Khi lỗi đang ảnh hưởng người dùng, nhóm có thể cần một đường phát hành riêng để sửa đúng phiên bản đang chạy mà không đưa theo thay đổi chưa phát hành. Hotfix cần review và kiểm thử tương xứng với mức rủi ro; gắn nhãn khẩn cấp không làm bản sửa an toàn hơn.
 
 ## 🧠 Mental Model
 Hãy hình dung con tàu ngầm đang tuần tra dưới đáy biển (`main`). Đột nhiên một đường ống áp lực bị rò rỉ. Thuyền trưởng không thể kéo tàu về xưởng sửa chữa trên đất liền (`develop`) để chờ lịch bảo trì tháng sau. Một đội thợ lặn cấp cứu (`hotfix branch`) mang dụng cụ vá ngay vết nứt tại chỗ để tàu tiếp tục hoạt động, rồi gửi biên bản về xưởng đóng tàu để các tàu sau không mắc lỗi.
@@ -50,48 +50,50 @@ gitGraph
 ```
 
 ## 🏢 Ví dụ thực tế
-Vào lúc 2 giờ sáng, hệ thống thanh toán báo lỗi do sai lệch múi giờ với khách hàng Nhật Bản. Kỹ sư trực ca lập tức chuyển sang `main` và tạo nhánh `hotfix/v1.0.1`. Kỹ sư sửa 3 dòng lệnh chuyển đổi giờ UTC trong tệp `payment.ts` và chạy test thành công. Sau khi PR được duyệt khẩn cấp, code được gộp vào `main`, gắn thẻ tag `v1.0.1` để tự động deploy sau 15 phút, rồi gộp tiếp vào `develop` để giữ lại bản sửa lỗi.
+Ví dụ giả định theo Git Flow: nhóm xác nhận production đang chạy commit của `main`, tạo `hotfix/v1.0.1` từ đó, sửa lỗi, chạy kiểm tra và mở PR khẩn cấp. Sau khi merge vào `main`, nhóm gắn tag nếu chính sách SemVer phù hợp và phát hành theo pipeline/quy trình đã cấu hình; bản sửa sau đó được tích hợp vào `develop`.
 
 ## 💻 Command & Cú pháp
 ```bash
-# Tách nhánh hotfix trực tiếp từ nhánh sản xuất main
+# Trong Git Flow, giả sử main trỏ tới phiên bản production cần sửa
 git switch -c hotfix/v1.0.1 main
 
-# Commit sửa lỗi tối thiểu cần thiết
+# Sau khi sửa file, stage và commit bản vá
+git add src/payment.ts
 git commit -m "fix(security): patch payment validation bypass"
 
 # Hợp nhất vào main để phát hành khẩn cấp và gắn thẻ tag
 git switch main && git merge --no-ff hotfix/v1.0.1
 git tag -a v1.0.1 -m "Hotfix v1.0.1: patch payment validation"
 
-# Hợp nhất ngược về develop để đồng bộ mã nguồn
+# Hợp nhất về develop nếu dự án duy trì nhánh này
 git switch develop && git merge --no-ff hotfix/v1.0.1
 git branch -d hotfix/v1.0.1
 ```
 
 ## 🔍 Giải thích command
-- `git switch -c hotfix/v1.0.1 main`: Tạo và chuyển sang nhánh hotfix bắt nguồn từ commit mới nhất của nhánh chính `main`.
+- `git switch -c hotfix/v1.0.1 main`: Trong ví dụ Git Flow này, tạo nhánh từ commit `main`; xác nhận nhánh này khớp với mã đang chạy trước khi sửa.
 - `git commit -m`: Ghi nhận thay đổi vá lỗi với mô tả súc tích và chính xác theo chuẩn `fix`.
-- `git tag -a v1.0.1`: Tăng chỉ số PATCH để đánh dấu phiên bản vá lỗi khẩn cấp tương thích ngược.
-- `git merge --no-ff`: Hợp nhất kép vào cả `main` và `develop` để ngăn ngừa tình trạng lỗi tái xuất hiện trong tương lai.
+- `git tag -a v1.0.1`: Gắn tag theo chính sách phiên bản sau khi xác định commit phát hành; hotfix không tự động đồng nghĩa PATCH.
+- `git merge --no-ff`: Tạo merge commit nếu nhóm muốn giữ dấu nhánh; tích hợp về `develop` khi dự án có nhánh này.
 
 ## ⚠️ Sai lầm phổ biến
 - Tách nhánh hotfix từ `develop` thay vì `main`, kéo theo toàn bộ các tính năng chưa kiểm thử lên môi trường thực tế.
 - Tiện tay thêm các tính năng không liên quan vào nhánh hotfix làm tăng nguy cơ phát sinh lỗi phụ.
-- Quên hợp nhất ngược hotfix về `develop`, khiến phiên bản sau lại đem lỗi cũ đè lên môi trường sản xuất.
+- Quên tích hợp bản sửa về nhánh phát triển còn được duy trì; chọn merge/cherry-pick theo lịch sử và chính sách nhóm.
 
 ## 🧪 Lab thực hành
 Bài học này là bài tự kiểm tra: bạn thao tác mô phỏng quy trình Hotfix trên máy và đối chiếu theo hướng dẫn bên dưới.
 
-1. Khởi tạo một kho Git với nhánh `main` và nhánh `develop`.
-2. Tạo nhánh hotfix khẩn cấp từ `main`: `git switch -c hotfix/v1.0.1 main`.
-3. Sửa một dòng lỗi trong tệp cấu hình và commit theo chuẩn `fix(config): update db timeout`.
-4. Chuyển sang `main`, merge nhánh hotfix và gắn tag `v1.0.1`.
-5. Chuyển sang `develop`, merge nhánh hotfix về và xóa nhánh `hotfix/v1.0.1`.
+Điều kiện đầu vào: repo thử nghiệm có commit trên `main` và `develop`; trong bài này giả định `main` là mã nguồn production.
+1. Tạo nhánh: `git switch -c hotfix/v1.0.1 main`.
+2. Sửa một file thử nghiệm, stage và commit: `git add config.yml`; `git commit -m "fix(config): update db timeout"`.
+3. Tích hợp vào `main`: `git switch main`; `git merge --no-ff hotfix/v1.0.1`.
+4. Gắn tag vào commit phát hành đã kiểm tra: `git tag -a v1.0.1 -m "Hotfix v1.0.1"`.
+5. Nếu repo duy trì `develop`, tích hợp thay đổi về đó rồi kiểm tra lịch sử bằng `git log --oneline --graph --all`.
 
 ## 💡 Hint & mẹo
-- Bản vá Hotfix phải là bản sửa đổi nhỏ nhất và an toàn nhất có thể để triệt tiêu sự cố mà không tạo tác dụng phụ.
-- Luôn viết tài liệu tóm tắt sự cố (Post-mortem) sau khi dập xong lỗi để cải tiến quy trình kiểm thử.
+- Giữ phạm vi bản vá hẹp, nhưng vẫn kiểm tra nguyên nhân và tác động liên quan trước khi phát hành.
+- Sau sự cố, ghi nhận nguyên nhân, cách phát hiện và hành động phòng ngừa theo quy trình của nhóm.
 
 ## ✅ Validation & Kết quả mong đợi
 - Nhánh `main` sở hữu bản vá và thẻ tag phiên bản mới phản ánh đúng trạng thái deploy lên máy chủ.

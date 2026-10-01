@@ -6,7 +6,7 @@
 - Hiểu rõ sự kiện `workflow_call` để biến một workflow bình thường thành một mô-đun tái sử dụng.
 - Áp dụng nguyên lý DRY (Don't Repeat Yourself) để chuẩn hóa quy trình CI/CD trên quy mô toàn doanh nghiệp.
 - Biết cách định nghĩa và truyền `inputs`, `outputs` và `secrets` giữa Caller Workflow và Called Workflow.
-- Nắm vững quy tắc giới hạn lồng nhau tối đa 4 cấp độ của GitHub Actions.
+- Nắm giới hạn lồng reusable workflows: tối đa 10 workflow trong một chuỗi, tính cả caller.
 
 ---
 
@@ -25,7 +25,7 @@
 ### secrets: inherit Property
 - **Nói dễ hiểu**: Cú pháp chuyển tiếp toàn bộ các biến bí mật từ workflow gọi sang workflow được gọi mà không cần ánh xạ từng biến một.
 - **Ví dụ**: Khai báo `secrets: inherit` dưới lệnh gọi `uses` để template tự động nhận diện `API_TOKEN`.
-- **Đừng nhầm**: Không làm lộ secret ra ngoài; chỉ chia sẻ trong phạm vi thực thi nội bộ của lần chạy hiện tại.
+- **Đừng nhầm**: `inherit` truyền toàn bộ secrets caller có thể dùng trong phạm vi được hỗ trợ; ánh xạ riêng từng secret để giới hạn quyền.
 
 ---
 
@@ -35,7 +35,7 @@ Reusable Workflows (Luồng công việc tái sử dụng) là tính năng mạn
 ---
 
 ## 💡 Tại sao cần
-Trong các công ty có hàng chục vi dịch vụ (Microservices), nếu mỗi kho lưu trữ đều tự viết một tệp YAML kiểm thử và đóng gói Docker riêng biệt, thì khi cần nâng cấp phiên bản bảo mật hoặc thay đổi địa chỉ máy chủ, kỹ sư sẽ phải sửa đổi thủ công hàng chục tệp YAML giống hệt nhau. Reusable Workflows giúp tập trung hóa toàn bộ logic vào một nơi duy nhất: sửa một nơi, toàn bộ công ty được cập nhật tự động.
+Trong tổ chức có nhiều repository, reusable workflows giảm việc sao chép cấu hình. Caller vẫn cần tham chiếu một phiên bản/ref của workflow dùng chung; thay đổi chỉ ảnh hưởng caller khi ref trỏ tới nội dung mới và quyền truy cập cho phép.
 
 ---
 
@@ -52,8 +52,8 @@ jobs:
   call-build:
     uses: company-templates/.github/workflows/standard-build.yml@main
     with:
-      node-version: 20
-    secrets: inherit
+      node-version: 24
+    secrets: inherit  # truyền rộng; dùng ánh xạ riêng nếu chỉ cần một secret
                      │
                      ▼ Kích hoạt
 [Called Reusable Workflow: standard-build.yml]
@@ -67,7 +67,10 @@ jobs:
   compile-and-test:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Building with Node version ${{ inputs.node-version }}"
+      - name: Show selected Node version
+        env:
+          NODE_VERSION: ${{ inputs.node-version }}
+        run: echo "Building with Node version $NODE_VERSION"
 ```
 
 ---
@@ -92,9 +95,9 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Use Node.js ${{ inputs.node-version }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ inputs.node-version }}
       - run: npm test
@@ -107,8 +110,8 @@ jobs:
   run-tests:
     uses: ./.github/workflows/reusable-test.yml
     with:
-      node-version: '20'
-    secrets: inherit
+      node-version: '24'
+    secrets: inherit  # chỉ truyền nếu workflow con cần secrets
 ```
 
 ---
@@ -117,15 +120,15 @@ jobs:
 - `on: workflow_call`: Khai báo sự kiện cho phép các workflow khác gọi đến tệp này.
 - `inputs.node-version`: Tham số đầu vào kiểu chuỗi bắt buộc phải truyền khi gọi workflow.
 - `uses: ./.github/workflows/reusable-test.yml`: Chỉ định đường dẫn tới tệp reusable workflow trong cùng kho lưu trữ.
-- `with.node-version: '20'`: Truyền giá trị thực tế cho tham số đã định nghĩa.
-- `secrets: inherit`: Cho phép workflow con tự động kế thừa toàn bộ secrets từ caller.
+- `with.node-version: '24'`: Truyền giá trị thực tế cho tham số đã định nghĩa.
+- `secrets: inherit`: Truyền các secrets caller có thể dùng; ánh xạ cụ thể sẽ giới hạn phạm vi tốt hơn.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Gọi lồng nhau quá 4 cấp độ**: GitHub giới hạn tối đa 4 tầng workflow lồng nhau (A gọi B, B gọi C, C gọi D, D gọi E sẽ báo lỗi).
-2. **Quên khai báo `secrets: inherit`**: Khiến workflow con không đọc được các biến bí mật như API token hay mật khẩu triển khai.
-3. **Khai báo sai cú pháp đường dẫn**: Thiếu tiền tố `./` cho các tệp nội bộ hoặc thiếu thẻ tag `@main` khi gọi từ kho lưu trữ bên ngoài.
+1. **Lồng workflow quá sâu hoặc tạo vòng lặp**: Tối đa 10 workflow trong một chuỗi, tính cả caller; workflow không được gọi vòng lặp lại nhau.
+2. **Dùng `secrets: inherit` cho tiện**: Cách này truyền rộng hơn mức cần thiết; ánh xạ riêng từng secret và thu hẹp `GITHUB_TOKEN` permissions.
+3. **Gọi workflow bên ngoài bằng ref tùy tiện**: Caller cần quyền truy cập; với workflow nhạy cảm, ưu tiên full commit SHA hoặc ref release được kiểm soát.
 
 ---
 
@@ -133,19 +136,19 @@ jobs:
 Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
 
 1. **Bước 1**: Tạo file `.github/workflows/reusable-lint.yml` khai báo `on: workflow_call` với một input mang tên `linter-name`.
-2. **Bước 2**: Trong file này, định nghĩa job in ra màn hình thông báo: `echo "Running linter ${{ inputs.linter-name }}"`.
+2. **Bước 2**: Đưa input vào biến môi trường `LINTER_NAME` rồi in biến đó bằng `echo "$LINTER_NAME"`; tránh nội suy input trực tiếp vào shell.
 3. **Bước 3**: Tạo file `.github/workflows/caller-test.yml` có sự kiện `push` và gọi reusable workflow vừa tạo với `with: linter-name: 'eslint'`.
 4. **Bước 4**: Commit cả 2 file, đẩy lên GitHub và xem kết quả thực thi trong tab Actions để xác nhận workflow con được triệu gọi thành công.
 
 ---
 
 ## 💡 Hint & mẹo
-> Khi gọi Reusable Workflow từ một repository khác trong cùng tổ chức, hãy ghim theo thẻ phiên bản phát hành hoặc commit SHA (ví dụ: `owner/repo/.github/workflows/build.yml@v1.2.0`) để đảm bảo tính ổn định và bảo mật cao nhất.
+> Khi gọi reusable workflow từ repo khác, hãy kiểm tra quyền truy cập và ref. Full commit SHA ghim chính xác revision; tag/branch dễ đọc hơn nhưng có thể di chuyển.
 
 ---
 
 ## ✅ Validation & Kết quả mong đợi
-- Tab Actions hiển thị một Job chính của Caller, bên trong mở rộng ra các Jobs được định nghĩa trong Reusable Workflow.
+- Khi chạy trên GitHub, caller hiển thị Job gọi reusable workflow và các Jobs được định nghĩa trong workflow đó.
 - Đầu vào `linter-name` được truyền chính xác và hiển thị đúng giá trị `eslint` trong console log.
 
 ---
@@ -164,4 +167,4 @@ Phân tích sự khác biệt cơ bản về phạm vi và năng lực giữa m�
 - `workflow_call` biến một workflow thành mô-đun có thể tái sử dụng từ các workflow khác.
 - Tuân thủ triệt để nguyên lý DRY, giúp chuẩn hóa và bảo trì quy trình CI/CD tập trung cho nhiều dự án.
 - Hỗ trợ định nghĩa rõ ràng các tham số đầu vào `inputs`, đầu ra `outputs` và chia sẻ `secrets`.
-- Cấu hình `secrets: inherit` giúp việc chia sẻ bí mật giữa các tầng workflow diễn ra thuận tiện và bảo mật.
+- Chỉ truyền secrets workflow cần; `inherit` tiện lợi nhưng có phạm vi rộng hơn ánh xạ rõ ràng.

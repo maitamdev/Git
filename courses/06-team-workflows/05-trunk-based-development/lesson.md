@@ -3,103 +3,106 @@
 ---
 
 ## 🎯 Mục tiêu
-- Nắm vững triết lý và thực tiễn của mô hình Trunk-Based Development được các gã khổng lồ công nghệ áp dụng.
-- Hiểu rõ khái niệm nhánh cực ngắn hạn (Short-lived branches) với tuổi thọ dưới 1 hoặc 2 ngày.
-- Làm chủ kỹ thuật Cờ tính năng (Feature Flags) để tách biệt giữa việc đưa mã nguồn lên main (Deploy) và kích hoạt tính năng (Release).
-- Nhận biết các điều kiện tiên quyết để vận hành Trunk-Based Development thành công: kiểm thử tự động toàn diện và văn hóa review thần tốc.
+- Hiểu mục tiêu của Trunk-Based Development: tích hợp thay đổi nhỏ vào nhánh chính thường xuyên.
+- Phân biệt tích hợp trực tiếp với nhánh ngắn hạn; thời lượng nhánh là hướng dẫn, không phải giới hạn cứng.
+- Hiểu Feature Flag là một cách kiểm soát tính năng có thể dùng khi triển khai dần.
+- Nêu được vì sao kiểm thử nhanh và phối hợp nhóm quan trọng trong mô hình này.
 
 ---
 
 ## 🧩 Từ khóa hôm nay
 
 ### Trunk
-- **Nói dễ hiểu**: Nhánh chính trung tâm (thường là main), nơi toàn bộ kỹ sư tích hợp các mẩu code nhỏ mỗi ngày.
-- **Ví dụ**: Thay vì để code trên nhánh phụ suốt 2 tuần, kỹ sư merge các phần nhỏ vào Trunk mỗi vài tiếng.
-- **Đừng nhầm**: Trunk chính là nhánh main; thuật ngữ bắt nguồn từ hình tượng thân cây trong các hệ thống VCS trước đây.
+- **Nói dễ hiểu**: Nhánh chính trung tâm (thường là `main`) nơi nhóm tích hợp thay đổi nhỏ thường xuyên.
+- **Ví dụ**: Nhóm tích hợp thay đổi nhỏ vào nhánh chính nhiều lần trong ngày hoặc theo nhịp làm việc của mình.
+- **Đừng nhầm**: Trunk thường là nhánh chính như `main`, nhưng tên nhánh tùy repo.
 
-### Short-Lived Branches (< 1-2 Days)
-- **Nói dễ hiểu**: Các nhánh rẽ có tuổi thọ siêu ngắn chỉ kéo dài vài giờ đến tối đa 1-2 ngày rồi hợp nhất ngay.
-- **Ví dụ**: Tạo nhánh nhỏ chỉ chứa 50 dòng code để sửa một hàm, mở PR review xong merge vào Trunk trong ngày.
-- **Đừng nhầm**: Khác với nhánh feature truyền thống kéo dài hàng tuần hoặc suốt cả kỳ sprint.
+### Short-Lived Branches (Nhánh ngắn hạn)
+- **Nói dễ hiểu**: Nhánh tạm để làm một thay đổi nhỏ rồi tích hợp sớm vào nhánh chính.
+- **Ví dụ**: Nhóm tạo nhánh sửa một lỗi nhỏ, mở PR và cố gắng review trong thời gian ngắn.
+- **Đừng nhầm**: Không có số giờ/ngày cố định áp dụng cho mọi nhóm; mục tiêu là giữ thay đổi nhỏ và tích hợp thường xuyên.
 
 ### Feature Flags (Cờ tính năng)
-- **Nói dễ hiểu**: Công tắc logic trong code cho phép đưa code lên production nhưng ẩn đi, chỉ bật cho người dùng khi đã sẵn sàng.
-- **Ví dụ**: Đặt điều kiện `if (features.enableNewRanking)` để code mới chạy ngầm an toàn mà không ảnh hưởng giao diện cũ.
+- **Nói dễ hiểu**: Cấu hình hoặc điều kiện trong ứng dụng quyết định người dùng nào được thấy một tính năng.
+- **Ví dụ**: `if (features.enableNewRanking)` có thể bật giao diện mới cho một nhóm thử nghiệm trước.
 - **Đừng nhầm**: Feature flag là logic điều khiển trong mã nguồn hoặc cấu hình, không phải là một nhánh của Git.
 
 ---
 
 ## 📖 Định nghĩa
-Trunk-Based Development là chiến lược phân nhánh trong đó toàn bộ kỹ sư liên tục hợp nhất các thay đổi nhỏ trực tiếp vào một nhánh chính duy nhất gọi là "Trunk" (main). Các nhánh rẽ có tuổi thọ cực ngắn, kết hợp chặt chẽ với kiểm thử tự động CI và cờ tính năng Feature Flags.
+Trunk-Based Development là cách làm trong đó nhóm tích hợp thay đổi nhỏ vào một nhánh chính thường xuyên. Nhóm có thể đẩy trực tiếp hoặc dùng nhánh ngắn hạn; CI nhanh giúp phát hiện lỗi sớm. Feature Flag là một kỹ thuật hỗ trợ khi cần triển khai code trước khi bật tính năng.
 
 ---
 
 ## 💡 Tại sao cần
-Các công ty công nghệ hàng đầu như Google và Meta ưa chuộng mô hình này vì nó triệt tiêu hoàn toàn "Địa ngục hợp nhất" (Merge Hell). Tích hợp mã nguồn nhiều lần trong ngày giúp phát hiện xung đột sớm và thúc đẩy văn hóa phản hồi tức thì.
+Tích hợp thay đổi nhỏ thường xuyên giúp giảm thời gian sống riêng của code và khiến vấn đề tích hợp được phát hiện sớm hơn. Mô hình này không loại bỏ conflict hoặc lỗi; nhóm cần có cách test, review và sửa nhanh khi nhánh chính gặp sự cố.
 
 ---
 
 ## 🧠 Mental Model
-Hãy hình dung con sông lớn là Trunk. Thay vì đào những con kênh dài chạy song song suốt nhiều tháng rồi đục thông gây ngập lụt kinh hoàng, các kỹ sư chỉ đào những rãnh nước rất ngắn, xả nước vào dòng sông từng gáo nhỏ mỗi giờ. Dòng sông luôn cuộn chảy ổn định, không bao giờ ngập lụt.
+Hãy hình dung nhánh chính như dòng công việc chung. Thay vì giữ một mảng code riêng lâu ngày, nhóm chia thay đổi thành phần nhỏ và ghép vào dòng chung thường xuyên. Dòng chung vẫn có thể lỗi nên cần theo dõi và sửa nhanh.
 
 ---
 
 ## 📊 Sơ đồ minh họa
 ```text
-Mô hình Trunk-Based Development với các nhánh cực ngắn:
-Trunk (main): ──●────●────●────●────●────●────●────●────● (Tích hợp liên tục nhiều lần/ngày)
+Mô hình Trunk-Based Development:
+Trunk (main): ──●────●────●────●────●────●────●────●────● (tích hợp thường xuyên)
                 │   ▲    │   ▲    │   ▲
                 └───┘    └───┘    └───┘
-              (Nhánh siêu ngắn < 1-2 ngày, commit nhỏ gọn)
+              (Có thể dùng nhánh ngắn; thời lượng tùy nhóm)
 ```
 
 ---
 
 ## 🏢 Ví dụ thực tế
-Kỹ sư Dũng làm thuật toán xếp hạng mới dự kiến 3 tuần. Thay vì giữ nhánh 3 tuần, Dũng dùng Feature Flag ẩn code mới. Mỗi ngày Dũng mở PR nhỏ 50 dòng gộp thẳng vào Trunk. Code lên production liên tục nhưng vẫn an toàn tuyệt đối, không lo lệch nhánh với đồng nghiệp.
+Kỹ sư Dũng làm thuật toán xếp hạng dự kiến mất vài tuần. Nhóm chia công việc thành các phần có thể tích hợp sớm, dùng Feature Flag để giới hạn người dùng được bật tính năng nếu cần. Họ vẫn chạy test và theo dõi ứng dụng sau khi triển khai.
 
 ---
 
 ## 💻 Command & Cú pháp
 ```bash
-git switch main && git pull --rebase origin main
+git switch main
+git pull --rebase origin main
 git switch -c short-feat/add-rating-model
 git push origin short-feat/add-rating-model
 ```
 
+Đây là ví dụ dùng remote trong Git thật. Một số nhóm tích hợp trực tiếp lên nhánh chính, số khác dùng PR ngắn hạn; hãy làm theo chính sách repo.
+
 ---
 
 ## 🔍 Giải thích command
-- `git pull --rebase`: Đồng bộ nhánh Trunk mới nhất giữ lịch sử thẳng hàng.
-- `git switch -c short-feat/<tên-nhánh>`: Tạo nhánh cực ngắn hạn chỉ giải quyết một phần việc nhỏ trong ngày.
-- Tích hợp liên tục: Đẩy code và mở PR nhỏ gọn giúp đồng nghiệp review xong chỉ trong 15 phút.
+- `git pull --rebase origin main`: Cập nhật `main` từ remote và phát lại commit cục bộ nếu có; chỉ dùng khi hiểu trạng thái nhánh.
+- `git switch -c short-feat/<tên-nhánh>`: Tạo nhánh tạm từ nhánh đang checkout.
+- Tích hợp liên tục: Gộp các thay đổi nhỏ thường xuyên; thời gian review phụ thuộc vào nhóm.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Giữ nhánh quá lâu**: Giữ nhánh nhiều tuần biến mô hình thành Feature Branch truyền thống và tích tụ conflict lớn.
-2. **Không dùng Feature Flag**: Đưa code dở dang lên Trunk mà không che chắn khiến người dùng gặp lỗi logic.
-3. **Thiếu hệ thống CI tự động**: Không có bộ kiểm thử tự động nhanh và chuẩn sẽ dễ khiến nhánh Trunk bị vỡ.
+1. **Để thay đổi sống riêng quá lâu**: Nhánh lệch lâu có thể tăng công sức tích hợp.
+2. **Dùng Feature Flag thiếu kiểm soát**: Cờ sai có thể bật tính năng chưa sẵn sàng; cần test cả trạng thái bật/tắt và dọn cờ cũ.
+3. **Không có phản hồi nhanh khi tích hợp**: CI là một cách phổ biến để phát hiện lỗi sớm; nhóm vẫn cần quy trình khác nếu không dùng CI.
 
 ---
 
 ## 🧪 Lab thực hành
 Bài học này là bài tự kiểm tra: bạn thao tác trực tiếp trên terminal của máy tính để làm quen với công cụ.
 1. Chia nhỏ một bài toán lớn thành 3 đầu việc nhỏ có thể hoàn thành trong 1 ngày làm việc.
-2. Tạo nhánh siêu ngắn hạn `short-feat/demo-flag` từ main.
-3. Viết mã nguồn kết hợp điều kiện if-else mô phỏng cơ chế Feature Flag bảo vệ tính năng mới.
-4. Mở PR nhỏ gọn và kiểm tra việc tích hợp nhanh chóng vào nhánh chính.
+2. Chia một thay đổi giả định thành hai commit nhỏ và ghi rõ thứ tự tích hợp.
+3. Viết vài dòng pseudocode cho Feature Flag và nêu cách kiểm tra cả trạng thái bật lẫn tắt.
+4. Nếu có repo thử nghiệm, tạo nhánh ngắn, commit từng phần rồi tích hợp theo quy ước của repo.
 
 ---
 
 ## 💡 Hint & mẹo
-> Trunk-Based Development chỉ thực sự phát huy sức mạnh khi đi đôi với bộ kiểm thử tự động vững chắc và văn hóa review code nhanh.
+> Kiểm tra tự động nhanh và review theo quy mô thay đổi giúp nhóm tích hợp thường xuyên mà phát hiện lỗi sớm.
 
 ---
 
 ## ✅ Validation & Kết quả mong đợi
 - Hiểu rõ sự khác biệt giữa thời điểm đưa mã nguồn lên máy chủ (Deployment) và thời điểm mở tính năng cho người dùng (Release).
-- Nắm vững cách chia nhỏ công việc thành các nhánh siêu ngắn dưới 2 ngày.
+- Nêu được cách chia nhỏ một thay đổi và một kiểm tra cần có trước/sau khi tích hợp.
 
 ---
 
@@ -115,5 +118,5 @@ Phân tích cơ chế hoạt động của Feature Flags trong việc giảm thi
 
 ## 📝 Tổng kết
 - Trunk-Based Development tập trung hợp nhất các thay đổi nhỏ vào một nhánh chính duy nhất thường xuyên.
-- Tuổi thọ của các nhánh tính năng cực ngắn, thường không vượt quá một đến hai ngày làm việc.
-- Kết hợp với Feature Flags để tách biệt việc đưa code lên hệ thống và kích hoạt tính năng cho người dùng.
+- Thay đổi nhỏ và tích hợp thường xuyên là mục tiêu; không có giới hạn thời gian cứng cho nhánh.
+- Feature Flags có thể tách thời điểm triển khai code khỏi thời điểm bật tính năng cho người dùng.

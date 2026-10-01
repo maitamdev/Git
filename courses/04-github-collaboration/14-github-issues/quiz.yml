@@ -21,7 +21,7 @@ questions:
       Request, điều kỳ diệu gì sẽ xảy ra?"
     type: single
     options:
-      - text: Khi Pull Request đó được merge thành công vào nhánh main, Issue số 25 sẽ
+      - text: Khi Pull Request đó được merge thành công vào nhánh mặc định của repository, Issue số 25 sẽ
           tự động được chuyển sang trạng thái Closed
         correct: true
       - text: Issue số 25 sẽ bị xóa vĩnh viễn khỏi lịch sử
@@ -30,8 +30,7 @@ questions:
         correct: false
       - text: Người tạo Issue 25 sẽ bị khóa tài khoản
         correct: false
-    explanation: "Closing keywords như `Fixes #ID`, `Closes #ID` tự động đóng Issue
-      liên kết ngay khi PR được merge."
+    explanation: "Closing keywords trong PR tự đóng Issue khi PR được merge vào nhánh mặc định của repository."
   - id: q3
     question: Tính năng "Labels" trong GitHub Issues mang lại lợi ích gì cho việc
       quản trị dự án?
@@ -80,4 +79,3 @@ questions:
         correct: false
     explanation: Milestones giúp nhóm theo dõi tỷ lệ phần trăm hoàn thành của một nhóm
       các task hướng tới một cột mốc bàn giao sản phẩm.
-

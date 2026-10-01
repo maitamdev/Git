@@ -39,12 +39,12 @@ questions:
         correct: false
       - text: "Danh sách các bug còn tồn đọng"
         correct: false
-    explanation: "Đối tượng Tag lưu trữ thông tin kiểm toán hoàn chỉnh về việc ai gắn thẻ, gắn vào đối tượng nào và vào thời điểm nào."
+    explanation: "Annotated tag lưu target, tên tag, tagger và message; chữ ký chỉ có khi tạo tag đã ký và không tự chứng minh vai trò tổ chức."
   - id: q4
-    question: "Các con trỏ Tag được lưu trữ vật lý ở đường dẫn nào trong thư mục .git/?"
+    question: "Namespace logic nào được dùng cho các ref của tag?"
     type: single
     options:
-      - text: ".git/refs/tags/"
+      - text: "refs/tags/"
         correct: true
       - text: ".git/objects/tags/"
         correct: false
@@ -52,7 +52,7 @@ questions:
         correct: false
       - text: ".git/branches/tags/"
         correct: false
-    explanation: "Mọi con trỏ thẻ phiên bản đều nằm trong thư mục tham chiếu .git/refs/tags/."
+    explanation: "Tag refs thuộc namespace `refs/tags/`; Git có thể lưu refs riêng, packed hoặc bằng backend khác nên không nên giả định luôn có file riêng."
   - id: q5
     question: "Ngoài đối tượng Commit, đối tượng Tag trong Git có thể trỏ trực tiếp tới loại đối tượng nào khác?"
     type: single
@@ -65,4 +65,4 @@ questions:
         correct: false
       - text: "Không thể trỏ tới đối tượng nào khác ngoài Commit"
         correct: false
-    explanation: "Về mặt thiết kế kỹ thuật, trường object trong đối tượng Tag có thể lưu mã SHA-1 của bất kỳ đối tượng Git nào (blob, tree, commit hoặc tag)."
+    explanation: "Trường object của tag object có thể trỏ tới blob, tree, commit hoặc tag; object ID được tính theo hash format của repo."

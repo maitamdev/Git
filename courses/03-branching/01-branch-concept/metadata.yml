@@ -1,25 +1,18 @@
 id: 01-branch-concept
-title: Khái niệm Branch trong Git
+title: Khái niệm nhánh (branch) trong Git
 duration: 25
 xp: 80
 keywords:
   - branch
   - nhanh git
   - con tro commit
-  - dag
   - phan nhanh
 prerequisites:
   - 06-git-commit
 objectives:
-  - Hiểu rõ bản chất kỹ thuật nhẹ nhàng của Branch trong Git như một con trỏ di
-    động 41 byte.
-  - So sánh sự vượt trội của Git Branching so với các hệ thống quản lý phiên bản
-    truyền thống.
-  - Nắm bắt vòng đời của nhánh từ khi tạo mới, phân kỳ, tới khi hợp nhất vào
-    nhánh chính.
-  - Giải thích được cấu trúc đồ thị luồng phát triển song song trong thực tế.
+  - Giải thích branch là một tên trỏ tới commit, không phải bản sao dự án.
+  - Nhận biết main là tên nhánh phổ biến, không bảo đảm code production.
+  - Dùng git branch để xem nhánh hiện có và nhánh đang chọn.
 commands:
   - git branch
   - git branch <tên-nhánh>
-  - git branch -v
-  - git branch -d <tên-nhánh>

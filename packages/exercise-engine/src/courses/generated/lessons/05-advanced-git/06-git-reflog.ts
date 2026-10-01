@@ -13,10 +13,10 @@ export const lesson: CourseLesson = {
       "04-git-reset-hard"
     ],
     "objectives": [
-      "Hiểu rõ bản chất của Reference Logs (`reflog`) như nhật ký ghi lại mọi chuyển động của con trỏ HEAD.",
+      "Hiểu reflog ghi lại các lần cập nhật HEAD, nhánh và một số ref cục bộ khác.",
       "Phân biệt sự khác nhau căn bản giữa nhật ký commit (`git log`) và nhật ký tham chiếu (`git reflog`).",
       "Đọc hiểu cú pháp định danh vị trí thời gian của reflog: `HEAD@{0}`, `HEAD@{1}`, `HEAD@{2 days ago}`.",
-      "Nhận thức tầm quan trọng của reflog như chiếc lưới an toàn tối hậu giúp khôi phục mọi sai lầm trong Git."
+      "Biết reflog không lưu file chưa commit và các entry có thể hết hạn theo cấu hình."
     ],
     "completion": {
       "theoryViewed": true,
@@ -34,12 +34,10 @@ export const lesson: CourseLesson = {
     ],
     "commands": [
       "git reflog",
-      "git reflog show HEAD",
-      "git reflog show <tên-nhánh>",
-      "git reflog --date=relative"
+      "git status"
     ]
   },
-  "content": "# git reflog\n\n---\n\n## 🎯 Mục tiêu\n- Hiểu rõ bản chất của Reference Logs (`reflog`) như nhật ký ghi lại mọi chuyển động của con trỏ HEAD.\n- Phân biệt sự khác nhau căn bản giữa nhật ký commit (`git log`) và nhật ký tham chiếu (`git reflog`).\n- Đọc hiểu cú pháp định danh vị trí thời gian của reflog: `HEAD@{0}`, `HEAD@{1}`, `HEAD@{2 days ago}`.\n- Nhận thức tầm quan trọng của reflog như chiếc lưới an toàn tối hậu giúp khôi phục mọi sai lầm trong Git.\n\n---\n\n## 🧩 Từ khóa hôm nay\n\n### git reflog\n- **Nói dễ hiểu**: Cuốn sổ tay ghi lại mọi hành động di chuyển của con trỏ HEAD trên máy tính cá nhân của bạn.\n- **Ví dụ**: Gõ `git reflog` để tìm lại mã hash của một commit vừa lỡ tay xóa bằng `git reset --hard`.\n- **Đừng nhầm**: Không đồng bộ lên GitHub; đây là dữ liệu riêng tư 100% nằm trong thư mục `.git/logs/` trên máy bạn.\n\n### HEAD@{n}\n- **Nói dễ hiểu**: Ký hiệu định vị vị trí của HEAD cách đây `n` lần thao tác di chuyển.\n- **Ví dụ**: `HEAD@{1}` là trạng thái của HEAD ngay trước câu lệnh vừa thực thi gần nhất.\n- **Đừng nhầm**: Không phải chỉ số commit trên nhánh; đây là thứ tự các hành động lệnh bạn đã gõ trên máy.\n\n### orphan commit\n- **Nói dễ hiểu**: Commit bị tách rời khỏi nhánh và không còn nhánh nào trỏ tới sau khi bị reset hoặc xóa nhánh.\n- **Ví dụ**: Commit C3 sau khi chạy `git reset --hard HEAD~1` bị mất dấu trong git log.\n- **Đừng nhầm**: Chưa bị xóa vĩnh viễn ngay; Git vẫn giữ commit này trong kho ngầm ít nhất 30 ngày để bạn cứu lại.\n\n---\n\n## 📖 Định nghĩa\n`git reflog` (Reference Logs - Nhật ký tham chiếu) là cơ chế ghi chép nội bộ cực kỳ mạnh mẽ của Git trên máy tính cá nhân. Trong khi `git log` chỉ hiển thị cây gia phả commit còn liên kết trên nhánh, `git reflog` hoạt động như một chiếc hộp đen ghi lại không sót bất kỳ hành động nào làm dịch chuyển con trỏ HEAD.\n\n---\n\n## 💡 Tại sao cần\nNhiều lập trình viên từng hoảng loạn khi lỡ tay gõ `git reset --hard` hoặc xóa nhầm nhánh tính năng và nghĩ rằng code đã mất vĩnh viễn. Trong Git, dữ liệu hiếm khi bị xóa ngay lập tức. Miễn là bạn đã từng tạo commit, mã hash của commit đó chắc chắn vẫn được lưu trong reflog, sẵn sàng để bạn hồi sinh.\n\n---\n\n## 🧠 Mental Model\nHãy hình dung `git log` như cuốn sử ký chính thức chỉ ghi lại các cột mốc vinh quang lớn (commit trên nhánh). Còn `git reflog` giống như thiết bị định vị GPS cá nhân gắn trên người bạn: nó ghi lại từng bước lùi, bước tiến, bước rẽ trái, thậm chí cả lúc bạn lỡ thụt chân xuống hố rồi trèo lên. Tọa độ bước chân luôn được lưu lại chính xác.\n\n---\n\n## 📊 Sơ đồ minh họa\n```text\nSự khác biệt giữa git log và git reflog:\ngit log:    Chỉ nhìn thấy các commit còn kết nối trong nhánh hiện tại.\n            C1 ──► C2 (mất dấu C3 vì đã lỡ reset --hard về C2)\n\ngit reflog: Ghi nhận mọi sự kiện di chuyển của HEAD:\n            HEAD@{0}: reset: moving to HEAD~1\n            HEAD@{1}: commit: feat: awesome feature (C3 - Tọa độ còn nguyên!)\n            HEAD@{2}: commit: fix: minor bug (C2)\n```\n\n---\n\n## 🏢 Ví dụ thực tế\nKỹ sư Huy thức trắng đêm và lỡ tay gõ `git reset --hard HEAD~5`, khiến 5 commit vừa làm biến mất hoàn toàn khỏi `git log`. Nhớ đến chiếc hộp đen reflog, Huy gõ `git reflog`. Dòng thứ hai in rõ ràng: `7a8b9c0 HEAD@{1}: commit: feat: payment`. Huy gõ ngay `git reset --hard HEAD@{1}` và toàn bộ 5 commit cùng mã nguồn lập tức sống dậy nguyên vẹn như chưa từng có sự cố.\n\n---\n\n## 💻 Command & Cú pháp\n```bash\ngit reflog\ngit reflog show HEAD\ngit reflog show <tên-nhánh>\ngit reflog --date=relative\n```\n\n---\n\n## 🔍 Giải thích command\n- `git reflog`: Hiển thị danh sách các lần dịch chuyển gần nhất của con trỏ HEAD kèm theo chỉ số index.\n- `git reflog show HEAD`: Cú pháp tường minh tương đương với lệnh reflog cơ bản.\n- `git reflog show <nhánh>`: Xem lịch sử dịch chuyển con trỏ của một nhánh cụ thể thay vì HEAD.\n- `git reflog --date=relative`: Hiển thị mốc thời gian tương đối như mười phút trước hoặc hai giờ trước.\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Nghĩ rằng reflog tồn tại vĩnh viễn**: Reflog có hạn sử dụng (mặc định 90 ngày cho commit tiếp cận được và 30 ngày cho commit mồ côi) trước khi bị dọn dẹp bởi git gc.\n2. **Tìm kiếm reflog trên GitHub**: Reflog là dữ liệu cục bộ riêng tư trên máy của bạn, không bao giờ được push lên server.\n3. **Nghĩ rằng file chưa commit có thể cứu bằng reflog**: Chỉ những gì đã từng commit thành snapshot mới có dấu vết trong reflog.\n\n---\n\n## 🧪 Lab thực hành\nBài học này là bài tự kiểm tra: bạn thao tác tra cứu nhật ký reflog trên terminal.\n1. Tạo 2 commit mới liên tiếp trong kho chứa bài tập.\n2. Chạy lệnh `git reflog` và quan sát các dòng ghi nhận sự kiện commit kèm thông điệp.\n3. Thử chuyển sang một nhánh khác rồi quay lại, sau đó chạy lại `git reflog`.\n4. Quan sát các sự kiện chuyển đổi nhánh checkout được ghi lại chi tiết.\n\n---\n\n## 💡 Hint & mẹo\n> Mỗi khi lỡ tay làm mất commit hoặc nhánh, câu lệnh đầu tiên bạn phải nghĩ đến luôn luôn là `git reflog`.\n\n---\n\n## ✅ Validation & Kết quả mong đợi\n- Lệnh `git reflog` hiển thị danh sách các thao tác gần đây với mã SHA và vị trí `HEAD@{n}`.\n- Xác định được mã hash của commit đã bị tách rời để chuẩn bị phục hồi.\n\n---\n\n## ❓ Quiz nhanh\nHãy làm bài kiểm tra trắc nghiệm dưới đây về công cụ cứu hộ git reflog.\n\n---\n\n## 🚀 Thử thách nâng cao\nTìm hiểu cơ chế dọn rác tự động của Git thông qua lệnh `git gc` và cách Git quản lý thời gian hết hạn của các bản ghi reflog.\n\n---\n\n## 📝 Tổng kết\n- `git reflog` là hộp đen ghi lại mọi sự kiện dịch chuyển của HEAD và các nhánh.\n- Dữ liệu reflog mang tính cục bộ riêng tư trên máy cá nhân, không chia sẻ qua remote.\n- Là nền tảng cốt lõi để khôi phục các commit bị mất do reset, checkout hoặc xóa nhánh.\n",
+  "content": "# git reflog\n\n---\n\n## 🎯 Mục tiêu\n- Hiểu reflog là nhật ký ghi lại các lần cập nhật `HEAD`, nhánh và một số tham chiếu cục bộ khác.\n- Phân biệt sự khác nhau căn bản giữa nhật ký commit (`git log`) và nhật ký tham chiếu (`git reflog`).\n- Đọc hiểu cú pháp định danh vị trí thời gian của reflog: `HEAD@{0}`, `HEAD@{1}`, `HEAD@{2 days ago}`.\n- Biết giới hạn của reflog: hữu ích để tìm commit đã từng được tham chiếu, nhưng không lưu nội dung sửa đổi chưa commit.\n\n---\n\n## 🧩 Từ khóa hôm nay\n\n### git reflog\n- **Nói dễ hiểu**: Nhật ký các lần Git cập nhật `HEAD` hoặc một tham chiếu cục bộ như nhánh.\n- **Ví dụ**: Gõ `git reflog` để tìm lại mã hash của một commit vừa lỡ tay xóa bằng `git reset --hard`.\n- **Đừng nhầm**: Reflog không được gửi lên remote qua `git push`; mỗi bản clone có nhật ký cục bộ riêng.\n\n### HEAD@{n}\n- **Nói dễ hiểu**: Ký hiệu tra một entry cũ trong reflog của `HEAD`.\n- **Ví dụ**: `HEAD@{1}` là entry đứng trước entry mới nhất trong reflog của `HEAD`.\n- **Đừng nhầm**: Không phải số thứ tự commit hoặc lệnh terminal; reflog chỉ ghi các lần ref được cập nhật.\n\n### Reflog entry\n- **Nói dễ hiểu**: Một dòng ghi nhận ref cũ và mới khi Git cập nhật tham chiếu.\n- **Ví dụ**: Sau `git reset`, entry có thể giúp bạn tìm hash mà `HEAD` vừa rời khỏi.\n- **Đừng nhầm**: Entry giúp tìm commit; nó không chứa bản sao các chỉnh sửa file chưa commit.\n\n---\n\n## 📖 Định nghĩa\n`git reflog` (Reference Logs - nhật ký tham chiếu) hiển thị các lần cập nhật tham chiếu trong kho cục bộ. `git log` xem các commit đi theo lịch sử của một nhánh; reflog còn có thể giúp tìm commit mà nhánh đã rời khỏi. Reflog không ghi mọi lệnh Git và không lưu file chưa commit.\n\n---\n\n## 💡 Tại sao cần\nNếu lỡ tay reset hoặc xóa nhánh, reflog có thể giúp tìm commit đã từng được tham chiếu. Khả năng khôi phục phụ thuộc vào việc entry còn tồn tại và commit object chưa bị dọn. Reflog không lưu các thay đổi chưa commit.\n\n---\n\n## 🧠 Mental Model\nHãy hình dung `git log` như danh sách commit có thể đi tới từ nhánh hiện tại. Reflog giống sổ ghi những lần các tham chiếu cục bộ được cập nhật. Đây là nhật ký giới hạn thời gian, không ghi mọi lệnh và không bảo đảm mọi commit vẫn còn.\n\n---\n\n## 📊 Sơ đồ minh họa\n```text\nSự khác biệt giữa git log và git reflog:\ngit log:    Chỉ nhìn thấy các commit còn kết nối trong nhánh hiện tại.\n            C1 ──► C2 (mất dấu C3 vì đã lỡ reset --hard về C2)\n\ngit reflog: Ví dụ các entry cập nhật HEAD:\n            HEAD@{0}: reset: moving to HEAD~1\n            HEAD@{1}: commit: feat: awesome feature (vị trí trước đó)\n            HEAD@{2}: commit: fix: minor bug (C2)\n```\n\n---\n\n## 🏢 Ví dụ thực tế\nKỹ sư Huy lỡ tay chạy `git reset --hard HEAD~5`, khiến các commit gần đây không còn trên nhánh hiện tại. Huy dừng lại, kiểm tra `git status` và `git reflog`, rồi chép hash của commit cần giữ. Sau khi xác minh hash, Huy tạo nhánh cứu hộ bằng `git branch rescue-payment <hash>`. Cách này giữ commit mà không di chuyển nhánh hiện tại; thay đổi chưa commit đã bị reset thì reflog không khôi phục được.\n\n---\n\n## 💻 Command & Cú pháp\n```bash\ngit reflog\n```\n\nGit thật còn hỗ trợ `git reflog show <nhánh>` và `git reflog --date=relative`; simulator chỉ hiển thị reflog cơ bản của `HEAD`.\n\n---\n\n## 🔍 Giải thích command\n- `git reflog`: Hiển thị các entry của HEAD; khi đọc entry, đối chiếu hash với `git show` hoặc `git log`.\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Nghĩ rằng reflog tồn tại vĩnh viễn**: mặc định Git thường đặt thời hạn 90 ngày cho entry còn reachable và 30 ngày cho entry unreachable; cấu hình và garbage collection có thể làm thời hạn khác đi.\n2. **Tìm reflog trên GitHub sau khi push**: `git push` cập nhật ref từ xa, không đồng bộ reflog của máy bạn.\n3. **Nghĩ rằng file chưa commit có thể cứu bằng reflog**: Chỉ những gì đã từng commit thành snapshot mới có dấu vết trong reflog.\n\n---\n\n## 🧪 Lab thực hành\nBài học này là bài tự kiểm tra: bạn thao tác tra cứu nhật ký reflog trên terminal.\n1. Tạo 2 commit mới liên tiếp trong kho chứa bài tập.\n2. Chạy lệnh `git reflog` và quan sát các dòng ghi nhận sự kiện commit kèm thông điệp.\n3. Thử chuyển sang một nhánh khác rồi quay lại, sau đó chạy lại `git reflog`.\n4. Quan sát các sự kiện chuyển đổi nhánh checkout được ghi lại chi tiết.\n\n---\n\n## 💡 Hint & mẹo\n> Khi nghi mất commit, trước tiên dừng các thao tác ghi, kiểm tra trạng thái repo, rồi đọc `git reflog` để tìm hash cần giữ.\n\n---\n\n## ✅ Validation & Kết quả mong đợi\n- Lệnh `git reflog` hiển thị các lần cập nhật ref gần đây cùng mã commit.\n- Xác định được commit cũ khi entry còn trong reflog và object vẫn còn trong kho.\n\n---\n\n## ❓ Quiz nhanh\nHãy làm bài kiểm tra trắc nghiệm dưới đây về công cụ cứu hộ git reflog.\n\n---\n\n## 🚀 Thử thách nâng cao\nTìm hiểu cơ chế dọn rác tự động của Git thông qua lệnh `git gc` và cách Git quản lý thời gian hết hạn của các bản ghi reflog.\n\n---\n\n## 📝 Tổng kết\n- `git reflog` ghi lại một số lần cập nhật ref cục bộ như `HEAD` và nhánh; nó không ghi mọi lệnh.\n- Dữ liệu reflog mang tính cục bộ riêng tư trên máy cá nhân, không chia sẻ qua remote.\n- Là nền tảng cốt lõi để khôi phục các commit bị mất do reset, checkout hoặc xóa nhánh.\n",
   "quiz": {
     "id": "quiz-05-06-git-reflog",
     "title": "Trắc nghiệm: git reflog",
@@ -50,7 +48,7 @@ export const lesson: CourseLesson = {
         "type": "single",
         "options": [
           {
-            "text": "git log hiển thị lịch sử commit của nhánh, còn reflog ghi lại mọi hành động di chuyển của con trỏ HEAD trên máy cục bộ",
+            "text": "git log duyệt lịch sử commit; reflog ghi các lần cập nhật ref cục bộ như HEAD hoặc nhánh",
             "correct": true
           },
           {
@@ -66,7 +64,7 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "`reflog` ghi nhận mọi thao tác cục bộ làm đổi vị trí HEAD (commit, checkout, reset...), kể cả các commit đã bị tách rời khỏi nhánh."
+        "explanation": "`reflog` ghi các lần cập nhật ref cục bộ, không phải mọi lệnh Git. Nó có thể giúp tìm commit mà nhánh đã rời khỏi."
       },
       {
         "id": "q2",
@@ -98,7 +96,7 @@ export const lesson: CourseLesson = {
         "type": "single",
         "options": [
           {
-            "text": "Hoàn toàn không, reflog chỉ là dữ liệu nội bộ riêng tư tồn tại duy nhất trên máy tính cá nhân của bạn",
+            "text": "Không, reflog không được đẩy lên remote; mỗi clone có reflog cục bộ riêng",
             "correct": true
           },
           {
@@ -114,7 +112,7 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "Reflog là nhật ký nội bộ của client Git cá nhân, không thuộc cấu trúc chia sẻ của giao thức remote."
+        "explanation": "Push gửi ref và đối tượng cần thiết, không đồng bộ nhật ký reflog. Clone khác có reflog riêng."
       },
       {
         "id": "q4",
@@ -146,7 +144,7 @@ export const lesson: CourseLesson = {
         "type": "single",
         "options": [
           {
-            "text": "Từ 30 đến 90 ngày (90 ngày cho commit có thể chạm tới và 30 ngày cho commit mồ côi)",
+            "text": "Mặc định thường là 90 ngày với entry còn truy cập được và 30 ngày với entry không còn truy cập được; cấu hình có thể đổi",
             "correct": true
           },
           {
@@ -162,7 +160,7 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "Mặc định Git cấu hình gc.reflogExpire là 90 ngày và gc.reflogExpireUnreachable là 30 ngày, mang lại thời gian cứu nguy rất thoải mái."
+        "explanation": "Git mặc định đặt thời hạn khác nhau cho entry reachable và unreachable; cấu hình repo, người dùng hoặc garbage collection có thể làm thay đổi thời gian thực tế."
       }
     ]
   }

@@ -1,116 +1,118 @@
-# Khái niệm Branch trong Git
+# Khái niệm nhánh (branch) trong Git
 
 ---
 
 ## 🎯 Mục tiêu
-- Giải thích được Branch là một con trỏ có tên, trỏ tới một commit cụ thể.
-- Nhận ra lợi ích của việc tạo nhánh riêng để thử nghiệm thay vì sửa trực tiếp trên `main`.
-- Dùng lệnh `git branch` để xem danh sách nhánh và nhận biết nhánh đang làm việc.
+- Giải thích branch là một tên trỏ tới commit, không phải bản sao dự án.
+- Nhận biết `main` chỉ là một tên nhánh phổ biến, không bảo đảm code đang chạy production.
+- Dùng `git branch` để xem nhánh hiện có và nhánh đang chọn.
 
 ---
 
 ## 🧩 Từ khóa hôm nay
 
-### Branch — nhánh làm việc
-- **Nói dễ hiểu:** Một con trỏ có tên trỏ trực tiếp tới một commit cụ thể trong lịch sử dự án.
-- **Ví dụ:** Tạo nhánh `feature-cart` để viết trang giỏ hàng mà không ảnh hưởng mã nguồn đang chạy.
-- **Đừng nhầm:** Nhánh trong Git không phải là một bản sao chép toàn bộ thư mục dự án sang chỗ khác.
+### Branch — nhánh
+- **Nói dễ hiểu:** Một tên trỏ tới commit mới nhất của một dòng công việc.
+- **Ví dụ:** Tạo `feature-cart` để làm tính năng giỏ hàng.
+- **Đừng nhầm:** Nhánh không phải bản sao toàn bộ thư mục.
 
-### main — nhánh chính mặc định
-- **Nói dễ hiểu:** Nhánh chứa mã nguồn ổn định nhất của dự án, dùng làm mốc chuẩn cho cả nhóm.
-- **Ví dụ:** Sản phẩm đang chạy cho khách hàng sử dụng được lấy từ commit trên nhánh `main`.
-- **Đừng nhầm:** `main` không có đặc quyền kỹ thuật khác biệt; đây là quy ước chuẩn để mọi người cùng thống nhất.
+### Commit — mốc trong lịch sử
+- **Nói dễ hiểu:** Một trạng thái dự án được lưu để xem lại.
+- **Ví dụ:** Commit lưu phiên bản giỏ hàng vừa hoàn thành.
+- **Đừng nhầm:** Nhánh trỏ tới commit; commit không phải nhánh.
 
-### Pointer — con trỏ di động
-- **Nói dễ hiểu:** Một nhãn lưu vị trí commit; khi có commit mới trên nhánh đó, nhãn tự trượt lên commit mới.
-- **Ví dụ:** Khi bạn commit thêm ảnh đại diện, nhánh `feature-avatar` tự trỏ vào commit ảnh vừa tạo.
-- **Đừng nhầm:** Bạn không cần đổi vị trí nhánh thủ công sau mỗi lần commit; Git tự động cập nhật.
+### `main` — tên nhánh thường dùng
+- **Nói dễ hiểu:** Nhiều dự án dùng `main` làm nhánh mặc định hoặc nhánh tích hợp.
+- **Ví dụ:** Người mới clone dự án có thể bắt đầu ở `main`.
+- **Đừng nhầm:** Tên `main` không tự bảo đảm nội dung đã sẵn sàng phát hành.
 
 ---
 
 ## 📖 Định nghĩa
-Branch (nhánh) trong Git là một con trỏ có thể di chuyển, trỏ vào một commit snapshot cụ thể. Khi bạn tạo commit mới trên nhánh, con trỏ đó tự động tiến lên phía trước để luôn giữ vị trí commit mới nhất.
+Branch (nhánh) là một tên nhẹ trỏ tới một commit trong lịch sử. Khi bạn tạo commit mới trên nhánh đang chọn, Git thường cập nhật tên nhánh đó để trỏ tới commit mới. Các thao tác viết lại lịch sử cũng có thể đổi vị trí con trỏ. Tạo nhánh mới không sao chép toàn bộ tệp dự án.
 
 ---
 
 ## 🤔 Tại sao cần?
-Khi làm việc nhóm hoặc thử nghiệm ý tưởng mới, bạn không nên sửa trực tiếp trên mã nguồn đang chạy ổn định. Nhánh cho phép bạn tạo một không gian riêng: bạn thoải mái sửa, commit thử và xóa bỏ nếu không đạt, mà không làm hỏng công việc của đồng đội trên nhánh chính.
+Nhánh cho phép bạn làm tính năng hoặc thử ý tưởng mà không trộn ngay vào công việc chung. Đồng đội có thể tiếp tục làm trên nhánh khác. Khi phần việc đã sẵn sàng, nhóm sẽ xem xét cách nhập thay đổi vào nhánh tích hợp.
 
 ---
 
 ## 🧠 Mental Model (Mô hình tư duy)
-Hãy hình dung lịch sử dự án như một thân cây. Nhánh `main` là thân chính vững chắc. Khi muốn làm tính năng mới, bạn tạo một nhánh con rẽ ra. Bạn làm việc trên nhánh con đó. Nếu tính năng chạy tốt, bạn ghép nhánh vào thân chính. Nếu tính năng thử nghiệm thất bại, bạn cắt bỏ nhánh con mà thân cây vẫn an toàn.
+Hãy coi commit là các mốc trên bản đồ, còn branch là một tấm nhãn đặt lên một mốc. Tạo branch mới nghĩa là đặt thêm một nhãn tại commit hiện tại. Nhãn mới và nhãn cũ có thể trỏ cùng một mốc lúc đầu; sau này, commit trên một nhánh có thể làm nhãn đó trỏ sang mốc mới.
 
 ---
 
 ## 🖼 Sơ đồ
 ```text
-Commit C1 ───> Commit C2 ───> Commit C3 (main)
-                                ▲
-                                └─── Commit C4 (feature-login)
+Lịch sử commit:  C1 ◄── C2 ◄── C3
+                       ▲      ▲
+                       │      └── main
+                       └───────── feature-cart
+
+Khi vừa tạo feature-cart, hai nhánh có thể cùng trỏ vào C2.
 ```
-Nhánh `feature-login` tách ra từ commit C3 để phát triển riêng, trong khi nhánh `main` vẫn giữ nguyên mốc ổn định.
 
 ---
 
 ## 🌎 Ví dụ thực tế
-Một nhóm sinh viên đang làm web trường. Nhánh `main` chứa bản nộp bài giữa kỳ đang chạy. Bạn An được giao làm tính năng chat trực tuyến; An tạo nhánh `feature-chat` từ `main`. Trong khi An viết code chat suốt 3 ngày, bạn Bình vẫn có thể sửa lỗi chính tả trên `main` mà không bị lẫn code chat chưa hoàn thiện của An.
+Nhóm làm website trường dùng `main` làm nhánh tích hợp. An tạo `feature-chat` để viết màn hình chat, còn Bình tiếp tục sửa trang thông tin trên nhánh khác. Nhánh giúp nhóm tách các mốc công việc; tên `main` là quy ước của nhóm chứ Git không kiểm tra xem nội dung đó có đang chạy trên website hay không.
 
 ---
 
 ## 💻 Command
 ```bash
 git branch
-git branch <tên-nhánh>
-git branch -v
+git branch feature-cart
+git branch
 ```
 
 ---
 
 ## 🔍 Giải thích command
-- `git branch`: Liệt kê tất cả các nhánh trong kho lưu trữ của bạn. Nhánh bạn đang đứng được đánh dấu bằng dấu sao `*`.
-- `git branch <tên-nhánh>`: Tạo một con trỏ nhánh mới trỏ vào commit hiện tại nhưng chưa chuyển sang nhánh đó.
-- `git branch -v`: Liệt kê danh sách nhánh kèm mã commit ngắn và thông điệp commit mới nhất của từng nhánh.
+- `git branch`: Liệt kê nhánh cục bộ; dấu `*` đứng trước nhánh đang chọn.
+- `git branch feature-cart`: Tạo một nhánh mới tại commit hiện tại nhưng vẫn ở nhánh cũ.
+- Chạy lại `git branch` để xác nhận nhánh mới xuất hiện và dấu `*` chưa chuyển.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Nghĩ tạo nhánh là nhân đôi toàn bộ thư mục:** Git chỉ tạo một con trỏ nhẹ, diễn ra gần như tức thì và tốn rất ít dung lượng.
-2. **Sửa mọi thứ trực tiếp trên main:** Thói quen này dễ khiến mã nguồn chính bị lỗi khi bạn đang code dở.
-3. **Đặt tên nhánh chung chung như `test` hoặc `fix`:** Tên nhánh nên thể hiện rõ nội dung công việc như `feature-cart` hoặc `fix-login-button`.
+1. **Tưởng tạo nhánh là nhân đôi thư mục:** Git tạo thêm một tên trỏ tới commit.
+2. **Tưởng `main` luôn là bản production:** Nhóm tự quy định vai trò của từng nhánh.
+3. **Tưởng `git branch tên` tự chuyển sang nhánh mới:** Lệnh này chỉ tạo tên nhánh; chuyển nhánh học ở bài sau.
 
 ---
 
 ## 🧪 Lab
-Bài tập này được thực hành trên môi trường Git mô phỏng của hệ thống:
-1. Chạy lệnh `git branch` để kiểm tra danh sách nhánh hiện có và xác định nhánh đang đứng (có dấu `*`).
-2. Tạo nhánh mới cho tính năng giỏ hàng bằng lệnh `git branch feature-cart`.
-3. Chạy `git branch` lần nữa để xác nhận nhánh `feature-cart` đã xuất hiện trong danh sách.
+1. Chạy `git branch` và ghi lại nhánh có dấu `*`.
+2. Tạo nhánh `feature-cart` bằng `git branch feature-cart`.
+3. Chạy `git branch` lần nữa.
+4. Xác nhận `feature-cart` xuất hiện nhưng dấu `*` vẫn ở nhánh ban đầu.
 
 ---
 
 ## 💡 Hint
-Lệnh `git branch <tên-nhánh>` chỉ tạo con trỏ nhánh mới chứ chưa tự động chuyển bạn sang nhánh đó.
+> Nếu bạn chỉ muốn tạo nhánh mà chưa đổi chỗ làm việc, dùng `git branch <tên-nhánh>`.
 
 ---
 
 ## ✅ Validation
-- Danh sách `git branch` hiển thị cả `main` và nhánh mới `feature-cart`.
-- Nhánh `main` vẫn có dấu `*` ở phía trước.
+- Danh sách có nhánh `feature-cart`.
+- Dấu `*` vẫn đứng trước nhánh đang làm việc ban đầu.
 
 ---
 
 ## ❓ Quiz
-Trả lời các câu hỏi sau để kiểm tra mức độ hiểu về bản chất con trỏ nhánh trong Git.
+Trả lời các câu hỏi để kiểm tra bạn đã hiểu nhánh là gì và lệnh tạo nhánh làm gì.
 
 ---
 
 ## 🔥 Challenge
-Chạy lệnh `git branch -v` để so sánh mã commit của nhánh vừa tạo với nhánh `main`. Nhận xét xem hai nhánh có đang trỏ vào cùng một commit hay không.
+Tạo thêm nhánh `experiment`. Dùng `git branch` để xác nhận bạn đang ở nhánh nào, rồi giải thích vì sao tạo nhánh không tự chuyển bạn sang đó.
 
 ---
 
 ## 📚 Tổng kết
-- Branch là một con trỏ có tên, trỏ vào commit đỉnh của một luồng công việc.
-- Tạo nhánh giúp tách biệt công việc thử nghiệm khỏi mã nguồn ổn định trên nhánh chính.
-- Lệnh `git branch` dùng để xem danh sách nhánh và tạo nhánh mới an toàn.
+- Branch là một tên trỏ tới commit, không phải bản sao thư mục.
+- `git branch <tên>` tạo nhánh tại commit hiện tại nhưng không chuyển nhánh.
+- `main` là tên phổ biến; vai trò của nó do nhóm quyết định.

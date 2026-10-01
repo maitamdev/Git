@@ -12,8 +12,8 @@ prerequisites:
   - 05-content-addressable-storage
 objectives:
   - Hiểu rõ bản chất của đối tượng Blob (Binary Large Object) trong Git.
-  - "Nắm vững quy tắc quan trọng: Blob CHỈ lưu trữ nội dung dữ liệu thô, HOÀN
-    TOÀN KHÔNG lưu tên tệp, ngày giờ hay quyền hạn."
+  - Nắm quy tắc Blob lưu nội dung; tên và mode nằm trong tree, metadata lịch sử
+    nằm trong commit.
   - Sử dụng các lệnh plumbing để băm, ghi và giải mã một đối tượng Blob.
 commands:
   - git hash-object -w file.txt

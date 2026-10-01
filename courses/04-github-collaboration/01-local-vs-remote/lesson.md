@@ -12,29 +12,29 @@
 ## 🧩 Từ khóa hôm nay
 
 ### Local Repository — kho lưu trữ trên máy
-- **Nói dễ hiểu:** Lịch sử phiên bản hoàn chỉnh của dự án nằm ngay trong thư mục ẩn `.git` trên máy tính của bạn.
+- **Nói dễ hiểu:** Kho Git nằm trên máy bạn. Nó lưu các commit và dữ liệu Git đã tải về; bản clone nông có thể chỉ chứa một phần lịch sử.
 - **Ví dụ:** Khi bạn mất kết nối mạng Internet, bạn vẫn có thể tạo commit an toàn vào Local Repository.
 - **Đừng nhầm:** Commit trên máy chưa tự bay lên mạng; dữ liệu lúc này chỉ mới nằm trên ổ cứng của bạn.
 
 ### Remote Repository — kho lưu trữ từ xa
-- **Nói dễ hiểu:** Kho chứa dự án được đặt trên một máy chủ đám mây (như GitHub) để cả nhóm cùng chia sẻ.
+- **Nói dễ hiểu:** Kho Git trên một máy chủ mà bạn kết nối qua mạng; GitHub là một dịch vụ lưu trữ phổ biến.
 - **Ví dụ:** Địa chỉ `https://github.com/nhom-hoc-tap/web-app.git` là một Remote Repository trên GitHub.
 - **Đừng nhầm:** Kho trên máy và kho từ xa hoàn toàn độc lập; chúng chỉ cập nhật cho nhau khi bạn ra lệnh.
 
 ### Push & Pull — đẩy lên và kéo về
-- **Nói dễ hiểu:** Hai thao tác đồng bộ: `push` đưa commit từ máy lên GitHub; `pull` tải commit mới từ GitHub về máy.
+- **Nói dễ hiểu:** `push` gửi commit từ máy lên remote. `pull` tải thay đổi về rồi tích hợp chúng vào nhánh hiện tại.
 - **Ví dụ:** Sau khi làm xong bài tập, bạn `push` lên GitHub để bạn cùng nhóm `pull` về máy của bạn ấy.
 - **Đừng nhầm:** Không có mạng thì không thể `push` hay `pull`, nhưng mọi thao tác viết code và commit trên máy vẫn chạy bình thường.
 
 ---
 
 ## 📖 Định nghĩa
-Trong mô hình phân tán của Git, Local Repository là kho chứa nằm trên ổ đĩa máy tính của bạn, cho phép bạn làm việc độc lập. Remote Repository là kho chứa đặt trên máy chủ đám mây như GitHub. Hai kho này tồn tại tách biệt và chỉ trao đổi dữ liệu qua mạng khi bạn dùng các lệnh đồng bộ.
+Git lưu kho cục bộ trên máy và có thể trao đổi commit với một hoặc nhiều kho từ xa qua mạng. Bạn có thể tạo commit ngoại tuyến. Remote có thể nằm trên GitHub hoặc một máy chủ Git khác. Sau khi `fetch`, máy bạn biết trạng thái remote ở lần tải gần nhất; Git không tự hỏi máy chủ mỗi khi bạn xem nhánh.
 
 ---
 
 ## 🤔 Tại sao cần?
-Một mình bạn làm việc trên máy tính thì không cần mạng. Nhưng để làm việc nhóm, chia sẻ mã nguồn với đồng nghiệp hoặc tạo bản sao lưu an toàn phòng khi máy hỏng, bạn bắt buộc phải kết nối kho trên máy với một kho từ xa trên GitHub.
+Bạn có thể sửa file, tạo nhánh, xem lịch sử và commit mà không có mạng. Khi muốn chia sẻ commit hoặc nhận thay đổi từ người khác, bạn cần kết nối tới remote. Remote hữu ích cho cộng tác và lưu bản sao, nhưng không thay thế chiến lược sao lưu riêng của tổ chức.
 
 ---
 
@@ -60,7 +60,7 @@ Máy tính cá nhân (Local):       Máy chủ GitHub (Remote):
 ---
 
 ## 🌎 Ví dụ thực tế
-Bạn ngồi trên xe bus không có mạng Wi-Fi nhưng vẫn mở máy tính ra viết code và tạo 3 commit mới trên Local Repository. Tối về đến nhà có mạng, bạn gõ lệnh `git push` để đưa toàn bộ 3 commit đó lên kho GitHub của nhóm. Bạn cùng nhóm mở máy ra tải về xem mà không gặp bất kỳ trở ngại nào.
+Bạn có thể tạo ba commit trên máy khi ngoại tuyến. Khi có mạng, `git push` gửi chúng tới remote nếu bạn có quyền ghi và lịch sử cho phép cập nhật. Đồng nghiệp cần `git fetch` hoặc `git pull` để nhận các commit đó.
 
 ---
 
@@ -75,8 +75,8 @@ git branch -a
 
 ## 🔍 Giải thích command
 - `git remote -v`: Xem danh sách và địa chỉ đường dẫn của các kho lưu trữ từ xa đang liên kết với máy bạn.
-- `git status`: Hiển thị nhánh hiện tại đang đi trước (ahead) hay đi sau (behind) nhánh từ xa bao nhiêu commit.
-- `git branch -a`: Liệt kê tất cả các nhánh, bao gồm cả các nhánh cục bộ và nhánh theo dõi từ xa.
+- `git status`: Hiển thị thay đổi cục bộ. Thông tin ahead/behind chỉ hiện nếu nhánh có upstream và dựa trên lần fetch gần nhất.
+- `git branch -a`: Liệt kê nhánh cục bộ và các nhánh theo dõi từ xa đã biết sau những lần fetch trước.
 
 ---
 
@@ -89,9 +89,10 @@ git branch -a
 
 ## 🧪 Lab
 Bài học này là bài tự kiểm tra cấu hình liên kết từ xa trên máy tính của bạn:
-1. Chạy lệnh `git remote -v` để kiểm tra kho lưu trữ hiện tại có liên kết từ xa nào không.
-2. Chạy `git branch -a` để quan sát danh sách các nhánh, chú ý các nhánh có tiền tố `remotes/origin/`.
-3. Chạy `git status` để đọc thông báo so sánh giữa nhánh trên máy và nhánh từ xa.
+1. Chạy `git remote -v`. Nếu không có kết quả, kho này chưa khai báo remote; đó là trạng thái bình thường.
+2. Nếu có remote, chạy `git fetch <tên-remote>` (thường là `origin`) để cập nhật thông tin nhánh từ xa.
+3. Chạy `git branch -a` để xem nhánh cục bộ và nhánh từ xa đã biết. Nếu chưa fetch hoặc remote chưa có nhánh, danh sách có thể trống.
+4. Chạy `git status`. Chỉ đọc số ahead/behind nếu Git cho biết nhánh đang theo dõi một upstream.
 
 ---
 
@@ -117,6 +118,6 @@ Giải thích vì sao mô hình phân tán của Git vẫn an toàn ngay cả kh
 ---
 
 ## 📚 Tổng kết
-- Local Repo nằm hoàn chỉnh trên máy tính cá nhân, hỗ trợ làm việc ngoại tuyến 100%.
-- Remote Repo nằm trên máy chủ GitHub dùng để chia sẻ, sao lưu và làm việc nhóm.
-- Hai kho hoàn toàn độc lập, chỉ trao đổi dữ liệu khi bạn chủ động chạy `push` hoặc `pull`.
+- Kho cục bộ cho phép bạn làm việc và commit ngoại tuyến; lịch sử có thể không đầy đủ nếu clone nông.
+- Remote là kho trên máy chủ, chẳng hạn GitHub, để chia sẻ và phối hợp.
+- `fetch` cập nhật thông tin remote; `pull` còn tích hợp thay đổi vào nhánh hiện tại; `push` gửi commit lên remote.

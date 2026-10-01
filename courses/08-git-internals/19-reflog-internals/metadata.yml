@@ -11,13 +11,11 @@ keywords:
 prerequisites:
   - 18-refspec-and-remotes
 objectives:
-  - Giải mã cấu trúc bên trong thư mục nhật ký .git/logs/ (gồm logs/HEAD và
-    logs/refs/heads/).
+  - Hiểu reflog ghi nhận các lần cập nhật ref và xem đường dẫn log bằng Git.
   - "Hiểu rõ định dạng văn bản của từng dòng bản ghi Reflog: old-hash, new-hash,
     committer, timestamp, và lý do thay đổi."
-  - Sử dụng kiến thức Reflog Internals để giải cứu mã nguồn khi mọi lệnh
-    Porcelain đều từ chối hoạt động.
+  - Dùng git reflog để tìm một commit cũ, kiểm tra nó và neo bằng nhánh mới.
 commands:
-  - cat .git/logs/HEAD
   - git reflog
+  - git rev-parse --git-path logs/HEAD
   - git log -g

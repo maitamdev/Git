@@ -20,7 +20,7 @@
 ### forward-moving undo
 - **Nói dễ hiểu**: Cơ chế hoàn tác tiến về phía trước trong tương lai thay vì lùi về quá khứ để viết lại lịch sử.
 - **Ví dụ**: Lịch sử có commit C1, C2 (lỗi), C3 thì revert sẽ tạo thêm commit C4 để đảo ngược C2.
-- **Đừng nhầm**: Khác với reset lùi con trỏ về quá khứ; phương pháp này an toàn tuyệt đối cho các nhánh dùng chung.
+- **Đừng nhầm**: Không di chuyển nhánh lùi như reset. Trên nhánh dùng chung, revert thường ít gây gián đoạn hơn, nhưng vẫn phải xem kết quả.
 
 ### revert commit
 - **Nói dễ hiểu**: Một snapshot commit mới được Git tự động sinh ra chứa các dòng diff đảo ngược.
@@ -30,12 +30,12 @@
 ---
 
 ## 📖 Định nghĩa
-`git revert <commit-target>` là câu lệnh hoàn tác an toàn nhất trong Git, hoạt động theo nguyên lý tạo ra một commit snapshot mới mang nội dung đối nghịch chính xác với những gì commit mục tiêu đã thực hiện. Thay vì xóa bỏ commit cũ, `git revert` bảo tồn trọn vẹn chuỗi lịch sử và bổ sung commit mới để vô hiệu hóa lỗi.
+`git revert <commit-target>` tạo commit mới áp dụng phần thay đổi ngược với commit mục tiêu, nên commit cũ vẫn nằm trong lịch sử. Đây thường là cách phù hợp để hoàn tác commit đã chia sẻ. Nếu các commit sau đã sửa cùng vùng, Git có thể báo conflict hoặc kết quả cần được kiểm tra; revert merge commit còn cần chọn mainline bằng `-m`.
 
 ---
 
 ## 💡 Tại sao cần
-Trên nhánh `main` hoặc `production`, việc viết lại lịch sử bằng reset bị cấm hoàn toàn vì sẽ phá vỡ đồng bộ của các thành viên và vi phạm quy chuẩn kiểm toán phần mềm. `git revert` là giải pháp tiêu chuẩn vàng giúp khắc phục lỗi tức thì mà vẫn giữ lại lịch sử minh bạch để cả nhóm cùng đối chiếu.
+Trên nhánh đã chia sẻ, reset một commit đã push có thể làm lịch sử của đồng đội lệch nhau. `git revert` thường hợp hơn vì giữ commit cũ và thêm commit đảo thay đổi. Hãy làm theo chính sách của nhóm, xem diff sau khi revert và xử lý conflict nếu Git báo.
 
 ---
 
@@ -58,7 +58,7 @@ C1 ──► C2 ──► C3 ──► C4 [Revert "C2"] (HEAD -> main)
 ---
 
 ## 🏢 Ví dụ thực tế
-Hệ thống thương mại điện tử triển khai lên production thì phát hiện commit `e7f8a9b` làm lỗi mã giảm giá. Không hoảng loạn dùng reset, kỹ sư trưởng gõ `git revert e7f8a9b`. Git tự động tính toán diff đối nghịch và mở trình soạn thảo commit message. Kỹ sư lưu lại, đẩy lên server và hệ thống CI/CD tự động cập nhật bản vá. Lỗi được giải quyết triệt để chỉ sau 2 phút.
+Hệ thống thương mại điện tử phát hiện commit `e7f8a9b` làm lỗi mã giảm giá. Sau khi xác nhận phạm vi thay đổi, kỹ sư chạy `git revert e7f8a9b`, xem diff đảo ngược, xử lý conflict nếu có, rồi chạy kiểm thử. Nếu nhóm dùng CI/CD, pipeline sẽ chạy theo cấu hình sau khi thay đổi được push.
 
 ---
 
@@ -66,44 +66,42 @@ Hệ thống thương mại điện tử triển khai lên production thì phát
 ```bash
 git revert <commit-hash>
 git revert HEAD
-git revert HEAD~2..HEAD
-git revert --no-commit <commit-hash>
 ```
+
+`git revert <dải-commit>` và `git revert --no-commit` là cú pháp Git thật; simulator hiện chỉ hỗ trợ revert một commit mỗi lần.
 
 ---
 
 ## 🔍 Giải thích command
 - `git revert <hash>`: Tạo commit mới đảo ngược các thay đổi do commit chỉ định tạo ra.
 - `git revert HEAD`: Hoàn tác commit gần đây nhất trên nhánh hiện tại.
-- `git revert HEAD~2..HEAD`: Hoàn tác liên tiếp một dải các commit gần nhất.
-- `git revert --no-commit <hash>`: Đảo ngược thay đổi đưa vào Staging nhưng chưa tự động tạo commit mới.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Nghĩ rằng revert sẽ xóa commit cũ khỏi git log**: Revert bảo tồn toàn bộ lịch sử và chỉ tạo thêm commit mới trên đỉnh nhánh.
-2. **Bối rối khi gặp xung đột conflict lúc revert**: Xung đột xảy ra khi các commit sau đó cùng sửa đổi dòng code; chỉ cần resolve conflict và chạy `git revert --continue`.
-3. **Lạm dụng reset thay vì revert trên nhánh chung**: Khiến máy chủ từ chối push và phá vỡ quy trình làm việc của toàn bộ đồng nghiệp.
+1. **Nghĩ rằng revert xóa commit cũ khỏi `git log`**: Lệnh này giữ commit cũ và thêm commit mới.
+2. **Cho rằng revert luôn tự chạy trơn tru**: Thay đổi về sau có thể gây conflict; giải quyết theo thông báo Git rồi kiểm tra diff trước khi tiếp tục.
+3. **Revert merge commit như commit thường**: Cần chọn mainline (`-m`) trong Git thật; quy trình nhóm cũng cần xác định tác động của việc đảo ngược merge.
 
 ---
 
 ## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác tạo commit revert và đối chiếu lịch sử commit trên terminal.
-1. Tạo một tệp `feature.txt` có nội dung thử nghiệm và thực hiện commit.
-2. Chạy lệnh `git revert HEAD` để hoàn tác commit vừa tạo.
-3. Quan sát Git mở cửa sổ soạn thảo thông điệp commit revert tự động.
-4. Lưu lại và kiểm tra `git log --oneline` để thấy commit revert mới xuất hiện trên đỉnh.
+Bài này cần có commit cha, vì không thể dùng lệnh revert thông thường để đảo ngược commit gốc duy nhất.
+1. Trong kho thử nghiệm riêng, tạo `base.txt`, stage và commit bằng thông điệp `base`.
+2. Tạo `feature.txt`, stage và commit bằng thông điệp `add feature`.
+3. Chạy `git revert HEAD`. Git thật thường mở editor để xác nhận thông điệp; simulator của khóa học tự tạo thông điệp mặc định.
+4. Chạy `git status`, mở `feature.txt`, rồi chạy `git log --oneline -3`. File đã được gỡ khỏi snapshot mới và log vẫn có cả commit thêm file lẫn commit revert.
 
 ---
 
 ## 💡 Hint & mẹo
-> Luôn sử dụng `git revert` khi cần thu hồi tính năng hoặc sửa lỗi trên các nhánh dùng chung và nhánh production.
+> Với commit đã chia sẻ, thường ưu tiên cách hoàn tác giữ lịch sử như `git revert`; làm theo quy ước của nhóm và kiểm tra diff trước khi push.
 
 ---
 
 ## ✅ Validation & Kết quả mong đợi
 - Commit mới mang thông điệp `Revert "<tên-commit>"` xuất hiện trên đỉnh nhật ký `git log`.
-- Nội dung file bị đảo ngược chính xác về trạng thái trước khi commit lỗi diễn ra.
+- Trong ví dụ không có thay đổi về sau, `feature.txt` không còn trong snapshot mới; với file đã đổi tiếp, hãy review diff và xử lý conflict nếu Git yêu cầu.
 
 ---
 
@@ -119,5 +117,5 @@ Tìm hiểu cách sử dụng cờ `-m 1` khi revert một Merge Commit (`git re
 
 ## 📝 Tổng kết
 - `git revert` tạo ra một commit mới để đảo ngược lại các thay đổi của commit cũ.
-- Là phương thức hoàn tác an toàn tuyệt đối trên các nhánh dùng chung và production.
-- Bảo tồn nguyên vẹn 100% lịch sử và tính toàn vẹn của chuỗi commit.
+- Thường phù hợp để hoàn tác commit đã chia sẻ vì không xóa commit cũ khỏi lịch sử.
+- Kết quả vẫn cần được review và kiểm thử; Git có thể báo conflict.

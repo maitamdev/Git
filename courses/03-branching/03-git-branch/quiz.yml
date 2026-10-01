@@ -1,96 +1,81 @@
 id: quiz-03-03-git-branch
-title: "Trắc nghiệm: Quản lý nhánh với git branch"
+title: "Trắc nghiệm: Xem và tạo nhánh"
 questions:
   - id: q1
-    question: Điều gì sẽ xảy ra nếu bạn cố gắng chạy lệnh `git branch -d feature`
-      khi bạn đang đứng trực tiếp trên nhánh `feature`?
+    question: Lệnh nào liệt kê các nhánh cục bộ?
     type: single
     options:
-      - text: Git sẽ báo lỗi từ chối xóa vì không thể xóa nhánh mà con trỏ HEAD đang
-          đứng trực tiếp
+      - text: git branch
         correct: true
-      - text: Git sẽ tự động xóa nhánh và thoát khỏi terminal ngay lập tức
+      - text: git log --oneline
         correct: false
-      - text: Git sẽ tự động chuyển bạn về nhánh main rồi mới xóa
+      - text: git remote -v
         correct: false
-      - text: Git sẽ xóa toàn bộ ổ cứng máy tính để làm sạch
+      - text: git status --short
         correct: false
-    explanation: "Bạn không thể xóa nhánh hiện tại; bạn phải chuyển sang nhánh khác
-      (ví dụ: git switch main) rồi mới xóa."
+    explanation: Chạy `git branch` không kèm tên để liệt kê các nhánh cục bộ trong repository.
   - id: q2
-    question: Sự khác biệt cốt lõi giữa hai cờ xóa nhánh `git branch -d` và `git
-      branch -D` là gì?
+    question: Bạn muốn tạo nhánh `feature-login` tại commit hiện tại và vẫn ở nhánh đang làm. Nên chạy lệnh nào?
     type: single
     options:
-      - text: "`-d` có cơ chế bảo vệ an toàn (chỉ xóa khi đã merge), còn `-D` cưỡng chế
-          xóa bất kể code chưa được merge"
+      - text: git branch feature-login
         correct: true
-      - text: "`-d` dùng cho hệ điều hành Windows, `-D` dùng cho hệ điều hành macOS"
+      - text: git switch -c feature-login
         correct: false
-      - text: "`-d` chỉ xóa trên máy tính cá nhân, `-D` xóa luôn cả máy chủ GitHub"
+      - text: git commit -m "feature-login"
         correct: false
-      - text: Hai cờ này hoàn toàn giống nhau 100% không có khác biệt nào
+      - text: git branch -d feature-login
         correct: false
-    explanation: "`-D` là viết tắt của `--delete --force`, ép buộc xóa bỏ nhánh ngay
-      cả khi có commit chưa hợp nhất."
+    explanation: "`git branch feature-login` tạo tên nhánh nhưng không chuyển HEAD sang nhánh đó."
   - id: q3
-    question: Lệnh nào sau đây dùng để đổi tên nhánh hiện tại bạn đang đứng thành
-      tên mới `feature-auth`?
+    question: Bạn vừa chạy `git branch experiment`. Điều gì xảy ra với thư mục làm việc?
     type: single
     options:
-      - text: git branch -m feature-auth
+      - text: Vẫn theo nhánh hiện tại; lệnh chỉ tạo thêm tên nhánh
         correct: true
-      - text: git branch --rename feature-auth
+      - text: Git lập tức thay toàn bộ tệp bằng nội dung của một commit mới
         correct: false
-      - text: git name-change feature-auth
+      - text: Git gửi nhánh mới lên remote
         correct: false
-      - text: git update-title feature-auth
+      - text: Git xóa nhánh đang chọn
         correct: false
-    explanation: Cờ `-m` (viết tắt của move/rename) đổi tên nhánh; nếu không truyền
-      tên cũ thì đổi tên nhánh hiện tại.
+    explanation: Tạo nhánh không cập nhật thư mục làm việc; việc chuyển sang nhánh khác là lệnh riêng.
   - id: q4
-    question: Cờ tùy chọn nào của lệnh git branch giúp hiển thị tất cả các nhánh bao
-      gồm cả nhánh từ xa trên GitHub?
+    question: Trong danh sách `git branch`, dấu `*` đứng trước tên nào?
     type: single
     options:
-      - text: -a (hoặc --all)
+      - text: Nhánh đang được chọn
         correct: true
-      - text: -r-only
+      - text: Nhánh đã bị xóa
         correct: false
-      - text: --global-branch
+      - text: Nhánh remote mới nhất
         correct: false
-      - text: -f (full)
+      - text: Nhánh có nhiều commit nhất
         correct: false
-    explanation: "`git branch -a` liệt kê toàn bộ nhánh cục bộ và nhánh theo dõi từ
-      xa (dạng remotes/origin/main)."
+    explanation: Dấu sao đánh dấu nhánh hiện tại; nó không biểu thị độ dài hay trạng thái remote.
   - id: q5
-    question: Để lọc ra danh sách các nhánh tính năng đã được hợp nhất an toàn vào
-      nhánh hiện tại, bạn dùng cờ nào?
+    question: Sau khi tạo `experiment`, dấu `*` vẫn đứng trước `main`. Điều đó cho biết gì?
     type: single
     options:
-      - text: --merged
+      - text: Bạn vẫn đang làm việc trên `main`
         correct: true
-      - text: --done
+      - text: Nhánh `experiment` chưa được tạo
         correct: false
-      - text: --finished
+      - text: Hai nhánh đã được merge
         correct: false
-      - text: --safe-delete
+      - text: Repository không có commit
         correct: false
-    explanation: "`git branch --merged` chỉ liệt kê các nhánh mà toàn bộ commit đã
-      nằm trong nhánh hiện tại."
+    explanation: Lệnh `git branch experiment` chỉ tạo nhánh; dấu sao vẫn chỉ nhánh mà bạn đang đứng.
   - id: q6
-    question: Khi bạn chạy lệnh `git branch -vv`, thông tin bổ sung quan trọng nào
-      được hiển thị?
+    question: Lệnh `git branch` không kèm tùy chọn chủ yếu hiển thị nhóm nào?
     type: single
     options:
-      - text: Mã commit đỉnh, thông điệp commit và trạng thái so sánh đi trước/sau với
-          nhánh remote tracking
+      - text: Các nhánh cục bộ trong repository hiện tại
         correct: true
-      - text: Địa chỉ nhà riêng và số tài khoản ngân hàng của tác giả
+      - text: Mọi nhánh trên tất cả máy tính của nhóm
         correct: false
-      - text: Dung lượng RAM đang tiêu tốn của hệ điều hành
+      - text: Mọi commit đã push lên GitHub
         correct: false
-      - text: Tốc độ quay của quạt tản nhiệt máy tính
+      - text: Danh sách tệp đang untracked
         correct: false
-    explanation: "`-vv` (very verbose) hiển thị chi tiết commit hash, subject và
-      tracking branch kèm trạng thái ahead/behind."
+    explanation: Lệnh cơ bản liệt kê nhánh cục bộ; nhánh từ xa có lệnh xem riêng học ở phần sau.

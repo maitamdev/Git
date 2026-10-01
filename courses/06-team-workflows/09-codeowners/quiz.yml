@@ -15,10 +15,10 @@ questions:
         correct: false
     explanation: "GitHub chỉ tìm kiếm tệp CODEOWNERS tại 3 vị trí quy định: `.github/CODEOWNERS`, `/CODEOWNERS`, hoặc `docs/CODEOWNERS`."
   - id: q2
-    question: Điều gì xảy ra một cách tự động khi bạn mở một Pull Request chỉnh sửa tệp tin đã được khai báo trong CODEOWNERS?
+    question: Khi một PR ở trạng thái sẵn sàng review sửa file được khai báo trong CODEOWNERS hợp lệ trên nhánh đích, điều gì có thể xảy ra?
     type: single
     options:
-      - text: GitHub tự động gửi yêu cầu đánh giá mã nguồn (Review request) tới các chủ sở hữu đã khai báo
+      - text: GitHub gửi review request tới owner khớp, nếu owner có quyền ghi vào repository
         correct: true
       - text: GitHub tự động từ chối và đóng ngay Pull Request đó
         correct: false
@@ -26,7 +26,7 @@ questions:
         correct: false
       - text: Toàn bộ máy chủ của công ty sẽ bị ngắt kết nối Internet
         correct: false
-    explanation: Hệ thống tự động kích hoạt yêu cầu xem xét mã nguồn gửi trực tiếp tới các cá nhân hoặc nhóm kỹ sư phụ trách module đó.
+    explanation: CODEOWNERS tạo review request cho owner khớp; PR Draft chưa gửi yêu cầu cho tới khi sẵn sàng review, và request chưa đồng nghĩa với approval bắt buộc.
   - id: q3
     question: Trong tệp CODEOWNERS, nếu có nhiều quy tắc trùng lặp với cùng một tệp tin thì quy tắc nào sẽ được ưu tiên áp dụng?
     type: single
@@ -39,12 +39,12 @@ questions:
         correct: false
       - text: GitHub sẽ tung đồng xu ngẫu nhiên để chọn
         correct: false
-    explanation: Tương tự như cú pháp của `.gitignore`, quy tắc khớp cuối cùng nằm ở phía dưới của tệp tin sẽ ghi đè các quy tắc chung bên trên.
+    explanation: Với các pattern khớp cùng file, pattern khớp cuối cùng xác định owner; cú pháp CODEOWNERS gần giống nhưng không hoàn toàn giống `.gitignore`.
   - id: q4
     question: Khi kết hợp CODEOWNERS với tùy chọn "Require review from Code Owners" trong Branch Protection, điều kiện để merge là gì?
     type: single
     options:
-      - text: Bắt buộc phải có ít nhất một phê duyệt chính thức từ đúng chủ sở hữu được khai báo trong CODEOWNERS
+      - text: Cần approval từ code owner theo quy tắc đã bật, trừ khi có ngoại lệ bypass áp dụng
         correct: true
       - text: Chỉ cần một đồng nghiệp bất kỳ bấm duyệt là có thể merge được ngay
         correct: false
@@ -52,7 +52,7 @@ questions:
         correct: false
       - text: Chủ sở hữu phải trực tiếp gõ lệnh merge từ terminal của máy họ
         correct: false
-    explanation: Ràng buộc này bảo đảm việc duyệt code không thể bị bỏ qua bởi những người ngoài chuyên môn của module liên quan.
+    explanation: CODEOWNERS tự nó chỉ yêu cầu review; branch protection phải bật yêu cầu review từ owner để biến approval thành điều kiện merge.
   - id: q5
     question: Cú pháp khai báo chủ sở hữu cho một nhóm làm việc (team) trong tệp CODEOWNERS trên GitHub là gì?
     type: single

@@ -5,7 +5,7 @@ export const lesson: CourseLesson = {
   "moduleId": "03-branching",
   "metadata": {
     "id": "07-fast-forward-merge",
-    "title": "Hợp nhất nhanh Fast-forward merge",
+    "title": "Hợp nhất tua nhanh (fast-forward merge)",
     "level": "intermediate",
     "duration": 30,
     "xp": 90,
@@ -13,10 +13,9 @@ export const lesson: CourseLesson = {
       "06-branch-isolation"
     ],
     "objectives": [
-      "Hiểu rõ điều kiện cần và đủ để Git kích hoạt cơ chế hợp nhất Fast-forward merge.",
-      "Thực hiện câu lệnh `git merge <tên-nhánh>` trên nhánh đích một cách chuẩn xác.",
-      "Giải thích vì sao Fast-forward không sinh ra commit hợp nhất mới (merge commit).",
-      "Sử dụng cờ `--no-ff` để chủ động tạo merge commit khi muốn lưu vết lịch sử nhánh tính năng."
+      "Nhận ra khi nhánh hiện tại có thể tiến thẳng tới commit của nhánh cần gộp.",
+      "Chạy git merge <nhánh> khi đang đứng trên nhánh nhận thay đổi.",
+      "Giải thích vì sao fast-forward không tạo merge commit."
     ],
     "completion": {
       "theoryViewed": true,
@@ -31,96 +30,94 @@ export const lesson: CourseLesson = {
       "fast-forward",
       "ff merge",
       "hop nhat nhanh",
-      "git merge",
-      "linear history"
+      "git merge"
     ],
     "commands": [
       "git switch main",
       "git merge <tên-nhánh>",
-      "git merge --no-ff <tên-nhánh>",
-      "git merge --ff-only <tên-nhánh>"
+      "git merge --no-ff <tên-nhánh>"
     ]
   },
-  "content": "# Hợp nhất nhanh Fast-forward merge\n\n---\n\n## 🎯 Mục tiêu\n- Hiểu rõ điều kiện để Git thực hiện hợp nhất tua nhanh (Fast-forward merge).\n- Thực hiện lệnh `git merge <tên-nhánh>` trên nhánh đích một cách chuẩn xác.\n- Giải thích vì sao Fast-forward không tạo ra commit hợp nhất mới và khi nào nên dùng cờ `--no-ff`.\n\n---\n\n## 🧩 Từ khóa hôm nay\n\n### Fast-forward Merge — hợp nhất tua nhanh\n- **Nói dễ hiểu:** Cách gộp nhánh khi nhánh chính chưa có commit mới nào kể từ khi rẽ nhánh tính năng.\n- **Ví dụ:** Bạn tách nhánh làm nút bấm trong khi `main` đứng yên; khi gộp, con trỏ `main` chỉ việc trượt tới commit của bạn.\n- **Đừng nhầm:** Không có commit hợp nhất mới nào được sinh ra; Git chỉ dịch chuyển con trỏ nhánh tiến lên phía trước.\n\n### Linear History — lịch sử tuyến tính\n- **Nói dễ hiểu:** Chuỗi các commit nối tiếp nhau thẳng hàng trên một đường duy nhất, không có ngã rẽ.\n- **Ví dụ:** Chuỗi commit C1 ──> C2 ──> C3 ──> C4 giúp bạn đọc lại lịch sử dự án rất rõ ràng và mạch lạc.\n- **Đừng nhầm:** Lịch sử tuyến tính không cấm tạo nhánh; khi gộp theo kiểu Fast-forward, các commit tự xếp thành một đường thẳng.\n\n### --no-ff — ép tạo commit hợp nhất\n- **Nói dễ hiểu:** Tùy chọn buộc Git tạo một commit gộp riêng để lưu lại bằng chứng một nhánh tính năng đã hoàn thành.\n- **Ví dụ:** Chạy `git merge --no-ff feature-cart` để giữ lại hình ảnh nhánh con trên cây lịch sử của nhóm.\n- **Đừng nhầm:** Dùng cờ này sẽ luôn sinh ra thêm một commit mới ngay cả khi đủ điều kiện tua nhanh con trỏ.\n\n---\n\n## 📖 Định nghĩa\nFast-forward merge là hình thức hợp nhất đơn giản nhất của Git, diễn ra khi nhánh đích (`main`) không có commit mới nào kể từ lúc tách nhánh tính năng. Git không cần giải quyết xung đột mà chỉ dịch chuyển con trỏ `main` tiến thẳng đến commit mới nhất của nhánh tính năng.\n\n---\n\n## 🤔 Tại sao cần?\nKhi bạn làm những tính năng nhỏ hoặc sửa lỗi nhanh mà nhánh chính chưa bị ai thay đổi, Fast-forward giúp tích hợp mã nguồn tức thì. Lịch sử commit giữ được sự liền mạch, thẳng thớm và không bị ngập tràn bởi các commit gộp vụn vặt.\n\n---\n\n## 🧠 Mental Model (Mô hình tư duy)\nHãy hình dung hai bạn Nam và Bình cùng đi bộ trên một con đường mòn. Đến cột mốc số 3, Bình đứng chờ còn Nam đi tiếp đến cột mốc số 5. Khi Nam gọi điện báo đã tới nơi, Bình chỉ việc bước nhanh về phía trước (Fast-forward) để đứng cùng Nam tại cột mốc số 5 mà không cần mở lối đi mới nào.\n\n---\n\n## 🖼 Sơ đồ\n```text\nTrước khi merge:\nmain:               C1 ───> C2 ───> C3 (HEAD -> main)\n                                     │\nfeature:                             └───> C4 ───> C5 (feature)\n\nSau lệnh: git merge feature\nmain & feature:     C1 ───> C2 ───> C3 ───> C4 ───> C5 (HEAD -> main, feature)\n```\n\n---\n\n## 🌎 Ví dụ thực tế\nBạn Đức tạo nhánh `fix-typo` từ `main` để sửa một chữ sai trên thanh menu. Đức commit hai lần. Trong lúc đó cả nhóm không ai sửa thêm gì vào `main`. Khi xong việc, Đức gõ `git switch main` rồi chạy `git merge fix-typo`. Git thông báo \"Fast-forward\", con trỏ `main` lập tức nhảy lên commit mới nhất của Đức mà không sinh thêm commit rác nào.\n\n---\n\n## 💻 Command\n```bash\ngit switch main\ngit merge <tên-nhánh>\ngit merge --no-ff <tên-nhánh>\n```\n\n---\n\n## 🔍 Giải thích command\n- `git switch main`: Bắt buộc chuyển về nhánh nhận code trước khi thực hiện thao tác hợp nhất.\n- `git merge <tên-nhánh>`: Gộp nhánh chỉ định vào nhánh hiện tại (tự động chọn Fast-forward nếu thỏa mãn điều kiện).\n- `git merge --no-ff <tên-nhánh>`: Ép buộc tạo commit hợp nhất mới để lưu vết mốc tích hợp nhánh tính năng.\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Đứng ở nhánh tính năng rồi gõ `git merge main`:** Thao tác này kéo code từ `main` vào nhánh con chứ không đưa code vào `main`.\n2. **Bối rối vì không thấy commit mới:** Đây là bản chất của Fast-forward vì Git chỉ dời con trỏ chứ không cần sinh commit mới.\n3. **Quên chuyển về nhánh chính trước khi merge:** Luôn kiểm tra `git status` xem mình đang đứng ở nhánh đích hay chưa.\n\n---\n\n## 🧪 Lab\nBài tập này được thực hành trên môi trường Git mô phỏng của hệ thống:\n1. Tạo nhánh `ff-demo` bằng lệnh `git switch -c ff-demo`.\n2. Tạo tệp `feature.js` và commit với thông điệp `feat: add feature file`.\n3. Chuyển về nhánh chính bằng lệnh `git switch main`.\n4. Chạy lệnh `git merge ff-demo` và quan sát dòng chữ `Fast-forward` trên terminal.\n\n---\n\n## 💡 Hint\nLuôn ghi nhớ quy tắc: đứng tại nhánh muốn nhận code (như `main`) rồi mới gọi tên nhánh cần gộp vào.\n\n---\n\n## ✅ Validation\n- Terminal hiển thị thông báo `Fast-forward`.\n- Lệnh `git log --oneline` cho thấy commit của nhánh `ff-demo` đã nằm ngay trên đỉnh nhánh `main`.\n\n---\n\n## ❓ Quiz\nTrả lời các câu hỏi sau để kiểm tra hiểu biết về cơ chế hợp nhất tua nhanh trong Git.\n\n---\n\n## 🔥 Challenge\nChạy thử lệnh `git merge --no-ff` trên một nhánh thử nghiệm khác và so sánh biểu đồ commit với lần merge Fast-forward vừa rồi.\n\n---\n\n## 📚 Tổng kết\n- Fast-forward chỉ xảy ra khi nhánh đích không có commit mới nào kể từ mốc tách nhánh.\n- Git chỉ dời nhãn nhánh tiến lên phía trước mà không tạo thêm commit mới.\n- Dùng cờ `--no-ff` khi bạn muốn lưu lại vết tích hợp rõ ràng trên đồ thị lịch sử.\n",
+  "content": "# Hợp nhất tua nhanh (fast-forward merge)\r\n\r\n---\r\n\r\n## 🎯 Mục tiêu\r\n- Nhận ra khi nhánh hiện tại có thể tiến thẳng tới commit của nhánh cần gộp.\r\n- Chạy `git merge <nhánh>` khi đang đứng trên nhánh nhận thay đổi.\r\n- Giải thích vì sao fast-forward không tạo merge commit.\r\n\r\n---\r\n\r\n## 🧩 Từ khóa hôm nay\r\n\r\n### Fast-forward — tua nhanh con trỏ\r\n- **Nói dễ hiểu:** Nhánh nhận thay đổi chưa có commit riêng kể từ lúc nhánh kia tách ra.\r\n- **Ví dụ:** `main` đứng yên trong lúc `feature` có thêm hai commit.\r\n- **Đừng nhầm:** Git chỉ dịch chuyển con trỏ `main` tới commit mới; không tạo merge commit.\r\n\r\n### Nhánh đích — nơi nhận thay đổi\r\n- **Nói dễ hiểu:** Nhánh bạn đang đứng khi chạy `git merge`.\r\n- **Ví dụ:** Muốn đưa `feature-cart` vào `main`, chuyển sang `main` trước.\r\n- **Đừng nhầm:** Đứng trên `feature-cart` rồi merge `main` sẽ đưa thay đổi theo hướng ngược lại.\r\n\r\n### `--no-ff` — giữ mốc hợp nhất\r\n- **Nói dễ hiểu:** Buộc Git tạo commit hợp nhất dù có thể tua nhanh.\r\n- **Ví dụ:** `git merge --no-ff feature-cart` ghi lại riêng lần tích hợp.\r\n- **Đừng nhầm:** Cờ này không tua nhanh; nó tạo commit có hai cha.\r\n\r\n---\r\n\r\n## 📖 Định nghĩa\r\nFast-forward xảy ra khi commit hiện tại của nhánh đích là tổ tiên của nhánh được gộp. Git có thể đưa con trỏ nhánh đích tới commit mới hơn mà không tạo commit hợp nhất. Nếu hai nhánh đã có commit riêng, điều kiện này không còn đúng; đó là tình huống học ở bài 3-way merge.\r\n\r\n---\r\n\r\n## 🤔 Tại sao cần?\r\nKhi nhánh đích chưa có thay đổi riêng, tua nhanh giữ lịch sử thẳng và dễ đọc. Nếu nhóm muốn lưu dấu một lần tích hợp dù lịch sử có thể đi thẳng, `--no-ff` yêu cầu Git tạo merge commit riêng.\r\n\r\n---\r\n\r\n## 🧠 Mental Model (Mô hình tư duy)\r\nHãy tưởng tượng `main` đang đứng ở cột mốc C3, còn `feature` đã đi tiếp tới C5. Nếu không có con đường khác tiến lên từ C3, `main` chỉ cần chuyển tới C5. Nếu nhóm muốn ghi rõ “ở đây đã tích hợp feature”, dùng `--no-ff` để tạo thêm một mốc hợp nhất.\r\n\r\n---\r\n\r\n## 🖼 Sơ đồ\r\n```text\r\nTrước:\r\nC1 ── C2 ── C3 (main) ── C4 ── C5 (feature)\r\n\r\nSau `git switch main` rồi `git merge feature`:\r\nC1 ── C2 ── C3 ── C4 ── C5 (main, feature)\r\n```\r\n\r\n---\r\n\r\n## 🌎 Ví dụ thực tế\r\nĐức tạo `fix-typo` từ `main`, sửa lỗi chính tả rồi tạo hai commit. Trong lúc đó không có commit mới trên `main`. Đức chuyển về `main`, chạy `git merge fix-typo`; Git có thể đưa `main` tới commit mới nhất của nhánh sửa lỗi mà không tạo commit hợp nhất mới.\r\n\r\n---\r\n\r\n## 💻 Command\r\n```bash\r\ngit switch main\r\ngit merge <tên-nhánh>\r\ngit merge --no-ff <tên-nhánh>\r\n```\r\n\r\n---\r\n\r\n## 🔍 Giải thích command\r\n- `git switch main`: Chọn nhánh sẽ nhận thay đổi.\r\n- `git merge <tên-nhánh>`: Gộp lịch sử của nhánh được nêu vào nhánh hiện tại; Git dùng fast-forward nếu có thể.\r\n- `git merge --no-ff <tên-nhánh>`: Yêu cầu tạo một merge commit thay vì tua nhanh.\r\n\r\n---\r\n\r\n## ⚠️ Sai lầm phổ biến\r\n1. **Đứng trên nhánh nguồn:** Merge sẽ cập nhật nhánh hiện tại, nên kiểm tra `git status` trước.\r\n2. **Chờ merge commit sau fast-forward:** Fast-forward chỉ di chuyển con trỏ; không sinh commit mới.\r\n3. **Cho rằng mọi lần merge đều tua nhanh:** Nếu nhánh đích cũng có commit riêng, Git cần cách hợp nhất khác.\r\n\r\n---\r\n\r\n## 🧪 Lab\r\n1. Chạy `git switch -c ff-demo`.\r\n2. Tạo `feature.js`, ghi một dòng, rồi chạy `git add feature.js` và `git commit -m \"feat: add feature file\"`.\r\n3. Chạy `git switch main`.\r\n4. Chạy `git merge ff-demo`; xác nhận terminal báo `Fast-forward`.\r\n5. Chạy `git log --oneline`; xác nhận commit tính năng nằm trong lịch sử `main`.\r\n\r\n---\r\n\r\n## 💡 Hint\r\n> Đứng trên nhánh nhận thay đổi rồi gọi tên nhánh nguồn trong `git merge`.\r\n\r\n---\r\n\r\n## ✅ Validation\r\n- Lệnh merge hoàn tất và báo `Fast-forward`.\r\n- `git log --oneline` trên `main` có commit `feat: add feature file`.\r\n\r\n---\r\n\r\n## ❓ Quiz\r\nTrả lời các câu hỏi để kiểm tra điều kiện và kết quả của fast-forward.\r\n\r\n---\r\n\r\n## 🔥 Challenge\r\nTạo nhánh tính năng mới từ `main`, commit một tệp, rồi merge bằng `--no-ff`. Dùng `git log --oneline` để tìm commit merge và so sánh với fast-forward ở lab.\r\n\r\n---\r\n\r\n## 📚 Tổng kết\r\n- Fast-forward chỉ xảy ra khi nhánh đích là tổ tiên của nhánh nguồn.\r\n- Chuyển sang nhánh đích trước khi chạy merge.\r\n- `--no-ff` tạo merge commit để lưu dấu lần tích hợp.\r\n",
   "quiz": {
     "id": "quiz-03-07-fast-forward-merge",
-    "title": "Trắc nghiệm: Hợp nhất nhanh Fast-forward merge",
+    "title": "Trắc nghiệm: Hợp nhất tua nhanh",
     "questions": [
       {
         "id": "q1",
-        "question": "Điều kiện tiên quyết để Git có thể thực hiện Fast-forward merge là gì?",
+        "question": "Điều kiện nào cho phép Git thực hiện fast-forward từ `feature` vào `main`?",
         "type": "single",
         "options": [
           {
-            "text": "Nhánh đích (ví dụ main) không có bất kỳ commit mới nào kể từ khi nhánh tính năng được tách ra",
+            "text": "Commit hiện tại của `main` là tổ tiên của commit trên `feature`",
             "correct": true
           },
           {
-            "text": "Dự án phải có dung lượng dưới 10 megabyte",
+            "text": "Hai nhánh có tên giống nhau",
             "correct": false
           },
           {
-            "text": "Cả hai lập trình viên phải sử dụng cùng một phiên bản hệ điều hành",
+            "text": "Repository có ít hơn mười tệp",
             "correct": false
           },
           {
-            "text": "Lệnh phải được thực thi vào lúc 12 giờ đêm",
+            "text": "Người dùng đã kết nối Internet",
             "correct": false
           }
         ],
-        "explanation": "Nếu nhánh đích không có commit mới, con đường lịch sử là hoàn toàn tuyến tính và Git có thể tua nhanh con trỏ."
+        "explanation": "Git có thể tua con trỏ main khi lịch sử của main nằm trên đường dẫn tới commit feature."
       },
       {
         "id": "q2",
-        "question": "Trong quá trình thực hiện Fast-forward merge thành công, Git có sinh ra một commit mới hay không?",
+        "question": "Fast-forward merge tạo ra thay đổi nào trong lịch sử?",
         "type": "single",
         "options": [
           {
-            "text": "Không, Git chỉ đơn thuần dịch chuyển con trỏ của nhánh đích tiến lên chỉ vào commit đỉnh của nhánh tính năng",
+            "text": "Di chuyển con trỏ nhánh đích tới commit mới hơn mà không tạo merge commit",
             "correct": true
           },
           {
-            "text": "Có, Git luôn luôn bắt buộc tạo ra một commit có hai cha",
+            "text": "Xóa toàn bộ commit của nhánh nguồn",
             "correct": false
           },
           {
-            "text": "Có, nhưng commit đó sẽ tự động bị ẩn đi sau 1 giờ",
+            "text": "Tạo commit có hai cha trong mọi trường hợp",
             "correct": false
           },
           {
-            "text": "Git sẽ xóa toàn bộ các commit cũ và thay bằng một commit duy nhất",
+            "text": "Đổi tên nhánh nguồn thành nhánh đích",
             "correct": false
           }
         ],
-        "explanation": "Fast-forward không tạo commit mới, chỉ di chuyển con trỏ tiến lên phía trước."
+        "explanation": "Fast-forward đưa nhánh đích tới commit đã có trên nhánh nguồn; không tạo commit mới."
       },
       {
         "id": "q3",
-        "question": "Trước khi chạy lệnh `git merge feature-login` để gộp tính năng vào nhánh chính, bạn bắt buộc phải làm gì?",
+        "question": "Muốn gộp `feature-login` vào `main`, bạn cần đứng trên nhánh nào trước khi chạy `git merge feature-login`?",
         "type": "single",
         "options": [
           {
-            "text": "Chuyển về nhánh đích đón nhận code bằng lệnh `git switch main`",
+            "text": "`main`, vì đó là nhánh nhận thay đổi",
             "correct": true
           },
           {
-            "text": "Xóa nhánh feature-login trước",
+            "text": "`feature-login`, vì merge luôn cập nhật nhánh nguồn",
             "correct": false
           },
           {
-            "text": "Tắt kết nối mạng Internet",
+            "text": "Nhánh remote `origin`",
             "correct": false
           },
           {
-            "text": "Đóng trình duyệt web",
+            "text": "Không quan trọng nhánh nào đang chọn",
             "correct": false
           }
         ],
-        "explanation": "Bạn luôn phải đứng ở nhánh đích (nơi muốn nhận code) trước khi ra lệnh merge nhánh nguồn vào."
+        "explanation": "Lệnh `git merge` cập nhật nhánh hiện tại bằng cách hợp nhất nhánh được nêu làm nguồn."
       },
       {
         "id": "q4",
-        "question": "Cờ tùy chọn nào ép buộc Git tạo một Merge Commit mới ngay cả khi đủ điều kiện thực hiện Fast-forward?",
+        "question": "Khi có thể fast-forward nhưng bạn muốn lưu một commit riêng cho lần tích hợp, dùng cờ nào?",
         "type": "single",
         "options": [
           {
@@ -128,67 +125,67 @@ export const lesson: CourseLesson = {
             "correct": true
           },
           {
-            "text": "--force-merge",
+            "text": "--oneline",
             "correct": false
           },
           {
-            "text": "--create-commit",
+            "text": "--staged",
             "correct": false
           },
           {
-            "text": "--always-new",
+            "text": "--cached",
             "correct": false
           }
         ],
-        "explanation": "`--no-ff` (no fast-forward) bắt buộc tạo một merge commit riêng biệt để lưu lại bằng chứng của nhánh tính năng."
+        "explanation": "`git merge --no-ff` yêu cầu Git tạo merge commit thay vì chỉ di chuyển con trỏ."
       },
       {
         "id": "q5",
-        "question": "Cờ `--ff-only` trong lệnh git merge mang lại sự an toàn nào cho quy trình CI/CD?",
+        "question": "Vì sao một nhóm có thể chọn `--no-ff` dù fast-forward đang khả thi?",
         "type": "single",
         "options": [
           {
-            "text": "Từ chối hợp nhất và báo lỗi nếu nhánh đích bị phân kỳ, bảo đảm lịch sử dự án luôn là một đường thẳng",
+            "text": "Muốn lưu riêng một mốc thể hiện lần tích hợp nhánh tính năng",
             "correct": true
           },
           {
-            "text": "Tự động chấp nhận tất cả các lỗi xung đột code mà không hỏi người dùng",
+            "text": "Muốn xóa lịch sử cũ khỏi repository",
             "correct": false
           },
           {
-            "text": "Xóa bỏ tất cả các bài kiểm tra tự động",
+            "text": "Muốn bỏ qua việc kiểm tra thay đổi",
             "correct": false
           },
           {
-            "text": "Tự động tăng số sao trên GitHub của dự án",
+            "text": "Muốn tự động đẩy commit lên GitHub",
             "correct": false
           }
         ],
-        "explanation": "`--ff-only` ngăn chặn việc vô tình sinh ra merge commit khi lịch sử đã bị phân kỳ."
+        "explanation": "Merge commit tạo dấu mốc riêng cho lần tích hợp, theo quy ước của nhóm."
       },
       {
         "id": "q6",
-        "question": "Khi quan sát `git log --graph --oneline` sau một Fast-forward merge, đồ thị nhánh sẽ có dạng gì?",
+        "question": "Sau fast-forward, điều gì đúng về hai con trỏ `main` và `feature`?",
         "type": "single",
         "options": [
           {
-            "text": "Một đường thẳng tắp duy nhất không có bất kỳ nút giao rẽ nhánh nào",
+            "text": "Cả hai có thể cùng trỏ tới commit mới nhất",
             "correct": true
           },
           {
-            "text": "Một vòng tròn khép kín vô tận",
+            "text": "`feature` bị xóa tự động",
             "correct": false
           },
           {
-            "text": "Một hình sao năm cánh phức tạp",
+            "text": "`main` quay lại commit đầu tiên",
             "correct": false
           },
           {
-            "text": "Đồ thị bị biến mất hoàn toàn không xem được",
+            "text": "Cả hai chuyển thành remote branch",
             "correct": false
           }
         ],
-        "explanation": "Do không có merge commit, các commit nối tiếp nhau trên một đường thẳng duy nhất."
+        "explanation": "Fast-forward di chuyển main tới commit feature; nhánh feature vẫn tồn tại nếu chưa bị xóa riêng."
       }
     ]
   }

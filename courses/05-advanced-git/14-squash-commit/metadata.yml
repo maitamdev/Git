@@ -20,7 +20,5 @@ objectives:
   - Phân biệt sự khác biệt giữa chỉ thị `squash` (giữ lại message để chỉnh sửa)
     và `fixup` (bỏ qua message).
 commands:
-  - git rebase -i HEAD~<n>
-  - s <commit-hash> <message>
-  - squash <commit-hash> <message>
   - git log --oneline -n 5
+  - git status

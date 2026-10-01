@@ -1,68 +1,68 @@
 id: quiz-03-02-head-pointer
-title: "Trắc nghiệm: Con trỏ HEAD và Detached HEAD"
+title: "Trắc nghiệm: HEAD và detached HEAD"
 questions:
   - id: q1
-    question: Trong trạng thái làm việc bình thường, con trỏ HEAD trong Git có vai trò gì?
+    question: Khi đang ở trạng thái bình thường trên `main`, HEAD thường trỏ tới đâu?
     type: single
     options:
-      - text: Chỉ định nhánh và commit hiện tại mà thư mục làm việc đang hiển thị
+      - text: Nhánh `main`, nhánh này trỏ tới commit hiện tại
         correct: true
-      - text: Mật khẩu bảo mật dùng để đăng nhập vào máy chủ GitHub
+      - text: Tệp `.gitignore`
         correct: false
-      - text: Danh sách các thành viên được cấp quyền ghi vào dự án
+      - text: Máy chủ GitHub
         correct: false
-      - text: Bản sao lưu dự phòng của toàn bộ mã nguồn trên đám mây
+      - text: Một commit chưa từng được tạo
         correct: false
-    explanation: HEAD là con trỏ đại diện cho vị trí hiện tại bạn đang đứng trong kho lưu trữ Git.
+    explanation: Trong trạng thái thông thường, HEAD theo nhánh hiện tại; nhánh đó chỉ tới commit mới nhất của nó.
   - id: q2
-    question: Trạng thái Detached HEAD xảy ra khi nào?
+    question: Khi nào HEAD ở trạng thái detached?
     type: single
     options:
-      - text: Khi con trỏ HEAD trỏ trực tiếp vào một commit cụ thể thay vì trỏ qua tên nhánh
+      - text: Khi HEAD trỏ trực tiếp tới commit thay vì theo tên nhánh
         correct: true
-      - text: Khi máy tính bị ngắt kết nối mạng Internet hoặc cáp quang
+      - text: Khi repository mất kết nối Internet
         correct: false
-      - text: Khi ổ đĩa của bạn bị đầy dung lượng và không thể lưu tệp
+      - text: Khi bạn sửa một tệp chưa staged
         correct: false
-      - text: Khi bạn đặt sai thông tin người dùng trong cấu hình Git
+      - text: Khi cấu hình email Git chưa đúng
         correct: false
-    explanation: Detached HEAD xuất hiện khi bạn checkout trực tiếp tới một mã hash commit thay vì một tên nhánh.
+    explanation: Detached HEAD mô tả vị trí con trỏ; nó không phụ thuộc kết nối mạng hay nội dung tệp.
   - id: q3
-    question: Nếu bạn đã tạo một số commit thử nghiệm trong trạng thái Detached HEAD, làm sao để giữ lại an toàn?
+    question: Bạn muốn xem một commit cũ mà không di chuyển `main`. Nên dùng lệnh nào?
     type: single
     options:
-      - text: Dùng lệnh `git switch -c <tên-nhánh-mới>` để gắn nhánh mới vào commit hiện tại
+      - text: git switch --detach <mã-commit>
         correct: true
-      - text: Tắt máy tính và khởi động lại để Git tự khôi phục dữ liệu
+      - text: git branch -D main
         correct: false
-      - text: Xóa thư mục dự án và tải lại từ đầu từ máy chủ
+      - text: git reset --hard main
         correct: false
-      - text: Nhấn tổ hợp phím Ctrl + Z nhiều lần trong trình soạn thảo
+      - text: git commit --amend
         correct: false
-    explanation: Lệnh `git switch -c <tên>` tạo một nhánh mới ngay tại commit hiện tại, giữ commit không bị mồ côi.
+    explanation: "`git switch --detach` đưa HEAD tới commit để kiểm tra mà không đổi con trỏ nhánh `main`."
   - id: q4
-    question: Lệnh nào là cách an toàn và rõ ràng nhất để đưa HEAD thoát khỏi Detached HEAD quay về nhánh main?
+    question: Nếu tạo commit thử nghiệm khi detached và muốn dễ tìm lại, bạn nên làm gì?
+    type: single
+    options:
+      - text: Tạo một nhánh tại commit đó trước khi chuyển đi
+        correct: true
+      - text: Đổi tên tệp thành mã commit
+        correct: false
+      - text: Chạy `git status` nhiều lần
+        correct: false
+      - text: Xóa nhánh `main`
+        correct: false
+    explanation: Nhánh đặt một tên ổn định trỏ tới commit thử nghiệm để bạn có thể quay lại sau.
+  - id: q5
+    question: Bạn muốn rời detached HEAD và quay về nhánh `main`. Lệnh nào phù hợp?
     type: single
     options:
       - text: git switch main
         correct: true
-      - text: git delete head
+      - text: git add main
         correct: false
-      - text: git reset --everything
+      - text: git branch main
         correct: false
-      - text: git close-all
+      - text: git diff main
         correct: false
-    explanation: Lệnh `git switch main` chuyển vùng làm việc và gắn con trỏ HEAD trở lại nhánh `main`.
-  - id: q5
-    question: Khi bạn đang ở trên nhánh main và thực hiện một commit mới, điều gì xảy ra với HEAD?
-    type: single
-    options:
-      - text: HEAD cùng với con trỏ main tiếp tục trỏ tới commit mới nhất vừa tạo
-        correct: true
-      - text: HEAD đứng yên ở commit cũ và tự động rơi vào trạng thái Detached HEAD
-        correct: false
-      - text: HEAD bị xóa khỏi kho lưu trữ và phải gõ lệnh tạo lại thủ công
-        correct: false
-      - text: HEAD tự động chuyển sang nhánh khác ngẫu nhiên trong dự án
-        correct: false
-    explanation: Ở trạng thái bình thường, HEAD trỏ vào nhánh `main`. Khi `main` tiến lên commit mới, vị trí hiện tại của HEAD cũng tiến theo.
+    explanation: "`git switch main` gắn HEAD lại với nhánh `main` và cập nhật thư mục làm việc theo nhánh đó."

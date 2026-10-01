@@ -85,7 +85,7 @@ git log --oneline -n 5
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Đặt chỉ thị `squash` ngay ở dòng đầu tiên của Todo List**: Sẽ gây lỗi vì dòng đầu tiên không có commit nào nằm phía trước để gộp vào.
+1. **Đặt `squash` hoặc `fixup` ở dòng đầu tiên**: Hai lệnh này cần commit đứng trước để gộp vào. Dòng đầu có thể dùng `pick`, `reword`, `edit` hoặc `drop` tùy mục tiêu.
 2. **Quên xóa các dòng thông điệp commit rác trong cửa sổ tổng hợp**: Khiến thông điệp cuối cùng chứa đầy những câu vụn vặt như "fix typo", "temp".
 3. **Squash nhầm các tính năng độc lập**: Gộp các commit không liên quan vào làm một khối khổng lồ sẽ gây khó khăn cho việc review và rollback khi phát sinh sự cố.
 
@@ -102,7 +102,7 @@ Bài học này là bài tự kiểm tra: bạn thao tác trực tiếp trên te
 ---
 
 ## 💡 Hint & mẹo
-> Nhớ nguyên tắc: Dòng đầu tiên trong Todo List luôn luôn phải là `pick` (hoặc reword/edit), tuyệt đối không thể là `squash` hay `fixup`.
+> `squash` và `fixup` cần commit trước đó làm đích gộp. Luyện trên nhánh chưa chia sẻ và kiểm tra kết quả bằng `git log`.
 
 ---
 

@@ -5,17 +5,17 @@
 ## 🎯 Mục tiêu
 - Nắm vững nguyên lý tìm kiếm nhị phân (Binary Search) được áp dụng trong câu lệnh `git bisect`.
 - Vận hành quy trình 4 bước truy tìm thủ phạm gây lỗi: `start` -> đánh dấu `bad`/`good` -> thử nghiệm -> `reset`.
-- Hiểu rõ hiệu quả toán học: Tìm ra commit lỗi trong 1000 commit chỉ với khoảng 10 lần kiểm tra (O(log N)).
-- Tự động hóa hoàn toàn quá trình tìm lỗi bằng câu lệnh `git bisect run <script-test>`.
+- Hiểu vì sao khoảng 1.000 commit có thể cần gần 10 lần kiểm tra khi lỗi nằm trong một khoảng liên tục và mỗi lần kiểm tra cho kết quả tin cậy.
+- Biết `git bisect run <script-test>` có thể tự động đánh dấu kết quả nếu script trả mã thoát đúng; lệnh này cần Git thật và không được mô phỏng trong khóa học.
 
 ---
 
 ## 🧩 Từ khóa hôm nay
 
 ### Git Bisect
-- **Nói dễ hiểu**: Công cụ điều tra tự động giúp tìm ra commit đầu tiên gây lỗi bằng thuật toán tìm kiếm nhị phân chia đôi lịch sử.
+- **Nói dễ hiểu**: Công cụ giúp thu hẹp commit đầu tiên gây lỗi bằng cách chia đôi lịch sử và kiểm tra từng phiên bản.
 - **Ví dụ**: Dùng `git bisect start`, đánh dấu `git bisect bad` và `git bisect good v1.0` để Git tự nhảy đến commit ở giữa.
-- **Đừng nhầm**: Git bisect không tự sửa lỗi code, nó chỉ tìm ra chính xác commit nào là nguyên nhân gây ra lỗi.
+- **Đừng nhầm**: Bisect không tự sửa lỗi. Kết quả đáng tin khi mốc good/bad đúng và lỗi xuất hiện một lần theo thứ tự lịch sử trong khoảng đã chọn.
 
 ### Good / Bad Commit
 - **Nói dễ hiểu**: Hai mốc đánh dấu trạng thái của mã nguồn: `good` là phiên bản còn chạy chuẩn, `bad` là phiên bản đã phát sinh lỗi.
@@ -25,12 +25,12 @@
 ### Bisect Reset (git bisect reset)
 - **Nói dễ hiểu**: Lệnh kết thúc phiên điều tra bisect và đưa con trỏ HEAD quay trở về nhánh làm việc ban đầu.
 - **Ví dụ**: Gõ `git bisect reset` ngay sau khi Git in ra thông báo commit thủ phạm gây lỗi.
-- **Đừng nhầm**: Nếu quên reset, bạn sẽ tiếp tục bị mắc kẹt ở trạng thái Detached HEAD trên commit lỗi.
+- **Đừng nhầm**: Trong lúc bisect, Git thường checkout các commit đang kiểm tra. `git bisect reset` kết thúc phiên và đưa HEAD về vị trí trước đó.
 
 ---
 
 ## 📖 Định nghĩa
-`git bisect` là công cụ điều tra lỗi trong Git hoạt động theo thuật toán tìm kiếm nhị phân (Binary Search). Bằng cách đánh dấu mốc tốt và mốc hỏng, Git liên tục chia đôi khoảng cách commit để tìm ra chính xác commit đầu tiên đưa lỗi vào hệ thống.
+`git bisect` tìm commit đầu tiên làm xuất hiện một lỗi bằng cách chọn commit ở giữa khoảng thời gian từ mốc tốt đến mốc hỏng. Bạn kiểm tra phiên bản đó rồi đánh dấu `good` hoặc `bad`; quá trình hiệu quả khi tình trạng lỗi có thể kiểm tra nhất quán và chuyển từ tốt sang hỏng một lần trong khoảng đã chọn.
 
 ---
 
@@ -63,7 +63,7 @@ KẾT LUẬN: C5 chính là commit đầu tiên gây ra lỗi!
 ---
 
 ## 🏢 Ví dụ thực tế
-Hệ thống xuất hóa đơn bị lỗi trên production. Kỹ sư Bách biết ở tag `v1.2.0` cách đây 500 commit code vẫn chạy tốt. Bách dùng `git bisect start`, gõ `bad` cho HEAD và `good v1.2.0`. Đúng 8 lần kiểm tra nhị phân, Git chỉ mặt điểm tên commit gây lỗi kèm tên tác giả và diff code.
+Hệ thống xuất hóa đơn bị lỗi trên production. Kỹ sư Bách biết tag `v1.2.0` vẫn tốt còn `HEAD` bị lỗi. Bách dùng `git bisect start`, đánh dấu hai mốc, rồi kiểm tra từng commit Git chọn. Với khoảng 500 commit, trong trường hợp lý tưởng cần khoảng 9 lượt kiểm tra; sau cùng Bách xác nhận hash và diff của commit đầu tiên bị lỗi.
 
 ---
 
@@ -83,36 +83,36 @@ git bisect run <file-chay-kiem-thu>
 - `git bisect bad`: Đánh dấu commit hiện tại là commit bị lỗi.
 - `git bisect good <hash/tag>`: Đánh dấu commit trong quá khứ là mốc hoạt động bình thường không có lỗi.
 - `git bisect reset`: Kết thúc phiên điều tra và đưa bạn quay trở về nhánh ban đầu.
-- `git bisect run <script>`: Tự động hóa 100%: Git sẽ tự động chạy file script kiểm thử và tự đánh dấu good/bad.
+- `git bisect run <script>`: Trong Git thật, chạy script ở từng commit và đọc mã thoát để đánh dấu good/bad; dùng test ổn định và bảo đảm script chạy được ở các phiên bản cũ.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Quên gõ `git bisect reset`**: Khiến bạn bị mắc kẹt ở trạng thái Detached HEAD trên commit lỗi sau khi điều tra xong.
+1. **Quên kết thúc phiên bisect**: Sau khi tìm được commit, chạy `git bisect reset` để quay về vị trí trước phiên điều tra.
 2. **Đánh dấu nhầm good thành bad**: Làm sai lệch thuật toán nhị phân khiến Git nhảy sang phân vùng tìm kiếm hoàn toàn sai.
 3. **Chưa build dependencies**: Quên cài thư viện hoặc build code khiến bài test báo lỗi giả mạo không phải do commit gây ra.
 
 ---
 
 ## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác trực tiếp trên terminal của máy tính để làm quen với công cụ.
-1. Khởi động chế độ bisect bằng `git bisect start`.
-2. Đánh dấu commit hiện tại là lỗi bằng `git bisect bad`.
-3. Đánh dấu commit tốt trong quá khứ bằng `git bisect good HEAD~6`.
-4. Quan sát Git tự động checkout về commit ở giữa.
-5. Chạy thử nghiệm, gõ `git bisect good` hoặc `git bisect bad` tương ứng cho đến khi Git thông báo thủ phạm.
-6. Gõ `git bisect reset` để hoàn tất bài tập và quay về nhánh chính.
+Làm trong kho thử nghiệm riêng có ít nhất một commit nền và sáu commit sau đó. Trong ví dụ này lỗi bắt đầu ở commit thứ ba sau nền.
+1. Tạo commit nền có `probe.txt` chứa `GOOD`.
+2. Tạo commit 1 và 2 bằng cách thêm `note1.txt`, `note2.txt`; commit 3 đổi `probe.txt` thành `BAD`; tạo commit 4, 5, 6 bằng cách thêm `note3.txt`, `note4.txt`, `note5.txt`.
+3. Chạy `git bisect start`, rồi `git bisect bad` để đánh dấu tip hiện tại là lỗi.
+4. Chạy `git bisect good HEAD~6` để đánh dấu commit nền tốt. Mở `probe.txt` tại từng commit Git checkout và đánh dấu `git bisect good` hoặc `git bisect bad` theo nội dung.
+5. Lặp lại cho đến khi Git in `is the first bad commit`; xác nhận commit đó chính là commit đổi `probe.txt` thành `BAD`.
+6. Chạy `git bisect reset` và xác nhận `git status` cùng nhánh hiện tại trở về trước phiên tìm kiếm.
 
 ---
 
 ## 💡 Hint & mẹo
-> Luôn nhớ chạy `git bisect reset` ngay sau khi đã xác định được commit gây lỗi để đưa con trỏ HEAD trở về nhánh làm việc an toàn.
+> Khi kết thúc điều tra, chạy `git bisect reset` để rời commit đang kiểm tra và trở về vị trí trước phiên bisect.
 
 ---
 
 ## ✅ Validation & Kết quả mong đợi
-- Sử dụng thành thạo quy trình `git bisect` để tìm ra chính xác commit gây lỗi trong chuỗi lịch sử.
-- Nắm vững cách kết hợp với test script bằng `git bisect run` để tự động hóa toàn bộ quá trình.
+- Tìm được commit đầu tiên có nội dung `BAD` trong ví dụ và xác nhận bằng thông điệp commit.
+- Kết thúc phiên bằng `git bisect reset`; chỉ thử `git bisect run` trong Git thật với script trả kết quả tin cậy.
 
 ---
 
@@ -127,6 +127,6 @@ Viết một đoạn script bash ngắn kiểm tra mã thoát (exit code) để 
 ---
 
 ## 📝 Tổng kết
-- `git bisect` áp dụng tìm kiếm nhị phân $O(\log N)$ để truy tìm lỗi cực nhanh.
+- `git bisect` dùng tìm kiếm nhị phân, cần khoảng $O(\log N)$ lần kiểm tra trong trường hợp đơn giản và có mốc good/bad đáng tin.
 - Quy trình: `git bisect start` -> `bad` / `good` -> kiểm tra lặp lại -> `git bisect reset`.
-- Có thể tự động hóa hoàn toàn với `git bisect run <script>`.
+- Git thật có thể chạy kiểm thử tự động bằng `git bisect run <script>`; script phải trả đúng mã thoát.

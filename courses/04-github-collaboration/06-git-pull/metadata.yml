@@ -11,16 +11,12 @@ keywords:
 prerequisites:
   - 05-git-fetch
 objectives:
-  - "Hiểu rõ công thức toán học bản chất của `git pull`: `git fetch` kết hợp với
-    `git merge`."
+  - Hiểu `git pull` fetch thay đổi rồi tích hợp vào nhánh hiện tại theo tùy chọn/cấu hình Git.
   - Sử dụng thành thạo câu lệnh `git pull` để kéo và tích hợp mã nguồn mới nhất
     từ GitHub.
-  - "Hiểu sự khác biệt giữa hai chiến lược tích hợp: `git pull --ff-only` và
-    `git pull --rebase`."
+  - Kiểm tra nhánh và trạng thái trước khi pull; nhận biết có thể phát sinh conflict.
   - Bình tĩnh xử lý khi gặp xung đột Merge Conflict phát sinh trong quá trình
     pull.
 commands:
   - git pull
   - git pull origin <tên-nhánh>
-  - git pull --rebase
-  - git pull --ff-only

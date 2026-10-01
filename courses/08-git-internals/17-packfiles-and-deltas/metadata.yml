@@ -13,9 +13,9 @@ prerequisites:
 objectives:
   - Hiểu rõ sự khác biệt giữa Loose Objects (đối tượng rời rạc) và Packed
     Objects (đối tượng đóng gói trong Packfile).
-  - "Làm chủ cơ chế nén sai biệt Delta Compression: lưu một phiên bản gốc (base)
-    và các bản vi phân chênh lệch nhỏ."
-  - "Sử dụng các lệnh kiểm tra và tạo gói: git verify-pack và git pack-objects."
+  - Hiểu object trong pack có thể được lưu đầy đủ hoặc dưới dạng delta dựa trên
+    một object khác; lựa chọn base không cố định theo tuổi phiên bản.
+  - Sử dụng git verify-pack và git count-objects để kiểm tra pack và thống kê object.
 commands:
-  - git verify-pack -v .git/objects/pack/*.pack
+  - git verify-pack -v <path-to-pack.idx>
   - git count-objects -v

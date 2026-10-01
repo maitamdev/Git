@@ -12,8 +12,8 @@
 
 ## 🧩 Từ khóa hôm nay
 
-### Binary Large Object (Blob)
-- **Nói dễ hiểu**: Loại đối tượng Git chuyên dùng để lưu trữ toàn bộ nội dung dữ liệu thô của một tệp tin bất kỳ.
+### Blob Object
+- **Nói dễ hiểu**: Loại đối tượng Git dùng để lưu trữ nội dung dữ liệu của một tệp tin.
 - **Ví dụ**: Nội dung file mã nguồn `server.js` hoặc file ảnh `avatar.png` đều được nén zlib thành một đối tượng Blob.
 - **Đừng nhầm**: Không chứa tên file, đường dẫn hay ngày giờ sửa đổi; chỉ lưu duy nhất dữ liệu thuần túy (content payload).
 
@@ -30,7 +30,7 @@
 ---
 
 ## 📖 Định nghĩa
-Blob (viết tắt của Binary Large Object - Đối tượng nhị phân lớn) là loại đối tượng đơn giản nhất và chiếm số lượng nhiều nhất trong cơ sở dữ liệu của Git. Nhiệm vụ duy nhất của Blob là lưu trữ toàn bộ nội dung dữ liệu thô của một tệp tin. Điều tối quan trọng cần ghi nhớ: một đối tượng Blob hoàn toàn không chứa tên tệp tin, không chứa quyền hạn thực thi (permissions), và không chứa ngày giờ tạo lập.
+Blob là loại object lưu byte nội dung đã được Git đưa vào object database. Blob không chứa tên đường dẫn, mode thực thi hoặc thời gian file; tree ghi tên và mode, còn commit ghi metadata lịch sử.
 
 ---
 
@@ -63,7 +63,7 @@ Cấu trúc của đối tượng Blob:
 ---
 
 ## 🏢 Ví dụ thực tế
-Một kỹ sư phần mềm thực hiện thử nghiệm tạo một tệp tin mới có tên `sample.txt` với nội dung văn bản thuần túy "Xin chào Git Academy". Kỹ sư mở cửa sổ dòng lệnh và chạy lệnh plumbing cơ bản: `git hash-object -w sample.txt` và lập tức nhận được chuỗi mã băm SHA-1: `3b18e512db79e4c8300de074a1e281301f6181f0`. Sau đó, kỹ sư xóa hẳn tệp tin `sample.txt` khỏi thư mục làm việc và dọn sạch thùng rác. Bằng cách sử dụng lệnh `git cat-file -p 3b18e512db79e4c8300de074a1e281301f6181f0`, màn hình lập tức in ra dòng chữ "Xin chào Git Academy". Dù tệp tin trên ổ đĩa đã bị xóa hoàn toàn và tên gọi của tệp không còn lưu trong bảng tệp của hệ điều hành, nhưng nội dung dữ liệu của nó đã được bảo tồn an toàn trong đối tượng Blob của Git.
+Tạo `sample.txt` với một đoạn văn bản, sau đó chạy `git hash-object -w sample.txt`. Dùng object ID được in ra với `git cat-file -p <object-id>` để đọc lại dữ liệu. Nếu xóa file trong working tree, object vẫn có thể đọc được khi còn trong database; nếu object không được refs sử dụng, Git có thể thu gom về sau nên đây không phải cách sao lưu.
 
 ---
 
@@ -73,19 +73,19 @@ Một kỹ sư phần mềm thực hiện thử nghiệm tạo một tệp tin m
 git hash-object -w file.txt
 
 # Kiểm tra kiểu của đối tượng (trả về "blob")
-git cat-file -t 3b18e512db79e4c8300de074a1e281301f6181f0
+git cat-file -t <object-id>
 
 # Xem kích thước byte chính xác của đối tượng
-git cat-file -s 3b18e512db79e4c8300de074a1e281301f6181f0
+git cat-file -s <object-id>
 
 # Giải nén và in nội dung dữ liệu của Blob
-git cat-file -p 3b18e512db79e4c8300de074a1e281301f6181f0
+git cat-file -p <object-id>
 ```
 
 ---
 
 ## 🔍 Giải thích command
-- `git hash-object -w file.txt`: Băm nội dung của `file.txt` và ghi đối tượng nén zlib vào `.git/objects/`.
+- `git hash-object -w file.txt`: Tính object ID và ghi object vào object database; khi mới ghi, object thường là loose object.
 - `git cat-file -t <hash>`: In ra định danh loại đối tượng (chữ `blob`).
 - `git cat-file -s <hash>`: Trả về số byte thực tế của nội dung tệp.
 - `git cat-file -p <hash>`: Lệnh "pretty-print" giải nén dữ liệu và in trực tiếp ra màn hình terminal.
@@ -102,10 +102,10 @@ git cat-file -p 3b18e512db79e4c8300de074a1e281301f6181f0
 ## 🧪 Lab thực hành
 Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
 
-1. **Bước 1**: Tạo một tệp `demo.txt` chứa một đoạn văn bản ngắn.
-2. **Bước 2**: Sử dụng `git hash-object -w demo.txt` để tạo và ghi Blob vào cơ sở dữ liệu đối tượng.
-3. **Bước 3**: Dùng lệnh `git cat-file -t <mã_sha>` để xác nhận loại đối tượng là `blob`.
-4. **Bước 4**: Dùng lệnh `git cat-file -p <mã_sha>` để giải nén và xem nội dung đối tượng mà không cần mở file gốc.
+1. Tạo `demo.txt` với một đoạn văn bản không nhạy cảm.
+2. Chạy `git hash-object -w demo.txt`; lưu object ID vừa in ra.
+3. Dùng `git cat-file -t <object-id>` để xác nhận loại là `blob` và `git cat-file -s <object-id>` để xem số byte.
+4. Chạy `git cat-file -p <object-id>` để đọc nội dung; nếu xóa file thử, object vẫn có thể đọc ngay nhưng không được đảm bảo giữ sau này nếu không còn ref.
 
 ---
 
@@ -134,4 +134,4 @@ Nếu bạn đổi tên một tệp tin 100 MB trong dự án và thực hiện 
 - Blob là đối tượng cơ bản nhất trong Git dùng để lưu trữ nội dung dữ liệu thô của tệp tin.
 - Blob hoàn toàn không chứa tên tệp, quyền hạn tệp hay dấu thời gian.
 - Sử dụng `git cat-file -p <hash>` để xem nội dung và `git cat-file -t <hash>` để kiểm tra loại đối tượng.
-- Việc tách biệt Blob và Tree giúp Git khử trùng lặp và tiết kiệm bộ nhớ khi đổi tên hay di chuyển tệp.
+- Tách Blob khỏi Tree giúp giữ nguyên object nội dung khi chỉ đổi tên hoặc di chuyển file; object không được tham chiếu không được bảo đảm giữ mãi.

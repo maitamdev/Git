@@ -1,93 +1,81 @@
 id: quiz-03-14-branching-challenge
-title: "Trắc nghiệm tổng kết: Master Branching & Merging"
+title: "Trắc nghiệm tổng kết: Branching và merge"
 questions:
   - id: q1
-    question: Quy trình chuẩn mực nhất để phát triển một tính năng mới trong nhóm là gì?
+    question: Trước khi chạy `git merge feature` để đưa tính năng vào `main`, bạn nên đứng trên nhánh nào?
     type: single
     options:
-      - text: Tạo nhánh riêng từ main -> Code và commit -> Kiểm thử -> Merge vào main ->
-          Xóa nhánh tính năng
+      - text: "`main`, vì lệnh merge cập nhật nhánh hiện tại"
         correct: true
-      - text: Code trực tiếp mọi thứ trên nhánh main của công ty
+      - text: "`feature`, vì đó là nhánh có thay đổi"
         correct: false
-      - text: Tạo nhánh mới rồi không bao giờ merge vào main
+      - text: Nhánh không liên quan
         correct: false
-      - text: Gửi code qua Zalo cho đồng nghiệp copy vào máy
+      - text: Detached HEAD
         correct: false
-    explanation: "Feature Branch Workflow: tách nhánh, phát triển độc lập, kiểm thử,
-      merge và dọn dẹp là chuẩn quốc tế."
+    explanation: Nhánh đang checkout nhận kết quả merge, nên cần chuyển sang main trước.
   - id: q2
-    question: Khi gặp Merge Conflict, hành động nào sau đây là SAI LẦM và nghiệp dư nhất?
+    question: Khi tệp có hai khối conflict, bước nào nên làm trước khi chọn nội dung?
     type: single
     options:
-      - text: Tự ý xóa code của đồng nghiệp mà không hiểu chức năng rồi commit bừa
+      - text: Đọc cả hai phiên bản và hiểu yêu cầu của thay đổi
         correct: true
-      - text: Chạy git status để kiểm tra danh sách tệp bị ảnh hưởng
+      - text: Luôn giữ Current mà không đọc
         correct: false
-      - text: Mở tệp ra xem xét kỹ lưỡng cả hai khối code
+      - text: Xóa toàn bộ tệp
         correct: false
-      - text: Trao đổi với tác giả của nhánh kia để thống nhất giải pháp
+      - text: Chạy git branch -D
         correct: false
-    explanation: Xóa bừa code của người khác thể hiện sự thiếu chuyên nghiệp và gây
-      ra các lỗi ngầm nghiêm trọng.
+    explanation: Chọn dựa trên yêu cầu nghiệp vụ giúp giữ logic cần thiết thay vì bỏ thay đổi một cách ngẫu nhiên.
   - id: q3
-    question: Thao tác nào sau đây biến một tệp tin từ trạng thái Unmerged sang
-      Staged trong quá trình giải quyết conflict?
+    question: Sau khi sửa tệp conflict và xóa markers, lệnh nào báo cho Git rằng tệp đã được giải quyết?
     type: single
     options:
       - text: git add <tên-tệp>
         correct: true
       - text: git status
         correct: false
-      - text: git diff
-        correct: false
       - text: git branch
         correct: false
-    explanation: "`git add` là lệnh báo cho Git biết tệp đó đã được con người giải
-      quyết mâu thuẫn xong."
+      - text: git switch
+        correct: false
+    explanation: "`git add` đưa phiên bản đã sửa vào staging area để chuẩn bị hoàn tất merge commit."
   - id: q4
-    question: Lệnh nào giúp bạn kiểm tra toàn diện đồ thị phân nhánh của tất cả các
-      nhánh trong dự án?
+    question: Sau khi merge hoàn tất, lệnh nào cho biết HEAD là merge commit và hiện hai commit cha?
     type: single
     options:
-      - text: git log --graph --oneline --all
+      - text: git show HEAD
         correct: true
-      - text: git branch --list-only
+      - text: git init
         correct: false
-      - text: git show --branches
+      - text: git status --remote
         correct: false
-      - text: git tree --full
+      - text: git list-parents
         correct: false
-    explanation: "`git log --graph --oneline --all` là câu lệnh vàng để quan sát
-      toàn bộ đồ thị DAG của Git."
+    explanation: Với merge commit, `git show` trình bày dòng Merge chứa mã của hai commit cha.
   - id: q5
-    question: Khi giải quyết xung đột, nếu hai phần logic của cả hai nhánh đều cần
-      thiết thì lựa chọn phù hợp nhất là gì?
+    question: Khi nào nên chạy `git branch -d feature`?
     type: single
     options:
-      - text: Kết hợp cả hai logic, kiểm thử kỹ lưỡng rồi mới hoàn tất merge commit
+      - text: Sau khi xác nhận công việc đã được merge vào nhánh nhận và đã chuyển khỏi feature
         correct: true
-      - text: Chỉ chọn code của bản thân và xóa hết code người khác
+      - text: Trước khi tạo commit tính năng
         correct: false
-      - text: Xóa toàn bộ tệp tin để không ai có lỗi
+      - text: Khi Git đang báo conflict
         correct: false
-      - text: Bỏ qua và không chạy kiểm thử tự động
+      - text: Bất cứ khi nào muốn bỏ qua kiểm tra của Git
         correct: false
-    explanation: Nhiều trường hợp đòi hỏi tích hợp hài hòa cả hai nghiệp vụ để đảm
-      bảo ứng dụng chạy đúng toàn diện.
+    explanation: Xóa nhánh sau merge giữ lịch sử trong nhánh nhận và tránh mất đường dẫn tới commit chưa tích hợp.
   - id: q6
-    question: Tại sao việc dọn dẹp các nhánh đã hoàn thành và đã merge lại là một
-      thực hành tốt trong kỹ thuật phần mềm?
+    question: Nếu `git status` còn báo `Unmerged paths`, điều đó có nghĩa gì?
     type: single
     options:
-      - text: Giúp kho lưu trữ luôn tinh gọn, giảm nguy cơ thao tác nhầm trên nhánh cũ
-          và giúp đồng nghiệp dễ theo dõi
+      - text: Còn tệp conflict cần được sửa và đánh dấu đã giải quyết
         correct: true
-      - text: Để giải phóng hàng trăm gigabyte dung lượng ổ cứng
+      - text: Merge đã hoàn tất và working tree chắc chắn sạch
         correct: false
-      - text: Để tránh việc GitHub tính thêm tiền phí lưu trữ nhánh
+      - text: Repository chưa được khởi tạo
         correct: false
-      - text: Vì Git tự động khóa kho chứa nếu có quá mười nhánh
+      - text: Tất cả các nhánh đã bị xóa
         correct: false
-    explanation: Dọn dẹp các nhánh cũ đã merge là thói quen vệ sinh mã nguồn chuyên
-      nghiệp của mọi kỹ sư Git.
+    explanation: Các đường dẫn unmerged cho biết merge chưa được xử lý xong và chưa thể kết luận thành công.

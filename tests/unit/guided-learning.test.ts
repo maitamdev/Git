@@ -9,9 +9,9 @@ describe('guided course', () => {
   it('teaches key terms as separate cards and turns a text lab into a try-and-check activity', async () => {
     const repository = new BuiltinCourseRepository();
     const lessonCards = [
-      ['01-version-control', 3],
+      ['01-version-control', 4],
       ['02-vcs-types', 4],
-      ['03-git-la-gi', 4],
+      ['03-git-la-gi', 3],
     ] as const;
     for (const [lessonId, expectedTermCount] of lessonCards) {
       const lesson = await repository.getLesson('01-foundations', lessonId);
@@ -31,6 +31,7 @@ describe('guided course', () => {
     expect(buildLessonSlides(firstLesson!).filter((slide) => slide.kind === 'term').map((slide) => slide.title)).toEqual([
       'Version Control — quản lý phiên bản',
       'VCS (Version Control System) — hệ thống quản lý phiên bản',
+      'Commit — mốc đã lưu trong Git',
       'History — lịch sử thay đổi',
     ]);
   });
@@ -38,11 +39,11 @@ describe('guided course', () => {
   it('teaches vocabulary as separate complete cards in every Level 1 lesson', async () => {
     const repository = new BuiltinCourseRepository();
     const lessonCards = [
-      ['01-version-control', 3],
+      ['01-version-control', 4],
       ['02-vcs-types', 4],
-      ['03-git-la-gi', 4],
+      ['03-git-la-gi', 3],
       ['04-git-architecture', 3],
-      ['05-git-vs-github', 4],
+      ['05-git-vs-github', 5],
       ['06-git-installation', 4],
       ['07-git-config', 5],
       ['08-repository', 4],
@@ -65,7 +66,7 @@ describe('guided course', () => {
   it('teaches vocabulary, practice, and a usable quiz in every Level 2 lesson', async () => {
     const repository = new BuiltinCourseRepository();
     const lessonCards = [
-      ['01-working-directory', 3],
+      ['01-working-directory', 4],
       ['02-staging-area', 3],
       ['03-head-snapshot', 3],
       ['04-git-status', 4],
@@ -227,7 +228,7 @@ describe('guided course', () => {
       ['08-branch-protection-rules', 3],
       ['09-codeowners', 3],
       ['10-conventional-commits', 3],
-      ['11-semantic-versioning', 3],
+      ['11-semantic-versioning', 4],
       ['12-release-branch', 3],
       ['13-hotfix-workflow', 3],
       ['14-team-conflict-scenario', 3],

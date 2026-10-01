@@ -2,12 +2,10 @@ id: quiz-05-12-git-rebase
 title: "Trắc nghiệm: git rebase và Quy tắc vàng"
 questions:
   - id: q1
-    question: '"Quy tắc vàng của Rebase" (The Golden Rule of Rebasing) trong Git quy
-      định điều gì?'
+    question: Trước khi rebase các commit đã push lên nhánh dùng chung, nên làm gì?
     type: single
     options:
-      - text: Tuyệt đối không bao giờ được phép rebase trên một nhánh công khai đang có
-          nhiều người cùng làm việc chung
+      - text: Tránh rebase các commit đã chia sẻ, trừ khi nhóm thống nhất quy trình phối hợp
         correct: true
       - text: Mọi commit đều phải được tạo bằng chữ in hoa
         correct: false
@@ -15,11 +13,9 @@ questions:
         correct: false
       - text: Không được phép rebase quá 3 lần trong một ngày
         correct: false
-    explanation: Rebase viết lại lịch sử; nếu làm trên nhánh chung, các đồng nghiệp
-      kéo code về sẽ bị xung đột nặng nề.
+    explanation: Rebase tạo commit mới với hash khác. Người khác đã lấy commit cũ có thể phải xử lý lịch sử phân kỳ, nên hãy phối hợp trước.
   - id: q2
-    question: Vì sao sau khi thực hiện rebase ở nhánh cá nhân cục bộ, lệnh `git
-      push` thông thường sẽ bị máy chủ từ chối?
+    question: Vì sao push thường có thể bị từ chối sau khi rebase các commit đã có trên remote?
     type: single
     options:
       - text: Vì các commit đã được viết lại với mã hash SHA-1 mới, khiến lịch sử cục bộ
@@ -31,15 +27,12 @@ questions:
         correct: false
       - text: Vì tên nhánh của bạn bị đổi thành tên khác
         correct: false
-    explanation: Commit hash mới tạo ra phân kỳ lịch sử, bắt buộc phải dùng
-      `--force-with-lease` để cập nhật con trỏ nhánh trên remote.
+    explanation: Nếu remote vẫn trỏ tới các commit cũ, commit mới sau rebase không còn nối tiếp từ đầu nhánh remote nên push thường bị từ chối kiểu non-fast-forward. Hãy phối hợp và xem trạng thái remote trước khi cập nhật.
   - id: q3
-    question: Tại sao cờ `--force-with-lease` lại được các chuyên gia khuyến nghị
-      thay thế hoàn toàn cho cờ `-f` (`--force`)?
+    question: Vì sao `--force-with-lease` thường được ưu tiên hơn `--force` khi nhóm đã thống nhất cần cập nhật nhánh đã viết lại?
     type: single
     options:
-      - text: Nó sẽ kiểm tra xem có ai khác vừa đẩy commit mới lên nhánh đó chưa; nếu
-          có, nó từ chối push để bảo vệ code của đồng nghiệp
+      - text: Nó kiểm tra ref remote có còn khớp giá trị dự kiến hay không trước khi cập nhật
         correct: true
       - text: Nó tăng tốc độ tải dữ liệu lên đám mây gấp đôi
         correct: false
@@ -47,8 +40,7 @@ questions:
         correct: false
       - text: Nó giúp giảm chi phí thuê máy chủ
         correct: false
-    explanation: "`--force-with-lease` hoạt động như một khóa an toàn (lease), chỉ
-      cho phép ghi đè nếu remote chưa bị thay đổi bởi người khác."
+    explanation: "Lease so sánh giá trị remote ref dự kiến với giá trị hiện có trước khi cập nhật. Nó giảm nguy cơ ghi đè commit mới, nhưng vẫn cần phối hợp và kiểm tra remote."
   - id: q4
     question: Nếu trong quá trình rebase bạn cảm thấy quá phức tạp và muốn hủy bỏ
       ngay lập tức để quay về trạng thái an toàn trước đó, bạn dùng lệnh nào?
@@ -79,4 +71,3 @@ questions:
         correct: false
     explanation: Khi giải quyết xong conflict trong rebase, dùng `git rebase --continue`
       để Git áp dụng tiếp các commit còn lại mà không tự tạo commit merge rác.
-

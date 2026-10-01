@@ -5,7 +5,7 @@ export const lesson: CourseLesson = {
   "moduleId": "03-branching",
   "metadata": {
     "id": "03-git-branch",
-    "title": "Quản lý nhánh với git branch",
+    "title": "Xem và tạo nhánh bằng git branch",
     "level": "intermediate",
     "duration": 25,
     "xp": 80,
@@ -13,10 +13,9 @@ export const lesson: CourseLesson = {
       "01-branch-concept"
     ],
     "objectives": [
-      "Sử dụng thành thạo câu lệnh `git branch` cùng các cờ tùy chọn nâng cao: `-a`, `-r`, `-vv`, `--merged`.",
-      "Xóa nhánh an toàn với cờ `-d` và xóa nhánh cưỡng chế với cờ `-D`.",
-      "Đổi tên nhánh cục bộ nhanh chóng bằng cờ `-m`.",
-      "Kiểm soát và dọn dẹp các nhánh đã hợp nhất để giữ kho lưu trữ luôn tinh gọn."
+      "Dùng git branch để xem nhánh cục bộ.",
+      "Dùng git branch <tên> để tạo nhánh mới.",
+      "Đọc dấu * để nhận biết nhánh đang chọn."
     ],
     "completion": {
       "theoryViewed": true,
@@ -29,168 +28,162 @@ export const lesson: CourseLesson = {
     },
     "keywords": [
       "git branch",
-      "quan ly nhanh",
-      "xoa nhanh",
       "danh sach nhanh",
-      "branch list"
+      "tao nhanh"
     ],
     "commands": [
       "git branch",
-      "git branch -a",
-      "git branch -vv",
-      "git branch -m <tên-cũ> <tên-mới>",
-      "git branch -d <tên-nhánh>",
-      "git branch -D <tên-nhánh>"
+      "git branch <tên-nhánh>"
     ]
   },
-  "content": "# Quản lý nhánh với git branch\n\n---\n\n## 🎯 Mục tiêu\n- Sử dụng lệnh `git branch` để xem danh sách nhánh và kiểm tra nhánh đang làm việc.\n- Đổi tên nhánh bằng cờ `-m` khi cần sửa tên cho đúng quy ước nhóm.\n- Xóa nhánh an toàn với cờ `-d` và phân biệt với xóa cưỡng chế bằng cờ `-D`.\n\n---\n\n## 🧩 Từ khóa hôm nay\n\n### git branch -d — xóa nhánh an toàn\n- **Nói dễ hiểu:** Lệnh xóa một nhánh chỉ khi nhánh đó đã được gộp đầy đủ vào nhánh chính.\n- **Ví dụ:** Sau khi tính năng `feature-cart` đã merge vào `main`, chạy `git branch -d feature-cart` để dọn dẹp.\n- **Đừng nhầm:** Git sẽ từ chối xóa bằng cờ `-d` nếu nhánh đó còn commit chưa được gộp, giúp bạn tránh mất dữ liệu.\n\n### git branch -D — xóa nhánh dứt khoát\n- **Nói dễ hiểu:** Lệnh ép buộc xóa một nhánh ngay cả khi các commit trên nhánh đó chưa hề được gộp.\n- **Ví dụ:** Bạn làm thử một tính năng nhưng quyết định hủy bỏ hoàn toàn nhánh `test-prototype`.\n- **Đừng nhầm:** Xóa bằng cờ `-D` sẽ bỏ qua lớp bảo vệ an toàn; chỉ dùng khi bạn chắc chắn không cần mã nguồn đó nữa.\n\n### git branch -m — đổi tên nhánh\n- **Nói dễ hiểu:** Đổi tên một nhánh cũ sang tên mới chuẩn mực và rõ nghĩa hơn.\n- **Ví dụ:** Chạy `git branch -m feat-log feature-login` để sửa tên nhánh theo đúng quy ước của nhóm.\n- **Đừng nhầm:** Đổi tên nhánh chỉ đổi nhãn con trỏ; toàn bộ commit và lịch sử bên trong nhánh vẫn giữ nguyên vẹn.\n\n---\n\n## 📖 Định nghĩa\n`git branch` là câu lệnh trung tâm để liệt kê, tạo mới, đổi tên và xóa bỏ các nhánh trong kho lưu trữ Git cục bộ. Khi chạy một mình, lệnh cho biết tất cả các nhánh hiện có và đánh dấu nhánh bạn đang đứng.\n\n---\n\n## 🤔 Tại sao cần?\nKhi dự án phát triển lâu dài, mỗi tính năng hoặc lần sửa lỗi đều tạo ra một nhánh mới. Nếu không kiểm tra và dọn dẹp các nhánh đã hoàn thành, danh sách nhánh sẽ phình to, gây khó khăn cho việc tìm kiếm và dễ khiến bạn gõ nhầm tên nhánh.\n\n---\n\n## 🧠 Mental Model (Mô hình tư duy)\nHãy hình dung `git branch` như danh bạ các đường dây liên lạc trong văn phòng. Bạn có thể mở danh bạ để xem đang có những đường dây nào (liệt kê), đăng ký thêm dây cho dự án mới (tạo nhánh), đổi lại tên phòng ban (đổi tên nhánh) hoặc cắt bỏ dây của dự án đã kết thúc (xóa nhánh).\n\n---\n\n## 🖼 Sơ đồ\n```text\nLiệt kê nhánh:   git branch\nĐổi tên nhánh:   git branch -m old-name new-name\nXóa an toàn:     git branch -d feature-cart   (chỉ xóa khi đã merge)\nXóa cưỡng chế:   git branch -D test-draft     (xóa bỏ code thử nghiệm)\n```\n\n---\n\n## 🌎 Ví dụ thực tế\nBạn Nam hoàn thành việc viết trang thông tin liên hệ trên nhánh `feature-contact` và đã gộp thành công vào nhánh `main`. Để máy tính cá nhân gọn gàng, Nam chuyển về `main` rồi chạy `git branch -d feature-contact`. Git xóa con trỏ nhánh an toàn vì biết toàn bộ commit của Nam đã nằm chắc chắn trong nhánh `main`.\n\n---\n\n## 💻 Command\n```bash\ngit branch\ngit branch -m <tên-cũ> <tên-mới>\ngit branch -d <tên-nhánh>\ngit branch -D <tên-nhánh>\n```\n\n---\n\n## 🔍 Giải thích command\n- `git branch`: Liệt kê tất cả các nhánh cục bộ hiện có trong kho lưu trữ của bạn.\n- `git branch -m <tên-cũ> <tên-mới>`: Đổi tên nhánh chỉ định sang tên mới.\n- `git branch -d <tên-nhánh>`: Xóa nhánh đã được hợp nhất an toàn.\n- `git branch -D <tên-nhánh>`: Ép buộc xóa nhánh, bỏ qua bước kiểm tra đã hợp nhất hay chưa.\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Đứng ngay trên nhánh đó rồi đòi xóa:** Git sẽ từ chối xóa nhánh mà bạn đang đứng; bạn phải chuyển sang nhánh khác như `main` rồi mới xóa được.\n2. **Dùng `-D` thành thói quen:** Dễ vô tình xóa mất những commit quan trọng mà bạn quên chưa gộp vào nhánh chính.\n3. **Quên dọn dẹp nhánh sau khi đã gộp xong:** Để lại hàng chục nhánh cũ không còn dùng đến khiến danh sách bị rối.\n\n---\n\n## 🧪 Lab\nBài tập này được thực hành trên môi trường Git mô phỏng của hệ thống:\n1. Chạy `git branch` để kiểm tra danh sách nhánh hiện tại.\n2. Tạo nhánh thử nghiệm bằng lệnh `git branch temp-test`.\n3. Đổi tên nhánh thành `experiment` bằng lệnh `git branch -m temp-test experiment`.\n4. Xóa nhánh đó an toàn bằng lệnh `git branch -d experiment`.\n\n---\n\n## 💡 Hint\nHãy nhớ chuyển về nhánh `main` trước khi chạy lệnh xóa các nhánh tính năng phụ.\n\n---\n\n## ✅ Validation\n- Nhánh `experiment` được tạo, đổi tên và xóa thành công.\n- Lệnh `git branch` cuối cùng chỉ còn hiển thị nhánh `main`.\n\n---\n\n## ❓ Quiz\nTrả lời các câu hỏi sau để nắm vững các thao tác tạo, đổi tên và xóa nhánh với `git branch`.\n\n---\n\n## 🔥 Challenge\nChạy lệnh `git branch --merged` để xem Git lọc ra những nhánh nào đã được hợp nhất an toàn vào nhánh hiện tại.\n\n---\n\n## 📚 Tổng kết\n- `git branch` giúp quản lý toàn bộ vòng đời của các nhánh cục bộ trong dự án.\n- Dùng cờ `-m` để đổi tên nhánh và cờ `-d` để xóa nhánh an toàn sau khi hoàn thành.\n- Luôn chuyển sang nhánh khác trước khi thực hiện thao tác xóa nhánh.\n",
+  "content": "# Xem và tạo nhánh bằng `git branch`\r\n\r\n---\r\n\r\n## 🎯 Mục tiêu\r\n- Dùng `git branch` để xem nhánh cục bộ.\r\n- Dùng `git branch <tên>` để tạo nhánh mới.\r\n- Đọc dấu `*` để nhận biết nhánh đang chọn.\r\n\r\n---\r\n\r\n## 🧩 Từ khóa hôm nay\r\n\r\n### Danh sách nhánh\r\n- **Nói dễ hiểu:** Các tên nhánh đang có trong repository trên máy bạn.\r\n- **Ví dụ:** `git branch` có thể hiện `main` và `feature-cart`.\r\n- **Đừng nhầm:** Đây là nhánh cục bộ, không tự liệt kê mọi nhánh remote.\r\n\r\n### Dấu `*` — nhánh hiện tại\r\n- **Nói dễ hiểu:** Dấu sao đứng trước tên nhánh đang được chọn.\r\n- **Ví dụ:** `* main` nghĩa là hiện bạn đang ở `main`.\r\n- **Đừng nhầm:** Tạo nhánh mới không tự chuyển dấu sao sang nhánh đó.\r\n\r\n### `git branch <tên>` — tạo nhánh\r\n- **Nói dễ hiểu:** Thêm một tên nhánh trỏ tới commit hiện tại.\r\n- **Ví dụ:** `git branch feature-cart` tạo nhánh cho phần giỏ hàng.\r\n- **Đừng nhầm:** Lệnh này không chuyển thư mục làm việc sang nhánh mới.\r\n\r\n---\r\n\r\n## 📖 Định nghĩa\r\nChạy `git branch` không kèm tên để xem các nhánh cục bộ. Thêm tên phía sau để tạo nhánh tại commit hiện tại. Lệnh tạo nhánh không thay đổi nhánh bạn đang làm việc; dấu `*` cho biết vị trí hiện tại. Bài này chỉ học xem và tạo; đổi tên hoặc xóa nhánh sẽ học ở bài riêng.\r\n\r\n---\r\n\r\n## 🤔 Tại sao cần?\r\nTrước khi bắt đầu việc mới, bạn cần biết nhánh nào đã tồn tại và nhánh nào đang chọn. Tạo nhánh riêng giúp tách công việc mới. Xác nhận dấu `*` sau khi tạo để tránh tiếp tục sửa trên nhánh khác với dự định.\r\n\r\n---\r\n\r\n## 🧠 Mental Model (Mô hình tư duy)\r\nHãy nghĩ `git branch` như xem danh sách nhãn đặt trên các commit. Lệnh tạo nhánh chỉ thêm một nhãn mới tại commit đang chọn; nó chưa chuyển chỗ làm việc của bạn.\r\n\r\n---\r\n\r\n## 🖼 Sơ đồ\r\n```text\r\nTrước:  * main ──► Commit C2\r\n\r\nLệnh:   git branch feature-cart\r\n\r\nSau:      main ─────────┐\r\n         * feature-cart ─┴──► Commit C2\r\n\r\nCả hai tên có thể trỏ cùng một commit; dấu * vẫn ở main.\r\n```\r\n\r\n---\r\n\r\n## 🌎 Ví dụ thực tế\r\nBạn đang ở `main` và được giao làm giao diện giỏ hàng. Chạy `git branch feature-cart` để tạo nhánh cho phần việc. Sau lệnh này, chạy `git branch`: thấy cả hai tên nhưng dấu `*` vẫn ở `main`. Chuyển sang `feature-cart` là thao tác riêng ở bài tiếp theo.\r\n\r\n---\r\n\r\n## 💻 Command\r\n```bash\r\ngit branch\r\ngit branch feature-cart\r\ngit branch\r\n```\r\n\r\n---\r\n\r\n## 🔍 Giải thích command\r\n- Lệnh đầu liệt kê nhánh hiện có.\r\n- Lệnh thứ hai tạo nhánh `feature-cart` tại commit hiện tại.\r\n- Lệnh cuối xác nhận tên nhánh mới và vị trí dấu `*`.\r\n\r\n---\r\n\r\n## ⚠️ Sai lầm phổ biến\r\n1. **Tưởng `git branch tên` tự chuyển nhánh:** Kiểm tra dấu `*`; nó vẫn ở nhánh cũ.\r\n2. **Tưởng mỗi branch là một bản sao tệp:** Lệnh chỉ tạo một tên tham chiếu tới commit.\r\n3. **Tưởng `git branch` hiện tất cả nhánh trên GitHub:** Bài này chỉ xem danh sách nhánh cục bộ.\r\n\r\n---\r\n\r\n## 🧪 Lab\r\n1. Chạy `git branch`; ghi lại nhánh có dấu `*`.\r\n2. Chạy `git branch experiment`.\r\n3. Chạy lại `git branch`.\r\n4. Xác nhận `experiment` xuất hiện và dấu `*` vẫn ở nhánh ban đầu.\r\n\r\n---\r\n\r\n## 💡 Hint\r\n> Chỉ tạo nhánh ở bài này; chưa cần chuyển, đổi tên hay xóa nhánh.\r\n\r\n---\r\n\r\n## ✅ Validation\r\n- Danh sách có nhánh `experiment`.\r\n- Dấu `*` đứng trước nhánh đang làm việc ban đầu.\r\n\r\n---\r\n\r\n## ❓ Quiz\r\nTrả lời các câu hỏi để kiểm tra cách xem và tạo nhánh cục bộ.\r\n\r\n---\r\n\r\n## 🔥 Challenge\r\nTạo nhánh `feature-profile`. Chạy `git branch` và giải thích vì sao dấu `*` chưa chuyển tới nhánh mới.\r\n\r\n---\r\n\r\n## 📚 Tổng kết\r\n- `git branch` liệt kê nhánh cục bộ.\r\n- `git branch <tên>` tạo nhánh tại commit hiện tại.\r\n- Dấu `*` đánh dấu nhánh đang chọn; tạo nhánh không đồng nghĩa chuyển nhánh.\r\n",
   "quiz": {
     "id": "quiz-03-03-git-branch",
-    "title": "Trắc nghiệm: Quản lý nhánh với git branch",
+    "title": "Trắc nghiệm: Xem và tạo nhánh",
     "questions": [
       {
         "id": "q1",
-        "question": "Điều gì sẽ xảy ra nếu bạn cố gắng chạy lệnh `git branch -d feature` khi bạn đang đứng trực tiếp trên nhánh `feature`?",
+        "question": "Lệnh nào liệt kê các nhánh cục bộ?",
         "type": "single",
         "options": [
           {
-            "text": "Git sẽ báo lỗi từ chối xóa vì không thể xóa nhánh mà con trỏ HEAD đang đứng trực tiếp",
+            "text": "git branch",
             "correct": true
           },
           {
-            "text": "Git sẽ tự động xóa nhánh và thoát khỏi terminal ngay lập tức",
+            "text": "git log --oneline",
             "correct": false
           },
           {
-            "text": "Git sẽ tự động chuyển bạn về nhánh main rồi mới xóa",
+            "text": "git remote -v",
             "correct": false
           },
           {
-            "text": "Git sẽ xóa toàn bộ ổ cứng máy tính để làm sạch",
+            "text": "git status --short",
             "correct": false
           }
         ],
-        "explanation": "Bạn không thể xóa nhánh hiện tại; bạn phải chuyển sang nhánh khác (ví dụ: git switch main) rồi mới xóa."
+        "explanation": "Chạy `git branch` không kèm tên để liệt kê các nhánh cục bộ trong repository."
       },
       {
         "id": "q2",
-        "question": "Sự khác biệt cốt lõi giữa hai cờ xóa nhánh `git branch -d` và `git branch -D` là gì?",
+        "question": "Bạn muốn tạo nhánh `feature-login` tại commit hiện tại và vẫn ở nhánh đang làm. Nên chạy lệnh nào?",
         "type": "single",
         "options": [
           {
-            "text": "`-d` có cơ chế bảo vệ an toàn (chỉ xóa khi đã merge), còn `-D` cưỡng chế xóa bất kể code chưa được merge",
+            "text": "git branch feature-login",
             "correct": true
           },
           {
-            "text": "`-d` dùng cho hệ điều hành Windows, `-D` dùng cho hệ điều hành macOS",
+            "text": "git switch -c feature-login",
             "correct": false
           },
           {
-            "text": "`-d` chỉ xóa trên máy tính cá nhân, `-D` xóa luôn cả máy chủ GitHub",
+            "text": "git commit -m \"feature-login\"",
             "correct": false
           },
           {
-            "text": "Hai cờ này hoàn toàn giống nhau 100% không có khác biệt nào",
+            "text": "git branch -d feature-login",
             "correct": false
           }
         ],
-        "explanation": "`-D` là viết tắt của `--delete --force`, ép buộc xóa bỏ nhánh ngay cả khi có commit chưa hợp nhất."
+        "explanation": "`git branch feature-login` tạo tên nhánh nhưng không chuyển HEAD sang nhánh đó."
       },
       {
         "id": "q3",
-        "question": "Lệnh nào sau đây dùng để đổi tên nhánh hiện tại bạn đang đứng thành tên mới `feature-auth`?",
+        "question": "Bạn vừa chạy `git branch experiment`. Điều gì xảy ra với thư mục làm việc?",
         "type": "single",
         "options": [
           {
-            "text": "git branch -m feature-auth",
+            "text": "Vẫn theo nhánh hiện tại; lệnh chỉ tạo thêm tên nhánh",
             "correct": true
           },
           {
-            "text": "git branch --rename feature-auth",
+            "text": "Git lập tức thay toàn bộ tệp bằng nội dung của một commit mới",
             "correct": false
           },
           {
-            "text": "git name-change feature-auth",
+            "text": "Git gửi nhánh mới lên remote",
             "correct": false
           },
           {
-            "text": "git update-title feature-auth",
+            "text": "Git xóa nhánh đang chọn",
             "correct": false
           }
         ],
-        "explanation": "Cờ `-m` (viết tắt của move/rename) đổi tên nhánh; nếu không truyền tên cũ thì đổi tên nhánh hiện tại."
+        "explanation": "Tạo nhánh không cập nhật thư mục làm việc; việc chuyển sang nhánh khác là lệnh riêng."
       },
       {
         "id": "q4",
-        "question": "Cờ tùy chọn nào của lệnh git branch giúp hiển thị tất cả các nhánh bao gồm cả nhánh từ xa trên GitHub?",
+        "question": "Trong danh sách `git branch`, dấu `*` đứng trước tên nào?",
         "type": "single",
         "options": [
           {
-            "text": "-a (hoặc --all)",
+            "text": "Nhánh đang được chọn",
             "correct": true
           },
           {
-            "text": "-r-only",
+            "text": "Nhánh đã bị xóa",
             "correct": false
           },
           {
-            "text": "--global-branch",
+            "text": "Nhánh remote mới nhất",
             "correct": false
           },
           {
-            "text": "-f (full)",
+            "text": "Nhánh có nhiều commit nhất",
             "correct": false
           }
         ],
-        "explanation": "`git branch -a` liệt kê toàn bộ nhánh cục bộ và nhánh theo dõi từ xa (dạng remotes/origin/main)."
+        "explanation": "Dấu sao đánh dấu nhánh hiện tại; nó không biểu thị độ dài hay trạng thái remote."
       },
       {
         "id": "q5",
-        "question": "Để lọc ra danh sách các nhánh tính năng đã được hợp nhất an toàn vào nhánh hiện tại, bạn dùng cờ nào?",
+        "question": "Sau khi tạo `experiment`, dấu `*` vẫn đứng trước `main`. Điều đó cho biết gì?",
         "type": "single",
         "options": [
           {
-            "text": "--merged",
+            "text": "Bạn vẫn đang làm việc trên `main`",
             "correct": true
           },
           {
-            "text": "--done",
+            "text": "Nhánh `experiment` chưa được tạo",
             "correct": false
           },
           {
-            "text": "--finished",
+            "text": "Hai nhánh đã được merge",
             "correct": false
           },
           {
-            "text": "--safe-delete",
+            "text": "Repository không có commit",
             "correct": false
           }
         ],
-        "explanation": "`git branch --merged` chỉ liệt kê các nhánh mà toàn bộ commit đã nằm trong nhánh hiện tại."
+        "explanation": "Lệnh `git branch experiment` chỉ tạo nhánh; dấu sao vẫn chỉ nhánh mà bạn đang đứng."
       },
       {
         "id": "q6",
-        "question": "Khi bạn chạy lệnh `git branch -vv`, thông tin bổ sung quan trọng nào được hiển thị?",
+        "question": "Lệnh `git branch` không kèm tùy chọn chủ yếu hiển thị nhóm nào?",
         "type": "single",
         "options": [
           {
-            "text": "Mã commit đỉnh, thông điệp commit và trạng thái so sánh đi trước/sau với nhánh remote tracking",
+            "text": "Các nhánh cục bộ trong repository hiện tại",
             "correct": true
           },
           {
-            "text": "Địa chỉ nhà riêng và số tài khoản ngân hàng của tác giả",
+            "text": "Mọi nhánh trên tất cả máy tính của nhóm",
             "correct": false
           },
           {
-            "text": "Dung lượng RAM đang tiêu tốn của hệ điều hành",
+            "text": "Mọi commit đã push lên GitHub",
             "correct": false
           },
           {
-            "text": "Tốc độ quay của quạt tản nhiệt máy tính",
+            "text": "Danh sách tệp đang untracked",
             "correct": false
           }
         ],
-        "explanation": "`-vv` (very verbose) hiển thị chi tiết commit hash, subject và tracking branch kèm trạng thái ahead/behind."
+        "explanation": "Lệnh cơ bản liệt kê nhánh cục bộ; nhánh từ xa có lệnh xem riêng học ở phần sau."
       }
     ]
   }

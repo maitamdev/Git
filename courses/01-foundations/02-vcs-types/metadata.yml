@@ -1,5 +1,5 @@
 id: 02-vcs-types
-title: Local / Centralized / Distributed VCS
+title: "Ba kiểu quản lý phiên bản: cục bộ, tập trung, phân tán"
 duration: 25
 xp: 60
 keywords:
@@ -15,6 +15,4 @@ objectives:
   - Phân biệt Local VCS, CVCS và DVCS theo nơi lưu lịch sử.
   - Nói được Git và SVN thường thuộc mô hình nào.
   - Biết việc nào cần mạng và việc nào làm được trên kho Git cục bộ.
-commands:
-  - git log
-  - git status
+commands: []

@@ -33,7 +33,6 @@ export const lesson: CourseLesson = {
     "commands": [
       "git checkout <tên-nhánh>",
       "git checkout -b <tên-nhánh-mới>",
-      "git checkout <commit-hash>",
       "git checkout -- <tên-tệp>"
     ]
   },

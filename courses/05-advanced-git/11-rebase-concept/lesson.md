@@ -30,7 +30,7 @@
 ---
 
 ## 📖 Định nghĩa
-`git rebase` (Đổi gốc nhánh) là cơ chế hợp nhất mã nguồn quan trọng trong Git bên cạnh `git merge`. Về bản chất, Rebase là quá trình ngắt kết nối các commit của nhánh hiện tại khỏi điểm xuất phát ban đầu, sau đó áp dụng lần lượt từng commit đó lên trên đỉnh một commit cơ sở mới (Base Commit) để tạo ra cây lịch sử thẳng tắp.
+`git rebase` lấy các commit riêng của nhánh hiện tại rồi áp dụng lại chúng trên một commit cơ sở mới. Git tạo các commit mới nên mã hash thay đổi. Rebase thường tạo lịch sử tuyến tính trong ví dụ đơn giản; lịch sử có merge commit hoặc patch đã có sẵn cần được xem xét riêng.
 
 ---
 
@@ -62,7 +62,7 @@ Base ──► M1 ──► M2 (main) ──► F1' ──► F2' (feature)
 ---
 
 ## 🏢 Ví dụ thực tế
-Nhóm phát triển quy định mọi nhánh tính năng trước khi mở PR đều phải rebase lên `main` mới nhất. Sau 3 ngày code nhánh `feat/biometric`, Hoàng thấy main đã tiến thêm 10 commit. Thay vì gõ merge làm sinh commit rác "Merge branch main into feat/biometric", Hoàng chạy `git rebase main`. Nhánh của Hoàng được đặt tiếp nối gọn gàng vào đuôi commit thứ 10 của main.
+Nhóm quy định nhánh tính năng cần cập nhật trước khi mở PR. Hoàng đang làm trên `feat/biometric` và `main` có commit mới. Theo quy trình nhóm, Hoàng có thể rebase nhánh tính năng lên `origin/main` để phát lại commit riêng của mình; nếu nhóm muốn giữ lại điểm hợp nhất, có thể chọn merge.
 
 ---
 
@@ -80,14 +80,14 @@ git log --oneline --graph
 - `git switch <feature>`: Chuyển về nhánh tính năng bạn muốn di chuyển điểm tựa.
 - `git fetch origin`: Cập nhật các commit mới nhất từ máy chủ từ xa về máy cá nhân.
 - `git rebase origin/main`: Dời các commit của nhánh tính năng lên trên đỉnh mới nhất của nhánh origin/main.
-- `git log --graph`: Chiêm ngưỡng cây lịch sử thẳng tắp không có các nút giao rác.
+- `git log --graph`: Quan sát cấu trúc lịch sử sau khi chọn rebase.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Nghĩ rằng Rebase làm mất mã nguồn**: Rebase áp dụng lại toàn bộ commit, mã nguồn được tích hợp đầy đủ.
+1. **Nghĩ rằng Rebase chỉ đổi nhãn commit**: Git phát lại thay đổi và tạo commit hash mới; conflict hoặc patch đã có sẵn có thể làm kết quả khác dự kiến.
 2. **Nhầm lẫn chiều rebase**: Rebase nhánh tính năng lên main chứ không phải rebase main vào nhánh tính năng.
-3. **Rebase trên nhánh dùng chung đã push lên server**: Vi phạm Quy tắc vàng của Rebase, gây xáo trộn lịch sử và xung đột nghiêm trọng cho đồng nghiệp.
+3. **Rebase nhánh mà đồng đội đang dựa vào**: Commit hash đổi; hãy theo chính sách nhóm và báo cho người cùng làm trước khi cập nhật nhánh đã chia sẻ.
 
 ---
 
@@ -101,13 +101,13 @@ Bài học này là bài tự kiểm tra: bạn tạo phân kỳ và thao tác r
 ---
 
 ## 💡 Hint & mẹo
-> Rebase làm sạch lịch sử bằng cách viết lại các commit thành đường thẳng tuyến tính.
+> Rebase phát lại commit trên một base mới. Trước khi làm, xác định ai đang dùng nhánh đó và liệu nhóm muốn rebase hay merge.
 
 ---
 
 ## ✅ Validation & Kết quả mong đợi
-- Lịch sử phân kỳ chữ Y biến thành một chuỗi commit thẳng hàng khi xem bằng `git log --graph`.
-- Tất cả commit của nhánh tính năng xuất hiện sau commit mới nhất của nhánh main.
+- Trong bài lab không có conflict, commit tính năng có cha mới là tip `main`.
+- Hash commit tính năng thay đổi sau khi rebase; so sánh bằng `git log --graph --oneline`.
 
 ---
 

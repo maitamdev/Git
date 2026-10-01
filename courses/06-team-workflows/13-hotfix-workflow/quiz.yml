@@ -2,10 +2,10 @@ id: quiz-06-13-hotfix-workflow
 title: "Trắc nghiệm: Hotfix Workflow"
 questions:
   - id: q1
-    question: Nhánh Hotfix bắt buộc phải được rẽ nhánh xuất phát trực tiếp từ đâu để giải quyết sự cố sản xuất?
+    question: Trong Git Flow, nhánh hotfix thường bắt đầu từ đâu; điều gì cần kiểm tra nếu production chạy tag riêng?
     type: single
     options:
-      - text: Trực tiếp từ nhánh main nơi phiên bản lỗi đang chạy thực tế trên production
+      - text: Từ commit production bị lỗi, thường là `main` trong Git Flow
         correct: true
       - text: Từ nhánh develop nơi chứa các tính năng mới nhất của sprint hiện tại
         correct: false
@@ -13,12 +13,12 @@ questions:
         correct: false
       - text: Từ nhánh master của một kho lưu trữ mã nguồn mở khác
         correct: false
-    explanation: Tách từ `main` giúp bản vá độc lập hoàn toàn với các tính năng dở dang chưa qua kiểm duyệt đang nằm trên `develop`.
+    explanation: Mục tiêu là sửa đúng commit đang chạy; Git Flow thường dùng `main`, nhưng deployment thực tế có thể trỏ tới tag/commit khác.
   - id: q2
     question: Nguyên tắc vàng về phạm vi chỉnh sửa mã nguồn bên trong một nhánh Hotfix là gì?
     type: single
     options:
-      - text: Chỉ thực hiện thay đổi tối thiểu cần thiết để sửa dứt điểm lỗi nghiêm trọng, tuyệt đối không thêm tính năng mới
+      - text: Giữ phạm vi bản vá hẹp, kiểm tra nguyên nhân và chạy test phù hợp trước khi phát hành
         correct: true
       - text: Nhân tiện viết lại toàn bộ kiến trúc dự án sang ngôn ngữ lập trình khác
         correct: false
@@ -26,7 +26,7 @@ questions:
         correct: false
       - text: Xóa toàn bộ các tệp tin cấu hình bảo mật
         correct: false
-    explanation: Bản vá càng nhỏ gọn thì rủi ro phát sinh lỗi phụ càng thấp, giúp việc kiểm thử và triển khai diễn ra nhanh nhất có thể.
+    explanation: Thay đổi hẹp thường dễ review hơn, nhưng vẫn cần kiểm tra nguyên nhân và tác động liên quan trước khi triển khai.
   - id: q3
     question: Điều gì sẽ xảy ra nếu một đội ngũ kỹ thuật quên không hợp nhất ngược nhánh Hotfix về nhánh develop?
     type: single
@@ -39,7 +39,7 @@ questions:
         correct: false
       - text: Tất cả các commit trên nhánh develop sẽ bị xóa sạch
         correct: false
-    explanation: Nếu không merge về `develop`, nhánh `develop` vẫn giữ đoạn mã lỗi cũ và khi release phiên bản mới sẽ đè lại lỗi đó lên production.
+    explanation: Nếu `develop` tiếp tục là nhánh phát triển, nhóm cần đưa bản sửa vào đó; cách tích hợp và thời điểm release tùy workflow.
   - id: q4
     question: Theo chuẩn Semantic Versioning, bản phát hành sau khi áp dụng Hotfix thành công sẽ tăng chỉ số nào?
     type: single
@@ -52,12 +52,12 @@ questions:
         correct: false
       - text: Không được phép thay đổi số phiên bản
         correct: false
-    explanation: Hotfix là bản sửa lỗi bảo đảm tính tương thích tuyệt đối nên chỉ số PATCH sẽ được tăng thêm một đơn vị.
+    explanation: Khi dùng SemVer và bản sửa tương thích ngược, PATCH là mức phù hợp; hotfix không tự quyết định mức phiên bản.
   - id: q5
     question: Nếu kho lưu trữ đang có một nhánh release đang hoạt động song song khi phát sinh hotfix, nhánh hotfix cần được hợp nhất vào những đâu?
     type: single
     options:
-      - text: Hợp nhất vào main để vá sản xuất, đồng thời hợp nhất vào nhánh release và develop để tránh tái phát lỗi
+      - text: Đưa bản sửa vào nhánh release/nhánh phát triển còn dùng theo quy trình nhóm, tránh bỏ sót phiên bản đang chuẩn bị
         correct: true
       - text: Chỉ hợp nhất vào main rồi xóa ngay lập tức
         correct: false
@@ -65,4 +65,4 @@ questions:
         correct: false
       - text: Chỉ hợp nhất vào máy trạm cá nhân của người phát hiện lỗi
         correct: false
-    explanation: Khi có nhánh release đang chạy, bản sửa lỗi hotfix phải được tích hợp vào cả release branch và develop để đợt phát hành kế tiếp không bị ghi đè lỗi cũ.
+    explanation: Hãy xác định các nhánh/commit phát hành còn hoạt động và tích hợp bản sửa phù hợp; không phải dự án nào cũng duy trì cả hai nhánh.

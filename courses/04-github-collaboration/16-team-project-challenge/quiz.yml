@@ -2,12 +2,10 @@ id: quiz-04-16-team-project-challenge
 title: "Trắc nghiệm tổng kết: Master GitHub Collaboration"
 questions:
   - id: q1
-    question: Quy trình chuẩn mực nhất để một kỹ sư phần mềm hoàn thành một nhiệm vụ
-      trong dự án nhóm là gì?
+    question: "Luồng nào là một ví dụ phổ biến để xử lý nhiệm vụ trong dự án dùng Feature Branch Workflow?"
     type: single
     options:
-      - text: Đọc Issue -> Pull main mới nhất -> Tạo feature branch -> Code & Commit ->
-          Push -> Mở PR -> Nhận review & sửa đổi -> Merge & Dọn nhánh
+      - text: Đọc yêu cầu -> theo hướng dẫn cập nhật nhánh nền -> tạo nhánh -> sửa và commit -> mở PR -> review -> tích hợp theo quy định
         correct: true
       - text: Commit trực tiếp vào nhánh main của công ty rồi gửi tin nhắn bảo đồng
           nghiệp tự kiểm tra
@@ -16,8 +14,7 @@ questions:
         correct: false
       - text: Xóa toàn bộ dự án cũ và tự viết lại một ứng dụng hoàn toàn mới
         correct: false
-    explanation: Chu trình 7 bước khép kín từ Issue đến Merge là chuẩn mực quốc tế
-      của phát triển phần mềm chuyên nghiệp.
+    explanation: Đây là một luồng thường dùng; repository có thể quy định nhánh nền, review và cách tích hợp khác.
   - id: q2
     question: Khi đồng nghiệp để lại nhận xét "Request changes" trên PR của bạn,
       thái độ và hành động chuẩn mực nhất là gì?
@@ -39,8 +36,7 @@ questions:
       tính cá nhân của bạn là gì?
     type: single
     options:
-      - text: "`main` là con trỏ nhánh cục bộ bạn có thể commit sửa đổi, còn
-          `origin/main` là con trỏ chỉ đọc phản ánh trạng thái trên server"
+      - text: "`main` là nhánh local; `origin/main` là remote-tracking ref local phản ánh trạng thái ở lần fetch gần nhất"
         correct: true
       - text: Hai con trỏ này hoàn toàn giống nhau 100% không có gì khác biệt
         correct: false
@@ -48,8 +44,7 @@ questions:
         correct: false
       - text: "`main` chỉ lưu tệp ảnh, `origin/main` chỉ lưu mã nguồn"
         correct: false
-    explanation: "`origin/main` là Remote-tracking branch do Git tự cập nhật khi
-      fetch; bạn không thể commit trực tiếp lên nó."
+    explanation: "`origin/main` là ref local được cập nhật khi fetch; bạn không commit trực tiếp vào remote-tracking ref."
   - id: q4
     question: Tại sao việc viết Commit Message và mô tả Pull Request rõ ràng lại cực
       kỳ quan trọng đối với dự án dài hạn?
@@ -79,15 +74,12 @@ questions:
         correct: false
       - text: git network-check
         correct: false
-    explanation: "`git status` và `git branch -vv` in rõ trạng thái `ahead N` và
-      `behind M` của tracking branch."
+    explanation: "Các lệnh này hiển thị độ lệch khi nhánh có upstream và thông tin remote-tracking đã được fetch."
   - id: q6
-    question: Sau khi hoàn thành xuất sắc toàn bộ 16 bài học của Level 4, bạn đã đạt
-      được năng lực nào sau đây?
+    question: "Sau thử thách README, bạn có thể chứng minh được năng lực nào bằng kết quả thực hành?"
     type: single
     options:
-      - text: Tự tin cộng tác nhóm, làm chủ toàn bộ chu trình GitHub, xử lý xung đột
-          mạng và tham gia vào các dự án chuyên nghiệp
+      - text: Tạo nhánh, sửa README, kiểm tra diff, tạo commit và giải thích các bước cần có khi mở PR
         correct: true
       - text: Trở thành chuyên gia phần cứng sửa chữa vi mạch máy tính
         correct: false
@@ -95,5 +87,4 @@ questions:
         correct: false
       - text: Có thể lập trình mà không cần dùng đến bàn phím máy tính
         correct: false
-    explanation: Level 4 trang bị toàn bộ kỹ năng cộng tác nhóm và văn hóa Git
-      chuyên nghiệp trên GitHub.
+    explanation: Bằng chứng của thử thách là thay đổi, diff, commit và mô tả được bước cộng tác trên PR.

@@ -20,8 +20,26 @@ export class LogCommand implements GitCommand {
 
     const currentBranch = ctx.stateManager.getCurrentBranch();
     const headCommit = ctx.stateManager.getHeadCommit();
+    const rangeArg = args.find((arg) => arg.includes('..'));
+    let startHash = headCommit?.hash || null;
+    let excludedHashes = new Set<string>();
 
-    if (!headCommit) {
+    if (rangeArg) {
+      const [baseRef, targetRef] = rangeArg.split('..', 2);
+      const baseHash = baseRef ? ctx.stateManager.resolveRef(baseRef) : null;
+      startHash = targetRef ? ctx.stateManager.resolveRef(targetRef) : headCommit?.hash || null;
+      if ((baseRef && !baseHash) || (targetRef && !startHash)) {
+        return { stdout: '', stderr: `fatal: invalid revision range '${rangeArg}'`, exitCode: 128 };
+      }
+      if (baseHash) excludedHashes = ctx.stateManager.getAncestors(baseHash);
+    } else if (args[0]) {
+      startHash = ctx.stateManager.resolveRef(args[0]);
+      if (!startHash) {
+        return { stdout: '', stderr: `fatal: ambiguous argument '${args[0]}': unknown revision`, exitCode: 128 };
+      }
+    }
+
+    if (!startHash) {
       return {
         stdout: '',
         stderr: `fatal: your current branch '${currentBranch}' does not have any commits yet`,
@@ -37,11 +55,11 @@ export class LogCommand implements GitCommand {
     // Traverse parent links
     const commitList: Commit[] = [];
     const visited = new Set<string>();
-    const queue = [headCommit.hash];
+    const queue = [startHash];
 
     while (queue.length > 0) {
       const currentHash = queue.shift()!;
-      if (visited.has(currentHash)) continue;
+      if (visited.has(currentHash) || excludedHashes.has(currentHash)) continue;
       visited.add(currentHash);
 
       const commit = ctx.stateManager.getCommit(currentHash);
@@ -58,7 +76,13 @@ export class LogCommand implements GitCommand {
     // Sort by timestamp descending
     commitList.sort((a, b) => b.timestamp - a.timestamp);
 
-    const sliced = limit ? commitList.slice(0, limit) : commitList;
+    const mergeFilter = flags['merges'] ? 'merges' : flags['no-merges'] ? 'no-merges' : null;
+    const filtered = mergeFilter
+      ? commitList.filter((commit) =>
+          mergeFilter === 'merges' ? commit.parents.length > 1 : commit.parents.length <= 1
+        )
+      : commitList;
+    const sliced = limit ? filtered.slice(0, limit) : filtered;
 
     if (isOneLine) {
       const lines = sliced.map((c) => {

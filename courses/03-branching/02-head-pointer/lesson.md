@@ -1,69 +1,70 @@
-# Con trỏ HEAD & Detached HEAD
+# HEAD và trạng thái detached HEAD
 
 ---
 
 ## 🎯 Mục tiêu
-- Hiểu được con trỏ HEAD dùng để định vị nhánh và commit bạn đang làm việc.
-- Nhận biết trạng thái Detached HEAD khi quay lại xem một commit cũ trong lịch sử.
-- Biết cách dùng `git switch` để quay lại nhánh an toàn mà không làm mất commit thử nghiệm.
+- Nhận biết HEAD thường theo nhánh đang chọn.
+- Nhận ra trạng thái detached HEAD khi chuyển thẳng tới một commit.
+- Quay về nhánh an toàn hoặc tạo nhánh để giữ commit thử nghiệm.
 
 ---
 
 ## 🧩 Từ khóa hôm nay
 
-### HEAD — con trỏ vị trí hiện tại
-- **Nói dễ hiểu:** Mắt đọc cho biết bạn đang đứng ở nhánh hoặc commit nào trong kho lưu trữ.
-- **Ví dụ:** Khi chạy `git status`, dòng đầu tiên báo `On branch main` vì HEAD đang gắn vào nhánh `main`.
-- **Đừng nhầm:** HEAD không phải là một commit độc lập; nó là nhãn chỉ vào nhánh hoặc commit bạn đang mở.
+### HEAD — vị trí làm việc hiện tại
+- **Nói dễ hiểu:** Con trỏ cho biết Git đang ở nhánh hoặc commit nào.
+- **Ví dụ:** Khi ở `main`, HEAD thường theo nhánh `main`.
+- **Đừng nhầm:** HEAD không phải tên tệp hay lời nhắn commit.
 
-### Detached HEAD — trạng thái rời nhánh
-- **Nói dễ hiểu:** Tình trạng HEAD trỏ thẳng vào một commit cụ thể thay vì trỏ thông qua một tên nhánh.
-- **Ví dụ:** Chạy `git checkout a1b2c3d` để xem lại mã nguồn của tuần trước sẽ đưa bạn vào Detached HEAD.
-- **Đừng nhầm:** Detached HEAD không phải lỗi hỏng kho lưu trữ; đây là chế độ xem lại lịch sử hoàn toàn bình thường.
+### Detached HEAD — HEAD không theo tên nhánh
+- **Nói dễ hiểu:** HEAD trỏ thẳng tới commit thay vì theo một nhánh.
+- **Ví dụ:** Dùng `git switch --detach <mã-commit>` để xem snapshot cũ.
+- **Đừng nhầm:** Đây là trạng thái hợp lệ để kiểm tra; nó không báo repository bị hỏng.
 
-### git switch — lệnh chuyển nhánh an toàn
-- **Nói dễ hiểu:** Câu lệnh chuyên trách để chuyển đổi giữa các nhánh hoặc thoát khỏi Detached HEAD.
-- **Ví dụ:** Chạy `git switch main` để đưa không gian làm việc quay trở về đỉnh nhánh chính.
-- **Đừng nhầm:** `git switch` chỉ chuyển nhánh; để khôi phục tệp bị sửa đổi bạn dùng `git restore`.
+### `git switch -c` — tạo nhánh tại vị trí hiện tại
+- **Nói dễ hiểu:** Tạo nhánh mới và chuyển sang đó từ commit bạn đang xem.
+- **Ví dụ:** `git switch -c keep-experiment` khi đang detached.
+- **Đừng nhầm:** Nếu muốn giữ commit thử nghiệm, tạo nhánh trước khi chuyển đi.
 
 ---
 
 ## 📖 Định nghĩa
-HEAD là con trỏ đặc biệt trong Git cho biết vị trí làm việc hiện tại của bạn. Bình thường, HEAD trỏ vào một nhánh (như `main`). Khi bạn chuyển thẳng tới một commit cũ bằng mã hash, HEAD sẽ rời khỏi nhánh và rơi vào trạng thái Detached HEAD.
+Trong trạng thái thông thường, HEAD trỏ tới một nhánh; nhánh đó trỏ tới commit hiện tại. Khi bạn chuyển thẳng tới một commit bằng `git switch --detach`, HEAD trỏ trực tiếp vào commit và không theo tên nhánh. Nếu tạo commit mới ở trạng thái này, hãy tạo nhánh cho nó trước khi rời đi để có một tên dễ tìm lại.
 
 ---
 
 ## 🤔 Tại sao cần?
-Khi dự án gặp lỗi mà không rõ nguyên nhân, bạn thường cần quay lại các phiên bản cũ trong quá khứ để chạy thử và kiểm tra. Hiểu cách HEAD hoạt động giúp bạn tự tin xem lại lịch sử mà không sợ làm mất dữ liệu hay làm xáo trộn nhánh chính.
+Đôi khi bạn cần kiểm tra một phiên bản cũ để tìm thời điểm lỗi bắt đầu. Detached HEAD cho phép xem commit cũ mà không di chuyển nhánh `main`. Nếu muốn giữ một thử nghiệm, hãy tạo nhánh tại commit đó. Đừng dựa vào việc một commit không có tên nhánh sẽ luôn dễ tìm lại.
 
 ---
 
 ## 🧠 Mental Model (Mô hình tư duy)
-Hãy hình dung HEAD giống như chiếc kim đọc đĩa than. Khi kim đặt vào rãnh `main`, loa phát bài hát của nhánh `main`. Khi bạn nhấc kim đặt tự do vào một đoạn cũ giữa đĩa than (Detached HEAD), bạn vẫn nghe được đoạn nhạc cũ đó. Khi muốn nghe lại bài hát chính, bạn chỉ cần gạt kim về lại rãnh `main`.
+Hãy hình dung HEAD như dấu “bạn đang xem mốc nào” trên dòng lịch sử. Khi HEAD theo `main`, commit mới sẽ nối vào nhánh đó. Khi detached, bạn đang đứng ở một mốc cụ thể nhưng không có tên nhánh di chuyển theo mình.
 
 ---
 
 ## 🖼 Sơ đồ
 ```text
-Trạng thái bình thường:
-HEAD ───> main ───> Commit C3
+Bình thường:
+HEAD ──► main ──► Commit C3
 
-Trạng thái Detached HEAD:
-HEAD ─────────────> Commit C1 (đang xem lại bản cũ)
-main ─────────────> Commit C3 (vẫn ở đỉnh)
+Detached:
+HEAD ──────────► Commit C1
+main ──────────► Commit C3 (không bị di chuyển)
 ```
 
 ---
 
 ## 🌎 Ví dụ thực tế
-Bạn đang làm web bán hàng và khách báo rằng chức năng thanh toán vừa bị lỗi sáng nay. Bạn xem mã commit của ngày hôm qua là `e8a1b2c`. Bạn checkout về commit đó để kiểm tra thử. Sau khi xác nhận hôm qua vẫn thanh toán tốt, bạn dùng lệnh `git switch main` để quay về code mới nhất mà không ảnh hưởng gì đến dự án.
+Một lỗi xuất hiện sau lần cập nhật mới. Bạn chọn một commit cũ để kiểm tra xem ứng dụng lúc đó hoạt động ra sao. Khi chuyển thẳng tới commit đó, HEAD ở trạng thái detached còn `main` vẫn trỏ tới mốc mới nhất. Nếu sửa thử và muốn giữ commit, tạo nhánh như `keep-experiment` trước khi quay về `main`.
 
 ---
 
 ## 💻 Command
 ```bash
+git log --oneline
+git switch --detach <mã-commit>
 git status
-git checkout <commit-hash>
 git switch main
 git switch -c <tên-nhánh-mới>
 ```
@@ -71,51 +72,51 @@ git switch -c <tên-nhánh-mới>
 ---
 
 ## 🔍 Giải thích command
-- `git status`: Hiển thị bạn đang đứng ở nhánh nào hoặc đang ở trạng thái Detached HEAD tại commit nào.
-- `git checkout <commit-hash>`: Đưa HEAD về một commit cụ thể trong quá khứ.
-- `git switch main`: Chuyển HEAD quay trở lại gắn vào nhánh `main`.
-- `git switch -c <tên-nhánh-mới>`: Tạo nhánh mới ngay tại vị trí commit hiện tại để giữ lại các thử nghiệm.
+- `git log --oneline`: Xem các commit; chọn một commit cũ hơn commit đầu danh sách.
+- `git switch --detach <mã-commit>`: Mở commit đó mà không chuyển con trỏ nhánh.
+- `git status`: Kiểm tra Git báo HEAD detached tại commit nào.
+- `git switch main`: Quay lại nhánh `main` nếu bạn không cần giữ commit thử.
+- `git switch -c <tên-nhánh-mới>`: Tạo nhánh tại vị trí hiện tại để giữ commit thử nghiệm.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Hoảng loạn khi thấy chữ Detached HEAD:** Đây là thông báo trạng thái bình thường của Git khi bạn xem lại commit cũ.
-2. **Commit thử nghiệm khi rời nhánh rồi chuyển đi mà không tạo nhánh:** Các commit này sẽ bị mồ côi vì không có tên nhánh nào trỏ vào.
-3. **Dùng nhầm `git checkout` với tệp:** Nên dùng `git switch` cho nhánh và `git restore` cho tệp để tránh nhầm lẫn.
+1. **Hoảng loạn khi thấy detached HEAD:** Đây là trạng thái hợp lệ khi xem commit trực tiếp.
+2. **Tạo commit rồi rời đi mà không tạo nhánh:** Commit không được nhánh nào giữ lại; hãy tạo nhánh trước khi chuyển đi.
+3. **Chọn commit mới nhất rồi mong thấy khác biệt:** Muốn xem phiên bản cũ, chọn một commit nằm dưới commit mới nhất trong `git log`.
 
 ---
 
 ## 🧪 Lab
-Bài học này là bài tự kiểm tra hiểu biết trên terminal của bạn:
-1. Chạy `git log --oneline` để lấy mã hash của một commit trước đó.
-2. Chạy `git checkout <mã-hash>` để quan sát thông báo Detached HEAD từ Git.
-3. Chạy `git status` để đọc lời nhắc của Git về vị trí con trỏ hiện tại.
-4. Chạy `git switch main` để đưa HEAD trở lại nhánh `main`.
+1. Chạy `git log --oneline`. Cần có ít nhất hai commit để so sánh. Nếu chỉ có một, tạo tệp `detached-practice.txt`, thêm một dòng nội dung, rồi chạy `git add detached-practice.txt` và `git commit -m "test: add detached practice"`.
+2. Chạy `git log --oneline` lần nữa; dùng mã ở dòng thứ hai (commit cũ hơn).
+3. Chạy `git switch --detach <mã-commit-cũ>` rồi dùng `git status` để xác nhận HEAD detached.
+4. Chạy `git switch main` để quay lại nhánh.
 
 ---
 
 ## 💡 Hint
-Khi ở Detached HEAD, nếu bạn tạo commit muốn giữ lại, hãy gõ `git switch -c <nhánh-mới>` trước khi chuyển đi nơi khác.
+> Muốn giữ commit thử nghiệm khi detached? Chạy `git switch -c keep-experiment` trước khi rời commit đó.
 
 ---
 
 ## ✅ Validation
-- Sau khi chạy `git switch main`, lệnh `git status` báo rõ `On branch main`.
-- Thư mục làm việc trở về trạng thái của commit mới nhất trên nhánh chính.
+- `git status` báo HEAD detached tại mã commit cũ ở bước 3.
+- Sau `git switch main`, `git status` báo đang ở nhánh `main`.
 
 ---
 
 ## ❓ Quiz
-Trả lời các câu hỏi sau để kiểm tra kiến thức về con trỏ HEAD và trạng thái Detached HEAD.
+Trả lời các câu hỏi để kiểm tra cách nhận biết và xử lý detached HEAD.
 
 ---
 
 ## 🔥 Challenge
-Mở tệp `.git/HEAD` bằng trình đọc tệp khi đang ở nhánh `main` và khi đang ở Detached HEAD để so sánh nội dung bên trong.
+Khi đang detached, hãy vẽ hai cách tiếp tục: quay về `main` mà bỏ thử nghiệm, hoặc tạo `keep-experiment` để giữ commit mới. Nêu lệnh mở đầu cho cách thứ hai.
 
 ---
 
 ## 📚 Tổng kết
-- HEAD chỉ định vị trí commit mà thư mục làm việc của bạn đang hiển thị.
-- Detached HEAD xuất hiện khi bạn đưa HEAD trỏ thẳng vào commit thay vì qua tên nhánh.
-- Dùng `git switch main` để quay về an toàn, hoặc `git switch -c` nếu muốn giữ lại commit thử nghiệm.
+- Bình thường HEAD theo một nhánh; detached HEAD trỏ thẳng vào commit.
+- Xem commit cũ không tự di chuyển nhánh `main`.
+- Tạo nhánh tại commit detached nếu muốn giữ lại thử nghiệm.

@@ -11,12 +11,9 @@ keywords:
 prerequisites:
   - 11-resolve-conflict
 objectives:
-  - Hiểu rõ cơ chế hoạt động của lệnh cứu hộ khẩn cấp `git merge --abort`.
-  - Nhận biết các tình huống thực tế nên chủ động hủy bỏ quá trình merge.
-  - Khôi phục Working Tree và con trỏ HEAD về chính xác trạng thái sạch sẽ trước
-    khi merge.
-  - Tự tin xử lý tình huống merge nhầm nhánh mà không làm hỏng dữ liệu.
+  - Nhận biết merge đang dở và biết khi nào cần hủy.
+  - Dùng `git merge --abort` rồi kiểm tra lại nhánh và working tree.
+  - Nêu được giới hạn khôi phục khi đã có thay đổi chưa commit trước merge.
 commands:
-  - git merge --abort
   - git status
-  - git merge --quit
+  - git merge --abort

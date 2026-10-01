@@ -13,13 +13,12 @@ keywords:
 prerequisites:
   - 11-git-cat-file
 objectives:
-  - "Hiểu rõ bản chất của một Nhánh (Branch) trong Git: thực chất chỉ là một tệp
-    văn bản nhỏ 41 bytes chứa mã băm SHA-1."
-  - "Khám phá cấu trúc thư mục .git/refs/ bao gồm: refs/heads/ (nhánh cục bộ),
-    refs/tags/ (thẻ), và refs/remotes/ (nhánh từ xa)."
+  - Hiểu nhánh local là ref trong namespace refs/heads/ trỏ tới commit; cách lưu
+    vật lý và độ dài object ID phụ thuộc repository.
+  - Phân biệt các namespace refs/heads/, refs/tags/ và refs/remotes/.
   - Sử dụng lệnh plumbing git update-ref để tạo và điều khiển con trỏ nhánh trực
     tiếp.
 commands:
-  - cat .git/refs/heads/main
+  - git show-ref --verify refs/heads/main
   - git show-ref
   - git update-ref refs/heads/test HEAD

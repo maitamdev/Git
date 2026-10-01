@@ -12,14 +12,10 @@ keywords:
 prerequisites:
   - 14-squash-commit
 objectives:
-  - Hiểu rõ sự tiện lợi vượt trội của chỉ thị `fixup` so với `squash` khi không
-    cần giữ lại thông điệp thừa.
-  - Sử dụng câu lệnh `git commit --fixup <commit-hash>` để tự động tạo commit
-    sửa lỗi gắn nhãn.
-  - Kích hoạt tính năng kỳ diệu `git rebase -i --autosquash` để Git tự động sắp
-    xếp và gộp commit tự động.
-  - Cấu hình Git tự động bật autosquash vĩnh viễn trong tệp `.gitconfig`.
+  - Phân biệt thông điệp của commit `fixup` với `squash`.
+  - Hiểu `git commit --fixup <commit-hash>` tạo commit vá được liên kết với commit mục tiêu.
+  - Nhận biết cách `git rebase -i --autosquash` sắp xếp todo list và vẫn cần người dùng review.
+  - Có thể bật autosquash cho riêng repository bằng cấu hình `rebase.autoSquash`.
 commands:
-  - git commit --fixup <commit-hash>
-  - git rebase -i --autosquash <base-hash>
-  - git config --global rebase.autoSquash true
+  - git status
+  - git log --oneline

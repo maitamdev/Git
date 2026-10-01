@@ -1,5 +1,5 @@
 id: 14-branching-challenge
-title: Thử thách tổng hợp Branching Master
+title: "Thử thách cuối Level 3: tạo nhánh, xử lý conflict và merge"
 duration: 40
 xp: 150
 keywords:
@@ -9,18 +9,18 @@ keywords:
   - conflict resolution
   - workflow
 prerequisites:
-  - 11-resolve-conflict
+  - 12-merge-abort
+  - 13-delete-rename-branch
 objectives:
-  - Áp dụng tổng hợp toàn bộ kỹ năng Level 3 vào một kịch bản phát triển phần
-    mềm đa nhánh thực chiến.
-  - Thực hiện tạo nhánh tính năng, chuyển nhánh, tạo commit độc lập, và phát
-    hiện xung đột.
-  - Giải quyết thành công xung đột Merge Conflict và tạo Merge Commit chuẩn hóa.
-  - Dọn dẹp hệ thống nhánh sạch sẽ sau khi hoàn thành nhiệm vụ.
+  - Tạo hai nhánh có commit riêng và gây conflict có chủ đích.
+  - Giải quyết conflict, tạo merge commit và xác nhận hai commit cha.
+  - Xóa an toàn nhánh đã merge.
 commands:
   - git switch -c feature-challenge
-  - git merge main
+  - git switch main
+  - git merge feature-challenge
   - git status
-  - git add <resolved-file>
-  - git commit
+  - git add challenge.txt
+  - 'git commit -m "merge: combine challenge changes"'
+  - git show HEAD
   - git branch -d feature-challenge

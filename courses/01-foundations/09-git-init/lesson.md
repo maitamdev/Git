@@ -17,19 +17,19 @@
 - **Đừng nhầm:** Lệnh này chưa thêm tệp và chưa tạo commit.
 
 ### Initial branch — nhánh ban đầu
-- **Nói dễ hiểu:** Tên nhánh Git chuẩn bị làm điểm bắt đầu cho lịch sử mới.
+- **Nói dễ hiểu:** Tên Git chuẩn bị dùng làm điểm bắt đầu cho dòng lịch sử mới.
 - **Ví dụ:** Tên thường gặp là `main`, nhưng có thể đặt tên khác theo cấu hình.
-- **Đừng nhầm:** Tên mặc định không giống nhau ở mọi máy hoặc mọi cấu hình.
+- **Đừng nhầm:** `git init` không phải lúc nào cũng đặt tên `main`; tên mặc định phụ thuộc cấu hình.
 
 ### Untracked — chưa được Git theo dõi
-- **Nói dễ hiểu:** Tệp đang nằm trong thư mục dự án nhưng chưa được chọn vào lịch sử Git.
+- **Nói dễ hiểu:** Tệp nằm trong thư mục dự án nhưng Git chưa được yêu cầu theo dõi nó.
 - **Ví dụ:** README mới tạo có thể hiện là untracked khi chạy `git status`.
-- **Đừng nhầm:** Untracked không có nghĩa tệp bị xóa; tệp vẫn nằm trong thư mục.
+- **Đừng nhầm:** Untracked không có nghĩa tệp bị xóa; tệp vẫn nằm trong thư mục và có thể được chọn sau.
 
 ### First commit — mốc đầu tiên
 - **Nói dễ hiểu:** Commit đầu tiên bạn chủ động tạo sau khi khởi tạo repository.
-- **Ví dụ:** Sau khi chọn README bằng `git add`, bạn có thể tạo mốc “Tạo README”.
-- **Đừng nhầm:** `git init` chỉ chuẩn bị repository; nó không tự tạo mốc này.
+- **Ví dụ:** Sau khi chọn những tệp cần lưu, bạn có thể tạo mốc “Tạo README”.
+- **Đừng nhầm:** `git init` chỉ chuẩn bị repository; chọn tệp và tạo commit sẽ học ở các bài sau.
 
 ---
 
@@ -76,7 +76,7 @@ git status
 
 ## 🔍 Giải thích command
 - `git init`: Khởi tạo repository trong thư mục hiện tại; lệnh không tự thêm tệp vào commit.
-- `git init -b main`: Đặt tên nhánh ban đầu là `main`; cấu hình Git cũng có thể quyết định tên mặc định.
+- `git init -b main`: Trên phiên bản Git hỗ trợ tùy chọn này, đặt tên nhánh ban đầu là `main` cho repository mới.
 - `git status`: Kiểm tra Git đã nhận repository và xem trạng thái tệp.
 
 ---
@@ -89,9 +89,9 @@ git status
 ---
 
 ## 🧪 Lab
-1. Mở terminal tại thư mục bài tập trống hoặc thư mục thực hành.
-2. Chạy `git init`.
-3. Chạy `git status`; xác nhận Git nhận repository và chưa có commit.
+1. Trong terminal mô phỏng, chạy `git init` tại thư mục dự án đang dùng. Nếu hiện thông báo repository đã được khởi tạo trước đó, đó là kết quả bình thường.
+2. Chạy `git status`; xác nhận Git nhận repository và xem tệp nào còn untracked.
+3. Khi tạo repository mới trên máy thật và muốn chọn `main` ngay từ đầu, dùng `git init -b main` thay cho `git init` nếu phiên bản Git hỗ trợ.
 
 ---
 
@@ -116,6 +116,6 @@ Khởi tạo repository trong một thư mục thực hành và giải thích v�
 ---
 
 ## 📚 Tổng kết
-- `git init` tạo dữ liệu Git để bắt đầu quản lý thư mục.
+- `git init` tạo dữ liệu Git để bắt đầu quản lý thư mục; chạy lại trong repository thường không xóa tệp.
 - Tệp có sẵn không tự được thêm vào lịch sử.
 - Dùng `git status` để kiểm tra repository sau khi khởi tạo.

@@ -1,56 +1,82 @@
 id: quiz-06-git-installation
-title: "Trắc nghiệm: Cài đặt và môi trường Git"
+title: "Trắc nghiệm: Cài đặt Git và môi trường terminal"
 questions:
   - id: q1
-    question: Lệnh nào dùng để kiểm tra xem Git đã được cài đặt thành công trên máy
-      tính hay chưa?
-    type: single
-    options:
-      - text: git --version
-        correct: true
-      - text: git --verify-install
-        correct: false
-      - text: git ping
-        correct: false
-      - text: git test-connection
-        correct: false
-    explanation: Lệnh này in ra phiên bản Git đang được cài trên máy tính của bạn.
-  - id: q2
-    question: Bạn đang dùng Windows. Có bắt buộc mở Git Bash mới chạy được Git không?
-    type: single
-    options:
-      - text: Không, PowerShell cũng chạy được Git khi cài đặt đúng
-        correct: true
-      - text: Có, Git chỉ chạy trong Git Bash
-        correct: false
-      - text: Có, Git Bash là tài khoản trực tuyến bắt buộc
-        correct: false
-      - text: Không, vì Windows không thể chạy lệnh Git
-        correct: false
-    explanation: Git for Windows có thể chạy trong PowerShell; Git Bash chỉ là một lựa chọn.
-  - id: q3
-    question: Terminal báo không nhận diện được lệnh `git`. Bạn nên kiểm tra gì trước?
-    type: single
-    options:
-      - text: Git đã được cài chưa và terminal có tìm thấy Git không
-        correct: true
-      - text: Tài khoản GitHub đã có ảnh đại diện chưa
-        correct: false
-      - text: README có đủ tiêu đề chưa
-        correct: false
-      - text: Đã tạo nhánh `main` chưa
-        correct: false
-    explanation: Có thể Git chưa được cài hoặc hệ điều hành chưa tìm thấy chương trình Git.
-  - id: q4
-    question: Lệnh đơn giản nào giúp bạn kiểm tra Git đã chạy được trong terminal chưa?
+    question: "Lệnh nào in ra phiên bản Git mà terminal đang gọi?"
     type: single
     options:
       - text: "`git --version`"
         correct: true
-      - text: "`git install --check`"
+      - text: "`git status`"
         correct: false
-      - text: "`git account`"
+      - text: "`git add`"
         correct: false
-      - text: "`git internet`"
+      - text: "`git config --list`"
         correct: false
-    explanation: "`git --version` xác nhận terminal nhận lệnh Git và hiển thị phiên bản."
+    explanation: >-
+      `git --version` in số phiên bản của chương trình Git đang chạy.
+      Lệnh này không xem trạng thái tệp hay cấu hình repository.
+
+  - id: q2
+    question: "Trên Windows, điều nào đúng về Git Bash và PowerShell?"
+    type: single
+    options:
+      - text: "Cả hai có thể chạy Git nếu Git đã được cài và terminal tìm thấy chương trình"
+        correct: true
+      - text: "Git chỉ chạy được trong Git Bash"
+        correct: false
+      - text: "PowerShell chỉ chạy GitHub, không thể gọi Git"
+        correct: false
+      - text: "Cài Git for Windows sẽ vô hiệu hóa PowerShell"
+        correct: false
+    explanation: >-
+      Git Bash đi kèm Git for Windows, nhưng PowerShell cũng chạy Git
+      khi cài đặt đã cấu hình PATH phù hợp.
+
+  - id: q3
+    question: "Terminal mới báo không nhận diện `git`. Bước kiểm tra nào hợp lý trước?"
+    type: single
+    options:
+      - text: "Xác nhận đã cài Git, rồi mở terminal mới và kiểm tra PATH"
+        correct: true
+      - text: "Xóa thư mục dự án để Git xuất hiện"
+        correct: false
+      - text: "Tạo tài khoản GitHub mới trước khi cài Git"
+        correct: false
+      - text: "Đổi tên tệp README để hệ điều hành tìm thấy lệnh"
+        correct: false
+    explanation: >-
+      Terminal không tìm thấy chương trình có thể do Git chưa cài hoặc PATH
+      chưa cập nhật; mở terminal mới sau khi cài là bước an toàn đầu tiên.
+
+  - id: q4
+    question: "Bạn chạy `git --version` trong terminal mô phỏng của Git Academy. Kết quả nói lên điều gì?"
+    type: single
+    options:
+      - text: "Phiên bản mô phỏng, không xác nhận Git đã cài trên máy cá nhân"
+        correct: true
+      - text: "Git đã được cài vào Windows hoặc macOS của bạn"
+        correct: false
+      - text: "Máy cá nhân đã kết nối với GitHub"
+        correct: false
+      - text: "Repository hiện tại đã có commit đầu tiên"
+        correct: false
+    explanation: >-
+      Terminal trong khóa học chạy trong trình duyệt và mô phỏng Git.
+      Muốn kiểm tra máy thật, chạy lệnh trong terminal của máy đó.
+
+  - id: q5
+    question: "Bạn nên tìm hướng dẫn cài Git cho máy của mình ở đâu?"
+    type: single
+    options:
+      - text: "Trang cài đặt chính thức `git-scm.com/install`"
+        correct: true
+      - text: "Một bản cài đặt bất kỳ được gửi trong tin nhắn lạ"
+        correct: false
+      - text: "Trang GitHub của một dự án không liên quan"
+        correct: false
+      - text: "Bên trong thư mục `.git` của bài tập"
+        correct: false
+    explanation: >-
+      Trang chính thức cung cấp hướng dẫn theo Windows, macOS và Linux.
+      Chọn đúng hệ điều hành để tránh tải nhầm gói cài đặt.

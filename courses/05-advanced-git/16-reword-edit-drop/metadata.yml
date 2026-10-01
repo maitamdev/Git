@@ -18,11 +18,7 @@ objectives:
     khứ.
   - Sử dụng `edit` (hoặc `e`) để tạm dừng tiến trình rebase, bổ sung thêm file
     hoặc chia nhỏ commit đó.
-  - Sử dụng `drop` (hoặc `d`) để loại bỏ hoàn toàn các commit thử nghiệm không
-    còn giá trị.
+  - Sử dụng `drop` (hoặc `d`) để không phát lại commit thử nghiệm vào lịch sử mới.
 commands:
-  - r <commit-hash> (hoặc reword)
-  - e <commit-hash> (hoặc edit)
-  - d <commit-hash> (hoặc drop)
-  - git rebase --continue
-  - git reset HEAD~1 (trong lúc edit)
+  - git log --oneline
+  - git status

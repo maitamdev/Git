@@ -11,17 +11,12 @@ keywords:
 prerequisites:
   - 15-collaboration-workflow
 objectives:
-  - Áp dụng tổng hợp toàn bộ kỹ năng Level 4 vào một kịch bản dự án cộng tác
-    nhóm hoàn chỉnh.
-  - Đóng vai trò một kỹ sư thực chiến giải quyết Issue, phát triển nhánh tính
-    năng, push và mở PR.
-  - Tham gia đóng vai trò Reviewer để đánh giá mã nguồn, đưa ra phản biện và phê
-    duyệt PR của đồng nghiệp.
-  - Xử lý tình huống xung đột khi merge PR và hoàn tất quy trình phát hành tính
-    năng lên sản phẩm.
+  - Thực hiện một thay đổi README trên nhánh riêng trong kho thử nghiệm.
+  - Kiểm tra diff, tạo commit và tự rà soát theo tiêu chí hoàn thành.
+  - Mô tả quy trình tạo PR và review; thực hiện trên GitHub nếu có quyền.
 commands:
-  - git switch main
-  - git pull origin main
-  - git switch -c feat/coupon-system
-  - git push -u origin feat/coupon-system
-  - git branch -d feat/coupon-system
+  - git switch -c feat/coupon-readme
+  - git status
+  - git diff
+  - git add README.md
+  - 'git commit -m "docs: explain coupon feature"'

@@ -20,22 +20,22 @@
 ### Branch Protection Rules
 - **Nói dễ hiểu**: Tập hợp quy tắc bảo vệ do quản trị viên thiết lập trên nhánh chính để ngăn chặn việc xóa nhánh hoặc hợp nhất code lỗi.
 - **Ví dụ**: Bật tùy chọn "Require status checks to pass before merging" để khóa nút Merge nếu CI chưa xanh.
-- **Đừng nhầm**: Không ngăn cản lập trình viên mở PR hay tạo nhánh mới; chỉ ngăn hành động merge hoặc push trực tiếp vào nhánh được bảo vệ.
+- **Đừng nhầm**: Chỉ các quy tắc đã bật mới được thực thi; required status checks chặn merge khi chưa đạt, còn quyền bypass/admin và quyền push tùy cấu hình.
 
 ### Merge Commit Ref
-- **Nói dễ hiểu**: Nhánh tham chiếu ảo tạm thời dạng `refs/pull/:id/merge` mà GitHub tự động sinh ra khi mở PR để kiểm tra tính tương thích giữa nhánh tính năng và nhánh đích.
+- **Nói dễ hiểu**: Tham chiếu merge thử nghiệm dạng `refs/pull/:id/merge` mà GitHub dùng cho `pull_request` khi có thể tạo kết quả merge để kiểm tra thay đổi với nhánh đích.
 - **Ví dụ**: Runner kéo mã nguồn từ `refs/pull/42/merge` để chạy test trên mã nguồn sau khi hợp nhất giả lập.
-- **Đừng nhầm**: Không phải là commit thật đã vào nhánh chính; commit này sẽ bị hủy nếu PR bị đóng hoặc có xung đột mã nguồn.
+- **Đừng nhầm**: Đây không phải commit đã được merge vào nhánh đích; cách checkout phụ thuộc event và trạng thái merge của PR.
 
 ---
 
 ## 📖 Định nghĩa
-Pull Request CI là mô hình kiểm chuẩn tự động bắt buộc trong quy trình phát triển phần mềm chuyên nghiệp. Khi một lập trình viên tạo hoặc đẩy thêm mã nguồn vào một Pull Request, GitHub Actions tự động tạo ra một nhánh ảo hợp nhất thử nghiệm (merge commit tạm thời) và thực thi toàn bộ chuỗi kiểm tra (Linter, Unit Test, Type Check). Kết quả thành công hay thất bại được gắn trực tiếp vào báo cáo trạng thái (Status Check) của PR.
+Pull Request CI là cách kiểm tra thay đổi trước khi merge. Khi workflow lắng nghe `pull_request`, GitHub Actions có thể chạy kiểm tra trên merge ref thử nghiệm, tùy khả năng tạo merge. Kết quả được báo về PR; việc chặn merge cần cấu hình required status checks trong branch protection hoặc ruleset.
 
 ---
 
 ## 💡 Tại sao cần
-Nếu không có CI gác cổng trên Pull Request, nhánh chính (main) sẽ liên tục bị vỡ hoặc suy giảm hiệu năng do những lỗi bất cẩn, xung đột thư viện của lập trình viên. Đợi đến khi code đã được merge vào main mới phát hiện lỗi thì đã quá muộn và tốn rất nhiều công sức để tìm kiếm commit lỗi và phục hồi hệ thống. PR CI đóng vai trò như một bộ lọc sạch tự động: mọi đoạn mã kém chất lượng đều bị chặn đứng ngay trước cửa ngõ của nhánh chính, bảo vệ sự ổn định tối cao của sản phẩm.
+Nếu chỉ kiểm tra sau khi merge, lỗi có thể ảnh hưởng tới nhánh chính trước khi phát hiện. PR CI đưa kết quả kiểm tra tới reviewer sớm hơn; muốn kết quả chặn merge thì quản trị viên phải cấu hình required checks, và vẫn cần quyền bypass được kiểm soát.
 
 ---
 
@@ -60,13 +60,13 @@ Developer tạo PR ──► [Kích hoạt CI Workflow]
 Status Check: Xanh (Success)   Status Check: Đỏ (Failure)
            │                             │
            ▼                             ▼
-[NÚT MERGE ĐƯỢC MỞ KHÓA]      [NÚT MERGE BỊ KHÓA CHẶT]
+[Merge có thể tiếp tục theo ruleset] [Merge bị chặn nếu check được đặt required]
 ```
 
 ---
 
 ## 🏢 Ví dụ thực tế
-Trong một dự án tài chính, nhánh `main` được bảo vệ bởi quy tắc Branch Protection Rules với yêu cầu bắt buộc: bài kiểm tra `ci/test` phải đạt trạng thái thành công. Khi lập trình viên Nam mở một PR thêm tính năng chuyển tiền nhanh, Nam vô tình sửa đổi một hàm mà quên cập nhật bài kiểm thử tương ứng. Đường ống Actions chạy trong 2 phút và báo lỗi đỏ ở bài test đơn vị. Trên giao diện PR của Nam, nút "Merge pull request" bị vô hiệu hóa với thông báo màu đỏ: "Required statuses must pass before merging". Nam kiểm tra log, sửa lại đoạn mã, commit và push lên nhánh của mình. CI tự động chạy lại, báo tích xanh và nút Merge lập tức sáng lên cho phép trưởng nhóm phê duyệt.
+Ví dụ giả định: repo đã đặt `ci/test` là required check. Khi test thất bại, merge bị chặn theo rule; sau khi sửa và CI xanh, các yêu cầu review còn lại vẫn phải được đáp ứng. Quyền bypass nếu có cũng phụ thuộc cấu hình.
 
 ---
 
@@ -84,11 +84,11 @@ jobs:
     name: quality-gate
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: 20
+          node-version: 24
       - name: Install dependencies
         run: npm ci
       - name: Run code linter
@@ -102,14 +102,14 @@ jobs:
 ## 🔍 Giải thích command
 - `on.pull_request.branches: [main]`: Workflow chỉ lắng nghe các PR có nhánh đích (base branch) là `main`.
 - `types: [opened, synchronize, reopened]`: Kích hoạt khi PR mới được mở, khi tác giả đẩy thêm commit mới (`synchronize`), hoặc khi mở lại PR đã đóng.
-- `name: quality-gate`: Tên hiển thị của check trên giao diện GitHub; tên này được dùng trong Branch Protection Rules.
-- `actions/checkout@v4`: Mặc định trên sự kiện PR, action này sẽ checkout commit merge ảo `refs/pull/<pr_number>/merge`.
+- `name: quality-gate`: Tên hiển thị cho Job; tên check cụ thể cần xác nhận trong giao diện PR rồi mới chọn làm required check.
+- `actions/checkout@v7`: Với `pull_request`, mặc định checkout merge ref thử nghiệm nếu ref đó có sẵn; có thể cấu hình checkout head SHA khác.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Kích hoạt cả hai sự kiện `push` và `pull_request` trên cùng một nhánh**: Khiến workflow bị chạy lặp lại 2 lần cho mỗi commit, gây lãng phí runner credits và làm chậm thời gian phản hồi.
-2. **Cấu hình tên Job kiểm tra trong Branch Protection Rule không khớp**: Tên status check phải trùng khớp tuyệt đối với trường `name:` của Job trong file YAML.
+1. **Kích hoạt cả `push` và `pull_request`**: Một lần push lên nhánh PR có thể tạo hai workflow run nếu cả hai bộ lọc khớp; cân nhắc thiết kế trigger để tránh chạy trùng không cần thiết.
+2. **Chọn nhầm required check**: Chạy workflow ít nhất một lần rồi chọn status check thực tế; check bị bỏ qua hoặc đổi tên có thể khiến merge bị pending.
 3. **Chỉ kiểm thử trên commit của tác giả thay vì commit sau khi merge**: Có thể xảy ra trường hợp code tác giả chạy tốt trên nhánh feature nhưng xung đột logic với commit mới nhất trên nhánh main.
 
 ---
@@ -117,10 +117,10 @@ jobs:
 ## 🧪 Lab thực hành
 Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
 
-1. **Bước 1**: Tạo file `.github/workflows/pr-ci.yml` với cấu hình lắng nghe sự kiện `pull_request` nhắm vào nhánh `main`.
+1. **Bước 1**: Đọc tệp mẫu `.github/workflows/pr-ci.yml` và xác định event, nhánh đích, Job và lệnh kiểm tra. Chạy thật trên GitHub là phần tùy chọn, cần repo có Actions/quyền truy cập.
 2. **Bước 2**: Định nghĩa job `lint-and-test` thực hiện chạy linter và unit test của dự án.
-3. **Bước 3**: Tạo nhánh mới `feature/login`, sửa mã nguồn, push lên remote và mở một Pull Request trên GitHub.
-4. **Bước 4**: Quan sát danh sách Checks ở cuối trang PR chuyển từ màu vàng (pending) sang màu xanh (success) hoặc màu đỏ (failure).
+3. **Bước 3**: Với repo GitHub bạn có quyền dùng, mở PR thử nghiệm; nếu không, đọc cấu hình và chỉ ra thời điểm `pull_request` sẽ kích hoạt.
+4. **Bước 4**: Quan sát Checks và phân biệt pending, success, failure; nếu không có repo, kiểm tra luồng dự kiến từ YAML.
 
 ---
 
@@ -130,9 +130,8 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
 ---
 
 ## ✅ Validation & Kết quả mong đợi
-- Trang Pull Request hiển thị mục **Checks** với đầy đủ các bài kiểm tra được liệt kê rõ ràng.
-- Nút "Merge pull request" bị khóa kèm cảnh báo nếu bất kỳ bước nào trong CI pipeline thất bại.
-- Sau khi bài test pass toàn bộ, nút Merge chuyển sang trạng thái sẵn sàng để review và hợp nhất.
+- Xác định được workflow sẽ báo kết quả ở mục Checks trên PR.
+- Chỉ khi check được cấu hình required thì failure/pending mới chặn merge; các review/rule khác vẫn có hiệu lực.
 
 ---
 
@@ -148,5 +147,5 @@ Làm thế nào để sử dụng đường ống CI gửi tin nhắn tóm tắt
 
 ## 📝 Tổng kết
 - PR CI tự động kiểm tra chất lượng mã nguồn mỗi khi có yêu cầu hợp nhất mới hoặc có commit đẩy thêm.
-- Kết hợp với Branch Protection Rules tạo thành cổng kiểm soát chất lượng tuyệt đối (Quality Gate).
-- Ngăn chặn triệt để nguy cơ mã nguồn vỡ build hoặc lỗi logic lọt vào nhánh chính của dự án.
+- Kết hợp với required status checks để chặn merge theo chính sách repo.
+- CI giảm rủi ro nhưng không bảo đảm phát hiện mọi lỗi hoặc ngăn mọi cách bypass.

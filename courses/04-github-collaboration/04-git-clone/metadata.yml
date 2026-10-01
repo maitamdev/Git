@@ -11,13 +11,10 @@ keywords:
 prerequisites:
   - 03-origin-concept
 objectives:
-  - Sử dụng câu lệnh `git clone` để tải toàn bộ một dự án từ GitHub về máy tính
-    cá nhân.
-  - "Hiểu rõ các hành động ngầm mà Git tự động thực hiện trong quá trình clone:
-    khởi tạo, liên kết remote, fetch dữ liệu và checkout nhánh mặc định."
-  - Tùy chỉnh tên thư mục đích khi clone dự án về ổ đĩa.
-  - Sử dụng cờ `--depth 1` (shallow clone) để tải nhanh các dự án có kích thước
-    khổng lồ.
+  - Dùng `git clone` để tạo kho cục bộ mới từ một URL.
+  - Giải thích clone thiết lập remote `origin` và checkout nhánh mặc định khi có.
+  - Chọn thư mục riêng để tránh thay đổi nhầm một kho đang làm.
+  - Phân biệt clone thông thường với shallow clone.
 commands:
   - git clone <url-kho-chứa>
   - git clone <url-kho-chứa> <tên-thư-mục-mới>

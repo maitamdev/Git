@@ -13,11 +13,10 @@ prerequisites:
 objectives:
   - "Phân biệt rõ ràng giữa hai tầng câu lệnh trong Git: Porcelain (gốm sứ cao
     cấp) và Plumbing (ống nước ngầm)."
-  - Hiểu cách các lệnh Porcelain thân thiện (git add, git commit) phối hợp nhiều
-    lệnh Plumbing bên dưới.
+  - Phân biệt mục đích của Porcelain và Plumbing; biết dùng output dành cho máy
+    như git status --porcelain trong script.
   - "Làm quen với các lệnh Plumbing cơ bản: git hash-object, git cat-file, git
     update-index, git write-tree, git commit-tree."
 commands:
-  - git commit -m "msg"
   - git write-tree
-  - git commit-tree
+  - git status --porcelain

@@ -1,5 +1,5 @@
 id: 05-git-vs-github
-title: Phân biệt Git vs GitHub
+title: Phân biệt Git và GitHub
 duration: 20
 xp: 50
 keywords:
@@ -12,9 +12,7 @@ prerequisites:
   - 04-git-architecture
 objectives:
   - Nói được Git là công cụ quản lý lịch sử trên máy còn GitHub là dịch vụ trực tuyến.
-  - Tạo commit cục bộ mà không cần Internet.
-  - Giải thích được `push` dùng để gửi commit lên remote.
+  - Phân biệt commit cục bộ với commit đã chia sẻ lên GitHub.
+  - Nêu được khi nào `push` và `pull` cần mạng.
 commands:
   - git remote -v
-  - git push
-  - git pull

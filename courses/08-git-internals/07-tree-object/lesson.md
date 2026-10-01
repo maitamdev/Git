@@ -4,7 +4,7 @@
 
 ## 🎯 Mục tiêu
 - Hiểu rõ bản chất của đối tượng Tree như người quản lý cấu trúc thư mục phân cấp trong Git.
-- Nắm vững định dạng từng dòng mục (Tree Entry): chế độ quyền tệp (mode), loại đối tượng, mã băm SHA-1 và tên tệp/thư mục.
+- Nắm vững các trường trong Tree Entry: mode, loại, object ID và tên tệp/thư mục.
 - Khám phá kiến trúc cây Merkle Tree lồng nhau: một đối tượng Tree có thể chứa các đối tượng Tree con (thư mục con) và Blob (tệp con).
 - Sử dụng thành thạo các lệnh plumbing `git ls-tree` và `git write-tree`.
 
@@ -23,19 +23,19 @@
 - **Đừng nhầm**: Git không lưu đầy đủ toàn bộ hệ thống phân quyền phức tạp của Linux (như user ID hay group ID); chỉ theo dõi cờ thực thi.
 
 ### Merkle Tree Architecture
-- **Nói dễ hiểu**: Cây đồ thị băm trong đó mã băm của nút cha được tính toán dựa trên mã băm của tất cả các nút con bên dưới.
+- **Nói dễ hiểu**: Cấu trúc mà object ID của tree phụ thuộc nội dung entry, gồm tên, mode và các object ID con.
 - **Ví dụ**: Nếu bạn sửa 1 tệp trong `src/utils/math.ts`, mã băm của `utils/`, mã băm của `src/`, và mã băm của Root Tree đều tự động thay đổi theo chuỗi.
 - **Đừng nhầm**: Không cần quét lại toàn bộ ổ đĩa; Git chỉ cần so sánh mã băm của hai Root Tree là biết ngay hai phiên bản có giống nhau hay không.
 
 ---
 
 ## 📖 Định nghĩa
-Đối tượng Tree (Cây thư mục) trong Git giải quyết bài toán biểu diễn cấu trúc hệ thống tệp tin phân cấp. Một đối tượng Tree đại diện cho một thư mục, bên trong chứa danh sách các bản ghi (entries). Mỗi bản ghi bao gồm 4 thông tin cốt lõi: chế độ quyền tệp (File Mode, ví dụ: 100644 cho tệp thường, 100755 cho tệp thực thi, 040000 cho thư mục con), loại đối tượng (blob hoặc tree), mã băm SHA-1 của đối tượng đó, và tên gọi của tệp hoặc thư mục.
+Đối tượng Tree biểu diễn một thư mục bằng các entry gồm mode, loại object, object ID và tên. Ví dụ phổ biến là `100644`/`100755` cho file thường, `040000` cho tree con, `120000` cho symlink và `160000` cho submodule (gitlink tới commit). Object ID dài tùy hash format của repository.
 
 ---
 
 ## 💡 Tại sao cần
-Nếu kiến trúc Git chỉ lưu trữ các đối tượng Blob, chúng ta sẽ chỉ sở hữu một kho dữ liệu nội dung thô rời rạc mà không thể biết tệp nào mang tên là gì, nằm trong đường dẫn thư mục nào, hoặc tệp nào được gán quyền thực thi kịch bản hệ điều hành. Đối tượng Tree chính là chất keo kết nối các Blob đơn lẻ lại thành một cây thư mục phân cấp hoàn chỉnh, mô phỏng chính xác 100% trạng thái không gian làm việc của dự án tại thời điểm chụp ảnh nhanh (snapshot), giúp tái tạo lại toàn bộ dự án nguyên vẹn.
+Nếu chỉ có blob, Git sẽ biết nội dung nhưng không biết tên, đường dẫn hay mode của tệp. Tree ghi các thông tin đó theo cấu trúc thư mục. Commit ghi lại tree được tạo từ index tại thời điểm commit, nên tree không nhất thiết phản ánh mọi thay đổi đang có trong working tree.
 
 ---
 
@@ -71,8 +71,8 @@ git ls-tree HEAD
 # Đệ quy xem toàn bộ tệp trong các thư mục con
 git ls-tree -r HEAD
 
-# Xem nội dung thô dạng bảng của một đối tượng Tree qua mã băm
-git cat-file -p 4b825dc642cb6eb9a060e54bf8d69288fbee4904
+# Xem nội dung thô của root tree trong commit hiện tại
+git cat-file -p "HEAD^{tree}"
 
 # Đóng gói Staging Area thành đối tượng Tree và in ra mã băm
 git write-tree
@@ -83,7 +83,7 @@ git write-tree
 ## 🔍 Giải thích command
 - `git ls-tree HEAD`: Liệt kê các bản ghi cấp cao nhất trong cây thư mục của commit hiện tại.
 - Cờ `-r` (recursive): Đệ quy đi vào mọi thư mục con để in danh sách toàn bộ các blob.
-- `git cat-file -p <tree-hash>`: In ra cấu trúc văn bản thô gồm mode, type, SHA-1 và filename của đối tượng Tree.
+- `git cat-file -p "HEAD^{tree}"`: In cấu trúc gồm mode, type, object ID và filename của root Tree trong HEAD.
 - `git write-tree`: Lệnh Plumbing chuyển trạng thái của file `.git/index` thành một đối tượng Tree mới trong cơ sở dữ liệu.
 
 ---
@@ -91,15 +91,15 @@ git write-tree
 ## ⚠️ Sai lầm phổ biến
 1. **Cho rằng thư mục rỗng sẽ tạo ra Tree**: Git không bao giờ theo dõi thư mục trống nếu bên trong không có ít nhất một file (đó là lý do các nhóm hay tạo file `.gitkeep`).
 2. **Nhầm lẫn giữa quyền hạn Linux và Git Mode**: Git không lưu quyền đọc hay ghi chi tiết; chỉ phân biệt quyền thực thi (`100755`) và không thực thi (`100644`).
-3. **Sắp xếp entry trong Tree sai thứ tự**: Chuẩn định dạng nhị phân của Git yêu cầu các mục trong Tree phải được sắp xếp nghiêm ngặt theo thứ tự mã byte ASCII.
+3. **Sắp xếp entry trong Tree sai thứ tự**: Git có quy tắc sắp xếp entry theo tên với xử lý riêng cho thư mục; không nên tự tạo raw tree bằng cách sắp theo trực giác.
 
 ---
 
 ## 🧪 Lab thực hành
 Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
 
-1. **Bước 1**: Tạo một thư mục con `src` chứa tệp `index.js`, và một tệp `README.md` ở thư mục gốc.
-2. **Bước 2**: Đưa toàn bộ vào staging bằng lệnh `git add .`.
+1. Trong repository thực hành riêng, tạo `src/index.js` và `README.md` ở thư mục gốc.
+2. Stage đúng hai đường dẫn bằng `git add README.md src/index.js` để không đưa các thay đổi khác vào index.
 3. **Bước 3**: Chạy lệnh plumbing `git write-tree` để sinh ra mã băm của đối tượng Root Tree.
 4. **Bước 4**: Chạy lệnh `git ls-tree <mã_tree_vừa_tạo>` để thấy hai dòng: một dòng kiểu `blob` cho `README.md` và một dòng kiểu `tree` cho thư mục `src`.
 
@@ -112,7 +112,7 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
 
 ## ✅ Validation & Kết quả mong đợi
 - Lệnh `git ls-tree` hiển thị bảng danh mục chuẩn với 4 cột: Mode, Type, Hash, Path.
-- Thư mục con `src` hiển thị loại đối tượng là `tree` và có mã SHA-1 riêng biệt.
+- Thư mục con `src` hiển thị loại object là `tree` và object ID riêng theo hash format của repo.
 
 ---
 
@@ -128,6 +128,6 @@ Tại sao Git từ chối theo dõi một thư mục hoàn toàn trống rỗng 
 
 ## 📝 Tổng kết
 - Đối tượng Tree đại diện cho một thư mục, liên kết các tên tệp với các đối tượng Blob và Tree con.
-- Mỗi bản ghi trong Tree gồm: File Mode, loại đối tượng, mã băm SHA-1 và tên tệp/thư mục.
+- Mỗi bản ghi trong Tree gồm: mode, loại object, object ID và tên tệp/thư mục.
 - Mô hình cây Merkle Tree giúp Git phát hiện sự thay đổi ở bất kỳ nhánh con nào một cách tức thì.
-- Thư mục rỗng không có đối tượng con nên không thể sinh ra Tree, cần dùng tệp giữ chỗ như `.gitkeep`.
+- Git không lưu một thư mục làm việc rỗng như một mục riêng; muốn giữ thư mục, cần stage một file bên trong, thường dùng file giữ chỗ như `.gitkeep`.

@@ -31,7 +31,7 @@ questions:
     question: "Lợi ích của việc lưu trữ Secret ở cấp độ Environment thay vì cấp độ Repository là gì?"
     type: single
     options:
-      - text: "Chỉ các Job được cấp quyền chạy trên môi trường đó mới có thể giải mã và đọc được Secret này"
+      - text: "Chỉ Job tham chiếu môi trường mới có thể nhận secret, sau khi các protection rules đạt"
         correct: true
       - text: "Làm cho Secret có thể xem được bởi tất cả mọi người trên mạng"
         correct: false
@@ -39,7 +39,7 @@ questions:
         correct: false
       - text: "Không có lợi ích gì khác biệt"
         correct: false
-    explanation: "Environment Secrets giúp cách ly tuyệt đối thông tin nhạy cảm: token production không bao giờ bị lộ cho các Job chạy trên staging."
+    explanation: "Environment Secrets chỉ cấp cho Job tham chiếu môi trường đó sau khi rules đạt; deploy code vẫn phải tránh in hoặc làm lộ token."
   - id: q4
     question: "Ai có quyền bấm nút phê duyệt (Approve) cho một Job đang chờ kiểm duyệt môi trường?"
     type: single

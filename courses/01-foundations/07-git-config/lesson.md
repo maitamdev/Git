@@ -1,4 +1,4 @@
-# Cấu hình danh tính Git Config
+# Cấu hình danh tính Git bằng git config
 
 ---
 
@@ -22,9 +22,9 @@
 - **Đừng nhầm:** Đây là thông tin do người dùng cấu hình, không phải bằng chứng xác thực danh tính.
 
 ### `user.email` — email ghi trong commit
-- **Nói dễ hiểu:** Địa chỉ email Git gắn vào commit do bạn tạo.
+- **Nói dễ hiểu:** Địa chỉ email Git gắn vào commit mới do bạn tạo.
 - **Ví dụ:** Commit chứa tên và email cấu hình tại thời điểm tạo.
-- **Đừng nhầm:** Email này không tự đăng nhập hoặc cấp quyền trên GitHub.
+- **Đừng nhầm:** Email này không đăng nhập GitHub; nếu chia sẻ commit công khai, người khác có thể thấy email đó.
 
 ### `--global` — cấu hình cho tài khoản máy tính
 - **Nói dễ hiểu:** Áp dụng giá trị cho các repository bạn dùng dưới tài khoản máy tính này.
@@ -32,9 +32,9 @@
 - **Đừng nhầm:** Global không có nghĩa là chia sẻ cấu hình lên Internet.
 
 ### `--local` và `--system` — phạm vi hẹp hơn hoặc rộng hơn
-- **Nói dễ hiểu:** `--local` chỉ áp dụng cho repository hiện tại; `--system` áp dụng cho mọi người dùng trên máy.
+- **Nói dễ hiểu:** `--local` chỉ áp dụng cho repository hiện tại; `--system` áp dụng cho mọi người dùng trên máy và có thể cần quyền quản trị.
 - **Ví dụ:** Dùng `--local` nếu một dự án cần tên tác giả riêng.
-- **Đừng nhầm:** Giá trị ở repository thường ghi đè giá trị global; system là mức toàn máy.
+- **Đừng nhầm:** Trong ba phạm vi này, giá trị local ưu tiên global, còn global ưu tiên system.
 
 ---
 
@@ -59,7 +59,7 @@ Máy tính           → --system (mọi người dùng trên máy)
 Tài khoản máy bạn  → --global (mặc định cho bạn)
 Repository này     → --local (chỉ dự án hiện tại)
 
-Nếu cùng một mục được đặt nhiều lần, giá trị local thường được ưu tiên.
+Nếu cùng một mục được đặt nhiều lần: local ưu tiên global; global ưu tiên system.
 ```
 
 ---
@@ -93,9 +93,9 @@ git config --list
 ---
 
 ## 🧪 Lab
-1. Chạy lệnh đầu với tên của bạn thay cho `Nguyen Van A`.
-2. Chạy lệnh thứ hai với email bạn muốn ghi vào commit.
-3. Chạy `git config --list` và kiểm tra hai giá trị.
+1. Chạy lệnh đầu với tên bạn muốn ghi vào commit.
+2. Chạy lệnh thứ hai với email bạn muốn gắn vào commit; nếu chia sẻ công khai, hãy cân nhắc địa chỉ phù hợp.
+3. Chạy `git config --list`, chỉ kiểm tra `user.name` và `user.email`; đừng đăng toàn bộ cấu hình lên nơi công khai.
 
 ---
 
@@ -106,6 +106,7 @@ git config --list
 
 ## ✅ Validation
 - `git config --list` hiển thị đúng `user.name` và `user.email` bạn vừa đặt.
+- Bạn biết email cấu hình sẽ được ghi vào commit mới, không thay đổi commit cũ.
 
 ---
 

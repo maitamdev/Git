@@ -5,7 +5,8 @@ xp: 95
 keywords:
   - content addressable
   - cryptographic hashing
-  - sha-1
+  - sha-256
+  - sha-1 compatibility
   - deduplication
   - immutability
 prerequisites:
@@ -13,8 +14,7 @@ prerequisites:
 objectives:
   - Hiểu sâu nguyên lý của Bộ nhớ định danh theo nội dung (Content-Addressable
     Storage - CAS).
-  - "Nắm bắt cơ chế tự động khử trùng lặp (Deduplication) tuyệt hảo: hai tệp có
-    nội dung giống nhau chỉ tạo đúng một đối tượng."
+  - Hiểu Git có thể tái sử dụng cùng object khi byte dữ liệu đã lưu giống nhau.
   - "Làm chủ công thức tiêu đề chuẩn mực của một đối tượng Git: <type>
     <size>\\0<content>."
 commands:

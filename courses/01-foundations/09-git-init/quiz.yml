@@ -1,58 +1,82 @@
 id: quiz-09-git-init
-title: "Trắc nghiệm: Khởi tạo kho chứa với git init"
+title: "Trắc nghiệm: Khởi tạo repository với git init"
 questions:
   - id: q1
-    question: Lệnh nào dùng để khởi tạo một Git repository mới trong thư mục hiện tại?
+    question: "Lệnh nào bắt đầu quản lý thư mục hiện tại bằng Git?"
     type: single
     options:
-      - text: git init
+      - text: "`git init`"
         correct: true
-      - text: git start
+      - text: "`git status`"
         correct: false
-      - text: git create-repo
+      - text: "`git add .`"
         correct: false
-      - text: git new
+      - text: "`git log`"
         correct: false
-    explanation: "`git init` bắt đầu quản lý thư mục hiện tại bằng một repository Git."
+    explanation: >-
+      `git init` tạo dữ liệu nội bộ để Git bắt đầu quản lý thư mục.
+      Lệnh này chưa thêm tệp hoặc tạo commit.
+
   - id: q2
-    question: Sau khi chạy lệnh `git init` thành công, thư mục ẩn nào sẽ xuất hiện
-      trong dự án?
+    question: "Trong một repository Git thông thường, thư mục nào được tạo khi chạy `git init`?"
     type: single
     options:
-      - text: .git
+      - text: "`.git`"
         correct: true
-      - text: .github
+      - text: "`.github`"
         correct: false
-      - text: .svn
+      - text: "`.repository`"
         correct: false
-      - text: .repository
+      - text: "`node_modules`"
         correct: false
-    explanation: "Git tạo `.git` để bắt đầu giữ dữ liệu nội bộ cho repository mới."
+    explanation: >-
+      `git init` tạo `.git` để chứa dữ liệu cần cho repository.
+      Tệp dự án có sẵn vẫn nằm trong thư mục của chúng.
+
   - id: q3
-    question: Điều gì sẽ xảy ra nếu bạn chạy `git init` trong một thư mục đã có sẵn
-      các tệp mã nguồn HTML và CSS?
+    question: "Bạn chạy `git init` trong thư mục đã có các tệp HTML và CSS. Điều gì xảy ra?"
     type: single
     options:
-      - text: Các tệp hiện có vẫn còn; Git tạo dữ liệu repository trong `.git`
+      - text: "Các tệp vẫn còn; Git tạo dữ liệu repository trong `.git`"
         correct: true
-      - text: Toàn bộ các tệp HTML/CSS sẽ bị xóa sạch để làm mới
+      - text: "Git xóa các tệp để bắt đầu một dự án trống"
         correct: false
-      - text: Git sẽ mã hóa các tệp tin và bắt buộc nhập mật khẩu để mở
+      - text: "Git tự thêm mọi tệp vào commit đầu tiên"
         correct: false
-      - text: Lệnh sẽ báo lỗi và từ chối chạy trên thư mục không rỗng
+      - text: "Git chỉ chạy được nếu thư mục ban đầu trống"
         correct: false
-    explanation: Trong thư mục có tệp, `git init` tạo dữ liệu Git mà không xóa các tệp.
+    explanation: >-
+      `git init` không xóa các tệp đang có và không tự lưu chúng.
+      Lệnh chỉ chuẩn bị dữ liệu Git để bắt đầu quản lý thư mục.
+
   - id: q4
-    question: Cờ tùy chọn nào cho phép bạn chỉ định tên nhánh khởi tạo ban đầu (ví
-      dụ `main`) khi chạy `git init`?
+    question: "Trên phiên bản Git hỗ trợ tùy chọn này, lệnh nào chọn `main` làm nhánh ban đầu?"
     type: single
     options:
-      - text: -b <tên-nhánh> hoặc --initial-branch=<tên-nhánh>
+      - text: "`git init -b main`"
         correct: true
-      - text: --name=<tên-nhánh>
+      - text: "`git init --name main`"
         correct: false
-      - text: --set-branch-first
+      - text: "`git status --branch main`"
         correct: false
-      - text: -m <tên-nhánh>
+      - text: "`git branch --initial main`"
         correct: false
-    explanation: "`-b main` đặt tên nhánh ban đầu là main khi tạo repository."
+    explanation: >-
+      `git init -b main` yêu cầu Git dùng `main` làm tên nhánh ban đầu.
+      Tên mặc định nếu bỏ tùy chọn có thể phụ thuộc cấu hình.
+
+  - id: q5
+    question: "Ngay sau khi chạy `git init`, các tệp dự án có tự nằm trong lịch sử chưa?"
+    type: single
+    options:
+      - text: "Chưa; bạn còn phải chọn tệp và tạo commit ở các bước sau"
+        correct: true
+      - text: "Có; `git init` tự tạo commit đầu tiên"
+        correct: false
+      - text: "Có; mọi tệp tự được gửi lên GitHub"
+        correct: false
+      - text: "Chưa; `git init` xóa tệp và chỉ giữ tên thư mục"
+        correct: false
+    explanation: >-
+      `git init` chuẩn bị repository nhưng không tạo commit đầu tiên.
+      Bạn sẽ học cách chọn tệp và lưu commit ở Level 2.

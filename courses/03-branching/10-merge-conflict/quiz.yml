@@ -1,92 +1,81 @@
 id: quiz-03-10-merge-conflict
-title: "Trắc nghiệm: Bản chất Merge Conflict"
+title: "Trắc nghiệm: Merge conflict"
 questions:
   - id: q1
-    question: Nguyên nhân cốt lõi dẫn đến việc phát sinh Merge Conflict trong Git là gì?
+    question: Tình huống nào có thể khiến Git dừng vì merge conflict?
     type: single
     options:
-      - text: Hai nhánh cùng chỉnh sửa các dòng code giống nhau trong cùng một tệp kể từ
-          commit tổ tiên chung
+      - text: Hai nhánh thay đổi cùng một vùng theo cách Git không thể kết hợp an toàn
         correct: true
-      - text: Do máy tính của lập trình viên bị nhiễm virus phần mềm độc hại
+      - text: Repository có hơn một trăm commit
         correct: false
-      - text: Do kho lưu trữ Git đã vượt quá giới hạn 100 commit
+      - text: Hai người dùng cùng hệ điều hành
         correct: false
-      - text: Do lập trình viên gõ sai tên tác giả trong lệnh git config
+      - text: Một nhánh có tên chứa dấu gạch nối
         correct: false
-    explanation: Xung đột xảy ra khi Git phát hiện hai thay đổi mâu thuẫn trên cùng
-      một vị trí dòng code mà không thể tự giải quyết.
+    explanation: Conflict thường xuất hiện khi những thay đổi chồng lấn và Git không thể suy ra ý định đúng.
   - id: q2
-    question: Trong cấu trúc Conflict Markers, phần nội dung nằm giữa `<<<<<<< HEAD`
-      và `=======` đại diện cho điều gì?
+    question: Trong conflict markers, nội dung giữa `<<<<<<< HEAD` và `=======` thuộc phía nào?
     type: single
     options:
-      - text: Nội dung code hiện tại của nhánh bạn đang đứng trực tiếp (OURS)
+      - text: Nhánh hiện tại, nơi bạn chạy lệnh merge
         correct: true
-      - text: Nội dung code của nhánh mà bạn đang muốn gộp vào (THEIRS)
+      - text: Nhánh nguồn được đưa vào
         correct: false
-      - text: Nội dung code của bản phát hành đầu tiên cách đây mười năm
+      - text: Commit đầu tiên của repository
         correct: false
-      - text: Mã nguồn do trí tuệ nhân tạo tự động viết thêm
+      - text: Một phiên bản do Git tự sinh ngẫu nhiên
         correct: false
-    explanation: Phần trên `=======` là HEAD (nhánh hiện tại bạn đang đứng); phần
-      dưới là nhánh đang được merge vào.
+    explanation: HEAD chỉ phiên bản hiện tại; nội dung phía dưới dấu phân cách là phiên bản từ nhánh nguồn.
   - id: q3
-    question: Ký hiệu `>>>>>>> <tên-nhánh>` trong tệp xung đột đánh dấu điều gì?
+    question: Dấu `>>>>>>> feature-conflict` thường kết thúc phần nội dung nào?
     type: single
     options:
-      - text: Điểm kết thúc của khối code đến từ nhánh đang được gộp vào
+      - text: Phần được đưa vào từ nhánh nguồn `feature-conflict`
         correct: true
-      - text: Điểm bắt đầu của một hàm lập trình mới
+      - text: Phần của nhánh hiện tại
         correct: false
-      - text: Vị trí tệp tin bị virus máy tính tấn công
+      - text: Toàn bộ lịch sử commit
         correct: false
-      - text: Lệnh thoát khỏi cửa sổ terminal
+      - text: Tệp cấu hình remote
         correct: false
-    explanation: "`>>>>>>>` là vạch kết thúc của khối thay đổi đến từ nhánh nguồn (theirs)."
+    explanation: Dấu cuối cùng kèm tên nhánh cho biết phần nội dung nguồn đang được merge vào.
   - id: q4
-    question: Khi xảy ra conflict, lệnh nào hiển thị danh sách các tệp tin đang bị
-      xung đột cần xử lý?
+    question: Lệnh nào cho biết những tệp còn unmerged trong lúc xử lý conflict?
     type: single
     options:
       - text: git status
         correct: true
-      - text: git crash-report
+      - text: git branch
         correct: false
-      - text: git clean-all
+      - text: git init
         correct: false
-      - text: git emergency
+      - text: git config
         correct: false
-    explanation: "`git status` liệt kê rõ ràng các tệp conflict dưới mục `Unmerged
-      paths: both modified: <file>`."
+    explanation: git status trình bày trạng thái repository và liệt kê các đường dẫn chưa được giải quyết.
   - id: q5
-    question: Tại sao lập trình viên không được phép để sót lại các ký tự `<<<<<<<`
-      hoặc `=======` trong mã nguồn khi commit?
+    question: Vì sao phải xóa conflict markers và viết lại nội dung cuối trước khi báo đã giải quyết?
     type: single
     options:
-      - text: Vì đây là các ký tự đánh dấu của Git, để sót lại sẽ khiến trình biên dịch
-          báo lỗi cú pháp và làm hỏng ứng dụng
+      - text: Marker chỉ là dấu tạm để so sánh; nội dung cuối phải phản ánh lựa chọn đúng cho chương trình
         correct: true
-      - text: Vì Git sẽ tự động xóa tài khoản GitHub của bạn nếu phát hiện
+      - text: Git không cho phép bất kỳ dấu nhỏ hơn nào trong mọi loại tệp
         correct: false
-      - text: Vì các ký tự này làm máy tính bị quá tải bộ nhớ RAM
+      - text: Marker làm tăng dung lượng repository hàng gigabyte
         correct: false
-      - text: Vì tổ chức tiêu chuẩn W3C nghiêm cấm sử dụng các ký tự này
+      - text: Git sẽ xóa tài khoản nếu thấy marker
         correct: false
-    explanation: Conflict markers là văn bản thô; để lại trong code sẽ làm gãy cú
-      pháp chương trình.
+    explanation: Cần thay phần so sánh tạm bằng nội dung có ý nghĩa rồi mới đánh dấu tệp đã giải quyết.
   - id: q6
-    question: Nếu cảm thấy chưa sẵn sàng giải quyết conflict và muốn quay về trạng
-      thái sạch sẽ ban đầu, bạn dùng lệnh gì?
+    question: Nếu `git status` báo tệp trong `Unmerged paths`, bước phù hợp tiếp theo là gì?
     type: single
     options:
-      - text: git merge --abort
+      - text: Mở tệp, hiểu cả hai phía và quyết định nội dung cần có trong kết quả
         correct: true
-      - text: git cancel now
+      - text: Xóa repository ngay lập tức
         correct: false
-      - text: git delete conflict
+      - text: Tạo thêm một commit mà không sửa tệp
         correct: false
-      - text: git undo everything
+      - text: Đổi tên nhánh để bỏ qua conflict
         correct: false
-    explanation: "`git merge --abort` khôi phục trạng thái Working Tree và HEAD về
-      chính xác trước khi ra lệnh merge."
+    explanation: Người giải quyết cần đọc nội dung và yêu cầu trước khi sửa; bài tiếp theo hướng dẫn các bước Git.

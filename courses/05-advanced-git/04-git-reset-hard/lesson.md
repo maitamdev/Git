@@ -5,7 +5,7 @@
 ## 🎯 Mục tiêu
 - Hiểu rõ bản chất mang tính hủy diệt (Destructive) của câu lệnh `git reset --hard`.
 - Biết chính xác cơ chế đồng bộ hóa cả 3 cây: HEAD, Staging Area và Working Directory về commit mục tiêu.
-- Nhận thức rõ nguy cơ mất vĩnh viễn dữ liệu chưa commit trong Working Directory khi chạy lệnh này.
+- Biết Git không lưu thay đổi chưa commit khi lệnh ghi đè chúng; không dựa vào reflog để khôi phục phần đó.
 - Sử dụng lệnh một cách an toàn và biết cách sao lưu tạm thời trước khi reset hard.
 
 ---
@@ -13,24 +13,24 @@
 ## 🧩 Từ khóa hôm nay
 
 ### git reset --hard
-- **Nói dễ hiểu**: Chế độ reset triệt để nhất, dịch chuyển con trỏ nhánh và xóa sạch mọi thay đổi trong cả Staging lẫn thư mục làm việc.
+- **Nói dễ hiểu**: Chế độ reset cập nhật nhánh, Staging và các tệp được theo dõi về commit đích; chỉnh sửa chưa commit trên các tệp đó sẽ bị bỏ.
 - **Ví dụ**: `git reset --hard HEAD` để xóa sạch toàn bộ các thử nghiệm lỗi và đưa code về y nguyên commit gần nhất.
-- **Đừng nhầm**: Mang tính hủy diệt; các file sửa dở dang chưa từng commit sẽ bị xóa vĩnh viễn không cứu lại được.
+- **Đừng nhầm**: Git không lưu bản sao chỉnh sửa bị ghi đè. File untracked không liên quan thường vẫn còn; file đó có thể bị ghi đè nếu cản trở việc cập nhật.
 
-### destructive command
-- **Nói dễ hiểu**: Lệnh có khả năng ghi đè hoặc xóa bỏ dữ liệu thực tế trên đĩa cứng mà không thể hoàn tác thông thường.
+### Lệnh có thể làm mất chỉnh sửa chưa commit
+- **Nói dễ hiểu**: Lệnh có thể ghi đè hoặc xóa dữ liệu được theo dõi trên đĩa. Git không có bản sao của chỉnh sửa chưa commit bị bỏ.
 - **Ví dụ**: `git reset --hard` hay `git clean -fd` là các lệnh nguy hiểm cần cân nhắc kỹ trước khi gõ.
-- **Đừng nhầm**: Khác với `--soft` hay `--mixed` vốn bảo toàn 100% mã nguồn trong thư mục làm việc.
+- **Đừng nhầm**: `--soft` và `--mixed` không cập nhật Working Tree; `--hard` cập nhật các file được theo dõi về snapshot đích.
 
-### working tree wipe
-- **Nói dễ hiểu**: Thao tác làm sạch toàn bộ Working Directory sao cho khớp chính xác với snapshot của commit mục tiêu.
+### Khôi phục file được theo dõi
+- **Nói dễ hiểu**: Thao tác đưa các file được theo dõi về snapshot của commit mục tiêu.
 - **Ví dụ**: Các file bị chỉnh sửa lung tung sẽ tự động quay về bản lưu sạch sẽ của commit trước.
-- **Đừng nhầm**: Git chỉ khôi phục được file đã từng commit; file mới tạo chưa add có thể bị bỏ qua hoặc mất nếu kết hợp tùy chọn xóa.
+- **Đừng nhầm**: Lệnh không dọn mọi file untracked. File untracked thường còn, nhưng có thể bị ghi đè hoặc xóa nếu cản đường file trong snapshot đích.
 
 ---
 
 ## 📖 Định nghĩa
-`git reset --hard <commit-target>` là tùy chọn mạnh mẽ và triệt để nhất của lệnh reset trong Git. Khi thực thi, Git dịch chuyển con trỏ HEAD và nhánh hiện tại về commit đích, đồng thời ghi đè và làm sạch cả Staging Area lẫn Working Directory khớp 100% với commit đó. Mọi thay đổi chưa commit sẽ bị xóa sạch hoàn toàn.
+`git reset --hard <commit-target>` di chuyển nhánh hiện tại về commit mục tiêu, cập nhật Staging Area và đưa các file được Git theo dõi về nội dung của commit đó. Thay đổi staged và unstaged trên các file ấy sẽ bị bỏ. File untracked không liên quan thường vẫn còn; file untracked chắn đường cho một file được khôi phục có thể bị ghi đè hoặc xóa. Reflog có thể giúp tìm lại commit cũ, nhưng không phải bản sao lưu cho sửa đổi chưa commit.
 
 ---
 
@@ -54,7 +54,7 @@ Working Tree:     Có tệp sửa đổi dở dang X
 Sau khi git reset --hard HEAD~1:
 Commit History:   C1 ──► C2 (HEAD -> main)
 Staging Area:     Khớp hoàn toàn với C2!
-Working Tree:     Khớp hoàn toàn với C2! (Tệp sửa đổi X bị XÓA VĨNH VIỄN!)
+Working Tree:     Các file được theo dõi trở về snapshot C2; chỉnh sửa X bị bỏ
 ```
 
 ---
@@ -83,18 +83,19 @@ git status
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Chạy reset hard khi đang có code dở dang chưa commit**: Dẫn đến việc mất vĩnh viễn các dòng code vừa viết mà không thể tìm lại qua reflog.
-2. **Dùng reset hard trên nhánh dùng chung**: Làm biến mất lịch sử chung và khiến các thành viên khác trong nhóm gặp lỗi đồng bộ nghiêm trọng.
-3. **Gõ nhầm số lượng commit cần lùi**: Ví dụ muốn lùi 1 commit nhưng gõ nhầm `HEAD~5` làm mất nhiều công sức lập trình.
+1. **Chạy reset hard khi còn code dở chưa lưu**: Thay đổi tracked có thể mất; `reflog` không ghi nội dung sửa chưa commit.
+2. **Dùng reset hard để cập nhật nhánh đã chia sẻ mà chưa phối hợp**: Việc di chuyển nhánh có thể làm lịch sử cục bộ lệch khỏi lịch sử nhóm.
+3. **Gõ nhầm số lượng commit cần lùi**: Ví dụ muốn lùi 1 commit nhưng gõ nhầm `HEAD~5`. Hãy đọc lại mục tiêu và xác nhận `git status` trước khi chạy.
 
 ---
 
 ## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác reset --hard để làm sạch môi trường trên terminal.
-1. Tạo một tệp tin nháp `temp.txt` và sửa nội dung một vài tệp có sẵn.
-2. Chạy `git status` để thấy dự án đang có các thay đổi chưa lưu.
-3. Chạy lệnh `git reset --hard HEAD` và quan sát console thông báo.
-4. Chạy lại `git status` để xác nhận thông báo "nothing to commit, working tree clean".
+Bài này xóa thay đổi trên file tracked; hãy dùng kho thử nghiệm riêng, không dùng kho dự án đang học.
+1. Tạo `tracked.txt` với nội dung `ban dau`, rồi chạy `git add tracked.txt` và `git commit -m "base"`.
+2. Sửa `tracked.txt` thành `ban sua chua commit`; tạo thêm `scratch.txt` nhưng không chạy `git add`.
+3. Chạy `git status` để thấy một file modified và một file untracked.
+4. Chạy `git reset --hard HEAD`, rồi mở hai file: `tracked.txt` trở về `ban dau`, còn `scratch.txt` vẫn còn vì nó không chắn file tracked nào.
+5. Chạy `git status`: chỉ còn `scratch.txt` trong nhóm untracked. Xóa nó thủ công nếu muốn dọn kho thử nghiệm.
 
 ---
 
@@ -104,8 +105,8 @@ Bài học này là bài tự kiểm tra: bạn thao tác reset --hard để là
 ---
 
 ## ✅ Validation & Kết quả mong đợi
-- Trạng thái kho lưu trữ trở về sạch sẽ hoàn toàn khớp với commit mục tiêu.
-- Lệnh `git status` báo `working tree clean`.
+- File tracked khớp với commit mục tiêu và các thay đổi staged của chúng bị bỏ.
+- File untracked không liên quan còn nguyên; do đó `git status` vẫn liệt kê `scratch.txt`.
 
 ---
 
@@ -121,5 +122,5 @@ Tìm hiểu cách sử dụng `git reflog` kết hợp với `git reset --hard <
 
 ## 📝 Tổng kết
 - `git reset --hard` đồng bộ hóa cả 3 cây HEAD, Staging và Working Tree về commit đích.
-- Xóa sạch mọi thay đổi chưa commit trong Working Directory không để lại dấu vết.
+- Bỏ thay đổi staged và unstaged trên các file được theo dõi; file untracked không liên quan thường còn nguyên.
 - Cực kỳ hữu ích để dọn dẹp các thử nghiệm thất bại nhưng đòi hỏi sự cẩn trọng cao độ.

@@ -4,7 +4,7 @@
 
 ## 🎯 Mục tiêu
 - Hiểu rõ khái niệm và tầm quan trọng sống còn của Protected Branch (Nhánh được bảo vệ) trên các nền tảng Git từ xa.
-- Nhận diện các mối nguy hiểm bị loại bỏ hoàn toàn bởi Protected Branch: xóa nhầm nhánh, force push đè lịch sử, push trực tiếp code lỗi.
+- Biết những thao tác có thể bị chặn khi quy tắc bảo vệ tương ứng được bật.
 - Nắm bắt các chính sách bảo vệ cơ bản: bắt buộc mở Pull Request, cấm ghi đè lịch sử, yêu cầu quyền quản trị.
 - Cấu hình kích hoạt tính năng bảo vệ nhánh trên giao diện cài đặt của GitHub.
 
@@ -13,63 +13,64 @@
 ## 🧩 Từ khóa hôm nay
 
 ### Protected Branch (Nhánh được bảo vệ)
-- **Nói dễ hiểu**: Thiết lập an ninh trên server (GitHub/GitLab) nhằm chặn đứng push trực tiếp, force push và xóa nhánh quan trọng.
+- **Nói dễ hiểu**: Các quy tắc trên máy chủ Git có thể giới hạn ai được cập nhật nhánh, yêu cầu Pull Request hoặc chặn force push và xóa nhánh.
 - **Ví dụ**: Bảo vệ nhánh `main` để không ai có thể vô tình xóa hoặc ghi đè lịch sử của dự án.
-- **Đừng nhầm**: Đây là tính năng do máy chủ từ xa quản lý, không phải là câu lệnh chạy ở máy Git cục bộ.
+- **Đừng nhầm**: Tạo một quy tắc bảo vệ không đồng nghĩa mọi thao tác đều bị chặn; kết quả phụ thuộc các lựa chọn trong quy tắc và quyền bypass.
 
 ### Direct Push Prevention
-- **Nói dễ hiểu**: Cơ chế từ chối mọi lệnh `git push` trực tiếp lên nhánh, bắt buộc mã nguồn phải đi qua Pull Request.
+- **Nói dễ hiểu**: Cơ chế từ chối cập nhật trực tiếp khi quy tắc yêu cầu Pull Request hoặc giới hạn người được push.
 - **Ví dụ**: Lập trình viên gõ `git push origin main` thì terminal báo lỗi từ chối ngay lập tức vì nhánh đã được bảo vệ.
-- **Đừng nhầm**: Không có nghĩa là nhánh bị khóa chết; bạn vẫn có thể merge code vào thông qua Pull Request được duyệt.
+- **Đừng nhầm**: Nếu không bật điều kiện yêu cầu Pull Request hay giới hạn push, một lần push thường vẫn có thể được chấp nhận.
 
 ### Force Push Protection
-- **Nói dễ hiểu**: Rào chắn cấm vĩnh viễn việc dùng cờ `--force` để ghi đè lịch sử commit trên các nhánh dùng chung.
+- **Nói dễ hiểu**: GitHub chặn force push lên nhánh được bảo vệ theo mặc định; người có quyền bypass hoặc cấu hình ngoại lệ có thể thay đổi kết quả.
 - **Ví dụ**: Ngăn chặn việc ai đó lỡ tay chạy `git push --force` làm mất các commit quan trọng của toàn bộ đồng nghiệp.
 - **Đừng nhầm**: Ngay cả khi bạn có quyền admin, việc cho phép bypass force push cũng tiềm ẩn nguy cơ phá hủy dữ liệu.
 
 ---
 
 ## 📖 Định nghĩa
-Protected Branch (Nhánh được bảo vệ) là cơ chế kiểm soát an ninh do các nền tảng Git từ xa cung cấp nhằm áp đặt các ràng buộc chặt chẽ lên các nhánh trọng yếu: cấm push trực tiếp, cấm xóa nhánh và vô hiệu hóa hoàn toàn thao tác force-push.
+Protected Branch là nhánh trên máy chủ được áp dụng một hoặc nhiều quy tắc bảo vệ. Tùy cấu hình, quy tắc có thể yêu cầu Pull Request, lượt duyệt hoặc status check, đồng thời chặn force push hay xóa nhánh. Quy tắc không tự quyết định ai được bypass; điều đó còn phụ thuộc quyền và cấu hình của repository.
 
 ---
 
 ## 💡 Tại sao cần
-Chỉ một sơ suất gõ nhầm `git push --force origin main` hoặc vô tình xóa nhánh chính, công sức cả đội ngũ có thể bị phá hủy. Protected Branch là lá chắn thép bảo vệ tài sản số khỏi sai sót con người và bảo đảm mã nguồn luôn được kiểm duyệt trước khi vào main.
+Quy tắc bảo vệ giúp nhóm giảm rủi ro cập nhật nhầm nhánh hoặc bỏ qua bước review đã thống nhất. Nó không thay thế backup, kiểm thử hay phân quyền phù hợp; cấu hình quá rộng hoặc quyền bypass vẫn có thể cho phép thay đổi không mong muốn.
 
 ---
 
 ## 🧠 Mental Model
-Hãy hình dung cửa kho tiền trung tâm ngân hàng. Cửa kho không bao giờ để mở toang cho nhân viên tự do ném tiền vào hay rút tiền ra. Cửa luôn khóa kiên cố. Muốn gửi hay rút tiền đều phải làm thủ tục qua quầy giao dịch, có biên lai và kiểm soát viên duyệt mới được chuyển vào.
+Hãy hình dung một cổng có nhiều chốt: nhóm chọn chốt nào cần dùng, chẳng hạn yêu cầu phiếu duyệt hoặc chặn ghi đè lịch sử. Một số chốt có mặc định riêng, nhưng quyền quản trị và cấu hình ngoại lệ vẫn ảnh hưởng kết quả.
 
 ---
 
 ## 📊 Sơ đồ minh họa
 ```text
-Cơ chế phòng thủ của Protected Branch trên GitHub:
-Dev cố tình gõ: git push origin main
+Ví dụ khi cấu hình yêu cầu Pull Request và không cấp ngoại lệ:
+Dev gõ: git push origin main
                 │
                 ▼
         ┌───────────────────────────────┐
         │  GitHub Branch Protection     │
-        │  [X] Direct push disabled!    │ ──► TỪ CHỐI (Remote rejected!)
-        │  [X] Force push disabled!     │
+        │  [X] Yêu cầu Pull Request     │ ──► TỪ CHỐI (nếu người push không được bypass)
+        │  [X] Chặn force push (mặc định)│
         └───────────────────────────────┘
                 ▲
-                │ Chỉ cho phép đi qua con đường duy nhất:
-        [Pull Request ──► Code Review ──► CI Pass ──► Merge]
+                │ Nếu rule yêu cầu PR:
+        [Pull Request ──► Review/checks đã cấu hình ──► Merge]
 ```
 
 ---
 
 ## 🏢 Ví dụ thực tế
-Kỹ sư mới gia nhập lỡ tay gõ `git push --force origin main` sau một thao tác rebase nhầm. Nhờ nhánh main đã được bảo vệ, GitHub từ chối lệnh ngay lập tức và in lỗi: "Protected branch update failed. Cannot force-push". Lịch sử của cả công ty được giữ an toàn tuyệt đối.
+Ví dụ giả định: repository bật quy tắc yêu cầu Pull Request và chặn force push, đồng thời tài khoản của kỹ sư không nằm trong danh sách bypass. Khi kỹ sư thử cập nhật trực tiếp `main`, máy chủ từ chối; thông báo cụ thể phụ thuộc nền tảng và cấu hình.
 
 ---
 
 ## 💻 Command & Cú pháp
 ```bash
 git push origin main
+# Hai lệnh sau có thể bị từ chối bởi quy tắc tương ứng; không chạy trên repo thật
 git push origin --delete main
 git push --force origin main
 ```
@@ -77,14 +78,14 @@ git push --force origin main
 ---
 
 ## 🔍 Giải thích command
-- `git push origin main`: Thao tác bị chặn đứng bởi Protected Branch nếu chưa qua Pull Request.
-- `git push origin --delete`: Bị từ chối tuyệt đối nhằm ngăn chặn rủi ro vô tình xóa mất nhánh chính.
-- `git push --force`: Bị vô hiệu hóa hoàn toàn để bảo vệ tính toàn vẹn của lịch sử commit.
+- `git push origin main`: Bị từ chối nếu quy tắc yêu cầu Pull Request/giới hạn push và bạn không được bypass; cấu hình khác có thể vẫn cho phép.
+- `git push origin --delete main`: Bị từ chối khi nhánh được bảo vệ và chính sách không cho phép xóa.
+- `git push --force origin main`: Bị chặn mặc định trên nhánh được bảo vệ; có thể được bật lại cho người có quyền theo cấu hình.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Quên kích hoạt bảo vệ**: Không bật Protected Branch ngay khi vừa tạo repo khiến nhánh chính dễ bị ghi đè.
+1. **Cho rằng có bảo vệ là không ai push được**: Quy tắc mặc định chặn force push/xóa nhánh, còn push thường phụ thuộc PR requirement và hạn chế quyền.
 2. **Cấp quyền miễn trừ (Bypass) tùy tiện**: Cho phép quá nhiều tài khoản được bypass làm mất đi tác dụng bảo vệ an ninh.
 3. **Bỏ quên các nhánh dài hạn khác**: Chỉ bảo vệ mỗi `main` mà bỏ qua các nhánh quan trọng như `develop` hay `staging`.
 
@@ -92,21 +93,21 @@ git push --force origin main
 
 ## 🧪 Lab thực hành
 Bài học này là bài tự kiểm tra: bạn thao tác trực tiếp trên terminal của máy tính để làm quen với công cụ.
-1. Truy cập vào mục Settings -> Branches trên một repository GitHub thử nghiệm.
-2. Kích hoạt quy tắc bảo vệ nhánh cho nhánh `main`.
-3. Thử thực hiện lệnh `git push origin main` trực tiếp từ terminal máy cá nhân.
-4. Quan sát thông báo từ chối từ GitHub và kiểm tra các điều kiện mở khóa.
+1. Dùng repository thử nghiệm mà bạn quản lý; không thử lệnh xóa hoặc force push trên dự án thật.
+2. Mở **Settings → Branches**, tạo quy tắc cho `main` và bật **Require a pull request before merging**.
+3. Nếu có tài khoản cộng tác viên thử nghiệm, thử push một commit lên `main`; nếu không, chỉ xem cấu hình và mô phỏng kết quả.
+4. Mở PR thử nghiệm, ghi lại điều kiện còn thiếu và cách quy tắc cho phép merge.
 
 ---
 
 ## 💡 Hint & mẹo
-> Bảo vệ nhánh là việc đầu tiên kỹ sư trưởng phải làm ngay sau khi gõ git init và push commit đầu tiên lên kho lưu trữ từ xa.
+> Trước khi bật quy tắc cho repo đang dùng, kiểm tra xem ai có quyền bypass và các điều kiện bắt buộc có phù hợp với quy trình của nhóm không.
 
 ---
 
 ## ✅ Validation & Kết quả mong đợi
-- Không ai có thể xóa hoặc force push vào nhánh chính đã được bảo vệ.
-- Mọi thay đổi vào nhánh bảo vệ đều phải đi qua cổng kiểm duyệt Pull Request.
+- Chỉ ra được từng quy tắc đang bật và ai có thể bypass.
+- Với cấu hình yêu cầu PR, giải thích được vì sao push trực tiếp bị từ chối và điều kiện nào mở khóa việc merge.
 
 ---
 
@@ -121,6 +122,6 @@ Phân tích các nguy cơ tiềm ẩn nếu một dự án cho phép các tài k
 ---
 
 ## 📝 Tổng kết
-- Protected Branch là tấm khiên an ninh bảo vệ nhánh chính khỏi phá hủy và ghi đè lịch sử.
-- Chặn push trực tiếp, cấm force-push và cấm xóa nhánh.
-- Bắt buộc mọi thay đổi mã nguồn phải thông qua quy trình Pull Request chuẩn mực.
+- Protected Branch là tên gọi cho nhánh có một hoặc nhiều quy tắc bảo vệ.
+- Push trực tiếp, force push, xóa nhánh, review và status check được điều khiển bởi các quy tắc riêng.
+- Quyền bypass và cấu hình repository ảnh hưởng đến kết quả thực tế.

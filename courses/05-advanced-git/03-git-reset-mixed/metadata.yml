@@ -15,11 +15,10 @@ objectives:
     reset` không truyền cờ).
   - Hiểu rõ trạng thái của HEAD, Staging Area và Working Directory sau khi chạy
     reset mixed.
-  - Sử dụng `git reset` để hủy staged toàn bộ hoặc chọn lọc các tệp tin một cách
-    linh hoạt.
+  - Dùng `git reset <commit>` để bỏ stage toàn bộ thay đổi; dùng `git restore --staged <file>` cho một file.
   - So sánh chi tiết sự khác nhau về hành vi giữa reset mixed và reset soft.
 commands:
   - git reset HEAD~1
   - git reset --mixed HEAD~1
-  - git reset <tên-tệp>
+  - git restore --staged <tên-tệp>
   - git status

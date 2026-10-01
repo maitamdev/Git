@@ -12,7 +12,7 @@ keywords:
 prerequisites:
   - 04-git-clone
 objectives:
-  - Hiểu rõ bản chất cơ chế Fork trên máy chủ GitHub như một bản sao phía server.
+  - Hiểu fork tạo repository thuộc tài khoản khác dựa trên repository gốc; quyền kho gốc không đổi.
   - Phân biệt rõ ràng giữa thao tác Fork (trên GitHub) và thao tác Clone (về máy
     cá nhân).
   - Nắm bắt quy trình đóng góp mã nguồn mở kinh điển thông qua mô hình Fork &

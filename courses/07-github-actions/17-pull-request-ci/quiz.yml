@@ -21,8 +21,7 @@ questions:
       điều gì sẽ xảy ra nếu bài test CI bị thất bại?
     type: single
     options:
-      - text: Nút Merge bị khóa chặt và không ai có thể hợp nhất mã nguồn bị lỗi vào
-          nhánh chính
+      - text: Merge bị chặn nếu check được cấu hình required và không có quyền bypass phù hợp
         correct: true
       - text: Nhánh chính tự động bị xóa
         correct: false
@@ -30,15 +29,13 @@ questions:
         correct: false
       - text: Lập trình viên bị trừ tiền lương tự động
         correct: false
-    explanation: Quy tắc bảo vệ nhánh sẽ cưỡng chế việc chặn nút Merge cho đến khi
-      tất cả các bài kiểm thử bắt buộc đều đạt kết quả xanh.
+    explanation: Required status checks chặn merge khi chưa đạt; quyền bypass vẫn phụ thuộc cấu hình branch protection hoặc ruleset.
   - id: q3
     question: "Tại sao không nên cấu hình workflow chạy đồng thời trên `on: [push,
       pull_request]` cho cùng một nhánh nội bộ?"
     type: single
     options:
-      - text: Vì khi lập trình viên đẩy commit lên nhánh của PR, workflow sẽ bị kích
-          hoạt trùng lặp 2 lần cùng lúc
+      - text: Một lần push có thể khớp cả hai trigger và tạo hai workflow run, tùy bộ lọc nhánh/sự kiện
         correct: true
       - text: Vì làm máy chủ của GitHub bị nổ tung
         correct: false
@@ -46,9 +43,7 @@ questions:
         correct: false
       - text: Vì kết quả của hai lần chạy sẽ triệt tiêu lẫn nhau
         correct: false
-    explanation: Việc kích hoạt cả hai sự kiện trên cùng một nhánh khiến GitHub
-      Actions chạy hai phiên làm việc giống hệt nhau, làm tăng gấp đôi chi phí
-      thời gian.
+    explanation: Push lên nhánh đang có PR có thể khớp cả `push` lẫn `pull_request`; hãy kiểm tra bộ lọc trước khi bỏ một trigger.
   - id: q4
     question: Lệnh GitHub CLI nào cho phép lập trình viên theo dõi tiến độ các bài
       kiểm tra Status Checks của PR hiện tại?
@@ -65,8 +60,7 @@ questions:
     explanation: "`gh pr checks` liệt kê chi tiết từng bài kiểm tra trạng thái đang
       chờ, thành công hoặc thất bại gắn liền với PR hiện tại."
   - id: q5
-    question: Tham chiếu Git nào được GitHub Actions tự động kiểm thử khi sự kiện
-      pull_request được kích hoạt?
+    question: Với PR có thể merge, tham chiếu nào thường được checkout mặc định cho sự kiện pull_request?
     type: single
     options:
       - text: refs/pull/:number/merge
@@ -77,9 +71,7 @@ questions:
         correct: false
       - text: refs/remotes/upstream/head
         correct: false
-    explanation: GitHub Actions tự động tạo một merge commit thử nghiệm tại
-      `refs/pull/:number/merge` để kiểm tra xung đột và tính toàn vẹn của mã sau
-      khi hợp nhất.
+    explanation: Merge ref biểu diễn kết quả thử merge để kiểm tra; nó không phải commit đã được đưa vào nhánh đích.
   - id: q6
     question: Trong quy trình CI Pull Request, trạng thái nào sau đây của Status
       Check biểu thị rằng bài kiểm tra đang được chạy?
@@ -93,5 +85,4 @@ questions:
         correct: false
       - text: cancelled
         correct: false
-    explanation: Trạng thái `pending` cho biết workflow hoặc job kiểm thử đang trong
-      quá trình thực thi trên runner và chưa có kết luận cuối cùng.
+    explanation: "`pending` nghĩa là check chưa có kết quả cuối cùng; workflow có thể đang chạy hoặc bị bỏ qua do filter."

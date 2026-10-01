@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { BUILTIN_LESSONS, COURSE_MANIFEST, COURSE_SEARCH_INDEX } from '@git-academy/exercise-engine';
-import { inspectTermCards } from '../learning/lesson-flow';
+import { COURSE_MANIFEST, COURSE_SEARCH_INDEX, COURSE_TERM_CARD_STATUS } from '@git-academy/exercise-engine';
 
 export const CourseHealthDashboard: React.FC = () => {
   const [selectedModuleId, setSelectedModuleId] = useState<string | null>(null);
@@ -11,7 +10,7 @@ export const CourseHealthDashboard: React.FC = () => {
   const totalLessons = activeModules.reduce((acc, m) => acc + m.lessons.length, 0);
   const totalDuration = activeModules.reduce((acc, m) => acc + m.lessons.reduce((lacc, l) => lacc + l.duration, 0), 0);
   const totalXP = activeModules.reduce((acc, m) => acc + m.lessons.reduce((lacc, l) => lacc + l.xp, 0), 0);
-  const hasTermCards = (lessonId: string) => inspectTermCards(BUILTIN_LESSONS[lessonId]?.content || '').complete;
+  const hasTermCards = (lessonId: string) => COURSE_TERM_CARD_STATUS[lessonId]?.complete ?? false;
   const termReadyLessons = activeModules.flatMap((module) => module.lessons).filter((lesson) => hasTermCards(lesson.id)).length;
   const termReadyInModule = (moduleId: string) => activeModules.find((module) => module.id === moduleId)?.lessons.filter((lesson) => hasTermCards(lesson.id)).length || 0;
 

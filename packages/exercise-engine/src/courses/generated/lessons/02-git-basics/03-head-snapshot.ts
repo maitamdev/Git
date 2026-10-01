@@ -5,7 +5,7 @@ export const lesson: CourseLesson = {
   "moduleId": "02-git-basics",
   "metadata": {
     "id": "03-head-snapshot",
-    "title": "Repository & HEAD Snapshot",
+    "title": "Repository, commit và vị trí HEAD",
     "level": "beginner",
     "duration": 25,
     "xp": 70,
@@ -14,8 +14,7 @@ export const lesson: CourseLesson = {
     ],
     "objectives": [
       "Nhận biết `HEAD` là vị trí hiện tại trong lịch sử Git.",
-      "Phân biệt tệp đang sửa với trạng thái đã lưu trong commit.",
-      "Dùng `git show HEAD` để xem commit hiện tại."
+      "Phân biệt tệp đang sửa với trạng thái đã lưu trong commit."
     ],
     "completion": {
       "theoryViewed": true,
@@ -30,12 +29,9 @@ export const lesson: CourseLesson = {
       "commit graph",
       "kho luu tru"
     ],
-    "commands": [
-      "git log --oneline",
-      "git show HEAD"
-    ]
+    "commands": []
   },
-  "content": "# Repository & HEAD Snapshot\n\n---\n\n## 🎯 Mục tiêu\n- Nhận biết `HEAD` là vị trí hiện tại trong lịch sử Git.\n- Phân biệt tệp đang sửa với trạng thái đã lưu trong commit.\n- Dùng `git show HEAD` để xem commit hiện tại.\n\n---\n\n## 🧩 Từ khóa hôm nay\n\n### HEAD — vị trí Git đang đứng\n- **Nói dễ hiểu:** Tên giúp Git biết commit hoặc nhánh hiện đang được chọn.\n- **Ví dụ:** Khi đang làm trên `main`, HEAD thường theo nhánh `main`.\n- **Đừng nhầm:** HEAD không phải tên của tệp hoặc commit message.\n\n### Commit snapshot — trạng thái đã lưu\n- **Nói dễ hiểu:** Một commit ghi nhận trạng thái dự án tại một mốc.\n- **Ví dụ:** Commit “Tạo trang chủ” là một mốc có thể xem lại.\n- **Đừng nhầm:** Snapshot không tự đổi khi bạn sửa tệp về sau.\n\n### Branch — nhánh lịch sử\n- **Nói dễ hiểu:** Tên dễ nhớ cho commit hiện tại của một dòng phát triển.\n- **Ví dụ:** `main` thường là tên nhánh ban đầu của dự án.\n- **Đừng nhầm:** Nhánh không phải bản sao đầy đủ riêng của mọi tệp.\n\n---\n\n## 📖 Định nghĩa\nRepository là nơi Git giữ các commit đã tạo. `HEAD` cho Git biết bạn đang ở nhánh hoặc commit nào. Khi tạo commit mới trên một nhánh, nhánh đó sẽ trỏ tới commit mới.\n\n---\n\n## 🤔 Tại sao cần?\nBiết `HEAD` đang chỉ vào đâu giúp bạn đọc `git status`, `git log` và hiểu commit mới được tạo ở vị trí nào. Hôm nay chỉ cần nhận diện vị trí hiện tại; các cách di chuyển lịch sử sẽ học sau.\n\n---\n\n## 🧠 Mental Model (Mô hình tư duy)\nHãy xem HEAD như nhãn “đang ở đây”: nó chỉ nhánh hoặc commit đang được chọn.\n\n---\n\n## 🖼 Sơ đồ\n```text\nMô hình con trỏ HEAD trong Repository:\n[Commit A] ◄── [Commit B] ◄── [Commit C] ◄── [main]\n                                                ▲\n                                                │\n                                              [HEAD] (Đang trỏ vào nhánh main tại Commit C)\n```\n\n---\n\n## 🌎 Ví dụ thực tế\nSau khi tạo commit, chạy `git show HEAD` để xem mốc mới nhất mà nhánh hiện tại đang trỏ tới.\n\n---\n\n## 💻 Command\n```bash\ngit log --oneline\ngit show HEAD\n```\n\n---\n\n## 🔍 Giải thích command\n- `git log --oneline`: Hiển thị lịch sử commit; `HEAD` đánh dấu vị trí hiện tại.\n- `git show HEAD`: Hiển thị thông tin và thay đổi của commit hiện tại.\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Nhầm HEAD với tên nhánh**:  `main` là tên nhánh; HEAD chỉ vị trí đang được chọn.\n2. **Nghĩ `git show HEAD` sẽ sửa dự án**:  Lệnh này chỉ hiển thị thông tin.\n3. **Tự chuyển HEAD về commit cũ khi chưa học cách quay lại**:  Hãy chỉ xem commit cũ trong bài này.\n\n---\n\n## 🧪 Lab\n1. Chạy lệnh `git log --oneline` để quan sát vị trí xuất hiện của nhãn `HEAD -> main`.\n2. Chạy lệnh `git show HEAD` để xem chi tiết snapshot commit mới nhất.\n3. Xác định HEAD đang theo nhánh hiện tại trong kết quả.\n\n---\n\n## 💡 Hint\n> HEAD là con trỏ chỉ vị trí làm việc hiện tại của bạn trong đồ thị commit.\n\n---\n\n## ✅ Validation\n- Xác định được commit mà HEAD đang trỏ tới thông qua git log.\n\n---\n\n## ❓ Quiz\nLàm bài kiểm tra trắc nghiệm dưới đây về Repository và con trỏ HEAD.\n\n---\n\n## 🔥 Challenge\nNêu sự khác nhau giữa con trỏ nhánh bình thường và con trỏ HEAD trong Git.\n\n---\n\n## 📚 Tổng kết\n- HEAD cho biết nhánh hoặc commit đang được chọn.\n- `git show HEAD` xem commit hiện tại mà không sửa tệp.\n- Commit mới trên nhánh làm nhánh đó chuyển sang commit mới.\n",
+  "content": "# Repository, commit và vị trí HEAD\r\n\r\n---\r\n\r\n## 🎯 Mục tiêu\r\n- Nhận biết `HEAD` là vị trí hiện tại trong lịch sử Git.\r\n- Phân biệt tệp đang sửa với trạng thái đã lưu trong commit.\r\n\r\n---\r\n\r\n## 🧩 Từ khóa hôm nay\r\n\r\n### HEAD — vị trí Git đang đứng\r\n- **Nói dễ hiểu:** Tên giúp Git biết commit hoặc nhánh hiện đang được chọn.\r\n- **Ví dụ:** Khi đang làm trên `main`, HEAD thường theo nhánh `main`.\r\n- **Đừng nhầm:** HEAD không phải tên của tệp hoặc commit message.\r\n\r\n### Commit snapshot — trạng thái đã lưu\r\n- **Nói dễ hiểu:** Một commit ghi nhận trạng thái dự án tại một mốc.\r\n- **Ví dụ:** Commit “Tạo trang chủ” là một mốc có thể xem lại.\r\n- **Đừng nhầm:** Snapshot không tự đổi khi bạn sửa tệp về sau.\r\n\r\n### Branch — nhánh lịch sử\r\n- **Nói dễ hiểu:** Tên dễ nhớ cho commit hiện tại của một dòng phát triển.\r\n- **Ví dụ:** `main` thường là tên nhánh ban đầu của dự án.\r\n- **Đừng nhầm:** Nhánh không phải bản sao đầy đủ riêng của mọi tệp.\r\n\r\n---\r\n\r\n## 📖 Định nghĩa\r\nRepository là nơi Git giữ các commit đã tạo. `HEAD` cho Git biết bạn đang ở nhánh hoặc commit nào. Khi tạo commit mới trên một nhánh, nhánh đó sẽ trỏ tới commit mới.\r\n\r\n---\r\n\r\n## 🤔 Tại sao cần?\r\nBiết `HEAD` giúp bạn hiểu Git đang làm việc trên nhánh nào và commit mới sẽ nối vào đâu. Nếu repository chưa có commit đầu tiên, lịch sử vẫn rỗng và chưa có commit để HEAD trỏ tới; bạn sẽ tạo mốc đầu tiên ở bài 6.\r\n\r\n---\r\n\r\n## 🧠 Mental Model (Mô hình tư duy)\r\nHãy xem HEAD như nhãn “đang ở đây”: nó chỉ nhánh hoặc commit đang được chọn.\r\n\r\n---\r\n\r\n## 🖼 Sơ đồ\r\n```text\r\nMô hình con trỏ HEAD trong Repository:\r\n[Commit A] ◄── [Commit B] ◄── [Commit C] ◄── [main]\r\n                                                ▲\r\n                                                │\r\n                                              [HEAD] (Đang trỏ vào nhánh main tại Commit C)\r\n```\r\n\r\n---\r\n\r\n## 🌎 Ví dụ thực tế\r\nGiả sử dự án đã có ba commit. Nhánh `main` trỏ tới commit mới nhất; khi bạn đang làm trên nhánh này, HEAD theo `main`. Nếu đây là dự án mới chưa có commit, chưa có snapshot nào để xem — đó là trạng thái bình thường.\r\n\r\n---\r\n\r\n## 💻 Command\r\nBài này chỉ xây mô hình bằng sơ đồ, chưa cần chạy lệnh. Sau khi tạo commit đầu tiên ở bài 6, bạn sẽ dùng `git log` và `git show` để quan sát lịch sử thật.\r\n\r\n---\r\n\r\n## 🔍 Giải thích command\r\nChưa có lệnh thực hành ở bài này. Không chạy `git log` hoặc `git show HEAD` trong repository chưa có commit: Git chưa có lịch sử để hiển thị.\r\n\r\n---\r\n\r\n## ⚠️ Sai lầm phổ biến\r\n1. **Nhầm HEAD với tên nhánh**:  `main` là tên nhánh; HEAD chỉ vị trí đang được chọn.\r\n2. **Tưởng repository mới đã có commit để xem**:  Lịch sử chỉ bắt đầu sau khi tạo commit đầu tiên.\r\n3. **Tự chuyển HEAD về commit cũ khi chưa học cách quay lại**:  Hãy chỉ xem commit cũ trong bài này.\r\n\r\n---\r\n\r\n## 🧪 Lab\r\nĐọc sơ đồ ở trên và trả lời:\r\n1. Commit nào là mốc mới nhất trong ví dụ?\r\n2. Nhánh `main` đang trỏ tới commit nào?\r\n3. HEAD đang theo nhánh hay trỏ thẳng vào commit?\r\n4. Nếu repository chưa có commit nào, bạn có thể xem `git show HEAD` chưa? Vì sao?\r\n\r\n---\r\n\r\n## 💡 Hint\r\n> HEAD là con trỏ chỉ vị trí làm việc hiện tại của bạn trong đồ thị commit.\r\n\r\n---\r\n\r\n## ✅ Validation\r\n- Bạn xác định được HEAD theo `main` và nhánh `main` trỏ tới Commit C trong ví dụ.\r\n- Bạn giải thích được repository mới chưa có commit để hiển thị bằng `git show HEAD`.\r\n\r\n---\r\n\r\n## ❓ Quiz\r\nLàm bài kiểm tra trắc nghiệm dưới đây về Repository và con trỏ HEAD.\r\n\r\n---\r\n\r\n## 🔥 Challenge\r\nNêu sự khác nhau giữa con trỏ nhánh bình thường và con trỏ HEAD trong Git.\r\n\r\n---\r\n\r\n## 📚 Tổng kết\r\n- HEAD cho biết nhánh hoặc commit đang được chọn.\r\n- Repository chưa có commit thì chưa có snapshot nào để xem.\r\n- Commit mới trên nhánh làm nhánh đó chuyển sang commit mới.\r\n",
   "quiz": {
     "id": "quiz-02-03-head-snapshot",
     "title": "Trắc nghiệm: Repository & HEAD Snapshot",
@@ -114,27 +110,27 @@ export const lesson: CourseLesson = {
       },
       {
         "id": "q4",
-        "question": "Lệnh nào cho phép bạn xem nội dung chi tiết của commit mà HEAD đang trỏ vào?",
+        "question": "Bạn vừa khởi tạo repository nhưng chưa tạo commit. Nhận định nào đúng?",
         "type": "single",
         "options": [
           {
-            "text": "git show HEAD",
+            "text": "Chưa có snapshot nào để xem trong lịch sử",
             "correct": true
           },
           {
-            "text": "git delete HEAD",
+            "text": "`HEAD` tự tạo một commit rỗng",
             "correct": false
           },
           {
-            "text": "git clear HEAD",
+            "text": "Repository tự tải lịch sử từ GitHub",
             "correct": false
           },
           {
-            "text": "git push HEAD --now",
+            "text": "Tệp trong thư mục tự trở thành commit",
             "correct": false
           }
         ],
-        "explanation": "`git show HEAD` in ra toàn bộ siêu dữ liệu và diff chi tiết của commit hiện tại."
+        "explanation": "`git init` tạo repository nhưng không tạo commit; người dùng cần stage thay đổi rồi commit."
       },
       {
         "id": "q5",

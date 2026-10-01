@@ -1,9 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import type { CourseLesson, CourseManifest, CourseProgress, GoalCheckItem, QuizQuestion, Scenario, User } from '@git-academy/shared';
-import { BuiltinCourseRepository, LessonCompletionEngine, PrerequisiteEngine, QuizEngine, ScenarioRunner, ProgressConflictResolver } from '@git-academy/exercise-engine';
+import { BuiltinCourseRepository, LessonCompletionEngine, PrerequisiteEngine, QuizEngine, ScenarioRunner } from '@git-academy/exercise-engine';
 import { buildLessonSlides, requiredLabsFor, type LearningSlide } from '../learning/lesson-flow';
 import { validateGuidedLab } from '../learning/lab-validation';
 import { GuidedPlumbingSession } from '../learning/plumbing-session';
+import { findLastContentStageIndex } from '../utils/guided-course-progress';
 import './guided-course.css';
 
 const repository = new BuiltinCourseRepository();
@@ -139,9 +140,9 @@ function fileStatusLabel(status: string): string {
   return labels[status] || status;
 }
 
-interface GuidedCourseProps { user?: User; onLogout?: () => void }
+interface GuidedCourseProps { user?: User }
 
-export const GuidedCourse: React.FC<GuidedCourseProps> = ({ user, onLogout }) => {
+export const GuidedCourse: React.FC<GuidedCourseProps> = ({ user }) => {
   const currentUserId = user?.id || 'local_learner';
   const [manifest, setManifest] = useState<CourseManifest | null>(null);
   const [progress, setProgress] = useState<CourseProgress>(() => loadLocalProgress(currentUserId));
@@ -204,7 +205,15 @@ export const GuidedCourse: React.FC<GuidedCourseProps> = ({ user, onLogout }) =>
   const totalLessons = manifest?.curriculum.reduce((count, item) => count + item.lessons.length, 0) || 0;
   const completedLessons = Object.values(progress.lessons).filter((item) => item.completed).length;
   const firstQuizIndex = stages.findIndex((item) => item.type === 'quiz');
+  const lastContentStageIndex = findLastContentStageIndex(stages);
   const currentLessonProgress = lesson ? progress.lessons[lesson.id] : undefined;
+  const missingTheory = Boolean(lesson?.metadata.completion?.theoryViewed && !currentLessonProgress?.theoryViewed);
+  const missingRequiredLabIndex = stages.findIndex((item) => item.type === 'lab' && item.required && !currentLessonProgress?.labsCompleted.includes(item.scenario.id));
+  const completionRecovery = missingTheory
+    ? { message: 'Hãy xem hết phần nội dung bắt buộc của bài.', stageIndex: Math.max(lastContentStageIndex, 0) }
+    : missingRequiredLabIndex >= 0
+      ? { message: 'Hãy hoàn thành bài thực hành bắt buộc.', stageIndex: missingRequiredLabIndex }
+      : { message: 'Hãy hoàn thành các câu hỏi của bài.', stageIndex: firstQuizIndex };
 
   useEffect(() => {
     if (stage?.type !== 'lab') return;
@@ -308,7 +317,7 @@ export const GuidedCourse: React.FC<GuidedCourseProps> = ({ user, onLogout }) =>
   const advanceContent = () => {
     if (!lesson || stage?.type !== 'content') return;
     if (stage.slide.kind === 'practice' && !practiceCheckRevealed) return;
-    if (stageIndex === slides.length - 1) {
+    if (stageIndex === lastContentStageIndex) {
       saveLessonProgress(lesson.id, (current) => ({ ...current, theoryViewed: true }));
     }
     goToStage(stageIndex + 1);
@@ -479,7 +488,7 @@ export const GuidedCourse: React.FC<GuidedCourseProps> = ({ user, onLogout }) =>
 
         {stage.type === 'quiz' && <><div className="guided-quiz"><span className="guided-kicker">TỰ LÀM · CÂU {stage.questionIndex + 1} / {lesson.quiz.questions.length}</span><h1>{stage.question.question}</h1>{stage.question.type === 'fill_command' ? <input className="guided-answer-input" value={typeof answer === 'string' ? answer : ''} onChange={(event) => setAnswer(event.target.value)} placeholder="Tự viết lệnh ở đây" disabled={!!checked} /> : stage.question.type === 'command_order' ? <div className="guided-order-list">{(Array.isArray(answer) && typeof answer[0] === 'string' ? answer as string[] : stage.question.options.map((option) => option.text)).map((line, index, order) => <div key={`${line}-${index}`}><code>{line}</code><button disabled={!!checked || index === 0} onClick={() => { const copy = [...order]; [copy[index - 1], copy[index]] = [copy[index], copy[index - 1]]; setAnswer(copy); }}>↑</button><button disabled={!!checked || index === order.length - 1} onClick={() => { const copy = [...order]; [copy[index + 1], copy[index]] = [copy[index], copy[index + 1]]; setAnswer(copy); }}>↓</button></div>)}</div> : <div className="guided-choice-list">{stage.question.options.map((option, index) => <button key={index} disabled={!!checked} className={answer === index || Array.isArray(answer) && answer.some((entry) => entry === index) ? 'selected' : ''} onClick={() => setAnswer(stage.question.type === 'multiple' || stage.question.type === 'multiple_choice' ? Array.isArray(answer) && typeof answer[0] === 'number' ? (answer as number[]).includes(index) ? (answer as number[]).filter((number) => number !== index) : [...answer as number[], index] : [index] : index)}><span>{String.fromCharCode(65 + index)}</span>{option.text}</button>)}</div>}{checked && <div className={`guided-answer-feedback ${checked.isCorrect ? 'correct' : 'incorrect'}`}><strong>{checked.isCorrect ? 'Chính xác' : 'Chưa chính xác'}</strong><p>{checked.explanation}</p></div>}<div className="guided-quiz-actions">{!checked ? <button className="guided-primary" disabled={answer === null || Array.isArray(answer) && answer.length === 0 || answer === ''} onClick={checkQuestion}>Kiểm tra đáp án →</button> : <button className="guided-primary" onClick={finishQuestion}>{stage.questionIndex + 1 === lesson.quiz.questions.length ? 'Xem kết quả →' : 'Câu tiếp theo →'}</button>}</div></div><div className="guided-quiz-side"><div className="guided-quiz-ring">{stage.questionIndex + 1}<small>/{lesson.quiz.questions.length}</small></div><p>Hãy tự chọn trước khi xem giải thích. Sai cũng có thể thử lại.</p></div></>}
 
-        {stage.type === 'complete' && <div className="guided-completion"><span className="guided-kicker">KẾT QUẢ BÀI HỌC</span>{quizResult && !quizResult.passed ? <><h1>Cần thử lại một lần nữa</h1><p>Bạn đạt {quizResult.score}%. Mục tiêu của bài là {lesson.metadata.completion?.quiz?.minimumScore || 75}%. Xem phần giải thích rồi tự làm lại.</p><button className="guided-primary" onClick={restartQuiz}>Làm lại câu hỏi →</button></> : currentLessonProgress?.completed ? <><div className="guided-completion-symbol">✓</div><h1>Bạn đã làm được.</h1><p>{lesson.metadata.title}</p><div className="guided-evidence"><span>✓ Đã học từng ý</span>{requiredLabIds.length > 0 && <span>✓ Đã hoàn thành thực hành</span>}<span>✓ Đã đạt bài kiểm tra</span></div><div className="guided-completion-actions">{next && next.lesson.id !== lesson.id ? <button className="guided-primary" onClick={() => openLesson(next.moduleIndex, next.lesson.id)}>Sang bài tiếp theo →</button> : <button className="guided-primary" onClick={() => setScreen('map')}>Về hành trình học →</button>}<button className="guided-secondary" onClick={() => goToStage(0)}>Xem lại bài</button></div></> : <><h1>Còn một bước để hoàn thành</h1><p>{requiredLabIds.some((id) => !currentLessonProgress?.labsCompleted.includes(id)) ? 'Hãy hoàn thành bài thực hành bắt buộc.' : 'Hãy hoàn thành các câu hỏi của bài.'}</p><button className="guided-primary" onClick={() => goToStage(requiredLabIds.some((id) => !currentLessonProgress?.labsCompleted.includes(id)) ? stages.findIndex((item) => item.type === 'lab' && item.required && !currentLessonProgress?.labsCompleted.includes(item.scenario.id)) : firstQuizIndex)}>Quay lại bước cần làm →</button></>}</div>}
+        {stage.type === 'complete' && <div className="guided-completion"><span className="guided-kicker">KẾT QUẢ BÀI HỌC</span>{quizResult && !quizResult.passed ? <><h1>Cần thử lại một lần nữa</h1><p>Bạn đạt {quizResult.score}%. Mục tiêu của bài là {lesson.metadata.completion?.quiz?.minimumScore || 75}%. Xem phần giải thích rồi tự làm lại.</p><button className="guided-primary" onClick={restartQuiz}>Làm lại câu hỏi →</button></> : currentLessonProgress?.completed ? <><div className="guided-completion-symbol">✓</div><h1>Bạn đã làm được.</h1><p>{lesson.metadata.title}</p><div className="guided-evidence"><span>✓ Đã học từng ý</span>{requiredLabIds.length > 0 && <span>✓ Đã hoàn thành thực hành</span>}<span>✓ Đã đạt bài kiểm tra</span></div><div className="guided-completion-actions">{next && next.lesson.id !== lesson.id ? <button className="guided-primary" onClick={() => openLesson(next.moduleIndex, next.lesson.id)}>Sang bài tiếp theo →</button> : <button className="guided-primary" onClick={() => setScreen('map')}>Về hành trình học →</button>}<button className="guided-secondary" onClick={() => goToStage(0)}>Xem lại bài</button></div></> : <><h1>Còn một bước để hoàn thành</h1><p>{completionRecovery.message}</p><button className="guided-primary" onClick={() => goToStage(completionRecovery.stageIndex)}>Quay lại bước cần làm →</button></>}</div>}
       </section>
     </main>}
   </div>;

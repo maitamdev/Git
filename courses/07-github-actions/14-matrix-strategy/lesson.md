@@ -8,7 +8,7 @@
 ## 🧩 Từ khóa hôm nay
 ### Matrix Strategy
 - **Nói dễ hiểu**: Chiến lược cấu hình cho phép tự động nhân bản một Job thành nhiều Job con chạy trên các môi trường khác nhau.
-- **Ví dụ**: Khai báo `node: [18, 20, 22]` để chạy đồng thời bài test trên cả 3 phiên bản Node.js.
+- **Ví dụ**: Khai báo `node: [22, 24]` để chạy test trên hai phiên bản Node.js còn được hỗ trợ.
 - **Đừng nhầm**: Bạn chỉ cần viết một Job duy nhất, GitHub Actions sẽ tự động sinh ra các phiên bản tương ứng.
 
 ### Cartesian Product
@@ -18,8 +18,8 @@
 
 ### fail-fast Property
 - **Nói dễ hiểu**: Thuộc tính kiểm soát việc có hủy bỏ các Job con còn lại hay không khi phát hiện một Job con bị lỗi.
-- **Ví dụ**: Đặt `fail-fast: false` để nếu Node 18 bị lỗi thì Node 20 và 22 vẫn tiếp tục chạy đến khi có kết quả đầy đủ.
-- **Đừng nhầm**: Mặc định `fail-fast: true` sẽ dừng ngay toàn bộ ma trận khi có một lỗi đầu tiên nhằm tiết kiệm thời gian.
+- **Ví dụ**: Đặt `fail-fast: false` để nếu một tổ hợp lỗi thì các tổ hợp khác vẫn tiếp tục, giúp thu đủ kết quả.
+- **Đừng nhầm**: Mặc định `fail-fast: true` hủy các Job con đang chạy hoặc còn chờ khi một Job con lỗi; không tự sửa lỗi.
 
 ## 📖 Định nghĩa
 Chiến lược ma trận (Matrix Strategy) là cơ chế cao cấp trong GitHub Actions cho phép bạn sử dụng các biến cấu hình để tự động tạo ra một tập hợp nhiều Job con chạy song song từ một định nghĩa Job duy nhất. Bằng cách khai báo khối `strategy: matrix:`, GitHub Actions sẽ tự động tính toán tích Đề-các của tất cả các mảng giá trị đầu vào để sinh ra toàn bộ các tổ hợp môi trường cần kiểm thử.
@@ -33,14 +33,14 @@ Hãy hình dung xưởng may áo sơ mi thử nghiệm một mẫu thiết kế 
 ## 📊 Sơ đồ minh họa
 ```mermaid
 flowchart TD
-    Config["strategy.matrix: os [ubuntu, windows] & node [18, 20]"] --> M1["Job 1: ubuntu + node 18"]
-    Config --> M2["Job 2: ubuntu + node 20"]
-    Config --> M3["Job 3: windows + node 18"]
-    Config --> M4["Job 4: windows + node 20"]
+Config["strategy.matrix: os [ubuntu, windows] & node [22, 24]"] --> M1["Job 1: ubuntu + node 22"]
+Config --> M2["Job 2: ubuntu + node 24"]
+Config --> M3["Job 3: windows + node 22"]
+Config --> M4["Job 4: windows + node 24"]
 ```
 
 ## 🏢 Ví dụ thực tế
-Một nhóm phát triển công cụ dòng lệnh mã nguồn mở thiết lập ma trận: hệ điều hành gồm `[ubuntu-latest, windows-latest, macos-latest]` và phiên bản Node gồm `[18, 20, 22]`. Khi có PR, GitHub Actions tự động phân rã thành 9 Jobs chạy đồng thời. Kết quả cho thấy 8 Jobs đều báo xanh, nhưng Job Windows với Node 18 bị đỏ do hàm xử lý đường dẫn `\` đặc thù. Nhờ đó, lập trình viên sửa lỗi ngay trước khi phát hành cho người dùng.
+Ví dụ giả định: một công cụ dòng lệnh kiểm tra trên ba hệ điều hành và hai bản Node được hỗ trợ, tạo ra sáu tổ hợp. Các Job có thể bị giới hạn đồng thời hoặc xếp hàng; lỗi trên Windows gợi ý cần kiểm tra cách xử lý đường dẫn nhưng không tự chứng minh đó là nguyên nhân.
 
 ## 💻 Command & Cú pháp
 ```bash
@@ -74,10 +74,10 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
          fail-fast: false
          matrix:
            os: [ubuntu-latest, windows-latest]
-           node: [18, 20]
+           node: [22, 24]
        steps:
          - name: Cài đặt Node.js
-           uses: actions/setup-node@v4
+           uses: actions/setup-node@v7
            with:
              node-version: ${{ matrix.node }}
          - name: Kiểm tra môi trường
@@ -86,7 +86,7 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
              node -v
    ```
 2. Đẩy commit lên GitHub và kích hoạt bằng nút Run workflow.
-3. Quan sát tab Actions hiển thị 4 Job con riêng biệt chạy song song trên các hệ điều hành và phiên bản tương ứng.
+3. Quan sát tab Actions hiển thị 4 tổ hợp Job; thời điểm chúng chạy còn tùy concurrency và runner sẵn có.
 
 ## 💡 Hint & mẹo
 - Đặt `fail-fast: false` bên trong `strategy:` nếu bạn muốn các phiên bản khác vẫn tiếp tục chạy khi có một phiên bản bị lỗi sớm.
@@ -100,7 +100,7 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
 Hãy hoàn thành bài trắc nghiệm bên dưới để kiểm tra khả năng tư duy và thiết lập ma trận kiểm thử trong GitHub Actions.
 
 ## 🚀 Thử thách nâng cao
-Sử dụng thuộc tính `exclude` trong ma trận gồm 3 hệ điều hành và 3 phiên bản Node để loại trừ duy nhất trường hợp Windows kết hợp với Node 18 do hệ thống cũ không hỗ trợ.
+Sử dụng `exclude` trong ma trận ba hệ điều hành và hai phiên bản Node để loại tổ hợp không được dự án hỗ trợ; chọn tổ hợp dựa trên yêu cầu thực tế.
 
 ## 📝 Tổng kết
 - `strategy: matrix:` tự động tạo ra nhiều Job con bằng tích Đề-các của các danh sách giá trị.

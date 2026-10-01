@@ -16,12 +16,10 @@ objectives:
     lên phía trước (Forward-moving undo).
   - Hiểu rõ sự khác biệt bản chất giữa việc xóa lịch sử (reset) và việc ghi nhận
     lịch sử đảo ngược (revert).
-  - Sử dụng `git revert` để hủy bỏ an toàn các commit lỗi trên môi trường
-    production và nhánh dùng chung.
+  - Biết khi nào `git revert` phù hợp để hoàn tác commit đã chia sẻ và vì sao cần review kết quả.
   - Xử lý tình huống giải quyết xung đột có thể phát sinh trong quá trình revert
     commit.
 commands:
   - git revert <commit-hash>
   - git revert HEAD
-  - git revert HEAD~2..HEAD
-  - git revert --no-commit <commit-hash>
+  - git log --oneline

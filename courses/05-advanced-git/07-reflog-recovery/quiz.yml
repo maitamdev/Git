@@ -15,15 +15,13 @@ questions:
         correct: false
       - text: git push --force c4d5e6f
         correct: false
-    explanation: "`git branch <tên-nhánh> <hash>` tạo một con trỏ nhánh mới neo giữ
-      commit đó, đưa nó trở lại cây lịch sử hoàn toàn an toàn."
+    explanation: "`git branch <tên-nhánh> <hash>` tạo ref mới trỏ tới commit. Hãy xác minh hash và tên nhánh trước khi chạy."
   - id: q2
     question: Nếu bạn vừa lỡ tay gõ `git branch -D feature-x` xóa mất nhánh khi chưa
       merge, bạn có thể cứu lại được không?
     type: single
     options:
-      - text: Hoàn toàn cứu được, chỉ cần tìm mã hash của đỉnh nhánh feature-x trong
-          reflog rồi tạo lại nhánh
+      - text: Có thể cứu nếu tìm được commit đỉnh nhánh trong reflog và object vẫn còn; hãy tạo nhánh mới trỏ tới commit đó
         correct: true
       - text: Không thể cứu được vì cờ -D là xóa vĩnh viễn
         correct: false
@@ -31,14 +29,12 @@ questions:
         correct: false
       - text: Phải liên hệ với bộ phận hỗ trợ khách hàng của GitHub
         correct: false
-    explanation: Xóa nhánh chỉ là xóa con trỏ tên nhánh; các commit vẫn nằm nguyên
-      vẹn trong kho và có thể tái tạo lại nhánh dễ dàng qua reflog.
+    explanation: Xóa nhánh bỏ ref của nhánh. Nếu reflog còn entry và commit object chưa bị dọn, có thể tạo ref mới trỏ tới commit đó.
   - id: q3
-    question: Trong tình huống bạn lỡ tay chạy `git reset --hard HEAD~1`, câu lệnh
-      một dòng nào đưa bạn quay trở lại ngay lập tức trạng thái trước khi reset?
+    question: Sau khi tìm được commit bị mất trong reflog, cách nào giữ commit đó mà không di chuyển nhánh hiện tại?
     type: single
     options:
-      - text: git reset --hard HEAD@{1}
+      - text: git branch rescue <commit-hash>
         correct: true
       - text: git undo reset
         correct: false
@@ -46,8 +42,7 @@ questions:
         correct: false
       - text: git restore --previous
         correct: false
-    explanation: Trước khi reset con trỏ ở vị trí `HEAD@{1}`, lệnh `git reset --hard
-      HEAD@{1}` lập tức đưa bạn trở lại vị trí đó.
+    explanation: Tạo nhánh mới lưu một tham chiếu tới commit tìm được. Trước khi dùng reset hard, hãy kiểm tra trạng thái làm việc vì lệnh có thể ghi đè chỉnh sửa chưa commit.
   - id: q4
     question: Tại sao việc giữ bình tĩnh và không gõ bừa bãi các lệnh khác khi phát
       hiện mất commit lại cực kỳ quan trọng?
@@ -62,8 +57,7 @@ questions:
         correct: false
       - text: Vì nếu gõ quá nhanh Git sẽ tự động thoát
         correct: false
-    explanation: Gõ nhiều lệnh dịch chuyển HEAD sẽ tạo thêm nhiều dòng `HEAD@{n}`,
-      làm phức tạp và đẩy xa vị trí commit cần cứu.
+    explanation: Reflog được đánh số theo thứ tự mới đến cũ; thao tác làm đổi ref có thể đổi số thứ tự. Hãy đọc và ghi lại hash cần tìm trước khi làm bước tiếp theo.
   - id: q5
     question: Khi bạn tạo nhánh mới tại commit tìm được từ reflog bằng cú pháp `git branch
       rescue-branch <commit-hash>`, điều gì xảy ra với nhánh hiện tại?
@@ -78,6 +72,4 @@ questions:
         correct: false
       - text: Git bắt buộc phải kích hoạt xung đột merge ngay lập tức
         correct: false
-    explanation: Lệnh `git branch <tên> <hash>` là thao tác an toàn 100%, chỉ tạo thêm
-      con trỏ tham chiếu mà không chạm vào nhánh làm việc hiện tại.
-
+    explanation: Lệnh này tạo thêm ref và không di chuyển ref của nhánh hiện tại. Kiểm tra hash trước để tránh neo nhánh mới vào commit nhầm.

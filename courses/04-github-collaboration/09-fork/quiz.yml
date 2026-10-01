@@ -5,8 +5,7 @@ questions:
     question: Thao tác "Fork" trong hệ sinh thái GitHub thực chất là gì?
     type: single
     options:
-      - text: Tạo một bản sao độc lập của kho lưu trữ người khác vào tài khoản GitHub
-          của chính bạn ở phía máy chủ
+      - text: Tạo repository thuộc tài khoản của bạn dựa trên repository gốc ở phía máy chủ
         correct: true
       - text: Một câu lệnh gõ trong terminal shell của máy tính cá nhân
         correct: false
@@ -14,8 +13,7 @@ questions:
         correct: false
       - text: Tải toàn bộ mã nguồn về ổ đĩa cứng dưới dạng file Word
         correct: false
-    explanation: Fork là thao tác server-side clone do GitHub cung cấp, tạo bản sao
-      kho trên máy chủ thuộc quyền sở hữu của bạn.
+    explanation: Fork tạo repository của bạn trên GitHub; quyền và cài đặt của kho gốc vẫn do chủ sở hữu quản lý.
   - id: q2
     question: Tại sao các dự án mã nguồn mở lại yêu cầu cộng đồng lập trình viên
       phải Fork dự án trước khi đóng góp?
@@ -53,8 +51,7 @@ questions:
       cá nhân là như thế nào?
     type: single
     options:
-      - text: Hai kho hoàn toàn độc lập, mọi sửa đổi trên kho fork không làm ảnh hưởng
-          gì tới kho gốc trừ khi tác giả chấp nhận Pull Request
+      - text: Fork có repository và quyền riêng; thay đổi ở fork không cập nhật nhánh gốc trừ khi được tích hợp, nhưng hai kho có thể thuộc cùng fork network
         correct: true
       - text: Bất kỳ dòng code nào bạn gõ trên máy cá nhân sẽ tự động xuất hiện trên kho
           gốc ngay lập tức
@@ -63,22 +60,17 @@ questions:
         correct: false
       - text: Hai kho bị khóa quyền truy cập của tất cả mọi người
         correct: false
-    explanation: Kho fork là không gian an toàn biệt lập 100%; tác giả kho gốc chỉ
-      nhận code khi duyệt Pull Request.
+    explanation: Fork tách quyền ghi nhưng không hẳn tách toàn bộ dữ liệu Git; thay đổi chỉ vào nhánh gốc khi được tích hợp.
   - id: q5
-    question: Khi thực hiện Fork trên GitHub, bạn có thể chọn sao chép những nhánh nào
-      sang tài khoản của mình?
+    question: "Sau khi fork một repository, quyền nào bạn có đối với repository gốc?"
     type: single
     options:
-      - text: Mặc định GitHub chỉ sao chép nhánh chính (default branch), hoặc bạn có thể
-          bỏ chọn để sao chép tất cả các nhánh
+      - text: Fork không tự cấp quyền ghi vào repository gốc; bạn có thể đề nghị tích hợp thay đổi bằng Pull Request
         correct: true
-      - text: Bắt buộc phải sao chép toàn bộ các nhánh mà không có lựa chọn nào khác
+      - text: Fork tự cấp quyền quản trị đầy đủ trên repository gốc
         correct: false
-      - text: Chỉ được phép sao chép các nhánh đã được gộp (merged branches)
+      - text: Chỉ được phép đọc repository gốc sau khi fork
         correct: false
-      - text: Không có nhánh nào được chép sang, bạn phải tự tạo lại từng nhánh từ đầu
+      - text: Có thể push thẳng mọi commit vào nhánh mặc định của repository gốc
         correct: false
-    explanation: Trên giao diện Fork của GitHub, tùy chọn 'Copy the default branch only'
-      được bật mặc định, cho phép linh hoạt chọn copy một hay toàn bộ nhánh.
-
+    explanation: Fork cho bạn nơi làm việc riêng; quyền ghi vào kho gốc vẫn cần được chủ sở hữu cấp.

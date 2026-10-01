@@ -11,12 +11,9 @@ keywords:
 prerequisites:
   - 07-git-push
 objectives:
-  - Hiểu rõ khái niệm và cơ chế hoạt động của Tracking Branch (Nhánh theo dõi)
-    trong Git.
-  - "Phân biệt rõ ràng giữa 3 loại nhánh: Nhánh cục bộ, Nhánh theo dõi từ xa
-    (`origin/main`), và Nhánh thực tế trên server."
-  - "Đọc hiểu và giải thích ý nghĩa các trạng thái so sánh: `ahead`, `behind`,
-    và `diverged`."
+  - Hiểu quan hệ upstream giữa nhánh local và remote-tracking branch.
+  - Phân biệt nhánh local, remote-tracking ref và nhánh trên máy chủ.
+  - Đọc trạng thái ahead/behind so với thông tin fetch gần nhất.
   - Thiết lập hoặc thay đổi quan hệ upstream tracking cho một nhánh cục bộ bất
     kỳ.
 commands:

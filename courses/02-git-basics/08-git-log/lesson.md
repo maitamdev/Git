@@ -4,7 +4,7 @@
 
 ## 🎯 Mục tiêu
 - Dùng `git log` để xem các commit trong lịch sử của nhánh hiện tại.
-- Rút gọn hoặc vẽ lịch sử bằng `--oneline` và `--graph`.
+- Rút gọn lịch sử bằng `--oneline`.
 - Giới hạn số commit hiển thị bằng `-n`.
 
 ---
@@ -26,15 +26,15 @@
 - **Ví dụ:** `git log --oneline`.
 - **Đừng nhầm:** Dạng gọn ẩn bớt chi tiết; có thể chạy `git log` để xem đầy đủ.
 
-### `--graph` — vẽ nhánh lịch sử
-- **Nói dễ hiểu:** Thêm ký hiệu giúp nhìn các đường nhánh và commit nối nhau.
-- **Ví dụ:** `git log --oneline --graph`.
-- **Đừng nhầm:** Ký hiệu chỉ trình bày lịch sử, không thay đổi repository.
-
 ### `-n` — giới hạn số commit
 - **Nói dễ hiểu:** Chỉ hiện một số lượng commit gần đây do bạn chọn.
 - **Ví dụ:** `git log -n 3` hiện tối đa ba commit.
 - **Đừng nhầm:** Tùy chọn này chỉ rút gọn kết quả, không xóa lịch sử.
+
+### HEAD — mốc Git đang đứng tại
+- **Nói dễ hiểu:** Tên đặc biệt trỏ tới vị trí hiện tại; `git log` mặc định xem lịch sử từ đây.
+- **Ví dụ:** `git log HEAD` hiển thị lịch sử bắt đầu từ commit mà HEAD trỏ tới.
+- **Đừng nhầm:** HEAD không phải tên cố định của một commit; khi chuyển nhánh hoặc tạo commit, vị trí nó trỏ tới có thể đổi.
 
 ---
 
@@ -55,11 +55,9 @@ Khi quên mình đã lưu những mốc nào, `git log` giúp bạn xem lại l�
 
 ## 🖼 Sơ đồ
 ```text
-Tùy biến hiển thị git log --graph --oneline:
-* f7d02a1 (HEAD -> main) feat(payment): add momo e-wallet support
-* 9e1c3d4 feat(cart): calculate discount coupon code
-* 4a2f8b9 fix(auth): prevent sql injection in login query
-* 1b8e4f2 feat: initialize project repository
+1a2b3c4 (HEAD -> main) docs: add setup guide
+5d6e7f8 feat: create home page
+9a0b1c2 feat: start project
 ```
 
 ---
@@ -73,7 +71,6 @@ Bạn muốn biết mình vừa lưu những mốc nào. Chạy `git log --oneli
 ```bash
 git log
 git log --oneline
-git log --graph --oneline
 git log -n 5
 ```
 
@@ -82,7 +79,6 @@ git log -n 5
 ## 🔍 Giải thích command
 - `git log`: Hiển thị lịch sử commit mà nhánh hiện tại có thể đi tới.
 - `git log --oneline`: Hiện mỗi commit trên một dòng ngắn; độ dài mã nhận diện có thể thay đổi.
-- `git log --graph --oneline`: Thêm ký hiệu để xem đường đi giữa các commit.
 - `git log -n 5`: Hiển thị tối đa 5 commit có thể đi tới từ nhánh hiện tại.
 
 ---
@@ -124,5 +120,5 @@ Dùng `git log --oneline -n 3`, rồi giải thích mã nhận diện và messag
 
 ## 📚 Tổng kết
 - `git log` hiển thị các commit có thể đi tới từ nhánh hiện tại, mới nhất trước.
-- Cờ `--oneline` giúp rút gọn mỗi commit thành một dòng trực quan dễ theo dõi.
+- Cờ `--oneline` giúp rút gọn mỗi commit thành một dòng dễ theo dõi.
 - Nhấn phím `q` trên bàn phím để thoát khỏi chế độ xem phân trang của git log.

@@ -5,7 +5,7 @@ questions:
     question: Một công ty khởi nghiệp gồm 4 lập trình viên đang xây dựng một ứng dụng web SaaS cần deploy nhiều lần mỗi ngày thì nên chọn mô hình nào?
     type: single
     options:
-      - text: GitHub Flow vì tính tinh gọn, đơn giản và hỗ trợ triển khai liên tục hoàn hảo
+      - text: GitHub Flow là một ứng viên gọn nhẹ để thử nghiệm; nhóm vẫn cần chọn review, kiểm thử và cách phát hành
         correct: true
       - text: Git Flow vì nó có đủ 5 loại nhánh phức tạp
         correct: false
@@ -13,9 +13,9 @@ questions:
         correct: false
       - text: Mô hình thác nước cổ điển Waterfall không phân nhánh
         correct: false
-    explanation: GitHub Flow là lựa chọn lý tưởng nhất cho các nhóm web nhỏ cần sự linh hoạt, tránh các tầng thủ tục rườm rà không cần thiết.
+    explanation: GitHub Flow có thể phù hợp với nhịp phát hành này, nhưng nhóm nên điều chỉnh theo rủi ro, quy trình kiểm thử và yêu cầu vận hành.
   - id: q2
-    question: Mô hình nào sau đây đòi hỏi hệ thống kiểm thử tự động (Automated Testing / CI) ở mức độ hoàn thiện cao nhất để hoạt động an toàn?
+    question: Trong mô hình nào việc tích hợp thường xuyên khiến phản hồi CI nhanh và đáng tin cậy đặc biệt hữu ích?
     type: single
     options:
       - text: Trunk-Based Development
@@ -26,7 +26,7 @@ questions:
         correct: false
       - text: Lập trình một mình không chia sẻ
         correct: false
-    explanation: Trunk-Based Development hợp nhất code liên tục vào Trunk, do đó nếu không có CI cực mạnh để phát hiện lỗi ngay lập tức thì nhánh chính sẽ liên tục bị gãy.
+    explanation: Trunk-Based Development dựa vào tích hợp thường xuyên; CI nhanh giúp tìm lỗi gần thời điểm thay đổi, dù cách kiểm tra có thể khác nhau giữa các nhóm.
   - id: q3
     question: Dự án nào sau đây phù hợp nhất với mô hình Git Flow truyền thống?
     type: single
@@ -39,12 +39,12 @@ questions:
         correct: false
       - text: Một kịch bản tự động hóa sao lưu dữ liệu đơn giản
         correct: false
-    explanation: Git Flow rất mạnh ở khâu đóng băng phiên bản (Release Freeze) để QA kiểm thử hồi quy và hỗ trợ bảo trì nhiều phiên bản cũ.
+    explanation: Nhánh release của Git Flow có thể hỗ trợ kiểm thử một phiên bản trong khi công việc khác tiếp tục; nó không phải lựa chọn duy nhất cho lịch phát hành này.
   - id: q4
     question: Điểm chung quan trọng nhất giữa cả 3 mô hình GitHub Flow, Git Flow và Trunk-Based Development là gì?
     type: single
     options:
-      - text: Đều hướng tới việc giữ cho nhánh chính (main/trunk) luôn ổn định và sử dụng quy trình kiểm duyệt trước khi hợp nhất
+      - text: Đều tìm cách tích hợp thay đổi có kiểm soát vào nhánh chính; cách review, CI và nhánh sử dụng tùy mô hình/nhóm
         correct: true
       - text: Đều bắt buộc phải có nhánh develop
         correct: false
@@ -52,12 +52,12 @@ questions:
         correct: false
       - text: Đều cấm sử dụng câu lệnh git merge
         correct: false
-    explanation: Dù cách thức phân nhánh khác nhau, mục tiêu tối thượng của mọi workflow chuyên nghiệp đều là bảo vệ chất lượng mã nguồn trên nhánh chính.
+    explanation: Các workflow tìm cách kiểm soát tích hợp, nhưng không phải mô hình nào cũng bắt buộc cùng một loại review hoặc cách bảo vệ main.
   - id: q5
-    question: Khi nào một đội ngũ phát triển nên chuyển từ Git Flow sang GitHub Flow hoặc Trunk-Based Development?
+    question: Dấu hiệu nào gợi ý nhóm nên xem xét một mô hình đơn giản hơn Git Flow?
     type: single
     options:
-      - text: Khi đội ngũ chuyển dịch sang mô hình phân phối liên tục (Continuous Delivery) và thấy các nhánh trung gian gây chậm trễ phát hành
+      - text: Khi nhóm thấy các bước/nhánh trung gian không còn giúp kiểm soát rủi ro tương xứng với công sức đồng bộ
         correct: true
       - text: Khi đội ngũ không muốn viết commit message nữa
         correct: false
@@ -65,4 +65,4 @@ questions:
         correct: false
       - text: Khi số lượng lập trình viên giảm xuống bằng 0
         correct: false
-    explanation: Việc chuyển dịch sang Continuous Delivery đòi hỏi quy trình phân nhánh tinh gọn để mã nguồn đến tay khách hàng nhanh nhất mà không bị cản trở bởi các tầng trung gian.
+    explanation: Nhóm nên đánh giá chi phí và rủi ro thực tế; Continuous Delivery không bắt buộc dùng duy nhất một mô hình phân nhánh.

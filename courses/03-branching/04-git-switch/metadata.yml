@@ -1,25 +1,19 @@
 id: 04-git-switch
-title: Chuyển nhánh với git switch
+title: Chuyển nhánh bằng git switch
 duration: 25
 xp: 80
 keywords:
   - git switch
   - chuyen nhanh
-  - switch branch
   - tao nhanh moi
   - working tree update
 prerequisites:
   - 03-git-branch
 objectives:
-  - Nắm vững câu lệnh chuyên trách hiện đại `git switch` được giới thiệu từ Git
-    2.23.
-  - "Sử dụng thành thạo phím tắt vừa tạo vừa chuyển nhánh: `git switch -c
-    <tên-nhánh>`."
-  - Hiểu cách Git cập nhật Working Directory khi bạn chuyển dịch qua lại giữa
-    các nhánh.
-  - Xử lý tình huống không chuyển được nhánh do có thay đổi cục bộ chưa commit.
+  - Chuyển sang nhánh có sẵn bằng git switch <tên-nhánh>.
+  - Tạo và chuyển sang nhánh mới bằng git switch -c <tên-nhánh>.
+  - Biết Git dừng nếu chuyển nhánh có thể ghi đè thay đổi chưa commit.
 commands:
+  - git status
   - git switch <tên-nhánh>
   - git switch -c <tên-nhánh-mới>
-  - git switch -
-  - git switch -d <commit-hash>

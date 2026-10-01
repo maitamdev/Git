@@ -14,10 +14,10 @@ export const lesson: CourseLesson = {
       "20-git-bisect"
     ],
     "objectives": [
-      "Tổng hợp toàn bộ các kỹ thuật Git nâng cao đã học vào một kịch bản thử thách thực chiến phức tạp.",
-      "Cứu hộ thành công một commit bị mất bằng reflog sau một thao tác phá hủy mô phỏng.",
-      "Biên tập dọn dẹp chuỗi commit bằng Interactive Rebase (squash, fixup, reword).",
-      "Sử dụng bisect để truy tìm một commit gây lỗi ngầm và gắn thẻ Annotated Tag đánh dấu phiên bản hoàn thiện."
+      "Thực hành riêng từng kỹ năng Level 5 trong repository có thể bỏ đi.",
+      "Cứu commit đã reset bằng reflog, nếu commit còn được ghi nhận.",
+      "Thực hiện một thao tác interactive rebase và tìm commit lỗi bằng bisect trong Git thật.",
+      "Tạo và kiểm tra annotated tag sau khi xác minh commit mục tiêu."
     ],
     "completion": {
       "theoryViewed": true,
@@ -34,20 +34,18 @@ export const lesson: CourseLesson = {
     ],
     "commands": [
       "git reflog",
-      "git branch rescue-branch <commit-hash>",
-      "git rebase -i HEAD~<n>",
-      "git bisect start && git bisect bad && git bisect good <hash>",
-      "git tag -a v2.0.0 -m \"<thông-điệp-phát-hành>\""
+      "git status",
+      "git log --oneline"
     ]
   },
-  "content": "# Advanced Git Challenge\n\n---\n\n## 🎯 Mục tiêu\n- Tổng hợp toàn bộ các kỹ thuật Git nâng cao đã học vào một kịch bản thử thách thực chiến phức tạp.\n- Cứu hộ thành công một commit bị mất bằng reflog sau một thao tác phá hủy mô phỏng.\n- Biên tập dọn dẹp chuỗi commit bằng Interactive Rebase (squash, fixup, reword).\n- Sử dụng bisect để truy tìm một commit gây lỗi ngầm và gắn thẻ Annotated Tag đánh dấu phiên bản hoàn thiện.\n\n---\n\n## 🧩 Từ khóa hôm nay\n\n### Git Rescue Specialist\n- **Nói dễ hiểu**: Kỹ sư thành thạo các kỹ thuật cứu hộ dữ liệu Git (reflog, revert, rebase) để giải cứu kho mã nguồn khi gặp sự cố nghiêm trọng.\n- **Ví dụ**: Dùng `git reflog` và `git branch` để cứu lại commit bị xóa nhầm do reset hard chỉ trong 1 phút.\n- **Đừng nhầm**: Cứu hộ không phải là đoán mò; mọi thao tác đều dựa trên nhật ký di chuyển reflog chính xác của Git.\n\n### History Rewriting Mastery\n- **Nói dễ hiểu**: Khả năng làm chủ việc chỉnh sửa và tái cấu trúc lịch sử commit (rebase -i, squash, fixup, autosquash) trước khi chia sẻ ra cộng đồng.\n- **Ví dụ**: Gộp 10 commit nháp thành 2 commit chuẩn conventional với mô tả sắc nét trước khi mở Pull Request.\n- **Đừng nhầm**: Chỉ viết lại lịch sử trên nhánh cá nhân ở máy cục bộ, không bao giờ viết lại lịch sử trên nhánh chung đã push.\n\n### Binary Bug Hunting (git bisect)\n- **Nói dễ hiểu**: Phương pháp truy tìm commit phát sinh lỗi tự động với thuật toán chia đôi nhị phân đạt tốc độ $O(\\log N)$.\n- **Ví dụ**: Tìm ra commit làm hỏng chức năng thanh toán giữa 1.000 commit chỉ với 10 lần kiểm thử.\n- **Đừng nhầm**: Nhớ chạy `git bisect reset` sau khi xác định xong thủ phạm để đưa HEAD về nhánh làm việc an toàn.\n\n---\n\n## 📖 Định nghĩa\nAdvanced Git Challenge là bài sát hạch toàn diện kết thúc Level 5, yêu cầu phối hợp nhịp nhàng các kỹ thuật chuyên sâu: cứu hộ commit bằng reflog, biên tập lịch sử với interactive rebase, truy tìm lỗi bằng bisect và đóng gói mốc phát hành bằng annotated tag.\n\n---\n\n## 💡 Tại sao cần\nHọc lý thuyết từng lệnh là chưa đủ. Khả năng kết hợp linh hoạt reflog, rebase, bisect và worktree dưới áp lực tình huống thực chiến giúp bạn trở thành chuyên gia Git thực thụ, tự tin xử lý mọi sự cố phức tạp trong các dự án quy mô lớn.\n\n---\n\n## 🧠 Mental Model\nHãy hình dung bạn là bác sĩ phẫu thuật trưởng trong phòng cấp cứu. Kho mã nguồn gặp sự cố: một chi đứt rời cần nối lại (cứu commit bằng reflog), vết thương cần cắt lọc gọt giũa (rebase squash), chất độc cần xét nghiệm tìm nguồn (bisect) và cấp giấy xuất viện hoàn hảo (Annotated Tag).\n\n---\n\n## 📊 Sơ đồ minh họa\n```text\nKịch bản 4 chặng của Advanced Git Challenge:\n[Chặng 1: Reflog Rescue]      ──► Hồi sinh commit bị mất do reset hard\n               │\n               ▼\n[Chặng 2: Interactive Rebase] ──► Dọn dẹp, squash và reword chuỗi commit\n               │\n               ▼\n[Chặng 3: Git Bisect Hunt]    ──► Truy tìm commit bí mật đưa lỗi vào hệ thống\n               │\n               ▼\n[Chặng 4: Annotated Tag]      ──► Đóng gói mốc phát hành an toàn v2.0.0!\n```\n\n---\n\n## 🏢 Ví dụ thực tế\nKỹ sư nhận ca sự cố: nhánh `feature` bị reset hard mất code. Kỹ sư mở `git reflog` hồi sinh nhánh, dùng `git rebase -i` gộp commit nháp thành 2 commit chuẩn mực, chạy `git bisect` qua 4 bước nhị phân tìm ra commit lỗi ngầm, rồi gắn tag `v2.0.0` xuất sắc hoàn thành thử thách.\n\n---\n\n## 💻 Command & Cú pháp\n```bash\ngit reflog\ngit branch rescue-branch <commit-hash>\ngit rebase -i HEAD~<n>\ngit bisect start && git bisect bad && git bisect good <hash>\ngit tag -a v2.0.0 -m \"<thông-điệp-phát-hành>\"\n```\n\n---\n\n## 🔍 Giải thích command\n- `git reflog & git branch`: Bộ đôi cứu hộ tái sinh commit bị mất vào nhánh mới an toàn.\n- `git rebase -i`: Tinh chỉnh, nén commit và viết lại thông điệp chuẩn mực.\n- `git bisect`: Chia đôi lịch sử để truy vết commit phát sinh lỗi.\n- `git tag -a`: Đóng dấu niêm phong cột mốc sản phẩm hoàn thiện.\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Mất bình tĩnh khi đối mặt với sự cố**: Bình tĩnh giải quyết tuần tự từng bước theo quy trình đã học; Git gần như không bao giờ làm mất commit đã tạo.\n2. **Quên chạy `git bisect reset`**: Để sót trạng thái bisect dở dang khiến HEAD bị tách rời khỏi nhánh làm việc.\n3. **Lạm dụng force push bừa bãi**: Luôn dùng `--force-with-lease` thay vì `--force` khi cần cập nhật nhánh cá nhân sau khi rebase.\n\n---\n\n## 🧪 Lab thực hành\nBài học này là bài tự kiểm tra: bạn thao tác trực tiếp trên terminal của máy tính để làm quen với công cụ.\n1. Khởi động kịch bản thử thách nâng cao trên kho bài tập cá nhân.\n2. Sử dụng `git reflog` để tìm và khôi phục commit bị mất do thao tác reset mô phỏng.\n3. Chạy `git rebase -i` để sắp xếp và gộp lại các commit cho gọn gàng.\n4. Thực hiện `git bisect` để tìm commit gây lỗi và ghi nhận mã hash.\n5. Tạo thẻ Annotated Tag `v2.0.0` và kiểm tra lại lịch sử toàn diện.\n\n---\n\n## 💡 Hint & mẹo\n> Bình tĩnh kiểm tra reflog trước tiên, mọi dữ liệu trong Git đều có thể cứu được nếu đã từng commit.\n\n---\n\n## ✅ Validation & Kết quả mong đợi\n- Vượt qua 100% các tiêu chí sát hạch của bài thi thử thách Advanced Git Challenge.\n- Tự tin làm chủ hoàn toàn các công cụ cấp cao của Git trong môi trường dự án thực tế.\n\n---\n\n## ❓ Quiz nhanh\nHãy làm bài kiểm tra trắc nghiệm tổng kết toàn diện Level 5: Advanced Git.\n\n---\n\n## 🚀 Thử thách nâng cao\nKết hợp Git Hooks và Worktree để tự động chạy kiểm thử đơn vị trong một worktree ngầm mỗi khi bạn chuẩn bị commit mã nguồn.\n\n---\n\n## 📝 Tổng kết\n- Level 5 trang bị toàn bộ kỹ năng cứu hộ và biên tập lịch sử tối cao của Git.\n- Reflog, Rebase, Bisect và Worktree là bộ tứ vũ khí của mọi Git Master.\n- Tự tin bước tiếp sang Level 6: Team Workflows & Collaboration.\n",
+  "content": "# Advanced Git Challenge\n\n---\n\n## 🎯 Mục tiêu\n- Tổng hợp toàn bộ các kỹ thuật Git nâng cao đã học vào một kịch bản thử thách thực chiến phức tạp.\n- Tạo ref mới trỏ tới commit bị tách khỏi nhánh và xác nhận file đã commit còn đó.\n- Chọn một thao tác Interactive Rebase đã học và kiểm tra nội dung cùng lịch sử sau khi viết lại.\n- Tìm commit gây lỗi trong lịch sử thử nghiệm, kết thúc phiên bisect, rồi gắn tag có chú giải cho commit đã kiểm tra.\n\n---\n\n## 🧩 Từ khóa hôm nay\n\n### Git Rescue Specialist\n- **Nói dễ hiểu**: Kỹ sư thành thạo các kỹ thuật cứu hộ dữ liệu Git (reflog, revert, rebase) để giải cứu kho mã nguồn khi gặp sự cố nghiêm trọng.\n- **Ví dụ**: Dùng `git reflog` và `git branch` để cứu lại commit bị xóa nhầm do reset hard chỉ trong 1 phút.\n- **Đừng nhầm**: Reflog có thể hết hạn và chỉ giúp tìm commit đã từng được tham chiếu; nó không lưu file chưa commit.\n\n### History Rewriting Mastery\n- **Nói dễ hiểu**: Khả năng làm chủ việc chỉnh sửa và tái cấu trúc lịch sử commit (rebase -i, squash, fixup, autosquash) trước khi chia sẻ ra cộng đồng.\n- **Ví dụ**: Gộp 10 commit nháp thành 2 commit chuẩn conventional với mô tả sắc nét trước khi mở Pull Request.\n- **Đừng nhầm**: Rebase thay đổi commit hash; trước khi cập nhật nhánh đã chia sẻ, cần làm theo quy trình của nhóm.\n\n### Binary Bug Hunting (git bisect)\n- **Nói dễ hiểu**: Phương pháp truy tìm commit phát sinh lỗi tự động với thuật toán chia đôi nhị phân đạt tốc độ $O(\\log N)$.\n- **Ví dụ**: Với 1.000 commit và một mốc tốt, một mốc hỏng rõ ràng, bisect cần khoảng 10 lượt kiểm tra trong trường hợp lý tưởng.\n- **Đừng nhầm**: Sau khi tìm thấy thủ phạm, chạy `git bisect reset` để kết thúc phiên và quay lại vị trí ban đầu.\n\n---\n\n## 📖 Định nghĩa\nĐây là bài ôn tập cuối Level 5 gồm bốn phần ngắn: reflog recovery, interactive rebase, bisect và annotated tag. Hãy làm trong repository thử nghiệm riêng; interactive rebase và bisect có bước kiểm tra cần Git thật, không phải terminal mô phỏng.\n\n---\n\n## 💡 Tại sao cần\nBạn sẽ thực hành từng kỹ năng trên một repo có thể bỏ đi, xem Git thay đổi ref và file ra sao, rồi đối chiếu kết quả bằng `git status`, `git log` và `git show`.\n\n---\n\n## 🧠 Mental Model\nHãy hình dung bạn là bác sĩ phẫu thuật trưởng trong phòng cấp cứu. Kho mã nguồn gặp sự cố: một chi đứt rời cần nối lại (cứu commit bằng reflog), vết thương cần cắt lọc gọt giũa (rebase squash), chất độc cần xét nghiệm tìm nguồn (bisect) và cấp giấy xuất viện hoàn hảo (Annotated Tag).\n\n---\n\n## 📊 Sơ đồ minh họa\n```text\nKịch bản 4 chặng của Advanced Git Challenge:\n[Chặng 1: Reflog Rescue]      ──► Hồi sinh commit bị mất do reset hard\n               │\n               ▼\n[Chặng 2: Interactive Rebase] ──► Dọn dẹp, squash và reword chuỗi commit\n               │\n               ▼\n[Chặng 3: Git Bisect Hunt]    ──► Truy tìm commit bí mật đưa lỗi vào hệ thống\n               │\n               ▼\n[Chặng 4: Annotated Tag]      ──► Đóng gói mốc phát hành an toàn v2.0.0!\n```\n\n---\n\n## 🏢 Ví dụ thực tế\nKỹ sư nhận ca sự cố: nhánh `feature` bị reset hard mất code. Kỹ sư mở `git reflog` hồi sinh nhánh, dùng `git rebase -i` gộp commit nháp thành 2 commit chuẩn mực, chạy `git bisect` qua 4 bước nhị phân tìm ra commit lỗi ngầm, rồi gắn tag `v2.0.0` xuất sắc hoàn thành thử thách.\n\n---\n\n## 💻 Command & Cú pháp\n```bash\ngit reflog\ngit branch rescue-branch <commit-hash>\ngit rebase -i HEAD~<n>\ngit bisect start\ngit bisect bad\ngit bisect good <commit-tot>\ngit bisect reset\ngit tag -a v2.0.0 -m \"<thông-điệp-phát-hành>\"\n```\n\n---\n\n## 🔍 Giải thích command\n- `git reflog` và `git branch`: Tìm một commit còn tham chiếu được rồi tạo nhánh mới trỏ tới nó.\n- `git rebase -i`: Tinh chỉnh, nén commit và viết lại thông điệp chuẩn mực.\n- `git bisect`: Chia đôi lịch sử để truy vết commit phát sinh lỗi.\n- `git tag -a`: Tạo tag có metadata; chỉ gắn sau khi xác nhận commit đúng.\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Dùng repo đang làm việc để thử reset/rebase**: Dùng repo riêng, xác nhận `git status` sạch và sao lưu nội dung cần giữ.\n2. **Cho rằng reflog giữ commit vô thời hạn hoặc cứu file chưa commit**: Reflog có thể hết hạn; commit hóa hoặc sao lưu công việc trước.\n3. **Xem `--force-with-lease` là không có rủi ro**: Cờ này giảm khả năng ghi đè cập nhật mới, nhưng vẫn cần quyền và phối hợp với người dùng nhánh.\n\n---\n\n## 🧪 Lab thực hành\nChạy bốn phần theo thứ tự trong một repo thử nghiệm mới bằng Git thật. Không dùng repo dự án đang làm.\n\n**A. Cứu commit**\n1. Tạo commit nền có `README.md`, sau đó commit `recovery.txt` với nội dung `keep this`.\n2. Ghi lại hash, chạy `git reset --hard HEAD~1`, rồi dùng `git reflog` tìm commit vừa rời khỏi nhánh.\n3. Chạy `git branch rescue <hash>`, rồi `git switch rescue`; xác nhận `recovery.txt` còn nội dung `keep this`.\n\n**B. Sửa lịch sử riêng**\n4. Trên một nhánh thử nghiệm chưa chia sẻ, tạo ba commit có thông điệp dễ nhận biết.\n5. Chạy `git rebase -i HEAD~3`; đổi một message bằng `reword` hoặc gộp hai commit liên quan bằng `squash`/`fixup`. Lưu todo list.\n6. Chạy `git log --oneline -4` và `git status`; xác nhận nội dung cần giữ vẫn còn và hash đã thay đổi.\n\n**C. Tìm commit lỗi**\n7. Dùng repo bisect riêng theo setup ở bài 20: mốc tốt, mốc hỏng và một file kiểm tra rõ kết quả.\n8. Ghi lại hash commit đầu tiên bị lỗi, sau đó chạy `git bisect reset`.\n\n**D. Gắn tag**\n9. Chỉ sau khi kiểm tra commit mục tiêu, chạy `git tag -a practice-v0.1 -m \"Practice release\"` và `git show practice-v0.1`.\n10. Xóa tag thử nghiệm bằng `git tag -d practice-v0.1` nếu đây không phải tag cần giữ.\n\n---\n\n## 💡 Hint & mẹo\n> Trước khi thử: chạy `git status`, dùng repo riêng, ghi lại hash trước thao tác viết lại lịch sử và kiểm tra lại file sau mỗi chặng.\n\n---\n\n## ✅ Validation & Kết quả mong đợi\n- Tạo được nhánh `rescue` trỏ đúng commit đã reset và mở lại file đã commit.\n- Hoàn thành một thao tác interactive rebase, tìm được commit lỗi bằng bisect và tạo/xem được annotated tag.\n- Sau mỗi phần, nêu được thay đổi nào có thể khôi phục và điều kiện nào có thể làm thao tác thất bại.\n\n---\n\n## ❓ Quiz nhanh\nHãy làm bài kiểm tra trắc nghiệm tổng kết toàn diện Level 5: Advanced Git.\n\n---\n\n## 🚀 Thử thách nâng cao\nKết hợp Git Hooks và Worktree để tự động chạy kiểm thử đơn vị trong một worktree ngầm mỗi khi bạn chuẩn bị commit mã nguồn.\n\n---\n\n## 📝 Tổng kết\n- Reflog giúp tìm commit còn được ghi nhận; nó không thay thế sao lưu.\n- Rebase viết lại commit; bisect tìm mốc lỗi; annotated tag lưu nhãn cùng metadata.\n- Tự tin bước tiếp sang Level 6: Team Workflows & Collaboration.\n",
   "quiz": {
     "id": "quiz-05-22-advanced-git-challenge",
     "title": "Trắc nghiệm tổng kết: Master Advanced Git",
     "questions": [
       {
         "id": "q1",
-        "question": "Bộ công cụ nào sau đây đại diện cho sức mạnh cứu hộ và kiểm soát lịch sử tối cao của Git?",
+        "question": "Bộ công cụ nào ghép đúng từng việc đã học trong Level 5?",
         "type": "single",
         "options": [
           {
@@ -67,11 +65,11 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "Bộ tứ Reflog, Interactive Rebase, Bisect và Worktree là đỉnh cao làm chủ Git của mọi kỹ sư chuyên nghiệp."
+        "explanation": "Reflog giúp tìm ref cũ, interactive rebase chỉnh chuỗi commit, bisect thu hẹp nơi phát sinh lỗi, còn worktree mở thư mục làm việc song song."
       },
       {
         "id": "q2",
-        "question": "Khi bạn cần hoàn tác một commit trên nhánh `main` chung mà không muốn làm hỏng lịch sử của đồng nghiệp, lệnh nào là lựa chọn duy nhất đúng?",
+        "question": "Với commit đã chia sẻ trên `main`, lệnh nào thường được dùng để thêm một commit đảo thay đổi?",
         "type": "single",
         "options": [
           {
@@ -91,7 +89,7 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "`git revert` tạo commit đối nghịch mới mà không viết lại lịch sử, an toàn tuyệt đối cho nhánh dùng chung."
+        "explanation": "`git revert` giữ commit cũ và thêm commit đảo thay đổi. Hãy review diff và làm theo quy ước của nhóm."
       },
       {
         "id": "q3",
@@ -115,15 +113,15 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "Cặp đôi `--fixup` và `--autosquash` tự động hóa hoàn toàn việc vá lỗi hồi tố vào commit cũ."
+        "explanation": "`--autosquash` sắp xếp commit fixup trong todo list; hãy kiểm tra danh sách và xử lý conflict nếu có trước khi hoàn tất rebase."
       },
       {
         "id": "q4",
-        "question": "Sau khi hoàn thành xuất sắc toàn bộ 22 bài học của Level 5, năng lực thực chiến của bạn được nâng lên tầm cao nào?",
+        "question": "Sau khi tìm thấy hash commit trong reflog, lệnh nào tạo nhánh cứu hộ mà không di chuyển nhánh hiện tại?",
         "type": "single",
         "options": [
           {
-            "text": "Làm chủ toàn bộ cỗ máy thời gian của Git, tự tin cứu hộ dữ liệu, tối ưu lịch sử và giải quyết xung đột cấp cao",
+            "text": "git branch rescue <commit-hash>",
             "correct": true
           },
           {
@@ -139,7 +137,7 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "Level 5 trang bị toàn bộ kỹ năng chuyên sâu giúp bạn trở thành chuyên gia Git cao cấp trong mọi đội ngũ kỹ thuật."
+        "explanation": "Lệnh này tạo ref nhánh mới trỏ tới commit đã tìm. Xác minh hash trước khi chạy và nhớ rằng reflog không khôi phục file chưa commit."
       },
       {
         "id": "q5",

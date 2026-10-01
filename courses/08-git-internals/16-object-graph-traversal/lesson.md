@@ -4,7 +4,7 @@
 
 ## 🎯 Mục tiêu
 - Nắm vững bản chất toán học của Git như một Đồ thị có hướng không chu trình (Directed Acyclic Graph - DAG).
-- Hiểu rõ khái niệm Reachability (Khả năng tiếp cận): đối tượng nào có thể chạm tới từ các References và đối tượng nào bị mồ côi (Dangling/Unreachable).
+- Hiểu reachability: object nào Git có thể lần tới từ các tham chiếu, index và reflog.
 - Sử dụng lệnh plumbing `git rev-list` và `git fsck` để duyệt toàn bộ đồ thị và phát hiện đối tượng mất kết nối.
 - Hiểu lý do tại sao các con trỏ trong Git luôn trỏ ngược từ tương lai về quá khứ.
 
@@ -17,25 +17,25 @@
 - **Ví dụ**: Mỗi commit mới tạo ra sẽ trỏ về commit cha cũ, bạn có thể đi lùi mãi về commit đầu tiên nhưng không bao giờ quay lại tương lai.
 - **Đừng nhầm**: Không phải cây đơn nhánh; Git hỗ trợ rẽ nhánh song song và hợp nhất nhiều nhánh lại với nhau (Merge).
 
-### Dangling Object / Unreachable Commit
-- **Nói dễ hiểu**: Đối tượng commit hoặc blob vẫn còn nằm trong `.git/objects/` nhưng không còn bất kỳ nhánh hay thẻ nào trỏ tới để tiếp cận.
-- **Ví dụ**: Khi bạn lỡ tay chạy `git reset --hard HEAD~1`, commit vừa bị bỏ rơi biến thành dangling commit.
-- **Đừng nhầm**: Chưa bị xóa khỏi ổ đĩa ngay; nó vẫn nằm đó trong 30 đến 90 ngày cho đến khi bộ dọn rác `git gc` dọn dẹp.
+### Unreachable object
+- **Nói dễ hiểu**: Object tồn tại trong object database nhưng Git không lần tới được từ các điểm bắt đầu đang xét.
+- **Ví dụ**: Commit bị bỏ khỏi đầu nhánh có thể vẫn còn trong reflog; dùng `git fsck --no-reflogs --unreachable` để tìm object không còn được reflog giữ lại.
+- **Đừng nhầm**: `dangling` là một trường hợp cụ thể của unreachable object. Thời gian object được giữ lại phụ thuộc cấu hình và thao tác bảo trì.
 
-### git fsck Command
-- **Nói dễ hiểu**: Lệnh plumbing kiểm tra tính toàn vẹn của hệ thống tệp tin và quét tìm tất cả các đối tượng mồ côi bị đứt kết nối.
-- **Ví dụ**: Chạy `git fsck --lost-found` để tìm lại mã SHA-1 của commit tưởng như đã mất sau khi reset nhầm.
-- **Đừng nhầm**: Không làm hỏng mã nguồn; đây là lệnh chỉ đọc an toàn dùng để kiểm tra sức khỏe và cứu hộ dữ liệu.
+### git fsck
+- **Nói dễ hiểu**: Lệnh kiểm tra tính toàn vẹn và kết nối giữa các object trong repository.
+- **Ví dụ**: `git fsck --no-reflogs --unreachable` bỏ qua reflog khi tính reachability để tìm object chỉ còn được reflog giữ.
+- **Đừng nhầm**: `--lost-found` ghi dữ liệu tham khảo vào `.git/lost-found`, nên không phải chế độ chỉ đọc thuần túy. Hãy tạo nhánh cứu hộ sau khi kiểm tra đúng commit.
 
 ---
 
 ## 📖 Định nghĩa
-Trong khoa học máy tính, lịch sử và cơ sở dữ liệu đối tượng của Git được mô hình hóa chính xác dưới dạng một Đồ thị có hướng không chu trình (Directed Acyclic Graph - DAG). Trong đồ thị này, các Đỉnh (Vertices/Nodes) là các đối tượng Commit, Tree, Blob, và các Cạnh có hướng (Directed Edges) là các con trỏ phụ thuộc trỏ ngược chiều thời gian (Commit trỏ về Commit cha, Commit trỏ về Root Tree, Tree trỏ về Blob). Tính chất "Không chu trình" (Acyclic) bảo đảm rằng không bao giờ có một commit nào có thể là tổ tiên của chính mình.
+Lịch sử commit của Git là đồ thị có hướng không chu trình (DAG). Một commit trỏ tới tree của nó và các commit cha; tree trỏ tới các entry con như tree hoặc blob. Khi tạo commit thông thường, các cạnh parent đi từ commit mới về commit đã có. Điều này cho phép Git biểu diễn nhánh rẽ và merge mà không tạo vòng lặp.
 
 ---
 
 ## 💡 Tại sao cần
-Hiểu rõ cấu trúc Đồ thị có hướng không chu trình (DAG) là chìa khóa then chốt để giải mã khái niệm "Khả năng tiếp cận" (Reachability) trong Git. Một đối tượng chỉ thực sự tồn tại có ý nghĩa nếu có ít nhất một con trỏ tham chiếu (nhánh làm việc, thẻ tag, hoặc HEAD) có thể duyệt tới nó theo các cạnh của đồ thị. Khi bạn xóa một nhánh hay reset commit, Git không hề xóa tệp tin ngay lập tức; đối tượng đó chỉ tạm thời trở thành Đối tượng mồ côi (Dangling Object) nằm lơ lửng trong đồ thị cho đến khi tiến trình dọn rác thu hồi.
+Reachability giải thích vì sao một commit không xuất hiện trong `git log --all` vẫn có thể còn trong repository. Git xác định điểm bắt đầu từ refs và index, và mặc định cũng xét reflog khi chạy `git fsck`. Vì vậy một commit vừa bị reset có thể chưa được báo unreachable. Object unreachable vẫn có thể được giữ lại một thời gian, nhưng không nên xem đó là bản sao lưu: garbage collection và cấu hình repository có thể làm object hết hạn.
 
 ---
 
@@ -47,20 +47,19 @@ Hãy tưởng tượng một cây cổ thụ sum suê xanh tốt trong một khu
 ## 📊 Sơ đồ minh họa
 ```text
 Mô hình Đồ thị DAG và Đối tượng mồ côi (Dangling):
-[Branch: main] ──► (Commit C3) ──► (Commit C2) ──► (Commit C1)  <── CÁC NODE REACHABLE
+[Branch: main] ──► (Commit C3) ──► (Commit C2) ──► (Commit C1)  <── REACHABLE
                          │
                          ▼
                     [Tree: T3] ──► [Blob: B1]
 
-(Commit D2) ──► (Commit D1)  <── BỊ CẮT ĐỨT (DANGLING / UNREACHABLE OBJECTS)
-     ▲
-     │ (Không có nhánh hay thẻ nào trỏ tới, nhưng tệp vẫn nằm trong .git/objects)
+(Commit D2) ──► (Commit D1)  <── UNREACHABLE NẾU KHÔNG CÒN ĐIỂM BẮT ĐẦU NÀO TRỎ TỚI
+     (Có thể còn trong object database; thời gian giữ lại không được bảo đảm)
 ```
 
 ---
 
 ## 🏢 Ví dụ thực tế
-Một kỹ sư phần mềm thực hiện lệnh `git reset --hard HEAD~3` và hoảng hốt nhận ra mình vừa làm mất một tính năng chưa kịp đẩy lên remote. Kỹ sư bình tĩnh mở terminal và chạy lệnh plumbing kiểm tra tính toàn vẹn của đồ thị: `git fsck --lost-found`. Git lập tức quét toàn bộ đồ thị DAG và thông báo: `dangling commit 8a7b6c5d4e3f`. Kỹ sư sử dụng lệnh `git cat-file -p 8a7b6c` để kiểm tra nội dung và xác nhận đúng là commit tính năng bị mất. Bằng cách gõ `git merge 8a7b6c` hoặc `git branch rescue-feature 8a7b6c`, toàn bộ nhánh mồ côi được nối lại vào thân cây chính của đồ thị DAG một cách ngoạn mục.
+Trong repository thử nghiệm, người học di chuyển đầu nhánh khỏi một commit rồi dùng `git fsck --no-reflogs --unreachable` để xem object không còn được reflog giữ lại. Họ kiểm tra một commit bằng `git show <object-id>` và chỉ khi xác nhận đúng mới neo nó bằng `git branch rescue-feature <object-id>`. Trong repository thật, bắt đầu bằng `git reflog` và tạo nhánh cứu hộ trước khi chạy lệnh dọn dẹp; việc khôi phục không được bảo đảm nếu object đã bị xóa.
 
 ---
 
@@ -69,8 +68,8 @@ Một kỹ sư phần mềm thực hiện lệnh `git reset --hard HEAD~3` và h
 # Đếm số lượng commit có thể tiếp cận trong toàn bộ đồ thị
 git rev-list --all --count
 
-# Quét và tìm tất cả các đối tượng bị mất liên kết (dangling)
-git fsck --unreachable
+# Tìm object không thể tiếp cận, kể cả commit còn trong reflog
+git fsck --no-reflogs --unreachable
 
 # Vẽ trực quan sơ đồ các nhánh của đồ thị DAG
 git log --graph --oneline --all
@@ -83,37 +82,60 @@ git rev-list HEAD
 
 ## 🔍 Giải thích command
 - `git rev-list --all --count`: Duyệt qua toàn bộ các con trỏ ref và đếm số lượng node commit tiếp cận được.
-- `git fsck --unreachable`: Rà soát toàn bộ tệp trong `.git/objects/` và in ra các mã băm không có đường đi từ bất kỳ ref nào.
+- `git fsck --no-reflogs --unreachable`: Tính reachability mà không dùng reflog làm điểm bắt đầu, rồi liệt kê object tồn tại nhưng không reachable.
 - `git log --graph --oneline --all`: Vẽ sơ đồ ASCII trực quan biểu diễn các cạnh hợp nhất và phân nhánh của đồ thị.
-- `git rev-list HEAD`: In ra danh sách toàn bộ các commit SHA-1 từ commit hiện tại ngược về root commit.
+- `git rev-list HEAD`: In các object ID commit từ commit hiện tại ngược về các tổ tiên của nó.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
 1. **Nghĩ rằng mũi tên trong Git trỏ từ quá khứ đến tương lai**: Con trỏ `parent` trong đối tượng commit luôn trỏ NGƯỢC từ commit con về commit cha (ngược chiều thời gian).
-2. **Lo sợ dữ liệu bị xóa mất ngay khi reset hard**: Các đối tượng commit vẫn nằm nguyên vẹn trong thư mục `.git/objects/` dưới dạng dangling objects và hoàn toàn có thể cứu hộ.
-3. **Không biết dùng `git fsck` khi gặp sự cố**: Vội vàng clone lại repo hoặc viết lại code từ đầu thay vì chỉ cần 1 lệnh để tìm lại commit bị mất.
+2. **Cho rằng reset luôn xóa commit ngay, hoặc luôn giữ commit đủ lâu**: Reset thường di chuyển ref; object có thể còn lại, nhưng thời hạn và khả năng cứu không được bảo đảm.
+3. **Chạy lệnh phá hủy để thử trên repo thật**: Tạo repository tạm riêng trước khi thực hành `reset --hard` hoặc tìm object unreachable.
 
 ---
 
 ## 🧪 Lab thực hành
 Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
 
-1. **Bước 1**: Xem đồ thị toàn diện của repository bằng lệnh `git log --graph --oneline --all`.
-2. **Bước 2**: Tạo một commit thử nghiệm, sau đó chạy `git reset --hard HEAD~1` để tách rời commit đó khỏi nhánh chính.
-3. **Bước 3**: Chạy lệnh `git fsck --unreachable` và tìm dòng `unreachable commit <mã_sha>`.
-4. **Bước 4**: Chạy `git branch rescue <mã_sha>` để nối lại commit mồ côi vào một nhánh mới và kiểm tra lại bằng `git log`.
+Chỉ làm các bước reset trong repository thử nghiệm mới, không làm trong repository dự án của bạn. Lệnh dưới đây dùng Bash/Git Bash:
+
+```bash
+mkdir git-fsck-lab
+cd git-fsck-lab
+git init
+git config user.name "Git Learner"
+git config user.email "learner@example.com"
+printf "first version\n" > note.txt
+git add note.txt
+git commit -m "first test commit"
+printf "second version\n" >> note.txt
+git add note.txt
+git commit -m "second test commit"
+
+# Chỉ làm trong repository thử nghiệm vừa tạo
+git reset --hard HEAD~1
+git fsck --no-reflogs --unreachable
+git show <object-id-of-unreachable-commit>
+git branch rescue <object-id-of-unreachable-commit>
+git log rescue -1
+```
+
+1. **Bước 1**: Tạo hai commit thử nghiệm bằng các lệnh trên.
+2. **Bước 2**: Sau lệnh reset, lấy ID của dòng `unreachable commit` do `git fsck` in ra.
+3. **Bước 3**: Thay `<object-id-of-unreachable-commit>` bằng ID đó để xem nội dung và tạo nhánh cứu hộ.
+4. **Bước 4**: Xác nhận commit đã được neo bằng `git log rescue -1`.
 
 ---
 
 ## 💡 Hint & mẹo
-> Mọi commit vừa bị mất do reset hard hay xóa nhầm nhánh đều có thể tìm lại được tức thì thông qua `git fsck` hoặc `git reflog` trước khi tiến trình `git gc` được kích hoạt.
+> Nếu lỡ di chuyển nhánh, hãy xem `git reflog` và neo commit đúng bằng một nhánh cứu hộ càng sớm càng tốt. Reflog và object chưa được bảo đảm tồn tại mãi.
 
 ---
 
 ## ✅ Validation & Kết quả mong đợi
-- Lệnh `git fsck` phát hiện chính xác mã băm của commit vừa bị reset.
-- Nhánh `rescue` được tạo ra khôi phục hoàn chỉnh 100% mã nguồn và lịch sử của commit tưởng như đã mất.
+- Trong repo thử nghiệm, `git fsck --no-reflogs --unreachable` liệt kê commit vừa bỏ khỏi nhánh.
+- `git show` xác nhận nội dung; `git branch rescue <object-id>` làm commit reachable qua nhánh cứu hộ.
 
 ---
 
@@ -130,5 +152,5 @@ Tại sao việc thiết kế con trỏ trỏ ngược về quá khứ (Commit t
 ## 📝 Tổng kết
 - Lịch sử Git là một Đồ thị có hướng không chu trình (Directed Acyclic Graph - DAG).
 - Các con trỏ parent luôn trỏ ngược chiều từ commit mới về commit tổ tiên.
-- Đối tượng không có con trỏ tham chiếu nào chạm tới được gọi là Unreachable/Dangling Object và có thể cứu hộ bằng `git fsck`.
-- Khái niệm Reachability giải thích cơ chế an toàn dữ liệu và quy trình thu gom rác tự động của Git.
+- Unreachable object còn trong object database nhưng không reachable từ các điểm bắt đầu; dangling là một trường hợp cụ thể.
+- `git fsck` giúp kiểm tra và tìm object, nhưng không thay thế backup và không bảo đảm phục hồi sau khi object đã bị thu hồi.

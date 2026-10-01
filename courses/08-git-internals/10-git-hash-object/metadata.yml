@@ -5,7 +5,7 @@ xp: 100
 keywords:
   - git hash-object
   - plumbing command
-  - sha-1 calculation
+  - sha-256 object format
   - write object
   - hands-on lab
 prerequisites:
@@ -14,8 +14,7 @@ objectives:
   - "Làm chủ lệnh plumbing quan trọng hàng đầu: git hash-object."
   - "Sử dụng các cờ cốt lõi: -w (write to database), --stdin (đọc từ luồng tiêu
     chuẩn), -t (chỉ định loại đối tượng)."
-  - Tự tay tạo ra một đối tượng Blob hợp lệ trong thư mục .git/objects/ mà không
-    cần dùng git add hay git commit.
+  - Tạo một blob object mà không cập nhật index hoặc tạo commit.
 commands:
   - echo "Hello Internals" | git hash-object -w --stdin
   - git hash-object -w myfile.txt

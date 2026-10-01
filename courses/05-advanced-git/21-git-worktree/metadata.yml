@@ -13,15 +13,12 @@ prerequisites:
 objectives:
   - "Hiểu rõ sự đột phá của tính năng `git worktree`: làm việc đồng thời trên
     nhiều nhánh ở nhiều thư mục khác nhau."
-  - "Khắc phục triệt để hạn chế của quy trình truyền thống: không cần phải stash
-    hay commit dở để chuyển nhánh."
+  - Mở thư mục làm việc riêng để xử lý nhánh khác mà không đổi nhánh trong thư mục hiện tại.
   - Sử dụng `git worktree add` để mở một không gian làm việc song song chỉ trong
     vài giây.
   - Quản lý danh sách và dọn dẹp an toàn các worktree bằng `git worktree list`
     và `git worktree remove`.
 commands:
-  - git worktree add <đường-dẫn-thư-mục> <tên-nhánh>
-  - git worktree add -b <nhánh-mới> <đường-dẫn>
+  - git worktree add -b <nhánh-mới> <đường-dẫn-thư-mục>
   - git worktree list
   - git worktree remove <đường-dẫn-thư-mục>
-  - git worktree prune

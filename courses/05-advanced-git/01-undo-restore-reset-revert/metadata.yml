@@ -16,8 +16,7 @@ objectives:
     chế hoàn tác: restore, reset và revert."
   - Hiểu rõ sự khác biệt giữa hoàn tác tệp tin trong Working Tree/Staging và
     hoàn tác commit trong lịch sử.
-  - Nhận thức tính an toàn của git revert khi làm việc trên các nhánh cộng tác
-    dùng chung so với git reset.
+  - Biết vì sao revert thường dễ phối hợp hơn reset khi commit đã được chia sẻ.
   - Lựa chọn chính xác câu lệnh hoàn tác phù hợp nhất cho từng tình huống phát
     sinh lỗi thực tế.
 commands:

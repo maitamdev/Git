@@ -13,5 +13,4 @@ objectives:
   - Giải thích được VCS giúp lưu và xem lại các mốc thay đổi.
   - Nhận ra rủi ro khi chỉ tạo nhiều bản sao thư mục thủ công.
   - Phân biệt mốc đã lưu với tệp đang sửa dở.
-commands:
-  - git --version
+commands: []

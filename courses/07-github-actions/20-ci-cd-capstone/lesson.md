@@ -3,166 +3,195 @@
 ---
 
 ## 🎯 Mục tiêu
-- Tổng hợp toàn bộ kiến thức Level 7 để thiết kế một đường ống CI/CD chuẩn doanh nghiệp hoàn chỉnh từ A đến Z.
-- Xây dựng quy trình tự động hóa đa tầng: Linting, Unit Testing, Matrix Build, Đóng gói Artifacts và Triển khai có phê duyệt.
-- Tích hợp bảo vệ nhánh Branch Protection Rules, quản lý Secrets an toàn và xử lý phục hồi lỗi linh hoạt.
-- Làm chủ kỹ năng tự động hóa chuyển giao phần mềm trong các môi trường doanh nghiệp thực tế.
+- Kết nối trigger, jobs, matrix, artifacts và environment thành một pipeline dễ đọc.
+- Phân biệt phần CI trong YAML với các thiết lập repo như required checks và phê duyệt môi trường.
+- Thực hành theo ví dụ có điều kiện tiên quyết rõ ràng; biết điểm nào phải thay bằng lệnh triển khai của dự án.
 
 ---
 
 ## 🧩 Từ khóa hôm nay
 
 ### End-to-End CI/CD Pipeline
-- **Nói dễ hiểu**: Chu trình tự động hóa hoàn chỉnh nối liền từ khoảnh khắc lập trình viên tạo Pull Request cho tới khi code được deploy an toàn trên môi trường sản xuất.
-- **Ví dụ**: Pipeline gồm các chặng: Lint mã nguồn -> Chạy test ma trận -> Đóng gói artifact -> Triển khai staging -> Duyệt thủ công -> Đưa lên production.
-- **Đừng nhầm**: Không chỉ là một file script bash đơn giản; đây là hệ thống phối hợp giữa nhiều Jobs, Runners và chính sách bảo mật đám mây.
+- **Nói dễ hiểu**: Pipeline nối các bước kiểm tra và phát hành theo trigger, điều kiện, quyền và cấu hình của repo.
+- **Ví dụ**: PR chạy lint/test; push vào `main` có thể tiếp tục build và deploy staging rồi chờ rule môi trường production.
+- **Đừng nhầm**: Một file YAML không tự cung cấp lệnh deploy, credentials, branch protection hay hạ tầng đích.
 
 ### Pipeline Quality Gate
-- **Nói dễ hiểu**: Cổng kiểm soát chất lượng tự động ngăn chặn mã nguồn đi tiếp nếu không vượt qua các tiêu chuẩn bắt buộc (độ bao phủ test, scan bảo mật, lint).
-- **Ví dụ**: Nếu Job `lint-and-security` báo lỗi, toàn bộ các Job đóng gói và triển khai phía sau sẽ bị hủy bỏ ngay lập tức.
-- **Đừng nhầm**: Không phải là thủ tục hành chính; đây là cơ chế chặn tự động bằng máy móc thông qua thuộc tính `needs:` và `status checks`.
+- **Nói dễ hiểu**: Điều kiện đã cấu hình quyết định job sau có chạy hay không; required status check có thể chặn merge.
+- **Ví dụ**: `build` khai báo `needs: [lint, audit, test]`, nên mặc định bị bỏ qua nếu một job tiên quyết lỗi hoặc bị bỏ qua.
+- **Đừng nhầm**: `needs` điều khiển luồng job; việc chặn merge cần chọn check trong branch protection/ruleset.
 
 ### Post-deployment Verification
 - **Nói dễ hiểu**: Bước kiểm tra sức khỏe tự động (Smoke Test) được thực thi ngay sau khi triển khai lên máy chủ nhằm xác nhận ứng dụng hoạt động bình thường.
-- **Ví dụ**: Bước curl endpoint `/health` để kiểm tra mã phản hồi HTTP 200 trước khi thông báo triển khai thành công.
+- **Ví dụ**: Sau deploy, `curl --fail "$APP_URL/health"` báo lỗi nếu endpoint không trả phản hồi thành công.
 - **Đừng nhầm**: Không phải là bài kiểm thử unit test nội bộ; đây là bài test tương tác trực tiếp với dịch vụ đang chạy trên server thật.
 
 ---
 
 ## 📖 Định nghĩa
-Bài học Capstone là thử thách thực chiến tổng hợp đỉnh cao của Level 7. Trong bài thực hành này, bạn sẽ vào vai một Kỹ sư DevOps trưởng (Lead DevOps Engineer) chịu trách nhiệm thiết kế, cấu hình và vận hành toàn bộ hạ tầng tự động hóa CI/CD cho một ứng dụng web thương mại điện tử hiện đại. Đường ống phải đáp ứng đầy đủ các tiêu chuẩn khắt khe nhất của ngành: kiểm tra an ninh, kiểm thử đa nền tảng, quản lý tạo phẩm và cổng triển khai sản xuất có kiểm duyệt.
+Bài này ghép các phần Level 7 thành một ví dụ workflow cho ứng dụng Node.js có `package-lock.json`, các script `lint`, `test`, `build` và script deploy do dự án cung cấp. Ví dụ minh họa quan hệ giữa các job; cần thay domain, command, policy, secrets và môi trường theo dự án thật. Không có một pipeline duy nhất đúng cho mọi nhóm.
 
 ---
 
 ## 💡 Tại sao cần
-Biết từng mảnh ghép lý thuyết riêng lẻ (events, jobs, steps, matrix, secrets) là chưa đủ để vận hành một hệ thống thực tế. Giá trị thực sự của một kỹ sư phần mềm chuyên nghiệp thể hiện ở khả năng kết nối tất cả các thành phần đó lại với nhau thành một cỗ máy hoạt động trơn tru, tin cậy, bảo vệ sự ổn định của hệ thống kinh doanh 24/7 trước hàng trăm thay đổi mã nguồn mỗi tuần.
+Biết từng khái niệm riêng lẻ chưa đủ để đọc một pipeline. Capstone giúp thấy trigger quyết định lúc chạy, `needs` quyết định thứ tự, artifact chuyển file, còn environment và branch rules được cấu hình ở repo. Pipeline giảm thao tác lặp nhưng không đảm bảo ứng dụng không lỗi.
 
 ---
 
 ## 🧠 Mental Model
-Hãy tưởng tượng bạn là tổng công trình sư thiết kế một nhà máy lọc dầu tự động hóa hoàn toàn. Dầu thô (mã nguồn mới) được đưa vào ống dẫn; hệ thống tự động lọc tạp chất và kiểm tra độ tinh khiết (CI lint và test); sau đó được phân tách thành các sản phẩm xăng dầu chuyên biệt theo ma trận tiêu chuẩn (matrix build); các sản phẩm đạt chuẩn được bơm vào kho bảo quản an toàn (artifacts); và cuối cùng, chỉ khi có chữ ký điện tử của giám đốc an toàn (environment approval), van dẫn mới được mở để cung cấp nhiên liệu ra thị trường (production deployment).
+Hãy hình dung một bưu cục: PR đưa kiện hàng qua các khâu kiểm tra song song; khi đạt, một bản build được niêm phong thành artifact. Push lên `main` có thể chuyển artifact sang staging. Production chỉ nhận kiện hàng khi rule môi trường được cấu hình và người có quyền duyệt.
 
 ---
 
 ## 📊 Sơ đồ minh họa
 ```text
-Kiến trúc Pipeline Capstone chuẩn Doanh nghiệp:
-[Event: PR to main]
-       │
-       ├─────────────────────────┐
-       ▼                         ▼
-[Job 1: Code Lint & Format]  [Job 2: Security & Secret Scan]
-       │                         │
-       └────────────┬────────────┘
-                    ▼
-[Job 3: Matrix Unit Test (Node 18, 20 on Ubuntu)]
-                    │
-                    ▼ (needs: [lint, security, test])
-[Job 4: Build Web Application & Upload Artifact]
-                    │
-                    ▼ (needs: build)
-[Job 5: Deploy to Staging Environment]
-                    │
-                    ▼ (needs: staging, on: push main)
-[Job 6: Deploy to Production (WAITING APPROVAL Gate)]
+PR hoặc push main
+       ├── lint ───────────┐
+       ├── dependency audit├── build + upload artifact
+       └── test matrix ────┘          │
+                              push main only
+                                      ▼
+                               deploy staging
+                                      ▼
+                         production environment rule
+                                      ▼
+                       deploy + smoke test /health
 ```
 
 ---
 
 ## 🏢 Ví dụ thực tế
-Một công ty khởi nghiệp chuẩn bị ra mắt nền tảng thanh toán trực tuyến. Lập trình viên hoàn thành bài tập Capstone bằng việc tạo hai tệp workflow: `ci.yml` kiểm soát chất lượng mã nguồn trên mọi Pull Request và `deploy.yml` tự động hóa việc đưa sản phẩm lên các máy chủ đám mây. Khi một thành viên trong nhóm mở PR thêm chức năng giỏ hàng, đường ống lập tức khởi động các Jobs kiểm tra song song: lint mã nguồn, quét mã độc, chạy ma trận bài kiểm thử trên các phiên bản Node. Khi PR được duyệt và gộp vào nhánh chính, đường ống triển khai tự động kích hoạt, tạo gói nén artifact, đẩy lên môi trường Staging và gửi yêu cầu phê duyệt cho giám đốc kỹ thuật trước khi đưa lên Production. Toàn bộ quy trình diễn ra tự động 100%, không một sai sót.
+Ví dụ giả định: PR chạy lint, dependency audit và test matrix; nếu repo đặt check làm required, merge phải chờ điều kiện đó. Push vào `main` tiếp tục build và lưu artifact, rồi gọi lệnh deploy của dự án cho staging. Job production tham chiếu environment; nếu reviewer rule đã cấu hình và gói repo hỗ trợ, Job chờ duyệt trước khi chạy. Kết quả vẫn cần smoke test, monitoring và rollback plan.
 
 ---
 
 ## 💻 Command & Cú pháp
 ```yaml
-# Cấu hình kiến trúc CI/CD Pipeline tổng thể
-name: Enterprise Capstone Pipeline
+# Ví dụ khung; cần có package-lock.json, npm scripts và scripts/deploy-*.sh của dự án
+name: Capstone CI and Deployment
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+
 jobs:
-  lint-and-audit:
+  lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
-          node-version: 20
+          node-version: 24
       - run: npm ci
       - run: npm run lint
 
-  matrix-test:
-    needs: lint-and-audit
+  dependency-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - run: npm ci
+      - run: npm audit --audit-level=high
+
+  test:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        node: [18, 20]
+        node: [22, 24]
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: ${{ matrix.node }}
       - run: npm ci
       - run: npm test
 
-  build-and-package:
-    needs: matrix-test
+  build:
+    needs: [lint, dependency-audit, test]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - run: npm ci && npm run build
-      - uses: actions/upload-artifact@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - run: npm ci
+      - run: npm run build
+      - uses: actions/upload-artifact@v7
         with:
           name: webapp-dist
           path: dist/
+          retention-days: 7
 
-  deploy-prod:
-    needs: build-and-package
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+  deploy-staging:
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    environment:
-      name: production
-      url: https://ecommerce.example.com
+    environment: staging
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: webapp-dist
           path: dist
-      - name: Deploy to Cloud
+      - name: Deploy to staging
+        run: ./scripts/deploy-staging.sh dist/
+
+  deploy-production:
+    needs: deploy-staging
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: webapp-dist
+          path: dist
+      - name: Deploy to production
         env:
-          PROD_KEY: ${{ secrets.PROD_API_KEY }}
-        run: echo "Deploying bundle to cloud cluster with key $PROD_KEY"
+          PROD_API_TOKEN: ${{ secrets.PROD_API_TOKEN }}
+        run: ./scripts/deploy-production.sh dist/
+      - name: Smoke test
+        env:
+          APP_URL: ${{ vars.PRODUCTION_URL }}
+        run: curl --fail --silent --show-error "$APP_URL/health"
 ```
+
+Trong ví dụ, `./scripts/deploy-staging.sh` và `./scripts/deploy-production.sh` là lệnh giả định phải có trong dự án. Nếu chưa có, thay bằng lệnh deploy của nền tảng đang dùng. Không đặt secret ở job kiểm thử; với nhà cung cấp cloud hỗ trợ, ưu tiên OIDC thay token dài hạn.
 
 ---
 
 ## 🔍 Giải thích command
-- `needs: [lint-and-audit]`: Đảm bảo job sau chỉ khởi chạy khi job trước thành công.
-- `strategy.matrix`: Chạy bài kiểm thử song song trên nhiều phiên bản Node.js.
-- `upload-artifact@v4` và `download-artifact@v4`: Lưu trữ và chuyển giao sản phẩm build giữa các Job độc lập.
-- `if: github.ref == 'refs/heads/main' && github.event_name == 'push'`: Đảm bảo chỉ deploy lên production khi commit đã vào nhánh `main`.
-- `environment: production`: Kích hoạt cổng kiểm duyệt thủ công và cách ly Secrets cấp độ môi trường.
+- `needs: [lint, dependency-audit, test]`: Chỉ cho phép build tiếp tục khi cả ba job tiên quyết thành công.
+- `strategy.matrix`: Tạo các Job test riêng cho Node 22 và 24; chúng có thể chạy song song tùy runner/concurrency.
+- `upload-artifact@v7` và `download-artifact@v8`: Chuyển thư mục build qua các Job; Action này không tự deploy.
+- `if`: Giới hạn deploy vào push trên `main`; PR chạy CI nhưng bỏ qua staging/production.
+- `environment: production`: Liên kết Job với môi trường; reviewer/branch rules và secret phải được cấu hình riêng trong repo.
+- `permissions: contents: read`: Giới hạn mặc định quyền token của workflow; chỉ thêm quyền khi một job thật sự cần.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Thiếu ràng buộc `needs` giữa các chặng**: Dẫn tới việc Job deploy chạy song song cùng lúc với Job test, có thể deploy nhầm mã nguồn đang bị lỗi.
-2. **Không phân tách quyền triển khai theo sự kiện**: Cho phép các sự kiện `pull_request` vô tình kích hoạt việc deploy lên hệ thống thật.
-3. **Quên kiểm tra sức khỏe sau triển khai**: Chỉ xem log deploy mà không kiểm tra xem website có thực sự phản hồi hay gặp lỗi sập server (500 Internal Server Error).
+1. **Thiếu `needs` giữa build và deploy**: Job deploy có thể chạy trước khi Artifact được tạo.
+2. **Không phân tách quyền theo sự kiện**: Workflow trên PR không nên được cấp credentials production; điều kiện trong YAML cần đi cùng quyền tối thiểu và protection rules.
+3. **Tưởng `environment: production` tự tạo phê duyệt**: Phải cấu hình Required reviewers hoặc rule khác trong Settings; khả năng dùng tùy gói/repo.
+4. **Chỉ xem log deploy**: Thêm smoke test và theo dõi dịch vụ; test thành công không thay thế monitoring hoặc rollback plan.
 
 ---
 
 ## 🧪 Lab thực hành
 Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
 
-1. **Bước 1**: Xây dựng hoàn chỉnh tệp `.github/workflows/ci-cd-capstone.yml` theo cấu trúc 4 tầng: Lint -> Matrix Test -> Build & Artifact -> Deploy.
-2. **Bước 2**: Cấu hình ma trận kiểm thử cho 2 phiên bản Node.js (18 và 20).
-3. **Bước 3**: Thiết lập môi trường `production` với tính năng Required reviewers trên GitHub repository.
-4. **Bước 4**: Mở Pull Request để kiểm tra chất lượng CI, sau đó tiến hành merge vào `main` để kích hoạt chặng Deploy và trải nghiệm cổng phê duyệt thực tế.
+1. **Bước 1**: Trước khi chạy ví dụ, xác nhận dự án có `package-lock.json` và scripts `lint`, `test`, `build`; nếu chưa có, dùng YAML để vẽ/đánh dấu luồng job mà chưa chạy thật.
+2. **Bước 2**: Đọc ma trận Node `22`/`24`; dự án thật nên chọn các phiên bản Node còn được hỗ trợ và phù hợp với người dùng.
+3. **Bước 3**: Xác định vì sao PR chỉ chạy CI còn push lên `main` mới đi tiếp staging/production.
+4. **Bước 4 (tùy chọn)**: Với repository có quyền truy cập và gói hỗ trợ, cấu hình environments, reviewer, variables/secrets rồi chạy workflow. Thay lệnh deploy giả định bằng lệnh của nền tảng đang dùng.
 
 ---
 
@@ -172,9 +201,10 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
 ---
 
 ## ✅ Validation & Kết quả mong đợi
-- Toàn bộ đồ thị pipeline hiển thị trực quan đẹp mắt trong giao diện GitHub Actions với các nhánh phụ thuộc rõ ràng.
-- Giai đoạn CI chạy tự động trên Pull Request và khóa nút Merge nếu có bài test thất bại.
-- Sau khi merge vào `main`, pipeline chạy tiếp đến bước Deploy Production và tạm dừng an toàn để chờ người kiểm duyệt bấm nút Approve.
+- Vẽ đúng DAG: lint, dependency audit, test matrix chạy độc lập; build đợi cả ba; staging chỉ chạy trên push `main`.
+- Biết required check phải được bật riêng trong branch protection/ruleset mới chặn merge.
+- Biết Job production chỉ chờ phê duyệt nếu environment rule đã cấu hình và repo/gói hỗ trợ.
+- Phân biệt placeholder deploy script với một lệnh deploy đã triển khai thật.
 
 ---
 
@@ -189,7 +219,7 @@ Thiết kế giải pháp tự động hoàn tác (Rollback Pipeline) khi bướ
 ---
 
 ## 📝 Tổng kết
-- Hoàn thành xuất sắc toàn bộ các khối kiến thức cốt lõi của GitHub Actions và đường ống CI/CD hiện đại.
-- Làm chủ từ cú pháp YAML, quản lý sự kiện, ma trận kiểm thử cho đến bảo mật bí mật và phê duyệt môi trường.
-- Sẵn sàng tự tin áp dụng tự động hóa chuyên nghiệp vào bất kỳ dự án phần mềm thực tế nào trong doanh nghiệp.
-- Xây dựng tư duy kỹ sư DevOps: viết mã luôn đi kèm với tự động hóa kiểm định và chuyển giao an toàn.
+- Pipeline là đồ thị job; `needs` điều khiển phụ thuộc, matrix tạo nhiều tổ hợp, artifact chuyển file.
+- Trigger/`if` giới hạn lúc deploy; repo settings mới cấu hình required checks và environment approvals.
+- Secrets cần quyền tối thiểu; không in ra log; lệnh deploy phải khớp hạ tầng thật.
+- CI/CD giúp phát hiện lỗi sớm hơn nhưng vẫn cần review, giám sát và phương án khôi phục.

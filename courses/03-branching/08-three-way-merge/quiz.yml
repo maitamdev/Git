@@ -1,97 +1,81 @@
 id: quiz-03-08-three-way-merge
-title: "Trắc nghiệm: Thuật toán Three-way merge"
+title: "Trắc nghiệm: Hợp nhất ba chiều"
 questions:
   - id: q1
-    question: Thuật toán Three-way merge của Git sử dụng chính xác 3 mốc snapshot
-      nào dưới đây để đối chiếu?
+    question: Khi hai nhánh đã có commit riêng, Git dựa vào những phiên bản nào để hợp nhất?
     type: single
     options:
-      - text: Commit tổ tiên chung gần nhất (Base), đỉnh nhánh hiện tại (Ours), và đỉnh
-          nhánh được gộp (Theirs)
+      - text: Tổ tiên chung, phiên bản của nhánh hiện tại và phiên bản của nhánh được gộp
         correct: true
-      - text: Ba commit đầu tiên khi dự án vừa được khởi tạo bằng git init
+      - text: Ba commit mới nhất bất kỳ trong repository
         correct: false
-      - text: Ba commit ngẫu nhiên do máy tính tự động chọn từ kho lưu trữ
+      - text: Chỉ phiên bản mới nhất của nhánh hiện tại
         correct: false
-      - text: Ba nhánh khác nhau của ba lập trình viên khác nhau
+      - text: Chỉ phiên bản đầu tiên được tạo bằng git init
         correct: false
-    explanation: Thuật toán 3 chiều đối chiếu Base, Ours và Theirs để nhận diện
-      chính xác từng bên đã thay đổi những gì.
+    explanation: Git so sánh Base, Ours và Theirs để biết mỗi nhánh đã thay đổi gì kể từ mốc chung.
   - id: q2
-    question: Điểm đặc biệt quan trọng nhất của một Merge Commit sinh ra từ
-      Three-way merge là gì?
+    question: Tổ tiên chung là gì trong tình huống hai nhánh phân kỳ?
     type: single
     options:
-      - text: Nó có hai (hoặc nhiều hơn) commit cha trỏ về đỉnh của các nhánh vừa được
-          hợp nhất
+      - text: Commit gần nhất mà lịch sử của cả hai nhánh cùng có trước khi tách
         correct: true
-      - text: Nó không có mã băm SHA nào cả
+      - text: Commit mới nhất trên nhánh được gộp
         correct: false
-      - text: Nó tự động xóa bỏ toàn bộ mã nguồn của nhánh con
+      - text: Tên gọi khác của nhánh main
         correct: false
-      - text: Nó không chứa bất kỳ dòng thông điệp mô tả nào
+      - text: Một tệp tạm do người dùng phải tự tạo
         correct: false
-    explanation: Merge Commit là một nút đặc biệt trong đồ thị DAG có 2 con trỏ cha
-      (parent commits).
+    explanation: Git dùng tổ tiên chung làm mốc để so sánh hai luồng thay đổi sau khi chúng tách ra.
   - id: q3
-    question: Nếu nhánh A sửa tệp `user.js` và nhánh B sửa tệp `product.js` kể từ
-      điểm rẽ nhánh chung, kết quả khi merge B vào A sẽ là gì?
+    question: Một nhánh sửa `about.html`, nhánh kia thêm `contact.html`. Thường điều gì xảy ra khi merge?
     type: single
     options:
-      - text: Git tự động hợp nhất thành công hoàn toàn và tạo ra một Merge Commit mới
-          mà không có xung đột
+      - text: Git có thể kết hợp tự động vì hai thay đổi nằm ở các tệp khác nhau
         correct: true
-      - text: Git sẽ báo lỗi xung đột nghiêm trọng và hủy bỏ toàn bộ thay đổi
+      - text: Git luôn báo conflict khi có hai nhánh
         correct: false
-      - text: Git sẽ xóa tệp product.js và chỉ giữ lại user.js
+      - text: Git xóa một tệp để chỉ giữ lại một nhánh
         correct: false
-      - text: Git bắt buộc lập trình viên phải chọn xóa một trong hai tệp
+      - text: Git tự tạo thêm một nhánh thứ ba
         correct: false
-    explanation: Thay đổi trên các tệp tin độc lập hoàn toàn không gây conflict; Git
-      tự động kết hợp cả hai tệp vào snapshot mới.
+    explanation: Thay đổi độc lập ở các tệp khác nhau thường có thể kết hợp tự động, dù vẫn cần kiểm tra kết quả.
   - id: q4
-    question: Lệnh nào cho phép bạn tra cứu trực tiếp mã băm của commit tổ tiên
-      chung giữa hai nhánh `main` và `feature`?
+    question: Git tạo merge commit có ý nghĩa gì sau khi hai nhánh phân kỳ?
     type: single
     options:
-      - text: git merge-base main feature
+      - text: Ghi trạng thái kết quả và nối hai lịch sử bằng hai commit cha
         correct: true
-      - text: git find-ancestor main feature
+      - text: Xóa tổ tiên chung khỏi lịch sử
         correct: false
-      - text: git common-root main feature
+      - text: Chứng minh rằng toàn bộ kiểm thử của ứng dụng đã thành công
         correct: false
-      - text: git parent-search main feature
+      - text: Đổi tên nhánh được gộp
         correct: false
-    explanation: "`git merge-base <branch1> <branch2>` in ra mã SHA của commit tổ
-      tiên chung gần nhất."
+    explanation: Merge commit nối đầu hai nhánh; việc kiểm thử vẫn cần được thực hiện riêng.
   - id: q5
-    question: Thông điệp commit mặc định mà Git tự động gợi ý khi tạo một Merge
-      Commit có dạng như thế nào?
+    question: Trong lệnh `git merge feature-contact`, nếu bạn đang đứng trên `main`, nhánh nào nhận kết quả?
     type: single
     options:
-      - text: Merge branch 'feature' into main (hoặc tương đương)
+      - text: "`main`, vì merge cập nhật nhánh hiện tại"
         correct: true
-      - text: Oops! An error occurred
+      - text: "`feature-contact`, vì tên nhánh đứng sau lệnh"
         correct: false
-      - text: Auto backup daily report
+      - text: Cả hai nhánh đều tự di chuyển đến cùng một commit
         correct: false
-      - text: Delete old files
+      - text: Không nhánh nào; lệnh chỉ xem lịch sử
         correct: false
-    explanation: Git tự động tạo message mặc định nêu rõ tên nhánh nguồn được gộp
-      vào nhánh đích.
+    explanation: Lệnh merge đưa thay đổi của nhánh nguồn vào nhánh hiện tại, nên cần kiểm tra mình đang đứng đúng nhánh.
   - id: q6
-    question: Khi trình soạn thảo tự động mở ra yêu cầu xác nhận thông điệp của
-      merge commit, bạn cần làm gì để hoàn tất quá trình merge?
+    question: Hai nhánh cùng sửa một đoạn nội dung theo cách không thể kết hợp tự động. Git thường làm gì?
     type: single
     options:
-      - text: Lưu tệp tin và đóng trình soạn thảo lại (ví dụ trong Nano bấm Ctrl+O rồi
-          Ctrl+X, hoặc trong Vim gõ :wq)
+      - text: Tạm dừng merge và yêu cầu người dùng giải quyết conflict
         correct: true
-      - text: Rút phích cắm điện máy tính ngay lập tức
+      - text: Tự chọn ngẫu nhiên nội dung của một bên
         correct: false
-      - text: Bấm phím Delete trên bàn phím liên tục
+      - text: Xóa cả hai nhánh
         correct: false
-      - text: Gõ thêm mật khẩu ngân hàng của bạn vào tệp
+      - text: Tạo merge commit và bỏ qua phần nội dung mâu thuẫn
         correct: false
-    explanation: Đóng trình soạn thảo sau khi lưu sẽ hoàn tất thao tác tạo Merge
-      Commit trong Git.
+    explanation: Khi không thể xác định cách kết hợp an toàn, Git dừng để người dùng chọn nội dung phù hợp.

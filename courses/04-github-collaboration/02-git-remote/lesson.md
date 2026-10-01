@@ -89,11 +89,12 @@ git remote remove <tên-bí-danh>
 ---
 
 ## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thực hành quản lý remote trên terminal và đối chiếu kết quả.
-1. Kiểm tra danh sách remote hiện tại bằng `git remote -v`.
-2. Thêm một liên kết remote thử nghiệm tên `backup` bằng `git remote add backup https://github.com/user/backup.git`.
-3. Chạy lại `git remote -v` để xác nhận cả origin và backup đều xuất hiện.
-4. Gỡ bỏ remote thử nghiệm bằng `git remote remove backup`.
+Thực hành trên Git Academy simulator hoặc một kho thử nghiệm. Các URL `example.com` dưới đây chỉ là dữ liệu giả; bài này không gửi code lên mạng.
+1. Chạy `git remote -v` để ghi lại cấu hình ban đầu.
+2. Thêm remote phụ với tên dành riêng cho bài tập: `git remote add training-backup https://example.com/team/project.git`.
+3. Đổi bí danh: `git remote rename training-backup training-archive` rồi chạy `git remote -v` để thấy tên mới.
+4. Đổi URL: `git remote set-url training-archive https://example.com/team/project-v2.git`; xác nhận URL đã đổi.
+5. Dọn cấu hình thử nghiệm bằng `git remote remove training-archive`, rồi kiểm tra lại bằng `git remote -v`.
 
 ---
 
@@ -114,7 +115,7 @@ Hãy hoàn thành các câu hỏi trắc nghiệm dưới đây để củng c�
 ---
 
 ## 🚀 Thử thách nâng cao
-Tìm hiểu file cấu hình `.git/config` bằng lệnh `cat .git/config` để xem cách Git lưu trữ các mục `[remote "origin"]` bên dưới hệ thống.
+Trong kho Git thật, mở `.git/config` bằng trình soạn thảo văn bản để tìm mục `[remote "origin"]`. Không sửa mục này trực tiếp; hãy đổi URL bằng `git remote set-url` để Git kiểm tra cấu hình.
 
 ---
 

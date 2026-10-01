@@ -13,10 +13,9 @@ export const lesson: CourseLesson = {
       "11-resolve-conflict"
     ],
     "objectives": [
-      "Hiểu rõ cơ chế hoạt động của lệnh cứu hộ khẩn cấp `git merge --abort`.",
-      "Nhận biết các tình huống thực tế nên chủ động hủy bỏ quá trình merge.",
-      "Khôi phục Working Tree và con trỏ HEAD về chính xác trạng thái sạch sẽ trước khi merge.",
-      "Tự tin xử lý tình huống merge nhầm nhánh mà không làm hỏng dữ liệu."
+      "Nhận biết merge đang dở và biết khi nào cần hủy.",
+      "Dùng `git merge --abort` rồi kiểm tra lại nhánh và working tree.",
+      "Nêu được giới hạn khôi phục khi đã có thay đổi chưa commit trước merge."
     ],
     "completion": {
       "theoryViewed": true,
@@ -32,159 +31,158 @@ export const lesson: CourseLesson = {
       "abort conflict"
     ],
     "commands": [
-      "git merge --abort",
       "git status",
-      "git merge --quit"
+      "git merge --abort"
     ]
   },
-  "content": "# Hủy bỏ quá trình merge với git merge --abort\n\n---\n\n## 🎯 Mục tiêu\n- Hiểu rõ cơ chế hoạt động của lệnh cứu hộ `git merge --abort`.\n- Nhận biết các tình huống nên chủ động hủy bỏ quá trình gộp nhánh.\n- Khôi phục thư mục làm việc và con trỏ HEAD về chính xác trạng thái an toàn trước khi merge.\n\n---\n\n## 🧩 Từ khóa hôm nay\n\n### git merge --abort — phanh khẩn cấp khi merge\n- **Nói dễ hiểu:** Câu lệnh hủy ngay quá trình gộp nhánh đang dở dang và đưa dự án về trạng thái an toàn ban đầu.\n- **Ví dụ:** Bạn lỡ gộp nhầm nhánh hoặc thấy có quá nhiều xung đột phức tạp, gõ `git merge --abort` để quay lại.\n- **Đừng nhầm:** Lệnh này chỉ chạy được khi đang có xung đột merge dở; bình thường gõ sẽ báo không có merge nào để hủy.\n\n### MERGE_HEAD — tệp đánh dấu đang gộp nhánh\n- **Nói dễ hiểu:** Tệp nội bộ do Git tự sinh ra trong `.git/` để ghi nhớ commit của nhánh đang được gộp vào.\n- **Ví dụ:** Khi đang gặp conflict, sự tồn tại của tệp này giúp Git biết tiến trình hợp nhất chưa kết thúc.\n- **Đừng nhầm:** Bạn không cần đụng vào tệp này; Git tự tạo khi bắt đầu merge và tự xóa khi bạn hoàn tất hoặc abort.\n\n### Working Tree Clean — trạng thái sạch sẽ\n- **Nói dễ hiểu:** Trạng thái thư mục làm việc không còn tệp nào sửa dở, không còn vạch xung đột và sẵn sàng làm việc tiếp.\n- **Ví dụ:** Sau khi chạy `git merge --abort`, `git status` báo `nothing to commit, working tree clean`.\n- **Đừng nhầm:** Sạch sẽ ở đây có nghĩa là không có thay đổi chưa lưu, không hề làm mất các commit cũ của bạn.\n\n---\n\n## 📖 Định nghĩa\n`git merge --abort` là lệnh cứu hộ trong Git cho phép bạn lập tức hủy bỏ quá trình hợp nhất đang diễn ra dở dang khi gặp xung đột. Lệnh này sẽ tự động xóa sạch các vạch đánh dấu xung đột và khôi phục toàn bộ thư mục làm việc trở về đúng trạng thái trước khi bạn chạy lệnh merge.\n\n---\n\n## 🤔 Tại sao cần?\nĐôi khi bạn gõ nhầm tên nhánh, hoặc khi mở tệp xung đột ra thì thấy quá nhiều dòng code lạ mà mình không nắm rõ. Thay vì sửa bừa làm hỏng code của cả nhóm, bạn chỉ cần gõ `git merge --abort` để quay lại vạch xuất phát an toàn, trao đổi với đồng đội rồi mới tiến hành merge lại sau.\n\n---\n\n## 🧠 Mental Model (Mô hình tư duy)\nHãy hình dung `git merge --abort` giống như nút bấm \"Hủy giao dịch\" trên cây ATM. Khi bạn đưa thẻ vào và lỡ bấm nhầm ngôn ngữ hoặc số tiền quá lớn, bạn không cần phải rút phích cắm điện của cây ATM; bạn chỉ việc bấm nút Hủy giao dịch để chiếc máy nhả thẻ ra nguyên vẹn và kết thúc phiên làm việc an toàn.\n\n---\n\n## 🖼 Sơ đồ\n```text\nCơ chế quay lui của git merge --abort:\nTrạng thái A (Sạch sẽ) ──(git merge)──> Trạng thái Conflict (Dở dang)\n        ▲                                          │\n        └─────────── git merge --abort ────────────┘\n         (Phục hồi nguyên vẹn trạng thái A ban đầu)\n```\n\n---\n\n## 🌎 Ví dụ thực tế\nBạn Tuấn định gộp nhánh `fix-button` vào `main`, nhưng gõ nhầm thành `git merge feature-huge-database`. Màn hình lập tức báo xung đột ở hơn 30 tệp tin. Biết mình đã gộp nhầm nhánh thử nghiệm dở dang của đồng nghiệp, Tuấn không hề hoảng sợ mà gõ ngay: `git merge --abort`. Ngay lập tức, toàn bộ các tệp xung đột biến mất, nhánh `main` trở lại sạch sẽ như cũ, sẵn sàng để Tuấn gõ lại lệnh merge nhánh đúng.\n\n---\n\n## 💻 Command\n```bash\ngit merge --abort\ngit status\n```\n\n---\n\n## 🔍 Giải thích command\n- `git merge --abort`: Hủy bỏ hoàn toàn tiến trình merge đang dở dang và đưa dự án về trạng thái trước khi merge.\n- `git status`: Kiểm tra lại trạng thái để xác nhận kho lưu trữ đã trở về trạng thái sạch sẽ hoàn toàn.\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Chạy abort khi không có merge nào đang dở:** Git sẽ báo lỗi `fatal: There is no merge to abort`.\n2. **Dùng `git reset --hard` thay vì `git merge --abort`:** Dù có thể cùng dọn sạch nhưng `git merge --abort` an toàn và chuyên trách hơn.\n3. **Cố chấp ngồi sửa hàng chục xung đột khi gộp nhầm nhánh:** Hãy abort ngay để tiết kiệm thời gian và tránh đưa nhầm code vào nhánh chính.\n\n---\n\n## 🧪 Lab\nBài tập này được thực hành trên môi trường Git mô phỏng của hệ thống:\n1. Nhận thấy kho lưu trữ đang ở trạng thái xung đột sau lệnh merge.\n2. Kiểm tra trạng thái bằng `git status` để thấy thông báo merge dở dang.\n3. Chạy câu lệnh cứu hộ `git merge --abort`.\n4. Chạy lại `git status` và xác nhận dòng chữ `nothing to commit, working tree clean`.\n\n---\n\n## 💡 Hint\nBất cứ khi nào bạn cảm thấy quá tải hoặc nghi ngờ mình gộp nhầm nhánh, hãy dùng `git merge --abort` để quay lại an toàn.\n\n---\n\n## ✅ Validation\n- Trạng thái kho lưu trữ trở về sạch sẽ (`working tree clean`).\n- Các vạch đánh dấu xung đột trong tệp hoàn toàn biến mất.\n\n---\n\n## ❓ Quiz\nTrả lời các câu hỏi sau để nắm vững cách dùng lệnh cứu hộ `git merge --abort`.\n\n---\n\n## 🔥 Challenge\nGiải thích vì sao lệnh `git merge --abort` lại có thể đưa thư mục làm việc về đúng trạng thái ban đầu mà không làm mất commit cũ nào.\n\n---\n\n## 📚 Tổng kết\n- `git merge --abort` là chiếc phanh khẩn cấp giúp hủy bỏ quá trình gộp nhánh khi gặp xung đột.\n- Khôi phục thư mục làm việc và con trỏ HEAD về mốc an toàn trước khi gõ lệnh merge.\n- Giúp bạn tự tin thao tác và thử nghiệm merge mà không sợ làm hỏng dự án.\n",
+  "content": "# Hủy merge đang dở bằng `git merge --abort`\n\n---\n\n## 🎯 Mục tiêu\n- Nhận biết khi repository đang dừng ở giữa một merge.\n- Dùng `git merge --abort` để hủy merge đang có conflict.\n- Kiểm tra lại nhánh và tệp sau khi hủy.\n\n---\n\n## 🧩 Từ khóa hôm nay\n\n### `git merge --abort` — hủy merge\n- **Nói dễ hiểu:** Dừng lần merge đang diễn ra và thử đưa working tree về trạng thái trước lúc merge.\n- **Ví dụ:** Bạn merge nhầm nhánh và Git báo conflict; sau khi xem `git status`, chạy `git merge --abort`.\n- **Đừng nhầm:** Lệnh chỉ dùng khi merge còn đang dở; nó không xóa commit đã tạo trước đó.\n\n### Merge in progress — merge đang diễn ra\n- **Nói dễ hiểu:** Git đã bắt đầu nối nhánh nhưng chưa hoàn tất commit hợp nhất.\n- **Ví dụ:** `git status` báo tệp trong `Unmerged paths`.\n- **Đừng nhầm:** Sửa tệp conflict chưa kết thúc merge; cần giải quyết và commit, hoặc hủy bằng abort.\n\n### Pre-merge changes — thay đổi có trước merge\n- **Nói dễ hiểu:** Những sửa đổi chưa commit đã có trong working tree trước khi bắt đầu merge.\n- **Ví dụ:** Bạn sửa `notes.txt` nhưng chưa commit rồi mới chạy lệnh merge.\n- **Đừng nhầm:** Git có thể không khôi phục đầy đủ các thay đổi này khi abort; hãy commit hoặc stash công việc trước khi merge.\n\n---\n\n## 📖 Định nghĩa\n`git merge --abort` hủy quá trình merge còn dở và cố gắng khôi phục working tree về trạng thái trước khi merge. Git không bảo đảm khôi phục trọn vẹn nếu đã có thay đổi chưa commit trước merge, vì vậy hãy bắt đầu merge từ working tree sạch.\n\n---\n\n## 🤔 Tại sao cần?\nKhi chọn nhầm nhánh hoặc chưa hiểu cách kết hợp nội dung, abort giúp bạn dừng lại để kiểm tra trước khi hoàn tất. Sau đó bạn có thể làm lại với nhánh đúng hoặc nhờ đồng đội xác nhận logic.\n\n---\n\n## 🧠 Mental Model (Mô hình tư duy)\nHãy coi merge như một thao tác đang được chuẩn bị. `git merge --abort` yêu cầu Git hủy thao tác dở đó và quay lại mốc làm việc trước merge, miễn là bạn không mang theo sửa đổi chưa lưu mà Git phải cố bảo toàn.\n\n---\n\n## 🖼 Sơ đồ\n```text\nWorking tree sạch\n       │ git merge\n       ▼\nMerge đang dở, có conflict\n       │ git merge --abort\n       ▼\nTrạng thái trước khi merge (Git cố gắng khôi phục)\n```\n\n---\n\n## 🌎 Ví dụ thực tế\nBạn định gộp `feature-search` nhưng lại gõ nhầm một nhánh thử nghiệm. Git báo conflict. Bạn xác nhận đúng là chọn nhầm, hủy merge, kiểm tra lại `main`, rồi mới quyết định bước tiếp theo. Các commit của nhánh nguồn vẫn còn; abort chỉ hủy lần hợp nhất đang dở.\n\n---\n\n## 💻 Command\n```bash\ngit status\ngit merge --abort\ngit status\n```\n\n---\n\n## 🔍 Giải thích command\n- `git status`: Trước khi abort, xác nhận đang có tệp chưa giải quyết.\n- `git merge --abort`: Hủy tiến trình merge hiện tại.\n- `git status`: Sau khi abort, xác nhận không còn merge dở và working tree trở về trạng thái trước đó.\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Cho rằng abort luôn phục hồi mọi sửa đổi chưa commit:** Git cảnh báo rằng thay đổi có trước merge có thể khó khôi phục chính xác.\n2. **Dùng abort khi không có merge dở:** Git báo không có merge để hủy.\n3. **Nghĩ abort xóa nhánh hoặc commit của nhánh nguồn:** Lệnh dừng lần merge; lịch sử hai nhánh vẫn còn.\n\n---\n\n## 🧪 Lab\nYêu cầu: bắt đầu từ `main`, repository có commit và working tree sạch. Dùng một tên nhánh mới nếu `feature-abort` đã tồn tại.\n1. Tạo `abort-demo.txt` trên `main` với dòng `Trạng thái: ban đầu`; add và commit.\n2. Chạy `git switch -c feature-abort`. Đổi dòng đó thành `Trạng thái: tính năng`; add và commit.\n3. Chạy `git switch main`. Đổi cùng dòng thành `Trạng thái: bản chính`; add và commit.\n4. Chạy `git merge feature-abort`. Khi Git báo conflict, xem `git status` và nội dung tệp.\n5. Chạy `git merge --abort`, rồi chạy lại `git status` và mở `abort-demo.txt`.\n6. Xác nhận tệp trở lại nội dung `Trạng thái: bản chính`, `main` không có merge dở. Chạy `git branch` để thấy `feature-abort` vẫn còn.\n\n---\n\n## 💡 Hint\nNếu kết quả khác dự kiến, đừng chạy thêm lệnh xóa hoặc reset. Xem `git status` và nhờ người hướng dẫn kiểm tra trạng thái trước.\n\n---\n\n## ✅ Validation\n- `git status` sau abort không còn mục `Unmerged paths` hoặc thông báo merge đang diễn ra.\n- `abort-demo.txt` trở về phiên bản đã commit trên `main` trước merge.\n- Nhánh `feature-abort` và commit của nó vẫn còn trong repository.\n\n---\n\n## ❓ Quiz\nTrả lời câu hỏi để kiểm tra khi nào nên hủy merge và những gì lệnh này khôi phục.\n\n---\n\n## 🔥 Challenge\nTrước khi merge, thử để working tree có một thay đổi chưa commit và giải thích vì sao đây là cách chuẩn bị không an toàn. Sau đó hoàn tác thay đổi trong lab hoặc làm lại trên repository thực hành riêng.\n\n---\n\n## 📚 Tổng kết\n- `git merge --abort` hủy một merge chưa hoàn tất và thử phục hồi trạng thái trước merge.\n- Commit hoặc stash công việc trước khi merge để giảm nguy cơ mất sửa đổi.\n- Abort không xóa nhánh hoặc commit nguồn.\n",
   "quiz": {
     "id": "quiz-03-12-merge-abort",
-    "title": "Trắc nghiệm: Hủy bỏ quá trình merge",
+    "title": "Trắc nghiệm: Hủy merge đang dở",
     "questions": [
       {
         "id": "q1",
-        "question": "Lệnh `git merge --abort` được sử dụng trong trường hợp nào là phù hợp nhất?",
+        "question": "Khi nào phù hợp để chạy `git merge --abort`?",
         "type": "single",
         "options": [
           {
-            "text": "Khi quá trình merge đang gặp xung đột (conflict) hoặc khi bạn lỡ merge nhầm nhánh và muốn quay lại ban đầu",
+            "text": "Khi một lần merge đang dở và bạn muốn hủy để kiểm tra lại",
             "correct": true
           },
           {
-            "text": "Khi bạn muốn xóa vĩnh viễn toàn bộ kho chứa Git",
+            "text": "Khi muốn xóa toàn bộ repository",
             "correct": false
           },
           {
-            "text": "Khi bạn muốn đẩy code lên máy chủ GitHub",
+            "text": "Khi muốn tải code lên GitHub",
             "correct": false
           },
           {
-            "text": "Khi bạn muốn tạo một commit mới",
+            "text": "Khi muốn tạo commit thông thường",
             "correct": false
           }
         ],
-        "explanation": "`--abort` là chiếc phanh an toàn giúp hủy bỏ tiến trình merge dở dang và quay về trạng thái sạch ban đầu."
+        "explanation": "Abort dừng lần merge chưa hoàn tất; trước hết dùng git status để xác nhận trạng thái."
       },
       {
         "id": "q2",
-        "question": "Sau khi chạy lệnh `git merge --abort`, các tệp tin trong Working Directory sẽ như thế nào?",
+        "question": "Git hứa hẹn điều gì khi dùng `git merge --abort`?",
         "type": "single",
         "options": [
           {
-            "text": "Được phục hồi nguyên vẹn 100% về trạng thái trước khi bạn thực hiện câu lệnh git merge",
+            "text": "Cố gắng khôi phục trạng thái trước merge; thay đổi chưa commit có thể khiến việc khôi phục không trọn vẹn",
             "correct": true
           },
           {
-            "text": "Bị xóa sạch toàn bộ khỏi ổ cứng",
+            "text": "Luôn phục hồi chính xác mọi byte, kể cả sửa đổi chưa commit",
             "correct": false
           },
           {
-            "text": "Vẫn giữ nguyên các vạch đánh dấu xung đột conflict markers",
+            "text": "Xóa cả nhánh hiện tại và nhánh nguồn",
             "correct": false
           },
           {
-            "text": "Tự động được tải lên trang web của công ty",
+            "text": "Đẩy các tệp conflict lên remote",
             "correct": false
           }
         ],
-        "explanation": "Git dọn dẹp sạch sẽ các conflict markers và trả lại trạng thái trước khi ra lệnh merge."
+        "explanation": "Tài liệu Git cảnh báo rằng thay đổi chưa commit trước merge có thể không được khôi phục đầy đủ."
       },
       {
         "id": "q3",
-        "question": "Điều gì sẽ xảy ra nếu bạn chạy `git merge --abort` khi kho lưu trữ đang ở trạng thái bình thường (không có merge dở dang)?",
+        "question": "Kết quả mong đợi sau khi abort thành công là gì?",
         "type": "single",
         "options": [
           {
-            "text": "Git sẽ in thông báo lỗi: `fatal: There is no merge to abort`",
+            "text": "Không còn tiến trình merge dở; working tree trở về trạng thái trước merge nếu có thể",
             "correct": true
           },
           {
-            "text": "Git sẽ tự động tạo một merge commit ngẫu nhiên",
+            "text": "Mọi commit trên nhánh nguồn bị xóa",
             "correct": false
           },
           {
-            "text": "Máy tính sẽ tự động tắt nguồn",
+            "text": "Git tự chọn một phía và tạo merge commit",
             "correct": false
           },
           {
-            "text": "Toàn bộ lịch sử commit bị xóa sạch",
+            "text": "Repository bị chuyển sang detached HEAD",
             "correct": false
           }
         ],
-        "explanation": "Lệnh abort chỉ có hiệu lực khi đang tồn tại một tiến trình merge dở dang (có tệp .git/MERGE_HEAD)."
+        "explanation": "Abort hủy lần merge hiện tại chứ không xóa lịch sử hoặc nhánh được đưa vào."
       },
       {
         "id": "q4",
-        "question": "Tại sao `git merge --abort` lại được khuyến nghị sử dụng hơn là `git reset --hard` khi muốn thoát merge conflict?",
+        "question": "Điều nên làm trước khi bắt đầu merge để giảm rủi ro khi phải abort là gì?",
         "type": "single",
         "options": [
           {
-            "text": "Vì nó là lệnh chuyên trách rõ nghĩa, an toàn và bảo vệ các thay đổi chưa commit từ trước tốt hơn",
+            "text": "Commit hoặc stash thay đổi đang làm và kiểm tra working tree sạch",
             "correct": true
           },
           {
-            "text": "Vì git reset --hard chỉ chạy được trên máy tính chạy hệ điều hành macOS",
+            "text": "Xóa thư mục `.git`",
             "correct": false
           },
           {
-            "text": "Vì git reset --hard bắt buộc phải có kết nối mạng Internet",
+            "text": "Đổi tên mọi tệp trong repository",
             "correct": false
           },
           {
-            "text": "Vì git merge --abort tự động giải quyết xung đột bằng trí tuệ nhân tạo",
+            "text": "Tạo thêm một merge commit rỗng",
             "correct": false
           }
         ],
-        "explanation": "`--abort` được thiết kế chuyên biệt cho ngữ cảnh merge, tránh các rủi ro xóa nhầm dữ liệu của reset hard."
+        "explanation": "Bắt đầu merge từ trạng thái sạch giúp bạn biết phần nào thuộc về merge và giảm nguy cơ mất sửa đổi."
       },
       {
         "id": "q5",
-        "question": "Dấu hiệu nào trong thư mục `.git` cho biết hệ thống đang ở giữa một tiến trình merge dở dang?",
+        "question": "Nếu chạy `git merge --abort` khi không có merge nào đang dở, điều gì xảy ra?",
         "type": "single",
         "options": [
           {
-            "text": "Sự tồn tại của tệp `.git/MERGE_HEAD` chứa mã băm của commit đang được gộp",
+            "text": "Git báo rằng không có merge để hủy",
             "correct": true
           },
           {
-            "text": "Tệp tin `.git/PASSWORDS` bị rò rỉ",
+            "text": "Git tự tạo một nhánh mới",
             "correct": false
           },
           {
-            "text": "Thư mục `.git` bị biến mất hoàn toàn",
+            "text": "Toàn bộ commit bị xóa",
             "correct": false
           },
           {
-            "text": "Đèn bàn phím máy tính nhấp nháy liên tục",
+            "text": "Git chạy git reset --hard thay bạn",
             "correct": false
           }
         ],
-        "explanation": "Git tạo tệp tin `.git/MERGE_HEAD` để ghi nhận commit đang merge; khi abort hoặc commit xong, tệp này bị xóa đi."
+        "explanation": "Abort cần một tiến trình merge chưa kết thúc; lệnh không phải cách hoàn tác chung."
       },
       {
         "id": "q6",
-        "question": "Lệnh `git merge --quit` khác với `git merge --abort` ở điểm cơ bản nào?",
+        "question": "Sau khi abort, điều gì vẫn còn nếu lệnh thành công?",
         "type": "single",
         "options": [
           {
-            "text": "`--quit` hủy bỏ trạng thái merge nhưng vẫn giữ nguyên các thay đổi hiện tại trong thư mục làm việc",
+            "text": "Nhánh nguồn và các commit đã có của nhánh đó",
             "correct": true
           },
           {
-            "text": "`--quit` tự động tắt màn hình máy tính",
+            "text": "Merge đang dở cùng các conflict markers",
             "correct": false
           },
           {
-            "text": "`--quit` xóa sạch tất cả các commit cũ",
+            "text": "Một merge commit mới",
             "correct": false
           },
           {
-            "text": "Hai cờ này hoàn toàn giống nhau không có khác biệt nào",
+            "text": "Toàn bộ thay đổi chưa commit chắc chắn được xóa an toàn",
             "correct": false
           }
         ],
-        "explanation": "`--abort` hoàn tác cả Working Tree và Staging Area về ban đầu, trong khi `--quit` chỉ dọn trạng thái merge mà để lại file dở dang."
+        "explanation": "Abort dừng lần merge nhưng không xóa nhánh nguồn hay các commit đã tạo trước đó."
       }
     ]
   }

@@ -41,10 +41,10 @@ questions:
         correct: false
     explanation: "Vì Blob chỉ lưu dữ liệu thô, git cat-file sẽ giải nén và in thẳng dữ liệu nhị phân của ảnh ra dòng lệnh."
   - id: q4
-    question: "Bạn có thể cung cấp bao nhiêu ký tự tối thiểu của mã băm cho lệnh git cat-file?"
+    question: "Khi nào tiền tố rút gọn của object ID dùng được với git cat-file?"
     type: single
     options:
-      - text: "Tối thiểu từ 4 ký tự trở lên, miễn là chuỗi đó không bị trùng lặp với đối tượng khác"
+      - text: "Khi tiền tố đủ dài để xác định duy nhất object trong repository"
         correct: true
       - text: "Bắt buộc phải đủ 40 ký tự"
         correct: false
@@ -52,7 +52,7 @@ questions:
         correct: false
       - text: "Chính xác 8 ký tự, không được thừa hay thiếu"
         correct: false
-    explanation: "Git hỗ trợ cơ chế Short Hash: bạn chỉ cần cung cấp đủ số ký tự đầu để phân biệt duy nhất đối tượng trong kho lưu trữ."
+    explanation: "Tiền tố rút gọn phải không mơ hồ trong repo; số ký tự cần thiết thay đổi theo object set và hash format."
   - id: q5
     question: "Tùy chọn --batch trong lệnh git cat-file thường được sử dụng trong trường hợp nào?"
     type: single

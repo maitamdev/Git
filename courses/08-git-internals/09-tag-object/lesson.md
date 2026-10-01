@@ -5,22 +5,22 @@
 ## 🎯 Mục tiêu
 - Phân biệt rõ ràng giữa Lightweight Tag (thẻ rút gọn) và Annotated Tag (thẻ có chú thích lưu thành đối tượng riêng).
 - Khám phá cấu trúc của đối tượng Tag trong cơ sở dữ liệu: object trỏ tới, type, tag name, tagger và message.
-- Sử dụng các lệnh plumbing để kiểm tra tính toàn vẹn và chữ ký số GPG gắn trên đối tượng Tag.
-- Hiểu vị trí lưu trữ vật lý của tag trong `.git/refs/tags/`.
+- Kiểm tra object của annotated tag và hiểu rằng chữ ký chỉ có khi tag được ký.
+- Hiểu `refs/tags/` là namespace logic; Git có thể lưu refs ở dạng file rời hoặc trong kho refs khác.
 
 ---
 
 ## 🧩 Từ khóa hôm nay
 
 ### Annotated Tag Object
-- **Nói dễ hiểu**: Loại đối tượng Git độc lập lưu trong `.git/objects/` chứa thông tin đầy đủ về người ký duyệt, ngày giờ, thông điệp và con trỏ trỏ tới đối tượng đích.
+- **Nói dễ hiểu**: Object riêng chứa object đích, tagger (nếu có), thông điệp và có thể có chữ ký nếu tag được ký.
 - **Ví dụ**: Tạo bằng lệnh `git tag -a v1.0.0 -m "Release v1.0.0"` sinh ra mã băm đối tượng riêng trong database.
-- **Đừng nhầm**: Không chỉ là một con trỏ commit đơn thuần; đây là đối tượng đầy đủ có metadata kiểm toán không thể chối cãi.
+- **Đừng nhầm**: `git tag -a` không tự ký tag. Thông tin tagger không tự chứng minh người đó được tổ chức ủy quyền.
 
 ### Lightweight Tag Reference
-- **Nói dễ hiểu**: Thẻ rút gọn chỉ gồm duy nhất một file văn bản nhỏ trong `.git/refs/tags/` ghi mã SHA-1 của commit mục tiêu, không tạo đối tượng mới.
+- **Nói dễ hiểu**: Lightweight tag là ref trỏ thẳng tới object đích, không tạo tag object riêng.
 - **Ví dụ**: Tạo bằng lệnh `git tag v1.0.0-draft` chỉ đóng vai trò như một nhãn bookmark tạm thời.
-- **Đừng nhầm**: Khi chạy `git cat-file -t` trên lightweight tag, kết quả trả về là `commit` chứ không phải `tag`.
+- **Đừng nhầm**: `git cat-file -t` trả loại của object đích; với tag được tạo mặc định trên commit, kết quả là `commit`.
 
 ### Tagger Metadata
 - **Nói dễ hiểu**: Trường dữ liệu ghi lại danh tính người tạo thẻ và dấu thời gian thực hiện gắn thẻ phiên bản.
@@ -30,17 +30,17 @@
 ---
 
 ## 📖 Định nghĩa
-Trong Git, có hai loại Tag: Lightweight Tag (chỉ là một con trỏ tham chiếu đơn giản ghi thẳng mã băm của commit vào một tệp văn bản trong `.git/refs/tags/`) và Annotated Tag (được lưu trữ như một Đối tượng Tag chính thức trong Object Database). Đối tượng Tag chứa một con trỏ trỏ tới đối tượng mục tiêu (thường là commit, nhưng có thể là tree hoặc blob), tên thẻ phiên bản, thông tin người gắn thẻ (Tagger), dấu thời gian và thông điệp chú thích phát hành.
+Lightweight tag là ref trỏ trực tiếp tới object; annotated tag tạo thêm tag object chứa object đích, tagger, thời gian và thông điệp. Có thể ký annotated tag bằng `-s` nếu đã cấu hình khóa ký; chữ ký cần được xác minh và khóa tin cậy riêng. Namespace `refs/tags/` là cách gọi logic; refs không nhất thiết nằm thành file riêng trong `.git/refs/tags/`.
 
 ---
 
 ## 💡 Tại sao cần
-Khi đánh dấu một cột mốc phát hành phiên bản phần mềm quan trọng (như v1.0.0 hay v2.4.0), bạn cần lưu giữ vĩnh viễn ai là người phê duyệt phát hành phiên bản đó, vào thời gian nào, cùng với ghi chú phát hành (Release Notes) chi tiết và chữ ký số mã hóa chống giả mạo. Annotated Tag cung cấp đầy đủ các thuộc tính này như một đối tượng bất biến độc lập trong cơ sở dữ liệu, đảm bảo bằng chứng xác thực không thể bị chối bỏ.
+Annotated tag phù hợp khi cần lưu thông điệp và thông tin tagger cho một mốc phát hành; có thể ký tag để người nhận kiểm tra chữ ký. Tag object không tự đảm bảo tag ref sẽ không bị đổi/xóa, và chữ ký chỉ có ý nghĩa khi người xác minh tin cậy đúng khóa ký.
 
 ---
 
 ## 🧠 Mental Model
-Hãy so sánh việc dán một mẩu giấy nhớ tạm thời màu vàng lên bìa cuốn sách (Lightweight Tag: chỉ ghi tên người đọc rồi dán tạm thời lên bìa) với việc đóng một con dấu sáp niêm phong hoàng gia chính thức có khắc chữ ký, gia huy và ngày tháng của đức vua lên văn kiện quốc gia (Annotated Tag: một thực thể trang trọng vĩnh viễn không thể làm giả, được lưu trữ thành một đối tượng độc lập có giá trị pháp lý trong lịch sử).
+Hãy so sánh lightweight tag với một nhãn đánh dấu đơn giản, còn annotated tag như một thẻ phát hành có mô tả người tạo và thông điệp. Nếu ký annotated tag, chữ ký cho phép kiểm tra object đã ký và khóa ký; tag vẫn có thể bị xóa hoặc di chuyển nếu người dùng có quyền thay đổi refs.
 
 ---
 
@@ -48,10 +48,10 @@ Hãy so sánh việc dán một mẩu giấy nhớ tạm thời màu vàng lên 
 ```text
 So sánh Lightweight Tag vs Annotated Tag:
 1. Lightweight Tag: (Không tạo đối tượng trong objects/)
-   .git/refs/tags/v1.0-light ──► [Commit Object: 7a8b9c4d]
+   refs/tags/v1.0-light ──► [Commit Object]
 
 2. Annotated Tag: (Tạo hẳn một Tag Object độc lập)
-   .git/refs/tags/v1.0.0 ──► [Tag Object: e1f2a3b4]
+   refs/tags/v1.0.0 ──► [Tag Object]
                               │
                               ├── object: 7a8b9c4d (Trỏ tới Commit)
                               ├── type: commit
@@ -63,13 +63,13 @@ So sánh Lightweight Tag vs Annotated Tag:
 ---
 
 ## 🏢 Ví dụ thực tế
-Nhóm phát hành chuẩn bị tung ra phiên bản thương mại `v2.0.0`. Kỹ sư trưởng chạy lệnh: `git tag -a v2.0.0 -m "Official Production Release 2.0.0"`. Khi kiểm tra trong thư mục `.git/refs/tags/v2.0.0`, tệp tin này không trỏ thẳng vào commit, mà trỏ tới một mã băm đối tượng mới `9d8c7b6a`. Kỹ sư chạy `git cat-file -p 9d8c7b6a` và thấy một bảng dữ liệu trang trọng: dòng 1 trỏ tới commit phát hành; dòng 2 ghi type commit; dòng 3 ghi tag v2.0.0; dòng 4 ghi thông tin tagger kèm thời gian; và cuối cùng là thông điệp phát hành chính thức. Đây là bằng chứng không thể chối cãi về cột mốc lịch sử của sản phẩm.
+Nhóm phát hành tạo tag bằng `git tag -a v2.0.0 -m "Release v2.0.0"`. `git cat-file -t v2.0.0` cho biết ref trỏ tới object loại `tag`; `git cat-file -p v2.0.0` hiển thị object đích, tagger và message. Nếu cần xác minh chữ ký, tag phải được ký trước đó và kiểm tra bằng `git tag -v v2.0.0`.
 
 ---
 
 ## 💻 Command & Cú pháp
 ```bash
-# Tạo Annotated Tag chính thức
+# Tạo Annotated Tag có message (chưa ký)
 git tag -a v1.0.0 -m "Release version 1.0.0"
 
 # Tạo Lightweight Tag tạm thời
@@ -86,7 +86,7 @@ git cat-file -p v1.0.0
 ---
 
 ## 🔍 Giải thích command
-- `git tag -a <name> -m <msg>`: Tạo đối tượng Tag độc lập trong `.git/objects/` và tạo con trỏ trong `.git/refs/tags/`.
+- `git tag -a <name> -m <msg>`: Tạo tag object và ref trong namespace `refs/tags/`; vị trí lưu vật lý phụ thuộc backend refs.
 - `git cat-file -t v1.0.0`: Trả về chữ `tag` vì đây là đối tượng độc lập.
 - `git cat-file -t v1.0.0-temp`: Trả về chữ `commit` vì lightweight tag trỏ thẳng vào commit mà không qua đối tượng trung gian.
 - `git cat-file -p v1.0.0`: Hiển thị trường `object`, `type`, `tag`, `tagger` và thông điệp phát hành.
@@ -96,28 +96,28 @@ git cat-file -p v1.0.0
 ## ⚠️ Sai lầm phổ biến
 1. **Dùng Lightweight Tag cho bản phát hành chính thức**: Làm mất thông tin người phát hành và thông điệp ghi chú release.
 2. **Nghĩ rằng Tag chỉ có thể trỏ vào Commit**: Về mặt cấu trúc Git internals, một đối tượng Tag có thể trỏ tới bất kỳ đối tượng nào (kể cả Blob hay Tree).
-3. **Xóa tag cục bộ nhưng quên đẩy lên remote**: Người khác khi pull sẽ đồng bộ lại tag cũ nếu không chạy lệnh `git push origin --delete <tagname>`.
+3. **Cho rằng xóa tag local sẽ xóa tag trên remote**: Mỗi repository có refs riêng; thao tác remote cần lệnh riêng và quyền phù hợp.
 
 ---
 
 ## 🧪 Lab thực hành
 Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
 
-1. **Bước 1**: Tạo một Lightweight Tag bằng lệnh `git tag v0.1-beta`.
-2. **Bước 2**: Tạo một Annotated Tag bằng lệnh `git tag -a v1.0.0 -m "Production Release 1.0"`.
-3. **Bước 3**: Chạy lệnh `git cat-file -t v0.1-beta` và ghi nhận kết quả là `commit`.
-4. **Bước 4**: Chạy lệnh `git cat-file -t v1.0.0` và chứng kiến kết quả trả về là `tag`, sau đó chạy `git cat-file -p v1.0.0` để đọc toàn bộ metadata.
+1. Trong repository thực hành, tạo lightweight tag `internals-demo-light` trỏ tới HEAD.
+2. Tạo annotated tag `internals-demo-annotated` bằng `git tag -a internals-demo-annotated -m "Demo tag object" HEAD`.
+3. So sánh `git cat-file -t internals-demo-light` và `git cat-file -t internals-demo-annotated`, rồi đọc nội dung annotated object bằng `git cat-file -p internals-demo-annotated`.
+4. Dọn hai tag thử bằng `git tag -d internals-demo-light internals-demo-annotated`. Không push tag thử lên remote.
 
 ---
 
 ## 💡 Hint & mẹo
-> Luôn luôn sử dụng cờ `-a` kèm theo thông điệp `-m` khi gắn thẻ phiên bản phát hành phần mềm chuyên nghiệp. Nếu muốn bảo mật tối đa, hãy dùng thêm cờ `-s` để ký số GPG.
+> Annotated tag thường phù hợp cho mốc phát hành cần message/tagger. Dùng `-s` nếu cần ký và đã cấu hình khóa cùng backend ký; sau đó xác minh bằng `git tag -v`.
 
 ---
 
 ## ✅ Validation & Kết quả mong đợi
 - Lệnh `git cat-file -t v1.0.0` hiển thị chính xác chữ `tag`.
-- Lệnh `git cat-file -p v1.0.0` hiển thị đầy đủ thông tin: đối tượng commit được trỏ tới, tag name, thông tin tagger và release message.
+- `git cat-file -p internals-demo-annotated` hiển thị object đích, tagger và message; lệnh `git tag -v` chỉ có ý nghĩa với tag đã ký.
 
 ---
 
@@ -127,12 +127,12 @@ Cùng làm bài kiểm tra về bản chất của đối tượng Tag trong Git
 ---
 
 ## 🚀 Thử thách nâng cao
-Làm thế nào để gắn chữ ký số mật mã học GPG vào một Annotated Tag bằng lệnh `git tag -s` và xác minh chữ ký đó bằng lệnh `git tag -v`?
+Tạo và kiểm tra một signed annotated tag bằng `git tag -s` và `git tag -v`. Nêu điều kiện cần để người nhận tin cậy chữ ký.
 
 ---
 
 ## 📝 Tổng kết
 - Lightweight Tag chỉ là một con trỏ văn bản đơn giản trỏ trực tiếp tới một commit.
 - Annotated Tag tạo ra một đối tượng Tag độc lập trong Object Database với đầy đủ metadata và thông điệp.
-- Annotated Tag là tiêu chuẩn bắt buộc cho các cột mốc phát hành phiên bản phần mềm chuyên nghiệp.
-- Mọi con trỏ tag đều được lưu trữ trong thư mục `.git/refs/tags/`.
+- Annotated tag thường hữu ích cho release; ký tag là lựa chọn riêng cần khóa tin cậy.
+- `refs/tags/` là namespace logic; refs có thể được lưu riêng, packed hoặc bằng backend khác.

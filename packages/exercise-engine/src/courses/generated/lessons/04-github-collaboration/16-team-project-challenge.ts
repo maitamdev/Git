@@ -13,10 +13,9 @@ export const lesson: CourseLesson = {
       "15-collaboration-workflow"
     ],
     "objectives": [
-      "Áp dụng tổng hợp toàn bộ kỹ năng Level 4 vào một kịch bản dự án cộng tác nhóm hoàn chỉnh.",
-      "Đóng vai trò một kỹ sư thực chiến giải quyết Issue, phát triển nhánh tính năng, push và mở PR.",
-      "Tham gia đóng vai trò Reviewer để đánh giá mã nguồn, đưa ra phản biện và phê duyệt PR của đồng nghiệp.",
-      "Xử lý tình huống xung đột khi merge PR và hoàn tất quy trình phát hành tính năng lên sản phẩm."
+      "Thực hiện một thay đổi README trên nhánh riêng trong kho thử nghiệm.",
+      "Kiểm tra diff, tạo commit và tự rà soát theo tiêu chí hoàn thành.",
+      "Mô tả quy trình tạo PR và review; thực hiện trên GitHub nếu có quyền."
     ],
     "completion": {
       "theoryViewed": true,
@@ -35,25 +34,25 @@ export const lesson: CourseLesson = {
       "full workflow"
     ],
     "commands": [
-      "git switch main",
-      "git pull origin main",
-      "git switch -c feat/coupon-system",
-      "git push -u origin feat/coupon-system",
-      "git branch -d feat/coupon-system"
+      "git switch -c feat/coupon-readme",
+      "git status",
+      "git diff",
+      "git add README.md",
+      "git commit -m \"docs: explain coupon feature\""
     ]
   },
-  "content": "# Thử thách dự án nhóm Team Project Challenge\n\n---\n\n## 🎯 Mục tiêu\n- Áp dụng tổng hợp toàn bộ kỹ năng Level 4 vào một kịch bản dự án cộng tác nhóm hoàn chỉnh.\n- Đóng vai trò một kỹ sư thực chiến giải quyết Issue, phát triển nhánh tính năng, push và mở PR.\n- Tham gia đóng vai trò Reviewer để đánh giá mã nguồn, đưa ra phản biện và phê duyệt PR của đồng nghiệp.\n- Xử lý tình huống xung đột khi merge PR và hoàn tất quy trình phát hành tính năng lên sản phẩm.\n\n---\n\n## 🧩 Từ khóa hôm nay\n\n### team simulation\n- **Nói dễ hiểu**: Kịch bản mô phỏng toàn diện môi trường làm việc nhóm thực tế với đầy đủ các vai trò kỹ sư và reviewer.\n- **Ví dụ**: Nhận Issue được giao, tách nhánh tính năng, đẩy code và mở PR chờ đồng nghiệp duyệt.\n- **Đừng nhầm**: Không chỉ là gõ lệnh một mình; đây là bài tập rèn luyện kỹ năng phối hợp và tuân thủ quy trình nhóm.\n\n### reviewer checklist\n- **Nói dễ hiểu**: Danh sách các tiêu chí kiểm tra mà người đánh giá dùng để soi xét chất lượng PR trước khi duyệt.\n- **Ví dụ**: Kiểm tra xem code có chạy qua bài test không, có bị lộ mật khẩu không và có viết tài liệu đầy đủ không.\n- **Đừng nhầm**: Không nhằm mục đích gây khó dễ; checklist bảo vệ cả nhóm khỏi các lỗi nghiêm trọng lọt vào production.\n\n### release integration\n- **Nói dễ hiểu**: Thao tác hòa nhập tính năng đã được kiểm duyệt và gộp vào nhánh chính để sẵn sàng phát hành.\n- **Ví dụ**: Squash-merge nhánh `feat/coupon` vào nhánh `main` và kích hoạt luồng đóng gói phiên bản mới.\n- **Đừng nhầm**: Không dừng lại ở việc gộp code; bạn còn cần xóa nhánh cũ và kéo cập nhật mới về máy cá nhân.\n\n---\n\n## 📖 Định nghĩa\nThử thách dự án nhóm Team Project Challenge là bài sát hạch toàn diện của Level 4: GitHub Collaboration, đặt bạn vào môi trường mô phỏng dự án nhóm thực tế với đầy đủ các vai trò: Quản trị viên, Lập trình viên và Người đánh giá để giải quyết một bài toán nghiệp vụ trọn vẹn từ khâu nhận việc đến xuất bản.\n\n---\n\n## 💡 Tại sao cần\nLập trình trong môi trường hiện đại là môn thể thao đồng đội. Dù bạn có kỹ năng viết code tốt nhưng nếu thiếu khả năng phối hợp trên GitHub, bạn không thể làm việc trong các công ty chuyên nghiệp. Hoàn thành thử thách này khẳng định bạn đã sẵn sàng tham gia vào các đội ngũ kỹ thuật thực tế.\n\n---\n\n## 🧠 Mental Model\nHãy hình dung thử thách này như một trận thi đấu bóng đá nội bộ trước thềm giải vô địch. Bạn không còn tập sút một mình vào lưới trống. Bạn phải phối hợp chuyền bóng ăn ý với đồng đội (pull code), nhận bóng thuận lợi (tách nhánh), vượt qua hậu vệ (giải quyết xung đột) và ghi bàn thắng quyết định (Merge PR).\n\n---\n\n## 📊 Sơ đồ minh họa\n```text\nKịch bản mô phỏng thử thách Team Project:\n[Issue: Thêm tính năng Coupon giảm giá]\n                  │\n                  ▼\n[Kỹ sư tạo nhánh feat/coupon ──► Push ──► Tạo PR]\n                  │\n                  ▼\n[Reviewer đánh giá: Yêu cầu sửa lỗi tính tiền]\n                  │\n                  ▼\n[Kỹ sư cập nhật commit mới ──► Reviewer Approve ──► Squash & Merge!]\n```\n\n---\n\n## 🏢 Ví dụ thực tế\nHọc viên tiếp nhận Issue #201 yêu cầu xây dựng tính năng mã giảm giá cho ứng dụng mua sắm. Học viên kéo code mới nhất từ main, tạo nhánh `feat/coupon-system`, hoàn thành tính năng và commit theo chuẩn. Khi mở PR, bạn nhận góp ý từ Reviewer yêu cầu xử lý trường hợp mã hết hạn. Học viên bổ sung commit, vượt qua kiểm thử tự động, được Approve và merge thành công vào main.\n\n---\n\n## 💻 Command & Cú pháp\n```bash\ngit switch main\ngit pull origin main\ngit switch -c feat/coupon-system\ngit push -u origin feat/coupon-system\ngit branch -d feat/coupon-system\n```\n\n---\n\n## 🔍 Giải thích command\n- `git switch main && git pull origin main`: Khởi đầu từ nền tảng code mới nhất của dự án nhóm.\n- `git switch -c <nhánh>`: Tách nhánh cô lập phát triển tính năng thử thách.\n- `git push -u origin <nhánh>`: Đẩy nhánh lên máy chủ GitHub mô phỏng.\n- `git branch -d <nhánh>`: Dọn dẹp vệ sinh kho chứa sau khi kết thúc thử thách xuất sắc.\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Tự ý merge PR khi chưa được phê duyệt**: Bỏ qua quy trình kiểm soát chất lượng và làm tăng nguy cơ lỗi cho toàn đội.\n2. **Không đọc kỹ yêu cầu trong Issue**: Dẫn đến việc lập trình sai nghiệp vụ và phải viết lại tính năng từ đầu.\n3. **Quên kéo cập nhật main về máy sau khi merge**: Khiến các nhánh tính năng tiếp theo bị xuất phát từ mốc lịch sử cũ lỗi thời.\n\n---\n\n## 🧪 Lab thực hành\nBài học này là bài tự kiểm tra: bạn vận hành chu trình phối hợp nhóm hoàn chỉnh từ tiếp nhận Issue đến đóng PR.\n1. Khởi động kịch bản mô phỏng dự án nhóm trong môi trường làm việc.\n2. Đọc kỹ yêu cầu trong Issue được giao và tạo nhánh tính năng tương ứng.\n3. Viết code giải quyết bài toán và tạo commit chuẩn quy ước Conventional Commits.\n4. Mở Pull Request, đọc nhận xét của Reviewer và thực hiện chỉnh sửa bổ sung.\n5. Hoàn tất merge PR và xác nhận Issue được đóng tự động.\n\n---\n\n## 💡 Hint & mẹo\n> Luôn giữ thái độ cầu thị, đọc kỹ phản hồi của Reviewer để hoàn thiện mã nguồn theo đúng tiêu chuẩn dự án.\n\n---\n\n## ✅ Validation & Kết quả mong đợi\n- Toàn bộ chu trình từ Issue đến PR Merged được hoàn thành trơn tru.\n- Nhánh tính năng được dọn dẹp sạch sẽ và nhánh main cục bộ đồng bộ hoàn toàn với remote.\n\n---\n\n## ❓ Quiz nhanh\nLàm bài trắc nghiệm tổng kết để hoàn tất toàn bộ Level 4: GitHub Collaboration.\n\n---\n\n## 🚀 Thử thách nâng cao\nMô phỏng lại toàn bộ quy trình này với một người bạn học cùng bằng cách tạo repository thật trên GitHub và phân vai review chéo cho nhau.\n\n---\n\n## 📝 Tổng kết\n- Làm chủ toàn diện kỹ năng cộng tác: Clone, Fetch, Pull, Push, Fork, PR và Code Review.\n- Feature Branch Workflow là kim chỉ nam cho mọi hoạt động phát triển phần mềm nhóm.\n- Giao tiếp văn minh, viết mô tả rõ ràng và tôn trọng quy trình là chìa khóa của sự thành công.\n",
+  "content": "# Thử thách dự án nhóm Team Project Challenge\n\n---\n\n## 🎯 Mục tiêu\n- Áp dụng tổng hợp toàn bộ kỹ năng Level 4 vào một kịch bản dự án cộng tác nhóm hoàn chỉnh.\n- Đóng vai trò một kỹ sư thực chiến giải quyết Issue, phát triển nhánh tính năng, push và mở PR.\n- Tham gia đóng vai trò Reviewer để đánh giá mã nguồn, đưa ra phản biện và phê duyệt PR của đồng nghiệp.\n- Xử lý tình huống xung đột khi merge PR và hoàn tất quy trình phát hành tính năng lên sản phẩm.\n\n---\n\n## 🧩 Từ khóa hôm nay\n\n### team simulation\n- **Nói dễ hiểu**: Bài tập nhập vai để tự làm các bước của người viết và tự kiểm tra như reviewer.\n- **Ví dụ**: Đọc yêu cầu, tạo nhánh, sửa file, commit và dùng checklist xem lại diff.\n- **Đừng nhầm**: Một mình không thể thực sự nhận review/approval từ người khác; có thể mời bạn học làm reviewer ở phần mở rộng.\n\n### acceptance criteria — tiêu chí hoàn thành\n- **Nói dễ hiểu**: Danh sách kết quả cụ thể dùng để quyết định nhiệm vụ đã làm xong chưa.\n- **Ví dụ**: README có hướng dẫn, thay đổi được commit, diff không chứa thông tin bí mật.\n- **Đừng nhầm**: “Đã push” không tự chứng minh tính năng đúng; cần đối chiếu yêu cầu và kiểm tra thay đổi.\n\n### self-review — tự rà thay đổi\n- **Nói dễ hiểu**: Tự đọc diff trước khi chia sẻ để phát hiện lỗi hoặc thay đổi ngoài ý muốn.\n- **Ví dụ**: Kiểm tra README đã có ví dụ và không chứa token/mật khẩu.\n- **Đừng nhầm**: Tự review không thay thế review độc lập nếu dự án yêu cầu người khác duyệt.\n\n---\n\n## 📖 Định nghĩa\nThử thách dự án nhóm Team Project Challenge là bài sát hạch toàn diện của Level 4: GitHub Collaboration, đặt bạn vào môi trường mô phỏng dự án nhóm thực tế với đầy đủ các vai trò: Quản trị viên, Lập trình viên và Người đánh giá để giải quyết một bài toán nghiệp vụ trọn vẹn từ khâu nhận việc đến xuất bản.\n\n---\n\n## 💡 Tại sao cần\nLập trình trong môi trường hiện đại là môn thể thao đồng đội. Dù bạn có kỹ năng viết code tốt nhưng nếu thiếu khả năng phối hợp trên GitHub, bạn không thể làm việc trong các công ty chuyên nghiệp. Hoàn thành thử thách này khẳng định bạn đã sẵn sàng tham gia vào các đội ngũ kỹ thuật thực tế.\n\n---\n\n## 🧠 Mental Model\nHãy hình dung thử thách này như một trận thi đấu bóng đá nội bộ trước thềm giải vô địch. Bạn không còn tập sút một mình vào lưới trống. Bạn phải phối hợp chuyền bóng ăn ý với đồng đội (pull code), nhận bóng thuận lợi (tách nhánh), vượt qua hậu vệ (giải quyết xung đột) và ghi bàn thắng quyết định (Merge PR).\n\n---\n\n## 📊 Sơ đồ minh họa\n```text\nKịch bản mô phỏng thử thách Team Project:\n[Issue: Thêm tính năng Coupon giảm giá]\n                  │\n                  ▼\n[Kỹ sư tạo nhánh feat/coupon ──► Push ──► Tạo PR]\n                  │\n                  ▼\n[Reviewer đánh giá: Yêu cầu sửa lỗi tính tiền]\n                  │\n                  ▼\n[Kỹ sư cập nhật commit mới ──► Reviewer Approve ──► Squash & Merge!]\n```\n\n---\n\n## 🏢 Ví dụ thực tế\nHọc viên tiếp nhận Issue #201 yêu cầu xây dựng tính năng mã giảm giá cho ứng dụng mua sắm. Học viên kéo code mới nhất từ main, tạo nhánh `feat/coupon-system`, hoàn thành tính năng và commit theo chuẩn. Khi mở PR, bạn nhận góp ý từ Reviewer yêu cầu xử lý trường hợp mã hết hạn. Học viên bổ sung commit, vượt qua kiểm thử tự động, được Approve và merge thành công vào main.\n\n---\n\n## 💻 Command & Cú pháp\n```bash\ngit switch main\ngit pull origin main\ngit switch -c feat/coupon-system\ngit push -u origin feat/coupon-system\ngit branch -d feat/coupon-system\n```\n\n---\n\n## 🔍 Giải thích command\n- `git switch main && git pull origin main`: Khởi đầu từ nền tảng code mới nhất của dự án nhóm.\n- `git switch -c <nhánh>`: Tách nhánh cô lập phát triển tính năng thử thách.\n- `git push -u origin <nhánh>`: Đẩy nhánh lên máy chủ GitHub mô phỏng.\n- `git branch -d <nhánh>`: Dọn dẹp vệ sinh kho chứa sau khi kết thúc thử thách xuất sắc.\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Tự ý merge PR khi chưa được phê duyệt**: Bỏ qua quy trình kiểm soát chất lượng và làm tăng nguy cơ lỗi cho toàn đội.\n2. **Không đọc kỹ yêu cầu trong Issue**: Dẫn đến việc lập trình sai nghiệp vụ và phải viết lại tính năng từ đầu.\n3. **Quên kéo cập nhật main về máy sau khi merge**: Khiến các nhánh tính năng tiếp theo bị xuất phát từ mốc lịch sử cũ lỗi thời.\n\n---\n\n## 🧪 Lab thực hành\n**Nhiệm vụ:** cập nhật README cho tính năng mã giảm giá trong kho thử nghiệm. Làm trong Git Academy simulator hoặc bản sao local riêng; không push lên dự án thật nếu chưa được phép.\n1. Viết ba tiêu chí hoàn thành: README có mục “Mã giảm giá”, có một ví dụ sử dụng, và không chứa thông tin bí mật.\n2. Tạo nhánh `feat/coupon-readme` bằng `git switch -c feat/coupon-readme`.\n3. Sửa README bằng editor, thêm mục và ví dụ; lưu file.\n4. Chạy `git status` và `git diff` để xem đúng nội dung vừa sửa.\n5. Chạy `git add README.md`, rồi `git commit -m \"docs: explain coupon feature\"`.\n6. Tự review bằng checklist: đủ ba tiêu chí chưa, diff có thay đổi ngoài ý muốn hoặc secret không? Nếu cần, sửa và tạo commit bổ sung.\n7. Trong simulator, push chỉ cập nhật remote giả lập. Với GitHub thật, push lên kho thử nghiệm bạn có quyền, tạo PR và mời bạn học review; chỉ merge khi có quyền.\n\n---\n\n## 💡 Hint & mẹo\n> Luôn giữ thái độ cầu thị, đọc kỹ phản hồi của Reviewer để hoàn thiện mã nguồn theo đúng tiêu chuẩn dự án.\n\n---\n\n## ✅ Validation & Kết quả mong đợi\n- Có nhánh riêng, thay đổi README, diff đã kiểm tra và commit rõ nội dung.\n- Nếu mở PR thử nghiệm, mô tả nêu mục tiêu và cách kiểm tra; review/merge chỉ thực hiện nếu có quyền.\n\n---\n\n## ❓ Quiz nhanh\nLàm bài trắc nghiệm tổng kết để hoàn tất toàn bộ Level 4: GitHub Collaboration.\n\n---\n\n## 🚀 Thử thách nâng cao\nLàm theo cặp trên một repository thử nghiệm: một người tạo PR, người kia kiểm tra diff bằng checklist và để lại một góp ý cụ thể; tác giả cập nhật commit rồi cả hai xác nhận tiêu chí đã đạt. Cần tài khoản GitHub và quyền truy cập vào repository.\n\n---\n\n## 📝 Tổng kết\n- Có thể đọc một nhiệm vụ, làm thay đổi trên nhánh riêng, kiểm tra diff và tạo commit.\n- PR, fork, review và merge diễn ra trên nền tảng cộng tác; quyền và cách làm tùy dự án.\n- Giao tiếp rõ ràng và làm theo quy trình của nhóm giúp người khác kiểm tra thay đổi.\n",
   "quiz": {
     "id": "quiz-04-16-team-project-challenge",
     "title": "Trắc nghiệm tổng kết: Master GitHub Collaboration",
     "questions": [
       {
         "id": "q1",
-        "question": "Quy trình chuẩn mực nhất để một kỹ sư phần mềm hoàn thành một nhiệm vụ trong dự án nhóm là gì?",
+        "question": "Luồng nào là một ví dụ phổ biến để xử lý nhiệm vụ trong dự án dùng Feature Branch Workflow?",
         "type": "single",
         "options": [
           {
-            "text": "Đọc Issue -> Pull main mới nhất -> Tạo feature branch -> Code & Commit -> Push -> Mở PR -> Nhận review & sửa đổi -> Merge & Dọn nhánh",
+            "text": "Đọc yêu cầu -> theo hướng dẫn cập nhật nhánh nền -> tạo nhánh -> sửa và commit -> mở PR -> review -> tích hợp theo quy định",
             "correct": true
           },
           {
@@ -69,7 +68,7 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "Chu trình 7 bước khép kín từ Issue đến Merge là chuẩn mực quốc tế của phát triển phần mềm chuyên nghiệp."
+        "explanation": "Đây là một luồng thường dùng; repository có thể quy định nhánh nền, review và cách tích hợp khác."
       },
       {
         "id": "q2",
@@ -101,7 +100,7 @@ export const lesson: CourseLesson = {
         "type": "single",
         "options": [
           {
-            "text": "`main` là con trỏ nhánh cục bộ bạn có thể commit sửa đổi, còn `origin/main` là con trỏ chỉ đọc phản ánh trạng thái trên server",
+            "text": "`main` là nhánh local; `origin/main` là remote-tracking ref local phản ánh trạng thái ở lần fetch gần nhất",
             "correct": true
           },
           {
@@ -117,7 +116,7 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "`origin/main` là Remote-tracking branch do Git tự cập nhật khi fetch; bạn không thể commit trực tiếp lên nó."
+        "explanation": "`origin/main` là ref local được cập nhật khi fetch; bạn không commit trực tiếp vào remote-tracking ref."
       },
       {
         "id": "q4",
@@ -165,15 +164,15 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "`git status` và `git branch -vv` in rõ trạng thái `ahead N` và `behind M` của tracking branch."
+        "explanation": "Các lệnh này hiển thị độ lệch khi nhánh có upstream và thông tin remote-tracking đã được fetch."
       },
       {
         "id": "q6",
-        "question": "Sau khi hoàn thành xuất sắc toàn bộ 16 bài học của Level 4, bạn đã đạt được năng lực nào sau đây?",
+        "question": "Sau thử thách README, bạn có thể chứng minh được năng lực nào bằng kết quả thực hành?",
         "type": "single",
         "options": [
           {
-            "text": "Tự tin cộng tác nhóm, làm chủ toàn bộ chu trình GitHub, xử lý xung đột mạng và tham gia vào các dự án chuyên nghiệp",
+            "text": "Tạo nhánh, sửa README, kiểm tra diff, tạo commit và giải thích các bước cần có khi mở PR",
             "correct": true
           },
           {
@@ -189,7 +188,7 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "Level 4 trang bị toàn bộ kỹ năng cộng tác nhóm và văn hóa Git chuyên nghiệp trên GitHub."
+        "explanation": "Bằng chứng của thử thách là thay đổi, diff, commit và mô tả được bước cộng tác trên PR."
       }
     ]
   }

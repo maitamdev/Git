@@ -2,55 +2,81 @@ id: quiz-05-git-vs-github
 title: "Trắc nghiệm: Phân biệt Git và GitHub"
 questions:
   - id: q1
-    question: Git và GitHub khác nhau thế nào?
+    question: "Mô tả nào phân biệt Git với GitHub chính xác nhất?"
     type: single
     options:
-      - text: Git là công cụ trên máy; GitHub là dịch vụ trực tuyến để lưu và cộng tác
+      - text: "Git quản lý lịch sử trên máy; GitHub là dịch vụ trực tuyến để chia sẻ repository"
         correct: true
-      - text: Git và GitHub đều là một loại tài khoản đăng nhập
+      - text: "Git là một tài khoản; GitHub là lệnh dùng để tạo commit"
         correct: false
-      - text: Git chỉ chạy trên GitHub
+      - text: "Git chỉ có thể chạy bên trong trang GitHub"
         correct: false
-      - text: GitHub là phần mềm cài để thay thế Git
+      - text: "GitHub thay thế hoàn toàn Git và lưu mọi thay đổi tự động"
         correct: false
-    explanation: Git có thể lưu lịch sử ngay trên máy; GitHub là dịch vụ riêng trên Internet.
+    explanation: >-
+      Git là phần mềm quản lý phiên bản; GitHub là dịch vụ trực tuyến.
+      Bạn có thể dùng Git trên máy mà không mở trang GitHub.
+
   - id: q2
-    question: GitHub đóng vai trò gì trong hệ sinh thái phát triển phần mềm?
+    question: "Một nhóm dùng GitHub. GitHub giúp nhóm làm việc gì?"
     type: single
     options:
-      - text: Là dịch vụ đám mây lưu trữ các kho Git từ xa và hỗ trợ cộng tác nhóm
-          chuyên nghiệp
+      - text: "Chia sẻ repository Git trực tuyến và cùng xem xét công việc"
         correct: true
-      - text: Là hệ điều hành dùng để cài đặt lên máy chủ thay thế Linux
+      - text: "Tạo mọi commit cục bộ mà không cần Git trên máy"
         correct: false
-      - text: Là trình duyệt web tốc độ cao cạnh tranh với Google Chrome
+      - text: "Thay Git thành một hệ điều hành chuyên dụng cho lập trình"
         correct: false
-      - text: Là phần mềm diệt virus bảo vệ mã nguồn máy tính
+      - text: "Bảo đảm mọi thay đổi được tự động đồng bộ tức thì"
         correct: false
-    explanation: GitHub lưu repository Git trực tuyến và cung cấp công cụ để nhóm cộng tác.
+    explanation: >-
+      GitHub lưu repository Git trực tuyến và có công cụ cộng tác.
+      Thành viên vẫn cần gửi hoặc lấy thay đổi để trao đổi commit.
+
   - id: q3
-    question: Bạn có thể tạo commit bằng Git khi máy đang offline không?
+    question: "Repository đã được tạo và cấu hình đầy đủ. Bạn đang offline; thao tác nào vẫn làm được?"
     type: single
     options:
-      - text: Có, commit được lưu trong repository trên máy
+      - text: "Tạo commit mới trong repository trên máy"
         correct: true
-      - text: Không, mọi lệnh Git đều cần Internet
+      - text: "Push commit mới lên GitHub ngay lập tức"
         correct: false
-      - text: Chỉ khi đăng nhập GitHub trước
+      - text: "Pull thay đổi mới nhất từ GitHub"
         correct: false
-      - text: Chỉ khi máy kết nối cùng mạng Wi-Fi với GitHub
+      - text: "Cập nhật repository trên laptop của thành viên khác"
         correct: false
-    explanation: Tạo commit là thao tác cục bộ; Internet cần thiết khi trao đổi với remote.
+    explanation: >-
+      Tạo commit là thao tác trên repository cục bộ nên không cần mạng.
+      Push và pull trao đổi với GitHub nên cần kết nối.
+
   - id: q4
-    question: Lệnh `git push` làm gì khi đã cấu hình remote?
+    question: "Lệnh nào gửi các commit đã lưu trên máy lên remote tên `origin`?"
     type: single
     options:
-      - text: Gửi commit từ máy lên repository từ xa
+      - text: "`git push origin main`"
         correct: true
-      - text: Tạo commit mới mà không cần bạn yêu cầu
+      - text: "`git pull origin main`"
         correct: false
-      - text: Xóa repository trên máy
+      - text: "`git remote -v`"
         correct: false
-      - text: Cài đặt GitHub vào máy
+      - text: "`git status`"
         correct: false
-    explanation: Push gửi những commit đã tạo trên máy tới nơi lưu trữ từ xa đã cấu hình.
+    explanation: >-
+      `git push origin main` gửi commit từ nhánh `main` lên remote `origin`.
+      Lệnh cần remote đã cấu hình và quyền truy cập phù hợp.
+
+  - id: q5
+    question: "`git remote -v` cho bạn biết điều gì?"
+    type: single
+    options:
+      - text: "Các remote đã cấu hình cùng tên và địa chỉ của chúng"
+        correct: true
+      - text: "Mọi commit trên máy đã được gửi hay chưa trong mọi trường hợp"
+        correct: false
+      - text: "Tên và email tác giả của commit mới nhất"
+        correct: false
+      - text: "Các tệp sẽ bị xóa khi bạn chạy pull"
+        correct: false
+    explanation: >-
+      `git remote -v` hiển thị các nơi repository đã kết nối tới. Nó không
+      thay cho trạng thái tệp hay cho biết đầy đủ lịch sử commit.

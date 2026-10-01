@@ -152,6 +152,21 @@ export class RemoteCommand implements GitCommand {
       };
     }
 
+    // git remote set-url <name> <url>
+    if (sub === 'set-url') {
+      if (args.length < 3) {
+        return { stdout: '', stderr: 'usage: git remote set-url <name> <url>', exitCode: 129 };
+      }
+      const name = args[1];
+      const url = args[2];
+      const remote = ctx.stateManager.getRemote(name);
+      if (!remote) {
+        return { stdout: '', stderr: `fatal: No such remote '${name}'`, exitCode: 2 };
+      }
+      remote.url = url;
+      return { stdout: '', stderr: '', exitCode: 0 };
+    }
+
     return {
       stdout: '',
       stderr: `error: Unknown subcommand: ${sub}`,

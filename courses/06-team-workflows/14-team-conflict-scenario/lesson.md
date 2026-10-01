@@ -8,25 +8,25 @@
 
 ## 🧩 Từ khóa hôm nay
 ### Merge Conflict
-- **Nói dễ hiểu**: Tình huống Git dừng lại vì hai người cùng sửa đổi một vùng mã nguồn và không biết nên giữ đoạn nào.
+- **Nói dễ hiểu**: Tình huống Git không thể tự kết hợp hai thay đổi; thường do cùng sửa một vùng, nhưng còn có dạng xung đột khác.
 - **Ví dụ**: Đồng nghiệp vừa merge nhánh đổi màu nút sang xanh, còn bạn gửi PR đổi màu nút sang đỏ trên cùng một dòng CSS.
-- **Đừng nhầm**: Không phải lỗi hệ thống bị hỏng, mà là cơ chế bảo vệ an toàn để lập trình viên tự quyết định logic đúng.
+- **Đừng nhầm**: Git chỉ báo xung đột văn bản/cấu trúc mà nó phát hiện được; hai thay đổi có thể ghép sạch nhưng vẫn sai logic nghiệp vụ.
 
 ### Local Resolution
-- **Nói dễ hiểu**: Quy trình kéo code mới về máy tính cá nhân để chạy thử, giải quyết xung đột và kiểm thử kỹ càng trước khi đẩy lên.
+- **Nói dễ hiểu**: Quy trình đưa thay đổi của nhánh đích vào môi trường làm việc, xử lý conflict rồi kiểm tra kết quả trước khi cập nhật PR.
 - **Ví dụ**: Dùng VS Code trên máy để chọn Accept Incoming Change, chạy test xong mới push lên GitHub.
-- **Đừng nhầm**: Tránh sửa conflict trực tiếp trên web GitHub với các file phức tạp vì không thể biên dịch hay chạy test.
+- **Đừng nhầm**: GitHub có thể giải quyết một số conflict đơn giản trên web; xử lý local hữu ích khi cần hiểu ngữ cảnh hoặc chạy test.
 
 ### Force With Lease
-- **Nói dễ hiểu**: Cờ đẩy code có kiểm tra an toàn, chỉ cho phép ghi đè lịch sử nếu chưa có ai khác đẩy thêm commit mới lên nhánh.
+- **Nói dễ hiểu**: Cờ cập nhật nhánh remote sau khi lịch sử local bị viết lại, từ chối nếu remote đã đổi so với thông tin mà Git đang dùng.
 - **Ví dụ**: Chạy `git push --force-with-lease` sau khi rebase xong để cập nhật lại Pull Request của chính mình.
-- **Đừng nhầm**: Khác với `git push --force` mù quáng sẽ ghi đè bất chấp mọi công sức của đồng nghiệp làm chung nhánh.
+- **Đừng nhầm**: Đây không phải bảo đảm tuyệt đối và không nên dùng để viết lại nhánh dùng chung nếu chưa phối hợp với người khác.
 
 ## 📖 Định nghĩa
-Team Conflict Scenario là tình huống thực chiến xảy ra khi nhiều lập trình viên cùng thay đổi các phần mã nguồn liên quan trên các nhánh độc lập, và một nhánh đã được hợp nhất vào nhánh chính trước. Khi nhánh còn lại được merge, Git sẽ thông báo xung đột, đòi hỏi lập trình viên phải tải mã mới về máy cục bộ để đối soát và xử lý an toàn.
+Conflict có thể xuất hiện khi merge hoặc rebase hai lịch sử có thay đổi Git không thể tự kết hợp. Git đánh dấu các xung đột mà nó phát hiện, nhưng không phát hiện hết xung đột về ý nghĩa chương trình. Bài này dùng một ví dụ sửa cùng dòng để luyện quy trình fetch, rebase, giải quyết và kiểm tra.
 
 ## 💡 Tại sao cần
-Xung đột mã nguồn là hiện tượng bình thường trong quá trình cộng tác phần mềm. Một kỹ sư chuyên nghiệp không bao giờ hoảng sợ hay đổ lỗi cho đồng nghiệp khi gặp conflict. Thay vào đó, họ bình tĩnh áp dụng quy trình xử lý bài bản: trao đổi trực tiếp với người viết đoạn code liên quan, làm rõ ngữ cảnh và giải quyết dứt điểm trên môi trường máy cá nhân.
+Conflict có thể xảy ra khi tích hợp nhánh. Đọc cả hai thay đổi, tìm hiểu mục đích và trao đổi với người liên quan khi cần; sau khi sửa, chạy các kiểm tra phù hợp. Rebase hữu ích với nhánh cá nhân chưa chia sẻ rộng, còn merge là lựa chọn khi không muốn viết lại lịch sử đã chia sẻ.
 
 ## 🧠 Mental Model
 Hãy hình dung hai kiến trúc sư cùng thiết kế một phòng khách. Người A đề xuất đặt đàn piano ở góc phòng và đã được duyệt bản vẽ trước (`merged into main`). Người B vừa nộp bản vẽ đặt giá sách lớn đúng vào góc đó (`PR conflict`). Người B không thể tự ý ném cây đàn đi, mà phải mang bản vẽ mới về bàn, trao đổi với người A để thống nhất dời giá sách hoặc kết hợp cả hai.
@@ -34,14 +34,15 @@ Hãy hình dung hai kiến trúc sư cùng thiết kế một phòng khách. Ng�
 ## 📊 Sơ đồ minh họa
 ```mermaid
 flowchart TD
-    PR[Pull Request bị Conflict trên GitHub] --> Fetch[Chạy git fetch origin trên máy]
+    PR[Pull Request cần cập nhật từ nhánh đích] --> Fetch[Chạy git fetch origin trên máy]
     Fetch --> Rebase[Chạy git rebase origin/main]
     Rebase --> Stop[Git tạm dừng tại commit có xung đột]
     Stop --> Discuss[Trao đổi với đồng nghiệp & sửa file]
     Discuss --> Add[git add cac-file-da-sua]
     Add --> Cont[git rebase --continue]
-    Cont --> Push[git push --force-with-lease origin branch]
-    Push --> Green[Pull Request xanh lại và sẵn sàng merge]
+    Cont --> Test[Chạy test và xem lại diff]
+    Test --> Push[Push nhánh đã cập nhật; có thể cần force-with-lease sau rebase]
+    Push --> Green[Kiểm tra lại PR và các điều kiện merge]
 ```
 
 ## 🏢 Ví dụ thực tế
@@ -66,10 +67,10 @@ git push --force-with-lease origin feat/cart-discount
 ```
 
 ## 🔍 Giải thích command
-- `git fetch origin`: Cập nhật dữ liệu từ xa mà không làm thay đổi thư mục làm việc hiện tại của bạn.
+- `git fetch origin`: Tải thông tin mới từ remote; không tự thay đổi nhánh hiện tại hay file đang sửa.
 - `git rebase origin/main`: Đặt lại gốc nhánh của bạn lên commit mới nhất của `main`, tái hiện các commit trên nền mới.
 - `git add <tệp>`: Báo cho Git biết bạn đã hoàn tất việc chỉnh sửa thủ công các đoạn mâu thuẫn trong tệp.
-- `git push --force-with-lease`: Cập nhật nhánh remote có kiểm tra điều kiện an toàn, chống ghi đè công sức của người khác.
+- `git push --force-with-lease`: Dùng khi rebase đã viết lại commit trên nhánh remote của chính bạn; kiểm tra trạng thái remote trước và phối hợp nếu có người cùng dùng nhánh.
 
 ## ⚠️ Sai lầm phổ biến
 - Tự ý xóa code của đồng nghiệp khi giải quyết xung đột mà không trao đổi để hiểu rõ mục đích của đoạn code đó.
@@ -79,19 +80,19 @@ git push --force-with-lease origin feat/cart-discount
 ## 🧪 Lab thực hành
 Bài học này là bài tự kiểm tra: bạn thao tác mô phỏng kịch bản xung đột trên máy và đối chiếu theo hướng dẫn bên dưới.
 
-1. Tạo hai nhánh cùng sửa một dòng trong tệp `calculator.ts`.
-2. Hợp nhất nhánh thứ nhất vào `main`.
-3. Chuyển sang nhánh thứ hai, chạy `git rebase main` và quan sát các dấu mốc conflict `<<<<<<<` và `>>>>>>>`.
-4. Mở trình soạn thảo, chọn giữ lại logic phù hợp và xóa bỏ các ký hiệu đánh dấu.
-5. Chạy `git add calculator.ts`, sau đó gõ `git rebase --continue` để hoàn tất quy trình xử lý.
+1. Trong repo thử nghiệm, tạo `main` và hai nhánh từ cùng một commit; sửa cùng một dòng trong `calculator.ts` trên mỗi nhánh rồi commit.
+2. Merge nhánh thứ nhất vào `main`.
+3. Chuyển sang nhánh thứ hai, chạy `git rebase main`; Git sẽ dừng nếu không tự kết hợp được hai sửa đổi.
+4. Mở file, đọc cả hai phiên bản, chọn kết quả đúng và xóa các dấu conflict. Chạy test hoặc kiểm tra kết quả.
+5. Chạy `git add calculator.ts`, rồi `git rebase --continue`; nếu muốn hủy, chạy `git rebase --abort`.
 
 ## 💡 Hint & mẹo
-- Trao đổi trực tiếp giữa người với người luôn là phương pháp giải quyết xung đột nhanh và chính xác nhất.
+- Trao đổi với người hiểu ngữ cảnh nghiệp vụ khi không rõ mục đích của một thay đổi.
 - Bạn có thể gõ `git rebase --abort` bất cứ lúc nào nếu muốn dừng lại và quay về trạng thái ban đầu an toàn.
 
 ## ✅ Validation & Kết quả mong đợi
-- Lệnh `git status` báo `nothing to commit, working tree clean`.
-- Nhánh của bạn sở hữu lịch sử commit thẳng thớm và Pull Request trên GitHub chuyển sang trạng thái sẵn sàng hợp nhất.
+- Rebase hoàn tất, `git status` không còn báo conflict và bài kiểm tra phù hợp chạy đạt.
+- Nếu bài tập dùng GitHub, kiểm tra lại PR; nếu chỉ dùng local thì xem lịch sử bằng `git log --oneline --graph --all`.
 
 ## ❓ Quiz nhanh
 Hãy hoàn thành bài trắc nghiệm bên dưới để kiểm tra kỹ năng phân tích và xử lý xung đột nhóm trong Git.
@@ -100,6 +101,6 @@ Hãy hoàn thành bài trắc nghiệm bên dưới để kiểm tra kỹ năng 
 So sánh sự khác biệt về lịch sử commit giữa việc giải quyết xung đột bằng `git merge main` so với `git rebase origin/main` trong môi trường nhóm đông thành viên.
 
 ## 📝 Tổng kết
-- Xung đột là một phần tất yếu của quá trình cộng tác nhóm trong mọi dự án phần mềm.
-- Luôn giải quyết xung đột tại máy cá nhân để bảo đảm kiểm thử và biên dịch thành công trước khi đẩy lên.
-- Phối hợp và giao tiếp cởi mở với đồng nghiệp là chìa khóa để xử lý mọi xung đột logic an toàn.
+- Git sẽ báo những xung đột mà nó không thể tự kết hợp; xung đột logic có thể không hiện thành marker.
+- Chọn merge hoặc rebase theo việc nhánh đã được chia sẻ hay chưa, rồi kiểm tra kết quả.
+- Trao đổi khi cần làm rõ yêu cầu và chạy test phù hợp trước khi tích hợp.

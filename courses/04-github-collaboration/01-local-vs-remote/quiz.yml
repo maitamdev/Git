@@ -65,12 +65,10 @@ questions:
     explanation: "`git remote -v` hiển thị tên định danh remote (như origin) kèm
       theo URL fetch và push cụ thể."
   - id: q5
-    question: Điều gì xảy ra nếu máy chủ từ xa trên GitHub bị mất điện hoặc ngừng
-      hoạt động tạm thời?
+    question: "Nếu bạn đã có một clone local đầy đủ và máy chủ tạm ngừng hoạt động, bạn vẫn làm được gì?"
     type: single
     options:
-      - text: Bạn vẫn tiếp tục lập trình, tạo nhánh và commit bình thường trên máy cá
-          nhân không hề bị gián đoạn
+      - text: Tiếp tục sửa file, tạo nhánh và commit trong kho local; thao tác cần remote sẽ chưa dùng được
         correct: true
       - text: Toàn bộ mã nguồn trên máy tính của bạn sẽ bị tự động khóa lại
         correct: false
@@ -78,8 +76,7 @@ questions:
         correct: false
       - text: Mọi commit trước đó trên máy cá nhân sẽ bị xóa sạch
         correct: false
-    explanation: Nhờ kiến trúc phân tán, mỗi máy cá nhân là một bản sao trọn vẹn,
-      không phụ thuộc vào tình trạng máy chủ.
+    explanation: Clone đầy đủ có lịch sử local để tiếp tục công việc; thao tác trao đổi với remote cần máy chủ hoạt động.
   - id: q6
     question: Thao tác nào bắt buộc phải có kết nối mạng Internet để thực hiện thành
       công?

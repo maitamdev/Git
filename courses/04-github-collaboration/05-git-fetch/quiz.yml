@@ -6,8 +6,7 @@ questions:
       chạy lệnh `git fetch origin`?
     type: single
     options:
-      - text: Hoàn toàn không có bất kỳ tệp tin nào bị thay đổi hay ghi đè, Working
-          Directory được giữ nguyên vẹn 100%
+      - text: Fetch cập nhật dữ liệu Git và remote-tracking refs nhưng không tích hợp các commit vào nhánh đang checkout
         correct: true
       - text: Các tệp tin tự động được cập nhật theo phiên bản mới nhất trên GitHub
         correct: false
@@ -15,8 +14,7 @@ questions:
         correct: false
       - text: Các tệp tin bị khóa lại và chuyển sang chế độ chỉ đọc
         correct: false
-    explanation: "`git fetch` chỉ tải dữ liệu về kho ngầm và cập nhật con trỏ
-      `origin/*`, tuyệt đối không tác động lên Working Tree."
+    explanation: "Fetch cập nhật thông tin remote để bạn kiểm tra; việc tích hợp vào nhánh hiện tại là bước riêng."
   - id: q2
     question: Con trỏ tham chiếu `origin/main` trong Git đại diện cho điều gì?
     type: single

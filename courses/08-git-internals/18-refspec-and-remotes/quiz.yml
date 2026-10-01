@@ -15,14 +15,14 @@ questions:
         correct: false
       - text: Cộng thêm 1 commit vào lịch sử
         correct: false
-    explanation: Dấu `+` tùy chọn ở đầu refspec thông báo cho Git bỏ qua kiểm tra an
-      toàn fast-forward khi cập nhật con trỏ tham chiếu.
+    explanation: Dấu `+` cho phép ref đích cập nhật non-fast-forward; với push, máy
+      chủ vẫn có thể từ chối theo chính sách của họ.
   - id: q2
     question: Cú pháp lệnh `git push origin :old-branch` (để trống phần nguồn trước
       dấu hai chấm) có tác dụng gì?
     type: single
     options:
-      - text: Xóa nhánh `old-branch` trên máy chủ từ xa
+      - text: Yêu cầu xóa ref `old-branch` trên remote
         correct: true
       - text: Đổi tên nhánh thành rỗng
         correct: false
@@ -30,11 +30,10 @@ questions:
         correct: false
       - text: Báo lỗi cú pháp
         correct: false
-    explanation: Đẩy một tham chiếu rỗng vào nhánh đích tương đương với hành động
-      xóa bỏ hoàn toàn tham chiếu đó trên máy chủ từ xa.
+    explanation: Refspec push có source rỗng yêu cầu remote xóa ref đích; hãy xác nhận
+      remote và tên ref trước khi chạy vì thao tác này có thể làm mất nhánh chia sẻ.
   - id: q3
-    question: Quy tắc Refspec mặc định khi bạn clone một repository từ GitHub về máy
-      là gì?
+    question: Refspec fetch thường gặp trong một bản clone thông thường là gì?
     type: single
     options:
       - text: +refs/heads/*:refs/remotes/origin/*
@@ -45,15 +44,14 @@ questions:
         correct: false
       - text: remote:local
         correct: false
-    explanation: Quy tắc mặc định ánh xạ toàn bộ các nhánh `refs/heads/*` trên
-      server thành các nhánh tracking `refs/remotes/origin/*` trên máy cục bộ.
+    explanation: Cấu hình thường ánh xạ các nhánh `refs/heads/*` của remote sang
+      `refs/remotes/origin/*` ở local; clone một nhánh hoặc cấu hình riêng có thể khác.
   - id: q4
     question: Tại sao các nhánh từ xa (như `origin/main`) lại được đặt trong không
       gian tên `refs/remotes/` thay vì `refs/heads/`?
     type: single
     options:
-      - text: Để cách ly không gian tên, ngăn chặn việc các nhánh theo dõi từ xa ghi đè
-          trực tiếp lên các nhánh làm việc cục bộ của bạn
+      - text: Để tách ref theo dõi vị trí remote khỏi nhánh local mà bạn trực tiếp làm việc
         correct: true
       - text: Do hạn chế về dung lượng ổ đĩa
         correct: false
@@ -61,12 +59,10 @@ questions:
         correct: false
       - text: Để máy tính tự động dịch sang tiếng Anh
         correct: false
-    explanation: Phân tách namespace giúp bạn có thể tự do chỉnh sửa nhánh `main`
-      cục bộ mà không sợ bị xung đột trực tiếp với con trỏ theo dõi
-      `origin/main`.
+    explanation: Namespace riêng giúp phân biệt nhánh local `refs/heads/main` với
+      ref theo dõi `refs/remotes/origin/main`; fetch cập nhật ref theo dõi.
   - id: q5
-    question: Khi thực hiện lệnh `git push origin main`, thực chất Git thực thi cú
-      pháp Refspec ngầm định nào?
+    question: Trong lệnh `git push origin main`, source ref và destination ref thường tương ứng với cặp nào?
     type: single
     options:
       - text: refs/heads/main:refs/heads/main
@@ -77,14 +73,14 @@ questions:
         correct: false
       - text: +refs/remotes/*:refs/heads/*
         correct: false
-    explanation: Lệnh push ngầm định đẩy nhánh cục bộ refs/heads/main lên nhánh cùng
-      tên refs/heads/main trên server từ xa.
+    explanation: Với lệnh explicit `main`, Git gửi nhánh local `refs/heads/main` tới
+      ref cùng tên trên remote, trừ khi cấu hình hoặc refspec khác thay đổi đích.
   - id: q6
     question: Làm thế nào để chỉ fetch duy nhất một nhánh `feature-login` mà không
       muốn kéo về tất cả các nhánh khác từ origin?
     type: single
     options:
-      - text: git fetch origin feature-login:refs/remotes/origin/feature-login
+      - text: git fetch origin +refs/heads/feature-login:refs/remotes/origin/feature-login
         correct: true
       - text: git fetch origin --all --single
         correct: false
@@ -92,5 +88,5 @@ questions:
         correct: false
       - text: git pull --only-one
         correct: false
-    explanation: Bằng cách chỉ định rõ ràng cặp refspec nguồn và đích cho nhánh cụ
-      thể, Git sẽ chỉ đồng bộ duy nhất nhánh đó.
+    explanation: Refspec nêu rõ source ref từ remote và đích local; dấu `+` cho phép
+      đích cập nhật non-fast-forward nếu nhánh remote đã bị viết lại.

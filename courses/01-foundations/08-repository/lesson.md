@@ -27,9 +27,9 @@
 - **Đừng nhầm:** `.git` không phải chỗ để bạn viết nội dung README hay mã nguồn.
 
 ### `HEAD` — dấu chỉ vị trí hiện tại
-- **Nói dễ hiểu:** Dấu để Git biết vị trí làm việc hiện tại, thường là nhánh đang được chọn.
+- **Nói dễ hiểu:** Dấu để Git biết vị trí hiện tại, thường là nhánh đang được chọn.
 - **Ví dụ:** Nếu bạn đang ở nhánh `main`, `HEAD` thường trỏ tới nhánh đó.
-- **Đừng nhầm:** `HEAD` không phải tên của một tệp dự án hay một commit message.
+- **Đừng nhầm:** `HEAD` không phải tên của một tệp dự án; trường hợp nó trỏ thẳng vào commit sẽ học sâu hơn sau này.
 
 ---
 
@@ -74,7 +74,7 @@ git status
 ---
 
 ## 🔍 Giải thích command
-- `ls -la`: Liệt kê cả tệp ẩn trên macOS/Linux; trên Windows có thể dùng `dir /a`.
+- `ls -la`: Liệt kê tệp ẩn trên macOS/Linux và trong terminal mô phỏng. Trong PowerShell dùng `Get-ChildItem -Force`; trong Command Prompt dùng `dir /a`.
 - `git status`: Cho biết Git có nhận ra repository tại thư mục này và các tệp nào đang đổi.
 
 ---
@@ -87,14 +87,14 @@ git status
 ---
 
 ## 🧪 Lab
-1. Chạy `dir /a` trên Windows hoặc `ls -la` trên macOS/Linux.
+1. Trong terminal mô phỏng, chạy `ls -la`. Trên PowerShell máy thật, dùng `Get-ChildItem -Force`; trên Command Prompt, dùng `dir /a`.
 2. Tìm `.git` nhưng không thay đổi hoặc xóa nội dung bên trong.
-3. Chạy `git status` và xác định một tệp đang thuộc Working Tree.
+3. Chạy `git status` trong repository và xác định một tệp đang thuộc Working Tree.
 
 ---
 
 ## 💡 Hint
-> Các tệp bạn sửa nằm trong dự án; hãy để Git quản lý `.git` bằng các lệnh.
+> Các tệp bạn sửa nằm trong dự án; hãy để Git quản lý `.git` bằng các lệnh. Terminal mô phỏng chỉ hiển thị cấu trúc minh họa.
 
 ---
 

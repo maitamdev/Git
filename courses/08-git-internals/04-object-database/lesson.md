@@ -5,7 +5,7 @@
 ## 🎯 Mục tiêu
 - Nắm vững bản chất của Git Object Database như một kho lưu trữ Key-Value Store đơn giản và thanh lịch.
 - Hiểu rõ 4 loại đối tượng cơ bản trong Git: blob (nội dung), tree (thư mục), commit (lịch sử) và tag (chú thích).
-- Khám phá cơ chế lưu trữ Loose Objects: cấu trúc phân chia thư mục 2 ký tự đầu và 38 ký tự sau (`.git/objects/xx/yyyy`).
+- Khám phá cơ chế lưu Loose Objects; ví dụ repo SHA-1 dùng 2 ký tự đầu làm thư mục và phần còn lại làm tên file.
 - Hiểu cấu trúc tiêu đề chuẩn của đối tượng Git: `<type> <size>\0<content>`.
 
 ---
@@ -14,33 +14,33 @@
 
 ### Loose Objects
 - **Nói dễ hiểu**: Các đối tượng riêng lẻ được nén zlib độc lập và lưu trữ trực tiếp dưới dạng các tệp tin trong `.git/objects/`.
-- **Ví dụ**: Tệp tin `.git/objects/ce/013625030ba8dba906f756967f9e9cf3944e52` chứa nội dung nén của một blob.
+- **Ví dụ**: Trong repo SHA-1, object ID của blob chứa đúng byte `hello\n` là `ce013625030ba8dba906f756967f9e9ca394464a`; nếu còn là loose, đường dẫn là `.git/objects/ce/013625030ba8dba906f756967f9e9ca394464a`.
 - **Đừng nhầm**: Không phải đối tượng trong Packfile; khi số lượng loose objects nhiều lên, Git sẽ gom chúng vào tệp `.pack` để tiết kiệm đĩa.
 
 ### Object Header Format
-- **Nói dễ hiểu**: Phần đầu nhị phân chuẩn hóa mà Git gắn vào trước nội dung dữ liệu trước khi thực hiện băm SHA-1.
-- **Ví dụ**: Chuỗi tiêu đề `blob 14\0` được ghép vào trước nội dung `hello world\n`.
+- **Nói dễ hiểu**: Header chuẩn hóa mà Git ghép trước nội dung khi tạo object ID theo hash format của repo.
+- **Ví dụ**: Chuỗi tiêu đề `blob 6\0` được ghép trước nội dung 6 byte `hello\n`.
 - **Đừng nhầm**: Người dùng không nhìn thấy tiêu đề này khi dùng lệnh Porcelain; nó được Git tự động tính toán ngầm bên trong.
 
 ### Key-Value Store in Git
-- **Nói dễ hiểu**: Mô hình cơ sở dữ liệu tra cứu đơn giản: đưa vào khóa là mã SHA-1 40 ký tự sẽ nhận về giá trị là nội dung giải nén của đối tượng.
-- **Ví dụ**: Tra cứu khóa `ce0136` bằng lệnh `git cat-file -p ce0136` trả về chuỗi văn bản gốc.
+- **Nói dễ hiểu**: Mô hình tra cứu object bằng object ID; ID dài 40 ký tự trong repo SHA-1 và 64 ký tự trong repo SHA-256.
+- **Ví dụ**: Dùng object ID đầy đủ vừa lấy từ `git hash-object` với `git cat-file -p <object-id>` để xem nội dung.
 - **Đừng nhầm**: Không có bảng, khóa ngoại hay chỉ mục SQL; mọi quan hệ được tạo ra nhờ các đối tượng trỏ mã băm của nhau.
 
 ---
 
 ## 📖 Định nghĩa
-Cơ sở dữ liệu đối tượng Git (Git Object Database) là một kho lưu trữ cặp Khóa - Giá trị (Key-Value Data Store) nằm tại thư mục `.git/objects/`. Trong hệ thống này, Giá trị (Value) là nội dung của một đối tượng bất kỳ được nén bằng thuật toán zlib, và Khóa (Key) là mã băm băm mật mã học SHA-1 (chuỗi 40 ký tự hexa) được tính toán từ chính nội dung của đối tượng đó kèm theo tiêu đề chuẩn.
+Object database là kho các object được Git tra cứu bằng object ID. Repo SHA-1 dùng SHA-1; repo SHA-256 dùng SHA-256. Object loose được nén riêng bằng zlib; khi đóng gói, nhiều object được lưu trong packfile có thể dùng delta compression. Git directory mặc định chứa `objects/`, nhưng có thể cấu hình vị trí khác.
 
 ---
 
 ## 💡 Tại sao cần
-Hiểu được cách Git tổ chức cơ sở dữ liệu đối tượng giúp bạn giải mã được sự thần kỳ về tốc độ và tính toàn vẹn của Git. Mọi thứ trong Git — từ một dòng mã bạn viết, một thư mục con, một commit cho đến một nhãn phát hành — đều được quy về một trong bốn loại đối tượng cơ bản bất biến. Nếu dữ liệu bị hỏng dù chỉ 1 bit, mã băm SHA-1 sẽ thay đổi ngay lập tức và Git sẽ phát hiện sự can thiệp bất hợp pháp.
+Hiểu object database giúp bạn đọc lịch sử và chẩn đoán dữ liệu. Object ID cho phép Git phát hiện thay đổi ngoài ý muốn; SHA-1 có điểm yếu va chạm đã biết và Git có cơ chế bảo vệ bổ sung. Không nên mô tả hash là bảo đảm mật mã tuyệt đối hoặc cho rằng object bất khả xóa.
 
 ---
 
 ## 🧠 Mental Model
-Hãy hình dung một thư viện khổng lồ chứa hàng triệu cuốn sách. Thủ thư không xếp sách theo tên tác giả hay ngày xuất bản, mà sử dụng một chiếc máy quét quang học quét toàn bộ chữ trong cuốn sách để tạo ra một mã số định danh duy nhất (SHA-1 hash). Sau đó, thủ thư lấy 2 chữ số đầu của mã số làm số thứ tự của Dãy kệ sách (ví dụ: kệ số `4b`), và 38 chữ số còn lại làm số hiệu cuốn sách đặt trên kệ đó (`.git/objects/4b/825dc6e8`).
+Hãy hình dung một thư viện sắp object theo ID thay vì tên tệp. Trong repository SHA-1, ID có 40 ký tự hexa; nếu object còn loose, Git dùng hai ký tự đầu làm thư mục và phần còn lại làm tên tệp. Ví dụ, blob rỗng có ID `e69de29bb2d1d6434b8b29ae775ad8c2e48c5391` nằm loose tại `.git/objects/e6/9de29bb2d1d6434b8b29ae775ad8c2e48c5391`. Repo SHA-256 và object đã pack có cách nhìn khác.
 
 ---
 
@@ -60,54 +60,52 @@ Nội dung bên trong tệp nén:
 ---
 
 ## 🏢 Ví dụ thực tế
-Một kỹ sư muốn kiểm tra xem Git lưu trữ một chuỗi văn bản như thế nào. Kỹ sư tạo một tệp tin `hello.txt` chứa chữ "hello\n" và chạy lệnh `git hash-object -w hello.txt`. Git trả về mã băm: `ce013625030ba8dba906f756967f9e9cf3944e52`. Kỹ sư mở thư mục `.git/objects/ce/` và thấy một tệp tin mới xuất hiện có tên `013625030ba8dba906f756967f9e9cf3944e52`. Khi kiểm tra tệp này bằng lệnh cat thông thường, màn hình chỉ hiển thị các ký tự nhị phân vô nghĩa vì dữ liệu đã được nén bằng zlib. Khi sử dụng lệnh chuyên dụng `git cat-file -p ce0136`, Git lập tức giải nén và in ra chữ "hello" nguyên bản.
+Một kỹ sư tạo `hello.txt` chứa đúng 6 byte `hello` và ký tự xuống dòng rồi chạy `git hash-object -w hello.txt`. Trong repo SHA-1, Git in `ce013625030ba8dba906f756967f9e9ca394464a`; nếu object còn ở dạng loose, nó nằm tại `.git/objects/ce/013625030ba8dba906f756967f9e9ca394464a`. Dùng `git cat-file -p <object-id>` để xem nội dung đã giải nén. Nếu object đã được pack, bạn sẽ không thấy file loose tương ứng.
 
 ---
 
 ## 💻 Command & Cú pháp
 ```bash
-# Quét toàn bộ tệp đối tượng rời rạc trên đĩa
-find .git/objects -type f
-
-# Thống kê số lượng đối tượng và dung lượng chiếm dụng
+# Thống kê số lượng loose objects và packfiles
 git count-objects -v
 
-# Kiểm tra kiểu của đối tượng qua mã băm
-git cat-file -t ce0136
+# Tính object ID cho nội dung mà không ghi object
+echo "Git Internals Demo" | git hash-object --stdin
 
-# Xem nội dung giải nén đẹp của đối tượng
-git cat-file -p ce0136
+# Kiểm tra kiểu và nội dung bằng object ID vừa in ra
+git cat-file -t <object-id>
+git cat-file -p <object-id>
 ```
 
 ---
 
 ## 🔍 Giải thích command
-- `find .git/objects -type f`: Liệt kê các tệp đối tượng rời rạc (loose objects) đang lưu trữ trên đĩa.
-- `git count-objects -v`: Thống kê số lượng loose objects, packfiles và dung lượng đĩa tương ứng.
-- `git cat-file -t <hash>`: Đọc header và trả về loại đối tượng (`blob`, `tree`, `commit`, hoặc `tag`).
-- `git cat-file -p <hash>`: Giải nén zlib và in ra nội dung nguyên bản (pretty-print).
+- `git count-objects -v`: Thống kê loose objects và thông tin packfiles; không nhất thiết có một file riêng cho mỗi object.
+- `git hash-object --stdin`: Tính object ID, mặc định không ghi object vào database.
+- `git cat-file -t <object-id>`: In loại object (`blob`, `tree`, `commit` hoặc `tag`).
+- `git cat-file -p <object-id>`: Hiển thị nội dung object theo dạng dễ đọc; blob nhị phân có thể không hiển thị thành văn bản dễ hiểu.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
 1. **Nghĩ rằng tên tệp tin được lưu trong đối tượng Blob**: Blob chỉ lưu duy nhất nội dung nhị phân thô; tên tệp và quyền hạn được lưu trong đối tượng Tree.
 2. **Sửa đổi thủ công tệp đối tượng trong `.git/objects/`**: Dẫn tới lỗi "Corrupt loose object" do mã băm không còn khớp với nội dung sau khi sửa.
-3. **Hoang mang khi thấy nhiều thư mục 2 ký tự**: Đây là thiết kế tối ưu hóa hệ thống tệp giúp tránh tình trạng một thư mục chứa quá nhiều tệp tin làm chậm hệ điều hành.
+3. **Cho rằng mọi repo đều có đường dẫn object dạng 2+38 ký tự**: Đó là ví dụ loose object của định dạng SHA-1; repo SHA-256 có ID dài hơn và packed object nằm trong packfile.
 
 ---
 
 ## 🧪 Lab thực hành
 Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
 
-1. **Bước 1**: Chạy lệnh `git count-objects -v` để ghi nhận số lượng đối tượng ban đầu trong kho.
-2. **Bước 2**: Chạy lệnh `echo "Git Internals Demo" | git hash-object -w --stdin` để trực tiếp tạo một blob vào database.
-3. **Bước 3**: Sao chép mã SHA-1 vừa in ra, kiểm tra kiểu đối tượng bằng lệnh `git cat-file -t <mã_sha>`.
-4. **Bước 4**: Chạy `git count-objects -v` lần nữa để thấy chỉ số `count` tăng thêm đúng 1 đối tượng.
+1. Chạy `git hash-object --stdin` rồi nhập một dòng nội dung duy nhất; lưu object ID được in ra.
+2. Chạy `git cat-file -t <object-id>` để xác nhận loại là `blob` và `git cat-file -p <object-id>` để đọc nội dung.
+3. Lặp lại `git hash-object --stdin` với cùng nội dung. ID phải giống nhau.
+4. Thêm cờ `-w` để ghi object; sau đó dùng `git count-objects -v` xem thống kê. Số loose objects có thể không tăng nếu blob đã tồn tại hoặc Git pack dữ liệu.
 
 ---
 
 ## 💡 Hint & mẹo
-> Tại sao Git lại tách 2 ký tự đầu làm thư mục con? Vì nhiều hệ thống tệp tin cổ điển (như FAT32 hoặc ext3) sẽ bị chậm nghiêm trọng nếu một thư mục đơn lẻ chứa quá 10.000 tệp tin. Với 256 thư mục con (từ 00 đến ff), tải trọng được phân bổ đều đặn.
+> Cấu trúc 2 ký tự đầu là cách Git tổ chức loose objects; không cần suy ra một ngưỡng hiệu năng cụ thể của hệ điều hành. Packfile có bố cục khác.
 
 ---
 
@@ -130,5 +128,5 @@ Tại sao các đối tượng trong Git Object Database lại được gọi l�
 ## 📝 Tổng kết
 - Git Object Database là một kho lưu trữ Key-Value dạng Content-Addressable nén bằng zlib.
 - Bốn loại đối tượng cốt lõi gồm: `blob`, `tree`, `commit`, và `tag`.
-- Đường dẫn đối tượng được phân rã thành thư mục 2 ký tự đầu và tệp 38 ký tự còn lại để tối ưu hóa hệ thống tệp.
-- Tính bất biến của đối tượng giúp Git bảo vệ tính toàn vẹn của lịch sử dự án trước mọi nguy cơ sửa đổi.
+- Trong repo SHA-1, đường dẫn loose object dùng 2 ký tự đầu làm thư mục và phần còn lại làm tên file; packfile không theo cấu trúc đó.
+- Object ID giúp phát hiện thay đổi nội dung; không nên xem hash hoặc object là bất khả xóa hay bảo đảm an ninh tuyệt đối.

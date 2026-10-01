@@ -66,8 +66,6 @@ Kỹ sư Tuấn hoàn thành chức năng tìm kiếm trên nhánh feature-searc
 git push
 git push origin <tên-nhánh>
 git push -u origin <tên-nhánh>
-git push origin --all
-git push origin --delete <tên-nhánh>
 ```
 
 ---
@@ -76,8 +74,6 @@ git push origin --delete <tên-nhánh>
 - `git push`: Đẩy commit lên remote và nhánh mặc định đã được thiết lập tracking.
 - `git push origin <tên-nhánh>`: Đẩy nhánh chỉ định lên remote mang tên origin.
 - `git push -u origin <nhánh>`: Đẩy lên và ghi nhớ mối quan hệ upstream tracking để rút gọn lệnh sau này.
-- `git push origin --all`: Đẩy toàn bộ các nhánh cục bộ hiện có lên máy chủ cùng lúc.
-- `git push origin --delete <nhánh>`: Xóa bỏ một con trỏ nhánh trên máy chủ từ xa GitHub.
 
 ---
 
@@ -90,20 +86,23 @@ git push origin --delete <tên-nhánh>
 
 ## 🧪 Lab thực hành
 Bài học này là bài tự kiểm tra: bạn thao tác đẩy nhánh lên remote và kiểm tra liên kết upstream.
-1. Tạo một nhánh mới `demo-push` và tạo một commit mới trên nhánh này.
-2. Chạy lệnh `git push -u origin demo-push` để đưa nhánh lên remote.
-3. Quan sát thông điệp phản hồi từ máy chủ GitHub xác nhận nhánh đã được tạo.
-4. Xóa nhánh trên remote để dọn dẹp bằng `git push origin --delete demo-push`.
+1. Thực hành trong Git Academy simulator hoặc kho thử nghiệm riêng; không dùng nhánh chính của dự án nhóm.
+2. Nếu đây là kho mới chưa có commit, chạy `git add README.md` rồi `git commit -m "docs: start push practice"` để tạo commit đầu tiên. Nếu kho đã có commit, bỏ qua bước này.
+3. Tạo nhánh bằng `git switch -c demo-push`, sửa một dòng trong README bằng editor, rồi chạy `git add README.md` và `git commit -m "docs: practice push"`.
+4. Trong simulator, thêm remote giả bằng `git remote add training-push https://example.com/training/push-demo.git`. URL này chỉ dùng trong mô phỏng, không kết nối GitHub.
+5. Chạy `git push -u training-push demo-push`, sau đó `git branch -vv` để kiểm tra liên kết upstream.
+6. Với GitHub thật, chỉ push lên repository bạn có quyền ghi. Không xóa nhánh remote ở bài này.
 
 ---
 
 ## 💡 Hint & mẹo
-> Khi bị lỗi rejected non-fast-forward, hãy bình tĩnh chạy `git pull` trước để tích hợp code mới nhất từ đồng nghiệp, sau đó mới push lại.
+> Khi bị từ chối non-fast-forward, đừng ép push. Fetch trước, kiểm tra khác biệt, rồi tích hợp theo quy trình của nhóm trước khi thử push lại.
 
 ---
 
 ## ✅ Validation & Kết quả mong đợi
-- Commit xuất hiện đầy đủ trên nhánh tương ứng tại máy chủ GitHub.
+- Với remote GitHub thật, commit được gửi lên nếu xác thực, quyền truy cập và quy tắc nhánh cho phép.
+- Với simulator, chỉ remote giả lập nhận commit; kết quả không xuất hiện trên tài khoản GitHub.
 - Lệnh `git status` báo nhánh cục bộ đã đồng bộ hoàn toàn với `origin/<nhánh>`.
 
 ---

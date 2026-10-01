@@ -13,29 +13,29 @@
 ## 🧩 Từ khóa hôm nay
 
 ### git restore
-- **Nói dễ hiểu**: Lệnh khôi phục hoặc xóa bỏ các sửa đổi ở cấp độ file trong Working Tree hoặc Staging Area.
-- **Ví dụ**: `git restore index.html` để hủy các dòng vừa gõ nhầm và lấy lại bản lưu trước đó.
-- **Đừng nhầm**: Không xóa commit trong lịch sử; lệnh này chỉ tác động lên file hiện tại trên máy bạn.
+- **Nói dễ hiểu**: Lệnh đưa file trong thư mục làm việc về bản đang được stage; với `--staged`, đưa bản stage về trạng thái của `HEAD`.
+- **Ví dụ**: `git restore index.html` hủy phần sửa chưa stage; `git restore --staged index.html` bỏ stage nhưng giữ phần sửa trong file.
+- **Đừng nhầm**: Khôi phục có thể xóa phần sửa bạn chưa lưu vào commit. Hãy xem `git diff` trước khi chạy.
 
 ### git reset
-- **Nói dễ hiểu**: Lệnh di chuyển con trỏ nhánh lùi về commit cũ trong quá khứ để viết lại lịch sử cục bộ.
+- **Nói dễ hiểu**: Ở dạng `git reset <commit>`, lệnh chuyển nhánh hiện tại về commit khác; `--soft`, `--mixed`, `--hard` quyết định Git xử lý Staging và file ra sao.
 - **Ví dụ**: `git reset --soft HEAD~1` để mở lại commit vừa tạo nhằm bổ sung thêm file.
-- **Đừng nhầm**: Viết lại lịch sử; tuyệt đối không dùng trên các nhánh đã push lên GitHub dùng chung với đồng nghiệp.
+- **Đừng nhầm**: `git reset <file>` chỉ bỏ stage file, không di chuyển nhánh. Reset commit đã chia sẻ cần phối hợp với nhóm.
 
 ### git revert
-- **Nói dễ hiểu**: Lệnh tạo một commit mới tinh có nội dung đảo ngược hoàn toàn tác động của một commit cũ gây lỗi.
+- **Nói dễ hiểu**: Lệnh tạo commit mới để áp dụng phần thay đổi ngược với commit cũ.
 - **Ví dụ**: `git revert 4a8b2c` để vô hiệu hóa một bản vá bị lỗi mà không làm mất lịch sử cũ.
-- **Đừng nhầm**: Không xóa bỏ commit cũ; cả commit lỗi và commit đảo ngược đều tồn tại rõ ràng trong nhật ký.
+- **Đừng nhầm**: Git có thể dừng vì xung đột; nếu sau đó file đã đổi, kết quả không nhất thiết là bản sao y nguyên trước commit cũ.
 
 ---
 
 ## 📖 Định nghĩa
-Trong Git, nhu cầu hoàn tác (Undo) có thể xảy ra ở nhiều tầng kiến trúc khác nhau, từ việc hủy bỏ chỉnh sửa file chưa lưu cho đến thu hồi commit đã đẩy lên mạng. Git cung cấp bộ 3 công cụ: `git restore` xử lý tệp ở Working Tree và Staging, `git reset` dịch con trỏ nhánh viết lại lịch sử cục bộ, và `git revert` tạo commit đảo ngược an toàn trên nhánh dùng chung.
+Trong Git, việc hoàn tác có thể nhắm vào file hoặc commit. `git restore` khôi phục nội dung file; `git reset <commit>` di chuyển nhánh hiện tại và tùy chế độ sẽ cập nhật Staging hoặc Working Tree; `git revert` tạo commit mới áp dụng thay đổi ngược. Với commit đã chia sẻ, `revert` thường dễ phối hợp hơn vì giữ nguyên commit cũ trong lịch sử.
 
 ---
 
 ## 💡 Tại sao cần
-Sai lầm phổ biến của lập trình viên là dùng sai lệnh hoàn tác, dẫn đến việc vô tình làm mất công sức lập trình cả ngày. Nắm vững ranh giới giữa restore, reset và revert giúp bạn biết khi nào chỉ cần hủy chỉnh sửa file, khi nào nên xóa commit thử nghiệm trên máy riêng và khi nào bắt buộc phải dùng revert để bảo vệ đồng nghiệp.
+Ba lệnh giải quyết ba việc khác nhau: `restore` đưa nội dung file về trạng thái đã lưu, `reset` di chuyển ref và có thể bỏ thay đổi, còn `revert` tạo commit mới để đảo một thay đổi. Với commit đã chia sẻ, nhóm thường chọn `revert` để tránh viết lại lịch sử mà đồng nghiệp đã lấy về.
 
 ---
 
@@ -70,10 +70,10 @@ git revert <commit-hash>
 ---
 
 ## 🔍 Giải thích command
-- `git restore <tệp>`: Khôi phục nội dung tệp tin trong Working Directory về trạng thái của commit gần nhất.
-- `git restore --staged <tệp>`: Đưa tệp tin ra khỏi Staging Area mà vẫn giữ nguyên nội dung chỉnh sửa.
+- `git restore <tệp>`: Mặc định khôi phục file trong Working Tree từ Staging Area; phần sửa chưa stage có thể bị mất.
+- `git restore --staged <tệp>`: Khôi phục bản stage từ `HEAD`, thường dùng để bỏ stage mà vẫn giữ nội dung file.
 - `git reset`: Dịch chuyển con trỏ nhánh về commit chỉ định và điều chỉnh lại Staging hoặc Working Tree.
-- `git revert <hash>`: Tạo ra một commit hoàn toàn mới mang nội dung đảo ngược lại commit được chỉ định.
+- `git revert <hash>`: Tạo commit mới áp dụng thay đổi ngược với commit được chỉ định. Có thể cần xử lý conflict.
 
 ---
 
@@ -86,21 +86,22 @@ git revert <commit-hash>
 
 ## 🧪 Lab thực hành
 Bài học này là bài tự kiểm tra: bạn thực hành phân biệt 3 thao tác restore, reset và revert trên terminal.
-1. Tạo một chỉnh sửa nhỏ trong tệp `test.txt` và hủy bỏ bằng lệnh `git restore test.txt`.
-2. Thêm tệp vào staging bằng `git add` rồi rút ra bằng `git restore --staged test.txt`.
-3. Tạo một commit thử nghiệm và thực hiện `git revert HEAD` để quan sát commit đảo ngược.
-4. Kiểm tra lại lịch sử bằng `git log --oneline` để xác nhận commit mới được tạo ra an toàn.
+1. Làm trong kho thử nghiệm riêng. Tạo `test.txt` với nội dung `v1`, rồi chạy `git add test.txt` và `git commit -m "base"`.
+2. Đổi nội dung thành `v2`, chạy `git restore test.txt`, rồi mở file để xác nhận nội dung trở lại `v1`.
+3. Đổi nội dung thành `v2` lần nữa, chạy `git add test.txt`, rồi `git restore --staged test.txt`. Chạy `git status`: file còn sửa nhưng đã bỏ stage.
+4. Stage và commit thay đổi `v2` bằng `git add test.txt` và `git commit -m "change test file"`.
+5. Chạy `git revert HEAD`, xác nhận file trở lại `v1`, rồi dùng `git log --oneline -3` để thấy commit gốc và commit revert cùng còn trong lịch sử.
 
 ---
 
 ## 💡 Hint & mẹo
-> Ghi nhớ nguyên tắc vàng: Nhánh cá nhân chưa push có thể dùng reset, nhưng nhánh cộng tác dùng chung luôn luôn dùng revert.
+> Trước khi hoàn tác, xác định thay đổi đang ở file, Staging hay trong commit. Với commit đã chia sẻ, hãy kiểm tra quy trình của nhóm; `revert` thường giữ lịch sử dễ phối hợp hơn.
 
 ---
 
 ## ✅ Validation & Kết quả mong đợi
-- Phân biệt chính xác phạm vi tác động của restore (file), reset (nhánh cục bộ) và revert (commit công khai).
-- Không làm mất lịch sử commit ngoài ý muốn trên nhánh chính.
+- Mô tả được `restore` tác động lên file, `reset` có thể di chuyển nhánh ở dạng commit, và `revert` tạo commit mới.
+- Nhận ra file sửa chưa commit có thể bị mất khi dùng `restore` hoặc `reset --hard`.
 
 ---
 
@@ -117,4 +118,4 @@ Tìm hiểu vì sao trước phiên bản Git 2.23 lệnh `git checkout` phải 
 ## 📝 Tổng kết
 - `git restore` chuyên dùng để khôi phục trạng thái tệp tin trong Working Directory hoặc Staging Area.
 - `git reset` dịch chuyển con trỏ nhánh lùi về quá khứ, phù hợp cho việc viết lại lịch sử cục bộ.
-- `git revert` tạo commit mới đảo ngược commit cũ, là phương pháp an toàn duy nhất trên nhánh dùng chung.
+- `git revert` tạo commit mới áp dụng thay đổi ngược; hãy kiểm tra kết quả, nhất là khi các commit sau đó sửa cùng file.

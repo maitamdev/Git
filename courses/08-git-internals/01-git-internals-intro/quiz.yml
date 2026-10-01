@@ -5,7 +5,7 @@ questions:
     question: "Về mặt bản chất kiến trúc cốt lõi, Git thực sự là gì?"
     type: single
     options:
-      - text: "Một hệ thống tệp tin định danh theo nội dung (Content-Addressable File System)"
+      - text: "Một hệ thống quản lý phiên bản dựa trên object được định danh theo nội dung và các tham chiếu"
         correct: true
       - text: "Một cơ sở dữ liệu quan hệ SQL truyền thống"
         correct: false
@@ -13,12 +13,12 @@ questions:
         correct: false
       - text: "Một dịch vụ lưu trữ đám mây của Microsoft"
         correct: false
-    explanation: "Git được thiết kế xoay quanh cơ sở dữ liệu khóa-giá trị, trong đó khóa chính là mã băm SHA-1 của nội dung dữ liệu."
+    explanation: "Git lưu blob, tree, commit và tag dưới dạng object được định danh bằng hash; refs đặt tên cho các object như đầu nhánh hoặc tag."
   - id: q2
     question: "Toàn bộ siêu dữ liệu, lịch sử commit và cấu hình của một kho lưu trữ Git được lưu trữ ở đâu?"
     type: single
     options:
-      - text: "Nằm trọn vẹn trong thư mục ẩn .git/ tại thư mục gốc của dự án"
+      - text: "Trong Git directory của repository; đường dẫn này có thể khác thư mục worktree"
         correct: true
       - text: "Lưu trữ trên máy chủ của GitHub tại Mỹ"
         correct: false
@@ -26,12 +26,12 @@ questions:
         correct: false
       - text: "Lưu rải rác trong từng tệp tin mã nguồn"
         correct: false
-    explanation: "Tính phân tán của Git thể hiện ở chỗ toàn bộ lịch sử và đối tượng đều được đóng gói đầy đủ trong thư mục .git."
+    explanation: "Repository metadata thường nằm trong Git directory, nhưng linked worktree và submodule có thể dùng file .git trỏ tới metadata ở nơi khác."
   - id: q3
     question: "Mô hình lưu trữ dữ liệu của Git khác gì so với các hệ thống VCS đời cũ như SVN hay CVS?"
     type: single
     options:
-      - text: "Git lưu trữ ảnh chụp toàn diện (Snapshot) của toàn bộ dự án, trong khi SVN lưu trữ danh sách các dòng thay đổi (Delta/Diff)"
+      - text: "Mỗi commit trỏ tới một snapshot logic của cây thư mục; Git vẫn có thể lưu object trong packfile bằng delta compression"
         correct: true
       - text: "Git chỉ lưu trữ mã nguồn tệp tin dạng văn bản thuần"
         correct: false
@@ -39,7 +39,7 @@ questions:
         correct: false
       - text: "Hai hệ thống có cơ chế lưu trữ hoàn toàn giống hệt nhau"
         correct: false
-    explanation: "Mỗi commit trong Git là một snapshot toàn diện của cây thư mục tại thời điểm đó, chứ không phải một chuỗi các bản vá vi phân tích lũy."
+    explanation: "Commit trỏ tới tree mô tả phiên bản dự án; packfile có thể dùng delta để lưu object hiệu quả mà không đổi mô hình snapshot logic."
   - id: q4
     question: "Bốn thành phần trụ cột nền tảng của Git Internals bao gồm những thành phần nào?"
     type: single
@@ -57,7 +57,7 @@ questions:
     question: "Tại sao việc hiểu rõ Git Internals lại giúp lập trình viên xử lý sự cố tốt hơn?"
     type: single
     options:
-      - text: "Vì bạn hiểu bản chất dữ liệu là đồ thị đối tượng bất biến và con trỏ, không còn hoảng sợ khi gặp detached HEAD hay mất commit"
+      - text: "Vì bạn hiểu object, refs, HEAD và index liên kết với nhau, nên biết cách kiểm tra trạng thái trước khi phục hồi"
         correct: true
       - text: "Vì Git sẽ tự động sửa lỗi cú pháp trong code cho bạn"
         correct: false
@@ -65,4 +65,4 @@ questions:
         correct: false
       - text: "Vì bạn có thể xóa thư mục .git mà không làm mất lịch sử"
         correct: false
-    explanation: "Khi nắm được Git chỉ là cơ sở dữ liệu khóa-giá trị và các tham chiếu con trỏ, bạn sẽ tự tin phục hồi mọi commit tưởng như đã mất bằng reflog và xử lý xung đột chính xác."
+    explanation: "Hiểu các mối liên hệ này giúp bạn dùng reflog hoặc fsck để tìm manh mối, nhưng object không còn tham chiếu có thể đã bị Git thu gom."

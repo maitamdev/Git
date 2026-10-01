@@ -16,6 +16,37 @@ export interface SearchIndexEntry {
   definition: string;
 }
 
+export interface TermCardStatus {
+  count: number;
+  completeCount: number;
+  complete: boolean;
+}
+
+function inspectTermCardStatus(markdown: string): TermCardStatus {
+  const normalize = (value: string) => value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd');
+  const sections = markdown.split(/^##\s+/m).slice(1);
+  const termSection = sections.find((part) => {
+    const lineEnd = part.indexOf('\n');
+    const heading = lineEnd < 0 ? part : part.slice(0, lineEnd);
+    return /tu khoa|thuat ngu/.test(normalize(heading));
+  });
+  const cards = termSection?.split(/^###\s+/m).slice(1) || [];
+  const completeCount = cards.filter((part) => {
+    const lineEnd = part.indexOf('\n');
+    const name = (lineEnd < 0 ? part : part.slice(0, lineEnd)).trim();
+    const hasRequiredFields = ['Nói dễ hiểu', 'Ví dụ', 'Đừng nhầm'].every((label) =>
+      new RegExp(`^\\s*[-*]?\\s*\\*{0,2}${label}\\*{0,2}:\\s*\\S`, 'im').test(part),
+    );
+    return Boolean(name && hasRequiredFields);
+  }).length;
+
+  return {
+    count: cards.length,
+    completeCount,
+    complete: cards.length >= 2 && cards.length <= 5 && completeCount === cards.length,
+  };
+}
+
 export interface NavigationNode {
   id: string;
   moduleId: string;
@@ -52,6 +83,7 @@ export function generateCourses() {
   const manifest: CourseManifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'));
   const lessonsRecord: Record<string, CourseLesson> = {};
   const searchIndex: SearchIndexEntry[] = [];
+  const termCardStatus: Record<string, TermCardStatus> = {};
   const navigationMap: Record<string, NavigationNode> = {};
   const depGraph: DependencyGraphData = { nodes: [], edges: [] };
 
@@ -195,6 +227,7 @@ export default lesson;
 
       lessonsRecord[item.id] = lessonObj;
       lessonsRecord[`${module.id}/${item.id}`] = lessonObj;
+      termCardStatus[item.id] = inspectTermCardStatus(content);
 
       // Extract search index keywords and definition
       const extractedCommands = extractCommandsFromContent(content);
@@ -295,6 +328,14 @@ export interface CourseSearchIndexEntry {
 }
 
 export const COURSE_SEARCH_INDEX: CourseSearchIndexEntry[] = ${JSON.stringify(searchIndex, null, 2)};
+
+export interface CourseTermCardStatus {
+  count: number;
+  completeCount: number;
+  complete: boolean;
+}
+
+export const COURSE_TERM_CARD_STATUS: Record<string, CourseTermCardStatus> = ${JSON.stringify(termCardStatus, null, 2)};
 
 export interface CourseNavigationNode {
   id: string;

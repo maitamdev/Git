@@ -30,7 +30,7 @@
 ---
 
 ## 📖 Định nghĩa
-`git reset --soft <commit-target>` là chế độ hoàn tác nhẹ nhàng và bảo tồn dữ liệu tối đa nhất của lệnh reset trong Git. Khi thực thi, Git chỉ dịch chuyển con trỏ HEAD và nhánh hiện tại lùi về commit mục tiêu, đồng thời bảo toàn trọn vẹn Staging Area và Working Directory. Mọi thay đổi của các commit bị rút lại đều nằm sẵn trong Staging.
+`git reset --soft <commit-target>` di chuyển nhánh hiện tại về commit mục tiêu nhưng không thay đổi Staging Area hoặc nội dung trong Working Tree. Nếu Staging khớp với `HEAD` trước lệnh, phần khác nhau giữa `HEAD` cũ và commit mục tiêu sẽ trở thành thay đổi staged sau reset. Dùng trong kho thử nghiệm hoặc nhánh cá nhân; lệnh này viết lại vị trí lịch sử của nhánh.
 
 ---
 
@@ -84,29 +84,29 @@ git commit -m "<thông-điệp-mới>"
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Lo sợ reset --soft làm mất mã nguồn**: Chế độ soft bảo tồn 100% dữ liệu, không xóa bỏ bất kỳ dòng code nào.
-2. **Chạy reset trên nhánh chung đã push lên server**: Viết lại lịch sử trên nhánh công khai sẽ gây lỗi từ chối và xung đột cho đồng nghiệp.
+1. **Nhầm `--soft` với thao tác không ảnh hưởng lịch sử**: File và index được giữ nguyên, nhưng nhánh vẫn được chuyển về commit mục tiêu.
+2. **Chạy reset trên nhánh đã chia sẻ mà chưa thống nhất**: Người khác có thể đã dựa trên commit cũ; hãy phối hợp trước khi cập nhật lịch sử từ xa.
 3. **Quên cờ --soft khiến Git chạy mặc định --mixed**: Làm toàn bộ file văng ra khỏi Staging Area và phải tốn công `git add` lại từ đầu.
 
 ---
 
 ## 🧪 Lab thực hành
 Bài học này là bài tự kiểm tra: bạn thao tác reset --soft và kiểm tra trạng thái staged trên terminal.
-1. Tạo một commit thử nghiệm mới với thông điệp bất kỳ.
-2. Chạy lệnh `git reset --soft HEAD~1` để hoàn tác commit vừa tạo.
-3. Chạy `git status` và quan sát các tệp tin vẫn đang ở trạng thái staged màu xanh lá cây.
-4. Thực hiện một commit mới hoàn thiện với thông điệp chuẩn mực.
+1. Trong kho thử nghiệm riêng, tạo `note.txt` có nội dung `ban dau`, rồi chạy `git add note.txt` và `git commit -m "base"`.
+2. Đổi nội dung thành `ban cap nhat`, stage và commit bằng thông điệp `thu nghiem`.
+3. Chạy `git reset --soft HEAD~1`, rồi `git status`. Thay đổi do commit `thu nghiem` tạo ra nằm trong Staging Area.
+4. Chạy `git commit -m "cap nhat note"`, sau đó `git log --oneline -3` để kiểm tra commit mới thay cho commit thử nghiệm.
 
 ---
 
 ## 💡 Hint & mẹo
-> Sử dụng `git reset --soft HEAD~1` khi bạn muốn viết lại commit message hoặc bổ sung file vào commit vừa tạo mà không muốn dùng amend.
+> Nếu chỉ cần sửa commit gần nhất, `git commit --amend` thường trực tiếp hơn. Dùng reset khi muốn đưa một hay nhiều commit về Staging để sắp xếp lại.
 
 ---
 
 ## ✅ Validation & Kết quả mong đợi
-- Lệnh `git status` hiển thị toàn bộ thay đổi của commit cũ trong mục "Changes to be committed".
-- Nhánh hiện tại lùi lại đúng 1 commit mà không làm mất nội dung trong file.
+- Lệnh `git status` hiển thị phần khác với commit mục tiêu trong mục "Changes to be committed" (khi kho sạch trước khi bắt đầu).
+- Nhánh hiện tại trỏ về commit cha, còn nội dung file vẫn giữ nguyên.
 
 ---
 

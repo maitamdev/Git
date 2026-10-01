@@ -31,10 +31,10 @@
 - **Ví dụ:** `feat(auth): add login` nói thay đổi thuộc phần đăng nhập.
 - **Đừng nhầm:** Tên scope do dự án chọn; Git không áp đặt danh sách.
 
-### Breaking Change — thay đổi làm hỏng tương thích
-- **Nói dễ hiểu:** Thay đổi khiến cách dùng cũ không còn hoạt động như trước.
-- **Ví dụ:** `feat(api)!: remove old endpoint` báo một thay đổi không tương thích.
-- **Đừng nhầm:** Dấu `!` ghi nhận thay đổi; nó không tự nâng phiên bản nếu thiếu công cụ cấu hình.
+### Description — phần tóm tắt thay đổi
+- **Nói dễ hiểu:** Cụm từ ngắn đứng sau dấu hai chấm, nói rõ thay đổi đã làm.
+- **Ví dụ:** Trong `fix: correct total price`, phần mô tả là `correct total price`.
+- **Đừng nhầm:** Description nên nói hành động cụ thể; tên type như `fix` chỉ phân loại thay đổi.
 
 ---
 
@@ -116,7 +116,7 @@ Hãy trả lời các câu hỏi sau về quy ước viết commit message chuy�
 ---
 
 ## 🔥 Challenge
-Nêu ý nghĩa của dấu chấm than `feat!:` trong quy ước Conventional Commits.
+Chọn `feat`, `fix` hoặc `docs` cho từng trường hợp: thêm nút tìm kiếm, sửa lỗi tính tổng, cập nhật hướng dẫn cài đặt. Viết một commit message rõ cho từng trường hợp.
 
 ---
 

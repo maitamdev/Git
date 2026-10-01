@@ -21,7 +21,7 @@ questions:
       nhất cho tính năng giỏ hàng?
     type: single
     options:
-      - text: feat/shopping-cart
+      - text: "feat/shopping-cart (một ví dụ dễ hiểu; dự án có thể dùng quy ước tên khác)"
         correct: true
       - text: code_moi_nhat_2026
         correct: false
@@ -29,8 +29,7 @@ questions:
         correct: false
       - text: dung-xoa-nhe
         correct: false
-    explanation: Tiền tố `feat/` kết hợp với mô tả ngắn gọn bằng tiếng Anh theo dạng
-      kebab-case là chuẩn mực phổ biến nhất trong các dự án công nghệ.
+    explanation: Tên này cho biết nhánh làm tính năng giỏ hàng; `feat/` và kebab-case là quy ước phổ biến, không phải yêu cầu của Git.
   - id: q3
     question: Sau khi một nhánh tính năng đã được hợp nhất thành công vào nhánh main
       trên GitHub, bước tiếp theo nên làm gì?
@@ -79,12 +78,10 @@ questions:
     explanation: Cờ `-c` trong lệnh hiện đại `git switch` thực hiện hành động tạo
       nhánh mới và chuyển sang nhánh đó trong một bước duy nhất.
   - id: q6
-    question: Trước khi bắt đầu rẽ nhánh tính năng mới từ nhánh main, bạn luôn luôn
-      nên thực hiện thao tác gì?
+    question: Trước khi tạo nhánh tính năng từ `main`, việc nào giúp bạn dùng đúng nền commit theo workflow của repo?
     type: single
     options:
-      - text: Chuyển về nhánh main và chạy git pull để bảo đảm đang rẽ nhánh từ phiên
-          bản mã nguồn mới nhất
+      - text: Kiểm tra hướng dẫn repo, chuyển sang nhánh nền phù hợp và đồng bộ theo cách nhóm quy định
         correct: true
       - text: Xóa sạch toàn bộ lịch sử commit trong thư mục .git
         correct: false
@@ -92,5 +89,4 @@ questions:
         correct: false
       - text: Đổi tên tài khoản GitHub của bạn sang tên khác
         correct: false
-    explanation: Luôn cập nhật nhánh main mới nhất trước khi rẽ nhánh giúp giảm
-      thiểu tối đa nguy cơ gặp xung đột mã nguồn sau này khi mở Pull Request.
+    explanation: Đồng bộ nhánh nền theo quy trình giúp bắt đầu từ commit phù hợp; cập nhật không loại bỏ hoàn toàn khả năng xung đột.

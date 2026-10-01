@@ -15,8 +15,7 @@ questions:
         correct: false
       - text: Máy tính sẽ tự động tắt ứng dụng Git
         correct: false
-    explanation: "`squash` yêu cầu phải có một commit làm đích ở phía trước nó; dòng
-      đầu tiên bắt buộc phải là một commit độc lập."
+    explanation: "`squash` cần một commit đứng trước để gộp vào. Dòng đầu có thể là `pick`, `reword`, `edit` hoặc `drop`, tùy mục tiêu."
   - id: q2
     question: Sau khi lưu tệp Todo List có chứa chỉ thị `squash`, bước tiếp theo Git
       sẽ yêu cầu bạn làm gì?

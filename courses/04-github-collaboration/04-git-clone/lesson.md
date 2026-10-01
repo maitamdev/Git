@@ -13,7 +13,7 @@
 ## 🧩 Từ khóa hôm nay
 
 ### git clone
-- **Nói dễ hiểu**: Lệnh tải toàn bộ dự án từ máy chủ về máy tính, bao gồm mọi file, lịch sử commit và nhánh.
+- **Nói dễ hiểu**: Lệnh tạo một thư mục kho Git mới từ địa chỉ máy chủ, tải dữ liệu cần thiết và thiết lập remote theo dõi nguồn.
 - **Ví dụ**: `git clone https://github.com/facebook/react.git` tải toàn bộ mã nguồn React về máy.
 - **Đừng nhầm**: Không chỉ tải mỗi file code nén dạng ZIP; lệnh mang về cả kho dữ liệu `.git` hoàn chỉnh.
 
@@ -22,25 +22,25 @@
 - **Ví dụ**: `git clone --depth 1 https://github.com/org/huge-repo.git` để tải cực nhanh trong CI/CD.
 - **Đừng nhầm**: Bản sao nông này thiếu lịch sử commit cũ; không thích hợp nếu bạn cần điều tra commit cũ bằng git log hay git blame.
 
-### nested repository
-- **Nói dễ hiểu**: Lỗi vô tình clone một kho Git vào bên trong một thư mục đã là kho Git khác.
-- **Ví dụ**: Đang đứng ở thư mục dự án của bạn rồi lại gõ `git clone` một thư viện khác vào đó.
-- **Đừng nhầm**: Không biến thành submodule tự động; Git sẽ cảnh báo hoặc bỏ qua thư mục con này khiến bạn mất code.
+### nested repository — kho lồng bên trong kho khác
+- **Nói dễ hiểu**: Một thư mục Git được đặt bên trong thư mục của kho khác.
+- **Ví dụ**: Clone một dự án con vào thư mục dự án cha.
+- **Đừng nhầm**: Git không tự biến kho con thành submodule. Nếu muốn quản lý quan hệ giữa hai kho, cần chọn giải pháp phù hợp như submodule hoặc subtree.
 
 ---
 
 ## 📖 Định nghĩa
-`git clone` là lệnh tạo bản sao cục bộ hoàn chỉnh của một kho lưu trữ từ xa trên máy tính của bạn. Quá trình clone tải về toàn bộ lịch sử commit, các nhánh, thẻ tag và tự động tạo sẵn liên kết remote `origin` trỏ về máy chủ ban đầu.
+`git clone <url>` tạo một thư mục mới chứa kho cục bộ, tải lịch sử theo chế độ clone đã chọn, thiết lập remote `origin` và checkout nhánh mặc định (nếu kho có nhánh). Clone thông thường tải lịch sử đầy đủ; tùy chọn như `--depth 1` chỉ lấy lịch sử nông. Lệnh cần mạng và quyền đọc kho.
 
 ---
 
 ## 💡 Tại sao cần
-Khi bắt đầu dự án mới trong công ty hoặc đóng góp vào kho mã nguồn mở, `git clone` là bước xuất phát đầu tiên. Hiểu rõ lệnh này giúp bạn bắt nhịp công việc nhanh, tùy biến thư mục tải về và biết cách tối ưu tốc độ cho các dự án dung lượng lớn.
+Khi tham gia một dự án có sẵn, clone tạo thư mục làm việc riêng trên máy bạn. Trước khi chạy, hãy biết thư mục hiện tại ở đâu và tránh clone đè vào thư mục dự án khác.
 
 ---
 
 ## 🧠 Mental Model
-Hãy hình dung `git clone` như việc bạn đến thư viện và đưa toàn bộ cuốn sổ tay dự án qua máy photocopy 3D. Bạn nhận được bản sao giống 100% bản gốc kèm đường dây điện thoại nối thẳng về bàn thủ thư để sẵn sàng cập nhật thông tin mới.
+Hãy hình dung clone như lấy một bản làm việc mới từ kho chung và ghi sẵn địa chỉ kho chung vào danh bạ. Sau đó `fetch` cập nhật thông tin mới, còn `pull` đưa thay đổi vào nhánh đang làm.
 
 ---
 
@@ -90,21 +90,23 @@ git clone --branch <tên-nhánh> <url-kho-chứa>
 ---
 
 ## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thực hành clone một dự án mẫu và kiểm tra thư mục kết quả.
-1. Clone kho lưu trữ mẫu bằng lệnh `git clone https://github.com/git-academy/sample-demo.git`.
-2. Di chuyển vào thư mục dự án vừa tải về bằng `cd sample-demo`.
-3. Kiểm tra liên kết remote tự động sinh ra bằng `git remote -v`.
-4. Xem lại lịch sử commit đã tải về trọn vẹn bằng `git log --oneline`.
+**Bài này làm trong PowerShell thật, không chạy `git clone` ở terminal mô phỏng của khóa học.** Simulator chỉ giữ một kho làm việc; clone tại đó sẽ bị chặn để bảo vệ bài đang học.
+1. Tạo thư mục luyện tập riêng và đi vào đó: `New-Item -ItemType Directory -Path "$env:USERPROFILE\Documents\git-clone-practice" -Force` rồi `Set-Location "$env:USERPROFILE\Documents\git-clone-practice"`.
+2. Clone dự án mẫu vào thư mục con mới: `git clone https://github.com/octocat/Hello-World.git git-clone-demo`.
+3. Chạy `cd git-clone-demo` để vào thư mục vừa tạo.
+4. Chạy `git remote -v`; xác nhận `origin` trỏ tới URL đã clone.
+5. Chạy `git log --oneline -n 5` để xem các commit đã tải về.
+6. Kết thúc bằng `cd ..`. Đừng xóa thư mục nếu muốn xem lại bài; đây là một kho riêng, tách khỏi dự án khóa học.
 
 ---
 
 ## 💡 Hint & mẹo
-> Tuyệt đối không chạy lệnh `git clone` khi bạn đang đứng bên trong một thư mục đã có file `.git`. Luôn kiểm tra bằng `git status` trước.
+> Trước khi clone, kiểm tra `pwd` (hoặc `Get-Location` trong PowerShell). Chọn một thư mục cha riêng để Git tạo thư mục dự án con.
 
 ---
 
 ## ✅ Validation & Kết quả mong đợi
-- Thư mục dự án mới xuất hiện trên ổ đĩa với đầy đủ tệp mã nguồn và thư mục ẩn `.git`.
+- Thư mục `git-clone-demo` có file dự án và thư mục `.git`.
 - Lệnh `git remote -v` hiển thị đúng `origin` trỏ về địa chỉ kho mẫu.
 
 ---
@@ -120,6 +122,6 @@ Thử dùng tùy chọn `--depth 1` để clone một dự án mã nguồn mở 
 ---
 
 ## 📝 Tổng kết
-- `git clone` sao chép toàn bộ mã nguồn, lịch sử commit và các nhánh về máy tính.
-- Tự động thiết lập sẵn remote `origin` trỏ về kho máy chủ ban đầu.
-- Sử dụng `--depth 1` khi muốn tải nhanh mã nguồn mà không cần tải toàn bộ lịch sử quá khứ.
+- Clone tạo kho cục bộ mới và thường thiết lập remote tên `origin`.
+- Clone mặc định lấy lịch sử đầy đủ; shallow clone như `--depth 1` chỉ lấy một phần lịch sử.
+- Clone vào thư mục riêng. Lệnh này cần mạng và quyền đọc kho nguồn.

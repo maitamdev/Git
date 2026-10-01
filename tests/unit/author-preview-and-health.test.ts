@@ -3,9 +3,11 @@ import {
   COURSE_MANIFEST,
   BUILTIN_LESSONS,
   COURSE_SEARCH_INDEX,
+  COURSE_TERM_CARD_STATUS,
 } from '../../packages/exercise-engine/src';
 import type { CourseModule, ManifestLessonItem } from '../../packages/shared/src';
 import { calculateLessonContentMetrics as calculateAuthorQualityMetrics } from '../../apps/playground/src/learning/content-quality';
+import { inspectTermCards } from '../../apps/playground/src/learning/lesson-flow';
 
 describe('Author Preview & Course Health Comprehensive Suite', () => {
   const activeModules = COURSE_MANIFEST.curriculum.filter((m: CourseModule) => m.status !== 'coming_soon');
@@ -85,6 +87,20 @@ describe('Author Preview & Course Health Comprehensive Suite', () => {
       const keyCommands = ['git --version', 'git init', 'git status'];
       for (const cmd of keyCommands) {
         expect(allCommands).toContain(cmd);
+      }
+    });
+
+    it('keeps term-card health in compact metadata without loading full lessons in the dashboard', () => {
+      expect(Object.keys(COURSE_TERM_CARD_STATUS)).toHaveLength(128);
+
+      for (const lessonId of allActiveLessons.map((lesson: ManifestLessonItem) => lesson.id)) {
+        const authoredStatus = inspectTermCards(BUILTIN_LESSONS[lessonId].content);
+        const generatedStatus = COURSE_TERM_CARD_STATUS[lessonId];
+        expect(generatedStatus, lessonId).toEqual({
+          count: authoredStatus.count,
+          completeCount: authoredStatus.completeCount,
+          complete: authoredStatus.complete,
+        });
       }
     });
   });

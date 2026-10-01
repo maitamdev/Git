@@ -13,7 +13,7 @@ questions:
         correct: false
       - text: "Là ngày giờ tạo ra tệp tin"
         correct: false
-    explanation: "Git sử dụng mã băm nội dung (Content Hash) làm khóa định danh duy nhất, đảm bảo tính toàn vẹn và bất biến."
+    explanation: "Git dùng hash của object làm object ID; thuật toán là SHA-1 hoặc SHA-256 tùy định dạng của repository."
   - id: q2
     question: "Git sử dụng thuật toán nén dữ liệu nào cho các đối tượng lưu trữ dạng rời rạc (Loose Objects)?"
     type: single
@@ -26,7 +26,7 @@ questions:
         correct: false
       - text: "rar"
         correct: false
-    explanation: "Git sử dụng thư viện nén zlib tiêu chuẩn để nén tiêu đề và nội dung của mọi đối tượng trước khi ghi xuống đĩa."
+    explanation: "Loose objects được nén bằng zlib; trong packfile, Git có thể lưu object bằng delta để tiết kiệm dung lượng."
   - id: q3
     question: "Bốn loại đối tượng cơ bản duy nhất tồn tại trong cơ sở dữ liệu của Git là gì?"
     type: single
@@ -39,12 +39,12 @@ questions:
         correct: false
       - text: "user, pass, token, và key"
         correct: false
-    explanation: "Mọi cấu trúc phức tạp của Git đều được quy tụ về đúng 4 khối hình học cơ bản: blob, tree, commit và tag."
+    explanation: "Blob, tree, commit và tag là bốn loại object cơ bản; branch và remote là refs/cấu hình chứ không phải object type."
   - id: q4
-    question: "Tại sao Git lại chia mã băm 40 ký tự thành thư mục con 2 ký tự và tệp 38 ký tự?"
+    question: "Trong repo SHA-1, loose object được tổ chức theo đường dẫn nào?"
     type: single
     options:
-      - text: "Để tránh việc có quá nhiều tệp tin nằm trong cùng một thư mục làm giảm tốc độ của hệ thống tệp tin hệ điều hành"
+      - text: "Hai ký tự đầu của object ID làm tên thư mục; phần còn lại làm tên file object"
         correct: true
       - text: "Để mã hóa thông tin chống người khác đọc trộm"
         correct: false
@@ -52,12 +52,12 @@ questions:
         correct: false
       - text: "Do quy định bắt buộc của ngôn ngữ C"
         correct: false
-    explanation: "Việc chia thành 256 thư mục con (từ 00 đến ff) giúp phân tán số lượng tệp, tối ưu hóa tốc độ tìm kiếm và mở tệp của OS."
+    explanation: "Đây là cách bố trí loose object truyền thống của repo SHA-1; object được pack thì nằm trong các packfile thay vì mỗi object một file."
   - id: q5
     question: "Đặc tính bất biến (immutability) của đối tượng trong Git Object Database có ý nghĩa gì?"
     type: single
     options:
-      - text: "Khi một đối tượng đã được ghi vào cơ sở dữ liệu, nội dung của nó không bao giờ bị sửa đổi; mọi sự thay đổi sẽ tạo ra một đối tượng mới với mã băm mới"
+      - text: "Object được định danh từ nội dung; thay đổi nội dung thường tạo object ID khác, nhưng object không phải bất khả xóa"
         correct: true
       - text: "Đối tượng không thể bị xóa ngay cả khi dùng lệnh rm -rf"
         correct: false
@@ -65,4 +65,4 @@ questions:
         correct: false
       - text: "Đối tượng tự động biến mất sau 30 ngày"
         correct: false
-    explanation: "Vì mã định danh đối tượng được sinh ra trực tiếp từ nội dung của nó, việc sửa đổi dù chỉ 1 bit nội dung sẽ làm thay đổi mã SHA-1 và tạo ra đối tượng mới, giữ nguyên lịch sử cũ."
+    explanation: "Git tính object ID từ header và nội dung; sửa đổi thường làm ID khác, còn object cũ chỉ được giữ khi còn tham chiếu hoặc chưa bị garbage collection dọn."

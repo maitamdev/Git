@@ -1,96 +1,81 @@
 id: quiz-03-06-branch-isolation
-title: "Trắc nghiệm: Nguyên lý cách ly không gian Branch Isolation"
+title: "Trắc nghiệm: Thay đổi trên các nhánh"
 questions:
   - id: q1
-    question: Nguyên lý Branch Isolation trong Git mang lại lợi ích lớn nhất nào sau đây?
+    question: Bạn commit `chat.js` trên `feature-chat`, rồi chuyển về `main`. Vì sao tệp chưa xuất hiện trên `main`?
     type: single
     options:
-      - text: Cho phép lập trình viên tự do thử nghiệm và thay đổi mã nguồn mà không sợ
-          ảnh hưởng tới nhánh chính
+      - text: Commit đó chưa thuộc lịch sử mà nhánh `main` trỏ tới
         correct: true
-      - text: Giúp mã nguồn tự động biên dịch thành file exe mà không cần trình biên
-          dịch
+      - text: Git tự đổi tên tệp thành `.git/chat.js`
         correct: false
-      - text: Giúp tự động sửa các lỗi cú pháp ngữ pháp tiếng Anh trong mã nguồn
+      - text: "`git switch` xóa mọi commit mới"
         correct: false
-      - text: Tăng tốc độ truy cập mạng Internet của văn phòng công ty
+      - text: "`main` chỉ lưu tệp HTML"
         correct: false
-    explanation: Tính cách ly độc lập bảo vệ nhánh chính an toàn trước mọi thử
-      nghiệm và lỗi phát sinh trên nhánh phụ.
+    explanation: Mỗi nhánh trỏ tới lịch sử riêng; commit tính năng cần được hợp nhất trước khi nằm trong lịch sử main.
   - id: q2
-    question: Nếu bạn commit một tệp mới trên nhánh `feature` rồi chuyển về nhánh
-      `main`, tệp đó trên ổ đĩa sẽ ra sao?
+    question: Khi chuyển về `main`, commit đã tạo trên `feature-chat` sẽ ra sao?
     type: single
     options:
-      - text: Tệp đó sẽ tự động biến mất khỏi Working Directory trên main và chỉ xuất
-          hiện lại khi quay về feature
+      - text: Vẫn thuộc lịch sử của nhánh tính năng
         correct: true
-      - text: Tệp đó sẽ tự động được gửi qua email cho sếp
+      - text: Bị xóa khỏi toàn bộ repository
         correct: false
-      - text: Tệp đó sẽ bị xóa vĩnh viễn khỏi toàn bộ lịch sử Git
+      - text: Tự chuyển thành commit trên `main`
         correct: false
-      - text: Tệp đó sẽ tự động được đưa vào nhánh main mà không cần merge
+      - text: Được gửi tự động lên GitHub
         correct: false
-    explanation: Git cập nhật Working Directory theo snapshot của nhánh hiện tại;
-      tệp của nhánh con sẽ được cất đi an toàn.
+    explanation: Chuyển nhánh thay đổi vị trí làm việc; thao tác đó không xóa commit trên nhánh cũ.
   - id: q3
-    question: Khi hai lập trình viên tạo hai nhánh khác nhau từ cùng một commit trên
-      main và cùng commit code mới, hình thái lịch sử sẽ như thế nào?
+    question: Bạn sửa một tệp nhưng chưa commit rồi chuyển nhánh. Điều gì có thể xảy ra?
     type: single
     options:
-      - text: Lịch sử sẽ phân kỳ (divergent) thành hai nhánh rẽ độc lập hình chữ Y từ
-          mốc commit chung ban đầu
+      - text: Git có thể giữ sửa đổi đó nếu chuyển nhánh không ghi đè nội dung
         correct: true
-      - text: Lịch sử sẽ bị khóa lại và không ai được commit tiếp
+      - text: Mọi sửa đổi chưa commit luôn bị xóa
         correct: false
-      - text: Một trong hai nhánh sẽ bị xóa ngẫu nhiên để tránh xung đột
+      - text: Sửa đổi tự động được commit lên cả hai nhánh
         correct: false
-      - text: Toàn bộ mã nguồn của cả hai người sẽ bị hòa tan thành một tệp duy nhất
+      - text: Repository tự chuyển sang detached HEAD
         correct: false
-    explanation: Đồ thị commit DAG sẽ phân nhánh độc lập từ commit cha chung tạo
-      thành hình thái phân kỳ.
+    explanation: Thay đổi chưa commit không được cách ly như commit; Git có thể mang nó theo nếu an toàn.
   - id: q4
-    question: Để xem biểu đồ phân kỳ trực quan của tất cả các nhánh trong terminal,
-      bạn dùng câu lệnh nào?
+    question: Bạn muốn biết có thay đổi chưa commit nào trước khi chuyển nhánh. Nên chạy lệnh nào?
     type: single
     options:
-      - text: git log --graph --oneline --all
+      - text: git status
         correct: true
-      - text: git show --branches-only
+      - text: git branch -D
         correct: false
-      - text: git view --diagram
+      - text: git remote -v
         correct: false
-      - text: git chart --divergent
+      - text: git log --oneline
         correct: false
-    explanation: "`git log --graph --oneline --all` vẽ các nhánh phân kỳ bằng ký tự
-      ASCII trực quan tuyệt đẹp."
+    explanation: "`git status` cho biết nhánh hiện tại và các tệp đang staged, chưa staged hoặc untracked."
   - id: q5
-    question: Một tính năng thử nghiệm trên nhánh phụ bị thất bại hoàn toàn, thao
-      tác xử lý chuẩn mực là gì?
+    question: Tính năng trên nhánh riêng đã được kiểm tra và muốn đưa vào `main`. Cần làm gì?
     type: single
     options:
-      - text: Chuyển về nhánh main và xóa bỏ nhánh thử nghiệm đó bằng lệnh git branch -D
+      - text: Đứng trên nhánh nhận thay đổi rồi thực hiện merge
         correct: true
-      - text: Phải cài lại hệ điều hành Windows từ đầu
+      - text: Chỉ đổi tên nhánh feature thành `main`
         correct: false
-      - text: Gửi đơn xin nghỉ việc tại công ty
+      - text: Chạy `git status` nhiều lần
         correct: false
-      - text: Xóa toàn bộ kho chứa của công ty trên GitHub
+      - text: Xóa commit cuối của `main`
         correct: false
-    explanation: Nhờ tính cách ly, bạn chỉ việc xóa nhánh thất bại là dự án trở về
-      trạng thái hoàn hảo ban đầu.
+    explanation: Để lịch sử tính năng đi vào main, nhóm cần chủ động chọn thao tác tích hợp phù hợp.
   - id: q6
-    question: Các commit trên một nhánh tính năng có thể đến được nhánh main thông
-      qua cơ chế nào?
+    question: Lịch sử hai nhánh được gọi là phân kỳ khi nào?
     type: single
     options:
-      - text: Thông qua thao tác hợp nhất có chủ đích (Merge hoặc Rebase)
+      - text: Cả hai nhánh có commit riêng sau một commit chung
         correct: true
-      - text: Tự động hòa nhập sau 24 giờ đồng hồ nếu không có lỗi
+      - text: Một nhánh không có commit nào
         correct: false
-      - text: Tự động hòa nhập khi bạn tắt máy tính đi ngủ
+      - text: Tệp `.gitignore` có hai dòng
         correct: false
-      - text: Thông qua việc cắm cáp USB nối giữa hai máy tính
+      - text: Người dùng tạo hai bản sao thư mục
         correct: false
-    explanation: Git chỉ hòa nhập mã nguồn khi có lệnh chỉ định rõ ràng của lập
-      trình viên (Merge hoặc Rebase).
+    explanation: Hai nhánh phân kỳ khi cùng đi từ một mốc chung rồi mỗi nhánh có commit riêng.

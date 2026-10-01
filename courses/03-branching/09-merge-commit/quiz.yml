@@ -1,28 +1,24 @@
 id: quiz-03-09-merge-commit
-title: "Trắc nghiệm: Bản chất của Merge commit"
+title: "Trắc nghiệm: Merge commit"
 questions:
   - id: q1
-    question: Thuộc tính kỹ thuật cơ bản nào phân biệt một Merge Commit với một
-      commit thông thường trong Git?
+    question: Điểm nào phân biệt merge commit với commit thông thường trong lịch sử phân kỳ?
     type: single
     options:
-      - text: Nó có từ hai con trỏ commit cha trở lên thay vì chỉ có duy nhất một commit
-          cha
+      - text: Merge commit có từ hai commit cha trở lên
         correct: true
-      - text: Nó không có mã băm định danh SHA
+      - text: Merge commit không có mã định danh
         correct: false
-      - text: Nó không lưu trữ cây thư mục mã nguồn
+      - text: Merge commit không lưu trạng thái tệp
         correct: false
-      - text: Nó chỉ có thể được tạo bởi tài khoản quản trị viên
+      - text: Merge commit chỉ được tạo bởi quản trị viên
         correct: false
-    explanation: Mỗi commit thông thường chỉ có 1 parent; Merge Commit là nút giao
-      có từ 2 parents trở lên.
+    explanation: Commit thông thường sau commit gốc thường có một cha, còn merge commit nối nhiều luồng lịch sử.
   - id: q2
-    question: Lệnh nào sau đây chỉ lọc và hiển thị các commit hợp nhất (Merge
-      Commits) trong lịch sử dự án?
+    question: Lệnh nào lọc lịch sử để chỉ xem các merge commit?
     type: single
     options:
-      - text: git log --merges
+      - text: git log --merges --oneline
         correct: true
       - text: git log --only-combine
         correct: false
@@ -30,67 +26,56 @@ questions:
         correct: false
       - text: git filter --merge-nodes
         correct: false
-    explanation: "`--merges` là bộ lọc tích hợp sẵn của git log giúp chỉ liệt kê các
-      commit có nhiều hơn 1 cha."
+    explanation: Tùy chọn --merges chỉ giữ các commit có nhiều hơn một commit cha trong kết quả git log.
   - id: q3
-    question: Lợi ích lớn nhất của việc lưu giữ các Merge Commit trong lịch sử của
-      một dự án lớn là gì?
+    question: Merge commit cho biết điều gì về lịch sử dự án?
     type: single
     options:
-      - text: Bảo lưu nguyên vẹn ngữ cảnh phát triển, ranh giới tính năng và thời điểm
-          tích hợp của nhánh
+      - text: Thời điểm hai luồng lịch sử được nối và trạng thái kết quả
         correct: true
-      - text: Giúp ứng dụng di động chạy mượt mà hơn và ít tốn pin hơn
+      - text: Chắc chắn mọi bài kiểm thử đều đạt
         correct: false
-      - text: Tự động sao lưu mã nguồn sang một ổ đĩa USB phụ
+      - text: Chắc chắn một người quản lý đã phê duyệt thay đổi
         correct: false
-      - text: Tránh việc máy tính bị quá nhiệt khi làm việc ban đêm
+      - text: Ai đã tạo repository đầu tiên
         correct: false
-    explanation: Merge Commit lưu vết ranh giới và thời điểm một luồng tính năng
-      hoàn chỉnh được kết nạp vào sản phẩm.
+    explanation: Commit ghi lịch sử tích hợp và trạng thái tệp, nhưng review và kiểm thử phải được xác nhận ở nơi khác.
   - id: q4
-    question: Khi bạn chạy lệnh `git show` trên một merge commit, dòng thông tin nào
-      cho bạn biết mã hash của các commit cha?
+    question: Khi `git show HEAD` đang trỏ tới merge commit, dòng `Merge:` cho biết gì?
     type: single
     options:
-      - text: "Dòng chữ `Merge: <hash1> <hash2>` nằm ngay dưới dòng commit hash"
+      - text: Mã định danh của hai commit cha
         correct: true
-      - text: Dòng chữ `Parents are secret`
+      - text: Danh sách tệp bị xóa
         correct: false
-      - text: "Dòng chữ `Author: Unknown`"
+      - text: Tên người đã duyệt pull request
         correct: false
-      - text: "Dòng chữ `Error: Multiple parents`"
+      - text: Tên remote của repository
         correct: false
-    explanation: "Git in dòng `Merge: <sha1> <sha2>` biểu thị trực tiếp hai commit
-      cha của commit này."
+    explanation: Dòng Merge liệt kê các commit cha, giúp nhận ra hai lịch sử đã được nối.
   - id: q5
-    question: Lệnh nào sau đây loại bỏ toàn bộ các commit hợp nhất, chỉ hiển thị
-      commit công việc thông thường?
+    question: "`git log --no-merges --oneline` làm gì?"
     type: single
     options:
-      - text: git log --no-merges
+      - text: Ẩn merge commit khỏi danh sách kết quả, không xóa chúng
         correct: true
-      - text: git log --without-parents
+      - text: Xóa các merge commit khỏi repository
         correct: false
-      - text: git log --simple-only
+      - text: Chỉ hiện commit đã được kiểm thử
         correct: false
-      - text: git log --hide-branches
+      - text: Tạo nhánh mới cho từng commit
         correct: false
-    explanation: "`--no-merges` lọc bỏ các commit hợp nhất, giúp người đọc theo dõi
-      các commit nội dung thuần túy."
+    explanation: Đây là bộ lọc cách hiển thị lịch sử; nội dung và commit trong repository không bị thay đổi.
   - id: q6
-    question: Khi bạn hoàn tác (revert) một merge commit bằng git revert, vì sao Git
-      yêu cầu phải truyền cờ -m (mainline)?
+    question: Vì sao fast-forward merge thường không tạo merge commit?
     type: single
     options:
-      - text: Vì merge commit có nhiều hơn một cha nên Git cần biết nhánh nào được coi
-          là luồng chính để hoàn tác
+      - text: Vì đầu nhánh hiện tại có thể được di chuyển thẳng tới commit mới hơn
         correct: true
-      - text: Vì merge commit bị khóa mật khẩu bảo mật
+      - text: Vì Git xóa các commit trên nhánh nguồn
         correct: false
-      - text: Vì Git không cho phép hoàn tác bất kỳ commit nào nếu không có cờ -m
+      - text: Vì fast-forward chỉ hoạt động khi không có repository
         correct: false
-      - text: Vì cờ -m dùng để ghi âm giọng nói của lập trình viên
+      - text: Vì Git tự đổi fast-forward thành squash
         correct: false
-    explanation: Cờ `-m 1` hoặc `-m 2` chỉ định commit cha nào được giữ làm nhánh
-      chính khi hoàn tác thay đổi của nhánh kia.
+    explanation: Nếu lịch sử nhánh hiện tại đã nằm phía trước nhánh nguồn, Git chỉ cần di chuyển con trỏ nhánh.

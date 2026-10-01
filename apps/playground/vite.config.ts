@@ -20,11 +20,12 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id) {
+          const normalizedId = id.replace(/\\/g, '/');
           if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) {
             return 'vendor-react';
           }
-          if (id.includes('generated/course-data') || id.includes('course-data.ts')) {
-            return 'course-data';
+          if (normalizedId.endsWith('/generated/course-data.ts')) {
+            return 'course-index';
           }
           if (id.includes('packages/git-scenarios')) {
             return 'git-scenarios';

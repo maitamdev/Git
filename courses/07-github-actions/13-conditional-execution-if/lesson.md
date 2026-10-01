@@ -17,18 +17,18 @@
 - **Đừng nhầm**: Mặc định mọi bước đều ngầm định mang `success()`; nếu không ghi gì thì có lỗi là các bước sau dừng lại.
 
 ### always() Function
-- **Nói dễ hiểu**: Hàm điều kiện ép buộc bước đó luôn luôn được thực thi trong mọi tình huống, kể cả khi các bước trước bị hỏng hay bị hủy.
-- **Ví dụ**: Bước xóa các tệp nháp và giải phóng container cơ sở dữ liệu tạm thời dùng `if: always()`.
-- **Đừng nhầm**: Cần cẩn trọng khi dùng `always()` cho thông báo để tránh gửi nhầm thông điệp thành công khi build bị lỗi.
+- **Nói dễ hiểu**: Hàm trạng thái trả về `true` kể cả khi workflow đã bị hủy, nên dùng cho tác vụ cần thử chạy trong cả tình huống đó.
+- **Ví dụ**: Có thể dùng `if: always()` để cố gắng lưu log chẩn đoán sau khi các bước trước lỗi hoặc workflow bị hủy.
+- **Đừng nhầm**: Nó không bảo đảm runner còn hoạt động đủ lâu để tác vụ hoàn tất. Tránh dùng cho thao tác thiết yếu có thể treo; nếu muốn chạy khi thành công hoặc thất bại nhưng bỏ qua khi bị hủy, dùng `if: ${{ !cancelled() }}`.
 
 ## 📖 Định nghĩa
-Thuộc tính `if` cho phép bạn ngăn chặn một Job hoặc Step thực thi trừ khi một điều kiện logic cụ thể được thỏa mãn. Bạn có thể sử dụng bất kỳ biểu thức ngữ cảnh nào kết hợp với các hàm kiểm tra trạng thái đặc biệt: `success()` (thành công), `failure()` (có lỗi trước đó), `always()` (luôn luôn chạy) và `cancelled()` (bị hủy bỏ giữa chừng).
+Thuộc tính `if` cho phép bạn điều khiển một Job hoặc Step có được chạy hay không. Có thể kết hợp biểu thức ngữ cảnh với các hàm trạng thái: `success()` trả về true khi các bước trước thành công; `failure()` khi bước trước hoặc Job tổ tiên thất bại; `cancelled()` khi workflow bị hủy; `always()` trả về true kể cả sau khi workflow bị hủy. `always()` không bảo đảm tác vụ sẽ hoàn tất nếu runner bị dừng.
 
 ## 💡 Tại sao cần
-Trong thực tế, bạn thường xuyên cần các hành động cứu hộ hoặc dọn dẹp khi sự cố xảy ra: gửi thông báo khẩn cấp lên Slack khi kiểm thử hỏng (`if: failure()`), hoặc dọn dẹp cụm máy chủ thử nghiệm kể cả khi ứng dụng bị sập (`if: always()`). Thiếu mệnh đề điều kiện, pipeline sẽ không có khả năng tự xử lý tình huống linh hoạt.
+Trong thực tế, bạn có thể gửi thông báo khi kiểm thử lỗi (`if: failure()`), dọn tài nguyên khi bước trước thành công hoặc thất bại nhưng workflow chưa bị hủy (`if: ${{ !cancelled() }}`), hoặc lưu thông tin chẩn đoán ngay cả khi bị hủy (`if: always()`). Chọn điều kiện theo hành động mong muốn; `always()` có rủi ro giữ Job chạy đến hết thời hạn nếu tác vụ gặp lỗi nghiêm trọng.
 
 ## 🧠 Mental Model
-Hãy hình dung hệ thống an toàn trên xe cứu hỏa. Hệ thống phun nước dập lửa chỉ hoạt động khi xe đã đến hiện trường an toàn (`if: success()`). Nhưng còi báo động khẩn cấp và túi khí chỉ bung ra khi xe gặp sự cố va chạm mạnh (`if: failure()`). Và thiết bị ghi dữ liệu hộp đen hành trình thì luôn luôn ghi âm liên tục trong mọi hoàn cảnh kể cả khi xe bị nổ lốp (`if: always()`).
+`success()` giữ bước sau ở trạng thái bỏ qua khi bước trước thất bại; `failure()` chọn xử lý lỗi; `!cancelled()` cho phép chạy sau thành công hoặc thất bại nhưng bỏ qua khi run bị hủy. `always()` vẫn đúng khi run bị hủy, nên phù hợp với bước ngắn như lưu log chẩn đoán; nó không thể bảo đảm runner còn sống để hoàn tất.
 
 ## 📊 Sơ đồ minh họa
 ```mermaid
@@ -36,11 +36,12 @@ flowchart TD
     Step1[Step 1: Run Unit Tests - Bị Thất bại] --> Check{Đánh giá điều kiện các bước sau}
     Check -- if: success() --> Step2[Step 2: Deploy - Bị bỏ qua Skipped]
     Check -- if: failure() --> Step3[Step 3: Gửi tin nhắn cứu hộ Telegram - Được chạy]
-    Check -- if: always() --> Step4[Step 4: Dọn dẹp máy ảo - Luôn được chạy]
+    Check -- if: !cancelled() --> Step4[Step 4: Dọn dẹp tài nguyên - Được chạy sau lỗi]
+    Check -- if: always() --> Step5[Step 5: Lưu log, kể cả khi bị hủy]
 ```
 
 ## 🏢 Ví dụ thực tế
-Một kỹ sư thiết lập đường ống kiểm thử cho ngân hàng trực tuyến. Khi Job kiểm thử chạy: Step 1 xuất bản gói ứng dụng chỉ khi toàn bộ bài test vượt qua (`if: success()`). Step 2 tự động chụp ảnh màn hình lỗi, thu thập log debug và tải lên kênh hỗ trợ chỉ khi có test thất bại (`if: failure()`). Step 3 gửi lệnh tắt cơ sở dữ liệu tạm thời để tránh tốn tiền đám mây (`if: always()`). Nhờ các hàm điều kiện chính xác, hệ thống vừa tiết kiệm chi phí vừa cung cấp đầy đủ thông tin gỡ lỗi.
+Một kỹ sư thiết lập đường ống kiểm thử cho ứng dụng web. Job chỉ phát hành gói nếu kiểm thử thành công (`success()`). Khi kiểm thử thất bại, một Step thu thập log để chẩn đoán (`failure()`). Một Step khác dọn cơ sở dữ liệu tạm nếu workflow chưa bị hủy (`!cancelled()`). Nếu cần thử lưu log khi run bị hủy, có thể dùng `always()`, nhưng phải thiết kế Step ngắn và chịu lỗi.
 
 ## 💻 Command & Cú pháp
 ```bash
@@ -53,11 +54,12 @@ echo "Đang dọn dẹp tài nguyên tạm thời!"
 
 ## 🔍 Giải thích command
 - Lệnh đầu tiên mô phỏng hành động cứu hộ chỉ chạy khi điều kiện `if: failure()` được kích hoạt bởi lỗi từ các bước trước.
-- Lệnh thứ hai mô phỏng hành động dọn dẹp môi trường luôn luôn được chạy nhờ điều kiện `if: always()`.
+- Lệnh thứ hai mô phỏng hành động cleanup khi dùng điều kiện `if: ${{ !cancelled() }}`.
 
 ## ⚠️ Sai lầm phổ biến
-- Nghĩ rằng `if: failure()` sẽ chạy ngay cả khi workflow bị bấm Cancel (trường hợp bị hủy phải dùng `always()` hoặc `cancelled()`).
+- Nghĩ `failure()` là điều kiện để xử lý việc hủy workflow; dùng `cancelled()` để nhận biết run bị hủy, hoặc `always()` nếu cần một tác vụ chạy cả sau khi hủy.
 - Quên rằng mặc định mọi Step đều có ngầm định `if: success()` nên viết lặp lại thừa thãi.
+- Dùng `always()` cho công việc dài hoặc thiết yếu: run bị hủy có thể vẫn chờ job/bước này, và runner có thể dừng trước khi nó xong.
 - Sử dụng biến môi trường không tồn tại trong mệnh đề điều kiện dẫn đến việc biểu thức luôn bị đánh giá là false.
 
 ## 🧪 Lab thực hành
@@ -79,19 +81,19 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
          - name: Bước 3 - Bị bỏ qua vì có lỗi
            if: success()
            run: echo "Bước này sẽ không bao giờ được in ra!"
-         - name: Bước 4 - Luôn luôn chạy
+         - name: Bước 4 - Ghi log ngay cả khi run bị hủy
            if: always()
-           run: echo "Bước 4 hoàn tất dọn dẹp an toàn!"
+           run: echo "Thử ghi log chẩn đoán sau lỗi hoặc khi workflow bị hủy."
    ```
 2. Đẩy file lên GitHub và kích hoạt thủ công qua nút Run workflow.
-3. Quan sát log: Bước 1 đỏ, Bước 2 xanh, Bước 3 xám (Skipped), Bước 4 xanh.
+3. Quan sát log của một run không bị hủy: Bước 1 đỏ, Bước 2 chạy nhờ `failure()`, Bước 3 bị bỏ qua do `success()` không thỏa, Bước 4 được thử chạy nhờ `always()`. Hủy run riêng để quan sát khác biệt; tác vụ vẫn có thể bị dừng nếu runner kết thúc.
 
 ## 💡 Hint & mẹo
-- Khi viết `if: always()`, bước đó sẽ kiên cường thực thi bất kể các bước trước đó thành công, thất bại hay bị hủy bỏ.
+- `always()` vẫn trả về true khi workflow bị hủy. Với bước cần chạy sau thành công/thất bại nhưng không chạy sau khi hủy, ưu tiên `if: ${{ !cancelled() }}`.
 - Bạn có thể kết hợp toán tử logic: `if: always() && github.ref == 'refs/heads/main'`.
 
 ## ✅ Validation & Kết quả mong đợi
-- Bước gắn `failure()` và bước gắn `always()` đều được thực thi sau khi bước đầu tiên gặp sự cố.
+- Trong run không bị hủy, bước gắn `failure()` và `always()` được chạy sau khi bước đầu tiên gặp sự cố; điều kiện của chúng khác nhau khi workflow bị hủy.
 - Bước mang điều kiện `success()` tự động chuyển sang trạng thái Skipped màu xám.
 
 ## ❓ Quiz nhanh
@@ -102,5 +104,5 @@ Thiết kế bước thông báo lỗi chỉ gửi tin nhắn cảnh báo khi s�
 
 ## 📝 Tổng kết
 - Từ khóa `if` dùng để quyết định xem một Job hoặc Step có được phép chạy hay không.
-- Các hàm trạng thái cốt lõi gồm: `success()`, `failure()`, `always()`, và `cancelled()`.
+- Các hàm trạng thái cốt lõi gồm `success()`, `failure()`, `always()` và `cancelled()`; dùng `!cancelled()` khi muốn tiếp tục sau lỗi nhưng tôn trọng thao tác hủy.
 - Mặc định nếu không chỉ định, GitHub Actions luôn áp dụng điều kiện ngầm định là `success()`.

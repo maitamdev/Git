@@ -6,7 +6,7 @@
 - Hiểu sâu nguyên lý của Bộ nhớ định danh theo nội dung (Content-Addressable Storage - CAS).
 - Nắm bắt cơ chế tự động khử trùng lặp (Deduplication) tuyệt hảo: hai tệp có nội dung giống nhau chỉ tạo đúng một đối tượng.
 - Làm chủ công thức tiêu đề chuẩn mực của một đối tượng Git: `<type> <size>\0<content>`.
-- Hiểu tại sao mã băm mật mã học bảo vệ toàn vẹn lịch sử Git trước mọi hành vi can thiệp trái phép.
+- Hiểu mã băm giúp nhận diện thay đổi nội dung và các giới hạn của SHA-1.
 
 ---
 
@@ -14,33 +14,33 @@
 
 ### Content-Addressable Storage (CAS)
 - **Nói dễ hiểu**: Phương thức lưu trữ mà địa chỉ dữ liệu chính là mã băm tính toán trực tiếp từ nội dung của đối tượng.
-- **Ví dụ**: Bạn đưa nội dung vào hàm băm để nhận về địa chỉ khóa SHA-1, không dựa vào tên hay đường dẫn tệp.
+- **Ví dụ**: Git tính object ID từ header và nội dung; tên/đường dẫn file được lưu trong tree, không nằm trong blob.
 - **Đừng nhầm**: Không giống hệ thống tệp thông thường (tìm file theo tên thư mục); Git tìm dữ liệu theo vân tay nội dung.
 
 ### Automatic Deduplication
 - **Nói dễ hiểu**: Khả năng tự động loại bỏ dữ liệu trùng lặp; nhiều tệp giống hệt nhau về nội dung chỉ lưu duy nhất một bản trên đĩa.
-- **Ví dụ**: Sao chép một file ảnh 10MB vào 5 thư mục khác nhau thì Git vẫn chỉ tốn đúng 10MB bộ nhớ cho một đối tượng Blob.
+- **Ví dụ**: Hai file có nội dung blob giống hệt nhau có thể cùng trỏ tới một object; tổng dung lượng thực tế còn phụ thuộc nén và cách lưu.
 - **Đừng nhầm**: Các tệp vẫn có tên và đường dẫn riêng biệt trong đối tượng Tree, nhưng cùng trỏ tới một mã băm Blob duy nhất.
 
 ### Cryptographic Hash (SHA-1 / SHA-256)
 - **Nói dễ hiểu**: Thuật toán băm một chiều biến đổi một khối dữ liệu có kích thước bất kỳ thành chuỗi ký tự độ dài cố định (40 ký tự hexa với SHA-1).
 - **Ví dụ**: Chuỗi băm `e69de29bb2d1d6434b8b29ae775ad8c2e48c5391` là mã băm chuẩn của một tệp rỗng (0 byte) trong Git.
-- **Đừng nhầm**: Không phải thuật toán mã hóa (encryption) có thể giải mã ngược lại; đây là hàm băm một chiều dùng để kiểm tra tính toàn vẹn.
+- **Đừng nhầm**: Hash không phải mã hóa, không thể giải mã ngược; SHA-1 có điểm yếu va chạm đã biết và không nên xem là bảo đảm an ninh tuyệt đối.
 
 ---
 
 ## 📖 Định nghĩa
-Content-Addressable Storage (CAS) là cơ chế lưu trữ dữ liệu trong đó thông tin được truy xuất và định danh dựa trên chính nội dung của nó, chứ không phải dựa trên vị trí đường dẫn hay tên gọi. Trong Git, mỗi khi bạn đưa dữ liệu vào hệ thống, Git sẽ băm toàn bộ nội dung cùng với một phần tiêu đề chuẩn mực thông qua thuật toán hàm băm SHA-1 để tạo ra mã định danh duy nhất (Content Hash). Nếu nội dung thay đổi dù chỉ một dấu cách, mã băm sẽ hoàn toàn khác; nếu nội dung giống hệt nhau, mã băm sẽ luôn luôn trùng khớp.
+Content-Addressable Storage (CAS) định danh dữ liệu theo nội dung. Trong Git, object ID được tính từ header `<type> <size>\0` cộng byte nội dung. Repo SHA-1 dùng SHA-1; repo SHA-256 dùng SHA-256. Cùng type và cùng byte nội dung cho cùng ID trong cùng định dạng hash (bỏ qua trường hợp va chạm). Đường dẫn không nằm trong blob, nhưng Git attributes/clean filters có thể biến đổi dữ liệu trước khi lưu.
 
 ---
 
 ## 💡 Tại sao cần
-Nguyên lý CAS mang lại hai siêu năng lực cốt lõi cho Git: Thứ nhất là Khử trùng lặp tự động (Automatic Deduplication) — nếu bạn có 100 tệp tin ở 100 thư mục khác nhau nhưng cùng chung nội dung, Git chỉ lưu đúng 1 đối tượng duy nhất trên đĩa, tiết kiệm dung lượng khổng lồ. Thứ hai là Tính toàn vẹn mật mã học (Cryptographic Integrity) — không ai có thể âm thầm sửa đổi mã nguồn trong quá khứ mà không làm thay đổi toàn bộ cây mã băm.
+CAS cho phép Git tái sử dụng cùng một blob khi byte dữ liệu đã lưu giống nhau, nhờ vậy tránh lưu nhiều bản giống hệt ở dạng loose objects. Git còn kiểm tra object ID để phát hiện thay đổi ngoài ý muốn. SHA-1 có va chạm thực tế đã biết; Git có bảo vệ bổ sung, nhưng hash không thay thế chữ ký, kiểm soát truy cập hay sao lưu.
 
 ---
 
 ## 🧠 Mental Model
-Hãy so sánh việc tìm một người bằng số Căn cước công dân (Định danh theo nội dung) với việc tìm theo số phòng khách sạn (Định danh theo vị trí). Nếu tìm theo số phòng, người thuê phòng có thể thay đổi liên tục nhưng số phòng vẫn là 301. Nhưng nếu tìm theo số Căn cước công dân gắn liền với vân tay và võng mạc (nội dung sinh trắc học), dù người đó có di chuyển sang bất kỳ tỉnh thành nào trên thế giới thì danh tính của họ vẫn duy nhất và không bao giờ bị trùng lặp.
+Hãy tưởng tượng hai bản sao của cùng một ghi chú. Nếu Git lưu nội dung theo tên đường dẫn, hai tên khác nhau sẽ tạo hai bản dữ liệu riêng. Với content-addressable storage, Git tính ID từ loại object và byte nội dung; hai blob giống nhau trong cùng định dạng hash thường có thể dùng chung object, còn tree vẫn giữ tên và đường dẫn riêng.
 
 ---
 
@@ -54,7 +54,7 @@ Chuỗi dữ liệu chuẩn hóa đưa vào hàm băm:
 "blob 6\0hello\n"
         │
         ▼ [Hàm băm mật mã học SHA-1]
-  ce013625030ba8dba906f756967f9e9cf3944e52
+  ce013625030ba8dba906f756967f9e9ca394464a
 
 (Bất kỳ ai trên thế giới băm chuỗi này đều ra đúng mã hash trên)
 ```
@@ -62,7 +62,7 @@ Chuỗi dữ liệu chuẩn hóa đưa vào hàm băm:
 ---
 
 ## 🏢 Ví dụ thực tế
-Một lập trình viên sao chép một tệp thư viện JavaScript có dung lượng 5 MB có tên `lodash.js` vào 10 thư mục module khác nhau trong dự án. Khi thực hiện `git add .`, lập trình viên lo lắng rằng thư mục `.git/` sẽ bị phình to thêm 50 MB (5 MB x 10). Tuy nhiên, khi kiểm tra dung lượng, thư mục `.git/objects/` chỉ tăng thêm đúng 5 MB. Lý do là vì cả 10 tệp tin đều có chung nội dung, Git áp dụng nguyên lý Content-Addressable Storage và tính toán ra cùng một mã băm SHA-1 duy nhất. Cả 10 đường dẫn khác nhau đều trỏ chung về một đối tượng Blob duy nhất trên đĩa.
+Nếu nhiều đường dẫn được stage với cùng byte nội dung và cùng bộ lọc, chúng có thể dùng chung một blob. Git vẫn cần tree entry riêng cho từng tên/đường dẫn; dung lượng thật thay đổi theo nén, packfile, và dữ liệu đã có trong repository.
 
 ---
 
@@ -81,7 +81,7 @@ printf "blob 12\0hello world\n" | sha1sum
 ---
 
 ## 🔍 Giải thích command
-- `git hash-object --stdin`: Nhận dữ liệu từ terminal stdin, thêm tiêu đề chuẩn `blob <length>\0` và tính toán mã SHA-1.
+- `git hash-object --stdin`: Nhận dữ liệu từ stdin, thêm header `blob <length>\0` và tính object ID theo định dạng hash của repo.
 - Cờ `-w` (write): Yêu cầu Git ghi đối tượng nén zlib vào đúng thư mục con tương ứng trong `.git/objects/`.
 - `printf "blob 12\0hello world\n" | sha1sum`: Thao tác băm thủ công chứng minh công thức tiêu đề nội tại của Git hoàn toàn minh bạch.
 
@@ -90,28 +90,28 @@ printf "blob 12\0hello world\n" | sha1sum
 ## ⚠️ Sai lầm phổ biến
 1. **Nghĩ rằng mã băm chỉ tính từ nội dung file**: Nếu bạn dùng lệnh `sha1sum file.txt` thông thường, kết quả sẽ khác với `git hash-object file.txt` vì Git bắt buộc phải ghép thêm header `blob <size>\0`.
 2. **Lo lắng khi đổi tên file làm tăng dung lượng kho**: Đổi tên file chỉ tạo ra đối tượng Tree mới chứa tên mới, còn nội dung Blob cũ được tái sử dụng 100%.
-3. **Hiểu lầm về va chạm mã băm**: Không gian địa chỉ 160-bit của SHA-1 có tới 2^160 khả năng, xác suất va chạm tự nhiên là 0 trong thực tế phát triển phần mềm.
+3. **Cho rằng va chạm SHA-1 là bất khả thi**: Đã có va chạm được chứng minh cho SHA-1; Git có biện pháp bảo vệ, nhưng không nên khẳng định xác suất bằng 0.
 
 ---
 
 ## 🧪 Lab thực hành
 Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
 
-1. **Bước 1**: Chạy lệnh `echo "hello git" | git hash-object --stdin` và ghi lại mã băm đầu ra.
-2. **Bước 2**: Tạo tệp `doc1.txt` chứa dòng chữ "hello git" và chạy `git hash-object doc1.txt`.
-3. **Bước 3**: Tạo tệp `sub/doc2.txt` ở thư mục con khác nhưng có cùng nội dung "hello git" và chạy `git hash-object sub/doc2.txt`.
-4. **Bước 4**: Đối chiếu 3 mã băm để xác nhận cả 3 kết quả đều cho ra cùng một chuỗi SHA-1 giống nhau hoàn toàn.
+1. Chạy `printf 'hello git\n' > doc1.txt`, rồi `mkdir -p sub` và `cp doc1.txt sub/doc2.txt` để hai đường dẫn có cùng byte nội dung.
+2. Chạy `git hash-object doc1.txt` và `git hash-object sub/doc2.txt`; hai ID phải khớp nếu file không qua clean filter khác nhau.
+3. Chạy `git hash-object --stdin`, nhập cùng nội dung `hello git` và xuống dòng bằng `Ctrl+D` (Git Bash), rồi so sánh ID.
+4. Thử hash một nội dung khác để thấy ID thay đổi. Lệnh chưa có `-w` nên không ghi các blob thử vào database.
 
 ---
 
 ## 💡 Hint & mẹo
-> Hai tệp tin ở hai vị trí khác nhau, mang hai tên gọi khác nhau, nhưng hễ có nội dung giống nhau thì sẽ có mã băm SHA-1 giống hệt nhau. Đó chính là bản chất của cơ chế khử trùng lặp trong Git.
+> So sánh hash của object đã lưu, không phải lúc nào cũng so raw file trước filter. Trong bài lab này, dùng file text đơn giản không có clean filter để thấy rõ quy tắc.
 
 ---
 
 ## ✅ Validation & Kết quả mong đợi
-- Cả 3 lệnh tính toán đều in ra cùng một chuỗi 40 ký tự hexa duy nhất.
-- Kiểm tra `.git/objects/` chỉ thấy xuất hiện 1 đối tượng duy nhất đại diện cho nội dung "hello git".
+- Hai đầu vào cùng byte cho cùng object ID; độ dài ID tùy SHA-1/SHA-256.
+- `git hash-object` không kèm `-w` chỉ tính ID, không ghi object thử vào database.
 
 ---
 
@@ -126,7 +126,7 @@ Nếu bạn có một dự án mã nguồn gồm 10.000 tệp tin nhưng tất c
 ---
 
 ## 📝 Tổng kết
-- Content-Addressable Storage lưu trữ và truy xuất dữ liệu dựa trên mã băm nội dung của chính nó.
+- Content-Addressable Storage định danh object từ header và byte nội dung của nó.
 - Công thức tính băm chuẩn của Git luôn bao gồm tiêu đề: `<type> <size>\0<content>`.
-- Mang lại khả năng tự động khử trùng lặp dữ liệu tuyệt đối và bảo đảm tính toàn vẹn bất biến.
+- Giúp tái sử dụng object giống nhau và phát hiện nhiều thay đổi; hash không phải bảo đảm an ninh tuyệt đối.
 - Đổi tên tệp hoặc di chuyển thư mục không làm tốn thêm dung lượng lưu trữ nội dung tệp tin.

@@ -34,130 +34,130 @@ export const lesson: CourseLesson = {
       "git status"
     ]
   },
-  "content": "# Working Directory (Thư mục làm việc)\n\n---\n\n## 🎯 Mục tiêu\n- Chỉ ra thư mục làm việc và biết nơi mình sửa tệp.\n- Phân biệt tệp Git đã theo dõi với tệp mới chưa được theo dõi.\n- Dùng `git status` để xem những tệp đó.\n\n---\n\n## 🧩 Từ khóa hôm nay\n\n### Working Directory — thư mục làm việc\n- **Nói dễ hiểu:** Các tệp dự án trên máy mà bạn mở và sửa.\n- **Ví dụ:** Tệp `index.html` đang mở trong trình soạn thảo nằm ở đây.\n- **Đừng nhầm:** Sửa ở đây chưa tự đưa thay đổi vào commit.\n\n### Tracked — đã được Git theo dõi\n- **Nói dễ hiểu:** Tệp Git đã biết và có thể so sánh với trạng thái đã lưu.\n- **Ví dụ:** README sau khi được thêm vào lịch sử sẽ là tracked.\n- **Đừng nhầm:** Tracked không có nghĩa sửa đổi mới đã được commit.\n\n### Untracked — chưa được Git theo dõi\n- **Nói dễ hiểu:** Tệp mới nằm trong thư mục nhưng Git chưa được yêu cầu theo dõi.\n- **Ví dụ:** Tạo `note.txt` mới rồi chạy `git status`.\n- **Đừng nhầm:** Tệp vẫn nằm trên máy; chỉ là chưa được chọn vào Git.\n\n---\n\n## 📖 Định nghĩa\nWorking Directory (còn gọi là Working Tree trong nhiều hướng dẫn) là các tệp dự án bạn mở và sửa trên máy. Tạo tệp mới chưa tự đưa tệp vào Git; `git status` sẽ báo tệp là untracked cho tới khi bạn chọn theo dõi.\n\n---\n\n## 🤔 Tại sao cần?\nLưu tệp trong trình soạn thảo chỉ cập nhật tệp trên máy. Git chưa đưa thay đổi đó vào lịch sử; việc này cần các bước `git add` và `git commit`.\n\n---\n\n## 🧠 Mental Model (Mô hình tư duy)\nWorking Directory là bản dự án bạn đang nhìn và sửa trên máy; commit là mốc đã lưu riêng trong lịch sử.\n\n---\n\n## 🖼 Sơ đồ\n```text\nKiến trúc 3 khu vực của Git:\n┌──────────────────────┐     git add      ┌──────────────────────┐    git commit    ┌──────────────────────┐\n│  Working Directory   │ ───────────────► │     Staging Area     │ ───────────────► │      Repository      │\n│ (Thư mục làm việc)   │                  │   (Vùng chuẩn bị)    │                  │  (các commit đã lưu) │\n│  - Chỉnh sửa tệp     │                  │  - Chọn thay đổi     │                  │  - Lưu các commit     │\n└──────────────────────┘                  └──────────────────────┘                  └──────────────────────┘\n```\n\n---\n\n## 🌎 Ví dụ thực tế\nTạo `payment.js`, rồi chạy `git status`. Git báo tệp là Untracked: tệp có trên máy nhưng chưa được chọn để theo dõi.\n\n---\n\n## 💻 Command\n```bash\ngit status\n```\n\n---\n\n## 🔍 Giải thích command\n- `git status`: Báo tệp nào đã sửa, đã staged hoặc chưa được theo dõi.\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Nghĩ lưu tệp là Git đã tạo mốc**:  Lưu trong trình soạn thảo chưa tạo commit.\n2. **Nhầm Working Directory với Staging Area**:  Tệp đang sửa chưa chắc đã được chọn cho commit.\n3. **Nhầm lẫn Working Directory với Staging Area**:  Không phân biệt được tệp đang sửa với tệp đã sẵn sàng để commit.\n\n---\n\n## 🧪 Lab\n1. Mở terminal tại thư mục dự án và tạo một tệp tin mới bằng lệnh `echo \"console.log(1);\" > script.js`.\n2. Chạy `git status` để thấy `script.js` trong mục Untracked files.\n3. Nhận biết rằng tệp tin này đang nằm trong Working Directory nhưng chưa hề được đưa vào Staging Area.\n\n---\n\n## 💡 Hint\n> Mọi tệp tin bạn nhìn thấy và sửa đổi trong VS Code đều nằm trong Working Directory.\n\n---\n\n## ✅ Validation\n- Tạo tệp thành công và `git status` nhận diện tệp là untracked trong working tree.\n\n---\n\n## ❓ Quiz\nHãy hoàn thành bài kiểm tra trắc nghiệm dưới đây về Working Directory trong Git.\n\n---\n\n## 🔥 Challenge\nMô tả điều gì sẽ xảy ra với các tệp trong Working Directory nếu bạn chuyển sang một nhánh hoàn toàn khác.\n\n---\n\n## 📚 Tổng kết\n- Working Directory là dự án bạn đang mở và sửa trên máy.\n- Tệp mới chưa được chọn sẽ hiện là Untracked.\n- Lưu tệp chưa tạo commit; dùng `git status` để kiểm tra trạng thái.\n",
+  "content": "# Working Directory (Thư mục làm việc)\n\n---\n\n## 🎯 Mục tiêu\n- Chỉ ra nơi bạn mở và sửa tệp của dự án.\n- Phân biệt một tệp Git đã biết với tệp mới chưa được theo dõi.\n- Dùng `git status` để xem trạng thái của các tệp.\n\n---\n\n## 🧩 Từ khóa hôm nay\n\n### Working Directory — thư mục làm việc\n- **Nói dễ hiểu:** Các tệp dự án trên máy mà bạn mở và sửa.\n- **Ví dụ:** Tệp `index.html` đang mở trong trình soạn thảo thuộc thư mục làm việc.\n- **Đừng nhầm:** Sửa tệp ở đây chưa tự tạo một commit trong lịch sử.\n\n### Tracked — đã được Git theo dõi\n- **Nói dễ hiểu:** Tệp Git đã được yêu cầu quản lý và sẽ báo khi nội dung thay đổi.\n- **Ví dụ:** README đã được lưu trong một commit trước đó là tracked.\n- **Đừng nhầm:** Tracked không có nghĩa mọi lần sửa mới đã được lưu thành commit.\n\n### Modified — đã sửa\n- **Nói dễ hiểu:** Tệp tracked có nội dung khác với mốc đã lưu gần nhất.\n- **Ví dụ:** Bạn sửa README đã có trong commit; `git status` báo tệp là modified.\n- **Đừng nhầm:** Modified cho biết nội dung đang đổi, không có nghĩa đã tạo commit mới.\n\n### Untracked — chưa được Git theo dõi\n- **Nói dễ hiểu:** Tệp đang có trong thư mục dự án nhưng Git chưa được yêu cầu quản lý.\n- **Ví dụ:** Bạn tạo `note.txt` mới rồi chạy `git status`; Git báo tệp chưa được theo dõi.\n- **Đừng nhầm:** Untracked không có nghĩa tệp bị xóa; tệp vẫn nằm trong thư mục dự án.\n\n---\n\n## 🤔 Tại sao cần?\nKhi làm dự án, bạn thường tạo tệp mới hoặc sửa tệp có sẵn. Trước khi học cách chọn và lưu thay đổi, hãy dùng `git status` để biết Git đang nhận diện các tệp đó ra sao. Nhờ vậy, bạn không nhầm một tệp chưa được theo dõi với tệp đã mất.\n\n---\n\n## 📖 Định nghĩa\nWorking Directory, còn gọi là Working Tree, là các tệp dự án bạn đang mở và sửa. `git status` báo tình trạng các tệp trong thư mục đó. Tệp mới chưa được Git biết thường hiện là Untracked; nội dung của nó vẫn còn trên máy.\n\n---\n\n## 🧠 Mental Model (Mô hình tư duy)\nHãy xem Working Directory như chiếc bàn bạn đang làm bài. Một tệp mới vẫn nằm trên bàn dù Git chưa theo dõi nó. `git status` giống như danh sách kiểm tra cho biết tệp nào đang mới hoặc đã sửa.\n\n---\n\n## 🖼 Sơ đồ\n```text\nThư mục dự án — Working Directory\n├── README.md   Git đã biết tệp này; nếu vừa sửa thì Modified\n└── note.txt    Tệp mới, Git chưa theo dõi (Untracked)\n\ngit status chỉ báo tình trạng; lệnh không thêm tệp hay tạo commit.\n```\n\n---\n\n## 🌎 Ví dụ thực tế\nBạn tạo `note.txt` để ghi ý tưởng cho dự án. Tệp đã có trong thư mục dù chưa nằm trong lịch sử Git. Chạy `git status` để thấy Git báo tệp mới là Untracked.\n\n---\n\n## 💻 Command\n```bash\ngit status\n```\n\n---\n\n## 🔍 Giải thích command\n`git status` cho biết tệp nào mới hoặc đã sửa trong repository hiện tại. Lệnh chỉ đọc trạng thái; nó không thay đổi tệp và không tạo commit.\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Nghĩ lưu trong trình soạn thảo là đã tạo commit:** Lưu tệp cập nhật Working Directory, không tự ghi mốc vào lịch sử.\n2. **Nghĩ Untracked có nghĩa tệp bị mất:** Tệp vẫn nằm trong thư mục; Git chỉ chưa được yêu cầu theo dõi.\n3. **Nghĩ `git status` tự sửa trạng thái:** Lệnh chỉ báo tình trạng hiện tại, không thêm hoặc lưu tệp.\n\n---\n\n## 🧪 Lab\n1. Trong bảng tệp của terminal mô phỏng, tạo tệp mới tên `note.txt` và nhập một dòng ghi chú.\n2. Chạy `git status`.\n3. Tìm `note.txt` dưới mục Untracked files và xác nhận tệp vẫn còn trong bảng tệp.\n\n---\n\n## 💡 Hint\nNếu vừa tạo tệp mới, hãy tìm mục **Untracked files** trong kết quả `git status`.\n\n---\n\n## ✅ Validation\n- Tạo được `note.txt` trong dự án.\n- `git status` báo tệp mới là Untracked.\n- Giải thích được tệp vẫn còn trong Working Directory dù Git chưa theo dõi.\n\n---\n\n## ❓ Quiz\nTrả lời các câu hỏi sau. Khi sai, đọc lời giải thích rồi thử lại.\n\n---\n\n## 🔥 Challenge\nTạo thêm `todo.txt`. Trước khi chạy `git status`, dự đoán tệp sẽ xuất hiện ở mục nào rồi kiểm tra dự đoán.\n\n---\n\n## 📚 Tổng kết\n- Working Directory là các tệp dự án bạn mở và sửa.\n- Tệp mới chưa được theo dõi thường hiện là Untracked.\n- `git status` báo tình trạng, không tự lưu commit.\n",
   "quiz": {
     "id": "quiz-02-01-working-directory",
-    "title": "Trắc nghiệm: Working Directory trong Git",
+    "title": "Trắc nghiệm: Working Directory và trạng thái tệp",
     "questions": [
       {
         "id": "q1",
-        "question": "Working Directory (hay Working Tree) trong Git là gì?",
+        "question": "Working Directory (còn gọi là Working Tree) là phần nào?",
         "type": "single",
         "options": [
           {
-            "text": "Thư mục vật lý trên ổ cứng chứa các tệp mã nguồn mà bạn trực tiếp mở và chỉnh sửa",
+            "text": "Các tệp dự án bạn đang mở và sửa",
             "correct": true
           },
           {
-            "text": "Máy chủ đám mây của GitHub lưu trữ bản sao lưu dự án",
+            "text": "Danh sách mọi commit đã lưu trong lịch sử",
             "correct": false
           },
           {
-            "text": "Bộ nhớ RAM tạm thời của vi xử lý máy tính",
+            "text": "Bản sao repository đang nằm trên máy chủ",
             "correct": false
           },
           {
-            "text": "Khu vực lưu trữ các commit đã được đóng gói hoàn thiện",
+            "text": "Thiết lập chung dùng để cài đặt Git",
             "correct": false
           }
         ],
-        "explanation": "Working Directory là nơi làm việc thực tế ngoài đời của lập trình viên trên hệ thống tệp tin. Đáp án B sai vì đó là Remote Server; C sai vì Git lưu trên ổ cứng; D sai vì đó là Repository."
+        "explanation": "Working Directory là các tệp hiện có để bạn làm việc. Commit đã lưu và cấu hình Git là những phần khác nhau."
       },
       {
         "id": "q2",
-        "question": "Một tệp mới vừa được tạo trong Working Directory ban đầu sẽ có trạng thái nào đối với Git?",
+        "question": "Bạn tạo `note.txt` mới trong dự án rồi chạy `git status`. Tệp thường hiện ở trạng thái nào?",
         "type": "single",
         "options": [
           {
-            "text": "Untracked (Chưa được theo dõi)",
+            "text": "Untracked, vì Git chưa được yêu cầu theo dõi tệp mới",
             "correct": true
           },
           {
-            "text": "Staged (Đã nằm trong vùng chuẩn bị)",
+            "text": "Committed, vì lưu tệp tự tạo commit",
             "correct": false
           },
           {
-            "text": "Tracked (Git đã bắt đầu theo dõi tệp)",
+            "text": "Modified, vì mọi tệp mới đều đã được theo dõi",
             "correct": false
           },
           {
-            "text": "Ignored (Bị bỏ qua tự động)",
+            "text": "Deleted, vì Git chưa nhận diện tệp",
             "correct": false
           }
         ],
-        "explanation": "Tệp mới thường là Untracked cho tới khi bạn chọn theo dõi bằng `git add`. Đáp án B sai vì cần chạy git add; C sai vì cần commit; D sai vì chỉ ignored nếu có trong .gitignore."
+        "explanation": "Tệp mới thường là Untracked cho tới khi bạn yêu cầu Git theo dõi. Tệp vẫn nằm trong dự án và chưa bị xóa."
       },
       {
         "id": "q3",
-        "question": "Khi bạn chỉnh sửa một dòng code trong tệp đã được theo dõi và bấm phím lưu, thay đổi đó nằm ở đâu?",
+        "question": "Bạn sửa README đã có trong một commit rồi lưu tệp. Git thường báo trạng thái nào?",
         "type": "single",
         "options": [
           {
-            "text": "Nằm trong Working Directory ở trạng thái Modified",
+            "text": "Modified, vì nội dung khác với mốc đã lưu",
             "correct": true
           },
           {
-            "text": "Tự động tạo ra một commit mới trong Repository",
+            "text": "Untracked, vì mọi lần sửa đều tạo một tệp mới",
             "correct": false
           },
           {
-            "text": "Tự động đẩy thẳng lên máy chủ từ xa GitHub",
+            "text": "Committed, vì nút Save tự lưu lịch sử Git",
             "correct": false
           },
           {
-            "text": "Biến mất ngay lập tức khi tắt terminal",
+            "text": "Deleted, vì nội dung cũ đã thay đổi",
             "correct": false
           }
         ],
-        "explanation": "Lưu tệp chỉ cập nhật nội dung trên Working Directory và chuyển trạng thái tệp thành Modified. Các đáp án khác sai vì Git không tự động commit hay push ngầm."
+        "explanation": "README đã được Git theo dõi nên thay đổi hiện ra là Modified. Lưu trong trình soạn thảo chưa tự tạo một commit."
       },
       {
         "id": "q4",
-        "question": "Sau khi chạy `git add`, chuyện gì xảy ra với tệp đang ở Working Directory?",
+        "question": "Lệnh `git status` dùng để làm gì trong bài này?",
         "type": "single",
         "options": [
           {
-            "text": "Tệp vẫn ở đó; trạng thái hiện tại được chọn vào Staging Area",
+            "text": "Xem trạng thái các tệp trong repository hiện tại",
             "correct": true
           },
           {
-            "text": "Remote Repository trên GitHub",
+            "text": "Tự thêm tệp Untracked vào lịch sử",
             "correct": false
           },
           {
-            "text": "Thùng rác hệ điều hành Recycle Bin",
+            "text": "Lưu mọi tệp đang sửa thành commit",
             "correct": false
           },
           {
-            "text": "Thư mục cấu hình toàn cục Global Config",
+            "text": "Xóa các tệp Git chưa nhận diện",
             "correct": false
           }
         ],
-        "explanation": "`git add` không di chuyển tệp khỏi thư mục; nó chọn phiên bản để chuẩn bị commit."
+        "explanation": "`git status` chỉ báo trạng thái hiện tại của tệp. Lệnh không thêm, commit hoặc xóa tệp."
       },
       {
         "id": "q5",
-        "question": "Bạn sửa một tệp đã được Git theo dõi rồi lưu lại. Thay đổi mới đang ở trạng thái nào?",
+        "question": "Một tệp hiện là Untracked. Điều nào đúng?",
         "type": "single",
         "options": [
           {
-            "text": "Modified trong Working Directory, chưa tự staged",
+            "text": "Tệp vẫn có trong thư mục nhưng Git chưa theo dõi nó",
             "correct": true
           },
           {
-            "text": "Một commit mới đã tự được tạo",
+            "text": "Tệp đã bị xóa khỏi máy",
             "correct": false
           },
           {
-            "text": "Tệp đã bị xóa khỏi dự án",
+            "text": "Tệp chắc chắn đã được lưu thành commit",
             "correct": false
           },
           {
-            "text": "Thay đổi đã được gửi lên GitHub",
+            "text": "Git đã gửi tệp lên máy chủ từ xa",
             "correct": false
           }
         ],
-        "explanation": "Lưu tệp chỉ cập nhật Working Directory. Bạn cần dùng `git add` để stage và `git commit` để tạo mốc lịch sử."
+        "explanation": "Untracked mô tả trạng thái Git chưa theo dõi, không phải tình trạng tệp bị mất. Bạn vẫn có thể mở và sửa tệp trong dự án."
       }
     ]
   }

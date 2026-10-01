@@ -18,12 +18,10 @@ questions:
     explanation: 'Bạn đề nghị người quản trị: "Xin hãy PULL các commit của tôi vào
       nhánh chính của bạn".'
   - id: q2
-    question: Thực hành nào sau đây được coi là chuẩn mực vàng khi tạo Pull Request
-      trong các công ty chuyên nghiệp?
+    question: "Thực hành nào thường giúp người khác review Pull Request dễ hơn?"
     type: single
     options:
-      - text: Mỗi PR chỉ giải quyết duy nhất một vấn đề cụ thể, có dung lượng vừa phải
-          kèm mô tả rõ ràng và ảnh minh họa
+      - text: Giữ PR tập trung, mô tả mục tiêu và cách kiểm tra rõ ràng
         correct: true
       - text: Gộp toàn bộ công việc của cả tháng vào một PR khổng lồ chứa hơn 10.000
           dòng code
@@ -32,8 +30,7 @@ questions:
         correct: false
       - text: Luôn luôn tạo PR trực tiếp từ nhánh main của máy cá nhân
         correct: false
-    explanation: PR nhỏ gọn (Small PRs) giúp việc review diễn ra nhanh chóng, kỹ
-      lưỡng và giảm thiểu rủi ro lỗi ngầm.
+    explanation: Thay đổi tập trung và có mô tả giúp reviewer hiểu bối cảnh và kiểm tra phần liên quan.
   - id: q3
     question: Thao tác tạo Pull Request được thực hiện chủ yếu ở đâu?
     type: single
@@ -82,12 +79,10 @@ questions:
     explanation: PR theo dõi con trỏ nhánh; mọi commit mới push lên nhánh đó đều tự
       động xuất hiện trong danh sách commit của PR.
   - id: q6
-    question: Hệ thống CI/CD (Continuous Integration) thường làm nhiệm vụ tự động gì
-      khi một Pull Request được mở ra?
+    question: "Nếu repository cấu hình CI cho Pull Request, workflow có thể tự động làm gì?"
     type: single
     options:
-      - text: Tự động chạy bộ kiểm thử đơn vị (Unit Tests), kiểm tra quy chuẩn mã nguồn
-          (Linter) và biên dịch thử dự án
+      - text: Chạy các kiểm tra mà repository đã cấu hình, chẳng hạn test, linter hoặc build
         correct: true
       - text: Tự động chuyển tiền lương vào tài khoản ngân hàng của tác giả PR
         correct: false
@@ -95,5 +90,4 @@ questions:
         correct: false
       - text: Tự động duyệt và merge PR mà không cần con người xem xét
         correct: false
-    explanation: CI đóng vai trò người gác cổng tự động bảo đảm mã nguồn mới đáp ứng
-      các tiêu chuẩn kỹ thuật trước khi merge.
+    explanation: CI chỉ chạy khi repository cấu hình workflow; kết quả hỗ trợ review nhưng không tự chứng minh mọi thứ đúng.

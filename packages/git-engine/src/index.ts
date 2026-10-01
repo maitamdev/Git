@@ -14,6 +14,7 @@ export * from './commands/checkout';
 export * from './commands/diff';
 export * from './commands/restore';
 export * from './commands/rm';
+export * from './commands/check-ignore';
 export * from './commands/mv';
 export * from './commands/merge';
 export * from './commands/reset';

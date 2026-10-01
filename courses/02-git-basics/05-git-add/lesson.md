@@ -1,17 +1,17 @@
-# Đưa tệp vào staging với git add
+# Đưa một tệp vào vùng chuẩn bị bằng `git add`
 
 ---
 
 ## 🎯 Mục tiêu
-- Chọn một tệp bằng `git add <file>` và xác nhận lựa chọn bằng `git status`.
-- Giải thích được `git add .` chọn thay đổi dưới thư mục hiện tại.
-- Biết `git add -p` dùng để chọn từng nhóm thay đổi.
+- Dùng `git add <tên-tệp>` để chọn một tệp.
+- Xác nhận lựa chọn bằng `git status`.
+- Giải thích được rằng add chưa tạo commit.
 
 ---
 
 ## 🧩 Từ khóa hôm nay
 
-### `git add` — chọn thay đổi cho commit
+### `git add` — chọn nội dung cho commit
 - **Nói dễ hiểu:** Đưa trạng thái hiện tại của tệp vào vùng chuẩn bị.
 - **Ví dụ:** `git add README.md` chọn riêng tệp README.
 - **Đừng nhầm:** `git add` chưa tạo commit.
@@ -21,101 +21,100 @@
 - **Ví dụ:** `README.md` là đường dẫn tới một tệp trong dự án.
 - **Đừng nhầm:** Chọn một tệp khác với chọn toàn bộ dự án.
 
-### `git add .` — chọn thay đổi ở thư mục hiện tại
-- **Nói dễ hiểu:** Thêm các thay đổi phù hợp bên dưới thư mục đang đứng.
-- **Ví dụ:** Chạy lệnh ở thư mục dự án để chọn nhiều tệp.
-- **Đừng nhầm:** Xem `git status` để chắc bạn không chọn nhầm tệp.
+### Untracked — tệp Git chưa theo dõi
+- **Nói dễ hiểu:** Tệp mới mà Git chưa được yêu cầu đưa vào lịch sử.
+- **Ví dụ:** `note.txt` mới thường hiện là Untracked trong `git status`.
+- **Đừng nhầm:** Sau khi chạy `git add note.txt`, tệp được theo dõi và staged; chưa có commit nào được tạo.
 
-### Patch mode — chọn từng phần thay đổi
-- **Nói dễ hiểu:** `git add -p` cho phép chọn từng nhóm dòng thay vì cả tệp.
-- **Ví dụ:** Chỉ đưa phần sửa lỗi vào commit, để phần làm dở lại.
-- **Đừng nhầm:** Đây là chế độ tương tác; đọc từng câu hỏi trước khi chọn.
+### Staged — nội dung đã được chọn
+- **Nói dễ hiểu:** Phiên bản nội dung được đưa vào vùng chuẩn bị cho commit kế tiếp.
+- **Ví dụ:** Chạy `git add app.js`, rồi sửa `app.js` thêm lần nữa; phiên bản đã staged và phần sửa mới là hai trạng thái khác nhau.
+- **Đừng nhầm:** Sửa tệp sau khi add không tự cập nhật bản staged; cần chạy `git add app.js` lại.
 
 ---
 
 ## 📖 Định nghĩa
-`git add` chụp trạng thái hiện tại của thay đổi vào Staging Area để chuẩn bị cho commit kế tiếp. Tệp vẫn nằm nguyên trong thư mục dự án. Ví dụ: `git add file.txt` chọn một tệp; `git add .` chọn thay đổi bên dưới thư mục hiện tại.
+`git add <tên-tệp>` ghi nhận trạng thái hiện tại của tệp vào Staging Area để chuẩn bị cho commit kế tiếp. Tệp vẫn nằm nguyên trong thư mục dự án. Hôm nay ta chọn một tệp cụ thể để kiểm soát rõ nội dung sắp đưa vào commit.
 
 ---
 
 ## 🤔 Tại sao cần?
-`git add` cho phép chọn phần thay đổi muốn đưa vào commit. Kiểm tra `git status` trước và sau lệnh để tránh chọn nhầm.
+Sau khi sửa hoặc tạo tệp, bạn chọn thay đổi muốn lưu trước. Xem `git status` trước và sau lệnh để biết Git đang thấy gì và xác nhận tệp đã vào vùng chuẩn bị.
 
 ---
 
 ## 🧠 Mental Model (Mô hình tư duy)
-Hãy nghĩ `git add` như chụp một bản của thay đổi vào khay chuẩn bị. Bản gốc vẫn ở trong thư mục; lần sửa tiếp theo chưa tự động cập nhật bản đã staged.
+Hãy nghĩ `git add` như chụp trạng thái hiện tại của một tệp vào khay chuẩn bị. Bản gốc vẫn nằm ở thư mục dự án; nếu bạn sửa tiếp, phần sửa mới cần được chọn lại.
 
 ---
 
 ## 🖼 Sơ đồ
 ```text
-`git add` chụp trạng thái tệp vào Staging Area, không di chuyển tệp:
-[Working Directory: file.txt] -- git add file.txt --> [Staging Area: bản đã chọn]
-          tệp vẫn còn ở đây                     bản gốc vẫn còn ở đây
+Working Directory                    Staging Area
+app.js (bản đang sửa) --git add-->   app.js (trạng thái được chọn)
+       vẫn nằm tại đây
 ```
 
 ---
 
 ## 🌎 Ví dụ thực tế
-Sửa `app.js`, chạy `git add app.js`, rồi sửa thêm lần nữa. Chạy `git status`: phiên bản đầu đang staged, phần sửa sau vẫn chưa staged.
+Tạo `app.js`, chạy `git add app.js`, rồi xem `git status`. Git vẫn để nguyên `app.js` trong thư mục dự án, đồng thời báo tệp đã staged.
 
 ---
 
 ## 💻 Command
 ```bash
-git add <file>
-git add .
-git add -A
-git add -p
+git status
+git add app.js
+git status
 ```
 
 ---
 
 ## 🔍 Giải thích command
-- `git add <file>`: Chọn một tệp cụ thể; kiểm tra tên tệp trước khi chạy.
-- `git add .`: Chọn các thay đổi bên dưới thư mục hiện tại.
-- `git add -A`: Chọn các thay đổi trong toàn bộ kho lưu trữ.
-- `git add -p`: Chế độ tương tác từng khối thay đổi (patch) cho phép bạn duyệt từng dòng code.
+- `git status`: Xem tệp đang untracked, đã staged hay còn thay đổi chưa staged.
+- `git add app.js`: Chọn trạng thái hiện tại của `app.js` cho commit kế tiếp.
+- Chạy `git status` lần nữa để xác nhận kết quả.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Chạy `git add .` mà không kiểm tra trạng thái**:  Có thể chọn cả tệp hoặc phần sửa bạn chưa định đưa vào commit.
-2. **Nghĩ `git add` đã tạo commit**:  Thay đổi mới chỉ nằm trong Staging Area; cần chạy `git commit` để tạo mốc lịch sử.
-3. **Không đọc kỹ thông báo khi git add gặp file quá lớn**:  Cố gắng add các file video hoặc zip nặng khiến Git chạy chậm chạp.
+1. **Nghĩ `git add` đã tạo commit**: Thay đổi mới chỉ nằm trong vùng chuẩn bị; cần `git commit` để tạo mốc.
+2. **Sửa tệp sau khi đã add nhưng quên add lại**: Phần sửa mới chưa được chọn.
+3. **Gõ nhầm đường dẫn**: Kiểm tra tên tệp trong `git status` nếu Git báo không tìm thấy.
 
 ---
 
 ## 🧪 Lab
 1. Tạo tệp `app.js` với nội dung `console.log("Git Add Lab");`.
-2. Chạy `git status` để thấy tệp trong danh sách Untracked.
-3. Chạy lệnh `git add app.js` để đưa tệp vào Staging Area.
-4. Chạy lại `git status` để xác nhận tệp nằm trong mục Changes to be committed.
+2. Chạy `git status` và nhận ra `app.js` đang Untracked.
+3. Chạy `git add app.js`.
+4. Chạy lại `git status`; xác nhận `app.js` nằm trong “Changes to be committed”.
 
 ---
 
 ## 💡 Hint
-> Gõ `git add <tên-tệp>` để thêm chính xác tệp tin bạn mong muốn.
+> Gõ `git add <tên-tệp>` để chọn đúng một tệp; xem lại bằng `git status`.
 
 ---
 
 ## ✅ Validation
-- Kiểm tra `git status` hiển thị tệp `app.js` trong mục Changes to be committed.
+- `git status` hiển thị `app.js` trong “Changes to be committed”.
+- Tệp `app.js` vẫn còn trong danh sách tệp của dự án.
 
 ---
 
 ## ❓ Quiz
-Hãy trả lời các câu hỏi dưới đây để củng cố kỹ năng sử dụng lệnh git add.
+Hãy trả lời các câu hỏi dưới đây để củng cố kỹ năng dùng `git add` cho một tệp.
 
 ---
 
 ## 🔥 Challenge
-Tìm hiểu cờ `git add -p` (patch) và giải thích lợi ích của việc stage từng khối dòng code (hunk).
+Tạo `note-a.txt` và `note-b.txt`. Chỉ chạy `git add note-a.txt`; dùng `git status` để giải thích tệp nào đã staged và tệp nào vẫn untracked.
 
 ---
 
 ## 📚 Tổng kết
-- `git add` chụp thay đổi vào Staging Area; tệp gốc vẫn ở nguyên chỗ.
-- Tệp mới được chọn bằng `git add` sẽ được theo dõi và staged.
-- Xem `git status` để biết chính xác nội dung nào đã chọn.
+- `git add <tên-tệp>` chọn trạng thái hiện tại của một tệp.
+- Tệp vẫn nằm trong thư mục dự án.
+- `git status` xác nhận thay đổi đã staged; commit là bước khác.

@@ -38,8 +38,7 @@ questions:
       trường hợp nào sau đây?
     type: single
     options:
-      - text: Khi phát hiện lỗi logic nghiêm trọng, lỗ hổng bảo mật hoặc vi phạm kiến
-          trúc bắt buộc phải sửa trước khi merge
+      - text: Khi bạn cho rằng thay đổi cần được xử lý trước khi chấp thuận; quy tắc repository quyết định trạng thái đó có chặn merge không
         correct: true
       - text: Khi bạn không thích màu hình đại diện đại diện của tác giả PR
         correct: false
@@ -47,8 +46,7 @@ questions:
         correct: false
       - text: Bất cứ khi nào bạn muốn trêu đùa đồng nghiệp cho vui
         correct: false
-    explanation: "`Request changes` là rào chắn chặn không cho phép merge cho đến
-      khi tác giả sửa xong các vấn đề cốt lõi."
+    explanation: "`Request changes` truyền đạt yêu cầu sửa; branch protection có thể bắt buộc xử lý trước khi merge."
   - id: q4
     question: Thói quen xấu nào sau đây thể hiện sự thiếu trách nhiệm và nguy hại
       nhất trong văn hóa Code Review?
@@ -81,4 +79,3 @@ questions:
         correct: false
     explanation: Tác giả PR chuyên nghiệp luôn trao đổi trên tinh thần kỹ thuật, kiểm
       tra lại logic và cập nhật commit mới để hoàn thiện code.
-

@@ -13,5 +13,7 @@ objectives:
   - Viết lời nhắn ngắn bằng `git commit -m`.
   - Phân biệt commit trên máy với push lên dịch vụ trực tuyến.
 commands:
+  - git status
+  - git add <file>
   - 'git commit -m "feat: your commit message"'
-  - 'git commit -am "fix: quick fix"'
+  - git log --oneline

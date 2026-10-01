@@ -5,7 +5,7 @@ questions:
     question: Mặc định, các Job trong cùng một Workflow của GitHub Actions sẽ thực thi như thế nào?
     type: single
     options:
-      - text: Thực thi song song (Parallel) cùng lúc trên các Runner riêng biệt
+      - text: Job không phụ thuộc thường có thể chạy song song trên các runner đã chọn
         correct: true
       - text: Thực thi tuần tự từng Job một theo thứ tự từ trên xuống dưới
         correct: false
@@ -13,7 +13,7 @@ questions:
         correct: false
       - text: Chờ người quản trị bấm kích hoạt từng Job một cách thủ công
         correct: false
-    explanation: GitHub Actions tối ưu hóa thời gian thực thi bằng cách khởi chạy tất cả các Job độc lập song song với nhau.
+    explanation: Các Job không phụ thuộc có thể bắt đầu song song; runner khả dụng và giới hạn concurrency có thể ảnh hưởng thời điểm chạy.
   - id: q2
     question: Các Step bên trong cùng một Job có đặc điểm thực thi như thế nào?
     type: single
@@ -31,7 +31,7 @@ questions:
     question: Nếu Job A tạo ra một tệp tin build/app.js, Job B có thể truy cập trực tiếp tệp tin đó từ ổ đĩa không?
     type: single
     options:
-      - text: Không, vì mỗi Job chạy trên một máy ảo hoàn toàn cách ly, cần dùng Artifact để truyền dữ liệu
+      - text: Không nên giả định có thể truy cập; hãy dùng Artifact hoặc cơ chế truyền dữ liệu giữa Job
         correct: true
       - text: Có, toàn bộ các Job luôn dùng chung một ổ đĩa cứng vật lý
         correct: false
@@ -39,7 +39,7 @@ questions:
         correct: false
       - text: Có, nếu hai Job cùng chạy hệ điều hành Ubuntu
         correct: false
-    explanation: Mỗi Job chạy trên một Runner độc lập, bộ nhớ và ổ đĩa của chúng bị cô lập hoàn toàn với nhau.
+    explanation: Mỗi Job có môi trường thực thi riêng; truyền tệp rõ ràng bằng Artifact để không phụ thuộc vào runner dùng chung.
   - id: q4
     question: Thành phần nào sau đây đóng vai trò là môi trường máy ảo thực tế thực hiện công việc?
     type: single
@@ -52,7 +52,7 @@ questions:
         correct: false
       - text: Context
         correct: false
-    explanation: Runner là máy chủ (máy ảo Ubuntu, Windows, macOS) do GitHub quản lý hoặc tự host để chạy các lệnh trong Job.
+    explanation: Runner là máy hoặc môi trường thực thi do GitHub quản lý hoặc do tổ chức tự quản lý để chạy Job.
   - id: q5
     question: Trong kiến trúc của GitHub Actions, thứ tự phân cấp từ cao nhất đến thấp nhất là gì?
     type: single

@@ -13,7 +13,8 @@ questions:
         correct: false
       - text: Tự động biên dịch mã nguồn thành file chạy
         correct: false
-    explanation: HEAD cho biết nhánh hoặc commit hiện được chọn làm vị trí làm việc.
+    explanation: >-
+      HEAD cho biết nhánh hoặc commit hiện được chọn làm vị trí làm việc.
   - id: q2
     question: Khi bạn tạo một commit mới trong trạng thái bình thường, điều gì sẽ
       xảy ra với HEAD?
@@ -27,7 +28,8 @@ questions:
         correct: false
       - text: HEAD sẽ nhảy sang kho lưu trữ của người khác
         correct: false
-    explanation: Commit mới trở thành đầu nhánh hiện tại; HEAD tiếp tục chỉ vị trí làm việc đó.
+    explanation: >-
+      Commit mới trở thành đầu nhánh hiện tại; HEAD tiếp tục chỉ vị trí làm việc đó.
   - id: q3
     question: Snapshot trong Repository của Git có đặc tính cốt lõi nào dưới đây?
     type: single
@@ -40,22 +42,22 @@ questions:
         correct: false
       - text: Chỉ lưu lại các tệp tin có dung lượng dưới 1 kilobyte
         correct: false
-    explanation: Git giữ commit đã tạo; khi lưu thay đổi tiếp theo, Git tạo một commit khác.
+    explanation: >-
+      Git giữ commit đã tạo; khi lưu thay đổi tiếp theo, Git tạo một commit khác.
   - id: q4
-    question: Lệnh nào cho phép bạn xem nội dung chi tiết của commit mà HEAD đang
-      trỏ vào?
+    question: Bạn vừa khởi tạo repository nhưng chưa tạo commit. Nhận định nào đúng?
     type: single
     options:
-      - text: git show HEAD
+      - text: Chưa có snapshot nào để xem trong lịch sử
         correct: true
-      - text: git delete HEAD
+      - text: "`HEAD` tự tạo một commit rỗng"
         correct: false
-      - text: git clear HEAD
+      - text: Repository tự tải lịch sử từ GitHub
         correct: false
-      - text: git push HEAD --now
+      - text: Tệp trong thư mục tự trở thành commit
         correct: false
-    explanation: "`git show HEAD` in ra toàn bộ siêu dữ liệu và diff chi tiết của
-      commit hiện tại."
+    explanation: >-
+      `git init` tạo repository nhưng không tạo commit; người dùng cần stage thay đổi rồi commit.
   - id: q5
     question: Khi ở một nhánh thông thường, HEAD giúp bạn biết điều gì?
     type: single
@@ -68,4 +70,5 @@ questions:
         correct: false
       - text: Lệnh tiếp theo Git sẽ tự chạy
         correct: false
-    explanation: HEAD đánh dấu vị trí làm việc hiện tại; khi đứng trên nhánh, nó theo nhánh đó.
+    explanation: >-
+      HEAD đánh dấu vị trí làm việc hiện tại; khi đứng trên nhánh, nó theo nhánh đó.

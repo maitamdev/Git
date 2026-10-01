@@ -23,14 +23,14 @@
 - **Đừng nhầm**: Người review không tự động ghi đè code; tác giả PR vẫn là người bấm duyệt áp dụng commit.
 
 ### request changes
-- **Nói dễ hiểu**: Trạng thái phản hồi chặn không cho merge PR cho đến khi các lỗi nghiêm trọng được khắc phục xong.
+- **Nói dễ hiểu**: Trạng thái review cho biết người review yêu cầu tác giả xử lý một số vấn đề trước khi tích hợp.
 - **Ví dụ**: Phát hiện lỗ hổng SQL Injection hoặc lộ secret key và yêu cầu sửa trước khi đưa vào main.
-- **Đừng nhầm**: Không dùng cho những góp ý nhỏ về cách đặt tên hay sở thích cá nhân; chỉ dùng khi có rủi ro kỹ thuật thật sự.
+- **Đừng nhầm**: `Request changes` không phải lúc nào cũng tự chặn merge; tác dụng chặn phụ thuộc quy tắc bảo vệ nhánh và quyền trong repository.
 
 ---
 
 ## 📖 Định nghĩa
-Code Review là quy trình kiểm tra chất lượng mã nguồn bắt buộc trong nhóm kỹ thuật, nơi các thành viên cùng đọc, phân tích và phản biện code trong Pull Request trước khi gộp vào nhánh chính, giúp phát hiện sớm lỗ hổng bảo mật, lỗi logic và sai lệch kiến trúc.
+Code Review là hoạt động để người khác đọc các thay đổi, kiểm tra rủi ro và chia sẻ kiến thức. Nhiều nhóm yêu cầu review trước khi merge, nhưng quy định cụ thể tùy repository và nhóm.
 
 ---
 
@@ -49,8 +49,8 @@ Hãy hình dung Code Review như quy trình biên tập viên đọc bản thả
 3 mức độ phản hồi khi kết thúc Code Review trên GitHub:
 ┌────────────────────────────────────────────────────────┐
 │  [Comment]         ──► Chỉ để lại câu hỏi hoặc góp ý nhẹ│
-│  [Approve]         ──► Đồng ý hoàn toàn, sẵn sàng merge │
-│  [Request Changes] ──► Bắt buộc phải sửa lỗi trước      │
+│  [Approve]         ──► Người review chấp thuận thay đổi  │
+│  [Request Changes] ──► Người review đề nghị sửa trước   │
 └────────────────────────────────────────────────────────┘
 ```
 
@@ -84,10 +84,11 @@ git log -p
 
 ## 🧪 Lab thực hành
 Bài học này là bài tự kiểm tra: bạn thực hành xem diff và thử để lại nhận xét trên giao diện GitHub PR.
-1. Mở tab `Files changed` trong một Pull Request trên GitHub.
-2. Rê chuột vào một dòng code và nhấn vào biểu tượng dấu cộng xanh để mở ô bình luận.
-3. Sử dụng cú pháp gợi ý sửa code để đề xuất dòng thay thế.
-4. Nhấn `Review changes` và phân biệt giữa ba lựa chọn `Comment`, `Approve`, `Request changes`.
+1. Mở một PR thử nghiệm mà bạn có quyền xem trên GitHub. Nếu chưa dùng GitHub, hãy review thay đổi mẫu sau: `- const finalPrice = price + discount;` / `+ const finalPrice = price - discount;`.
+2. Với PR thật, trong tab `Files changed`, chọn một dòng thay đổi và để lại một câu hỏi hoặc gợi ý cụ thể, giải thích lý do. Với ví dụ mẫu, viết nhận xét: công thức nào sai và ảnh hưởng tới giá cuối cùng là gì?
+3. Nếu phù hợp, tạo Suggested Change. Tác giả PR sẽ xem xét và quyết định có áp dụng hay không.
+4. Trên PR thật, chọn `Review changes` và đọc ý nghĩa của `Comment`, `Approve`, `Request changes`; chỉ gửi trạng thái thể hiện đúng đánh giá thật của bạn.
+5. Viết một nhận xét mẫu theo cấu trúc “Vấn đề quan sát được → ảnh hưởng → đề xuất kiểm tra/sửa”. Không cần gửi nhận xét lên repository thật để hoàn thành bài này.
 
 ---
 
@@ -97,8 +98,8 @@ Bài học này là bài tự kiểm tra: bạn thực hành xem diff và thử 
 ---
 
 ## ✅ Validation & Kết quả mong đợi
-- Để lại nhận xét mang tính xây dựng và sử dụng thành thạo tính năng gợi ý sửa code trên GitHub.
-- Hiểu rõ khi nào nên Approve và khi nào cần Request changes.
+- Nhận xét nêu cụ thể vị trí, tác động và hướng xử lý; không công kích người viết.
+- Biết `Request changes` có thể chặn merge theo quy tắc repository, không phải trong mọi cấu hình.
 
 ---
 

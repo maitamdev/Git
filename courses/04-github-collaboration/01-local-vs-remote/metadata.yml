@@ -18,8 +18,7 @@ objectives:
     kiểm soát phiên bản phân tán.
   - Giải thích cơ chế đồng bộ hóa dữ liệu hai chiều thông qua các giao thức mạng
     bảo mật.
-  - Nhận biết lý do vì sao Git vẫn hoạt động 100% công năng ngay cả khi hoàn
-    toàn mất kết nối Internet.
+  - Nhận biết nhiều thao tác cục bộ của Git vẫn hoạt động khi mất Internet.
 commands:
   - git remote -v
   - git status

@@ -13,7 +13,7 @@ questions:
         correct: false
       - text: Tự động sửa toàn bộ các lỗi thuật toán logic trong chương trình
         correct: false
-    explanation: Quy trình làm việc nhóm giúp chuẩn hóa việc tích hợp mã nguồn, ngăn ngừa rủi ro hỏng hóc hệ thống và giữ nhánh chính luôn ổn định.
+    explanation: Workflow làm rõ cách nhóm tích hợp thay đổi và có thể giảm rủi ro; review, test và cách phát hành cụ thể tùy cấu hình của dự án.
   - id: q2
     question: Hành động nào sau đây bị xem là thiếu chuyên nghiệp và tiềm ẩn nguy cơ cao nhất trong làm việc nhóm?
     type: single
@@ -26,9 +26,9 @@ questions:
         correct: false
       - text: Chạy kiểm thử tự động trước khi hợp nhất mã nguồn vào nhánh chính
         correct: false
-    explanation: Commit thẳng lên nhánh main dễ khiến code lỗi chưa qua kiểm thử phá hỏng phiên bản chạy thực tế của khách hàng.
+    explanation: Nếu nhóm yêu cầu review/test trước khi cập nhật `main`, push code chưa kiểm thử sẽ bỏ qua các bước đó; nhóm cần nêu rõ chính sách của mình.
   - id: q3
-    question: Yếu tố nào sau đây KHÔNG phải là một thành phần bắt buộc của một Git Workflow tiêu chuẩn?
+    question: Nội dung nào không thuộc thỏa thuận về cách nhóm quản lý thay đổi mã nguồn?
     type: single
     options:
       - text: Quy định mọi kỹ sư phải sử dụng cùng một loại bàn phím máy tính giống hệt nhau
@@ -57,7 +57,7 @@ questions:
     question: Khái niệm "Production-ready" của nhánh chính (main) trong một workflow chuẩn có ý nghĩa là gì?
     type: single
     options:
-      - text: Nhánh chính luôn ở trạng thái ổn định tuyệt đối, đã qua kiểm thử và có thể triển khai lên môi trường thực tế bất kỳ lúc nào
+      - text: Mục tiêu của nhóm là giữ `main` ở trạng thái có thể phát hành; review và CI giúp giảm rủi ro nhưng không bảo đảm tuyệt đối
         correct: true
       - text: Nhánh chính chứa toàn bộ mã nguồn nháp của tất cả các lập trình viên
         correct: false
@@ -65,4 +65,4 @@ questions:
         correct: false
       - text: Nhánh chính sẽ tự động xóa sau mỗi lần phát hành phiên bản
         correct: false
-    explanation: Nguyên tắc bất biến của các Git workflow hiện đại là giữ nhánh chính luôn ổn định và sẵn sàng triển khai cho khách hàng.
+    explanation: '"Production-ready" mô tả mục tiêu theo chính sách nhóm; nó không bảo đảm tuyệt đối rằng không có lỗi.'

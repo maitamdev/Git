@@ -16,13 +16,11 @@ objectives:
     lệnh `git bisect`.
   - "Vận hành quy trình 4 bước truy tìm thủ phạm gây lỗi: `start` -> đánh dấu
     `bad`/`good` -> thử nghiệm -> `reset`."
-  - "Hiểu rõ hiệu quả toán học: Tìm ra commit lỗi trong 1000 commit chỉ với
-    khoảng 10 lần kiểm tra (O(log N))."
-  - Tự động hóa hoàn toàn quá trình tìm lỗi bằng câu lệnh `git bisect run
-    <script-test>`.
+  - "Hiểu rằng bisect cần khoảng 10 lần kiểm tra cho 1.000 commit khi có mốc tốt/xấu rõ ràng và lỗi chuyển một lần."
+  - Biết dùng `git bisect run` trong Git thật với script kiểm thử tin cậy.
 commands:
   - git bisect start
   - git bisect bad
   - git bisect good <commit-hoặc-tag>
   - git bisect reset
-  - git bisect run <file-chay-kiem-thu>
+  - git bisect log

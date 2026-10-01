@@ -1,21 +1,16 @@
 id: 05-git-add
-title: Đưa tệp vào staging với git add
+title: Đưa một tệp vào vùng chuẩn bị bằng git add
 duration: 25
 xp: 80
 keywords:
   - git add
   - staging
-  - stage changes
-  - chon loc thay doi
-  - patch mode
+  - chon mot tep
 prerequisites:
   - 04-git-status
 objectives:
-  - Chọn một tệp bằng git add <file> và xác nhận lựa chọn bằng git status.
-  - Giải thích git add . chọn thay đổi dưới thư mục hiện tại.
-  - Biết git add -p dùng để chọn từng nhóm thay đổi.
+  - Chọn một tệp bằng `git add <file>`.
+  - Xác nhận tệp đã staged bằng `git status`.
 commands:
   - git add <file>
-  - git add .
-  - git add -A
-  - git add -p
+  - git status

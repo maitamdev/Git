@@ -39,12 +39,12 @@ questions:
         correct: false
       - text: "share_all_secrets: true"
         correct: false
-    explanation: "Từ khóa secrets: inherit giúp kế thừa toàn bộ Secrets có sẵn mà không cần phải ánh xạ thủ công từng biến một."
+    explanation: "`secrets: inherit` truyền các secrets caller được phép dùng; ánh xạ riêng từng secret sẽ giới hạn quyền tốt hơn."
   - id: q4
-    question: "Số cấp độ lồng nhau tối đa (nesting depth) mà GitHub Actions cho phép đối với Reusable Workflows là bao nhiêu?"
+    question: "Số workflow tối đa trong một chuỗi gọi Reusable Workflows là bao nhiêu, tính cả caller?"
     type: single
     options:
-      - text: "Tối đa 4 cấp độ (workflow A gọi B, B gọi C, C gọi D)"
+      - text: "Tối đa 10 workflow tính cả caller"
         correct: true
       - text: "Không giới hạn số cấp độ"
         correct: false
@@ -52,7 +52,7 @@ questions:
         correct: false
       - text: "Tối đa 100 cấp độ"
         correct: false
-    explanation: "GitHub Actions giới hạn tối đa 4 tầng lồng nhau để ngăn chặn nguy cơ vòng lặp vô hạn và làm phức tạp hóa pipeline."
+    explanation: "GitHub cho phép tối đa 10 workflow trong một chuỗi, tính cả caller; các workflow không được gọi vòng lặp lại nhau."
   - id: q5
     question: "Sự khác biệt căn bản giữa Reusable Workflow (workflow_call) và Composite Action là gì?"
     type: single

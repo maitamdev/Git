@@ -13,9 +13,9 @@ prerequisites:
 objectives:
   - Hiểu rõ khái niệm Artifact như cầu nối lưu trữ và truyền tải dữ liệu giữa
     các Job độc lập.
-  - Sử dụng thành thạo action actions/upload-artifact@v4 để lưu trữ gói tệp tin
+  - Sử dụng thành thạo action actions/upload-artifact@v7 để lưu trữ gói tệp tin
     sau khi build.
-  - Sử dụng thành thạo action actions/download-artifact@v4 để kéo sản phẩm về
+  - Sử dụng thành thạo action actions/download-artifact@v8 để kéo sản phẩm về
     máy ảo của Job triển khai.
 commands:
   - ls -la dist/

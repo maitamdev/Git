@@ -4,7 +4,7 @@
 
 ## 🎯 Mục tiêu
 - Nắm vững quy trình hợp nhất (Merge) một Pull Request hoàn chỉnh vào nhánh chính trên GitHub.
-- Phân biệt rõ ràng 3 chiến lược merge được GitHub cung cấp: Create a merge commit, Squash and merge, và Rebase and merge.
+- Phân biệt ba cách tích hợp PR mà GitHub có thể bật: merge commit, squash merge và rebase merge.
 - Hiểu rõ ưu và nhược điểm của từng chiến lược đối với đồ thị lịch sử của dự án.
 - Thực hiện thao tác dọn dẹp xóa nhánh tính năng sau khi PR đã được merge thành công.
 
@@ -20,7 +20,7 @@
 ### squash and merge
 - **Nói dễ hiểu**: Gom toàn bộ các commit nhỏ trong nhánh tính năng lại thành đúng một commit duy nhất đưa vào main.
 - **Ví dụ**: Nén 6 commit nháp sửa lỗi CSS và chính tả thành một commit sạch duy nhất `feat(auth): add login form`.
-- **Đừng nhầm**: Không làm mất code; toàn bộ thay đổi vẫn giữ nguyên nhưng lịch sử nhánh chính gọn gàng hơn nhiều.
+- **Đừng nhầm**: Nội dung thay đổi được giữ trong commit squash; các commit gốc không còn xuất hiện riêng trên lịch sử nhánh đích.
 
 ### rebase and merge
 - **Nói dễ hiểu**: Áp dụng lần lượt từng commit của nhánh tính năng lên đỉnh của nhánh chính mà không tạo merge commit.
@@ -30,12 +30,12 @@
 ---
 
 ## 📖 Định nghĩa
-Merge Pull Request là thao tác hoàn tất của một tính năng trên GitHub, chính thức đưa các commit từ nhánh tính năng vào nhánh chính (thường là `main`). GitHub hỗ trợ 3 chiến lược: Create a merge commit (giữ vết nhánh), Squash and merge (nén thành một commit), và Rebase and merge (xếp thẳng hàng).
+Merge Pull Request tích hợp các thay đổi từ nhánh nguồn vào nhánh đích. GitHub có thể bật một hoặc nhiều phương thức: merge commit, squash merge, rebase merge. Chủ repository cấu hình phương thức nào dùng được; PR có thể còn cần review, CI hoặc quyền phù hợp.
 
 ---
 
 ## 💡 Tại sao cần
-Chiến lược merge quyết định chất lượng lịch sử dự án trong nhiều năm vận hành. Nếu chọn sai, lịch sử nhánh chính sẽ ngập tràn các commit nháp vô nghĩa như "fix typo", "test again". Hiểu rõ các chiến lược giúp giữ nhật ký commit sạch đẹp, dễ tra cứu và thuận tiện truy vết lỗi hoặc rollback.
+Phương thức tích hợp ảnh hưởng cách lịch sử nhánh đích thể hiện các thay đổi. Chọn theo quy ước của dự án: merge commit giữ mốc tích hợp, squash tạo một commit trên nhánh đích, rebase merge xếp các commit thành tuyến tính với SHA mới.
 
 ---
 
@@ -91,21 +91,22 @@ git branch -d feat/my-feature
 
 ## 🧪 Lab thực hành
 Bài học này là bài tự kiểm tra: bạn thao tác hợp nhất PR trên giao diện GitHub và đồng bộ về máy cá nhân.
-1. Quan sát nút xanh `Merge pull request` xuất hiện khi PR đã được Approve và pass CI.
-2. Nhấn vào mũi tên cạnh nút để so sánh 3 tùy chọn: Merge, Squash, và Rebase.
-3. Chọn `Squash and merge` và chỉnh sửa lại tiêu đề commit cho thật chuẩn mực.
-4. Nhấn xác nhận merge và bấm nút `Delete branch` màu tím để xóa nhánh.
+1. Trên PR thử nghiệm bạn có quyền xem, đọc diff, trạng thái review và các kiểm tra. Nếu nút merge chưa sẵn sàng, đọc lý do hiển thị; không tìm cách vượt quy tắc. Nếu chưa có tài khoản GitHub, dùng các sơ đồ trong bài để so sánh ba kiểu lịch sử.
+2. Xem phương thức merge mà repository cho phép. Có thể chỉ có một lựa chọn.
+3. Chọn phương thức theo quy ước nhóm; nếu chỉ đang học hoặc không có quyền, dừng ở bước quan sát thay vì merge một PR thật.
+4. Sau khi merge PR thử nghiệm, xóa nhánh chỉ khi không còn cần thiết. Trên máy local, chuyển khỏi nhánh đó rồi xóa bằng `git branch -d <tên-nhánh>` nếu Git xác nhận đã tích hợp.
+5. Cập nhật nhánh đích cục bộ bằng `git switch <nhánh-đích>` rồi `git pull <remote> <nhánh-đích>`.
 
 ---
 
 ## 💡 Hint & mẹo
-> Squash and merge là lựa chọn phổ biến hàng đầu trong các dự án hiện đại để giữ lịch sử nhánh main luôn tinh gọn.
+> Không có phương thức merge tốt nhất cho mọi dự án. Xem cài đặt repository và hỏi theo quy ước của nhóm.
 
 ---
 
 ## ✅ Validation & Kết quả mong đợi
 - Pull Request chuyển sang trạng thái màu tím `Merged`.
-- Nhánh main cục bộ cập nhật đầy đủ mã nguồn tính năng mới sau khi kéo bằng `git pull`.
+- PR hiển thị trạng thái Merged sau khi được tích hợp. Nhánh local cập nhật sau khi pull đúng nhánh đích.
 
 ---
 
@@ -121,5 +122,5 @@ Thiết lập tùy chọn repository trên GitHub để chỉ cho phép "Squash 
 
 ## 📝 Tổng kết
 - Merge PR chính thức kết nạp mã nguồn tính năng vào nhánh chính của sản phẩm.
-- 3 chiến lược: Merge commit (giữ vết), Squash (nén thành 1), Rebase (làm phẳng).
-- Luôn xóa nhánh tính năng sau khi merge để giữ kho lưu trữ luôn sạch đẹp.
+- Repository có thể cho phép một hoặc nhiều phương thức: merge commit, squash, rebase.
+- Chọn theo quy ước dự án; chỉ xóa nhánh khi không còn cần dùng.

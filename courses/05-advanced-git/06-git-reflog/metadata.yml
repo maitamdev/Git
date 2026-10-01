@@ -12,16 +12,12 @@ keywords:
 prerequisites:
   - 04-git-reset-hard
 objectives:
-  - Hiểu rõ bản chất của Reference Logs (`reflog`) như nhật ký ghi lại mọi
-    chuyển động của con trỏ HEAD.
+  - Hiểu reflog ghi lại các lần cập nhật HEAD, nhánh và một số ref cục bộ khác.
   - Phân biệt sự khác nhau căn bản giữa nhật ký commit (`git log`) và nhật ký
     tham chiếu (`git reflog`).
   - "Đọc hiểu cú pháp định danh vị trí thời gian của reflog: `HEAD@{0}`,
     `HEAD@{1}`, `HEAD@{2 days ago}`."
-  - Nhận thức tầm quan trọng của reflog như chiếc lưới an toàn tối hậu giúp khôi
-    phục mọi sai lầm trong Git.
+  - Biết reflog không lưu file chưa commit và các entry có thể hết hạn theo cấu hình.
 commands:
   - git reflog
-  - git reflog show HEAD
-  - git reflog show <tên-nhánh>
-  - git reflog --date=relative
+  - git status

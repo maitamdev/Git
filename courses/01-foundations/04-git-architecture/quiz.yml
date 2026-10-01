@@ -1,56 +1,82 @@
 id: quiz-04-git-architecture
-title: "Trắc nghiệm: Kiến trúc lưu trữ của Git"
+title: "Trắc nghiệm: Snapshot và Diff"
 questions:
   - id: q1
-    question: Git lưu trữ dữ liệu của các mốc lịch sử theo mô hình nào dưới đây?
+    question: "Một commit giúp bạn hình dung điều gì trong lịch sử dự án?"
     type: single
     options:
-      - text: Các ảnh chụp tức thời hoàn chỉnh (Snapshots)
+      - text: "Trạng thái các tệp trong dự án tại lúc commit được lưu"
         correct: true
-      - text: Danh sách các dòng code thay đổi khác biệt (Deltas)
+      - text: "Chỉ những dòng khác nhau giữa hai phiên bản"
         correct: false
-      - text: Các tệp tin nén zip chứa toàn bộ hệ điều hành
+      - text: "Danh sách lệnh đã chạy trong terminal"
         correct: false
-      - text: Bảng dữ liệu quan hệ SQL theo từng cột dòng
+      - text: "Bản sao thư mục được Git tạo bên cạnh dự án"
         correct: false
-    explanation: Git coi dữ liệu như một chuỗi các snapshot của hệ thống tệp tin tại
-      từng thời điểm commit.
+    explanation: >-
+      Commit đại diện cho trạng thái dự án tại một thời điểm. Phần khác nhau
+      giữa các trạng thái gọi là Diff.
+
   - id: q2
-    question: Diff giúp bạn làm việc gì?
+    question: "Diff giúp bạn trả lời câu hỏi nào?"
     type: single
     options:
-      - text: Xem phần khác nhau giữa hai trạng thái dự án
+      - text: "Nội dung nào đã thay đổi giữa hai phiên bản"
         correct: true
-      - text: Tự động tạo một commit mới
+      - text: "Commit mới nhất được tự động tạo lúc nào"
         correct: false
-      - text: Đổi tên nhánh hiện tại
+      - text: "Git đã được cài vào máy bằng cách nào"
         correct: false
-      - text: Cài Git vào máy tính
+      - text: "Tên nào phải đặt cho nhánh ban đầu"
         correct: false
-    explanation: Diff giúp đọc phần thay đổi giữa hai trạng thái; bản thân nó không lưu commit.
+    explanation: >-
+      Diff trình bày phần khác nhau giữa hai phiên bản để bạn xem.
+      Bản thân Diff không tạo commit hoặc cài đặt Git.
+
   - id: q3
-    question: Bạn sửa README nhưng chưa chạy lệnh tạo commit. Việc gì đã xảy ra?
+    question: "Bạn đã lưu commit rồi sửa tiếp một dòng nhưng chưa tạo commit mới. Điều nào đúng?"
     type: single
     options:
-      - text: Nội dung tệp đã đổi, nhưng chưa có mốc mới trong lịch sử
+      - text: "Commit cũ vẫn ghi trạng thái lúc nó được lưu"
         correct: true
-      - text: Git tự tạo commit ngay khi lưu tệp
+      - text: "Git tự viết lại commit cũ khi tệp thay đổi"
         correct: false
-      - text: Git đã gửi README lên GitHub
+      - text: "Phần sửa mới tự biến thành Diff trong lịch sử"
         correct: false
-      - text: README bị xóa khỏi máy
+      - text: "Git xóa commit cũ để tránh hai phiên bản trùng nhau"
         correct: false
-    explanation: Sửa tệp chỉ đổi nội dung trong dự án; bạn phải tạo commit riêng để lưu mốc.
+    explanation: >-
+      Commit cũ tiếp tục đại diện cho trạng thái đã lưu lúc trước.
+      Thay đổi mới cần một commit riêng để trở thành mốc lịch sử.
+
   - id: q4
-    question: Lệnh `git log --oneline` giúp bạn xem điều gì?
+    question: "README đổi từ `Lịch sinh hoạt: Thứ Sáu` thành `Lịch sinh hoạt: Thứ Bảy`. Diff là gì?"
     type: single
     options:
-      - text: Danh sách commit dưới dạng ngắn gọn
+      - text: "Phần cho thấy `Thứ Sáu` được thay bằng `Thứ Bảy`"
         correct: true
-      - text: Nội dung mọi tệp đang sửa
+      - text: "Toàn bộ nội dung README ở cả hai phiên bản"
         correct: false
-      - text: Các ứng dụng đã cài trên máy
+      - text: "Một commit mới tự lưu thay đổi đó"
         correct: false
-      - text: Tên người dùng GitHub của bạn
+      - text: "Tên thư mục đang chứa README"
         correct: false
-    explanation: Lệnh này hiển thị các mốc commit đã có; nó không tự tạo mốc mới.
+    explanation: >-
+      Diff chỉ ra dòng hoặc nội dung khác nhau giữa hai phiên bản.
+      Nó mô tả thay đổi, không phải toàn bộ Snapshot.
+
+  - id: q5
+    question: "Câu nào mô tả đúng mối quan hệ giữa Snapshot và Diff?"
+    type: single
+    options:
+      - text: "Snapshot là trạng thái đã lưu; Diff là phần khác nhau khi so sánh"
+        correct: true
+      - text: "Snapshot chỉ chứa dòng mới; Diff chứa toàn bộ dự án"
+        correct: false
+      - text: "Snapshot và Diff đều là lệnh để lưu commit"
+        correct: false
+      - text: "Diff thay thế Snapshot sau mỗi lần sửa tệp"
+        correct: false
+    explanation: >-
+      Snapshot mô tả trạng thái dự án tại mốc đã lưu. Diff chỉ ra phần
+      khác nhau giữa hai trạng thái mà bạn đang so sánh.

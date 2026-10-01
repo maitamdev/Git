@@ -27,6 +27,7 @@ export class AddCommand implements GitCommand {
     }
 
     const state = ctx.stateManager.getState();
+    const headTree = ctx.stateManager.getHeadTree();
     const stageAll = args.includes('.') || flags['A'] || flags['all'] || flags['u'];
 
     if (stageAll) {
@@ -36,7 +37,9 @@ export class AddCommand implements GitCommand {
       }
 
       for (const f of allFiles) {
+        if (ctx.fs.getIgnoreRule(f.path) && !(f.path in headTree)) continue;
         this.stageFile(state.stagingArea, f.path, f.content);
+        this.markConflictResolved(f.path, f.content, ctx);
         ctx.events.emit('file:staged', { path: f.path, content: f.content });
       }
 
@@ -53,8 +56,21 @@ export class AddCommand implements GitCommand {
         };
       }
 
+      if (
+        ctx.fs.getIgnoreRule(normPath) &&
+        !(normPath in headTree) &&
+        !state.stagingArea.some((item) => item.path === normPath)
+      ) {
+        return {
+          stdout: '',
+          stderr: `The following path is ignored by .gitignore:\n  ${normPath}\nhint: Use -f if you really want to add it.`,
+          exitCode: 1,
+        };
+      }
+
       const content = ctx.fs.readFile(normPath) || '';
       this.stageFile(state.stagingArea, normPath, content);
+      this.markConflictResolved(normPath, content, ctx);
       ctx.events.emit('file:staged', { path: normPath, content });
     }
 
@@ -78,5 +94,14 @@ export class AddCommand implements GitCommand {
         staged: true,
       });
     }
+  }
+
+  private markConflictResolved(path: string, content: string, ctx: CommandContext): void {
+    if (content.includes('<<<<<<<') || content.includes('=======') || content.includes('>>>>>>>')) {
+      return;
+    }
+    const merge = ctx.stateManager.getMergeState();
+    const conflict = merge?.conflicts.find((entry) => entry.path === path);
+    if (conflict) conflict.status = 'resolved';
   }
 }

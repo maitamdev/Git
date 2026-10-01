@@ -13,7 +13,7 @@
 ## 🧩 Từ khóa hôm nay
 
 ### pull request (PR)
-- **Nói dễ hiểu**: Lời đề nghị chính thức gửi tới nhóm đề nghị xem xét và kéo (pull) code từ nhánh của bạn vào nhánh chính.
+- **Nói dễ hiểu**: Yêu cầu nền tảng xem xét các thay đổi từ nhánh nguồn và tích hợp chúng vào nhánh đích nếu nhóm chấp thuận.
 - **Ví dụ**: Mở PR đề xuất gộp nhánh `feat/cart` vào nhánh `main` của dự án.
 - **Đừng nhầm**: Không phải lệnh của Git trên máy tính; đây là cơ chế tương tác và quản lý code trên GitHub hoặc GitLab.
 
@@ -25,17 +25,17 @@
 ### base and compare branch
 - **Nói dễ hiểu**: Cặp nhánh xác định chiều gộp code: `base` là nhánh đích nhận code, `compare` là nhánh tính năng của bạn.
 - **Ví dụ**: `base: main` ◄── `compare: feat/login` thể hiện code sẽ đi từ feat/login vào main.
-- **Đừng nhầm**: Đừng chọn nhầm base branch sang một nhánh tính năng khác khi mục tiêu thực sự là đưa vào main.
+- **Đừng nhầm**: `base` là nhánh đích, không phải lúc nào cũng là `main`; kiểm tra đúng repository và hướng so sánh trước khi tạo PR.
 
 ---
 
 ## 📖 Định nghĩa
-Pull Request (viết tắt là PR, trong GitLab gọi là Merge Request) là cơ chế cộng tác trên nền tảng Git lưu trữ, cho phép lập trình viên thông báo và yêu cầu đội ngũ bảo trì kiểm tra, thảo luận và gộp code từ một nhánh tính năng vào nhánh chính của dự án kèm giao diện so sánh diff trực quan.
+Pull Request (PR; GitLab thường gọi là Merge Request) là yêu cầu trên nền tảng cộng tác để xem xét các thay đổi từ nhánh nguồn vào nhánh đích. Nền tảng hiển thị diff và hỗ trợ thảo luận, kiểm tra tự động, review và tích hợp theo quyền/cấu hình của repository.
 
 ---
 
 ## 💡 Tại sao cần
-Đẩy code trực tiếp lên nhánh chính mà không qua ai kiểm duyệt rất dễ làm hỏng hệ thống production. Pull Request giúp ngăn ngừa lỗi tiềm ẩn, tạo không gian chia sẻ kiến thức giữa các thành viên, chạy kiểm thử tự động CI và lưu lại lý do kỹ thuật cho từng quyết định thay đổi.
+PR tạo nơi để nhóm xem thay đổi, thảo luận và chạy kiểm tra trước khi tích hợp. Quy trình review hoặc yêu cầu CI phụ thuộc cài đặt dự án; PR tự nó không đảm bảo đã có người duyệt hay mọi kiểm tra đều chạy.
 
 ---
 
@@ -83,10 +83,10 @@ git push -u origin feat/my-feature
 
 ## 🧪 Lab thực hành
 Bài học này là bài tự kiểm tra: bạn thao tác tạo nhánh tính năng, đẩy lên remote và mở PR trên giao diện web.
-1. Tạo nhánh tính năng mới `feat-login-button` và commit một chỉnh sửa nhỏ.
-2. Đẩy nhánh tính năng lên GitHub bằng `git push -u origin feat-login-button`.
-3. Mở trang repository trên GitHub và nhấn nút `Compare & pull request`.
-4. Điền tiêu đề, tóm tắt lý do thay đổi và nhấn `Create pull request`.
+1. Dùng một repository thử nghiệm trên GitHub mà bạn có quyền push, tạo nhánh `feat-login-button` và commit một chỉnh sửa nhỏ.
+2. Chạy `git push -u origin feat-login-button`. Nếu đang học trong simulator, bước này chỉ cập nhật remote giả lập; không thể tạo PR trên GitHub từ đó.
+3. Trên GitHub thật, mở repository, chọn tạo PR và kiểm tra đúng `base` (nhánh đích) cùng `compare` (nhánh nguồn).
+4. Viết tiêu đề và mô tả gồm mục tiêu, thay đổi chính, cách kiểm tra; tạo PR nếu có quyền.
 
 ---
 
@@ -112,6 +112,6 @@ Tìm hiểu cách cấu hình file `.github/pull_request_template.md` để tự
 ---
 
 ## 📝 Tổng kết
-- Pull Request là yêu cầu chính thức đề nghị gộp code từ nhánh tính năng vào nhánh chính.
-- Cung cấp môi trường thảo luận, xem diff, bình luận code và chạy kiểm thử tự động CI.
-- Luôn tạo nhánh riêng biệt và viết mô tả rõ ràng cho từng Pull Request.
+- Pull Request đề nghị tích hợp thay đổi từ nhánh nguồn vào nhánh đích trên nền tảng cộng tác.
+- Kiểm tra repository, hai nhánh, diff và các quy tắc của nhóm trước khi tạo.
+- PR hỗ trợ review và kiểm tra; quyền merge phụ thuộc vào quyền truy cập và cấu hình repository.

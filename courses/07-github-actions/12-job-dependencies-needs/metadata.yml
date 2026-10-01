@@ -18,5 +18,6 @@ objectives:
   - Biết cách truyền và sử dụng kết quả (needs.<job_id>.result) hoặc dữ liệu đầu
     ra (outputs) giữa các Job.
 commands:
-  - gh run view --graph
+  - gh run view
+  - gh run view --web
   - cat .github/workflows/pipeline.yml

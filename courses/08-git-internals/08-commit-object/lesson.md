@@ -4,7 +4,7 @@
 
 ## 🎯 Mục tiêu
 - Giải phẫu cấu trúc định dạng nội dung của một đối tượng Commit trong Git.
-- Hiểu rõ 4 thành phần bắt buộc bên trong Commit: con trỏ tree, con trỏ commit cha (parent), thông tin tác giả/người commit, và commit message.
+- Hiểu các trường cốt lõi của Commit: tree, author, committer, thông điệp và parent tùy lịch sử.
 - Nắm bắt bản chất của lịch sử Git như một Đồ thị có hướng không chu trình (DAG) liên kết bởi các con trỏ parent.
 - Phân biệt sự khác nhau giữa Author (tác giả sáng tác mã) và Committer (người áp dụng commit vào kho).
 
@@ -13,14 +13,14 @@
 ## 🧩 Từ khóa hôm nay
 
 ### Commit Object Structure
-- **Nói dễ hiểu**: Tệp văn bản thuần túy nhỏ gọn (thường dưới 300 byte) liên kết một cây thư mục `tree` với lịch sử trước đó qua các con trỏ `parent`.
-- **Ví dụ**: Nội dung commit gồm các dòng `tree <hash>`, `parent <hash>`, `author`, `committer` và dòng thông điệp mô tả.
+- **Nói dễ hiểu**: Object mô tả một snapshot bằng `tree` và ghi metadata tác giả/người commit; có thể trỏ tới commit cha.
+- **Ví dụ**: Nội dung có dòng `tree`, thường có `author` và `committer`, có 0, 1 hoặc nhiều dòng `parent`, rồi đến thông điệp sau một dòng trống.
 - **Đừng nhầm**: Commit không lưu trữ danh sách các dòng thay đổi (diff/patch); nó trỏ thẳng tới một Root Tree hoàn chỉnh của toàn bộ dự án.
 
 ### Author vs Committer Metadata
 - **Nói dễ hiểu**: Author là người đầu tiên sáng tác ra đoạn mã nguồn, còn Committer là người trực tiếp ghi commit đó vào nhánh hiện tại.
 - **Ví dụ**: Bạn viết code vào tuần trước (Author), trưởng nhóm hôm nay dùng `git rebase` hoặc `cherry-pick` để gộp vào main (Committer).
-- **Đừng nhầm**: Khi commit bình thường thì Author và Committer trùng nhau; chỉ khi rebase, cherry-pick hoặc nhận patch qua email thì hai thông tin này mới tách biệt.
+- **Đừng nhầm**: Khi commit thông thường hai trường thường trùng nhau; có thể khác trong nhiều quy trình, ví dụ rebase, cherry-pick, áp dụng patch hoặc đặt author riêng.
 
 ### Directed Acyclic Graph (DAG) in Git
 - **Nói dễ hiểu**: Cấu trúc đồ thị một chiều không khép kín, trong đó mỗi commit trỏ ngược về một hoặc nhiều commit cha đi trước.
@@ -30,7 +30,7 @@
 ---
 
 ## 📖 Định nghĩa
-Đối tượng Commit là khối xây dựng trung tâm gắn kết toàn bộ lịch sử của Git. Một đối tượng Commit là một tệp văn bản nhỏ có cấu trúc cố định chứa một con trỏ trỏ tới đối tượng Tree gốc đại diện cho snapshot toàn diện của dự án tại thời điểm đó, một hoặc nhiều con trỏ trỏ tới các commit cha đi trước (parent), siêu dữ liệu về tác giả (Author: người viết mã) và người thực hiện commit (Committer: người đưa mã vào repo) kèm theo dấu thời gian UTC, và cuối cùng là thông điệp mô tả commit (Commit Message).
+Commit object chứa con trỏ tới root tree, thông tin author và committer (tên, email, Unix timestamp cùng độ lệch múi giờ), các dòng parent nếu có, và thông điệp sau một dòng trống. Root commit không có parent; commit thường có một parent; merge commit có từ hai parent trở lên. Có thể có thêm header tùy chọn như chữ ký. Nội dung thực tế không có giới hạn kích thước cố định.
 
 ---
 
@@ -40,7 +40,7 @@ Nếu không có đối tượng Commit, bạn chỉ có các ảnh chụp thư 
 ---
 
 ## 🧠 Mental Model
-Hãy tưởng tượng một chuỗi các toa tàu hỏa nối đuôi nhau trên đường ray. Mỗi toa tàu là một đối tượng Commit. Đầu toa tàu có một chiếc móc xích bằng thép nối ngược về toa tàu phía trước (`parent <hash>`). Bên trong toa tàu chứa một tấm bản đồ chỉ dẫn tới nhà kho chứa hàng (`tree <hash>`). Bạn có thể đi ngược từ toa tàu cuối cùng (HEAD) lần theo từng móc xích để đi về toa tàu đầu tiên của đoàn tàu lịch sử.
+Hãy tưởng tượng mỗi commit là một trang nhật ký chỉ tới snapshot của dự án (`tree`) và ghi lại trang trước đó qua `parent`. Trang đầu không có trang trước; khi hai dòng lịch sử được hợp nhất, trang mới có thể tham chiếu nhiều trang cha. Nhờ vậy, lịch sử là đồ thị chứ không chỉ là một chuỗi.
 
 ---
 
@@ -50,10 +50,10 @@ Giải phẫu cấu trúc tệp nội dung đối tượng Commit:
 ┌────────────────────────────────────────────────────────┐
 │                     COMMIT OBJECT                      │
 ├────────────────────────────────────────────────────────┤
-│ tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904         │ <── Trỏ tới Root Tree
-│ parent 7a6b5c4d3e2f1a0b9c8d7e6f5a4b3c2d1e0f9a8b        │ <── Trỏ tới Commit cha
-│ author Nguyen Van A <a@demo.com> 1769817600 +0700      │ <── Tác giả viết code
-│ committer Nguyen Van A <a@demo.com> 1769817600 +0700   │ <── Người commit
+│ tree <tree-object-id>                                  │ <── Trỏ tới Root Tree
+│ parent <parent-object-id> (nếu có)                     │ <── Có thể có nhiều parent
+│ author Nguyen Van A <a@demo.com> <epoch> +0700          │ <── Tác giả thay đổi
+│ committer Nguyen Van A <a@demo.com> <epoch> +0700       │ <── Người tạo commit object
 │                                                        │
 │ feat: implement user authentication logic              │ <── Commit Message
 └────────────────────────────────────────────────────────┘
@@ -62,7 +62,7 @@ Giải phẫu cấu trúc tệp nội dung đối tượng Commit:
 ---
 
 ## 🏢 Ví dụ thực tế
-Một kỹ sư muốn xem Git lưu trữ commit đầu tiên của dự án như thế nào. Kỹ sư chạy lệnh `git cat-file -p HEAD`. Màn hình hiển thị chính xác cấu trúc văn bản thuần túy gồm 5 dòng: dòng 1 bắt đầu bằng chữ `tree` kèm mã băm 40 ký tự; dòng 2 bắt đầu bằng chữ `parent` trỏ về commit trước; dòng 3 ghi rõ `author Le Hoang Nam <nam@company.com> 1727654400 +0700`; dòng 4 là committer; và sau một dòng trống là thông điệp: "feat: add user login endpoint". Kỹ sư nhận ra rằng commit không hề to lớn cồng kềnh, nó chỉ là một tệp văn bản nhỏ nặng chưa tới 300 bytes làm nhiệm vụ liên kết các con trỏ.
+Chạy `git cat-file -p HEAD` để xem commit hiện tại. Header bắt đầu bằng `tree`; nếu HEAD là root commit thì không có dòng `parent`, còn merge commit có thể có nhiều dòng `parent`. Các trường author/committer ghi timestamp dạng Unix và độ lệch múi giờ; một dòng trống phân cách header với thông điệp.
 
 ---
 
@@ -83,7 +83,7 @@ git log -1 --pretty=raw
 ## 🔍 Giải thích command
 - `git cat-file -p HEAD`: Đọc và giải mã trực tiếp đối tượng commit mà con trỏ HEAD đang trỏ tới.
 - `git cat-file -t HEAD`: Trả về kiểu của đối tượng (chữ `commit`).
-- `git log -1 --pretty=raw`: In ra toàn bộ nội dung thô bao gồm cả timestamp dạng Unix epoch và thông tin timezone của author và committer.
+- `git log -1 --pretty=raw`: Hiển thị các header chính, parent và timestamp; `git cat-file -p` hữu ích để xem payload commit trực tiếp.
 
 ---
 
@@ -110,7 +110,7 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
 ---
 
 ## ✅ Validation & Kết quả mong đợi
-- Lệnh `git cat-file -p HEAD` hiển thị đầy đủ 4 phần: `tree`, `parent` (nếu không phải root commit), `author`/`committer`, và thông điệp commit.
+- Lệnh `git cat-file -p HEAD` hiển thị `tree`, author/committer, thông điệp và 0/1/nhiều parent tùy loại commit.
 - Truy vấn ngược theo mã `parent` dẫn về đúng lịch sử commit trước đó được hiển thị trong `git log`.
 
 ---
@@ -127,6 +127,6 @@ Tại sao khi hai lập trình viên khác nhau cùng commit một đoạn mã c
 
 ## 📝 Tổng kết
 - Đối tượng Commit là trung tâm của lịch sử Git, liên kết snapshot thư mục với trục thời gian.
-- Cấu trúc gồm: con trỏ `tree`, con trỏ `parent`, metadata `author`/`committer`, và `message`.
+- Cấu trúc gồm `tree`, metadata `author`/`committer`, message và các parent tùy lịch sử (root không có parent).
 - Các con trỏ parent móc nối với nhau tạo thành Đồ thị có hướng không chu trình (DAG).
 - Phân biệt rõ Author và Committer giúp kiểm soát xuất xứ và lịch sử chỉnh sửa mã nguồn minh bạch.

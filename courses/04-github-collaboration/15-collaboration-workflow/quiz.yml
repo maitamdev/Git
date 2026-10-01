@@ -2,12 +2,10 @@ id: quiz-04-15-collaboration-workflow
 title: "Trắc nghiệm: Feature Branch Workflow"
 questions:
   - id: q1
-    question: Quy tắc vàng số 1 bất di bất dịch trong quy trình Feature Branch
-      Workflow là gì?
+    question: "Trong Feature Branch Workflow, nhóm thường làm gì trước khi tích hợp thay đổi?"
     type: single
     options:
-      - text: Tuyệt đối không bao giờ được phép commit hoặc push trực tiếp mã nguồn lên
-          nhánh main
+      - text: Làm thay đổi trên nhánh riêng rồi mở Pull Request theo quy định của repository
         correct: true
       - text: Mọi lập trình viên đều phải dùng chung một máy tính
         correct: false
@@ -15,15 +13,12 @@ questions:
         correct: false
       - text: Chỉ được phép merge code vào ban đêm
         correct: false
-    explanation: Nhánh main là linh hồn của sản phẩm, chỉ được phép cập nhật thông
-      qua Pull Request đã qua kiểm duyệt.
+    explanation: Nhánh riêng giúp tách thay đổi để xem xét; nhóm và cài đặt repository quy định cách tích hợp.
   - id: q2
-    question: Trước khi gõ lệnh `git switch -c feat/new-feature` để bắt đầu làm tính
-      năng mới, thao tác BẮT BUỘC bạn phải làm là gì?
+    question: "Trước khi tạo nhánh cho tính năng mới, bạn nên làm gì?"
     type: single
     options:
-      - text: Chuyển về nhánh main và chạy lệnh `git pull origin main` để bảo đảm nhánh
-          mới được tách từ mốc code mới nhất
+      - text: Đọc hướng dẫn repository, xác định nhánh đích và cập nhật từ đó theo quy trình của nhóm
         correct: true
       - text: Khởi tạo lại toàn bộ kho chứa bằng git init
         correct: false
@@ -31,8 +26,7 @@ questions:
         correct: false
       - text: Tắt kết nối mạng Internet
         correct: false
-    explanation: Luôn cập nhật main mới nhất trước khi tách nhánh để tránh code trên
-      nền tảng lỗi thời dẫn đến xung đột.
+    explanation: Nhánh nền và cách cập nhật phụ thuộc cấu hình dự án; kiểm tra hướng dẫn để bắt đầu đúng chỗ.
   - id: q3
     question: Tiền tố quy ước nào thường được sử dụng khi đặt tên nhánh cho các tác
       vụ sửa lỗi khẩn cấp?
@@ -69,8 +63,7 @@ questions:
       bước dọn dẹp vệ sinh kho chứa là gì?
     type: single
     options:
-      - text: Xóa nhánh tính năng trên GitHub và chạy `git branch -d` xóa nhánh đó trên
-          máy tính cá nhân
+      - text: Xóa nhánh tính năng khi không còn cần dùng, theo quyền và quy trình của repository
         correct: true
       - text: Xóa nhánh main để làm lại từ đầu
         correct: false
@@ -78,15 +71,13 @@ questions:
         correct: false
       - text: Khóa toàn bộ dự án lại không cho ai truy cập
         correct: false
-    explanation: Dọn dẹp các nhánh đã hoàn thành giúp cây lịch sử luôn tinh gọn và
-      tránh nhầm lẫn trong tương lai.
+    explanation: Nhánh đã tích hợp có thể được dọn khi không còn cần dùng; việc xóa không bắt buộc trong mọi quy trình.
   - id: q6
     question: Lợi ích lớn nhất mà Feature Branch Workflow mang lại cho các doanh
       nghiệp phần mềm là gì?
     type: single
     options:
-      - text: Bảo vệ nhánh main luôn trong trạng thái sẵn sàng xuất bản
-          (Production-ready) và kiểm soát chất lượng chặt chẽ
+      - text: Tách biệt thay đổi và tạo chỗ để review trước khi nhóm quyết định tích hợp
         correct: true
       - text: Giúp lập trình viên không bao giờ cần phải viết kiểm thử tự động
         correct: false
@@ -94,5 +85,4 @@ questions:
         correct: false
       - text: Miễn phí toàn bộ chi phí thuê máy chủ
         correct: false
-    explanation: Nhánh main luôn ổn định 100% giúp doanh nghiệp có thể triển khai
-      sản phẩm bất cứ lúc nào khách hàng yêu cầu.
+    explanation: Nhánh riêng và review tạo bước kiểm tra trước tích hợp nhưng không tự bảo đảm phần mềm không có lỗi.

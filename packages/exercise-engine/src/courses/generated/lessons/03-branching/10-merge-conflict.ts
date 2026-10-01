@@ -13,10 +13,9 @@ export const lesson: CourseLesson = {
       "08-three-way-merge"
     ],
     "objectives": [
-      "Hiểu rõ nguyên nhân căn bản phát sinh xung đột Merge Conflict trong quá trình làm việc nhóm.",
-      "Nhận diện và phân tích cấu trúc của các vạch đánh dấu xung đột (Conflict Markers): `<<<<<<<`, `=======`, `>>>>>>>`.",
-      "Phân biệt rõ ràng giữa xung đột nội dung dòng code (Content conflict) và xung đột tệp tin (File rename/delete conflict).",
-      "Giữ bình tĩnh và thực hiện quy trình chẩn đoán trạng thái conflict một cách bài bản."
+      "Giải thích vì sao Git phải dừng khi không thể tự kết hợp thay đổi.",
+      "Nhận diện conflict markers và xác định nội dung của mỗi nhánh.",
+      "Dùng `git status` để tìm các tệp đang chờ giải quyết."
     ],
     "completion": {
       "theoryViewed": true,
@@ -35,91 +34,90 @@ export const lesson: CourseLesson = {
       "mau thuan code"
     ],
     "commands": [
-      "git status",
-      "git diff",
-      "git merge --abort"
+      "git merge feature-conflict",
+      "git status"
     ]
   },
-  "content": "# Xung đột Merge Conflict là gì?\n\n---\n\n## 🎯 Mục tiêu\n- Hiểu rõ nguyên nhân phát sinh xung đột hợp nhất (Merge Conflict) khi làm việc nhóm.\n- Đọc hiểu cấu trúc các vạch đánh dấu xung đột (Conflict Markers): `<<<<<<<`, `=======`, `>>>>>>>`.\n- Sử dụng `git status` để xác định danh sách các tệp bị xung đột và giữ bình tĩnh khi xử lý.\n\n---\n\n## 🧩 Từ khóa hôm nay\n\n### Merge Conflict — xung đột hợp nhất\n- **Nói dễ hiểu:** Tình huống hai nhánh cùng sửa đổi tại cùng một dòng code trong cùng một tệp tin.\n- **Ví dụ:** Bạn sửa tiêu đề trang web ở dòng 10 thành \"Trang chủ\", bạn khác lại sửa dòng 10 thành \"Home\".\n- **Đừng nhầm:** Xung đột không phải lỗi hỏng phần mềm; đây là cơ chế bảo vệ để Git không tự ý xóa code của ai.\n\n### Conflict Markers — vạch đánh dấu xung đột\n- **Nói dễ hiểu:** Các dòng ký hiệu `<<<<<<<`, `=======`, `>>>>>>>` do Git chèn vào để bao quanh đoạn code tranh chấp.\n- **Ví dụ:** Đoạn nằm trên `=======` là code nhánh bạn đang đứng; đoạn nằm dưới là code của nhánh đang gộp vào.\n- **Đừng nhầm:** Bạn bắt buộc phải xóa sạch các dòng ký hiệu này trước khi commit, nếu không chương trình sẽ bị lỗi cú pháp.\n\n### Unmerged paths — danh sách tệp chờ xử lý\n- **Nói dễ hiểu:** Mục thông báo trong `git status` liệt kê những tệp đang bị xung đột cần bạn mở ra chọn lại nội dung.\n- **Ví dụ:** Dòng chữ đỏ `both modified: app.js` cho biết tệp `app.js` đang có xung đột cần được giải quyết.\n- **Đừng nhầm:** Git sẽ dừng tiến trình merge và chờ bạn sửa xong toàn bộ các tệp trong danh sách này.\n\n---\n\n## 📖 Định nghĩa\nMerge Conflict (xung đột hợp nhất) xảy ra khi hai nhánh cùng sửa đổi cùng một dòng code trong cùng một tệp kể từ commit tổ tiên chung. Vì không thể tự đoán bạn muốn giữ phiên bản nào, Git sẽ tạm dừng tiến trình gộp, giữ nguyên cả hai đoạn code kèm vạch đánh dấu để bạn tự đưa ra quyết định.\n\n---\n\n## 🤔 Tại sao cần?\nKhi làm việc nhóm, việc hai người vô tình sửa cùng một dòng là điều bình thường. Thay vì để người gộp sau đè mất code của người gộp trước, Git phát hiện và báo xung đột. Đây là chốt chặn an toàn bảo vệ công sức lập trình của mọi thành viên trong nhóm.\n\n---\n\n## 🧠 Mental Model (Mô hình tư duy)\nHãy hình dung hai kiến trúc sư cùng vẽ vào một góc phòng khách trên bản thiết kế nhà. Một người muốn đặt lò sưởi, người kia muốn đặt bể cá. Thợ xây (Git) không thể tự ý chọn lò sưởi hay bể cá, nên sẽ đánh dấu khoanh vùng vị trí đó lại và gọi cả hai người đến để cùng thống nhất xem nên giữ cái nào.\n\n---\n\n## 🖼 Sơ đồ\n```text\nCấu trúc vạch đánh dấu xung đột trong tệp:\n<<<<<<< HEAD (Nhánh bạn đang đứng - ví dụ: main)\nconst apiUrl = \"https://api.production.vn/v1\";\n=======\nconst apiUrl = \"https://api.staging.vn/v2\";\n>>>>>>> feature-api (Nhánh bạn đang muốn gộp vào)\n```\n\n---\n\n## 🌎 Ví dụ thực tế\nTrong tệp `config.js`, bạn An sửa cổng chạy ứng dụng thành `port = 8080` trên nhánh `main`, còn bạn Bình sửa thành `port = 9000` trên nhánh `feature-api`. Khi An chạy lệnh gộp nhánh `feature-api` vào `main`, Git thấy cùng dòng đó có hai giá trị khác nhau. Git dừng lại, báo conflict và chèn các vạch đánh dấu vào `config.js` để An và Bình trao đổi chọn cổng thích hợp.\n\n---\n\n## 💻 Command\n```bash\ngit status\ngit diff\ngit merge --abort\n```\n\n---\n\n## 🔍 Giải thích command\n- `git status`: Hiển thị danh sách các tệp đang bị xung đột ở mục `Unmerged paths`.\n- `git diff`: So sánh và in ra các khối xung đột trực tiếp trên cửa sổ dòng lệnh.\n- `git merge --abort`: Hủy bỏ quá trình gộp nhánh và đưa dự án quay trở lại trạng thái sạch sẽ trước khi chạy lệnh merge.\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Hoảng loạn xóa thư mục khi gặp xung đột:** Xung đột là chuyện thường ngày trong lập trình nhóm, chỉ cần mở tệp ra xem xét và chỉnh sửa.\n2. **Commit khi chưa xóa các vạch `<<<<<<<` và `=======`:** Sẽ làm hỏng cú pháp chương trình và gây lỗi khi chạy code.\n3. **Tự ý xóa code của bạn cùng nhóm mà không trao đổi:** Cần thảo luận để biết giải pháp nào là tối ưu cho cả hai bên.\n\n---\n\n## 🧪 Lab\nBài tập này được thực hành trên môi trường Git mô phỏng của hệ thống:\n1. Nhận thông báo xung đột sau khi thực hiện lệnh gộp nhánh.\n2. Chạy `git status` và quan sát mục `Unmerged paths: both modified: app.js`.\n3. Mở tệp `app.js` trong trình soạn thảo để nhận diện các vạch `<<<<<<<`, `=======`, `>>>>>>>`.\n4. Quan sát hai đoạn code khác nhau ở hai nhánh trước khi quyết định cách sửa.\n\n---\n\n## 💡 Hint\nPhần giữa `<<<<<<< HEAD` và `=======` là code hiện tại của bạn; phần giữa `=======` và `>>>>>>>` là code của nhánh được gộp.\n\n---\n\n## ✅ Validation\n- Nhận diện đúng tệp tin xung đột qua lệnh `git status`.\n- Chỉ ra được đoạn code của nhánh hiện tại và nhánh nguồn trong tệp có vạch đánh dấu.\n\n---\n\n## ❓ Quiz\nTrả lời các câu hỏi sau để nắm vững nguyên nhân và cấu trúc của Merge Conflict trong Git.\n\n---\n\n## 🔥 Challenge\nChạy thử lệnh `git merge --abort` để tự mình chứng kiến Git dọn dẹp sạch sẽ trạng thái xung đột và đưa bạn trở về ban đầu như thế nào.\n\n---\n\n## 📚 Tổng kết\n- Merge Conflict xuất hiện khi hai nhánh sửa cùng vị trí dòng code kể từ mốc rẽ nhánh.\n- Git chèn các vạch `<<<<<<<`, `=======`, `>>>>>>>` để con người tự chọn lựa nội dung.\n- Conflict là tính năng an toàn bảo vệ dữ liệu, không phải sự cố hỏng hóc của Git.\n",
+  "content": "# Merge conflict là gì?\n\n---\n\n## 🎯 Mục tiêu\n- Giải thích vì sao Git dừng khi không thể kết hợp hai thay đổi an toàn.\n- Đọc các dấu mốc trong tệp conflict và xác định nội dung của mỗi nhánh.\n- Dùng `git status` để tìm tệp cần xử lý.\n\n---\n\n## 🧩 Từ khóa hôm nay\n\n### Merge conflict — xung đột khi hợp nhất\n- **Nói dễ hiểu:** Hai nhánh thay đổi cùng một vùng theo cách Git không thể tự kết hợp.\n- **Ví dụ:** Một nhánh đổi dòng `màu = xanh`, nhánh kia đổi chính dòng đó thành `màu = đỏ`.\n- **Đừng nhầm:** Cùng sửa một tệp chưa chắc gây conflict; thay đổi ở các phần độc lập thường được Git kết hợp tự động.\n\n### Conflict markers — dấu đánh dấu vùng xung đột\n- **Nói dễ hiểu:** Các dòng Git chèn vào để đặt hai phiên bản cạnh nhau cho người dùng xem.\n- **Ví dụ:** `<<<<<<< HEAD` bắt đầu phần hiện tại; `=======` ngăn hai phần; `>>>>>>> feature-conflict` kết thúc phần nhánh nguồn.\n- **Đừng nhầm:** Dấu này không phải cú pháp của chương trình. Cần sửa nội dung và xóa dấu trước khi đánh dấu conflict đã giải quyết.\n\n### Unmerged path — tệp chưa giải quyết\n- **Nói dễ hiểu:** Tệp mà hai phiên bản chưa được kết hợp xong.\n- **Ví dụ:** `git status` báo `both modified: conflict.txt`.\n- **Đừng nhầm:** Chỉ lưu tệp trong editor chưa báo cho Git biết conflict đã được giải quyết.\n\n---\n\n## 📖 Định nghĩa\nMerge conflict xảy ra khi Git không thể tự ghép một hay nhiều thay đổi từ hai nhánh. Một trường hợp phổ biến là cả hai nhánh cùng sửa một vùng của cùng tệp. Git tạm dừng merge, cho biết tệp cần xem xét và thường đặt hai phiên bản vào tệp với conflict markers.\n\n---\n\n## 🤔 Tại sao cần?\nGit không thể biết ý định của người viết. Khi nội dung mâu thuẫn, nó dừng để bạn chọn hoặc kết hợp đúng theo yêu cầu của chương trình, thay vì âm thầm bỏ một thay đổi.\n\n---\n\n## 🧠 Mental Model (Mô hình tư duy)\nHai người sửa cùng một câu trong tài liệu theo hai cách khác nhau. Git đặt cả hai phiên bản cạnh nhau và hỏi bạn nên viết câu nào trong bản cuối.\n\n---\n\n## 🖼 Sơ đồ\n```text\n<<<<<<< HEAD\nPhiên bản của nhánh hiện tại\n=======\nPhiên bản của nhánh được merge vào\n>>>>>>> feature-conflict\n```\n\n---\n\n## 🌎 Ví dụ thực tế\nMột nhánh cập nhật địa chỉ API, nhánh khác cũng đổi địa chỉ đó. Khi hợp nhất, nhóm cần xác nhận địa chỉ nào đúng hoặc kết hợp thay đổi theo cấu hình thực tế; không nên chọn một bên chỉ vì tên nhánh nghe mới hơn.\n\n---\n\n## 💻 Command\n```bash\ngit status\ngit merge feature-conflict\n```\n\n---\n\n## 🔍 Giải thích command\n- `git status`: Báo tên tệp chưa giải quyết dưới mục `Unmerged paths`.\n- `git merge feature-conflict`: Thử đưa nhánh `feature-conflict` vào nhánh hiện tại. Bài lab bên dưới cố ý tạo thay đổi mâu thuẫn để lệnh này dừng ở conflict.\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Cho rằng mọi conflict là lỗi Git:** Git đang bảo vệ nội dung vì chưa biết lựa chọn nào đúng.\n2. **Chọn “Current” hoặc “Incoming” mà không đọc code:** Cả hai lựa chọn đều có thể bỏ nghiệp vụ cần thiết.\n3. **Commit khi chưa gỡ dấu conflict:** Marker còn lại có thể làm hỏng cú pháp hoặc lộ văn bản conflict vào sản phẩm.\n\n---\n\n## 🧪 Lab\nYêu cầu: repository đã có ít nhất một commit, nhánh `main` tồn tại và working tree sạch. Dùng editor của lab để sửa đúng một dòng trong `conflict.txt`:\n1. Đứng trên `main`. Tạo `conflict.txt` với nội dung `Màu nền: trắng`, rồi chạy `git add conflict.txt` và `git commit -m \"docs: add conflict example\"`.\n2. Chạy `git switch -c feature-conflict`. Đổi dòng trong tệp thành `Màu nền: xanh`, rồi add và commit với thông điệp `feat: use blue background`.\n3. Chạy `git switch main`. Đổi cùng dòng thành `Màu nền: đỏ`, rồi add và commit với thông điệp `feat: use red background`.\n4. Chạy `git merge feature-conflict`. Merge sẽ dừng vì hai nhánh đổi cùng một dòng.\n5. Chạy `git status`, mở `conflict.txt` và chỉ ra phần hiện tại, dấu phân cách và phần từ nhánh nguồn. Bài sau sẽ hướng dẫn giải quyết.\n\n---\n\n## 💡 Hint\nPhần sau `<<<<<<< HEAD` thuộc nhánh đang đứng; phần sau `=======` thuộc nhánh nguồn được merge vào.\n\n---\n\n## ✅ Validation\n- `git status` nêu `conflict.txt` trong `Unmerged paths`.\n- Tệp có đủ ba dấu `<<<<<<<`, `=======`, `>>>>>>>` và có nội dung từ cả hai nhánh.\n- Chưa chạy `git add` hay `git commit`; giữ nguyên conflict để làm bài tiếp theo.\n\n---\n\n## ❓ Quiz\nTrả lời câu hỏi để kiểm tra cách nhận biết một conflict và đọc nội dung hai phía.\n\n---\n\n## 🔥 Challenge\nGiải thích vì sao sửa hai tệp khác nhau thường không conflict, còn hai thay đổi cùng vùng có thể khiến Git phải dừng.\n\n---\n\n## 📚 Tổng kết\n- Conflict có nghĩa Git cần bạn quyết định cách kết hợp; không phải repository bị hỏng.\n- Đọc cả hai phía và hiểu logic trước khi chọn hoặc viết nội dung kết quả.\n- Dùng `git status` tìm tệp chưa giải quyết; chưa vội add hoặc commit.\n",
   "quiz": {
     "id": "quiz-03-10-merge-conflict",
-    "title": "Trắc nghiệm: Bản chất Merge Conflict",
+    "title": "Trắc nghiệm: Merge conflict",
     "questions": [
       {
         "id": "q1",
-        "question": "Nguyên nhân cốt lõi dẫn đến việc phát sinh Merge Conflict trong Git là gì?",
+        "question": "Tình huống nào có thể khiến Git dừng vì merge conflict?",
         "type": "single",
         "options": [
           {
-            "text": "Hai nhánh cùng chỉnh sửa các dòng code giống nhau trong cùng một tệp kể từ commit tổ tiên chung",
+            "text": "Hai nhánh thay đổi cùng một vùng theo cách Git không thể kết hợp an toàn",
             "correct": true
           },
           {
-            "text": "Do máy tính của lập trình viên bị nhiễm virus phần mềm độc hại",
+            "text": "Repository có hơn một trăm commit",
             "correct": false
           },
           {
-            "text": "Do kho lưu trữ Git đã vượt quá giới hạn 100 commit",
+            "text": "Hai người dùng cùng hệ điều hành",
             "correct": false
           },
           {
-            "text": "Do lập trình viên gõ sai tên tác giả trong lệnh git config",
+            "text": "Một nhánh có tên chứa dấu gạch nối",
             "correct": false
           }
         ],
-        "explanation": "Xung đột xảy ra khi Git phát hiện hai thay đổi mâu thuẫn trên cùng một vị trí dòng code mà không thể tự giải quyết."
+        "explanation": "Conflict thường xuất hiện khi những thay đổi chồng lấn và Git không thể suy ra ý định đúng."
       },
       {
         "id": "q2",
-        "question": "Trong cấu trúc Conflict Markers, phần nội dung nằm giữa `<<<<<<< HEAD` và `=======` đại diện cho điều gì?",
+        "question": "Trong conflict markers, nội dung giữa `<<<<<<< HEAD` và `=======` thuộc phía nào?",
         "type": "single",
         "options": [
           {
-            "text": "Nội dung code hiện tại của nhánh bạn đang đứng trực tiếp (OURS)",
+            "text": "Nhánh hiện tại, nơi bạn chạy lệnh merge",
             "correct": true
           },
           {
-            "text": "Nội dung code của nhánh mà bạn đang muốn gộp vào (THEIRS)",
+            "text": "Nhánh nguồn được đưa vào",
             "correct": false
           },
           {
-            "text": "Nội dung code của bản phát hành đầu tiên cách đây mười năm",
+            "text": "Commit đầu tiên của repository",
             "correct": false
           },
           {
-            "text": "Mã nguồn do trí tuệ nhân tạo tự động viết thêm",
+            "text": "Một phiên bản do Git tự sinh ngẫu nhiên",
             "correct": false
           }
         ],
-        "explanation": "Phần trên `=======` là HEAD (nhánh hiện tại bạn đang đứng); phần dưới là nhánh đang được merge vào."
+        "explanation": "HEAD chỉ phiên bản hiện tại; nội dung phía dưới dấu phân cách là phiên bản từ nhánh nguồn."
       },
       {
         "id": "q3",
-        "question": "Ký hiệu `>>>>>>> <tên-nhánh>` trong tệp xung đột đánh dấu điều gì?",
+        "question": "Dấu `>>>>>>> feature-conflict` thường kết thúc phần nội dung nào?",
         "type": "single",
         "options": [
           {
-            "text": "Điểm kết thúc của khối code đến từ nhánh đang được gộp vào",
+            "text": "Phần được đưa vào từ nhánh nguồn `feature-conflict`",
             "correct": true
           },
           {
-            "text": "Điểm bắt đầu của một hàm lập trình mới",
+            "text": "Phần của nhánh hiện tại",
             "correct": false
           },
           {
-            "text": "Vị trí tệp tin bị virus máy tính tấn công",
+            "text": "Toàn bộ lịch sử commit",
             "correct": false
           },
           {
-            "text": "Lệnh thoát khỏi cửa sổ terminal",
+            "text": "Tệp cấu hình remote",
             "correct": false
           }
         ],
-        "explanation": "`>>>>>>>` là vạch kết thúc của khối thay đổi đến từ nhánh nguồn (theirs)."
+        "explanation": "Dấu cuối cùng kèm tên nhánh cho biết phần nội dung nguồn đang được merge vào."
       },
       {
         "id": "q4",
-        "question": "Khi xảy ra conflict, lệnh nào hiển thị danh sách các tệp tin đang bị xung đột cần xử lý?",
+        "question": "Lệnh nào cho biết những tệp còn unmerged trong lúc xử lý conflict?",
         "type": "single",
         "options": [
           {
@@ -127,67 +125,67 @@ export const lesson: CourseLesson = {
             "correct": true
           },
           {
-            "text": "git crash-report",
+            "text": "git branch",
             "correct": false
           },
           {
-            "text": "git clean-all",
+            "text": "git init",
             "correct": false
           },
           {
-            "text": "git emergency",
+            "text": "git config",
             "correct": false
           }
         ],
-        "explanation": "`git status` liệt kê rõ ràng các tệp conflict dưới mục `Unmerged paths: both modified: <file>`."
+        "explanation": "git status trình bày trạng thái repository và liệt kê các đường dẫn chưa được giải quyết."
       },
       {
         "id": "q5",
-        "question": "Tại sao lập trình viên không được phép để sót lại các ký tự `<<<<<<<` hoặc `=======` trong mã nguồn khi commit?",
+        "question": "Vì sao phải xóa conflict markers và viết lại nội dung cuối trước khi báo đã giải quyết?",
         "type": "single",
         "options": [
           {
-            "text": "Vì đây là các ký tự đánh dấu của Git, để sót lại sẽ khiến trình biên dịch báo lỗi cú pháp và làm hỏng ứng dụng",
+            "text": "Marker chỉ là dấu tạm để so sánh; nội dung cuối phải phản ánh lựa chọn đúng cho chương trình",
             "correct": true
           },
           {
-            "text": "Vì Git sẽ tự động xóa tài khoản GitHub của bạn nếu phát hiện",
+            "text": "Git không cho phép bất kỳ dấu nhỏ hơn nào trong mọi loại tệp",
             "correct": false
           },
           {
-            "text": "Vì các ký tự này làm máy tính bị quá tải bộ nhớ RAM",
+            "text": "Marker làm tăng dung lượng repository hàng gigabyte",
             "correct": false
           },
           {
-            "text": "Vì tổ chức tiêu chuẩn W3C nghiêm cấm sử dụng các ký tự này",
+            "text": "Git sẽ xóa tài khoản nếu thấy marker",
             "correct": false
           }
         ],
-        "explanation": "Conflict markers là văn bản thô; để lại trong code sẽ làm gãy cú pháp chương trình."
+        "explanation": "Cần thay phần so sánh tạm bằng nội dung có ý nghĩa rồi mới đánh dấu tệp đã giải quyết."
       },
       {
         "id": "q6",
-        "question": "Nếu cảm thấy chưa sẵn sàng giải quyết conflict và muốn quay về trạng thái sạch sẽ ban đầu, bạn dùng lệnh gì?",
+        "question": "Nếu `git status` báo tệp trong `Unmerged paths`, bước phù hợp tiếp theo là gì?",
         "type": "single",
         "options": [
           {
-            "text": "git merge --abort",
+            "text": "Mở tệp, hiểu cả hai phía và quyết định nội dung cần có trong kết quả",
             "correct": true
           },
           {
-            "text": "git cancel now",
+            "text": "Xóa repository ngay lập tức",
             "correct": false
           },
           {
-            "text": "git delete conflict",
+            "text": "Tạo thêm một commit mà không sửa tệp",
             "correct": false
           },
           {
-            "text": "git undo everything",
+            "text": "Đổi tên nhánh để bỏ qua conflict",
             "correct": false
           }
         ],
-        "explanation": "`git merge --abort` khôi phục trạng thái Working Tree và HEAD về chính xác trước khi ra lệnh merge."
+        "explanation": "Người giải quyết cần đọc nội dung và yêu cầu trước khi sửa; bài tiếp theo hướng dẫn các bước Git."
       }
     ]
   }

@@ -4,29 +4,29 @@
 - Làm chủ toàn diện các tùy chọn chi tiết trong bộ quy tắc Branch Protection Rules trên GitHub.
 - Thiết lập yêu cầu bắt buộc kiểm duyệt mã nguồn: số lượng người phê duyệt tối thiểu (Require approvals) và tự động vô hiệu hóa duyệt khi có commit mới.
 - Cấu hình cổng kiểm tra trạng thái bắt buộc (Require status checks to pass) tích hợp chặt chẽ với CI/CD.
-- Áp dụng quy tắc lịch sử tuyến tính (Require linear history) và chữ ký bảo mật (Require signed commits).
+- Hiểu điều kiện lịch sử tuyến tính và chữ ký commit; bật chúng khi repo đã thống nhất cách tạo/xác minh commit.
 
 ## 🧩 Từ khóa hôm nay
 ### Branch Protection Rules
-- **Nói dễ hiểu**: Bộ quy tắc tự động ngăn chặn việc đẩy code trực tiếp hoặc merge bừa bãi vào nhánh quan trọng.
+- **Nói dễ hiểu**: Các điều kiện có thể áp dụng cho nhánh quan trọng, chẳng hạn yêu cầu PR, lượt duyệt hoặc status check trước khi merge.
 - **Ví dụ**: Khóa nhánh `main`, chỉ cho phép merge khi đã có ít nhất một đồng nghiệp bấm Approve và test CI chạy qua.
 - **Đừng nhầm**: Không phải quyền truy cập tài khoản, mà là điều kiện bắt buộc áp dụng riêng cho từng nhánh Git.
 
 ### Status Checks
-- **Nói dễ hiểu**: Các bài kiểm tra tự động chạy trên GitHub Actions trước khi cấp phép hợp nhất mã nguồn.
+- **Nói dễ hiểu**: Kết quả kiểm tra được gửi lên GitHub bởi CI hoặc ứng dụng tích hợp; quy tắc có thể yêu cầu một số kết quả cụ thể phải đạt trước khi merge.
 - **Ví dụ**: Bài kiểm tra `npm test` và `lint` phải báo màu xanh thì nút Merge mới sáng lên.
-- **Đừng nhầm**: Không thay thế việc con người review code; con người kiểm tra nghiệp vụ còn máy kiểm tra cú pháp và logic.
+- **Đừng nhầm**: Không phải mọi status check đều do GitHub Actions tạo ra, và CI không thay thế review của con người.
 
 ### Linear History
-- **Nói dễ hiểu**: Quy tắc giữ cho lịch sử commit trên nhánh chính luôn là một đường thẳng tắp, không có nhánh rẽ chằng chịt.
+- **Nói dễ hiểu**: Quy tắc từ chối merge commit trên nhánh được bảo vệ để giữ lịch sử tuyến tính.
 - **Ví dụ**: Yêu cầu nhóm sử dụng Squash and Merge hoặc Rebase thay vì tạo các merge commit thông thường.
-- **Đừng nhầm**: Không làm mất nội dung code, chỉ gộp hoặc sắp xếp lại thứ tự commit cho gọn gàng.
+- **Đừng nhầm**: Quy tắc này giới hạn kiểu merge; nó không tự sắp xếp lại commit hay thay đổi mã nguồn.
 
 ## 📖 Định nghĩa
-Branch Protection Rules là bộ chính sách kỹ thuật trên GitHub nhằm bảo vệ các nhánh trọng yếu. Hệ thống buộc mọi thay đổi phải đi qua Pull Request, đáp ứng đủ số lượt duyệt của đồng nghiệp, vượt qua kiểm thử tự động và giải quyết hết các bình luận trước khi được merge.
+Branch protection rules là các chính sách tùy chọn áp dụng cho nhánh trên GitHub. Quản trị viên chọn riêng điều kiện cần dùng, chẳng hạn yêu cầu PR, số lượt duyệt, status checks, giải quyết hội thoại hoặc lịch sử tuyến tính. Nếu không bật một điều kiện thì không thể giả định điều kiện đó đang được yêu cầu; quyền bypass cũng ảnh hưởng việc thực thi.
 
 ## 💡 Tại sao cần
-Tin tưởng ý thức tự giác là chưa đủ khi làm việc nhóm quy mô lớn. Lập trình viên có thể vô tình quên test hoặc vội vã đưa code lỗi lên máy chủ sản xuất. Quy tắc bảo vệ nhánh đóng vai trò như chốt chặn kỹ thuật tự động, bảo đảm chất lượng đồng đều cho mọi dòng mã.
+Nhóm có thể dùng quy tắc để biến một số bước đã thống nhất thành điều kiện kỹ thuật trước khi merge. Chọn vừa đủ để kiểm soát rủi ro; yêu cầu quá nhiều hoặc status check không ổn định có thể làm chậm cả nhóm.
 
 ## 🧠 Mental Model
 Hãy tưởng tượng quy trình an ninh sân bay đa tầng trước khi hành khách lên máy bay. Bạn phải xuất trình vé hợp lệ do nhân viên xác nhận (`Require approvals`), hành lý qua máy quét tự động không có vật cấm (`Status checks pass`), và giải quyết xong mọi thắc mắc ở cổng soi chiếu (`Conversations resolved`).
@@ -40,28 +40,28 @@ flowchart TD
     C2 -- Thất bại đỏ --> Block2[Khóa nút Merge]
     C2 -- Thành công xanh --> C3{Giải quyết hết hội thoại?}
     C3 -- Còn phản hồi --> Block3[Khóa nút Merge]
-    C3 -- Hoàn tất --> Open[Nút Merge sáng xanh - Cho phép hợp nhất]
+    C3 -- Hoàn tất --> Open[Không còn điều kiện chặn trong sơ đồ này]
 ```
 
 ## 🏢 Ví dụ thực tế
-Một công ty tài chính cấu hình nhánh `main` yêu cầu tối thiểu hai lượt Approve từ kỹ sư cao cấp và bài test kiểm tra bảo mật phải đạt. Khi một lập trình viên gửi PR bổ sung cổng nạp thẻ, dù đồng nghiệp đã duyệt một lượt nhưng nút Merge vẫn xám. Sau khi có thêm lượt duyệt thứ hai và bài test tự động báo xanh, mã nguồn mới được đưa vào sản xuất an toàn.
+Ví dụ giả định: một nhóm bật yêu cầu hai lượt duyệt và chọn status check bảo mật cho `main`. PR sẽ còn điều kiện chặn khi thiếu một trong hai kết quả. Điều này chỉ xác nhận các điều kiện đã cấu hình đạt, không tự bảo đảm phần mềm không có lỗi hay tự triển khai ra production.
 
 ## 💻 Command & Cú pháp
 ```bash
-# Kiểm tra danh sách status checks của Pull Request hiện tại
+# Các lệnh gh cần GitHub CLI đã cài, đăng nhập và repository phù hợp
 gh pr checks
 
 # Xem tổng quan trạng thái phê duyệt của Pull Request
 gh pr status
 
-# Kiểm tra tính hợp lệ của chữ ký số GPG trên các commit
+# Xem chữ ký của commit (nếu có; GitHub chấp nhận GPG, SSH hoặc S/MIME khi đã cấu hình)
 git log --oneline --show-signature
 ```
 
 ## 🔍 Giải thích command
-- `gh pr checks`: Hiển thị danh sách các bài test tự động và trạng thái thành công hay thất bại của từng bài kiểm tra.
-- `gh pr status`: Xem nhanh tiến độ phê duyệt, trạng thái bình luận và kết quả kiểm thử của các nhánh đang làm việc.
-- `git log --show-signature`: Xác thực tính toàn vẹn và danh tính tác giả qua chữ ký điện tử GPG đính kèm từng commit.
+- `gh pr checks`: Hiển thị các check GitHub ghi nhận cho PR; cần cài và đăng nhập GitHub CLI trong repo liên quan.
+- `gh pr status`: Tóm tắt PR liên quan đến tài khoản hiện tại; lệnh này không thay thế trang Settings hay cấu hình rule.
+- `git log --show-signature`: Hiển thị kết quả kiểm tra chữ ký nếu commit có chữ ký và Git có thể xác minh khóa; chữ ký không tự chứng minh nội dung code an toàn.
 
 ## ⚠️ Sai lầm phổ biến
 - Đặt số lượng reviewer bắt buộc quá cao trong nhóm ít người gây tắc nghẽn tiến độ dự án.
@@ -71,19 +71,18 @@ git log --oneline --show-signature
 ## 🧪 Lab thực hành
 Bài học này là bài tự kiểm tra: bạn thao tác cấu hình trực tiếp trên giao diện GitHub Repository Settings và đối chiếu theo hướng dẫn bên dưới.
 
-1. Truy cập Repository trên GitHub, vào mục **Settings** rồi chọn **Branches**.
-2. Nhấn **Add branch protection rule**, nhập pattern là `main`.
-3. Tích chọn **Require a pull request before merging** và đặt **Require approvals** là 1.
-4. Tích chọn **Dismiss stale pull request approvals when new commits are pushed**.
-5. Nhấn **Create** để lưu quy tắc, sau đó thử tạo một Pull Request để quan sát các điều kiện khóa tự động.
+1. Dùng repository thử nghiệm mà bạn có quyền quản trị; vào **Settings → Branches** (tên nút có thể thay đổi theo giao diện).
+2. Tạo quy tắc chỉ khớp `main`; bật **Require a pull request before merging** và đặt một lượt duyệt nếu giao diện cho phép.
+3. Quan sát các tùy chọn khác, nhưng chỉ bật chúng nếu repo có quy trình đáp ứng được (ví dụ status check phải tồn tại trước khi chọn).
+4. Lưu quy tắc rồi tạo PR thử nghiệm; ghi lại điều kiện còn thiếu. Một số tùy chọn có thể phụ thuộc quyền, loại repository hoặc cấu hình CI.
 
 ## 💡 Hint & mẹo
-- Luôn bật tính năng hủy phê duyệt cũ khi có commit mới để tránh sơ hở lọt mã nguồn chưa qua kiểm duyệt.
-- Bạn có thể bật thêm tùy chọn Do not allow bypassing the above settings để ngay cả Admin repo cũng phải tuân thủ đúng quy trình.
+- Cân nhắc hủy lượt duyệt cũ khi có commit mới; quyết định này phụ thuộc mức rủi ro và cách nhóm review.
+- Xem mục bypass/exemptions trong rule để biết chính xác tài khoản nào được phép bỏ qua điều kiện.
 
 ## ✅ Validation & Kết quả mong đợi
-- Nút Merge trên giao diện GitHub hiển thị trạng thái Merging is blocked màu xám khi chưa đủ điều kiện.
-- Nút Merge chỉ chuyển sang màu xanh khi toàn bộ các bài kiểm tra tự động đạt yêu cầu và có đủ số lượt phê duyệt từ đồng nghiệp.
+- Nêu được các điều kiện thực tế đã bật cho nhánh thử nghiệm.
+- Tạo PR minh họa được ít nhất một điều kiện chưa đạt và quan sát trạng thái mà GitHub hiển thị.
 
 ## ❓ Quiz nhanh
 Hãy làm bài trắc nghiệm bên dưới để kiểm tra mức độ thấu hiểu của bạn về các quy tắc Branch Protection Rules chuyên sâu.
@@ -92,6 +91,6 @@ Hãy làm bài trắc nghiệm bên dưới để kiểm tra mức độ thấu 
 Hãy tìm hiểu thêm về tính năng Rulesets mới trên GitHub và so sánh ưu điểm của Rulesets so với Branch Protection Rules truyền thống khi quản lý nhiều nhánh cùng lúc.
 
 ## 📝 Tổng kết
-- Branch Protection Rules là chốt chặn kỹ thuật tự động giúp bảo vệ nhánh chính khỏi mã nguồn lỗi.
-- Kết hợp duyệt mã bắt buộc và status checks từ CI/CD tạo nên hàng rào bảo mật nhiều lớp đáng tin cậy.
-- Duy trì lịch sử tuyến tính và chữ ký commit giúp cây mã nguồn rõ ràng, minh bạch và dễ dàng truy vết sự cố.
+- Mỗi branch protection rule chỉ thực thi các điều kiện đã bật và áp dụng cho pattern khớp.
+- Status checks có thể đến từ các dịch vụ tích hợp khác nhau; cấu hình nhầm check có thể chặn PR.
+- Linear history chặn merge commit; chữ ký giúp xác minh nguồn gốc commit khi cấu hình xác minh phù hợp.

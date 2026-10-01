@@ -2,62 +2,81 @@ id: quiz-01-version-control
 title: "Trắc nghiệm: Version Control là gì?"
 questions:
   - id: q1
-    question: Mục đích cốt lõi nhất của một hệ thống quản lý phiên bản (VCS) là gì?
+    question: "Mục đích nào mô tả đúng nhất về Version Control?"
     type: single
     options:
-      - text: Lưu, theo dõi và xem lại những phiên bản bạn chủ động ghi nhận
+      - text: "Ghi lại các phiên bản được chọn để xem lại hoặc so sánh về sau"
         correct: true
-      - text: Biên dịch mã nguồn JavaScript sang mã máy để tăng tốc độ chạy ứng dụng
+      - text: "Tự động lưu mọi ký tự người dùng gõ vào tệp"
         correct: false
-      - text: Tự động sửa lỗi cú pháp trong các tệp tin HTML và CSS
+      - text: "Tự gửi tất cả tệp của dự án lên Internet"
         correct: false
-      - text: Chạy quét virus và tường lửa ngăn chặn hacker tấn công máy tính
+      - text: "Tự tìm và sửa mọi lỗi trong chương trình"
         correct: false
-    explanation: VCS giúp lưu các mốc thay đổi để so sánh hoặc xem lại sau này. Git
-      không tự lưu mọi lần gõ phím; người dùng cần chủ động tạo mốc.
+    explanation: >-
+      Version Control lưu những mốc người dùng chọn để xem lại và so sánh.
+      Nó không tự lưu từng lần gõ, tải tệp lên mạng hoặc sửa lỗi.
+
   - id: q2
-    question: Bạn đã lưu một commit khi dự án còn chạy tốt, sau đó một thay đổi làm
-      phát sinh lỗi. VCS giúp gì trong tình huống này?
+    question: "Bạn đã lưu một commit khi trang còn chạy tốt, rồi một lần sửa làm trang lỗi. Git giúp gì?"
     type: single
     options:
-      - text: Bạn phải xóa bỏ toàn bộ dự án và viết lại mã nguồn từ đầu
+      - text: "Tự nhận ra lỗi và sửa đúng dòng mà không cần bạn kiểm tra"
         correct: false
-      - text: Bạn có thể xem lại hoặc khôi phục từ mốc đã lưu trước khi lỗi xảy ra
+      - text: "Cho bạn so sánh thay đổi với commit cũ và lấy lại nội dung cần thiết"
         correct: true
-      - text: Máy tính sẽ tự động định dạng lại ổ cứng để xóa sạch các lỗi phát sinh
+      - text: "Xóa mọi thay đổi sau commit cũ ngay khi trang báo lỗi"
         correct: false
-      - text: Bạn phải liên hệ với quản trị viên mạng để mở khóa tệp tin
+      - text: "Chỉ cho xem lịch sử nếu dự án đã được gửi lên Internet"
         correct: false
-    explanation: VCS cho phép xem lại những mốc bạn đã lưu. Thay đổi chưa được lưu
-      thành commit không tự xuất hiện trong lịch sử và vẫn cần được bảo vệ riêng.
+    explanation: >-
+      Commit cũ cho bạn một trạng thái để so sánh hoặc lấy lại nội dung.
+      Git không tự xác định nguyên nhân lỗi hay chọn thay đổi cần khôi phục.
+
   - id: q3
-    question: Vì sao việc đặt tên thư mục kiểu "project_v1", "project_final" lại bị
-      coi là sai lầm trong kỹ nghệ phần mềm?
+    question: "Rủi ro nào dễ gặp khi tự tạo nhiều tệp tên `final`, `final-2`, `final-moi-nhat`?"
     type: single
     options:
-      - text: Vì hệ điều hành không cho phép đặt tên thư mục có dấu gạch dưới
-        correct: false
-      - text: Vì gây lãng phí dung lượng, dễ nhầm lẫn và không hỗ trợ làm việc nhóm an
-          toàn
+      - text: "Khó biết các tệp khác nhau ở đâu và bản nào đã được kiểm tra"
         correct: true
-      - text: Vì Git sẽ từ chối quản lý các thư mục có từ "final"
+      - text: "Hệ điều hành sẽ tự gộp nội dung các tệp thành một bản"
         correct: false
-      - text: Vì tệp tin sẽ tự động bị mã hóa và không thể mở lại được
+      - text: "Git sẽ xóa mọi thư mục có chữ `final` trong tên"
         correct: false
-    explanation: Quản lý phiên bản thủ công bằng cách copy thư mục gây tốn dung
-      lượng ổ đĩa, dễ nhầm lẫn tệp tin mới/cũ và không thể so sánh chi tiết từng
-      dòng code thay đổi.
+      - text: "Tệp sao chép luôn được lưu thêm trên một thiết bị khác"
+        correct: false
+    explanation: >-
+      Tên tệp chỉ là nhãn do người đặt; chúng không ghi rõ từng khác biệt,
+      người sửa hay lý do thay đổi như một lịch sử có tổ chức.
+
   - id: q4
-    question: Lệnh nào cho phép xem phiên bản phần mềm Git đang chạy trên máy tính?
+    question: "Bạn đã lưu một commit rồi sửa tiếp tệp nhưng chưa lưu mốc mới. Điều nào đúng?"
     type: single
     options:
-      - text: git --version
+      - text: "Lần sửa mới đã tự xuất hiện trong lịch sử Git"
+        correct: false
+      - text: "Lịch sử vẫn có commit cũ; lần sửa mới chưa nằm trong một commit"
         correct: true
-      - text: git check-system
+      - text: "Git xóa commit cũ để thay bằng phần đang sửa"
         correct: false
-      - text: git show-update
+      - text: "Tệp đang sửa chắc chắn đã bị mất"
         correct: false
-      - text: git status --all
+    explanation: >-
+      Commit ghi lại trạng thái tại lúc bạn lưu nó; sửa sau đó không tự
+      viết lại lịch sử và phần sửa vẫn có thể còn trong tệp hiện tại.
+
+  - id: q5
+    question: "Dự án chỉ có một bản Git trên laptop. Nếu laptop hỏng, điều gì cần nhớ?"
+    type: single
+    options:
+      - text: "Git tự tạo thêm một bản đầy đủ trên Internet"
         correct: false
-    explanation: "`git --version` là câu lệnh chuẩn trong giao diện dòng lệnh để in
-      ra phiên bản cài đặt của công cụ Git."
+      - text: "Lịch sử trên laptop cũng có thể mất; cần có bản sao ở nơi khác"
+        correct: true
+      - text: "Mọi commit đã lưu đều tự chuyển sang máy của bạn cùng nhóm"
+        correct: false
+      - text: "Không thể dùng Git nếu chưa mua dịch vụ sao lưu"
+        correct: false
+    explanation: >-
+      Repository Git chỉ có trên một thiết bị không bảo vệ khỏi hỏng thiết bị.
+      Muốn có bản dự phòng, bạn cần sao chép dữ liệu sang một nơi khác.

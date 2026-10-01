@@ -71,9 +71,17 @@ export class ResetCommand implements GitCommand {
 
     // 2. Apply Mode
     if (mode === 'hard') {
-      // Discard all staged and working tree modifications, match target commit exactly
+      // Discard staged and unstaged changes to tracked paths, while keeping
+      // unrelated untracked files just like real `git reset --hard` does.
+      const pathsToRestore = new Set([
+        ...Object.keys(currentHead?.tree || {}),
+        ...Object.keys(targetCommit.tree),
+        ...state.stagingArea.map((entry) => entry.path),
+      ]);
       ctx.stateManager.clearStagingArea();
-      ctx.fs.clear();
+      for (const path of pathsToRestore) {
+        ctx.fs.deleteFile(path);
+      }
       for (const [path, content] of Object.entries(targetCommit.tree)) {
         ctx.fs.writeFile(path, content);
       }

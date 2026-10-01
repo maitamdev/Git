@@ -12,15 +12,8 @@ keywords:
 prerequisites:
   - 11-pull-request
 objectives:
-  - Hiểu rõ mục đích và tầm quan trọng sống còn của hoạt động Code Review đối
-    với sự phát triển của đội ngũ.
-  - "Sử dụng thành thạo các công cụ review trên GitHub: bình luận từng dòng
-    (line comments), tạo đề xuất sửa code (Suggested Changes), và phê duyệt
-    (Approve)."
+  - Hiểu mục tiêu của Code Review và viết nhận xét kỹ thuật mang tính xây dựng.
+  - Nhận biết Comment, Approve, Request Changes và Suggested Changes trên GitHub.
   - Xây dựng văn hóa nhận xét mang tính xây dựng, tôn trọng và đồng cảm (Empathy
     in Code Review).
-  - "Phân biệt rõ ràng giữa 3 trạng thái phản hồi: Comment, Approve, và Request
-    Changes."
-commands:
-  - gh pr checkout <pr-number>
-  - git log -p
+commands: []

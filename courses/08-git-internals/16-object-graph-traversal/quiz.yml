@@ -13,12 +13,12 @@ questions:
         correct: false
       - text: "Dung lượng repository không bao giờ vượt quá 1 GB"
         correct: false
-    explanation: "Vì các cạnh đồ thị trỏ ngược về quá khứ theo mã băm mật mã, không thể tạo ra một chu trình khép kín quay lại chính mình."
+    explanation: "Commit mới ghi parent đã tồn tại trước đó; các cạnh parent vì thế đi về lịch sử trước và không tạo vòng lặp."
   - id: q2
     question: "Thuật ngữ Dangling Commit (Commit mồ côi) trong Git ám chỉ điều gì?"
     type: single
     options:
-      - text: "Một commit vẫn tồn tại trong cơ sở dữ liệu đối tượng nhưng không có bất kỳ nhánh hay thẻ nào trỏ tới để tiếp cận"
+      - text: "Một commit còn trong object database nhưng không thể lần tới từ các điểm bắt đầu mà Git đang xét"
         correct: true
       - text: "Một commit bị nhiễm virus máy tính"
         correct: false
@@ -26,12 +26,12 @@ questions:
         correct: false
       - text: "Một commit không chứa bất kỳ dòng mã nào"
         correct: false
-    explanation: "Dangling commit là node bị đứt kết nối khỏi hệ thống tham chiếu của đồ thị, thường do reset hard hoặc xóa nhánh."
+    explanation: "Unreachable phụ thuộc các điểm bắt đầu được xét; mặc định `git fsck` cũng xét reflog, nên commit vừa reset có thể chưa bị xem là unreachable."
   - id: q3
     question: "Lệnh Plumbing nào dùng để kiểm tra tính toàn vẹn của đồ thị đối tượng và liệt kê các đối tượng không thể tiếp cận?"
     type: single
     options:
-      - text: "git fsck"
+      - text: "git fsck --unreachable"
         correct: true
       - text: "git graph-check"
         correct: false
@@ -39,7 +39,7 @@ questions:
         correct: false
       - text: "git scan-lost"
         correct: false
-    explanation: "git fsck (File System Consistency Check) là lệnh chuyên dụng để xác thực đồ thị đối tượng và tìm các đối tượng mồ côi."
+    explanation: "`git fsck` kiểm tra tính toàn vẹn và kết nối object; cờ `--unreachable` yêu cầu liệt kê object không tới được từ điểm bắt đầu."
   - id: q4
     question: "Trong đồ thị Git, hướng của các cạnh liên kết giữa các commit diễn ra như thế nào?"
     type: single

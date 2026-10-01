@@ -1,123 +1,123 @@
-# Xóa và đổi tên nhánh an toàn
+# Đổi tên và xóa nhánh an toàn
 
 ---
 
 ## 🎯 Mục tiêu
-- Nắm vững kỹ thuật dọn dẹp và bảo trì hệ thống nhánh sau khi hoàn tất tính năng.
-- Sử dụng thành thạo cú pháp đổi tên nhánh bằng cờ `-m`.
-- Phân biệt rõ ràng giữa xóa an toàn với cờ `-d` và xóa cưỡng chế với cờ `-D`.
+- Đổi tên một nhánh bằng `git branch -m`.
+- Giải thích vì sao `git branch -d` có thể từ chối xóa.
+- Chỉ xóa nhánh sau khi xác nhận công việc đã được merge.
 
 ---
 
 ## 🧩 Từ khóa hôm nay
 
-### git branch -m — đổi tên nhánh
-- **Nói dễ hiểu:** Lệnh thay đổi tên nhánh sang tên mới rõ nghĩa và đúng quy ước của nhóm hơn.
-- **Ví dụ:** Chạy `git branch -m feat-cart feature-cart` để chuẩn hóa tên nhánh trước khi nộp bài.
-- **Đừng nhầm:** Đổi tên nhánh chỉ đổi nhãn con trỏ; toàn bộ commit và lịch sử bên trong nhánh vẫn giữ nguyên vẹn.
+### `git branch -m` — đổi tên nhánh
+- **Nói dễ hiểu:** Đổi tên con trỏ nhánh; commit và nội dung lịch sử vẫn giữ nguyên.
+- **Ví dụ:** `git branch -m temp-feature feature-profile` đổi tên nhánh `temp-feature`.
+- **Đừng nhầm:** Lệnh không đổi tên nhánh trên GitHub; phần đó cần quy trình remote ở Level 4.
 
-### git branch -d vs -D — xóa an toàn và cưỡng chế
-- **Nói dễ hiểu:** Cờ `-d` chỉ cho phép xóa khi nhánh đã được gộp; cờ `-D` ép xóa ngay cả khi code chưa gộp.
-- **Ví dụ:** Dùng `-d` để dọn nhánh đã merge vào `main`; dùng `-D` để vứt bỏ hoàn toàn nhánh thử nghiệm hỏng.
-- **Đừng nhầm:** Xóa một nhánh đã gộp bằng `-d` không làm mất code; toàn bộ commit đã nằm chắc chắn trong nhánh chính.
+### `git branch -d` — xóa nhánh có kiểm tra
+- **Nói dễ hiểu:** Xóa nhánh nếu công việc trên đó đã được nhập vào nhánh hiện tại hoặc nhánh theo dõi.
+- **Ví dụ:** Sau khi merge `feature-profile` vào `main`, xóa nhánh phụ bằng `git branch -d feature-profile`.
+- **Đừng nhầm:** Nếu nhánh còn commit chưa merge, Git từ chối để tránh làm mất đường dẫn tới công việc đó.
 
-### git push origin --delete — xóa nhánh trên máy chủ
-- **Nói dễ hiểu:** Lệnh gửi yêu cầu lên GitHub để xóa con trỏ nhánh tương ứng trên kho chứa từ xa.
-- **Ví dụ:** Sau khi tính năng được merge trên GitHub, chạy `git push origin --delete feature-cart` để dọn dẹp.
-- **Đừng nhầm:** Xóa nhánh ở máy tính cá nhân không tự làm mất nhánh trên GitHub; bạn phải chạy thêm lệnh này.
+### `git branch -D` — xóa cưỡng chế
+- **Nói dễ hiểu:** Cờ viết hoa bỏ qua kiểm tra an toàn của `-d`.
+- **Ví dụ:** Git nhắc tới `-D` trong thông báo khi `-d` từ chối.
+- **Đừng nhầm:** Bài này không dùng `-D`; chỉ cân nhắc khi bạn đã xác nhận muốn bỏ công việc chưa merge và biết cách khôi phục.
 
 ---
 
 ## 📖 Định nghĩa
-Xóa và đổi tên nhánh là các thao tác bảo trì cần thiết để giữ kho lưu trữ Git luôn gọn gàng và dễ theo dõi. Thao tác xóa nhánh trong Git chỉ đơn thuần là gỡ bỏ một nhãn con trỏ có tên, trong khi các commit đã được gộp vẫn nằm an toàn trong lịch sử nhánh chính.
+Tên nhánh là nhãn giúp trỏ tới commit. Đổi tên thay đổi nhãn; xóa nhánh gỡ nhãn đó. `git branch -d` chỉ cho xóa khi Git xác nhận nhánh đã được gộp, nhờ vậy giảm nguy cơ bỏ quên commit chưa tích hợp.
 
 ---
 
 ## 🤔 Tại sao cần?
-Khi làm việc lâu dài, việc đặt nhầm tên nhánh hoặc gõ sai chính tả rất thường xảy ra. Đổi tên nhánh giúp chuẩn hóa tên trước khi gửi cho đồng đội. Đồng thời, chủ động xóa các nhánh đã hoàn thành giúp danh sách nhánh luôn ngắn gọn, tránh việc chọn nhầm các nhánh cũ đã lỗi thời.
+Nhánh thường được đặt tên tạm khi bắt đầu làm việc. Khi công việc hoàn tất, tên rõ ràng giúp nhóm dễ hiểu hơn; sau khi merge, xóa nhánh cũ giữ danh sách gọn. Kiểm tra an toàn trước khi xóa bảo vệ công việc chưa được nhập.
 
 ---
 
 ## 🧠 Mental Model (Mô hình tư duy)
-Hãy hình dung các con trỏ nhánh giống như những chiếc thẻ đánh dấu trang kẹp vào cuốn sách. Khi bạn đọc xong một chương và đã hiểu hết nội dung (đã merge), bạn rút chiếc thẻ đánh dấu đó ra cất đi (xóa nhánh) để cuốn sách không bị vướng víu. Các trang sách và nội dung chữ (các commit) vẫn nằm nguyên vẹn trong gáy cuốn sách.
+Nhánh giống tấm thẻ đánh dấu vị trí trong quyển sổ lịch sử. Đổi tên là viết lại tên trên thẻ. Xóa thẻ không xóa những trang đã được đánh dấu; nhưng nếu thẻ là đường duy nhất tới vài trang chưa chép vào nơi khác, đừng vứt nó đi.
 
 ---
 
 ## 🖼 Sơ đồ
 ```text
-Cơ chế gỡ bỏ nhãn con trỏ (Xóa nhánh):
-Trước khi xóa:
-main ───────────> Commit C3
-feature-cart ───> Commit C3 (Trỏ cùng commit C3)
+Trước merge:    main ── C1
+                         \
+                 feature ─ C2   (chưa merge, -d từ chối)
 
-Sau khi chạy: git branch -d feature-cart
-main ───────────> Commit C3
-(Chỉ có con trỏ feature-cart bị gỡ bỏ, Commit C3 vẫn an toàn 100%)
+Sau merge:      main ── C1 ── M/C2
+                              \
+                 feature ─────┘   (đã nhập, -d có thể xóa nhãn)
 ```
 
 ---
 
 ## 🌎 Ví dụ thực tế
-Bạn Long hoàn tất việc gộp nhánh `feature-auth` vào nhánh `main` của dự án công ty. Khi gõ `git branch`, Long thấy nhánh cũ vẫn còn hiển thị. Long chuyển về `main` bằng `git switch main` rồi chạy `git branch -d feature-auth`. Git kiểm tra thấy toàn bộ commit đã nằm trong `main` nên báo xóa thành công. Danh sách nhánh của Long giờ chỉ còn lại `main` sạch sẽ.
+Bạn đặt nhánh tạm là `temp-feature`, sau đó đổi thành `feature-profile` cho dễ hiểu. Khi tính năng đã được merge vào `main`, bạn xóa nhánh phụ. Nếu thử xóa trước khi merge, `-d` dừng và báo rằng nhánh chưa được gộp.
 
 ---
 
 ## 💻 Command
 ```bash
-git branch -m <tên-mới>
 git branch -m <tên-cũ> <tên-mới>
 git branch -d <tên-nhánh>
-git branch -D <tên-nhánh>
+git branch
 ```
 
 ---
 
 ## 🔍 Giải thích command
-- `git branch -m <tên-mới>`: Đổi tên nhánh hiện tại bạn đang đứng sang tên mới.
-- `git branch -m <tên-cũ> <tên-mới>`: Đổi tên một nhánh bất kỳ mà không cần phải chuyển sang nhánh đó.
-- `git branch -d <tên-nhánh>`: Xóa nhánh có kiểm tra an toàn (chỉ xóa nếu nhánh đã được merge).
-- `git branch -D <tên-nhánh>`: Ép buộc xóa nhánh ngay lập tức, bỏ qua kiểm tra an toàn.
+- `git branch -m <cũ> <mới>`: Đổi tên nhánh bất kỳ; nếu chỉ truyền một tên sau `-m`, Git đổi tên nhánh hiện tại.
+- `git branch -d <nhánh>`: Xóa nhánh đã merge; Git từ chối nếu phát hiện commit chưa được gộp.
+- `git branch`: Kiểm tra tên nhánh còn lại và nhánh hiện tại.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Cố xóa nhánh mình đang đứng:** Git sẽ từ chối; bạn phải chuyển sang nhánh khác như `main` rồi mới xóa được.
-2. **Sợ mất code khi xóa nhánh đã merge:** Toàn bộ commit đã nằm trong nhánh chính, việc xóa nhánh con không làm mất dòng code nào.
-3. **Đổi tên ở máy cá nhân nhưng quên cập nhật trên GitHub:** Dễ khiến nhánh trên máy và nhánh trên máy chủ bị lệch tên nhau.
+1. **Xóa nhánh khi chưa biết đã merge chưa:** Để Git kiểm tra bằng `-d`; không bỏ qua cảnh báo.
+2. **Nghĩ xóa nhánh đã merge sẽ xóa commit khỏi `main`:** Commit đã có trong lịch sử `main`; chỉ nhãn nhánh phụ bị gỡ.
+3. **Nghĩ đổi tên local sẽ tự đổi tên trên GitHub:** Nhánh remote cần được cập nhật riêng.
 
 ---
 
 ## 🧪 Lab
-Bài học này là bài tự kiểm tra thao tác đổi tên và xóa nhánh trên máy của bạn:
-1. Tạo một nhánh tạm bằng lệnh `git branch temp-name`.
-2. Đổi tên nhánh thành `proper-feature` bằng `git branch -m temp-name proper-feature`.
-3. Kiểm tra lại bằng `git branch` để thấy tên mới xuất hiện.
-4. Xóa nhánh đó bằng lệnh `git branch -d proper-feature`.
+Yêu cầu: đang ở `main`, có ít nhất một commit và working tree sạch. Nếu tên `temp-feature` đã có, chọn tên khác.
+1. Chạy `git branch temp-feature` để tạo nhánh tại commit hiện tại.
+2. Đổi tên bằng `git branch -m temp-feature feature-profile`, rồi chạy `git branch` để xác nhận.
+3. Chạy `git switch feature-profile`. Tạo tệp `feature-profile.txt`, ghi một dòng, rồi add và commit.
+4. Chạy `git switch main`. Thử `git branch -d feature-profile`; đọc thông báo từ chối vì commit chưa merge.
+5. Chạy `git merge feature-profile` để nhập thay đổi vào `main`.
+6. Chạy `git branch -d feature-profile`, rồi `git branch` để xác nhận nhánh phụ đã được xóa.
 
 ---
 
 ## 💡 Hint
-Nhớ quy tắc chữ cái: `-d` là xóa an toàn (delete), `-m` là đổi tên (move/rename).
+Nếu `-d` báo nhánh chưa được merge, dừng lại và kiểm tra `git log --oneline`; đừng đổi sang `-D` để ép xóa.
 
 ---
 
 ## ✅ Validation
-- Nhánh tạm được đổi tên và sau đó xóa thành công.
-- Lệnh `git branch` xác nhận nhánh phụ đã được dọn sạch khỏi danh sách.
+- Tên nhánh được đổi từ `temp-feature` thành `feature-profile`.
+- Lần xóa trước merge bị từ chối và nhánh vẫn còn.
+- Sau merge, lệnh `git branch -d feature-profile` thành công; tệp vẫn có trên `main`.
 
 ---
 
 ## ❓ Quiz
-Trả lời các câu hỏi sau để nắm vững các kỹ thuật đổi tên và xóa nhánh an toàn trong Git.
+Trả lời các câu hỏi để phân biệt đổi tên, xóa an toàn và xóa cưỡng chế.
 
 ---
 
 ## 🔥 Challenge
-Tìm hiểu cách khôi phục lại một commit bị xóa nhầm bằng cờ `-D` thông qua việc tra cứu lịch sử đầu đọc bằng lệnh `git reflog`.
+Giải thích vì sao Git ngăn `git branch -d` xóa `feature-profile` trước merge, và điều gì thay đổi sau khi merge.
 
 ---
 
 ## 📚 Tổng kết
-- Xóa nhánh chỉ là gỡ bỏ nhãn con trỏ; các commit đã merge luôn nằm an toàn trong nhánh chính.
-- Dùng cờ `-m` để đổi tên nhánh và cờ `-d` để xóa nhánh an toàn sau khi hoàn tất công việc.
-- Thường xuyên dọn dẹp các nhánh cũ giúp kho lưu trữ luôn sạch sẽ và chuyên nghiệp.
+- `git branch -m` đổi tên nhánh mà không sửa lịch sử commit.
+- `git branch -d` kiểm tra trạng thái merge trước khi xóa.
+- Không ép xóa nhánh nếu chưa xác nhận công việc có thể bỏ.

@@ -6,6 +6,11 @@ export interface VFile {
   updatedAt: number;
 }
 
+export interface GitIgnoreMatch {
+  line: number;
+  pattern: string;
+}
+
 export class VirtualFileSystem {
   private files: Map<string, VFile> = new Map();
   private directories: Set<string> = new Set();
@@ -115,6 +120,61 @@ export class VirtualFileSystem {
     const path = this.normalizePath(rawPath);
     const file = this.files.get(path);
     return file ? file.content : null;
+  }
+
+  /** Return the last matching root .gitignore rule for a path. */
+  public getIgnoreRule(rawPath: string): GitIgnoreMatch | null {
+    const path = this.normalizePath(rawPath);
+    const ignoreFile = this.readFile('.gitignore');
+    if (!path || ignoreFile === null) return null;
+
+    const segments = path.split('/');
+    let match: GitIgnoreMatch | null = null;
+    const lines = ignoreFile.split(/\r?\n/);
+
+    for (let index = 0; index < lines.length; index++) {
+      const rawPattern = lines[index].trim();
+      if (!rawPattern || rawPattern.startsWith('#') || rawPattern.startsWith('!')) continue;
+
+      const directoryOnly = rawPattern.endsWith('/');
+      const anchored = rawPattern.startsWith('/');
+      const pattern = rawPattern.replace(/^\//, '').replace(/\/$/, '');
+      if (!pattern) continue;
+
+      const patternRegex = this.globToRegExp(pattern);
+      let matched = false;
+
+      if (anchored || pattern.includes('/')) {
+        matched = patternRegex.test(path);
+        if (!matched && directoryOnly) matched = patternRegex.test(`${path}/`);
+        if (!matched && directoryOnly) {
+          for (let i = 1; i < segments.length; i++) {
+            if (patternRegex.test(segments.slice(0, i).join('/'))) {
+              matched = true;
+              break;
+            }
+          }
+        }
+      } else {
+        const limit = directoryOnly ? segments.length - 1 : segments.length;
+        for (let i = 0; i < Math.max(limit, 1); i++) {
+          const segmentMatches = patternRegex.test(segments[i]);
+          if (segmentMatches && (!directoryOnly || i < segments.length - 1 || this.isDirectory(path))) {
+            matched = true;
+            break;
+          }
+        }
+      }
+
+      if (matched) match = { line: index + 1, pattern: rawPattern };
+    }
+
+    return match;
+  }
+
+  private globToRegExp(pattern: string): RegExp {
+    const escaped = pattern.replace(/[|\\{}()[\]^$+?.]/g, '\\$&').replace(/\*/g, '[^/]*');
+    return new RegExp(`^${escaped}$`);
   }
 
   public deleteFile(rawPath: string): boolean {

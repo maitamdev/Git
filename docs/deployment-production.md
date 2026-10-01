@@ -1,4 +1,6 @@
-# Hướng dẫn Triển khai Production — Git Academy Vietnam (Sprint 6)
+# Hướng dẫn triển khai Full Stack tùy chọn — Git Academy Vietnam
+
+> **Đối với khóa tự học public không cần đăng nhập:** không cần API, database hay Docker. Dùng [hướng dẫn deploy frontend lên Vercel](deploy-vercel.md). Tài liệu bên dưới là bản phác thảo hạ tầng LMS full stack của Sprint 6, chưa được xác nhận là quy trình production hiện hành; các lệnh, URL mẫu và placeholder phải được đối chiếu trước khi dùng.
 
 Tài liệu này cung cấp quy trình chi tiết chuẩn hóa để triển khai nền tảng Git Academy Vietnam lên môi trường Production (Ubuntu 22.04 LTS / 24.04 LTS, Docker & Docker Compose).
 

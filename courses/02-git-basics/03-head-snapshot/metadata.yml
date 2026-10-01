@@ -1,5 +1,5 @@
 id: 03-head-snapshot
-title: Repository & HEAD Snapshot
+title: Repository, commit và vị trí HEAD
 duration: 25
 xp: 70
 keywords:
@@ -13,7 +13,4 @@ prerequisites:
 objectives:
   - Nhận biết `HEAD` là vị trí hiện tại trong lịch sử Git.
   - Phân biệt tệp đang sửa với trạng thái đã lưu trong commit.
-  - Dùng `git show HEAD` để xem commit hiện tại.
-commands:
-  - git log --oneline
-  - git show HEAD
+commands: []

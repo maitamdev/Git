@@ -3,19 +3,19 @@
 ---
 
 ## 🎯 Mục tiêu
-- Hiểu rõ khái niệm và vai trò của Tag trong Git như các mốc đánh dấu phiên bản bất biến.
-- Phân biệt rõ ràng giữa con trỏ nhánh (Branch - di chuyển liên tục) và con trỏ thẻ (Tag - đứng yên vĩnh viễn).
+- Hiểu tag là tên tham chiếu tới một đối tượng Git, thường dùng để đánh dấu phiên bản.
+- Phân biệt branch thường di chuyển khi có commit mới trên đó, còn tag không tự di chuyển.
 - Tạo và quản lý các thẻ Lightweight Tag (Thẻ nhẹ) nhanh chóng.
-- Đẩy thẻ lên máy chủ từ xa và xóa thẻ khi không còn sử dụng.
+- Biết cách đẩy/xóa tag từ xa trong Git thật và phân biệt với thao tác tag cục bộ.
 
 ---
 
 ## 🧩 Từ khóa hôm nay
 
 ### Git Tag
-- **Nói dễ hiểu**: Con trỏ tĩnh bất biến dùng để đánh dấu và ghim một mốc phiên bản cụ thể trong lịch sử Git.
+- **Nói dễ hiểu**: Tên tham chiếu tới một đối tượng Git, thường dùng để đánh dấu commit phiên bản.
 - **Ví dụ**: Dùng `git tag v1.0.0` để đánh dấu commit phát hành phiên bản 1.0.0 cho khách hàng.
-- **Đừng nhầm**: Tag đứng yên mãi mãi tại commit được gắn, trong khi con trỏ nhánh (branch) tự động tiến lên mỗi khi có commit mới.
+- **Đừng nhầm**: Tag không tự tiến lên khi có commit mới, nhưng vẫn có thể bị xóa hoặc di chuyển thủ công.
 
 ### Lightweight Tag
 - **Nói dễ hiểu**: Loại thẻ đơn giản nhất trong Git, chỉ là một con trỏ trỏ trực tiếp đến mã hash của commit mà không chứa metadata riêng.
@@ -30,7 +30,7 @@
 ---
 
 ## 📖 Định nghĩa
-`git tag` là công cụ quản lý thẻ phiên bản trong Git, dùng để ghim cố định một mốc thời gian quan trọng trong lịch sử dự án, thường gắn liền với các bản phát hành như `v1.0.0` hay `v2.0.0`.
+`git tag` tạo hoặc liệt kê tên tag trỏ tới commit hay đối tượng Git khác. Tag không tự tiến theo nhánh, nhưng vẫn có thể bị xóa hoặc force-update; vì vậy đừng xem nó là bất biến về mặt kỹ thuật.
 
 ---
 
@@ -50,13 +50,13 @@ Sự khác biệt giữa Branch và Tag:
 Nhánh main: Di chuyển liên tục mỗi khi có commit mới!
 C1 ──► C2 ──► C3 ──► C4 (HEAD -> main)
         ▲
-        └── [Tag: v1.0.0] (Đứng yên vĩnh viễn tại C2!)
+        └── [Tag: v1.0.0] (không tự di chuyển; có thể được cập nhật thủ công)
 ```
 
 ---
 
 ## 🏢 Ví dụ thực tế
-Sau khi hoàn thành đợt kiểm thử cuối cùng, trưởng nhóm gõ lệnh `git tag v1.0.0` để gắn nhãn bản phát hành đầu tiên tại commit hiện tại. Sau đó nhóm chạy `git push origin v1.0.0` lên GitHub. Hệ thống tự động tạo mục Release cho phép khách hàng tải mã nguồn chuẩn xác.
+Sau khi hoàn thành đợt kiểm thử cuối cùng, trưởng nhóm gõ `git tag v1.0.0` để gắn nhãn commit hiện tại. Trong Git thật, nhóm có thể đẩy tag bằng `git push origin v1.0.0`. Tạo GitHub Release là bước riêng, có thể làm thủ công hoặc qua automation của dự án.
 
 ---
 
@@ -65,10 +65,10 @@ Sau khi hoàn thành đợt kiểm thử cuối cùng, trưởng nhóm gõ lện
 git tag
 git tag <tên-thẻ>
 git tag <tên-thẻ> <commit-hash>
-git push origin <tên-thẻ>
-git push origin --tags
 git tag -d <tên-thẻ>
 ```
+
+Trong Git thật, có thể đẩy tag cụ thể bằng `git push origin <tên-thẻ>` hoặc các tag bằng `git push origin --tags`. Simulator của khóa học chưa mô phỏng push tag.
 
 ---
 
@@ -83,7 +83,7 @@ git tag -d <tên-thẻ>
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Nghĩ rằng git push thông thường sẽ tự động đẩy tag**: Git cố tình không đẩy tag khi gõ `git push`, bạn phải đẩy tường minh bằng tên tag hoặc cờ `--tags`.
+1. **Cho rằng `git push` luôn gửi mọi tag**: Hành vi phụ thuộc cấu hình và tùy chọn; khi cần, hãy đẩy rõ tên tag hoặc dùng `--tags` theo chính sách repo.
 2. **Nhầm lẫn giữa tag và branch**: Cố gắng chuyển sang tag và commit tiếp sẽ rơi vào trạng thái Detached HEAD.
 3. **Đặt tên tag tùy tiện**: Đặt tên tag lộn xộn không tuân theo chuẩn Semantic Versioning (như `ban-moi`, `chuan-roi`) gây khó khăn cho CI/CD.
 
@@ -92,20 +92,20 @@ git tag -d <tên-thẻ>
 ## 🧪 Lab thực hành
 Bài học này là bài tự kiểm tra: bạn thao tác trực tiếp trên terminal của máy tính để làm quen với công cụ.
 1. Liệt kê các tag hiện có trong kho chứa bài tập bằng `git tag`.
-2. Tạo một thẻ phiên bản `v0.1.0` tại commit hiện tại bằng `git tag v0.1.0`.
-3. Kiểm tra lại danh sách tag để thấy `v0.1.0` xuất hiện.
-4. Thử xóa thẻ vừa tạo bằng lệnh `git tag -d v0.1.0` và kiểm tra lại danh sách.
+2. Tạo thẻ thử nghiệm `demo-v0.1` tại commit hiện tại bằng `git tag demo-v0.1`.
+3. Kiểm tra lại danh sách tag để thấy `demo-v0.1` xuất hiện.
+4. Xóa thẻ thử nghiệm bằng `git tag -d demo-v0.1` và kiểm tra lại danh sách.
 
 ---
 
 ## 💡 Hint & mẹo
-> Nhớ rằng lệnh `git push` thông thường sẽ KHÔNG tự động đẩy tag lên server, bạn phải dùng `git push origin <tên-tag>` hoặc `git push origin --tags`.
+> Push tag tường minh bằng `git push origin <tên-tag>`; tạo GitHub Release là thao tác riêng.
 
 ---
 
 ## ✅ Validation & Kết quả mong đợi
 - Tạo, kiểm tra và quản lý thành công các thẻ phiên bản bằng `git tag`.
-- Hiểu rõ sự khác biệt giữa con trỏ nhánh di động và con trỏ tag tĩnh.
+- Hiểu branch tiến theo commit mới; tag vẫn trỏ tới mục tiêu ban đầu cho đến khi ai đó thay đổi tag.
 
 ---
 
@@ -120,6 +120,6 @@ Tại sao việc gõ `git checkout v1.0.0` lại đưa con trỏ của bạn và
 ---
 
 ## 📝 Tổng kết
-- `git tag` tạo mốc tham chiếu tĩnh không bao giờ tự di chuyển.
+- `git tag` tạo mốc tham chiếu không tự di chuyển theo commit mới trên branch.
 - Thẻ nhẹ (Lightweight tag) là con trỏ trực tiếp đến commit.
 - Phải dùng lệnh push tường minh hoặc `--tags` để đưa thẻ lên GitHub.

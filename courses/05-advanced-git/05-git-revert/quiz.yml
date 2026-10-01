@@ -17,12 +17,10 @@ questions:
     explanation: "`git revert` tiến lên phía trước bằng cách sinh ra commit nghịch
       đảo chứ không hề xóa bỏ commit trong quá khứ."
   - id: q2
-    question: Tại sao `git revert` lại là phương pháp hoàn tác bắt buộc trên nhánh
-      `main` của các dự án chuyên nghiệp?
+    question: Vì sao `git revert` thường được chọn để hoàn tác trên nhánh `main` dùng chung?
     type: single
     options:
-      - text: Vì nó không viết lại lịch sử, tránh gây xung đột cho các thành viên khác
-          và phục vụ tốt việc kiểm toán mã nguồn
+      - text: Vì nó thêm commit đảo thay đổi mà không di chuyển nhánh lùi, giúp người khác đồng bộ lịch sử dễ hơn
         correct: true
       - text: Vì lệnh này chạy nhanh hơn tất cả các lệnh khác 100 lần
         correct: false
@@ -30,8 +28,7 @@ questions:
         correct: false
       - text: Vì nó tự động sửa lỗi logic của lập trình viên
         correct: false
-    explanation: Tính bảo tồn lịch sử giúp mọi thành viên kéo code về mà không bị
-      lỗi phân kỳ lịch sử do viết lại cây commit.
+    explanation: Revert giữ commit cũ và thêm commit đảo thay đổi. Nhóm vẫn cần review kết quả và xử lý xung đột nếu có.
   - id: q3
     question: Nếu commit bạn muốn revert đang bị mâu thuẫn dòng code với các commit
       mới hơn, Git sẽ xử lý thế nào?
@@ -80,4 +77,3 @@ questions:
         correct: false
     explanation: Vì merge commit có từ hai nhánh cha trở lên, cờ `-m <parent-number>`
       bắt buộc phải có để báo cho Git biết bên nào là dòng chính cần được giữ lại.
-

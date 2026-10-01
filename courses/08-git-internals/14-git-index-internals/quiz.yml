@@ -5,7 +5,7 @@ questions:
     question: "Tệp tin nào trên ổ đĩa đại diện trực tiếp cho Staging Area trong kho lưu trữ Git?"
     type: single
     options:
-      - text: ".git/index"
+      - text: "Index của repository (thường là `.git/index`)"
         correct: true
       - text: ".git/staging/"
         correct: false
@@ -13,7 +13,7 @@ questions:
         correct: false
       - text: ".git/stage.txt"
         correct: false
-    explanation: "Staging Area không phải là một thư mục, mà là một tệp nhị phân duy nhất có tên .git/index."
+    explanation: "Index thường nằm ở `.git/index`, nhưng Git directory có thể ở vị trí khác và split-index có thể lưu phần lớn mục ở tệp riêng."
   - id: q2
     question: "Lệnh Plumbing nào dùng để xem danh sách các tệp tin trong Index kèm mã mode, mã băm Blob và stage number?"
     type: single
@@ -54,10 +54,10 @@ questions:
         correct: false
     explanation: "Chữ ký nhị phân (magic signature) của tệp index trong mã nguồn Git là 4 ký tự ASCII DIRC."
   - id: q5
-    question: "Ngoài mã băm SHA-1 và đường dẫn tệp, tệp tin .git/index còn lưu thông tin gì để giúp lệnh git status chạy cực nhanh?"
+    question: "Ngoài object ID và đường dẫn, index lưu metadata nào để giúp Git kiểm tra working tree hiệu quả hơn?"
     type: single
     options:
-      - text: "Dấu thời gian sửa đổi (mtime), kích thước tệp và inode để phát hiện thay đổi tức thì"
+      - text: "Metadata như thời gian sửa, kích thước và inode để giảm số lần phải đọc nội dung tệp"
         correct: true
       - text: "Toàn bộ mã nguồn của dự án dưới dạng nén"
         correct: false
@@ -65,4 +65,4 @@ questions:
         correct: false
       - text: "Mật khẩu mã hóa của SSH key"
         correct: false
-    explanation: "Nhờ cơ chế cache các thuộc tính stat (mtime, size) của hệ điều hành trong .git/index, Git có thể so sánh siêu dữ liệu trong tích tắc mà không cần phải băm lại từng tệp tin trên đĩa."
+    explanation: "Git dùng stat cache để tăng tốc so sánh; khi metadata đổi hoặc không đáng tin cậy, Git vẫn có thể cần kiểm tra nội dung tệp."

@@ -12,15 +12,10 @@ keywords:
 prerequisites:
   - 06-git-reflog
 objectives:
-  - "Thành thạo quy trình 4 bước cứu hộ commit bị mất: Kiểm tra reflog -> Xác
-    định tọa độ -> Tạo nhánh cứu hộ -> Hợp nhất."
+  - Tìm commit trong reflog rồi tạo nhánh mới trỏ tới commit đó.
   - Khôi phục thành công một commit vừa bị xóa do câu lệnh `git reset --hard`.
-  - Hồi sinh nguyên vẹn một nhánh tính năng vừa bị lỡ tay xóa cưỡng chế bằng
-    `git branch -D`.
-  - Xây dựng tâm lý bình tĩnh, tự tin xử lý mọi sự cố mất mát mã nguồn trong dự
-    án.
+  - Hiểu reflog chỉ tìm lại commit còn được ghi nhận; nó không khôi phục file chưa commit.
 commands:
   - git reflog
   - git branch <tên-nhánh-cứu-hộ> <commit-hash>
-  - git reset --hard HEAD@{n}
-  - git checkout -b <nhánh-mới> HEAD@{n}
+  - git log --oneline

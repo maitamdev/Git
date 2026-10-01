@@ -14,11 +14,11 @@
 
 ### Deployment Environments
 - **Nói dễ hiểu**: Đối tượng quản trị trên GitHub đại diện cho hạ tầng máy chủ thực tế (Production, Staging, QA) kèm theo các chính sách bảo vệ riêng.
-- **Ví dụ**: Môi trường mang tên `production` yêu cầu hai kỹ sư trưởng xác nhận trước khi cho phép tiến hành cài đặt.
+- **Ví dụ**: Môi trường `production` yêu cầu một người trong danh sách reviewer phê duyệt Job; người duyệt và quyền bypass tùy cài đặt.
 - **Đừng nhầm**: Không phải biến môi trường dạng chuỗi (`NODE_ENV=production`); đây là thực thể quản lý quyền và secret trên GitHub.
 
 ### Required Reviewers
-- **Nói dễ hiểu**: Quy tắc bảo vệ yêu cầu ít nhất một người trong danh sách được chỉ định phê duyệt trước khi Job thực thi.
+- **Nói dễ hiểu**: Quy tắc bảo vệ yêu cầu ít nhất một người được chỉ định phê duyệt trước khi Job được gửi tới runner.
 - **Ví dụ**: Lead DevOps nhận thông báo và bấm nút "Approve and deploy" trên web thì Job deploy mới bắt đầu chạy.
 - **Đừng nhầm**: Không phải là Pull Request code review; đây là bước phê duyệt thực thi pipeline ngay trong lúc workflow đang chạy.
 
@@ -30,17 +30,17 @@
 ---
 
 ## 📖 Định nghĩa
-Deployment Environments (Môi trường triển khai) là tính năng của GitHub cho phép bạn mô hình hóa các mục tiêu triển khai thực tế như Production, Staging hay Development. Mỗi môi trường có thể được thiết lập các quy tắc bảo vệ riêng biệt (Environment Protection Rules) bao gồm: bắt buộc có sự phê duyệt thủ công từ những người chỉ định (Required Reviewers), thời gian chờ (Wait Timer), giới hạn nhánh được phép triển khai, và sở hữu kho lưu trữ Secrets/Variables riêng biệt.
+Deployment Environments mô tả mục tiêu triển khai như `production`, `staging` hoặc `development`. Mỗi môi trường có thể đặt quy tắc duyệt, thời gian chờ hoặc giới hạn nhánh/tag; tính năng cụ thể còn tùy loại repo và gói GitHub. Secrets/variables của môi trường chỉ cấp cho Job tham chiếu môi trường; secret chỉ được cấp sau khi các rule đạt.
 
 ---
 
 ## 💡 Tại sao cần
-Tự động hóa hoàn toàn là tuyệt vời, nhưng triển khai lên máy chủ sản xuất phục vụ người dùng thực tế tiềm ẩn rủi ro tài chính to lớn. Bạn không bao giờ muốn một commit vô tình được đẩy vào lúc nửa đêm tự động ghi đè lên cơ sở dữ liệu khách hàng. Cổng phê duyệt môi trường tạo ra điểm dừng kiểm soát an toàn tối thượng: pipeline tạm dừng, gửi email thông báo cho trưởng nhóm kỹ thuật, và chỉ khi họ bấm nút "Approve and deploy" thì Job mới tiếp tục chạy.
+Deploy lên production có thể ảnh hưởng dữ liệu và người dùng. Environment rules tạo điểm kiểm tra trước khi Job chạy; việc phê duyệt không thay thế quyền tối thiểu, review mã, backup, giám sát hay rollback. Job dùng self-hosted runner vẫn chạy trong hạ tầng do tổ chức quản lý, không được môi trường biến thành sandbox.
 
 ---
 
 ## 🧠 Mental Model
-Hãy hình dung chiếc chìa khóa đôi để phóng tên lửa vũ trụ trong các trung tâm chỉ huy quân sự cấp cao. Kỹ sư tự động hóa đã chuẩn bị xong toàn bộ bệ phóng, kiểm tra máy tính và nạp đầy đủ nhiên liệu cần thiết (tương đương với các bài kiểm thử unit test đã vượt qua). Nhưng để tên lửa thực sự rời bệ phóng lao lên không gian (triển khai lên production thực tế), bắt buộc phải có hai vị chỉ huy trưởng (Required Reviewers) cùng tra chiếc chìa khóa định danh, xem xét kỹ lưỡng và vặn nút phê duyệt đồng ý trên bảng điều khiển trung tâm.
+Hãy hình dung một lô hàng đã qua kiểm tra chất lượng nhưng cần nhân viên được phân quyền xác nhận trước khi xuất kho. Environment rule là bước xác nhận; ai duyệt và có cho phép bỏ qua hay không phụ thuộc vào thiết lập của tổ chức.
 
 ---
 
@@ -55,7 +55,7 @@ Quy trình dừng chờ phê duyệt môi trường (Environment Gate):
                            ▼
         ┌──────────────────────────────────────┐
         │ TRẠNG THÁI: WAITING APPROVAL         │
-        │ Gửi thông báo tới: Lead Engineer     │
+        │ Job chờ người được chỉ định duyệt    │
         └──────────────────┬───────────────────┘
                            │
                ┌───────────┴───────────┐
@@ -69,7 +69,7 @@ Quy trình dừng chờ phê duyệt môi trường (Environment Gate):
 ---
 
 ## 🏢 Ví dụ thực tế
-Một công ty fintech quản lý môi trường triển khai có tên `production`. Trong phần thiết lập môi trường, họ chỉ định 2 kỹ sư trưởng làm Required Reviewers và chỉ cho phép triển khai từ nhánh `main`. Khi một bản vá lỗi được gộp vào nhánh chính, Job biên dịch chạy hoàn tất trong 3 phút, sau đó Job triển khai chuyển sang trạng thái màu vàng: "Waiting for review". Trưởng nhóm nhận được thông báo trên điện thoại, xem xét danh sách các thay đổi và bấm nút "Approve and deploy". Ngay lập tức, máy ảo Runner được cấp phát và mã nguồn được đẩy lên hệ thống máy chủ ngân hàng an toàn.
+Ví dụ giả định: repo đã cấu hình môi trường `production`, branch/tag policy và reviewer. Job tham chiếu môi trường chờ tới khi các protection rule đạt; khi được duyệt, runner mới được cấp cho Job và secrets của môi trường mới khả dụng. Người duyệt vẫn cần kiểm tra thay đổi và mục tiêu deploy.
 
 ---
 
@@ -90,13 +90,13 @@ jobs:
       name: production
       url: https://app.example.com
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Deploy application
         env:
           PROD_API_KEY: ${{ secrets.PROD_API_KEY }}
         run: |
           echo "Triển khai an toàn lên cụm máy chủ production"
-          echo "Khóa xác thực: $PROD_API_KEY"
+          ./deploy.sh  # script dùng khóa; không in secret ra log
 ```
 
 ---
@@ -104,7 +104,7 @@ jobs:
 ## 🔍 Giải thích command
 - `environment.name: production`: Khai báo liên kết Job với môi trường `production`, kích hoạt các chính sách kiểm duyệt thủ công đã cấu hình trong Settings.
 - `environment.url: https://app.example.com`: Cung cấp liên kết ứng dụng trực tiếp trên giao diện Deployments sau khi Job chạy thành công.
-- `secrets.PROD_API_KEY`: Đọc biến bí mật thuộc phạm vi riêng của môi trường `production`, ngăn chặn các Job ở nhánh khác đọc lén.
+- `secrets.PROD_API_KEY`: Đọc secret môi trường sau khi Job tham chiếu `production` vượt qua protection rules; bản thân secret không thay thế việc kiểm tra code/deploy script.
 
 ---
 
@@ -126,13 +126,13 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
 ---
 
 ## 💡 Hint & mẹo
-> Tính năng Environment Protection Rules yêu cầu kho lưu trữ Public hoặc tài khoản GitHub Enterprise / Team đối với kho lưu trữ Private.
+> Quyền dùng Required Reviewers và Environment Secrets tùy gói/repo: tài liệu hiện tại giới hạn một số rule với repo private trên Free/Pro/Team; kiểm tra cài đặt GitHub của repo trước khi làm lab.
 
 ---
 
 ## ✅ Validation & Kết quả mong đợi
 - Workflow hiển thị trạng thái màu vàng "Waiting for review" khi đến Job deploy.
-- Sau khi bấm nút Approve, Job mới bắt đầu cấp phát runner và thực hiện các bước deploy.
+- Các protection rules phải đạt trước khi Job được gửi tới runner; Environment Secrets chỉ khả dụng sau đó.
 - Trang chủ repo hiển thị thẻ Deployments với trạng thái Active và nút "View deployment" dẫn về URL đã cấu hình.
 
 ---
@@ -148,7 +148,7 @@ Làm thế nào để kết hợp tính năng Wait Timer (thời gian chờ hoã
 ---
 
 ## 📝 Tổng kết
-- `environment` mô hình hóa các môi trường triển khai thực tế như `production`, `staging`.
-- Cung cấp cổng bảo vệ kiểm duyệt với cơ chế phê duyệt thủ công (Required Reviewers).
-- Cho phép định nghĩa các Secrets và Variables độc quyền chỉ có hiệu lực trong môi trường đó.
+- `environment` mô hình hóa mục tiêu triển khai và liên kết Job với các rule đã cấu hình.
+- Required reviewers là một rule tùy chọn; quyền duyệt và quyền bypass phụ thuộc cài đặt.
+- Environment Secrets chỉ được cấp cho Job tham chiếu môi trường sau khi protection rules đạt.
 - Gắn liên kết URL triển khai giúp đội ngũ dễ dàng kiểm tra ứng dụng trực tiếp từ giao diện GitHub.

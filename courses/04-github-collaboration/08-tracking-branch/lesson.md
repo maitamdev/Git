@@ -12,10 +12,10 @@
 
 ## 🧩 Từ khóa hôm nay
 
-### tracking branch
-- **Nói dễ hiểu**: Nhánh cục bộ được gắn liên kết trực tiếp với một nhánh tương ứng trên máy chủ từ xa.
-- **Ví dụ**: Nhánh `main` trên máy bạn được thiết lập theo dõi nhánh `origin/main` trên GitHub.
-- **Đừng nhầm**: Không phải là con trỏ nhánh trên server; nó là nhánh làm việc cục bộ có thêm thông tin định hướng.
+### upstream — nhánh được theo dõi
+- **Nói dễ hiểu**: Cấu hình liên kết một nhánh local với nhánh mà Git dùng làm mặc định cho lệnh như `status`, `pull` và `push`.
+- **Ví dụ**: Local `main` có upstream `origin/main`.
+- **Đừng nhầm**: Remote-tracking branch `origin/main` là một ref cục bộ phản ánh lần fetch gần nhất; upstream là quan hệ cấu hình của nhánh local.
 
 ### ahead commit
 - **Nói dễ hiểu**: Số lượng commit bạn đã tạo trên máy tính cá nhân nhưng chưa đẩy lên máy chủ GitHub.
@@ -30,12 +30,12 @@
 ---
 
 ## 📖 Định nghĩa
-Tracking Branch là nhánh cục bộ có mối liên kết trực tiếp một-một với một nhánh theo dõi từ xa như `origin/main`. Nhờ liên kết này, Git tự động so sánh vị trí hai bên và báo cho bạn biết bạn đang đi trước máy chủ bao nhiêu commit (ahead) hay bị tụt lại phía sau bao nhiêu commit (behind).
+Một nhánh local có thể được cấu hình để theo dõi một remote-tracking branch, thường gọi là upstream. `git status` và `git branch -vv` dùng quan hệ này để báo ahead/behind so với thông tin đã fetch gần nhất. Đây không phải phép kiểm tra trực tiếp máy chủ.
 
 ---
 
 ## 💡 Tại sao cần
-Nếu không có Tracking Branch, bạn sẽ không biết mã nguồn cục bộ đã đồng bộ lên GitHub hay chưa khi gõ `git status`. Thiết lập tracking giúp bạn thoải mái gõ `git push` hoặc `git pull` ngắn gọn mà không cần gõ kèm tên remote hay nhánh dài dòng.
+Upstream giúp lệnh `git status` so sánh hai đầu và cho phép rút gọn `git push`/`git pull`. Không có upstream, bạn vẫn có thể làm việc; chỉ cần chỉ rõ remote và nhánh khi đồng bộ.
 
 ---
 
@@ -94,20 +94,21 @@ git branch --unset-upstream
 
 ## 🧪 Lab thực hành
 Bài học này là bài tự kiểm tra: bạn thao tác tạo commit và đối chiếu thông tin so sánh nhánh.
-1. Chạy lệnh `git branch -vv` và quan sát cột hiển thị upstream trong ngoặc vuông `[origin/main]`.
-2. Tạo một commit mới và chạy `git status` để quan sát thông báo `ahead by 1 commit`.
-3. Đẩy commit lên server bằng lệnh ngắn gọn `git push`.
-4. Chạy lại `git status` để xác nhận thông báo `Your branch is up to date with 'origin/main'`.
+1. Chạy `git branch -vv`. Nếu nhánh hiện tại chưa có upstream, Git sẽ không hiển thị tên nhánh upstream trong ngoặc vuông; đó là bình thường.
+2. Nếu kho mới chưa có commit, tạo commit đầu tiên trước bằng `git add README.md` rồi `git commit -m "docs: start tracking practice"`.
+3. Tạo nhánh `tracking-practice` bằng `git switch -c tracking-practice`, sửa một dòng README, rồi add và commit.
+4. Trong simulator, tạo remote giả `git remote add tracking-demo https://example.com/training/tracking-demo.git`, sau đó chạy `git push -u tracking-demo tracking-practice`. Với GitHub thật, chỉ dùng remote của kho thử nghiệm bạn có quyền ghi.
+5. Chạy `git branch -vv`, `git status`, rồi `git push` và xem lại `git status`. Trong simulator, remote này chỉ là dữ liệu giả lập.
 
 ---
 
 ## 💡 Hint & mẹo
-> Nhớ chạy `git fetch` trước khi xem `git status` để trạng thái ahead/behind phản ánh đúng thực tế mới nhất trên server.
+> Chạy `git fetch` trước khi cần so sánh với trạng thái mới nhất mà remote cung cấp. `git status` một mình không kết nối mạng.
 
 ---
 
 ## ✅ Validation & Kết quả mong đợi
-- Lệnh `git branch -vv` hiển thị đúng nhánh remote tương ứng cho từng nhánh cục bộ.
+- Nếu upstream đã được thiết lập, `git branch -vv` hiển thị tên upstream; nếu chưa có, trường này để trống.
 - Hiểu và phân biệt chính xác ý nghĩa của các thông báo `ahead`, `behind` và `up to date`.
 
 ---

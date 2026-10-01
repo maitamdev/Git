@@ -5,7 +5,7 @@ questions:
     question: Đặc điểm nào sau đây là của GitHub-hosted Runner?
     type: single
     options:
-      - text: Mỗi Job được chạy trên một máy ảo sạch và máy ảo bị hủy ngay sau khi Job kết thúc
+      - text: Runner hosted tiêu chuẩn thường được cấp môi trường sạch; chi tiết tùy loại runner
         correct: true
       - text: Bạn phải tự mua phần cứng máy chủ và cắm dây mạng
         correct: false
@@ -13,7 +13,7 @@ questions:
         correct: false
       - text: Không hỗ trợ hệ điều hành Linux
         correct: false
-    explanation: GitHub-hosted Runners được sinh ra tức thời theo yêu cầu và bị hủy ngay lập tức để đảm bảo tính an toàn và sạch sẽ.
+    explanation: GitHub-hosted runners tiêu chuẩn thường dùng môi trường sạch cho từng Job; loại runner khác có thể có cấu hình riêng.
   - id: q2
     question: Trường hợp nào sau đây là lý do chính đáng nhất để đầu tư Self-hosted Runner?
     type: single
@@ -26,12 +26,12 @@ questions:
         correct: false
       - text: Để tránh việc phải kết nối Internet
         correct: false
-    explanation: Self-hosted Runners phù hợp khi cần tài nguyên phần cứng lớn, thời lượng chạy dài hoặc cần kết nối cơ sở dữ liệu nội bộ.
+    explanation: Self-hosted runners có thể đáp ứng GPU hoặc mạng riêng, nhưng tổ chức phải vận hành, làm sạch và bảo vệ máy đó.
   - id: q3
     question: Tại sao việc dùng Self-hosted Runner cho kho lưu trữ Public lại cực kỳ nguy hiểm?
     type: single
     options:
-      - text: Bất kỳ ai trên Internet mở PR cũng có thể chạy lệnh tùy ý trên máy chủ của bạn để đánh cắp dữ liệu hoặc đào tiền ảo
+      - text: PR chứa mã không tin cậy có thể chạy trên runner và chiếm quyền truy cập dữ liệu hoặc mạng mà máy đó được cấp
         correct: true
       - text: Làm máy chủ bị tiêu tốn quá nhiều giấy in
         correct: false
@@ -39,7 +39,7 @@ questions:
         correct: false
       - text: GitHub sẽ tự động xóa tài khoản cá nhân của bạn ngay lập tức
         correct: false
-    explanation: Mọi mã nguồn trong PR từ cộng đồng đều có thể thực thi với quyền hạn của máy chủ nội bộ, tiềm ẩn nguy cơ bảo mật nghiêm trọng.
+    explanation: Workflow từ PR không tin cậy có thể thực thi mã trên runner; GitHub khuyến nghị gần như không dùng self-hosted runner cho repo công khai.
   - id: q4
     question: Để chỉ định Job chạy trên một Self-hosted Runner do bạn tự cấu hình, cú pháp runs-on sẽ là gì?
     type: single

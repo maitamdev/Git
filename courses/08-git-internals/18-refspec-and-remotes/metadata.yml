@@ -11,13 +11,11 @@ keywords:
 prerequisites:
   - 17-packfiles-and-deltas
 objectives:
-  - "Giải mã cú pháp Refspec bí ẩn trong tệp cấu hình .git/config:
-    `+refs/heads/*:refs/remotes/origin/*`."
+  - Đọc refspec dạng `[+]<source>:<destination>` và giải thích chiều fetch/push.
   - Hiểu rõ cơ chế ánh xạ không gian tên (Namespace Mapping) giữa nhánh máy chủ
     và nhánh theo dõi cục bộ.
-  - Làm chủ quy tắc đồng bộ khi thực hiện git fetch và git push thông qua đặc tả
-    Refspec tùy biến.
+  - Thực hành fetch, push và xóa ref bằng một remote sandbox local.
 commands:
   - git config --get remote.origin.fetch
   - git fetch origin
-  - git push origin main:refs/heads/custom
+  - git fetch origin +refs/heads/main:refs/remotes/origin/main

@@ -2,7 +2,7 @@ id: quiz-05-22-advanced-git-challenge
 title: "Trắc nghiệm tổng kết: Master Advanced Git"
 questions:
   - id: q1
-    question: Bộ công cụ nào sau đây đại diện cho sức mạnh cứu hộ và kiểm soát lịch sử tối cao của Git?
+    question: Bộ công cụ nào ghép đúng từng việc đã học trong Level 5?
     type: single
     options:
       - text: Reflog (cứu hộ), Interactive Rebase (biên tập), Bisect (tìm lỗi nhị phân), Worktree (đa nhiệm)
@@ -13,9 +13,9 @@ questions:
         correct: false
       - text: Các phần mềm diệt virus trên máy tính
         correct: false
-    explanation: Bộ tứ Reflog, Interactive Rebase, Bisect và Worktree là đỉnh cao làm chủ Git của mọi kỹ sư chuyên nghiệp.
+    explanation: Reflog giúp tìm ref cũ, interactive rebase chỉnh chuỗi commit, bisect thu hẹp nơi phát sinh lỗi, còn worktree mở thư mục làm việc song song.
   - id: q2
-    question: Khi bạn cần hoàn tác một commit trên nhánh `main` chung mà không muốn làm hỏng lịch sử của đồng nghiệp, lệnh nào là lựa chọn duy nhất đúng?
+    question: Với commit đã chia sẻ trên `main`, lệnh nào thường được dùng để thêm một commit đảo thay đổi?
     type: single
     options:
       - text: git revert <commit-hash>
@@ -26,7 +26,7 @@ questions:
         correct: false
       - text: git push --force
         correct: false
-    explanation: "`git revert` tạo commit đối nghịch mới mà không viết lại lịch sử, an toàn tuyệt đối cho nhánh dùng chung."
+    explanation: "`git revert` giữ commit cũ và thêm commit đảo thay đổi. Hãy review diff và làm theo quy ước của nhóm."
   - id: q3
     question: Kỹ thuật nào giúp bạn tự động chèn bản sửa lỗi vào đúng một commit cũ sâu trong lịch sử mà không cần kéo thả thủ công?
     type: single
@@ -39,12 +39,12 @@ questions:
         correct: false
       - text: git reset --mixed
         correct: false
-    explanation: Cặp đôi `--fixup` và `--autosquash` tự động hóa hoàn toàn việc vá lỗi hồi tố vào commit cũ.
+    explanation: "`--autosquash` sắp xếp commit fixup trong todo list; hãy kiểm tra danh sách và xử lý conflict nếu có trước khi hoàn tất rebase."
   - id: q4
-    question: Sau khi hoàn thành xuất sắc toàn bộ 22 bài học của Level 5, năng lực thực chiến của bạn được nâng lên tầm cao nào?
+    question: Sau khi tìm thấy hash commit trong reflog, lệnh nào tạo nhánh cứu hộ mà không di chuyển nhánh hiện tại?
     type: single
     options:
-      - text: Làm chủ toàn bộ cỗ máy thời gian của Git, tự tin cứu hộ dữ liệu, tối ưu lịch sử và giải quyết xung đột cấp cao
+      - text: git branch rescue <commit-hash>
         correct: true
       - text: Biết cách sửa chữa phần cứng màn hình máy tính
         correct: false
@@ -52,7 +52,7 @@ questions:
         correct: false
       - text: Có thể tự động viết code mà không cần động vào bàn phím
         correct: false
-    explanation: Level 5 trang bị toàn bộ kỹ năng chuyên sâu giúp bạn trở thành chuyên gia Git cao cấp trong mọi đội ngũ kỹ thuật.
+    explanation: Lệnh này tạo ref nhánh mới trỏ tới commit đã tìm. Xác minh hash trước khi chạy và nhớ rằng reflog không khôi phục file chưa commit.
   - id: q5
     question: Khi nào bạn NÊN sử dụng `git cherry-pick` thay vì `git merge` hay `git rebase`?
     type: single

@@ -38,8 +38,7 @@ questions:
       non-fast-forward]` là gì?
     type: single
     options:
-      - text: Chạy lệnh `git pull` để lấy commit mới về máy, giải quyết xung đột nếu có,
-          rồi mới thực hiện `git push` lại
+      - text: Chạy `git fetch`, kiểm tra thay đổi remote, tích hợp theo quy trình của nhóm rồi thử push lại
         correct: true
       - text: Gõ lệnh `git push --force` ngay lập tức để đè bẹp code trên server
         correct: false
@@ -47,7 +46,7 @@ questions:
         correct: false
       - text: Tạo tài khoản GitHub mới
         correct: false
-    explanation: "Quy trình chuẩn mực: Pull về -> Merge/Rebase -> Test -> Push lại an toàn."
+    explanation: "Fetch và kiểm tra trước giúp bạn hiểu thay đổi remote rồi mới chọn cách tích hợp phù hợp."
   - id: q4
     question: Tại sao cờ tùy chọn `--force` (hoặc `-f`) trong lệnh git push lại được
       coi là cực kỳ nguy hiểm trong làm việc nhóm?
@@ -65,20 +64,18 @@ questions:
     explanation: Push force ép server xóa bỏ lịch sử hiện tại để thay thế bằng lịch
       sử máy bạn, cực kỳ nguy hiểm trên nhánh chung.
   - id: q5
-    question: Lệnh nào sau đây dùng để xóa một nhánh có tên `old-feature` trực tiếp
-      trên máy chủ từ xa GitHub?
+    question: "Bạn nên kiểm tra điều gì trước khi đẩy commit lên repository công khai?"
     type: single
     options:
-      - text: git push origin --delete old-feature
+      - text: Kiểm tra diff để chắc chắn không có token, mật khẩu hoặc thông tin nhạy cảm
         correct: true
-      - text: git remove remote old-feature
+      - text: Xóa thư mục `.git` để Git không tải nhầm file
         correct: false
-      - text: git drop origin old-feature
+      - text: Đổi tên commit thành một chuỗi ngẫu nhiên
         correct: false
-      - text: git erase cloud old-feature
+      - text: Tắt Internet để lệnh push chạy nhanh hơn
         correct: false
-    explanation: "`git push origin --delete <nhánh>` gửi chỉ thị xóa con trỏ nhánh
-      trên máy chủ từ xa."
+    explanation: "Diff giúp phát hiện dữ liệu bí mật trước khi commit được chia sẻ với người khác."
   - id: q6
     question: Nếu bạn đã cấu hình upstream tracking cho nhánh hiện tại bằng cờ `-u`,
       lệnh rút gọn nào dùng để đẩy commit lên server?

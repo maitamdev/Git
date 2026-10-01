@@ -1,8 +1,9 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "installCommand": "pnpm install --filter playground...",
+  "buildCommand": "pnpm --filter playground... build",
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api" },
-    { "source": "/((?!api/).*)", "destination": "/index.html" }
+    { "source": "/(.*)", "destination": "/index.html" }
   ],
   "headers": [
     {

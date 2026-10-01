@@ -2,74 +2,72 @@ id: quiz-02-05-git-add
 title: "Trắc nghiệm: Sử dụng lệnh git add"
 questions:
   - id: q1
-    question: Lệnh nào dưới đây đưa một tệp tin cụ thể mang tên `main.js` vào
-      Staging Area?
+    question: Bạn vừa tạo `note-a.txt` và `note-b.txt`, nhưng chỉ muốn chọn `note-a.txt`. Nên chạy lệnh nào?
     type: single
     options:
-      - text: git add main.js
+      - text: git add note-a.txt
         correct: true
-      - text: git stage-create main.js
+      - text: git add note-b.txt
         correct: false
-      - text: git push main.js
+      - text: git commit -m "add notes"
         correct: false
-      - text: git commit main.js
+      - text: git status note-a.txt
         correct: false
-    explanation: "`git add <tên-tệp>` là cú pháp chuẩn xác để đưa tệp vào Staging Area."
+    explanation: >-
+      `git add note-a.txt` chọn đúng tệp được nêu trong đường dẫn; `git status` xác nhận lựa chọn.
   - id: q2
-    question: Lệnh `git add .` thực hiện hành động gì?
+    question: Sau khi chạy `git add app.js`, tệp `app.js` có bị chuyển khỏi thư mục dự án không?
     type: single
     options:
-      - text: Thêm tất cả các tệp tin bị thay đổi hoặc tạo mới trong thư mục hiện tại
-          vào Staging Area
+      - text: Không; Git chọn nội dung để chuẩn bị commit, còn tệp vẫn ở nguyên vị trí
         correct: true
-      - text: Xóa sạch tất cả các tệp tin trong thư mục hiện tại
+      - text: Có; Git chuyển tệp vào thư mục ẩn `.git`
         correct: false
-      - text: Tải toàn bộ mã nguồn trên GitHub về thư mục hiện tại
+      - text: Có; Git gửi tệp lên GitHub rồi xóa bản trên máy
         correct: false
-      - text: Đóng cửa sổ dòng lệnh terminal ngay lập tức
+      - text: Có; Git đổi tên tệp thành `app.js.staged`
         correct: false
-    explanation: Dấu chấm `.` đại diện cho thư mục hiện tại, `git add .` thêm toàn
-      bộ thay đổi từ thư mục đó trở xuống.
+    explanation: >-
+      `git add` ghi nhận nội dung đã chọn vào vùng chuẩn bị; nó không di chuyển hay xóa tệp gốc.
   - id: q3
-    question: Cờ tùy chọn nào của git add cho phép bạn xem và chọn lọc từng khối
-      dòng code (hunk) để stage?
+    question: Bạn đã stage `app.js`, sau đó sửa tệp lần nữa. Muốn đưa phần sửa mới vào lần commit kế tiếp, cần làm gì?
     type: single
     options:
-      - text: -p (viết tắt của --patch)
+      - text: Chạy lại `git add app.js`
         correct: true
-      - text: -f (force)
+      - text: Chạy `git status`; lệnh này tự stage mọi phần sửa
         correct: false
-      - text: -d (delete)
+      - text: Chạy `git push`; lệnh này tự stage phần sửa
         correct: false
-      - text: -m (message)
+      - text: Không cần làm gì vì bản staged tự cập nhật
         correct: false
-    explanation: "`git add -p` mở chế độ tương tác patch mode cho phép duyệt và
-      stage từng khối dòng code riêng lẻ."
+    explanation: >-
+      `git add` chọn trạng thái tại thời điểm chạy; thay đổi xảy ra sau đó chưa được staged.
   - id: q4
-    question: Tại sao các kỹ sư phần mềm khuyến cáo không nên lạm dụng lệnh git add .?
+    question: Sau khi chạy `git add note.txt`, `git status` cho biết tệp nằm trong “Changes to be committed”. Điều đó có nghĩa gì?
     type: single
     options:
-      - text: Dễ vô tình đưa các tệp tin bí mật như mật khẩu, file log và tài nguyên rác
-          vào commit
+      - text: Tệp đã staged và sẽ được đưa vào commit nếu bạn tạo commit lúc này
         correct: true
-      - text: Vì lệnh này làm hỏng ổ cứng máy tính ngay lập tức
+      - text: Commit đã được tạo tự động
         correct: false
-      - text: Vì lệnh này chỉ chạy được duy nhất một lần trong đời dự án
+      - text: Tệp đã được gửi lên GitHub
         correct: false
-      - text: Vì lệnh này bị cấm bởi tổ chức tiêu chuẩn quốc tế ISO
+      - text: Git đã xóa bản tệp trong thư mục dự án
         correct: false
-    explanation: "`git add .` gom bừa toàn bộ mọi thứ, rất dễ làm rò rỉ tệp chứa
-      khóa bí mật hoặc làm loãng lịch sử."
+    explanation: >-
+      “Changes to be committed” là thay đổi trong Staging Area; bạn vẫn cần tự chạy lệnh `git commit`.
   - id: q5
-    question: Bạn chạy `git add app.js` rồi sửa tiếp `app.js`. Việc gì cần làm để đưa phần sửa mới vào commit?
+    question: Bạn chạy `git add app.js` nhưng muốn chắc chắn lựa chọn đã đúng. Nên làm gì tiếp?
     type: single
     options:
-      - text: Chạy `git add app.js` thêm lần nữa
+      - text: Chạy `git status` và kiểm tra `app.js` trong phần staged
         correct: true
-      - text: Chạy `git status` vì lệnh này tự stage mọi phần sửa
+      - text: Chạy `git push` để xem Git có nhận tệp không
         correct: false
-      - text: Chạy `git push` để Git tự stage phần sửa
+      - text: Đóng terminal rồi mở lại
         correct: false
-      - text: Không cần làm gì; Git cập nhật phần đã staged tự động
+      - text: Chạy `git init` lần nữa
         correct: false
-    explanation: "`git add` chọn trạng thái tại thời điểm chạy. Phần sửa sau đó vẫn chưa staged cho tới khi bạn add lại."
+    explanation: >-
+      `git status` báo những gì đã staged, chưa staged và chưa được theo dõi để bạn kiểm tra trước commit.

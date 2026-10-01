@@ -7,9 +7,9 @@
 
 ## 🧩 Từ khóa hôm nay
 ### runs-on
-- **Nói dễ hiểu**: Thuộc tính bắt buộc chỉ định loại hệ điều hành của máy ảo Runner mà GitHub sẽ cấp phát cho Job.
+- **Nói dễ hiểu**: Thuộc tính chọn runner theo nhãn hoặc nhóm; với Job chạy lệnh, giá trị thường là nhãn hệ điều hành hoặc `self-hosted`.
 - **Ví dụ**: Khai báo `runs-on: ubuntu-latest` để chạy Job trên môi trường Linux Ubuntu mới nhất.
-- **Đừng nhầm**: Không thể bỏ trống thuộc tính này; nếu thiếu `runs-on` workflow sẽ bị báo lỗi cú pháp ngay.
+- **Đừng nhầm**: Job chạy trực tiếp trên runner cần `runs-on`; Job gọi reusable workflow dùng `uses` ở cấp Job thay thế.
 
 ### Parallel Jobs
 - **Nói dễ hiểu**: Cơ chế mặc định của GitHub Actions chạy tất cả các Job trong cùng workflow song song cùng lúc.
@@ -17,12 +17,12 @@
 - **Đừng nhầm**: Nếu muốn các Job chạy nối tiếp tuần tự, bạn bắt buộc phải dùng thuộc tính phụ thuộc `needs`.
 
 ### Job Isolation
-- **Nói dễ hiểu**: Nguyên lý cô lập tuyệt đối; mỗi Job chạy trên một máy ảo sạch và bị hủy sau khi hoàn thành.
+- **Nói dễ hiểu**: Mỗi Job là một đơn vị thực thi riêng; GitHub-hosted thường cấp môi trường sạch, còn self-hosted có thể giữ trạng thái giữa các lần chạy.
 - **Ví dụ**: Tệp tin tải về ở Job A không tự động xuất hiện ở Job B trừ khi được chia sẻ qua Artifacts.
-- **Đừng nhầm**: Không dùng chung RAM hay ổ đĩa giữa các Job; mỗi Job là một không gian độc lập hoàn toàn.
+- **Đừng nhầm**: Không dựa vào việc hai Job dùng chung ổ đĩa; hãy truyền kết quả bằng Artifact, output hoặc cơ chế lưu trữ phù hợp.
 
 ## 📖 Định nghĩa
-Một Job là một tập hợp các bước (steps) được thực thi trên cùng một máy ảo hoặc bộ chứa container riêng biệt. Thuộc tính bắt buộc hàng đầu của mỗi Job là `runs-on`, chỉ định hệ điều hành máy ảo (như `ubuntu-latest`, `windows-latest`, `macos-latest`). Mỗi Job có mã định danh duy nhất (`job_id`), chạy độc lập và không chia sẻ bộ nhớ hay tệp tin với các Job khác.
+Một Job là tập hợp các bước được thực thi trên runner được chọn. Với Job chạy steps, `runs-on` chọn runner theo nhãn, ví dụ `ubuntu-latest` hoặc `self-hosted`; có thể chạy một số Job trong container. Job có mã định danh duy nhất (`job_id`). Không nên dựa vào việc Job khác có cùng máy hay workspace; dùng cách truyền dữ liệu rõ ràng.
 
 ## 💡 Tại sao cần
 Phân tách quy trình thành các Job riêng biệt giúp tận dụng tối đa khả năng xử lý song song, rút ngắn thời gian phản hồi của pipeline từ hàng chục phút xuống còn vài phút. Ngoài ra, việc này cho phép bạn chỉ định môi trường phù hợp cho từng loại tác vụ: chạy linter trên Linux tiết kiệm chi phí, trong khi build ứng dụng iOS chạy trên macOS.
@@ -59,8 +59,8 @@ gh run view
 
 ## ⚠️ Sai lầm phổ biến
 - Quên khai báo thuộc tính bắt buộc `runs-on` khiến GitHub từ chối biên dịch tệp workflow.
-- Sử dụng máy ảo macOS hoặc Windows cho các tác vụ đơn giản chỉ cần Linux, làm tiêu tốn gấp 2 đến 10 lần định mức phút miễn phí.
-- Đặt tên `job_id` chứa ký tự đặc biệt hoặc khoảng trắng (chỉ nên dùng chữ thường, số và dấu gạch ngang).
+- Chọn hệ điều hành không cần thiết cho tác vụ; mức phí và hạn mức thay đổi theo nền tảng, loại runner và gói dịch vụ.
+- Dùng khoảng trắng hoặc ký tự ngoài chữ/số/gạch nối/gạch dưới cho `job_id`; hãy dùng ID dễ đọc gồm chữ, số, `-` hoặc `_`.
 
 ## 🧪 Lab thực hành
 Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
@@ -82,11 +82,11 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
          - run: echo "Unit tests passed!"
    ```
 2. Đẩy file lên GitHub và theo dõi tiến trình chạy trong tab Actions.
-3. Quan sát cả hai Job khởi chạy cùng một lúc trên hai Runner độc lập và hoàn thành song song.
+3. Quan sát hai Job độc lập; chúng có thể được xếp hàng và bắt đầu gần nhau nhưng không được đảm bảo khởi chạy cùng một lúc.
 
 ## 💡 Hint & mẹo
 - Luôn ưu tiên chọn `ubuntu-latest` trừ khi dự án của bạn bắt buộc phải có môi trường Windows hoặc macOS chuyên biệt.
-- Sử dụng thuộc tính `timeout-minutes` trong mỗi Job để tránh trường hợp kịch bản bị treo ngốn hết quota phút miễn phí.
+- Dùng `timeout-minutes` để giới hạn thời gian Job chạy; mức tiêu thụ và tính phí phụ thuộc chính sách hiện hành của runner/repo.
 
 ## ✅ Validation & Kết quả mong đợi
 - Cả hai Job hiển thị tên tiếng Việt thân thiện trên bảng điều khiển giao diện web của GitHub Actions.
@@ -96,9 +96,9 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
 Hãy hoàn thành bài trắc nghiệm bên dưới để kiểm tra mức độ nắm vững cấu hình Job và thuộc tính `runs-on`.
 
 ## 🚀 Thử thách nâng cao
-Tìm hiểu tại sao GitHub tính phí số phút chạy trên macOS đắt gấp 10 lần so với Linux Ubuntu, và cách kỹ sư tối ưu hóa chi phí bằng cách chỉ chạy Job macOS khi cần thiết.
+Tra cứu bảng phí/hạn mức GitHub Actions hiện hành và so sánh các loại runner; ghi rõ gói repo và loại runner vì đơn giá thay đổi theo thời gian.
 
 ## 📝 Tổng kết
-- Mỗi Job đại diện cho một tác vụ độc lập chạy trên một máy ảo Runner được cấp phát riêng.
-- Thuộc tính `runs-on` là bắt buộc để chỉ định hệ điều hành (`ubuntu-latest`, `windows-latest`, `macos-latest`).
-- Các Job mặc định chạy song song hoàn toàn, giúp tối ưu hóa tối đa thời gian thực thi của đường ống.
+- Mỗi Job chạy trên runner đã chọn; trạng thái giữa các lần chạy phụ thuộc loại runner.
+- `runs-on` chọn runner cho Job chạy steps; có thể dùng nhãn hệ điều hành, nhóm hoặc nhãn self-hosted.
+- Các Job không có phụ thuộc có thể chạy song song, nhưng thời điểm bắt đầu còn tùy tài nguyên và giới hạn concurrency.

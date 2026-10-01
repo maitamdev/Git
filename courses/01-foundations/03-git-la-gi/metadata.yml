@@ -1,13 +1,13 @@
 id: 03-git-la-gi
-title: Git là gì? Kiến trúc phân tán
+title: Git là gì? VCS phân tán trên máy bạn
 duration: 25
 xp: 60
 keywords:
   - git la gi
-  - linus torvalds
   - dvcs
-  - lich su git
-  - dac diem
+  - repository
+  - commit
+  - offline
 prerequisites:
   - 02-vcs-types
 objectives:
@@ -16,4 +16,3 @@ objectives:
   - Nêu việc nào Git làm trên máy và việc nào cần mạng.
 commands:
   - git status
-  - git --version

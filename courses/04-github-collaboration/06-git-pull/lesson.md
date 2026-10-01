@@ -13,14 +13,14 @@
 ## 🧩 Từ khóa hôm nay
 
 ### git pull
-- **Nói dễ hiểu**: Lệnh tải mã nguồn mới từ máy chủ về và tự động gộp ngay vào nhánh bạn đang đứng.
+- **Nói dễ hiểu**: Lệnh tải thay đổi từ remote và tích hợp chúng vào nhánh hiện tại. Cách tích hợp có thể tùy cấu hình Git.
 - **Ví dụ**: `git pull origin main` để lấy toàn bộ commit mới của đồng nghiệp trên GitHub về máy.
-- **Đừng nhầm**: Không phải một lệnh nguyên tử đơn lẻ; bản chất lệnh là chạy `git fetch` rồi đến `git merge`.
+- **Đừng nhầm**: Pull gồm bước fetch rồi bước tích hợp. Mặc định thường dùng merge, nhưng cấu hình có thể chọn rebase.
 
-### git pull --rebase
-- **Nói dễ hiểu**: Chiến lược gộp code bằng cách đưa các commit riêng của bạn lên trên đỉnh các commit mới kéo về.
-- **Ví dụ**: `git pull --rebase origin main` giúp tránh sinh commit gộp rác và giữ nhánh thẳng tắp.
-- **Đừng nhầm**: Không xóa code của bạn; Git chỉ tạm thời gỡ commit cá nhân ra và đắp lại sau.
+### fetch — lấy thông tin mới từ remote
+- **Nói dễ hiểu**: Tải commit và cập nhật tham chiếu theo dõi từ remote mà chưa tích hợp vào nhánh hiện tại.
+- **Ví dụ**: `git fetch origin` cập nhật dữ liệu từ `origin`; bạn có thể xem commit mới trước khi quyết định merge hoặc rebase.
+- **Đừng nhầm**: Fetch đứng riêng không thay đổi nội dung nhánh hiện tại; `git pull` thực hiện fetch rồi thêm bước tích hợp.
 
 ### pull conflict
 - **Nói dễ hiểu**: Xung đột xảy ra khi bạn và đồng nghiệp cùng sửa trên cùng một dòng code trong cùng một file.
@@ -30,7 +30,7 @@
 ---
 
 ## 📖 Định nghĩa
-`git pull` là câu lệnh tổng hợp trong Git, kết hợp hai thao tác liên tiếp: đầu tiên thực hiện `git fetch` để tải các commit mới nhất từ máy chủ, sau đó chạy `git merge` để tự động gộp những commit đó vào nhánh hiện tại trong Working Directory.
+`git pull <remote> <nhánh>` lấy thay đổi từ nhánh đã chỉ định rồi tích hợp vào nhánh hiện tại. Git fetch trước; kiểu tích hợp phụ thuộc tùy chọn và cấu hình. Với cấu hình merge thông thường, pull dùng merge; nếu cấu hình rebase thì hành vi khác. Nếu lịch sử phân kỳ, có thể phát sinh merge commit hoặc conflict.
 
 ---
 
@@ -46,19 +46,20 @@ Nếu `git fetch` là nhân viên bưu tá đặt kiện hàng vào hòm thư tr
 
 ## 📊 Sơ đồ minh họa
 ```text
-Bản chất hai pha của câu lệnh git pull:
+Luồng thường gặp khi cấu hình dùng merge:
 ┌────────────────────────────────────────────────────────┐
 │                      git pull                          │
 │  ┌───────────────────────┐   ┌───────────────────────┐  │
-│  │ 1. git fetch origin   │ + │ 2. git merge FETCH_HEAD│  │
+│  │ 1. fetch dữ liệu       │ + │ 2. tích hợp thay đổi   │  │
 │  └───────────────────────┘   └───────────────────────┘  │
 └────────────────────────────────────────────────────────┘
+Kiểu tích hợp phụ thuộc tùy chọn và cấu hình Git.
 ```
 
 ---
 
 ## 🏢 Ví dụ thực tế
-Sáng thứ Hai, kỹ sư Hoàng mở dự án trên máy cá nhân. Nhánh main của Hoàng đang ở commit C2, trong khi đồng nghiệp đã đẩy C3, C4 lên GitHub. Hoàng chạy `git pull origin main`. Git lập tức tải C3, C4 về và tua nhanh con trỏ nhánh lên C4. Toàn bộ tính năng mới xuất hiện trong editor của Hoàng chỉ sau 2 giây mà không cần thao tác thủ công.
+Nhánh local `main` đang ở C2, remote có thêm C3. Khi nhánh local chưa có commit riêng và cấu hình cho phép fast-forward, `git pull origin main` tải C3 rồi đưa `main` lên C3. Nếu hai bên cùng có commit mới, cần tích hợp lịch sử và có thể phải xử lý conflict.
 
 ---
 
@@ -66,8 +67,6 @@ Sáng thứ Hai, kỹ sư Hoàng mở dự án trên máy cá nhân. Nhánh main
 ```bash
 git pull
 git pull origin <tên-nhánh>
-git pull --rebase
-git pull --ff-only
 ```
 
 ---
@@ -75,8 +74,6 @@ git pull --ff-only
 ## 🔍 Giải thích command
 - `git pull`: Kéo và gộp dữ liệu từ nhánh theo dõi mặc định trên remote vào nhánh hiện tại.
 - `git pull origin <nhánh>`: Chỉ định cụ thể tên remote và tên nhánh cần kéo về gộp.
-- `git pull --rebase`: Gộp code theo chiến lược rebase, đặt commit cục bộ lên đỉnh lịch sử mới tải về.
-- `git pull --ff-only`: Chỉ cho phép kéo về nếu có thể tua nhanh (Fast-forward), từ chối gộp nếu có phân kỳ lịch sử.
 
 ---
 
@@ -89,21 +86,21 @@ git pull --ff-only
 
 ## 🧪 Lab thực hành
 Bài học này là bài tự kiểm tra: bạn thao tác kéo cập nhật từ remote và kiểm tra lịch sử commit.
-1. Đứng tại nhánh `main` và kiểm tra trạng thái sạch sẽ bằng `git status`.
-2. Thực hiện câu lệnh `git pull origin main` để cập nhật mã nguồn mới nhất.
-3. Quan sát thông báo Git tự động thực hiện hai bước fetch và merge.
-4. Kiểm tra lại nhật ký lịch sử bằng `git log --oneline -n 3` để xác nhận commit mới đã tích hợp.
+1. Dùng một kho thử nghiệm có remote và nhánh `main`; chạy `git status` để kiểm tra nhánh hiện tại và thay đổi chưa commit.
+2. Chạy `git fetch origin` để cập nhật thông tin remote trước. Nếu bạn không có remote thử nghiệm, hãy dừng ở bước này thay vì chạy lệnh lên kho công việc thật.
+3. Chạy `git pull origin main`. Nếu remote không có commit mới, Git báo đã cập nhật; nếu có commit mới thì xem thông báo tích hợp.
+4. Chạy `git log --oneline -n 5` và `git status` để kiểm tra kết quả.
 
 ---
 
 ## 💡 Hint & mẹo
-> Tập thói quen chạy `git pull` vào đầu mỗi buổi làm việc trước khi bắt tay vào viết dòng code mới.
+> Trước khi pull, xem `git status` và xác nhận bạn đang ở đúng nhánh. Hãy theo cấu hình và quy trình của nhóm.
 
 ---
 
 ## ✅ Validation & Kết quả mong đợi
 - Lịch sử commit trên nhánh cục bộ bắt kịp commit mới nhất trên remote.
-- Trạng thái `git status` báo `Your branch is up to date with 'origin/main'`.
+- Nếu remote không có commit mới, nhánh không đổi. Nếu có thay đổi, lịch sử hoặc file phản ánh cách Git đã tích hợp chúng.
 
 ---
 
@@ -113,11 +110,11 @@ Hãy hoàn thành các câu hỏi trắc nghiệm dưới đây để kiểm tra
 ---
 
 ## 🚀 Thử thách nâng cao
-Cấu hình Git tự động rebase mỗi khi pull bằng lệnh `git config --global pull.rebase true` và quan sát cây lịch sử commit sau khi thực hiện.
+Đọc `git help pull` để tìm các chế độ merge/rebase và tùy chọn fast-forward. Không đổi cấu hình `--global` trên máy dùng chung hoặc trước khi hiểu tác động tới mọi kho của bạn.
 
 ---
 
 ## 📝 Tổng kết
-- `git pull` = `git fetch` (tải về) kết hợp với `git merge` (gộp vào).
-- Giúp đồng bộ mã nguồn mới nhất từ máy chủ vào thẳng Working Directory.
-- Sử dụng `--rebase` khi muốn giữ lịch sử commit dạng một đường thẳng tinh gọn.
+- `git pull` fetch thay đổi rồi tích hợp vào nhánh hiện tại.
+- Cách tích hợp phụ thuộc tùy chọn và cấu hình; có thể phát sinh conflict.
+- Kiểm tra nhánh và trạng thái trước khi pull; làm theo quy ước của nhóm.

@@ -16,4 +16,3 @@ objectives:
 commands:
   - git status
   - git add <file>
-  - git restore --staged <file>

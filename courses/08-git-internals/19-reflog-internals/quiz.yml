@@ -2,10 +2,10 @@ id: quiz-08-git-internals-19-reflog-internals
 title: "Trắc nghiệm: Cơ chế lưu trữ và phục hồi của .git/logs (Reflog Internals)"
 questions:
   - id: q1
-    question: "Dữ liệu Reflog được lưu trữ vật lý trong thư mục nào của kho lưu trữ?"
+    question: "Lệnh nào là cách thông thường để xem các lần cập nhật gần đây của HEAD?"
     type: single
     options:
-      - text: ".git/logs/"
+      - text: "git reflog"
         correct: true
       - text: ".git/history/"
         correct: false
@@ -13,12 +13,12 @@ questions:
         correct: false
       - text: ".git/backups/"
         correct: false
-    explanation: "Toàn bộ các tệp nhật ký tham chiếu được lưu trữ ngăn nắp trong thư mục .git/logs/."
+    explanation: "`git reflog` đọc reflog của HEAD; vị trí vật lý do Git directory quyết định và có thể xem bằng `git rev-parse --git-path`."
   - id: q2
     question: "Khi bạn chạy lệnh git push origin main, dữ liệu Reflog của bạn có được đẩy lên GitHub không?"
     type: single
     options:
-      - text: "Hoàn toàn không, Reflog là dữ liệu riêng tư cục bộ 100% trên máy tính của bạn"
+      - text: "Không; push không gửi các entry reflog local như một phần của lịch sử dự án"
         correct: true
       - text: "Có, toàn bộ lịch sử reflog được đồng bộ lên server"
         correct: false
@@ -26,12 +26,12 @@ questions:
         correct: false
       - text: "Chỉ đẩy lên nếu có cờ --force"
         correct: false
-    explanation: "Reflog chỉ ghi lại hành vi di chuyển con trỏ trên máy cá nhân, không thuộc về lịch sử chung của dự án nên không bao giờ được push."
+    explanation: "Push gửi object và ref theo yêu cầu; nhật ký reflog ở repository local không phải dữ liệu được push lên remote."
   - id: q3
     question: "Mỗi dòng bản ghi trong tệp .git/logs/HEAD chứa những trường thông tin chính nào?"
     type: single
     options:
-      - text: "Old SHA-1, New SHA-1, Thông tin người thực hiện, Dấu thời gian, và Lý do hành động"
+      - text: "Old object ID, new object ID, danh tính committer, dấu thời gian và message hành động"
         correct: true
       - text: "Toàn bộ nội dung các tệp tin mã nguồn"
         correct: false
@@ -41,7 +41,7 @@ questions:
         correct: false
     explanation: "Cấu trúc tệp nhật ký ghi rõ mã băm trước và sau khi di chuyển, ai làm, vào lúc nào và hành động là gì (commit, checkout, rebase v.v.)."
   - id: q4
-    question: "Thời gian lưu trữ mặc định của các mục Reflog không thể tiếp cận (unreachable) trước khi bị dọn rác là bao lâu?"
+    question: "Mặc định, Git đặt thời hạn cho reflog entry unreachable là bao lâu trước khi entry có thể hết hạn?"
     type: single
     options:
       - text: "30 ngày"
@@ -52,12 +52,12 @@ questions:
         correct: false
       - text: "Vĩnh viễn không bao giờ xóa"
         correct: false
-    explanation: "Git cấu hình mặc định thời gian hết hạn cho các mục không thể tiếp cận là 30 ngày (gc.reflogExpireUnreachable)."
+    explanation: "`gc.reflogExpireUnreachable` mặc định là 30 ngày; cấu hình có thể thay đổi và hết hạn entry không đồng nghĩa object bị xóa đúng ngày đó."
   - id: q5
     question: "Tệp tin nhật ký .git/logs/HEAD khác gì so với các tệp tin trong .git/logs/refs/heads/?"
     type: single
     options:
-      - text: ".git/logs/HEAD ghi lại mọi sự di chuyển của con trỏ HEAD (kể cả checkout giữa các nhánh), còn logs/refs/heads chỉ ghi khi nhánh đó có commit mới"
+      - text: "Reflog HEAD ghi cập nhật của HEAD; reflog một nhánh ghi cập nhật ref nhánh đó, không chỉ commit mới"
         correct: true
       - text: ".git/logs/HEAD chỉ lưu trữ lỗi hệ thống"
         correct: false
@@ -65,4 +65,4 @@ questions:
         correct: false
       - text: "Hai nơi này chứa dữ liệu hoàn toàn giống hệt nhau"
         correct: false
-    explanation: "Tệp .git/logs/HEAD là cuốn nhật ký tổng thể ghi nhận mọi bước chân của bạn trong repo, trong khi từng tệp nhánh con chỉ ghi lại các cập nhật riêng của nhánh đó."
+    explanation: "HEAD và ref nhánh là các refs riêng nên reflog của chúng có thể ghi nhận các cập nhật khác nhau; reflog phụ thuộc cấu hình và retention."

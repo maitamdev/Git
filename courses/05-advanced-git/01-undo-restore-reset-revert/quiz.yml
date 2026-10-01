@@ -14,8 +14,7 @@ questions:
         correct: false
       - text: Xóa thư mục .git trên máy chủ
         correct: false
-    explanation: "`git revert` tạo ra một commit mới đảo ngược thay đổi mà không
-      viết lại lịch sử, an toàn tuyệt đối cho nhánh dùng chung."
+    explanation: "`git revert` tạo commit mới để đảo thay đổi, nên thường phù hợp với nhánh dùng chung. Vẫn cần xem diff và xử lý conflict nếu có."
   - id: q2
     question: Lệnh nào sau đây dùng để hủy bỏ các thay đổi chưa commit của một tệp
       tin trong Working Directory kể từ Git 2.23?
@@ -77,4 +76,3 @@ questions:
         correct: false
     explanation: Reset di chuyển con trỏ nhánh lùi về quá khứ và có thể làm mất commit,
       trong khi revert tạo thêm commit mới tiến về phía trước để đảo ngược tác động.
-

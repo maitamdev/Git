@@ -3,10 +3,10 @@
 ---
 
 ## 🎯 Mục tiêu
-- Làm chủ toàn diện hệ thống ngăn kéo tạm thời với các câu lệnh nâng cao của `git stash`.
+- Dùng stash để cất thay đổi tracked; biết cách thêm file untracked bằng `-u`.
 - Phân biệt rõ ràng sự khác nhau giữa `git stash pop` (áp dụng và xóa) và `git stash apply` (áp dụng giữ lại).
-- Sử dụng các cờ quan trọng: `-u` (`--include-untracked`) và `-a` (`--all`) để lưu cả tệp mới và tệp bị bỏ qua.
-- Đặt tên mô tả tường minh cho từng mẩu stash và tạo nhánh mới trực tiếp từ một mẩu stash.
+- Đặt ghi chú bằng `-m`, áp dụng stash nhiều lần bằng `apply`, hoặc lấy ra bằng `pop`.
+- Biết `-a` còn đưa file ignored vào stash; `stash branch` là lệnh Git thật, chưa được mô phỏng trong khóa học.
 
 ---
 
@@ -15,7 +15,7 @@
 ### git stash push -u
 - **Nói dễ hiểu**: Lệnh cất toàn bộ code dở dang vào ngăn kéo bao gồm cả các file mới tạo chưa từng add vào Git.
 - **Ví dụ**: `git stash push -u -m "WIP: auth module"` để cất sạch sẽ mọi thay đổi kèm file mới.
-- **Đừng nhầm**: Mặc định `git stash` bỏ quên file mới tạo; bắt buộc phải có cờ `-u` để không sót file.
+- **Đừng nhầm**: Mặc định `git stash` không cất file untracked. Thêm `-u` nếu muốn đưa cả các file mới chưa được theo dõi vào stash.
 
 ### stash pop vs apply
 - **Nói dễ hiểu**: `pop` lấy code ra khỏi ngăn kéo và xóa luôn mục đó; `apply` lấy code ra nhưng vẫn giữ bản sao trong ngăn kéo.
@@ -30,12 +30,12 @@
 ---
 
 ## 📖 Định nghĩa
-`git stash` nâng cao là bộ công cụ quản lý ngăn kéo tạm thời chuyên sâu trong Git, cho phép bạn dọn sạch Working Directory ngay lập tức bằng cách cất giữ toàn bộ trạng thái dở dang (cả tệp đã staged, chưa staged và tệp mới untracked) vào ngăn xếp có tổ chức để tự do chuyển nhánh làm việc mà không cần tạo commit nháp.
+`git stash` cất thay đổi staged và unstaged trên file tracked để làm sạch phần công việc đó. Mặc định, file untracked không được cất; thêm `-u` để gồm file untracked, hoặc `-a` để gồm cả file ignored. Dùng `-m` để đặt lời nhắc. Nếu áp dụng stash gây conflict, Git thật thường giữ entry lại để bạn xử lý.
 
 ---
 
 ## 💡 Tại sao cần
-Khi đang viết tính năng phức tạp với code dở dang chưa thể chạy được, bạn bất ngờ nhận yêu cầu sửa lỗi khẩn cấp trên nhánh khác trong 15 phút. Bạn không thể commit code dở vì sẽ làm bẩn lịch sử, cũng không thể chuyển nhánh vì Git sẽ chặn. `git stash` nâng cao giúp bạn cất toàn bộ code vào ngăn kéo trong một giây để chuyển nhánh an toàn.
+Khi đang sửa một tính năng thì cần chuyển sang nhánh khác, bạn có thể commit tạm, dùng worktree, hoặc cất thay đổi bằng `git stash`. Stash tiện khi chưa muốn tạo commit; lưu ý file untracked cần `-u`, và khi áp dụng lại có thể phát sinh conflict.
 
 ---
 
@@ -69,8 +69,9 @@ git stash list
 git stash apply stash@{n}
 git stash pop
 git stash drop stash@{n}
-git stash branch <nhánh-mới> stash@{n}
 ```
+
+`git stash branch <nhánh-mới> stash@{n}` cũng có trong Git thật để tạo nhánh từ điểm gốc của stash rồi áp dụng stash; simulator hiện chưa hỗ trợ lệnh này. `git stash -a` và `--index` có thể dùng trong Git thật; simulator hỗ trợ `-a`, còn `--index` chỉ khôi phục staging ở trường hợp đơn giản.
 
 ---
 
@@ -85,18 +86,18 @@ git stash branch <nhánh-mới> stash@{n}
 
 ## ⚠️ Sai lầm phổ biến
 1. **Quên cờ -u khi có file mới tạo**: Khiến các tệp untracked bị bỏ sót lại trên Working Tree và gây lỗi khi chuyển nhánh.
-2. **Không đặt tên mô tả cho stash**: Khiến danh sách stash chứa hàng chục mục vô danh khó phân biệt sau vài ngày.
-3. **Quên dọn dẹp các mẩu stash cũ**: Để tồn đọng quá nhiều stash rác rưởi không còn dùng làm rối danh sách kiểm tra.
+2. **Cho rằng `pop` xóa stash dù có conflict**: Nếu Git thật không áp dụng được stash hoàn toàn, entry có thể vẫn còn; kiểm tra bằng `git stash list`.
+3. **Dùng `drop` trước khi kiểm tra**: `drop` xóa entry khỏi danh sách; hãy chắc chắn không cần nội dung đó nữa.
 
 ---
 
 ## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác cất giữ và khôi phục stash nâng cao trên terminal.
-1. Tạo một tệp mới `new-feature.txt` và chỉnh sửa một tệp có sẵn.
-2. Chạy lệnh `git stash push -u -m "demo stash untracked"` để cất toàn bộ.
-3. Gõ `git status` xác nhận Working Tree sạch sẽ.
-4. Chạy `git stash list` để xem thông điệp mô tả trong danh sách.
-5. Chạy `git stash pop` để hồi phục lại đầy đủ cả tệp mới và tệp sửa đổi.
+1. Tạo commit nền có `tracked.txt` với nội dung `base`: chạy `echo "base" > tracked.txt`, `git add tracked.txt`, `git commit -m "base"`.
+2. Đổi `tracked.txt` thành `work`, tạo `new-feature.txt`, rồi chạy `git stash push -u -m "demo stash untracked"`.
+3. Chạy `git status`: thay đổi tracked đã được cất, file mới cũng được dọn khỏi Working Tree.
+4. Chạy `git stash list` để xem lời nhắc.
+5. Chạy `git stash apply stash@{0}` rồi `git stash list`: thay đổi trở lại nhưng stash vẫn còn.
+6. Sau khi xác nhận file đúng, chạy `git stash pop stash@{0}`. Kiểm tra nội dung hai file và xác nhận entry đã bị gỡ khỏi danh sách.
 
 ---
 
@@ -107,7 +108,7 @@ Bài học này là bài tự kiểm tra: bạn thao tác cất giữ và khôi 
 
 ## ✅ Validation & Kết quả mong đợi
 - Danh sách `git stash list` hiển thị rõ thông điệp mô tả nội dung công việc.
-- Toàn bộ file sửa đổi và file mới được phục hồi đầy đủ vào Working Directory sau khi pop.
+- `-u` đã cất cả file mới; `apply` khôi phục mà vẫn giữ entry, còn `pop` khôi phục rồi gỡ entry khi áp dụng thành công.
 
 ---
 

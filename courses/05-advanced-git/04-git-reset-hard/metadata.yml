@@ -16,8 +16,7 @@ objectives:
     --hard`.
   - "Biết chính xác cơ chế đồng bộ hóa cả 3 cây: HEAD, Staging Area và Working
     Directory về commit mục tiêu."
-  - Nhận thức rõ nguy cơ mất vĩnh viễn dữ liệu chưa commit trong Working
-    Directory khi chạy lệnh này.
+  - Nhận ra thay đổi tracked chưa commit có thể bị bỏ và không được reflog lưu lại.
   - Sử dụng lệnh một cách an toàn và biết cách sao lưu tạm thời trước khi reset
     hard.
 commands:

@@ -28,10 +28,10 @@ questions:
         correct: false
     explanation: Autosquash tự động quét các tiền tố `fixup!` và `squash!` để tái cấu trúc Todo list thông minh.
   - id: q3
-    question: Lệnh cấu hình nào giúp bạn luôn luôn kích hoạt tính năng autosquash mà không cần phải gõ cờ `--autosquash` mỗi lần rebase?
+    question: Lệnh nào đặt autosquash làm mặc định cho repository hiện tại?
     type: single
     options:
-      - text: git config --global rebase.autoSquash true
+      - text: git config rebase.autoSquash true
         correct: true
       - text: git config --global git.alwaysFixup true
         correct: false
@@ -39,7 +39,7 @@ questions:
         correct: false
       - text: git enable auto-rebase
         correct: false
-    explanation: Cấu hình `rebase.autoSquash true` trong config toàn cục biến hành vi autosquash thành mặc định.
+    explanation: "`git config rebase.autoSquash true` ghi cấu hình vào repository hiện tại; bỏ `--global` để không đổi thiết lập cho mọi dự án trên máy."
   - id: q4
     question: Trường hợp sử dụng lý tưởng nhất của `git commit --fixup` trong thực tế là gì?
     type: single
@@ -52,7 +52,7 @@ questions:
         correct: false
       - text: Khi chuẩn bị tắt máy tính đi về nhà
         correct: false
-    explanation: Fixup + Autosquash là cặp đôi sửa lỗi hồi tố nhanh nhất và an toàn nhất trong Git.
+    explanation: Fixup tạo commit vá để ghép vào commit đích khi bạn kiểm tra và chạy interactive rebase.
   - id: q5
     question: Điểm khác biệt quan trọng giữa commit `--fixup` và commit `--squash` khi tự động gộp bằng autosquash là gì?
     type: single

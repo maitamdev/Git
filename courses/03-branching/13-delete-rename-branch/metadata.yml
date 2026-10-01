@@ -11,16 +11,10 @@ keywords:
 prerequisites:
   - 03-git-branch
 objectives:
-  - Nắm vững kỹ thuật dọn dẹp và bảo trì hệ thống nhánh sau khi hoàn tất tính
-    năng.
-  - Sử dụng thành thạo cú pháp đổi tên nhánh hiện tại và đổi tên nhánh bất kỳ từ
-    xa.
-  - Phân biệt rõ ràng giữa cờ an toàn `-d` và cờ cưỡng chế `-D` khi xóa nhánh.
-  - Hiểu cách xóa nhánh trên máy chủ từ xa thông qua lệnh `git push origin
-    --delete <nhánh>`.
+  - Đổi tên nhánh bằng `git branch -m`.
+  - Giải thích điều kiện để xóa an toàn bằng `git branch -d`.
+  - Nhận biết vì sao không nên bỏ qua kiểm tra an toàn của `-d`.
 commands:
-  - git branch -m <tên-mới>
   - git branch -m <tên-cũ> <tên-mới>
   - git branch -d <tên-nhánh>
-  - git branch -D <tên-nhánh>
-  - git push origin --delete <tên-nhánh>
+  - git branch

@@ -2,18 +2,18 @@ id: quiz-08-git-internals-17-packfiles-and-deltas
 title: "Trắc nghiệm: Đóng gói Packfiles và nén sai biệt Delta Compression"
 questions:
   - id: q1
-    question: "Trong cơ chế Delta Compression của Packfile, Git chọn phiên bản nào của tệp tin để lưu trữ đầy đủ làm Base Object?"
+    question: "Quy tắc nào mô tả đúng việc Git chọn base object cho delta trong một packfile?"
     type: single
     options:
-      - text: "Phiên bản mới nhất của tệp tin"
+      - text: "Không có quy tắc cố định rằng base luôn là phiên bản mới nhất hay cũ nhất"
         correct: true
       - text: "Phiên bản đầu tiên cách đây 10 năm"
         correct: false
       - text: "Một phiên bản ngẫu nhiên ở giữa"
         correct: false
-      - text: "Không phiên bản nào cả, tất cả đều là delta"
+      - text: "Mọi object trong pack đều luôn là delta"
         correct: false
-    explanation: "Git ưu tiên tốc độ truy xuất cho phiên bản mới nhất, do đó lưu bản mới nhất làm Base đầy đủ."
+    explanation: "Git có thể lưu object đầy đủ hoặc delta và chọn cách đóng gói phù hợp; người học nên đọc pack cụ thể thay vì giả định base theo tuổi phiên bản."
   - id: q2
     question: "Vai trò của tệp .idx (Index File) đi kèm với tệp .pack trong thư mục objects/pack/ là gì?"
     type: single
@@ -26,12 +26,12 @@ questions:
         correct: false
       - text: "Dùng để sao lưu dự phòng khi mất điện"
         correct: false
-    explanation: "Tệp .idx chứa bảng băm nhị phân giúp Git nhảy thẳng tới offset byte của đối tượng trong tệp .pack với độ phức tạp O(log N)."
+    explanation: "File `.idx` ánh xạ object ID tới vị trí trong pack tương ứng, nhờ đó Git tra cứu object mà không phải giải nén toàn bộ pack."
   - id: q3
-    question: "Lệnh nào sau đây dùng để kiểm tra chi tiết cấu trúc và các chuỗi delta bên trong một tệp Packfile?"
+    question: "Lệnh nào kiểm tra pack thông qua tệp index `.idx` và có thể in danh sách object cùng thông tin delta?"
     type: single
     options:
-      - text: "git verify-pack -v"
+      - text: "git verify-pack -v <pack>.idx"
         correct: true
       - text: "git check-pack"
         correct: false
@@ -39,9 +39,9 @@ questions:
         correct: false
       - text: "git inspect-bundle"
         correct: false
-    explanation: "git verify-pack là lệnh plumbing chuyên dụng để kiểm tra tính toàn vẹn và in cấu trúc chi tiết của tệp Packfile."
+    explanation: "`git verify-pack` nhận một hay nhiều file `.idx`; cờ `-v` yêu cầu in các object và thông tin delta của pack tương ứng."
   - id: q4
-    question: "Khi các đối tượng được đóng gói từ dạng rời rạc (Loose) vào tệp Packfile, mã băm SHA-1 của chúng có bị thay đổi không?"
+    question: "Khi object được đóng gói từ dạng loose vào packfile, object ID của nó có đổi không?"
     type: single
     options:
       - text: "Hoàn toàn không thay đổi"
@@ -52,7 +52,7 @@ questions:
         correct: false
       - text: "Tùy thuộc vào hệ điều hành"
         correct: false
-    explanation: "Mã băm SHA-1 là định danh nội dung bất biến; vị trí lưu trữ trên đĩa (loose hay packed) không bao giờ làm thay đổi mã băm."
+    explanation: "Object ID được tính từ nội dung object logic nên cách lưu loose hay packed không làm đổi ID; thuật toán hash tùy repository."
   - id: q5
     question: "Lệnh nào sau đây chủ động kích hoạt quy trình tối ưu hóa và đóng gói các Loose Objects vào Packfiles?"
     type: single
@@ -65,4 +65,4 @@ questions:
         correct: false
       - text: "git pack-force"
         correct: false
-    explanation: "Lệnh git gc (Garbage Collection) tự động dọn rác các đối tượng không tiếp cận được và đóng gói hàng ngàn loose objects rời rạc thành packfiles nhỏ gọn."
+    explanation: "`git gc` chạy các tác vụ bảo trì như đóng gói và dọn dữ liệu hết hạn; nó có thể làm thay đổi repository và không bảo đảm mọi loose object sẽ thành pack ngay."

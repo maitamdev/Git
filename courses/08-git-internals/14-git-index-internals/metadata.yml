@@ -12,11 +12,11 @@ prerequisites:
   - 13-symbolic-refs-head
 objectives:
   - Giải phẫu cấu trúc nhị phân của tệp .git/index (DIRC - Directory Cache).
-  - "Hiểu rõ các trường dữ liệu được lưu cho mỗi tệp: ctime, mtime, file size,
-    permissions, SHA-1, và đường dẫn tệp."
+  - "Nhận biết metadata, mode, object ID, stage và đường dẫn trong mục index;
+    độ dài object ID phụ thuộc định dạng hash của repository."
   - Sử dụng lệnh plumbing git ls-files --stage để xem bảng thông tin Staging
     Area nội bộ.
 commands:
   - git ls-files --stage
   - git status --porcelain=v2
-  - git update-index
+  - git rev-parse --git-path index

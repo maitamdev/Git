@@ -63,7 +63,6 @@ Bạn sửa `auth.js` và `style.css`, nhưng chỉ hoàn tất `auth.js`. Chạ
 ```bash
 git status
 git add <file>
-git restore --staged <file>
 ```
 
 ---
@@ -71,7 +70,6 @@ git restore --staged <file>
 ## 🔍 Giải thích command
 - `git status`: Kiểm tra tệp đã staged và thay đổi chưa staged.
 - `git add <file>`: Đưa nội dung hiện tại của tệp tin từ Working Directory vào Staging Area.
-- `git restore --staged <file>`: Rút tệp tin ra khỏi Staging Area trở lại Working Directory mà không làm mất nội dung code.
 
 ---
 
@@ -79,6 +77,8 @@ git restore --staged <file>
 1. **Nghĩ `git add` đã tạo commit**:  Lệnh này chỉ chọn thay đổi; cần `git commit` để lưu mốc.
 2. **Sửa tệp sau khi đã add mà không kiểm tra lại**:  Phần sửa mới chưa được staged cho tới khi bạn add lại.
 3. **Không xem lại những gì đã chọn**:  Chạy `git status` trước khi commit.
+
+> Bài này chỉ học cách đưa thay đổi vào Staging Area. Cách bỏ một thay đổi khỏi vùng này sẽ học ở bài hoàn tác, sau khi đã hiểu commit đầu tiên.
 
 ---
 

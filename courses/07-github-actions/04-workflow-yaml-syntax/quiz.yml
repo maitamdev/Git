@@ -31,7 +31,7 @@ questions:
     question: Quy ước số lượng dấu cách (Spaces) tiêu chuẩn cho mỗi cấp độ thụt lề trong YAML là bao nhiêu?
     type: single
     options:
-      - text: 2 dấu cách (2 spaces)
+      - text: Không có số bắt buộc; 2 dấu cách mỗi cấp là quy ước phổ biến
         correct: true
       - text: 1 dấu cách
         correct: false
@@ -39,7 +39,7 @@ questions:
         correct: false
       - text: 8 dấu cách
         correct: false
-    explanation: Quy ước chuẩn của GitHub Actions và cộng đồng phát triển phần mềm là sử dụng đúng 2 dấu cách cho mỗi tầng thụt lề.
+    explanation: YAML yêu cầu cấu trúc thụt lề nhất quán bằng spaces; hai dấu cách mỗi cấp là quy ước dễ đọc, không phải luật bắt buộc.
   - id: q4
     question: Phần mở rộng nào sau đây là hợp lệ cho một tệp workflow GitHub Actions?
     type: single

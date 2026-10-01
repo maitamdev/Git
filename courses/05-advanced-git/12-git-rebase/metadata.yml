@@ -13,14 +13,11 @@ prerequisites:
 objectives:
   - Thực thi thành thạo câu lệnh `git rebase <upstream>` để đồng bộ nhánh tính
     năng với nhánh chính.
-  - 'Khắc cốt ghi tâm "Quy tắc vàng của Rebase" (The Golden Rule of Rebasing):
-    Không bao giờ rebase trên nhánh công khai.'
-  - Hiểu rõ quy trình xử lý khi cần cập nhật nhánh sau khi đã rebase bằng `git
-    push --force-with-lease`.
+  - Nhận biết rủi ro khi viết lại commit mà người khác đã dùng làm cơ sở.
+  - Biết `--force-with-lease` giảm rủi ro cập nhật nhầm remote nhưng vẫn cần kiểm tra và phối hợp.
   - Định hình thói quen giữ lịch sử dự án luôn tinh gọn trước khi tạo Pull
     Request.
 commands:
   - git fetch origin
   - git rebase origin/main
-  - git push --force-with-lease origin <tên-nhánh>
   - git rebase --abort

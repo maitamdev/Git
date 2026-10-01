@@ -17,6 +17,28 @@ export class DiffCommand implements GitCommand {
       };
     }
 
+    const rangeArg = args.find((arg) => arg.includes('..'));
+    if (rangeArg) {
+      const [leftRef, rightRef] = rangeArg.split('..', 2);
+      const leftHash = ctx.stateManager.resolveRef(leftRef);
+      const rightHash = ctx.stateManager.resolveRef(rightRef);
+      const leftCommit = leftHash ? ctx.stateManager.getCommit(leftHash) : null;
+      const rightCommit = rightHash ? ctx.stateManager.getCommit(rightHash) : null;
+      if (!leftCommit || !rightCommit) {
+        return { stdout: '', stderr: `fatal: invalid revision range '${rangeArg}'`, exitCode: 128 };
+      }
+
+      const paths = new Set([...Object.keys(leftCommit.tree), ...Object.keys(rightCommit.tree)]);
+      const outputs: string[] = [];
+      for (const path of [...paths].sort()) {
+        const before = leftCommit.tree[path];
+        const after = rightCommit.tree[path];
+        if (before === after) continue;
+        outputs.push(this.formatDiff(path, before || '', after || '', before === undefined, after === undefined));
+      }
+      return { stdout: outputs.join('\n\n'), stderr: '', exitCode: 0 };
+    }
+
     const isStaged = Boolean(flags['staged'] || flags['cached']);
     const headTree = ctx.stateManager.getHeadTree();
     const stagingMap = new Map<string, string>();

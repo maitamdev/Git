@@ -6,7 +6,7 @@ questions:
       commit khi bạn chạy `git reset --hard`?
     type: single
     options:
-      - text: Chúng bị ghi đè và xóa sổ vĩnh viễn, hoàn toàn không thể khôi phục lại
+      - text: Git không lưu bản sao của các chỉnh sửa bị ghi đè; hãy xem chúng là mất nếu chưa sao lưu
         correct: true
       - text: Chúng được tự động lưu vào thùng rác Recycle Bin của hệ điều hành
         correct: false
@@ -14,8 +14,7 @@ questions:
         correct: false
       - text: Chúng tự động được gửi lên máy chủ GitHub
         correct: false
-    explanation: Git chỉ bảo vệ các dữ liệu đã từng được commit; những thay đổi chưa
-      commit sẽ bị reset hard ghi đè vĩnh viễn.
+    explanation: "`reset --hard` đặt các tệp được theo dõi về snapshot đích. Git không lưu bản sao của phần chưa commit; tệp không được theo dõi thường vẫn còn, trừ khi cản trở việc cập nhật."
   - id: q2
     question: Lệnh nào sau đây giúp bạn hủy bỏ toàn bộ chỉnh sửa chưa commit và đưa
       Working Tree về trạng thái sạch sẽ của HEAD?
@@ -52,8 +51,7 @@ questions:
       hard đối với Working Directory:"
     type: single
     options:
-      - text: soft và mixed giữ nguyên Working Directory, còn hard ghi đè và xóa sạch
-          Working Directory
+      - text: soft và mixed không cập nhật Working Tree; hard đặt các tệp được theo dõi về snapshot đích
         correct: true
       - text: Cả 3 cờ đều xóa sạch Working Directory như nhau
         correct: false
@@ -61,8 +59,7 @@ questions:
         correct: false
       - text: Không có cờ nào chạm vào Working Directory
         correct: false
-    explanation: Chỉ có `--hard` là ghi đè lên Working Directory, hai chế độ
-      `--soft` và `--mixed` hoàn toàn bảo tồn Working Tree.
+    explanation: "`--soft` và `--mixed` không cập nhật Working Tree. `--hard` cập nhật các tệp được theo dõi về snapshot đích và có thể ghi đè file không theo dõi nếu chúng cản trở."
   - id: q5
     question: Nếu lỡ chạy `git reset --hard HEAD~1` và mất một commit vừa tạo, công cụ
       nào của Git có thể cứu bạn tìm lại commit đó?
@@ -76,6 +73,4 @@ questions:
         correct: false
       - text: Không thể cứu được vì reset hard xóa vĩnh viễn khỏi ổ cứng
         correct: false
-    explanation: Đối với commit đã từng được lưu, `git reflog` vẫn lưu vết SHA hash
-      trong ít nhất 30-90 ngày, giúp bạn khôi phục lại dễ dàng.
-
+    explanation: Nếu commit còn trong reflog và object chưa bị dọn, bạn có thể tạo ref mới trỏ tới nó. Thời hạn mặc định thường là 90 ngày với ref còn truy cập được và 30 ngày với ref không còn truy cập được; cấu hình có thể đổi.

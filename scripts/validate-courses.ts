@@ -46,6 +46,31 @@ export function detectPrerequisiteCycles(graph: Map<string, string[]>): string[]
   return null;
 }
 
+const REQUIRED_LESSON_SECTIONS: Array<{ label: string; pattern: RegExp }> = [
+  { label: 'Mục tiêu', pattern: /^##[ \t]+[^\r\n]*Mục tiêu[^\r\n]*$/im },
+  { label: 'Từ khóa hôm nay', pattern: /^##[ \t]+[^\r\n]*Từ khóa hôm nay[^\r\n]*$/im },
+  { label: 'Định nghĩa', pattern: /^##[ \t]+[^\r\n]*Định nghĩa[^\r\n]*$/im },
+  { label: 'Tại sao cần', pattern: /^##[ \t]+[^\r\n]*Tại sao cần[^\r\n]*$/im },
+  { label: 'Mental Model', pattern: /^##[ \t]+[^\r\n]*Mental[^\r\n]*$/im },
+  { label: 'Sơ đồ', pattern: /^##[ \t]+[^\r\n]*Sơ đồ[^\r\n]*$/im },
+  { label: 'Ví dụ', pattern: /^##[ \t]+[^\r\n]*Ví dụ[^\r\n]*$/im },
+  { label: 'Command', pattern: /^##[ \t]+[^\r\n]*Command[^\r\n]*$/im },
+  { label: 'Giải thích', pattern: /^##[ \t]+[^\r\n]*Giải thích[^\r\n]*$/im },
+  { label: 'Sai lầm', pattern: /^##[ \t]+[^\r\n]*Sai lầm[^\r\n]*$/im },
+  { label: 'Lab', pattern: /^##[ \t]+[^\r\n]*Lab[^\r\n]*$/im },
+  { label: 'Hint', pattern: /^##[ \t]+[^\r\n]*Hint[^\r\n]*$/im },
+  { label: 'Validation', pattern: /^##[ \t]+[^\r\n]*Validation[^\r\n]*$/im },
+  { label: 'Quiz', pattern: /^##[ \t]+[^\r\n]*Quiz[^\r\n]*$/im },
+  { label: 'Thử thách / Challenge', pattern: /^##[ \t]+[^\r\n]*(?:Thử thách|Challenge)[^\r\n]*$/im },
+  { label: 'Tổng kết', pattern: /^##[ \t]+[^\r\n]*Tổng kết[^\r\n]*$/im },
+];
+
+export function findMissingLessonSections(content: string): string[] {
+  return REQUIRED_LESSON_SECTIONS
+    .filter(({ pattern }) => !pattern.test(content))
+    .map(({ label }) => label);
+}
+
 export function validateCourses(): void {
   console.log('🔍 [Git Academy] Bắt đầu kiểm tra tính hợp lệ của toàn bộ khoá học...\n');
 
@@ -144,33 +169,13 @@ export function validateCourses(): void {
         }
       }
 
-      // Check 15 standard sections in lesson.md
+      // Check the required instructional sections, accepting the Vietnamese headings used by the course.
       const lessonMdPath = path.join(lessonDir, 'lesson.md');
       if (fs.existsSync(lessonMdPath)) {
         const content = fs.readFileSync(lessonMdPath, 'utf-8');
-        const requiredSections = [
-          'Mục tiêu',
-          'Định nghĩa',
-          'Tại sao cần',
-          'Mental',
-          'Sơ đồ',
-          'Ví dụ',
-          'Command',
-          'Giải thích',
-          'Sai lầm',
-          'Lab',
-          'Hint',
-          'Validation',
-          'Quiz',
-          'Challenge',
-          'Tổng kết',
-        ];
-
-        for (const section of requiredSections) {
-          if (!content.includes(section)) {
-            summary.errors.push(`lesson.md trong ${lessonDir} thiếu mục bắt buộc: "${section}"`);
-            lessonValid = false;
-          }
+        for (const section of findMissingLessonSections(content)) {
+          summary.errors.push(`lesson.md trong ${lessonDir} thiếu mục bắt buộc: "${section}"`);
+          lessonValid = false;
         }
       }
 

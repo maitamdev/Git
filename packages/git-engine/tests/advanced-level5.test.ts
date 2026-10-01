@@ -317,6 +317,12 @@ describe('Level 5 Advanced Git Engine Commands (Parts 6 - 11)', () => {
       const tagObj = engine.getContext().stateManager.getTag('v1.1.0');
       expect(tagObj?.annotated).toBe(true);
       expect(tagObj?.message).toBe('Release version 1.1.0 with bugfixes');
+
+      const annotatedShow = engine.execute('git show v1.1.0');
+      const lightweightShow = engine.execute('git show v1.0.0');
+      expect(annotatedShow.stdout).toContain('Tagger:');
+      expect(annotatedShow.stdout).toContain('Release version 1.1.0 with bugfixes');
+      expect(lightweightShow.stdout).not.toContain('Tagger:');
     });
 
     it('deletes an existing tag with git tag -d', () => {

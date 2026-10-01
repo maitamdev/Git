@@ -2,14 +2,14 @@
 
 ## 🎯 Mục tiêu
 - Nắm vững vị trí bắt buộc của tệp workflow: thư mục `.github/workflows/` với phần mở rộng `.yml` hoặc `.yaml`.
-- Làm chủ các quy tắc định dạng YAML: thụt lề bằng 2 dấu cách, danh sách gạch đầu dòng, cặp key-value.
+- Làm chủ cấu trúc YAML: thụt lề bằng dấu cách, danh sách gạch đầu dòng và cặp khóa-giá trị; dùng nhất quán 2 dấu cách theo quy ước.
 - Nhận biết và khắc phục các lỗi cú pháp thụt lề YAML phổ biến làm workflow bị từ chối biên dịch.
 
 ## 🧩 Từ khóa hôm nay
 ### YAML Indentation
-- **Nói dễ hiểu**: Quy tắc bắt buộc dùng dấu cách Space để thụt đầu dòng thể hiện quan hệ cha con giữa các khối dữ liệu.
+- **Nói dễ hiểu**: Dùng dấu cách để thụt đầu dòng và thể hiện quan hệ cha con giữa các khối dữ liệu.
 - **Ví dụ**: Dùng đúng 2 dấu cách cho mỗi cấp độ phân cấp; `steps` thụt vào 4 khoảng trắng dưới `jobs`.
-- **Đừng nhầm**: Nghiêm cấm dùng phím Tab; dùng Tab sẽ khiến trình phân tích YAML báo lỗi ngay lập tức.
+- **Đừng nhầm**: Tab không được dùng để thụt lề YAML; trong editor, phím Tab có thể tự chèn dấu cách nếu bật tùy chọn phù hợp.
 
 ### .github/workflows
 - **Nói dễ hiểu**: Thư mục quy ước duy nhất nơi GitHub tự động quét tìm và kích hoạt các tệp kịch bản Actions.
@@ -19,13 +19,13 @@
 ### Key-Value Mapping
 - **Nói dễ hiểu**: Cặp khóa - giá trị phân tách bởi dấu hai chấm và khoảng trắng biểu diễn dữ liệu trong YAML.
 - **Ví dụ**: Cặp `runs-on: ubuntu-latest` gán giá trị hệ điều hành cho thuộc tính của Job.
-- **Đừng nhầm**: Bắt buộc phải có một khoảng trắng sau dấu hai chấm (`name: Build` chứ không được viết liền `name:Build`).
+- **Đừng nhầm**: Trong cặp khóa-giá trị phải có dấu cách sau dấu hai chấm (`name: Build`); `name:Build` không được phân tích thành khóa `name` với giá trị `Build`.
 
 ## 📖 Định nghĩa
 Trong GitHub Actions, toàn bộ kịch bản tự động hóa bắt buộc phải được lưu trữ dưới dạng các tệp văn bản YAML nằm chính xác tại thư mục `.github/workflows/` trong nhánh của kho lưu trữ. Cú pháp YAML dựa trên thụt lề khoảng trắng nghiêm ngặt để biểu diễn phân cấp giữa workflow, job, step và các tham số cấu hình.
 
 ## 💡 Tại sao cần
-Hơn 80% sự cố ban đầu của kỹ sư mới làm quen với GitHub Actions bắt nguồn từ việc vi phạm cú pháp YAML: dùng phím Tab thay vì dấu cách Space, thụt dòng sai cấp độ giữa steps và jobs, hoặc viết sai đường dẫn thư mục. Nắm vững cú pháp YAML chuẩn giúp bạn viết kịch bản sạch sẽ, dễ bảo trì và loại bỏ lỗi ngớ ngẩn.
+Lỗi YAML thường đến từ thụt lề sai, dùng Tab để thụt lề hoặc đặt khóa sai cấp. Học cách đọc cấu trúc từng tầng giúp bạn phát hiện lỗi trước khi GitHub chạy workflow.
 
 ## 🧠 Mental Model
 Hãy hình dung tệp YAML như sơ đồ tổ chức phòng ban của công ty. Mỗi cấp bậc quản lý được biểu diễn bằng khoảng thụt lề 2 bước chân (2 spaces). Nếu một nhân viên thực thi (`step`) đứng ngang hàng với trưởng phòng (`job`), toàn bộ trật tự quản lý sẽ bị xáo trộn và hệ thống quét tự động sẽ từ chối phê duyệt ngay.
@@ -60,7 +60,7 @@ yamllint .github/workflows/ci.yml
 - `yamllint`: Kiểm tra tính hợp lệ về thụt lề và quy tắc định dạng của tệp trước khi đẩy lên máy chủ.
 
 ## ⚠️ Sai lầm phổ biến
-- Dùng phím Tab thay vì dấu cách Space để thụt lề (YAML cấm tuyệt đối ký tự Tab).
+- Dùng Tab để thụt lề (YAML không cho phép Tab làm ký tự thụt lề; editor có thể cấu hình phím Tab để chèn spaces).
 - Đặt tệp sai đường dẫn như `.github/workflow/` (thiếu chữ s) khiến GitHub hoàn toàn bỏ qua kịch bản.
 - Viết sai phần mở rộng tệp thành `.json` hoặc `.txt` thay vì `.yml` hoặc `.yaml`.
 
@@ -82,7 +82,7 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
 4. Đẩy commit lên GitHub và vào tab Actions để quan sát workflow đầu tiên được thực thi.
 
 ## 💡 Hint & mẹo
-- Trong trình soạn thảo VS Code, bạn nên cài đặt `"editor.tabSize": 2` và `"editor.insertSpaces": true` để khi gõ phím Tab hệ thống tự động đổi thành 2 dấu cách.
+- Trong trình soạn thảo, bật tùy chọn chèn spaces và chọn độ rộng thụt lề nhất quán; 2 spaces là quy ước phổ biến.
 - Cài tiện ích mở rộng GitHub Actions trên VS Code để được gợi ý cú pháp và bắt lỗi YAML ngay khi gõ.
 
 ## ✅ Validation & Kết quả mong đợi
@@ -97,5 +97,5 @@ Giải thích tại sao định dạng YAML lại được chọn cho GitHub Act
 
 ## 📝 Tổng kết
 - Tệp workflow bắt buộc phải đặt tại `.github/workflows/` với phần mở rộng `.yml` hoặc `.yaml`.
-- Luôn sử dụng 2 dấu cách Space cho mỗi cấp độ thụt lề và không bao giờ dùng phím Tab.
+- Dùng spaces thay cho Tab để thụt lề; 2 spaces mỗi cấp là quy ước dễ đọc, không phải yêu cầu cú pháp duy nhất.
 - Cú pháp YAML phân cấp rõ ràng giúp kịch bản tự động hóa dễ đọc và dễ bảo trì.

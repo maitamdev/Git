@@ -2,7 +2,7 @@ id: quiz-06-11-semantic-versioning
 title: "Trắc nghiệm: Semantic Versioning"
 questions:
   - id: q1
-    question: Khi bạn chỉ thực hiện sửa lỗi mã nguồn mà không thêm tính năng mới và không làm hỏng tương thích ngược thì con số nào tăng lên?
+    question: Với thư viện đang ở phiên bản ổn định `1.0.0` trở lên, sửa một lỗi tương thích ngược thì tăng thành phần nào?
     type: single
     options:
       - text: PATCH (ví dụ từ 1.0.0 lên 1.0.1)
@@ -13,9 +13,9 @@ questions:
         correct: false
       - text: Không được tăng số nào cả
         correct: false
-    explanation: Chỉ số PATCH dành riêng cho các bản vá lỗi (bug fixes) bảo đảm an toàn và tương thích tuyệt đối cho người dùng.
+    explanation: SemVer quy định PATCH cho bản phát hành sửa lỗi tương thích ngược; điều này không bảo đảm bản phát hành không còn lỗi.
   - id: q2
-    question: Khi một thư viện xóa bỏ hoàn toàn một hàm công khai mà khách hàng đang sử dụng, thư viện đó BẮT BUỘC phải tăng con số nào?
+    question: Với thư viện từ phiên bản `1.0.0` trở lên, nếu xóa một hàm thuộc public API đã công bố thì theo SemVer cần tăng thành phần nào?
     type: single
     options:
       - text: MAJOR vì đây là thay đổi phá vỡ tính tương thích ngược (Breaking Change)
@@ -26,7 +26,7 @@ questions:
         correct: false
       - text: Giữ nguyên phiên bản cũ
         correct: false
-    explanation: Bất kỳ thay đổi nào khiến mã nguồn của người dùng hiện tại bị lỗi khi nâng cấp đều bắt buộc phải tăng MAJOR theo chuẩn SemVer.
+    explanation: Từ `1.0.0`, thay đổi public API không tương thích ngược cần tăng MAJOR; trước `1.0.0`, SemVer chưa cam kết API ổn định.
   - id: q3
     question: Sau khi tăng chỉ số MINOR từ phiên bản `1.4.3`, số phiên bản mới chính xác sẽ là gì?
     type: single
@@ -39,7 +39,7 @@ questions:
         correct: false
       - text: 1.4.4
         correct: false
-    explanation: Theo đặc tả SemVer, khi một con số ở bậc cao hơn tăng lên, tất cả các con số ở bậc thấp hơn phía sau nó bắt buộc phải được reset về số 0.
+    explanation: Khi tăng MINOR, PATCH trở về 0; vì vậy mức MINOR kế tiếp sau `1.4.3` là `1.5.0`.
   - id: q4
     question: Các phiên bản có số MAJOR bằng 0 (ví dụ `0.3.2`) mang ý nghĩa quy ước gì trong SemVer?
     type: single
@@ -52,7 +52,7 @@ questions:
         correct: false
       - text: Phần mềm chỉ chạy được trên hệ điều hành 32-bit
         correct: false
-    explanation: Giai đoạn `0.x.x` dành cho các sản phẩm sơ khai đang hoàn thiện kiến trúc, không ràng buộc bởi quy tắc tương thích nghiêm ngặt của phiên bản ổn định 1.0.0.
+    explanation: SemVer gọi `0.y.z` là giai đoạn phát triển ban đầu và API chưa được xem là ổn định; nhà phát hành vẫn nên ghi rõ thay đổi.
   - id: q5
     question: Hậu tố pre-release như `-alpha`, `-beta`, hoặc `-rc.1` trong định dạng SemVer mang ý nghĩa quy ước gì?
     type: single
@@ -66,3 +66,16 @@ questions:
       - text: Đánh dấu phần mềm chứa mã độc cần bị cách ly khẩn cấp
         correct: false
     explanation: Hậu tố pre-release như 1.0.0-rc.1 biểu thị bản phát hành thử nghiệm cho cộng đồng kiểm thử trước khi phát hành phiên bản chính thức 1.0.0.
+  - id: q6
+    question: Theo SemVer, thông tin sau dấu `+` như `1.2.3+build.17` có tác dụng gì khi so sánh độ ưu tiên phiên bản?
+    type: single
+    options:
+      - text: Ghi metadata bản dựng; phần này không ảnh hưởng thứ tự ưu tiên SemVer
+        correct: true
+      - text: Tăng PATCH lên `1.2.4`
+        correct: false
+      - text: Làm bản phát hành có độ ưu tiên thấp hơn như pre-release
+        correct: false
+      - text: Thay thế thành phần MAJOR
+        correct: false
+    explanation: Build metadata có thể ghi số build hoặc mã pipeline; SemVer bỏ qua phần này khi so sánh độ ưu tiên.

@@ -15,9 +15,8 @@ objectives:
     hiện tại của bạn trong Git.
   - "Hiểu rõ khái niệm Tham chiếu biểu tượng (Symbolic Reference): HEAD trỏ tới
     một nhánh chứ không trỏ thẳng vào commit."
-  - "Giải mã tường tận hiện tượng Detached HEAD dưới góc nhìn nhị phân: khi HEAD
-    trỏ trực tiếp vào commit SHA-1."
+  - Giải thích Detached HEAD khi HEAD trỏ trực tiếp tới object ID của commit.
 commands:
-  - cat .git/HEAD
+  - git rev-parse --git-path HEAD
   - git symbolic-ref HEAD
   - git checkout --detach HEAD

@@ -18,7 +18,7 @@ questions:
     question: Điều gì xảy ra với các Step phía sau nếu một Step bị lỗi (exit code khác 0)?
     type: single
     options:
-      - text: Mặc định toàn bộ các Step phía sau sẽ bị hủy bỏ (skipped) và Job báo thất bại
+      - text: Mặc định các Step sau bị bỏ qua và Job thất bại, trừ khi điều kiện hoặc continue-on-error thay đổi hành vi
         correct: true
       - text: Hệ thống tự động khởi động lại máy tính của lập trình viên
         correct: false
@@ -26,7 +26,7 @@ questions:
         correct: false
       - text: Toàn bộ kho lưu trữ GitHub bị khóa tạm thời
         correct: false
-    explanation: "GitHub Actions có cơ chế Fail-fast: khi một bước bị lỗi, các bước sau sẽ không được chạy để tránh hậu quả sai lệch."
+    explanation: Mặc định các step sau chỉ chạy khi trước đó thành công; điều kiện trạng thái hoặc continue-on-error có thể thay đổi quy tắc này.
   - id: q3
     question: Thuộc tính nào giúp một Step vẫn tiếp tục chạy mà không làm dừng Job kể cả khi lệnh bên trong bị lỗi?
     type: single
@@ -39,7 +39,7 @@ questions:
         correct: false
       - text: "force-run: true"
         correct: false
-    explanation: "`continue-on-error: true` cho phép Job tiếp tục chạy các bước sau dù bước hiện tại trả về mã lỗi thất bại."
+    explanation: "`continue-on-error: true` cho phép bước tiếp tục sau lỗi; hãy cân nhắc vì Job có thể được báo thành công dù step đó lỗi."
   - id: q4
     question: Mục đích chính của thuộc tính `id` trong một Step là gì?
     type: single

@@ -5,7 +5,7 @@ questions:
     question: "Trong một đường ống CI/CD hoàn chỉnh, thứ tự thực thi chuẩn mực nhất của các giai đoạn là gì?"
     type: single
     options:
-      - text: "Lint & Test -> Build & Package -> Deploy Staging -> Phê duyệt -> Deploy Production"
+      - text: "Lint/audit/test -> Build & Artifact -> Deploy Staging -> rule môi trường (nếu cấu hình) -> Deploy Production -> Smoke Test"
         correct: true
       - text: "Deploy Production -> Build -> Test -> Lint"
         correct: false
@@ -13,12 +13,12 @@ questions:
         correct: false
       - text: "Chỉ cần Deploy Production, không cần kiểm thử"
         correct: false
-    explanation: "Quy trình chuẩn luôn đi từ kiểm tra chất lượng mã nguồn sớm nhất, sau đó mới đóng gói, thử nghiệm trên staging và cuối cùng mới lên production."
+    explanation: "Job build cần đợi các kiểm tra cần thiết; deploy cần đợi artifact và môi trường phù hợp, còn approval chỉ có khi đã cấu hình."
   - id: q2
     question: "Thành phần nào đóng vai trò như chốt chặn an ninh ngăn không cho mã nguồn lỗi lọt vào nhánh chính?"
     type: single
     options:
-      - text: "Branch Protection Rules kết hợp với Required Status Checks của CI"
+      - text: "Required Status Checks được bật trong branch protection/ruleset và gắn với kết quả CI"
         correct: true
       - text: "Tệp tin .gitignore"
         correct: false
@@ -26,12 +26,12 @@ questions:
         correct: false
       - text: "Phần mềm diệt virus trên máy tính cá nhân"
         correct: false
-    explanation: "Quy tắc bảo vệ nhánh kết hợp với CI Status Check là giải pháp cơ học tự động hóa không thể bị qua mặt bằng sự bất cẩn của con người."
+    explanation: "CI gửi kết quả check; quản trị viên phải cấu hình check đó thành required, đồng thời quản lý quyền bypass phù hợp."
   - id: q3
     question: "Khi triển khai lên môi trường Production, thực hành nào sau đây là quan trọng nhất để đảm bảo an toàn?"
     type: single
     options:
-      - text: "Áp dụng Environment Protection Rules với Required Reviewers và sử dụng Secrets riêng biệt"
+      - text: "Cấu hình Environment Protection Rules nếu repo/gói hỗ trợ, giới hạn secret và chỉ cấp cho Job deploy cần dùng"
         correct: true
       - text: "Triển khai vào lúc nửa đêm để không ai biết"
         correct: false
@@ -39,7 +39,7 @@ questions:
         correct: false
       - text: "Xóa toàn bộ các bản sao lưu cũ để giải phóng dung lượng"
         correct: false
-    explanation: "Sự phê duyệt của con người kết hợp với sự phân tách bí mật theo môi trường là chốt chặn bảo vệ tối hậu cho hệ thống sản xuất."
+    explanation: "Environment rules có thể yêu cầu reviewer; secrets chỉ nên cấp cho đúng job, nhưng cần thêm quyền tối thiểu và kế hoạch giám sát/khôi phục."
   - id: q4
     question: "Lợi ích lớn nhất mà một kỹ sư phần mềm đạt được sau khi làm chủ GitHub Actions là gì?"
     type: single

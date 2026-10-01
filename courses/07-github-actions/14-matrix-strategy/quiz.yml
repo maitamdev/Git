@@ -2,10 +2,10 @@ id: quiz-07-github-actions-14-matrix-strategy
 title: "Trắc nghiệm: Chiến lược ma trận kiểm thử đa môi trường (Matrix Strategy)"
 questions:
   - id: q1
-    question: "Nếu ma trận khai báo `os: [ubuntu, windows]` và `node: [18, 20, 22]`, có tổng cộng bao nhiêu Job con sẽ được sinh ra?"
+    question: "Nếu ma trận khai báo `os: [ubuntu, windows]` và `node: [22, 24]`, có tổng cộng bao nhiêu Job con sẽ được sinh ra?"
     type: single
     options:
-      - text: 6 Jobs (2 x 3 = 6)
+      - text: 4 Jobs (2 x 2 = 4)
         correct: true
       - text: 5 Jobs (2 + 3 = 5)
         correct: false
@@ -13,12 +13,12 @@ questions:
         correct: false
       - text: 3 Jobs
         correct: false
-    explanation: "Số lượng Job con được tính bằng tích Đề-các giữa số phần tử của các chiều trong ma trận: 2 nhân 3 bằng 6."
+    explanation: "Số lượng Job con trước include/exclude bằng tích số phần tử của từng chiều: hai hệ điều hành nhân hai phiên bản Node bằng bốn."
   - id: q2
     question: "Thuộc tính `fail-fast: true` (mặc định) trong strategy có hành vi như thế nào?"
     type: single
     options:
-      - text: Ngay khi một Job con trong ma trận bị lỗi, GitHub Actions lập tức hủy bỏ tất cả các Job con còn lại đang chạy
+      - text: Khi một Job con lỗi, GitHub Actions hủy các Job con khác đang chạy hoặc đang chờ trong ma trận
         correct: true
       - text: Tự động sửa lỗi cho các bài kiểm thử
         correct: false
@@ -26,7 +26,7 @@ questions:
         correct: false
       - text: Bỏ qua hoàn toàn bài test bị lỗi mà không thông báo
         correct: false
-    explanation: "`fail-fast: true` giúp tiết kiệm chi phí bằng cách dừng ngay toàn bộ ma trận khi đã phát hiện có ít nhất một môi trường bị lỗi."
+    explanation: "`fail-fast: true` là mặc định và hủy các Job con khác của ma trận sau lỗi; Job đã hoàn thành không bị ảnh hưởng."
   - id: q3
     question: Cú pháp nào sau đây dùng để truy cập giá trị của biến `version` đang xét trong Step của ma trận?
     type: single

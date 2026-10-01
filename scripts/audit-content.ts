@@ -97,7 +97,7 @@ export function auditContent(): AuditReport {
         (fs.existsSync(labsDir) && fs.readdirSync(labsDir).length > 0) ||
         Boolean(item.labIds && item.labIds.length > 0);
 
-      const challengeMatch = content.match(/##\s+🔥\s+Challenge[\s\S]*?(?=\n##|$)/i);
+      const challengeMatch = content.match(/^##[ \t]+[^\r\n]*(?:Challenge|Thử thách)[^\r\n]*\r?\n[\s\S]*?(?=\r?\n##[ \t]+|$)/im);
       const challengeText = challengeMatch ? challengeMatch[0].trim() : '';
       const hasChallenge = challengeText.length > 40;
 

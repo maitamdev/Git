@@ -11,15 +11,11 @@ keywords:
 prerequisites:
   - 19-reflog-internals
 objectives:
-  - "Chinh phục thử thách tối thượng của Level 8: Tự tay tạo ra một Commit hợp
-    lệ mà TUYỆT ĐỐI KHÔNG dùng git add hay git commit."
-  - "Thực hiện quy trình 5 bước phẫu thuật: Băm Blob -> Cập nhật Index nhị phân
-    -> Đóng gói Tree -> Tạo Commit object -> Cập nhật con trỏ nhánh."
-  - Quan sát Git Graph và git log hiển thị commit do chính bạn lắp ráp thủ công
-    từ các linh kiện cơ bản.
+  - Trong repository thử nghiệm mới, tạo một root commit bằng các lệnh plumbing.
+  - Thực hiện và kiểm tra luồng Blob -> Index -> Tree -> Commit -> Ref.
 commands:
   - git hash-object -w <file>
   - git update-index --add --cacheinfo 100644 <hash> <path>
   - git write-tree
   - git commit-tree <tree-hash> -m "Manual commit"
-  - git update-ref refs/heads/main <commit-hash>
+  - git update-ref refs/heads/capstone <commit-hash>

@@ -6,12 +6,14 @@ import { StatusCommand } from '../commands/status';
 import { AddCommand } from '../commands/add';
 import { CommitCommand } from '../commands/commit';
 import { LogCommand } from '../commands/log';
+import { ShowCommand } from '../commands/show';
 import { BranchCommand } from '../commands/branch';
 import { SwitchCommand } from '../commands/switch';
 import { CheckoutCommand } from '../commands/checkout';
 import { DiffCommand } from '../commands/diff';
 import { RestoreCommand } from '../commands/restore';
 import { RmCommand } from '../commands/rm';
+import { CheckIgnoreCommand } from '../commands/check-ignore';
 import { MvCommand } from '../commands/mv';
 import { MergeCommand } from '../commands/merge';
 import { ResetCommand } from '../commands/reset';
@@ -41,12 +43,14 @@ export class CommandExecutor {
     this.registerCommand(new AddCommand());
     this.registerCommand(new CommitCommand());
     this.registerCommand(new LogCommand());
+    this.registerCommand(new ShowCommand());
     this.registerCommand(new BranchCommand());
     this.registerCommand(new SwitchCommand());
     this.registerCommand(new CheckoutCommand());
     this.registerCommand(new DiffCommand());
     this.registerCommand(new RestoreCommand());
     this.registerCommand(new RmCommand());
+    this.registerCommand(new CheckIgnoreCommand());
     this.registerCommand(new MvCommand());
     this.registerCommand(new MergeCommand());
     this.registerCommand(new ResetCommand());
@@ -105,6 +109,18 @@ export class CommandExecutor {
     });
 
     try {
+      // Global Git option: it works without an initialized repository.
+      if (parsed.program === 'git' && parsed.subcommand === '--version') {
+        return {
+          success: true,
+          stdout: 'git version 2.56.0 (Git Academy simulator)',
+          stderr: '',
+          exitCode: 0,
+          state: ctx.stateManager.getState(),
+          events: [],
+        };
+      }
+
       // Built-in shell utilities
       if (parsed.program === 'clear') {
         return {
@@ -119,6 +135,13 @@ export class CommandExecutor {
 
       if (parsed.program === 'ls') {
         const files = ctx.fs.listFiles(parsed.args[0] || '');
+        if (
+          parsed.flags['a'] &&
+          !parsed.args[0] &&
+          ctx.stateManager.getState().repositoryInitialized
+        ) {
+          files.unshift('.git/');
+        }
         return {
           success: true,
           stdout: files.join('  '),

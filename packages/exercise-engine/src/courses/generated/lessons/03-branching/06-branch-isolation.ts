@@ -5,7 +5,7 @@ export const lesson: CourseLesson = {
   "moduleId": "03-branching",
   "metadata": {
     "id": "06-branch-isolation",
-    "title": "Nguyên lý cách ly không gian Branch Isolation",
+    "title": "Thay đổi đã commit được giữ riêng theo nhánh",
     "level": "intermediate",
     "duration": 25,
     "xp": 80,
@@ -13,10 +13,9 @@ export const lesson: CourseLesson = {
       "04-git-switch"
     ],
     "objectives": [
-      "Hiểu rõ nguyên lý cách ly không gian (Branch Isolation) độc lập của các luồng phát triển trong Git.",
-      "Nhận biết phạm vi tác động của commit trên từng nhánh riêng biệt.",
-      "Tự tin phát triển các tính năng thử nghiệm mạo hiểm mà không sợ làm ảnh hưởng tới nhánh chính.",
-      "Phân tích sự phân kỳ lịch sử (divergent history) khi hai nhánh cùng tiến về phía trước."
+      "Giải thích vì sao commit trên nhánh tính năng chưa xuất hiện trên main.",
+      "Tạo commit trên nhánh thử nghiệm rồi so sánh với main.",
+      "Nhận biết sửa đổi chưa commit có thể còn đi theo khi chuyển nhánh."
     ],
     "completion": {
       "theoryViewed": true,
@@ -26,165 +25,165 @@ export const lesson: CourseLesson = {
     },
     "keywords": [
       "branch isolation",
-      "cach ly khong gian",
-      "song song",
-      "an toan nhanh",
-      "doc lap"
+      "cach ly nhanh",
+      "lich su phan ky"
     ],
     "commands": [
       "git switch -c <nhánh-thử-nghiệm>",
-      "git log --oneline --graph --all",
-      "git diff main..<nhánh-thử-nghiệm>"
+      "git add <file>",
+      "git commit -m \"test: add isolated file\"",
+      "git switch main",
+      "git status"
     ]
   },
-  "content": "# Nguyên lý cách ly không gian Branch Isolation\n\n---\n\n## 🎯 Mục tiêu\n- Hiểu rõ nguyên lý cách ly độc lập giữa các nhánh trong Git.\n- Nhận biết phạm vi tác động của một commit chỉ nằm trên nhánh đang làm việc.\n- Tự tin thử nghiệm ý tưởng mới trên nhánh riêng mà không sợ hỏng mã nguồn chính.\n\n---\n\n## 🧩 Từ khóa hôm nay\n\n### Branch Isolation — nguyên lý cách ly nhánh\n- **Nói dễ hiểu:** Mọi commit tạo ra trên một nhánh chỉ tồn tại và ảnh hưởng trong nội bộ nhánh đó.\n- **Ví dụ:** Bạn tạo tệp `chat.js` trên nhánh `feature-chat`, khi về `main` tệp này hoàn toàn không xuất hiện.\n- **Đừng nhầm:** Tính cách ly chỉ áp dụng cho commit đã lưu; các tệp sửa dở chưa commit có thể đi theo khi đổi nhánh.\n\n### Divergent History — lịch sử phân kỳ\n- **Nói dễ hiểu:** Tình trạng hai nhánh cùng tách ra từ một commit cũ, sau đó mỗi nhánh tiếp tục có các commit mới riêng biệt.\n- **Ví dụ:** Nhánh `main` có commit cập nhật tài liệu, nhánh `feature` có commit thêm nút bấm, tạo thành ngã rẽ chữ Y.\n- **Đừng nhầm:** Lịch sử phân kỳ không phải là lỗi; đây là quy trình làm việc song song bình thường của nhóm.\n\n### Merge — hành động hợp nhất nhánh\n- **Nói dễ hiểu:** Thao tác chủ động gom toàn bộ thay đổi từ nhánh tính năng đưa vào nhánh chính.\n- **Ví dụ:** Sau khi tính năng thanh toán được kiểm tra kỹ, bạn gộp `feature-pay` vào nhánh `main`.\n- **Đừng nhầm:** Git không bao giờ tự động gộp các nhánh; bạn luôn phải chủ động thực hiện lệnh hợp nhất.\n\n---\n\n## 📖 Định nghĩa\nNguyên lý cách ly nhánh (Branch Isolation) đảm bảo rằng những commit trên một nhánh chỉ thuộc về luồng lịch sử của nhánh đó. Nhánh chính (`main`) và các nhánh khác không bị ảnh hưởng cho tới khi bạn chủ động gộp chúng lại với nhau.\n\n---\n\n## 🤔 Tại sao cần?\nNhờ tính cách ly, bạn có thể tự do thử nghiệm các giải pháp phức tạp hoặc viết lại code mà không sợ làm gián đoạn sản phẩm đang chạy. Nếu thử nghiệm thành công, bạn gộp vào nhánh chính; nếu thất bại, bạn chỉ cần xóa nhánh con đi là dự án lại nguyên vẹn như cũ.\n\n---\n\n## 🧠 Mental Model (Mô hình tư duy)\nHãy hình dung mỗi nhánh như một phòng thí nghiệm riêng biệt trong cùng một tòa nhà. Bạn làm việc, thử nghiệm và thậm chí làm hỏng thiết bị trong phòng của mình thì các phòng khác và sảnh chính của tòa nhà vẫn hoàn toàn an toàn và hoạt động bình thường.\n\n---\n\n## 🖼 Sơ đồ\n```text\nCommit chung C2:\nNhánh main:            C1 ───> C2 ───> C3 ───> C5 (main)\n                               │\nNhánh feature-login:          └───> C4 ───> C6 (feature-login)\n(Commit C4 và C6 hoàn toàn không xuất hiện trên nhánh main)\n```\n\n---\n\n## 🌎 Ví dụ thực tế\nBạn An tạo nhánh `test-darkmode` để thử đổi toàn bộ giao diện sang màu tối. Sau khi sửa 10 tệp CSS và commit 3 lần, An thấy màu sắc chưa hài hòa và quyết định dừng lại. Nhờ tính cách ly của nhánh, mã nguồn trên `main` của cả nhóm vẫn hiển thị giao diện sáng chuẩn mực. An chỉ việc chuyển về `main` và xóa nhánh thử nghiệm mà không để lại bất kỳ rác thừa nào.\n\n---\n\n## 💻 Command\n```bash\ngit switch -c <nhánh-thử-nghiệm>\ngit log --oneline --graph --all\ngit diff main..<nhánh-thử-nghiệm>\n```\n\n---\n\n## 🔍 Giải thích command\n- `git switch -c <nhánh-thử-nghiệm>`: Tạo ra một không gian làm việc độc lập mới để bắt đầu thử nghiệm.\n- `git log --oneline --graph --all`: Xem sơ đồ cây phân nhánh trực quan của tất cả các nhánh trong dự án.\n- `git diff main..<nhánh>`: So sánh tổng thể những khác biệt giữa nhánh thử nghiệm và nhánh chính.\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Nghĩ commit nhánh con sẽ tự sang nhánh main:** Bạn bắt buộc phải chủ động chạy lệnh hợp nhất thì code mới vào `main`.\n2. **Lo lắng khi tệp của nhánh con biến mất khi chuyển về main:** Đây là hành vi đúng của Git nhằm phản ánh chính xác trạng thái của nhánh hiện tại.\n3. **Để tệp sửa dở khi chuyển nhánh:** Nên commit hoặc cất tệp tạm trước khi chuyển nhánh để tránh mang nhầm code chưa hoàn thiện sang nhánh khác.\n\n---\n\n## 🧪 Lab\nBài tập này được thực hành trên môi trường Git mô phỏng của hệ thống:\n1. Tạo nhánh cách ly bằng lệnh `git switch -c test-isolation`.\n2. Tạo tệp mới `secret-test.txt` và commit vào nhánh này.\n3. Chuyển quay trở lại nhánh chính bằng lệnh `git switch main`.\n4. Quan sát danh sách tệp và nhận thấy `secret-test.txt` hoàn toàn không có mặt trên nhánh `main`.\n\n---\n\n## 💡 Hint\nKhi chuyển về nhánh `main`, Git tự động dọn dẹp các tệp chỉ thuộc về nhánh con để giữ thư mục làm việc luôn đúng chuẩn.\n\n---\n\n## ✅ Validation\n- Tệp `secret-test.txt` chỉ xuất hiện khi bạn đứng ở nhánh `test-isolation`.\n- Thư mục làm việc trên nhánh `main` hoàn toàn sạch sẽ, không có tệp đó.\n\n---\n\n## ❓ Quiz\nTrả lời các câu hỏi sau để kiểm tra sự hiểu biết về nguyên lý cách ly không gian nhánh trong Git.\n\n---\n\n## 🔥 Challenge\nChạy lệnh `git log --graph --oneline --all` sau khi đã commit trên cả hai nhánh để tự mình nhìn thấy ngã rẽ đồ thị chữ Y trên màn hình dòng lệnh.\n\n---\n\n## 📚 Tổng kết\n- Branch Isolation đảm bảo các thay đổi đã commit trên nhánh này không làm ảnh hưởng nhánh khác.\n- Bạn có thể thoải mái thử nghiệm ý tưởng mới trên nhánh riêng với rủi ro bằng không.\n- Mã nguồn chỉ được chia sẻ giữa các nhánh khi có lệnh hợp nhất rõ ràng.\n",
+  "content": "# Thay đổi đã commit được giữ riêng theo nhánh\r\n\r\n---\r\n\r\n## 🎯 Mục tiêu\r\n- Giải thích vì sao commit trên nhánh tính năng chưa xuất hiện trên `main`.\r\n- Tạo commit trên nhánh thử nghiệm rồi so sánh với `main`.\r\n- Nhận biết sửa đổi chưa commit có thể còn đi theo khi chuyển nhánh.\r\n\r\n---\r\n\r\n## 🧩 Từ khóa hôm nay\r\n\r\n### Cách ly thay đổi đã commit\r\n- **Nói dễ hiểu:** Commit mới được gắn vào nhánh đang chọn; nhánh khác không tự chuyển theo.\r\n- **Ví dụ:** `feature-chat` có commit thêm `chat.js`, còn `main` vẫn ở mốc cũ.\r\n- **Đừng nhầm:** Tệp sửa dở chưa commit có thể được giữ khi chuyển nhánh.\r\n\r\n### Lịch sử phân kỳ\r\n- **Nói dễ hiểu:** Hai nhánh cùng có commit riêng sau một mốc chung.\r\n- **Ví dụ:** `main` sửa trang chủ, `feature-chat` thêm chức năng chat.\r\n- **Đừng nhầm:** Phân kỳ là trạng thái bình thường trước khi chọn cách hợp nhất.\r\n\r\n### Hợp nhất (merge)\r\n- **Nói dễ hiểu:** Thao tác đưa lịch sử từ nhánh này vào nhánh khác.\r\n- **Ví dụ:** Hợp nhất `feature-chat` vào `main` sau khi kiểm tra.\r\n- **Đừng nhầm:** Commit không tự xuất hiện trên mọi nhánh.\r\n\r\n---\r\n\r\n## 📖 Định nghĩa\r\nKhi tạo commit, Git cập nhật nhánh hiện tại để trỏ tới commit mới. Nhánh khác vẫn trỏ tới vị trí riêng của nó cho tới khi bạn chủ động hợp nhất hoặc áp dụng commit bằng một thao tác khác. Như vậy, commit trên nhánh tính năng chưa nằm trong lịch sử của `main`. Các thay đổi chưa commit là chuyện khác: chúng có thể được giữ lại khi chuyển nhánh nếu không gây xung đột.\r\n\r\n---\r\n\r\n## 🤔 Tại sao cần?\r\nTách commit theo nhánh cho nhóm thời gian làm và kiểm tra một tính năng trước khi đưa vào nhánh chung. Nếu thử nghiệm không dùng được, `main` vẫn ở mốc cũ. Commit thử vẫn có thể tồn tại trong lịch sử repository; đừng hiểu việc chuyển về `main` là xóa commit đó.\r\n\r\n---\r\n\r\n## 🧠 Mental Model (Mô hình tư duy)\r\nHãy hình dung mỗi nhánh là một dấu trang trên cùng quyển sổ lịch sử. Bạn ghi một trang mới khi đang ở `feature-chat`, nên dấu trang `main` không tự nhảy tới trang đó. Hợp nhất là thao tác chọn cách nối lịch sử lại.\r\n\r\n---\r\n\r\n## 🖼 Sơ đồ\r\n```text\r\n                 ┌── C4 (feature-chat)\r\nC1 ── C2 ── C3 ──┤\r\n                 └── C5 (main)\r\n\r\nCommit C4 chỉ có trên feature-chat cho tới khi được hợp nhất.\r\n```\r\n\r\n---\r\n\r\n## 🌎 Ví dụ thực tế\r\nAn tạo `test-darkmode`, thêm tệp CSS rồi commit. Khi An chuyển về `main`, tệp chỉ có trong commit của nhánh thử nghiệm nên không xuất hiện trong snapshot `main`. Commit đó vẫn còn trong lịch sử nhánh `test-darkmode`; nó không bị xóa chỉ vì An đổi nhánh. Nếu An muốn đưa giao diện tối vào dự án chung, nhóm sẽ review rồi hợp nhất.\r\n\r\n---\r\n\r\n## 💻 Command\r\n```bash\r\ngit switch -c test-isolation\r\n# Tạo tệp secret-test.txt trong trình sửa tệp, rồi lưu nội dung\r\ngit add secret-test.txt\r\ngit commit -m \"test: add isolated file\"\r\ngit switch main\r\ngit status\r\n```\r\n\r\n---\r\n\r\n## 🔍 Giải thích command\r\n- `git switch -c test-isolation`: Tạo nhánh và chuyển sang đó.\r\n- Tạo tệp mới, rồi dùng `git add` và `git commit` để lưu tệp trên nhánh thử nghiệm.\r\n- `git switch main`: Quay về nhánh chính; tệp chỉ có trong commit thử sẽ không nằm trong snapshot này.\r\n- `git status`: Kiểm tra trạng thái hiện tại; thay đổi chưa commit cần được xem riêng.\r\n\r\n---\r\n\r\n## ⚠️ Sai lầm phổ biến\r\n1. **Nghĩ commit nhánh con tự sang `main`:** Cần một thao tác tích hợp có chủ đích.\r\n2. **Nghĩ tệp biến mất khỏi `main` là bị xóa khỏi repository:** Tệp vẫn nằm trong commit của nhánh thử nghiệm.\r\n3. **Nghĩ mọi thay đổi đều được cách ly tuyệt đối:** Sửa đổi chưa commit có thể đi theo khi đổi nhánh nếu an toàn.\r\n\r\n---\r\n\r\n## 🧪 Lab\r\n1. Chạy `git switch -c test-isolation`.\r\n2. Tạo `secret-test.txt` bằng trình sửa tệp và ghi `Chỉ có trên nhánh thử nghiệm`.\r\n3. Chạy `git add secret-test.txt`, rồi `git commit -m \"test: add isolated file\"`.\r\n4. Chạy `git switch main`; kiểm tra danh sách tệp và xác nhận `secret-test.txt` không có trong snapshot của `main`.\r\n5. Chạy `git switch test-isolation`; xác nhận tệp vẫn còn trên nhánh thử nghiệm.\r\n\r\n---\r\n\r\n## 💡 Hint\r\n> Chuyển nhánh chỉ thay đổi commit mà thư mục đang phản ánh; nó không tự gộp lịch sử.\r\n\r\n---\r\n\r\n## ✅ Validation\r\n- `secret-test.txt` có trên `test-isolation`.\r\n- Tệp không có trên `main` trước khi hợp nhất.\r\n- `git status` sạch sau mỗi lần commit.\r\n\r\n---\r\n\r\n## ❓ Quiz\r\nTrả lời câu hỏi để kiểm tra sự khác nhau giữa commit nhánh riêng và thay đổi đã hợp nhất.\r\n\r\n---\r\n\r\n## 🔥 Challenge\r\nTạo commit khác trên `main`, rồi chuyển qua lại hai nhánh. Ghi lại tệp nào thuộc snapshot mỗi nhánh và nêu thao tác cần có để đưa tệp giữa hai nhánh.\r\n\r\n---\r\n\r\n## 📚 Tổng kết\r\n- Commit mới được gắn vào nhánh đang chọn.\r\n- Chuyển về `main` không xóa commit ở nhánh khác.\r\n- Sửa đổi chưa commit có thể đi theo khi chuyển nhánh; kiểm tra `git status`.\r\n",
   "quiz": {
     "id": "quiz-03-06-branch-isolation",
-    "title": "Trắc nghiệm: Nguyên lý cách ly không gian Branch Isolation",
+    "title": "Trắc nghiệm: Thay đổi trên các nhánh",
     "questions": [
       {
         "id": "q1",
-        "question": "Nguyên lý Branch Isolation trong Git mang lại lợi ích lớn nhất nào sau đây?",
+        "question": "Bạn commit `chat.js` trên `feature-chat`, rồi chuyển về `main`. Vì sao tệp chưa xuất hiện trên `main`?",
         "type": "single",
         "options": [
           {
-            "text": "Cho phép lập trình viên tự do thử nghiệm và thay đổi mã nguồn mà không sợ ảnh hưởng tới nhánh chính",
+            "text": "Commit đó chưa thuộc lịch sử mà nhánh `main` trỏ tới",
             "correct": true
           },
           {
-            "text": "Giúp mã nguồn tự động biên dịch thành file exe mà không cần trình biên dịch",
+            "text": "Git tự đổi tên tệp thành `.git/chat.js`",
             "correct": false
           },
           {
-            "text": "Giúp tự động sửa các lỗi cú pháp ngữ pháp tiếng Anh trong mã nguồn",
+            "text": "`git switch` xóa mọi commit mới",
             "correct": false
           },
           {
-            "text": "Tăng tốc độ truy cập mạng Internet của văn phòng công ty",
+            "text": "`main` chỉ lưu tệp HTML",
             "correct": false
           }
         ],
-        "explanation": "Tính cách ly độc lập bảo vệ nhánh chính an toàn trước mọi thử nghiệm và lỗi phát sinh trên nhánh phụ."
+        "explanation": "Mỗi nhánh trỏ tới lịch sử riêng; commit tính năng cần được hợp nhất trước khi nằm trong lịch sử main."
       },
       {
         "id": "q2",
-        "question": "Nếu bạn commit một tệp mới trên nhánh `feature` rồi chuyển về nhánh `main`, tệp đó trên ổ đĩa sẽ ra sao?",
+        "question": "Khi chuyển về `main`, commit đã tạo trên `feature-chat` sẽ ra sao?",
         "type": "single",
         "options": [
           {
-            "text": "Tệp đó sẽ tự động biến mất khỏi Working Directory trên main và chỉ xuất hiện lại khi quay về feature",
+            "text": "Vẫn thuộc lịch sử của nhánh tính năng",
             "correct": true
           },
           {
-            "text": "Tệp đó sẽ tự động được gửi qua email cho sếp",
+            "text": "Bị xóa khỏi toàn bộ repository",
             "correct": false
           },
           {
-            "text": "Tệp đó sẽ bị xóa vĩnh viễn khỏi toàn bộ lịch sử Git",
+            "text": "Tự chuyển thành commit trên `main`",
             "correct": false
           },
           {
-            "text": "Tệp đó sẽ tự động được đưa vào nhánh main mà không cần merge",
+            "text": "Được gửi tự động lên GitHub",
             "correct": false
           }
         ],
-        "explanation": "Git cập nhật Working Directory theo snapshot của nhánh hiện tại; tệp của nhánh con sẽ được cất đi an toàn."
+        "explanation": "Chuyển nhánh thay đổi vị trí làm việc; thao tác đó không xóa commit trên nhánh cũ."
       },
       {
         "id": "q3",
-        "question": "Khi hai lập trình viên tạo hai nhánh khác nhau từ cùng một commit trên main và cùng commit code mới, hình thái lịch sử sẽ như thế nào?",
+        "question": "Bạn sửa một tệp nhưng chưa commit rồi chuyển nhánh. Điều gì có thể xảy ra?",
         "type": "single",
         "options": [
           {
-            "text": "Lịch sử sẽ phân kỳ (divergent) thành hai nhánh rẽ độc lập hình chữ Y từ mốc commit chung ban đầu",
+            "text": "Git có thể giữ sửa đổi đó nếu chuyển nhánh không ghi đè nội dung",
             "correct": true
           },
           {
-            "text": "Lịch sử sẽ bị khóa lại và không ai được commit tiếp",
+            "text": "Mọi sửa đổi chưa commit luôn bị xóa",
             "correct": false
           },
           {
-            "text": "Một trong hai nhánh sẽ bị xóa ngẫu nhiên để tránh xung đột",
+            "text": "Sửa đổi tự động được commit lên cả hai nhánh",
             "correct": false
           },
           {
-            "text": "Toàn bộ mã nguồn của cả hai người sẽ bị hòa tan thành một tệp duy nhất",
+            "text": "Repository tự chuyển sang detached HEAD",
             "correct": false
           }
         ],
-        "explanation": "Đồ thị commit DAG sẽ phân nhánh độc lập từ commit cha chung tạo thành hình thái phân kỳ."
+        "explanation": "Thay đổi chưa commit không được cách ly như commit; Git có thể mang nó theo nếu an toàn."
       },
       {
         "id": "q4",
-        "question": "Để xem biểu đồ phân kỳ trực quan của tất cả các nhánh trong terminal, bạn dùng câu lệnh nào?",
+        "question": "Bạn muốn biết có thay đổi chưa commit nào trước khi chuyển nhánh. Nên chạy lệnh nào?",
         "type": "single",
         "options": [
           {
-            "text": "git log --graph --oneline --all",
+            "text": "git status",
             "correct": true
           },
           {
-            "text": "git show --branches-only",
+            "text": "git branch -D",
             "correct": false
           },
           {
-            "text": "git view --diagram",
+            "text": "git remote -v",
             "correct": false
           },
           {
-            "text": "git chart --divergent",
+            "text": "git log --oneline",
             "correct": false
           }
         ],
-        "explanation": "`git log --graph --oneline --all` vẽ các nhánh phân kỳ bằng ký tự ASCII trực quan tuyệt đẹp."
+        "explanation": "`git status` cho biết nhánh hiện tại và các tệp đang staged, chưa staged hoặc untracked."
       },
       {
         "id": "q5",
-        "question": "Một tính năng thử nghiệm trên nhánh phụ bị thất bại hoàn toàn, thao tác xử lý chuẩn mực là gì?",
+        "question": "Tính năng trên nhánh riêng đã được kiểm tra và muốn đưa vào `main`. Cần làm gì?",
         "type": "single",
         "options": [
           {
-            "text": "Chuyển về nhánh main và xóa bỏ nhánh thử nghiệm đó bằng lệnh git branch -D",
+            "text": "Đứng trên nhánh nhận thay đổi rồi thực hiện merge",
             "correct": true
           },
           {
-            "text": "Phải cài lại hệ điều hành Windows từ đầu",
+            "text": "Chỉ đổi tên nhánh feature thành `main`",
             "correct": false
           },
           {
-            "text": "Gửi đơn xin nghỉ việc tại công ty",
+            "text": "Chạy `git status` nhiều lần",
             "correct": false
           },
           {
-            "text": "Xóa toàn bộ kho chứa của công ty trên GitHub",
+            "text": "Xóa commit cuối của `main`",
             "correct": false
           }
         ],
-        "explanation": "Nhờ tính cách ly, bạn chỉ việc xóa nhánh thất bại là dự án trở về trạng thái hoàn hảo ban đầu."
+        "explanation": "Để lịch sử tính năng đi vào main, nhóm cần chủ động chọn thao tác tích hợp phù hợp."
       },
       {
         "id": "q6",
-        "question": "Các commit trên một nhánh tính năng có thể đến được nhánh main thông qua cơ chế nào?",
+        "question": "Lịch sử hai nhánh được gọi là phân kỳ khi nào?",
         "type": "single",
         "options": [
           {
-            "text": "Thông qua thao tác hợp nhất có chủ đích (Merge hoặc Rebase)",
+            "text": "Cả hai nhánh có commit riêng sau một commit chung",
             "correct": true
           },
           {
-            "text": "Tự động hòa nhập sau 24 giờ đồng hồ nếu không có lỗi",
+            "text": "Một nhánh không có commit nào",
             "correct": false
           },
           {
-            "text": "Tự động hòa nhập khi bạn tắt máy tính đi ngủ",
+            "text": "Tệp `.gitignore` có hai dòng",
             "correct": false
           },
           {
-            "text": "Thông qua việc cắm cáp USB nối giữa hai máy tính",
+            "text": "Người dùng tạo hai bản sao thư mục",
             "correct": false
           }
         ],
-        "explanation": "Git chỉ hòa nhập mã nguồn khi có lệnh chỉ định rõ ràng của lập trình viên (Merge hoặc Rebase)."
+        "explanation": "Hai nhánh phân kỳ khi cùng đi từ một mốc chung rồi mỗi nhánh có commit riêng."
       }
     ]
   }

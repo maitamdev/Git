@@ -17,9 +17,7 @@ objectives:
   - Tạo thẻ Annotated Tag chứa đầy đủ tên tác giả, email, ngày giờ và thông điệp
     phát hành bằng cờ `-a`.
   - Kiểm tra thông tin chi tiết của một thẻ chú giải bằng câu lệnh `git show`.
-  - Hiểu rõ vì sao các bản phát hành sản phẩm chính thức (Production Releases)
-    luôn bắt buộc dùng Annotated Tag.
+  - Biết nhiều dự án chọn annotated tag cho release; quy định cụ thể tùy repository.
 commands:
   - git tag -a <tên-thẻ> -m "<thông-điệp-phát-hành>"
-  - git tag -s <tên-thẻ> -m "<thông-điệp>"
   - git show <tên-thẻ>

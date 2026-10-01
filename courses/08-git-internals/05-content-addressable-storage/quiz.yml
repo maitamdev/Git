@@ -2,10 +2,10 @@ id: quiz-08-git-internals-05-content-addressable-storage
 title: "Trắc nghiệm: Bộ nhớ định danh theo nội dung (Content-Addressable Storage)"
 questions:
   - id: q1
-    question: "Công thức chuỗi dữ liệu đầu vào mà Git sử dụng để tính toán mã băm SHA-1 cho một đối tượng là gì?"
+    question: "Git tính object ID từ dữ liệu nào?"
     type: single
     options:
-      - text: "<type> <size>\\0<content>"
+      - text: "<type> <size>, byte NUL, rồi đến nội dung object"
         correct: true
       - text: "<filename> <content>"
         correct: false
@@ -13,7 +13,7 @@ questions:
         correct: false
       - text: "Chỉ riêng phần <content> thuần túy"
         correct: false
-    explanation: "Git luôn gắn phần tiêu đề gồm loại đối tượng, dấu cách, kích thước byte, ký tự null byte (\\0) rồi mới đến nội dung."
+    explanation: "Git băm header gồm type và kích thước, byte NUL, rồi byte nội dung; repo chọn SHA-1 hoặc SHA-256 làm thuật toán hash."
   - id: q2
     question: "Nếu bạn có 5 tệp tin ở 5 thư mục khác nhau nhưng có nội dung hoàn toàn giống nhau từng ký tự, Git sẽ lưu bao nhiêu Blob trong .git/objects/?"
     type: single
@@ -26,7 +26,7 @@ questions:
         correct: false
       - text: "10 đối tượng"
         correct: false
-    explanation: "Vì nội dung giống nhau nên mã băm giống nhau, Git tái sử dụng ngay đối tượng đã có mà không ghi đè thêm bản sao."
+    explanation: "Nếu byte blob đã stage giống nhau thì ID giống nhau trong cùng hash format, nên Git có thể tái sử dụng cùng một object."
   - id: q3
     question: "Đặc tính Bất biến (Immutability) trong hệ thống Content-Addressable Storage nghĩa là gì?"
     type: single
@@ -39,7 +39,7 @@ questions:
         correct: false
       - text: "Chỉ có tác giả mới có quyền commit"
         correct: false
-    explanation: "Mỗi đối tượng gắn liền vĩnh viễn với mã băm của nó. Thay đổi dù 1 bit cũng biến nó thành một đối tượng hoàn toàn khác."
+    explanation: "ID được tính từ header và nội dung; thay đổi thường tạo ID khác, nhưng object cũ có thể bị dọn khi không còn được tham chiếu."
   - id: q4
     question: "Lệnh nào cho phép bạn tính toán mã băm của một chuỗi dữ liệu mà không cần phải ghi đối tượng vào thư mục .git/objects/?"
     type: single
@@ -54,10 +54,10 @@ questions:
         correct: false
     explanation: "Cờ -w viết tắt của write (ghi xuống đĩa). Nếu không có cờ -w, lệnh chỉ tính và in ra mã băm mà không ghi đối tượng."
   - id: q5
-    question: "Tại sao thuật toán SHA-1 hoặc SHA-256 lại được coi là nền tảng bảo mật toàn vẹn của Git?"
+    question: "Mô tả nào chính xác nhất về vai trò và giới hạn của hash trong Git?"
     type: single
     options:
-      - text: "Vì bất kỳ sự sửa đổi nào dù vô tình hay độc hại đối với mã nguồn hoặc lịch sử commit đều khiến toàn bộ mã băm thay đổi, làm lộ hành vi can thiệp"
+      - text: "Hash giúp phát hiện nhiều thay đổi nội dung, nhưng SHA-1 có va chạm đã biết và hash không thay thế chữ ký hay sao lưu"
         correct: true
       - text: "Vì Git dùng mã băm để giấu code không cho lập trình viên khác xem"
         correct: false
@@ -65,4 +65,4 @@ questions:
         correct: false
       - text: "Vì các máy chủ đám mây chỉ chấp nhận file có SHA-1"
         correct: false
-    explanation: "Do tính chất một chiều của hàm băm mật mã học, không thể sửa đổi nội dung mà vẫn giữ nguyên mã hash, giúp bảo vệ toàn vẹn lịch sử mã nguồn tuyệt đối."
+    explanation: "Object ID giúp đối chiếu nội dung nhưng không phải bảo đảm an ninh tuyệt đối; SHA-1 đã có va chạm thực tế nên cần hiểu giới hạn này."

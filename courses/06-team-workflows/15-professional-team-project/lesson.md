@@ -1,25 +1,25 @@
 # Professional Team Project
 
 ## 🎯 Mục tiêu
-- Tổng hợp toàn bộ các kỹ năng và kiến thức đã học trong Level 6 vào một dự án mô phỏng thực chiến quy mô doanh nghiệp.
-- Thiết lập hoàn chỉnh cấu trúc dự án chuẩn mực: Protected Branch, Branch Protection Rules, tệp CODEOWNERS và mẫu PR Template.
-- Vận hành trơn tru quy trình Feature Branch kết hợp Conventional Commits và Semantic Versioning.
-- Xử lý thành công tình huống khẩn cấp Hotfix trên môi trường sản xuất song song với việc phát triển tính năng mới.
+- Kết hợp workflow nhánh, commit có cấu trúc, tag và kiểm tra thay đổi trong một repo thử nghiệm.
+- Phân biệt việc ghi tài liệu/chạy lệnh Git local với cấu hình PR, CODEOWNERS và branch protection cần GitHub.
+- Thực hiện một nhánh feature và một bản sửa khẩn cấp theo quy trình mà bài tập đã chọn.
+- Nêu rõ phần nào phụ thuộc nhánh `develop`, SemVer hoặc quyền trên GitHub.
 
 ## 🧩 Từ khóa hôm nay
 ### Governance Framework
 - **Nói dễ hiểu**: Khung chính sách kỹ thuật và quy tắc quản trị giúp cả đội ngũ lập trình phối hợp nhịp nhàng mà không sợ giẫm chân lên nhau.
-- **Ví dụ**: Kết hợp khóa nhánh chính, bắt buộc 1 lượt review từ CODEOWNERS và test CI phải xanh mới cho phép merge.
-- **Đừng nhầm**: Không phải quy định hành chính trên giấy, mà là các chốt chặn tự động hóa 100% bằng công cụ.
+- **Ví dụ**: Nhóm có thể yêu cầu PR, một lượt review, check CI và approval từ code owner trước khi merge.
+- **Đừng nhầm**: Một số chính sách cần cấu hình máy chủ; tài liệu quy trình, quyền bypass và ngoại lệ vẫn cần con người quản lý.
 
 ### Pull Request Template
-- **Nói dễ hiểu**: Mẫu nội dung định sẵn tự động xuất hiện khi mở PR để nhắc nhở người tạo cung cấp đủ ngữ cảnh và checklist an toàn.
+- **Nói dễ hiểu**: Tệp mẫu gợi ý nội dung để tác giả điền khi tạo PR trên GitHub.
 - **Ví dụ**: Tệp `.github/pull_request_template.md` chứa các mục: Mô tả thay đổi, Ảnh chụp màn hình, và Các bài test đã chạy.
-- **Đừng nhầm**: Không bắt buộc phải viết dài dòng, mục đích chính là bảo đảm không bỏ sót các bước kiểm tra then chốt.
+- **Đừng nhầm**: Mẫu chỉ nhắc người viết; nó không kiểm chứng câu trả lời hay ép người dùng hoàn thành checklist.
 
 ### Release Cadence
 - **Nói dễ hiểu**: Nhịp điệu và lịch trình phát hành phần mềm định kỳ của đội ngũ kỹ thuật ra môi trường thực tế.
-- **Ví dụ**: Nhóm cố định cắt nhánh release vào thứ Tư hàng tuần và triển khai lên máy chủ sản xuất vào sáng thứ Sáu.
+- **Ví dụ**: Một nhóm chọn phát hành vào thứ Sáu; đây là lịch riêng của nhóm, không phải quy tắc Git.
 - **Đừng nhầm**: Không áp dụng cho các bản vá khẩn cấp Hotfix; hotfix được triển khai ngay lập tức khi hoàn thành kiểm thử.
 
 ## 📖 Định nghĩa
@@ -42,7 +42,7 @@ flowchart TD
 ```
 
 ## 🏢 Ví dụ thực tế
-Trong dự án thương mại điện tử, nhóm thiết lập `.github/CODEOWNERS` phân chia quyền sở hữu cho thư mục `api/` và `web/`. Tiếp theo, nhóm cấu hình nhánh `main` cấm push trực tiếp và bắt buộc vượt qua kiểm thử CI. Khi một kỹ sư mở PR thêm cổng thanh toán, hệ thống tự động gán đúng reviewer tài chính. Đồng thời khi có sự cố giao dịch, nhóm kích hoạt nhánh `hotfix/v1.0.1`, vá lỗi, thực hiện hợp nhất kép vào cả `main` lẫn `develop` và gắn tag SemVer để triển khai tức thì.
+Ví dụ giả định theo Git Flow: repo có `main` và `develop`; nhóm cấu hình CODEOWNERS trên nhánh đích, bật các điều kiện review/CI họ cần và có pipeline phát hành riêng. Khi sửa cổng thanh toán, GitHub có thể yêu cầu review từ owner; approval chỉ là điều kiện merge nếu rule tương ứng bật. Với hotfix, nhóm bắt đầu từ commit production thực tế, kiểm thử, phát hành theo chính sách rồi đồng bộ về `develop` nếu còn dùng nhánh này.
 
 ## 💻 Command & Cú pháp
 ```bash
@@ -50,40 +50,42 @@ Trong dự án thương mại điện tử, nhóm thiết lập `.github/CODEOWN
 git tag -a v1.0.0 -m "Release v1.0.0 baseline"
 
 # Tách nhánh tính năng mới và commit chuẩn mực
+# Trước commit, phải sửa hoặc tạo file rồi stage thay đổi
 git switch -c feat/order-service
 git commit -m "feat(order): implement order placement logic"
 
-# Tách nhánh cứu hộ khẩn cấp từ main khi có sự cố
+# Tạo hotfix từ main trong ví dụ Git Flow; xác nhận main đúng với production
 git switch -c hotfix/v1.0.1 main
 git commit -m "fix(order): prevent duplicate checkout charges"
 ```
 
 ## 🔍 Giải thích command
-- `git tag -a v1.0.0`: Đánh dấu cột mốc phiên bản ổn định ban đầu làm điểm mốc đối chiếu cho dự án.
-- `git commit -m "feat(order): <mo-ta>"`: Áp dụng cú pháp Conventional Commits để chuẩn hóa lịch sử và phục vụ tự động hóa changelog.
-- `git switch -c hotfix/v1.0.1 main`: Rẽ nhánh giải cứu sản xuất trực tiếp từ `main` để dập lỗi khẩn cấp mà không vướng tính năng dở dang.
+- `git tag -a v1.0.0`: Gắn tag vào commit hiện tại; chỉ dùng số này nếu đó thực sự là mốc phát hành dự án.
+- `git commit -m "feat(order): <mo-ta>"`: Tạo commit sau khi đã sửa file và stage; format chỉ tự động hóa nếu repo có cấu hình tool phù hợp.
+- `git switch -c hotfix/v1.0.1 main`: Trong ví dụ này, tạo nhánh từ `main`; cần xác minh nhánh trỏ đúng commit đang chạy production.
 
 ## ⚠️ Sai lầm phổ biến
-- Bỏ qua bước thiết lập CODEOWNERS và Branch Protection trước khi mở quyền cho các thành viên đóng góp code.
-- Viết commit message tự do không tuân thủ quy chuẩn khiến công cụ tự động hóa không thể sinh nhật ký phát hành.
-- Quên đồng bộ bản vá hotfix về nhánh phát triển khiến nhánh `develop` bị lỗi thời mã nguồn.
+- Cho rằng có tệp CODEOWNERS là approval đã bắt buộc; cần bật review-from-code-owners trong branch rule.
+- Mong đợi Conventional Commits tự tạo changelog/phiên bản khi repo chưa cấu hình công cụ.
+- Quên đồng bộ bản vá về nhánh phát triển đang được duy trì; chọn merge/cherry-pick theo chính sách nhóm.
 
 ## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác thực hành bài tập lớn mô phỏng trên máy và đối chiếu theo hướng dẫn bên dưới.
+Làm phần A trong repo local. Phần B cần repository GitHub thử nghiệm và quyền quản trị; nếu chưa có, đọc cấu hình mẫu và ghi kết quả dự kiến, không cần tạo tài khoản.
 
-1. Khởi tạo kho lưu trữ với tệp `.github/CODEOWNERS` và tệp `.github/pull_request_template.md`.
-2. Tạo nhánh `feat/auth` và thực hiện các commit chuẩn Conventional Commits.
-3. Mở Pull Request mô phỏng, kiểm tra danh sách review và checklist an toàn.
-4. Giả lập một sự cố sản xuất, tạo nhánh `hotfix/v1.0.1`, vá lỗi và thực hiện hợp nhất kép vào cả `main` lẫn `develop`.
-5. Gắn thẻ tag SemVer `v1.0.1` và dùng `git log --graph --oneline` để chiêm ngưỡng cây lịch sử sạch đẹp của toàn bộ dự án.
+1. Bắt đầu từ repo thử nghiệm có commit trên `main`; tạo một file README, stage và commit `docs: start team demo`, sau đó kiểm tra bằng `git status`.
+2. Tạo `develop` từ `main`, rồi tạo `feat/auth` từ `develop`. Sửa một file, stage, commit `feat(auth): add sign-in instructions` và merge nhánh feature về `develop`.
+3. Tạo `release/v1.0.0` từ `develop`, sửa một lỗi nhỏ, commit, merge vào `main` rồi gắn tag `v1.0.0` lên commit phát hành; nếu theo Git Flow, tích hợp sửa đổi cần giữ lại về `develop`.
+4. Tạo `hotfix/v1.0.1` từ `main`, sửa một lỗi khác, stage/commit, merge vào `main`, gắn tag sau khi xác minh commit; tích hợp bản sửa về `develop` nếu nhánh còn được dùng.
+5. Chạy `git status` và `git log --oneline --graph --decorate --all`; chỉ xóa nhánh thử nghiệm sau khi xác nhận các commit cần giữ đã được tích hợp.
+6. **Phần B tùy chọn**: trên repo GitHub thử nghiệm, thêm CODEOWNERS/PR template và cấu hình branch rule. CODEOWNERS phải có trên nhánh đích; chọn reviewer có quyền ghi và bật điều kiện approval riêng nếu muốn nó chặn merge.
 
 ## 💡 Hint & mẹo
-- Tính kỷ luật và sự rõ ràng trong quy trình phân nhánh là yếu tố quyết định giúp các đội ngũ kỹ sư lớn vận hành hiệu quả mà không bị hỗn loạn.
-- Luôn kiểm tra trạng thái cây Git bằng `git status` trước khi chuyển đổi qua lại giữa nhánh tính năng và nhánh cứu hộ.
+- `git status` giúp xác nhận file nào đang sửa/stage trước khi đổi nhánh hoặc commit.
+- Chọn workflow theo các nhánh nhóm thực sự duy trì; không cần tạo `develop`, release branch hay CODEOWNERS nếu dự án không dùng.
 
 ## ✅ Validation & Kết quả mong đợi
-- Lịch sử Git sạch đẹp, phân định rõ ràng giữa các commit tính năng và các bản vá khẩn cấp.
-- Toàn bộ các thẻ tag SemVer trỏ chính xác vào các mốc phát hành trên nhánh chính.
+- Có thể chỉ ra feature commit, release/hotfix commit và commit mà mỗi tag đang trỏ tới.
+- Giải thích được các bước GitHub chỉ hoạt động khi có remote, quyền và quy tắc tương ứng.
 
 ## ❓ Quiz nhanh
 Hãy hoàn thành bài trắc nghiệm bên dưới để tổng kết toàn diện các kiến thức và kỹ năng then chốt của Level 6: Team Workflows.
@@ -92,6 +94,6 @@ Hãy hoàn thành bài trắc nghiệm bên dưới để tổng kết toàn di�
 Thiết kế tệp cấu hình GitHub Actions hoàn chỉnh để tự động kiểm tra định dạng commit message và tự động đóng gói ứng dụng mỗi khi có thẻ tag phiên bản mới được đẩy lên kho lưu trữ.
 
 ## 📝 Tổng kết
-- Kết hợp Protected Branch, CODEOWNERS và Conventional Commits tạo nên nền tảng quản trị mã nguồn vững chắc.
-- Khả năng xử lý linh hoạt giữa Feature Branch, Release Branch và Hotfix Workflow là thước đo của một kỹ sư Git chuyên nghiệp.
-- Bạn đã sẵn sàng tự tin bước vào môi trường phát triển phần mềm cộng tác quy mô doanh nghiệp!
+- Branch protection, CODEOWNERS và commit conventions là các lựa chọn có cấu hình riêng, không tự xuất hiện khi dùng Git.
+- Feature/release/hotfix branches cần gắn với workflow cụ thể của nhóm; hotfix phải bắt đầu từ commit production đúng.
+- Đánh giá dựa trên việc giải thích được lựa chọn, thực hiện được thao tác và kiểm tra được kết quả.

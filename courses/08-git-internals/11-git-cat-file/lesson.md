@@ -5,7 +5,7 @@
 ## 🎯 Mục tiêu
 - Làm chủ lệnh plumbing cứu hộ đa năng: `git cat-file`.
 - Sử dụng thành thạo 3 cờ quan sát cốt lõi: `-p` (pretty-print nội dung), `-t` (kiểm tra loại đối tượng), và `-s` (xem kích thước byte).
-- Có khả năng kiểm tra bất kỳ đối tượng nhị phân nào trong `.git/objects/` chỉ bằng tiền tố mã băm (hash prefix).
+- Có khả năng kiểm tra object bằng object ID đầy đủ, ref hoặc tiền tố ID ngắn nếu ID đó không mơ hồ.
 - Nắm vững cách truyền các symbolic refs như `HEAD` trực tiếp vào lệnh kiểm tra.
 
 ---
@@ -13,7 +13,7 @@
 ## 🧩 Từ khóa hôm nay
 
 ### git cat-file Command
-- **Nói dễ hiểu**: Lệnh plumbing chuyên dụng dùng để giải nén zlib và hiển thị thông tin chi tiết của mọi đối tượng trong Git database.
+- **Nói dễ hiểu**: Lệnh plumbing đọc object từ Git database và hiển thị thông tin hoặc nội dung đã giải nén.
 - **Ví dụ**: Dùng `git cat-file -p HEAD` để xem nội dung văn bản gốc của commit mới nhất.
 - **Đừng nhầm**: Không phải lệnh `cat` của Linux; đối tượng Git được nén nhị phân nên lệnh `cat` thông thường sẽ in ra ký tự rác.
 
@@ -30,12 +30,12 @@
 ---
 
 ## 📖 Định nghĩa
-`git cat-file` là con dao pha của các chuyên gia Git Internals. Vì mọi đối tượng trong thư mục `.git/objects/` đều bị nén bằng thuật toán zlib, bạn không thể sử dụng các lệnh đọc văn bản thông thường như `cat` hay notepad để xem nội dung của chúng. Lệnh `git cat-file` nhận mã băm SHA-1 của một đối tượng, tự động giải nén, phân tích cú pháp tiêu đề và hiển thị thông tin chi tiết ra màn hình tùy theo các cờ tùy chọn được cung cấp.
+`git cat-file` đọc object từ object database. Loose object được nén riêng; nhiều object khác có thể nằm trong packfile. Lệnh xử lý cách lưu trữ đó và cho phép xem loại (`-t`), kích thước nội dung (`-s`) hoặc nội dung (`-p`). Bạn có thể đưa vào object ID, ref hoặc revision expression hợp lệ; tiền tố rút gọn chỉ dùng được khi không mơ hồ.
 
 ---
 
 ## 💡 Tại sao cần
-Khi hệ thống Git gặp sự cố hỏng tệp hoặc khi bạn cần điều tra lịch sử ở mức độ pháp y kỹ thuật số (digital forensics), `git cat-file` là công cụ duy nhất cho phép bạn "chụp X-quang" bên trong cơ sở dữ liệu đối tượng. Bạn có thể xem chính xác một Commit trỏ tới Tree nào, một Tree chứa những tệp gì, hoặc một Blob chứa nội dung thô ra sao mà không làm thay đổi trạng thái của Working Directory.
+Khi cần tìm hiểu một commit chứa gì, `git cat-file` cho phép đọc object mà không chuyển nhánh hay sửa working tree. Bạn có thể xem commit trỏ tới tree nào, tree chứa entry gì, hoặc blob có nội dung nào. Một số lệnh khác như `git show` cũng trình bày dữ liệu lịch sử ở dạng thân thiện hơn.
 
 ---
 
@@ -47,13 +47,11 @@ Hãy tưởng tượng các đối tượng trong `.git/objects/` như những v
 ## 📊 Sơ đồ minh họa
 ```text
 Ba chế độ kiểm tra của git cat-file:
-Đối tượng: .git/objects/4b/825dc642cb6eb9a060e54bf8d69288fbee4904
+Đối tượng: <object-id>
                │
-               ├─ git cat-file -t 4b825d ──► "tree"     (Loại đối tượng)
-               ├─ git cat-file -s 4b825d ──► "182"      (Kích thước byte)
-               └─ git cat-file -p 4b825d ──► Hiển thị nội dung định dạng đẹp
-                                             100644 blob e69de2 README.md
-                                             040000 tree 8a7b6c src
+               ├─ git cat-file -t <object-id> ──► loại (blob/tree/commit/tag)
+               ├─ git cat-file -s <object-id> ──► kích thước payload theo byte
+               └─ git cat-file -p <object-id> ──► nội dung theo dạng phù hợp với loại
 ```
 
 ---
@@ -66,7 +64,7 @@ Một kỹ sư nhận được thông báo lỗi từ đồng nghiệp rằng co
 ## 💻 Command & Cú pháp
 ```bash
 # Xem nội dung định dạng đẹp của đối tượng
-git cat-file -p 4b825dc642
+git cat-file -p 'HEAD^{tree}'
 
 # Kiểm tra loại đối tượng (blob, tree, commit, tag)
 git cat-file -t HEAD
@@ -81,7 +79,7 @@ git cat-file -p HEAD^{tree}
 ---
 
 ## 🔍 Giải thích command
-- `git cat-file -p <hash>`: Giải nén zlib và in dữ liệu ra terminal ở định dạng dễ đọc nhất.
+- `git cat-file -p <object>`: Đọc object và in nội dung phù hợp với loại object; blob nhị phân có thể không đọc được trong terminal.
 - `git cat-file -t <hash>`: Đọc byte header và in ra loại đối tượng.
 - `git cat-file -s <hash>`: Trả về số byte của nội dung tệp trước khi nén.
 - `HEAD^{tree}`: Cú pháp revision mở rộng trỏ trực tiếp tới đối tượng Tree của commit hiện tại.
@@ -90,18 +88,19 @@ git cat-file -p HEAD^{tree}
 
 ## ⚠️ Sai lầm phổ biến
 1. **Dùng lệnh `cat` của Linux đọc file trong `.git/objects/`**: Gây ra màn hình tràn ngập ký tự nhị phân rác vì tệp đã bị nén zlib.
-2. **Truyền nhầm đường dẫn file thay vì mã băm SHA-1**: `git cat-file` chỉ nhận mã SHA-1 hoặc con trỏ ref (`HEAD`), không nhận đường dẫn tệp trên đĩa.
-3. **Nghĩ rằng phải gõ đủ 40 ký tự**: Bạn chỉ cần cung cấp từ 4 đến 7 ký tự đầu tiên miễn là tiền tố đó không bị trùng lặp trong kho lưu trữ.
+2. **Truyền nhầm đường dẫn file trên ổ đĩa**: `git cat-file` cần object name hoặc revision expression; để xem file trong commit, dùng biểu thức như `HEAD:path/to/file`.
+3. **Nghĩ rằng tiền tố ngắn bất kỳ luôn dùng được**: Tiền tố phải đủ dài để xác định duy nhất một object trong repository; độ dài cần thiết thay đổi theo repo.
 
 ---
 
 ## 🧪 Lab thực hành
 Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
 
-1. **Bước 1**: Lấy mã băm của commit gần nhất bằng lệnh `git rev-parse HEAD`.
-2. **Bước 2**: Chạy lệnh `git cat-file -t HEAD` để xác nhận loại đối tượng là `commit`.
-3. **Bước 3**: Chạy lệnh `git cat-file -p HEAD` và sao chép mã băm ở dòng `tree`.
-4. **Bước 4**: Chạy `git cat-file -p <mã_tree>` để xem danh mục tệp, rồi tiếp tục lấy một mã blob và chạy `git cat-file -p <mã_blob>` để xem nội dung tệp.
+1. **Bước 1**: Chạy `git rev-parse HEAD` để xem object ID của commit hiện tại.
+2. **Bước 2**: Chạy `git cat-file -t HEAD`; kết quả phải là `commit`.
+3. **Bước 3**: Chạy `git cat-file -p HEAD` và đọc object ID sau `tree`.
+4. **Bước 4**: Chạy `git cat-file -p 'HEAD^{tree}'` để xem tree, rồi `git ls-tree -r HEAD` để chọn một đường dẫn có trong commit.
+5. **Bước 5**: Chạy `git cat-file -p HEAD:<path>` với đường dẫn vừa chọn để xem nội dung blob văn bản.
 
 ---
 
@@ -127,7 +126,7 @@ Làm thế nào để sử dụng `git cat-file --batch-check` kết hợp với
 ---
 
 ## 📝 Tổng kết
-- `git cat-file` là công cụ giải nén và kiểm tra nội tạng của các đối tượng trong Git Object Store.
+- `git cat-file` là công cụ kiểm tra object trong Git Object Store, bất kể chúng được lưu loose hay packed.
 - Cờ `-p` in nội dung định dạng đẹp, `-t` in loại đối tượng, `-s` in kích thước byte.
 - Hỗ trợ truyền mã băm rút gọn (prefix hash) hoặc các con trỏ tham chiếu như `HEAD`.
 - Giúp kỹ sư kiểm tra sâu và điều tra lịch sử mã nguồn ở tầng dữ liệu nhị phân nguyên bản.

@@ -4,7 +4,7 @@
 
 ## 🎯 Mục tiêu
 - Giải phẫu cấu trúc nhị phân của tệp `.git/index` (DIRC - Directory Cache).
-- Hiểu rõ các trường dữ liệu được lưu cho mỗi tệp: ctime, mtime, file size, permissions, SHA-1, và đường dẫn tệp.
+- Nhận biết các trường thường có trong index: metadata của tệp, object ID, stage và đường dẫn.
 - Sử dụng lệnh plumbing `git ls-files --stage` để xem bảng thông tin Staging Area nội bộ.
 - Nắm vững ý nghĩa của các Stage Number (0, 1, 2, 3) trong quá trình giải quyết xung đột 3-way merge.
 
@@ -12,30 +12,30 @@
 
 ## 🧩 Từ khóa hôm nay
 
-### Directory Cache (.git/index)
-- **Nói dễ hiểu**: Tệp nhị phân duy nhất đại diện cho Staging Area, đóng vai trò bản nháp bộ nhớ đệm trung gian trước khi commit.
-- **Ví dụ**: Khi gõ `git add file.txt`, Git ghi đường dẫn `file.txt` cùng mã blob vào tệp `.git/index`.
-- **Đừng nhầm**: Không phải là một thư mục chứa các bản copy vật lý; nó chỉ là danh bạ nhị phân lưu trữ các con trỏ trỏ tới Blobs.
+### Git index (Staging Area)
+- **Nói dễ hiểu**: Bản ghi nhị phân Git dùng để biết nội dung nào sẽ đi vào commit kế tiếp.
+- **Ví dụ**: `git add file.txt` cập nhật đường dẫn và object ID trong index.
+- **Đừng nhầm**: `.git/index` là vị trí thông thường; Git directory có thể nằm nơi khác, index có thể dùng split-index, và index không lưu nguyên bản nội dung tệp.
 
 ### Stage Numbers (0, 1, 2, 3)
 - **Nói dễ hiểu**: Chỉ số phân đoạn trong index: `0` là trạng thái bình thường; `1` là bản gốc tổ tiên (base), `2` là bản của ta (ours), `3` là bản của đối phương (theirs) khi có xung đột.
 - **Ví dụ**: Khi gặp merge conflict, `git ls-files -u` hiển thị cùng lúc 3 stage 1, 2, 3 cho tệp bị xung đột.
 - **Đừng nhầm**: Sau khi sửa xong xung đột và gõ `git add`, cả 3 stage sẽ được thu về một stage 0 duy nhất.
 
-### Stat Cache Optimization
-- **Nói dễ hiểu**: Cơ chế lưu lại mtime (giờ sửa đổi) và size tệp tin trực tiếp từ hệ điều hành để nhận diện thay đổi trong tích tắc.
-- **Ví dụ**: Lệnh `git status` chỉ cần so sánh tem mtime của file trên đĩa với số mtime lưu trong index mà không cần đọc lại toàn bộ nội dung.
-- **Đừng nhầm**: Nếu bạn chạm vào file bằng lệnh `touch` (đổi mtime) mà không đổi nội dung, Git sẽ băm lại nội dung để xác minh trước khi báo modified.
+### Stat cache
+- **Nói dễ hiểu**: Index lưu một số metadata như thời gian sửa và kích thước để Git kiểm tra tệp nhanh hơn.
+- **Ví dụ**: `git status` dùng metadata để nhận ra nhiều tệp không đổi mà không phải đọc lại nội dung từng tệp.
+- **Đừng nhầm**: Đây là cách tối ưu, không phải bằng chứng tuyệt đối. Git có thể đọc và so sánh nội dung khi metadata thay đổi hoặc không đủ tin cậy.
 
 ---
 
 ## 📖 Định nghĩa
-Tệp `.git/index` là một tệp nhị phân phức tạp và có hiệu năng cao bậc nhất trong Git, đại diện cho Staging Area (hay còn gọi là Cache hoặc Dircache). Nó đóng vai trò là bản nháp trung gian chuẩn bị cho commit tiếp theo. Cấu trúc nhị phân của tệp index bắt đầu bằng 4 byte chữ ký "DIRC", phiên bản, số lượng mục (entries), và danh sách các tệp được theo dõi. Mỗi mục lưu giữ đầy đủ thông số tem thời gian của hệ điều hành (stat cache), quyền hạn tệp, mã băm SHA-1 của Blob tương ứng, số thứ tự phân đoạn (stage number dùng cho xử lý merge conflict), và đường dẫn tệp.
+Git index (còn gọi là Staging Area hoặc dircache) là bản ghi nhị phân dùng để chuẩn bị nội dung cho commit kế tiếp. Trong cấu trúc index phổ biến, phần đầu có chữ ký `DIRC`, số phiên bản và số mục; sau đó là các mục cùng phần mở rộng. Một mục thường ghi metadata của tệp, mode, object ID theo định dạng hash của repository, stage và đường dẫn. Git thường lưu index ở `.git/index`, nhưng vị trí Git directory có thể khác và split-index có thể lưu phần lớn mục ở tệp dùng chung riêng.
 
 ---
 
 ## 💡 Tại sao cần
-Tại sao lệnh `git status` có thể quét hàng trăm nghìn tệp tin trong dự án lớn chỉ trong tích tắc nửa giây? Bí quyết nằm ở tệp `.git/index`. Bằng cách lưu lại thông số `mtime` (thời điểm chỉnh sửa tệp) và kích thước tệp trực tiếp từ hệ điều hành, Git chỉ cần gọi hàm hệ thống nhanh `stat()` để so sánh tem thời gian. Nếu tem thời gian không đổi, Git biết chắc 100% nội dung tệp chưa hề bị sửa mà không cần tốn công đọc nội dung tệp từ đĩa.
+`git status` cần so sánh index với working tree và commit hiện tại. Metadata như thời gian sửa, kích thước và inode giúp Git bỏ qua nhiều lần đọc tệp không cần thiết. Nếu metadata báo có thay đổi, hoặc Git không thể tin chắc dữ liệu cache (ví dụ có thể gặp tình huống racy timestamp), Git có thể kiểm tra nội dung để xác định trạng thái. Vì vậy stat cache giúp tăng tốc nhưng không bảo đảm rằng chỉ nhìn thời gian là luôn đủ.
 
 ---
 
@@ -54,18 +54,18 @@ Cấu trúc nhị phân của tệp .git/index:
 │ - ctime / mtime (Tem thời gian hệ điều hành)          │
 │ - file size (Kích thước byte trên đĩa)                │
 │ - mode: 100644 (Quyền tệp tin)                         │
-│ - sha1: e69de29bb2d1 (Mã băm trỏ tới Blob)            │
+│ - object ID: (độ dài tùy hash format của repo)        │
 │ - stage: 0 (Normal) | 1 (Base) | 2 (Ours) | 3 (Theirs) │
 │ - path: "src/app.ts" (Đường dẫn tệp)                   │
 ├────────────────────────────────────────────────────────┤
-│ ENTRY 2: [mode, sha1, path]                            │
+│ ENTRY 2: [mode, object ID, stage, path]                │
 └────────────────────────────────────────────────────────┘
 ```
 
 ---
 
 ## 🏢 Ví dụ thực tế
-Một kỹ sư muốn xem những gì thực sự đang nằm trong Staging Area sau khi gõ `git add`. Kỹ sư chạy lệnh plumbing: `git ls-files --stage`. Màn hình hiển thị danh sách chi tiết: `100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0 README.md` và `100644 3b18e512db79e4c8300de074a1e281301f6181f0 0 src/index.ts`. Kỹ sư nhận thấy số `0` ở giữa chính là stage number (biểu thị tệp ở trạng thái bình thường, không xung đột). Khi xảy ra xung đột merge conflict, lệnh này sẽ hiển thị 3 dòng cho cùng một tệp ứng với stage 1 (base), stage 2 (ours), và stage 3 (theirs). Hiểu được tệp index giúp kỹ sư giải quyết xung đột ở tầng bản chất nhất.
+Sau khi chạy `git add`, người học dùng `git ls-files --stage` để xem các mục trong index. Mỗi dòng thường có dạng `100644 <object-id> 0 README.md`: mode, object ID, stage và đường dẫn. Stage `0` là mục bình thường. Trong một số xung đột, cùng đường dẫn có thể có các mục stage `1` (base), `2` (ours) và `3` (theirs). Độ dài object ID tùy định dạng hash của repository.
 
 ---
 
@@ -80,24 +80,24 @@ git ls-files --unmerged
 # Kiểm tra trực tiếp trạng thái index với định dạng porcelain v2
 git status --porcelain=v2
 
-# Cập nhật trực tiếp tệp vào index bằng lệnh plumbing
-git update-index --add sample.txt
+# Xem đường dẫn Git dùng cho index trong repository hiện tại
+git rev-parse --git-path index
 ```
 
 ---
 
 ## 🔍 Giải thích command
-- `git ls-files --stage`: In ra bảng dữ liệu nội bộ của index gồm mode, sha-1, stage number và path.
+- `git ls-files --stage`: In ra các mục trong index gồm mode, object ID, stage number và path.
 - `git ls-files --unmerged`: Bộ lọc tiện lợi chỉ hiển thị các tệp đang có stage khác 0 khi bị conflict.
 - `git status --porcelain=v2`: Định dạng đầu ra ổn định cho script phân tích cú pháp trạng thái index.
-- `git update-index --add`: Thao tác trực tiếp với Staging Area mà không cần qua lệnh bề mặt `git add`.
+- `git rev-parse --git-path index`: Trả về đường dẫn index thực tế mà repository này sử dụng.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Nghĩ rằng Staging Area là một thư mục ảo**: Thực chất chỉ là một tệp nhị phân duy nhất `.git/index` chứa danh sách con trỏ trỏ tới Blob.
+1. **Nghĩ mọi repository luôn có một tệp index ở đúng `.git/index`**: Đây là vị trí thường gặp, nhưng linked worktree và split-index có thể dùng vị trí hoặc cấu trúc khác.
 2. **Không hiểu ý nghĩa Stage Number**: Dẫn đến lúng túng khi xử lý xung đột 3-way merge ở mức độ sâu.
-3. **Nghĩ rằng `git add` chỉ là đánh dấu nhãn**: Lệnh `git add` thực tế đã tạo ngay đối tượng Blob mới nén zlib vào `.git/objects/` tại thời điểm bạn gõ lệnh.
+3. **Nghĩ mỗi lần `git add` luôn tạo một tệp Blob mới**: Git lưu object theo nội dung; nội dung đã có có thể được dùng lại và object có thể được lưu loose hoặc trong pack.
 
 ---
 
@@ -106,8 +106,8 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
 
 1. **Bước 1**: Tạo một tệp mới `hello.txt` và thêm vào Staging Area bằng lệnh `git add hello.txt`.
 2. **Bước 2**: Sử dụng lệnh plumbing `git ls-files --stage` để kiểm tra bảng dữ liệu nội bộ của Index.
-3. **Bước 3**: Quan sát 4 cột dữ liệu: File Mode (`100644`), Blob SHA-1, Stage Number (`0`), và Đường dẫn tệp.
-4. **Bước 4**: Dùng lệnh `git cat-file -p <mã_sha_ở_cột_2>` để xác minh Blob đã được ghi vào database ngay khi `git add`.
+3. **Bước 3**: Quan sát mode, object ID, stage (`0`) và đường dẫn. Object ID có thể dài khác nhau tùy repository.
+4. **Bước 4**: Dùng `git cat-file -p <object-id>` với ID ở cột thứ hai để đọc nội dung đã được đưa vào index.
 
 ---
 
@@ -117,8 +117,8 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
 ---
 
 ## ✅ Validation & Kết quả mong đợi
-- Lệnh `git ls-files --stage` hiển thị chính xác tệp tin với stage number là `0`.
-- Đối tượng Blob tương ứng xuất hiện ngay trong thư mục `.git/objects/` ngay cả khi bạn chưa hề gõ lệnh `git commit`.
+- `git ls-files --stage` hiển thị tệp với stage `0`.
+- `git cat-file -p <object-id>` in nội dung đã stage; không cần tìm tệp vật lý trong `.git/objects/` vì object có thể đã được pack.
 
 ---
 
@@ -133,7 +133,7 @@ Làm thế nào mà thông số stat cache bên trong tệp `.git/index` giúp G
 ---
 
 ## 📝 Tổng kết
-- Tệp `.git/index` là tệp nhị phân Directory Cache đại diện cho Staging Area.
-- Lưu trữ stat cache (mtime, size), quyền hạn tệp, mã băm Blob và stage number.
+- Git index là bản ghi nhị phân đại diện cho Staging Area; `.git/index` là vị trí phổ biến nhưng không phải giả định an toàn cho mọi repository.
+- Các mục chứa stat cache, mode, object ID, stage và đường dẫn; metadata giúp tăng tốc nhưng không thay thế mọi lần kiểm tra nội dung.
 - Sử dụng `git ls-files --stage` để xem chi tiết các mục đang nằm trong Index.
-- Quá trình `git add` thực sự tạo Blob trong database và ghi nhận thông tin vào file `.git/index`.
+- `git add` cập nhật index và bảo đảm nội dung được Git nhận diện; cùng nội dung có thể dùng chung object.

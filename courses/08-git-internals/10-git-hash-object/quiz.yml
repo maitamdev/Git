@@ -39,7 +39,7 @@ questions:
         correct: false
       - text: "tag"
         correct: false
-    explanation: "Loại đối tượng mặc định của git hash-object luôn luôn là blob."
+    explanation: "Nếu không truyền `-t`, `git hash-object` dùng loại `blob` mặc định; `-t` cho phép yêu cầu loại object khác."
   - id: q4
     question: "Sau khi chạy lệnh git hash-object -w myfile.txt, tệp myfile.txt đã được đưa vào Staging Area chưa?"
     type: single

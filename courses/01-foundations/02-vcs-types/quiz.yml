@@ -1,65 +1,82 @@
 id: quiz-02-vcs-types
-title: "Trắc nghiệm: Phân loại kiến trúc VCS"
+title: "Trắc nghiệm: Phân biệt Local VCS, CVCS và DVCS"
 questions:
   - id: q1
-    question: Điểm khác biệt căn bản nhất giữa Distributed VCS (như Git) và
-      Centralized VCS (như SVN) là gì?
+    question: "Điểm khác nhau chính giữa CVCS và DVCS là gì?"
     type: single
     options:
-      - text: Một bản clone Git đầy đủ thông thường có kho cục bộ kèm lịch sử dự án
+      - text: "CVCS giữ lịch sử chung trên máy chủ; bản clone DVCS thường có lịch sử cục bộ"
         correct: true
-      - text: DVCS chỉ hoạt động trên hệ điều hành Linux còn CVCS chỉ chạy trên Windows
+      - text: "CVCS chỉ dùng được với tệp văn bản; DVCS chỉ dùng được với mã nguồn"
         correct: false
-      - text: CVCS lưu code trên đám mây còn DVCS lưu code trên thẻ nhớ rời
+      - text: "CVCS luôn miễn phí; DVCS luôn yêu cầu phí hằng tháng"
         correct: false
-      - text: DVCS yêu cầu phải trả phí bản quyền hàng tháng còn CVCS hoàn toàn miễn phí
+      - text: "CVCS tự tạo lịch sử; DVCS yêu cầu người dùng sao chép thư mục thủ công"
         correct: false
-    explanation: Với một bản clone đầy đủ thông thường, Git có dữ liệu và lịch sử
-      cục bộ để bạn làm nhiều thao tác mà không cần hỏi máy chủ. Một số chế độ
-      clone rút gọn là chủ đề nâng cao.
+    explanation: >-
+      CVCS dựa vào máy chủ trung tâm để giữ lịch sử chung. Một bản clone Git
+      đầy đủ thông thường cũng mang lịch sử về máy để làm việc cục bộ.
+
   - id: q2
-    question: Nếu máy chủ trung tâm bị mất kết nối mạng Internet, lập trình viên sử
-      dụng Git có thể làm những gì?
+    question: "Bạn đã clone đầy đủ một dự án Git rồi mất Internet. Việc nào vẫn làm được trên máy?"
     type: single
     options:
-      - text: Vẫn có thể commit, tạo nhánh, xem khác biệt và lịch sử đã có trên máy
+      - text: "Xem lịch sử đã có và lưu một commit mới trên máy"
         correct: true
-      - text: Không thể làm bất cứ thao tác gì vì Git sẽ bị khóa hoàn toàn
+      - text: "Gửi commit mới lên máy chủ chia sẻ để nhóm nhận ngay"
         correct: false
-      - text: Mọi dữ liệu trên máy tính sẽ tự động bị xóa sạch
+      - text: "Tải những commit mới nhất từ máy chủ về"
         correct: false
-      - text: Chỉ có thể đọc code chứ không được phép chỉnh sửa tệp tin
+      - text: "Tự động làm cho thành viên khác nhìn thấy thay đổi của bạn"
         correct: false
-    explanation: Git xử lý các thao tác trên kho cục bộ mà không cần Internet. Gửi
-      commit lên server hoặc lấy thay đổi mới từ server thì cần kết nối.
+    explanation: >-
+      Bản clone đầy đủ có lịch sử cục bộ nên bạn vẫn có thể đọc và lưu commit.
+      Gửi hoặc nhận dữ liệu từ máy chủ cần kết nối mạng.
+
   - id: q3
-    question: Khái niệm "Single Point of Failure" (Điểm nghẽn đơn độc) phản ánh
-      nhược điểm nguy hiểm của mô hình nào?
+    question: "Nếu máy chủ của một CVCS tạm ngừng hoạt động, mô tả nào đúng nhất?"
     type: single
     options:
-      - text: Centralized VCS (Hệ thống quản lý phiên bản tập trung)
+      - text: "Thành viên có thể còn tệp trên máy nhưng chưa lưu phiên bản mới vào lịch sử chung"
         correct: true
-      - text: Distributed VCS (Hệ thống quản lý phiên bản phân tán)
+      - text: "Tất cả tệp trên máy thành viên tự động bị xóa"
         correct: false
-      - text: Cả hai mô hình đều không bị ảnh hưởng
+      - text: "Mỗi máy thành viên luôn có toàn bộ lịch sử để commit offline như Git"
         correct: false
-      - text: Mô hình điện toán đám mây hiện đại
+      - text: "Lịch sử chung tự chuyển sang máy của một thành viên bất kỳ"
         correct: false
-    explanation: CVCS phụ thuộc vào máy chủ trung tâm cho các thao tác chia sẻ lịch
-      sử. Nếu máy chủ gặp sự cố, nhóm bị ảnh hưởng; mất dữ liệu lâu dài còn phụ
-      thuộc vào bản sao lưu.
+    explanation: >-
+      Trong CVCS, máy chủ giữ lịch sử chung. Mất kết nối có thể chặn việc lưu
+      phiên bản mới vào đó, dù tệp đang làm trên máy vẫn còn.
+
   - id: q4
-    question: Đại diện tiêu biểu nhất của hệ thống quản lý phiên bản phân tán hiện
-      nay là phần mềm nào?
+    question: "Cặp nào ghép đúng công cụ với mô hình quản lý phiên bản thường dùng?"
     type: single
     options:
-      - text: Git
+      - text: "Git — DVCS; Subversion (SVN) — CVCS"
         correct: true
-      - text: Subversion (SVN)
+      - text: "Git — CVCS; Subversion (SVN) — DVCS"
         correct: false
-      - text: CVS
+      - text: "Git và SVN đều là Local VCS chỉ dành cho một máy"
         correct: false
-      - text: Microsoft Word Track Changes
+      - text: "Git — Local VCS; Subversion (SVN) — CVCS"
         correct: false
-    explanation: Git do Linus Torvalds sáng lập năm 2005 là đại diện tiêu biểu và
-      phổ biến nhất của kiến trúc DVCS.
+    explanation: >-
+      Git là DVCS với lịch sử trong bản clone cục bộ. SVN thường được triển khai
+      theo mô hình CVCS có máy chủ giữ lịch sử chung.
+
+  - id: q5
+    question: "Khác biệt nào thường đúng giữa clone Git đầy đủ và tải dự án dưới dạng ZIP?"
+    type: single
+    options:
+      - text: "Clone Git thường giữ dữ liệu kho và lịch sử; ZIP thường chỉ chứa các tệp ở một trạng thái"
+        correct: true
+      - text: "ZIP luôn có toàn bộ lịch sử, còn clone Git chỉ tải tệp mới nhất"
+        correct: false
+      - text: "Clone Git tự gửi thay đổi lên máy chủ; ZIP tự đồng bộ giữa các máy"
+        correct: false
+      - text: "Không có khác biệt nào; hai cách luôn tạo ra cùng một loại dữ liệu"
+        correct: false
+    explanation: >-
+      Clone Git thông thường tạo bản kho có lịch sử để Git tiếp tục làm việc.
+      ZIP tải các tệp hiện có nhưng thường không mang dữ liệu lịch sử Git.

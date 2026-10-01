@@ -14,8 +14,7 @@ questions:
         correct: false
       - text: git merge --continue
         correct: false
-    explanation: Trong quy trình rebase, sau khi add tệp resolved bạn BẮT BUỘC dùng
-      `git rebase --continue` để Git tự động tạo commit tiếp.
+    explanation: Trong quy trình thông thường, sau khi stage tệp đã giải quyết, `git rebase --continue` yêu cầu Git tiếp tục phát lại chuỗi commit.
   - id: q2
     question: Điều gì sẽ xảy ra nếu bạn chạy câu lệnh `git rebase --skip` khi đang ở
       trạng thái xung đột commit?
@@ -91,5 +90,4 @@ questions:
         correct: false
       - text: Kiểm tra trạng thái bằng git status
         correct: false
-    explanation: Gõ `git commit` thủ công sẽ phá vỡ tiến trình máy trạng thái của
-      rebase và tạo ra commit thừa không mong muốn.
+    explanation: Khi rebase đang tạm dừng vì conflict, hãy dùng `git rebase --continue` theo hướng dẫn Git để hoàn tất bước hiện tại và phát lại các commit còn lại.

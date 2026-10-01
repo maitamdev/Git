@@ -1,10 +1,33 @@
 import { describe, it, expect } from 'vitest';
 import fs from 'fs';
 import path from 'path';
-import { detectPrerequisiteCycles } from '../../scripts/validate-courses';
+import { detectPrerequisiteCycles, findMissingLessonSections } from '../../scripts/validate-courses';
 import { COURSE_SEARCH_INDEX } from '../../packages/exercise-engine/src/courses/generated/course-data';
 
 describe('Course Manifest, Prerequisite Cycle Detection & Search Index (Parts A2, A3, A4, J3, J4, K)', () => {
+  describe('Lesson section validation', () => {
+    it('accepts the standard Vietnamese instructional headings', () => {
+      const content = [
+        '## 🎯 Mục tiêu', '## 🧩 Từ khóa hôm nay', '## 📖 Định nghĩa', '## 💡 Tại sao cần',
+        '## 🧠 Mental Model', '## 📊 Sơ đồ minh họa', '## 🏢 Ví dụ thực tế',
+        '## 💻 Command & Cú pháp', '## 🔍 Giải thích command', '## ⚠️ Sai lầm phổ biến',
+        '## 🧪 Lab thực hành', '## 💡 Hint & mẹo', '## ✅ Validation & Kết quả mong đợi',
+        '## ❓ Quiz nhanh', '## 🚀 Thử thách nâng cao', '## 📝 Tổng kết',
+      ].join('\n');
+
+      expect(findMissingLessonSections(content)).toEqual([]);
+    });
+
+    it('accepts the legacy English Challenge heading and reports genuinely missing sections', () => {
+      const content = '## 🧩 Từ khóa hôm nay\n## 🔥 Challenge';
+
+      expect(findMissingLessonSections(content)).toEqual([
+        'Mục tiêu', 'Định nghĩa', 'Tại sao cần', 'Mental Model', 'Sơ đồ', 'Ví dụ',
+        'Command', 'Giải thích', 'Sai lầm', 'Lab', 'Hint', 'Validation', 'Quiz', 'Tổng kết',
+      ]);
+    });
+  });
+
   describe('Prerequisite Cycle Detection (detectPrerequisiteCycles) (Part J4)', () => {
     it('returns null for an empty prerequisite graph', () => {
       const graph = new Map<string, string[]>();

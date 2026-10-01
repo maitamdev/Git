@@ -39,7 +39,7 @@ export const lesson: CourseLesson = {
       "git branch --list"
     ]
   },
-  "content": "# So sánh GitHub Flow / Git Flow / Trunk-Based\n\n---\n\n## 🎯 Mục tiêu\n- Lập bảng ma trận so sánh chi tiết ưu nhược điểm, độ phức tạp và trường hợp sử dụng của 3 mô hình workflow hàng đầu.\n- Hiểu rõ sự đánh đổi (Trade-offs) giữa tính linh hoạt tốc độ cao và mức độ kiểm soát an toàn nghiêm ngặt.\n- Phân tích được các tiêu chí cốt lõi để lựa chọn workflow phù hợp: loại sản phẩm, quy mô đội ngũ, chu kỳ phát hành, độ chín CI/CD.\n- Tự tin tư vấn và thiết lập quy trình phân nhánh tối ưu cho một dự án thực tế.\n\n---\n\n## 🧩 Từ khóa hôm nay\n\n### Workflow Trade-offs (Đánh đổi quy trình)\n- **Nói dễ hiểu**: Việc cân nhắc giữa tốc độ phát hành nhanh chóng và mức độ an toàn kiểm soát chặt chẽ khi chọn quy trình.\n- **Ví dụ**: Startup chọn GitHub Flow để release nhanh mỗi ngày, chấp nhận bớt các tầng kiểm duyệt trung gian như Git Flow.\n- **Đừng nhầm**: Không có mô hình nào là hoàn hảo tuyệt đối cho mọi dự án; mô hình tốt nhất là mô hình giải quyết đúng nút thắt của nhóm.\n\n### CI/CD Maturity (Độ chín của CI/CD)\n- **Nói dễ hiểu**: Mức độ tự động hóa và độ tin cậy của hệ thống kiểm thử tự động, build và triển khai mã nguồn trong dự án.\n- **Ví dụ**: Dự án có 1.000 test case tự động chạy dưới 5 phút đạt độ chín CI/CD cao, đủ điều kiện áp dụng Trunk-Based Development.\n- **Đừng nhầm**: Nếu chưa có bài test tự động nào mà áp dụng Trunk-Based sẽ khiến nhánh chính liên tục bị hỏng.\n\n### Release Cadence (Chu kỳ phát hành)\n- **Nói dễ hiểu**: Nhịp độ và tần suất đưa phiên bản phần mềm mới đến tay người dùng (nhiều lần mỗi ngày, hàng tuần, hay định kỳ mỗi tháng).\n- **Ví dụ**: Web app SaaS có chu kỳ phát hành liên tục theo ngày, trong khi app mobile thường phát hành theo kỳ sprint 2-4 tuần.\n- **Đừng nhầm**: Chu kỳ phát hành do đặc thù phân phối sản phẩm quyết định, từ đó định hình chiến lược phân nhánh Git phù hợp.\n\n---\n\n## 📖 Định nghĩa\nLựa chọn chiến lược phân nhánh là bài toán cân nhắc sự đánh đổi (Trade-off): Git Flow ưu tiên kiểm soát an toàn cho các chu kỳ phát hành định kỳ; GitHub Flow ưu tiên tinh gọn cho ứng dụng web; còn Trunk-Based Development tối đa hóa tốc độ tích hợp cho đội ngũ có hạ tầng CI/CD tự động hóa cao.\n\n---\n\n## 💡 Tại sao cần\nÁp dụng sai workflow gây lãng phí năng suất nghiêm trọng: ép startup 3 người dùng Git Flow cồng kềnh sẽ làm chậm tiến độ vì thủ tục rườm rà; ngược lại, ép phần mềm thiết bị y tế dùng Trunk-Based khi chưa có test tự động sẽ tiềm ẩn rủi ro lỗi nguy hiểm.\n\n---\n\n## 🧠 Mental Model\nHãy so sánh 3 mô hình với phương tiện giao thông. Git Flow như đoàn tàu hỏa chở hàng: chạy theo lịch trình cố định, nhiều toa kiểm định, cực kỳ an toàn nhưng khó đổi hướng. GitHub Flow như chiếc ô tô cá nhân: linh hoạt, gọn gàng, xuất phát bất cứ lúc nào. Còn Trunk-Based Development như xe đua F1: cực nhanh, đòi hỏi tay lái điêu luyện và đội kỹ thuật CI hỗ trợ tức thì.\n\n---\n\n## 📊 Sơ đồ minh họa\n```text\nBảng ma trận so sánh 3 mô hình Workflow hàng đầu:\n┌─────────────────┬──────────────┬──────────────┬────────────────────────┐\n│ Tiêu chí        │ Git Flow     │ GitHub Flow  │ Trunk-Based Dev        │\n├─────────────────┼──────────────┼──────────────┼────────────────────────┤\n│ Độ phức tạp     │ Cao (5 nhánh)│ Thấp (1 chính)│ Rất thấp (1 Trunk)     │\n│ Chu kỳ Release  │ Tuần / Tháng │ Vài lần/ngày │ Liên tục từng giờ      │\n│ Tuổi thọ nhánh  │ Dài hạn      │ Vài ngày     │ Rất ngắn (< 1-2 ngày)  │\n│ Hạ tầng CI/CD   │ Cơ bản       │ Khá          │ Rất cao (Bắt buộc)     │\n│ Dự án phù hợp   │ Mobile/Enter │ Web/SaaS     │ Microservices/BigTech  │\n└─────────────────┴──────────────┴──────────────┴────────────────────────┘\n```\n\n---\n\n## 🏢 Ví dụ thực tế\nCông ty công nghệ áp dụng đồng thời hai mô hình: ứng dụng mobile chịu kiểm duyệt khắt khe từ App Store dùng Git Flow để đóng băng phiên bản cho QA kiểm thử an ninh. Trong khi đó, dịch vụ backend microservices có hơn 1.000 test tự động áp dụng Trunk-Based để 50 kỹ sư deploy liên tục mỗi ngày.\n\n---\n\n## 💻 Command & Cú pháp\n```bash\ngit log --oneline --graph --all\ngit branch --list\n```\n\n---\n\n## 🔍 Giải thích command\n- `git log --graph --all`: Trực quan hóa toàn bộ biểu đồ lịch sử các nhánh để xác định chính xác nhóm bạn đang vận hành theo mô hình phân nhánh nào.\n- `git branch --list`: Liệt kê toàn bộ các nhánh đang tồn tại trong dự án để đánh giá độ phức tạp, số lượng và tuổi thọ thực tế của các nhánh.\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Áp dụng máy móc**: Bắt startup nhỏ dùng Git Flow 5 nhánh cồng kềnh gây lãng phí thời gian và làm chậm tốc độ ra mắt sản phẩm.\n2. **Áp dụng Trunk-Based khi thiếu CI**: Hợp nhất liên tục vào main khi chưa có hệ thống test tự động sẽ khiến nhánh chính thường xuyên bị gãy.\n3. **Thay đổi quy trình liên tục**: Đổi workflow quá thường xuyên làm đảo lộn thói quen và gây bối rối cho toàn bộ kỹ sư trong nhóm.\n\n---\n\n## 🧪 Lab thực hành\nBài học này là bài tự kiểm tra: bạn thao tác trực tiếp trên terminal của máy tính để làm quen với công cụ.\n1. Dùng lệnh `git log --oneline --graph --all` để khảo sát cây lịch sử phân nhánh của một dự án mã nguồn mở.\n2. Phân tích dự án dựa trên 4 tiêu chí: loại sản phẩm, tốc độ release, độ chín của CI và quy mô nhóm.\n3. Lựa chọn mô hình workflow tối ưu nhất và viết bản giải trình ngắn gọn lý do lựa chọn.\n\n---\n\n## 💡 Hint & mẹo\n> Không có quy trình nào là hoàn hảo tuyệt đối; quy trình tốt nhất là quy trình giải quyết đúng nút thắt và phù hợp với năng lực hạ tầng của đội ngũ.\n\n---\n\n## ✅ Validation & Kết quả mong đợi\n- Phân tích rạch ròi ưu nhược điểm của cả 3 mô hình Git Flow, GitHub Flow và Trunk-Based Development.\n- Đưa ra quyết định lựa chọn workflow chính xác dựa trên các ràng buộc kỹ thuật thực tế.\n\n---\n\n## ❓ Quiz nhanh\nHãy làm bài trắc nghiệm dưới đây để đối chiếu và so sánh các mô hình workflow.\n\n---\n\n## 🚀 Thử thách nâng cao\nĐề xuất phương án chuyển dịch từng bước từ mô hình Git Flow sang Trunk-Based Development cho một dự án đang phát triển.\n\n---\n\n## 📝 Tổng kết\n- Git Flow phù hợp với các sản phẩm có lịch phát hành cố định và yêu cầu kiểm soát nhiều tầng.\n- GitHub Flow tối ưu cho các sản phẩm web triển khai liên tục và quy mô nhóm vừa phải.\n- Trunk-Based Development mang lại tốc độ cao nhất nhưng đòi hỏi hệ thống kiểm thử tự động cực kỳ hoàn hảo.\n",
+  "content": "# So sánh GitHub Flow / Git Flow / Trunk-Based\n\n---\n\n## 🎯 Mục tiêu\n- Lập bảng ma trận so sánh chi tiết ưu nhược điểm, độ phức tạp và trường hợp sử dụng của 3 mô hình workflow hàng đầu.\n- Hiểu rõ sự đánh đổi (Trade-offs) giữa tính linh hoạt tốc độ cao và mức độ kiểm soát an toàn nghiêm ngặt.\n- Phân tích các tiêu chí lựa chọn workflow: rủi ro, nhịp phát hành, CI/CD và công sức phối hợp; không chọn chỉ dựa vào loại sản phẩm.\n- Tự tin tư vấn và thiết lập quy trình phân nhánh tối ưu cho một dự án thực tế.\n\n---\n\n## 🧩 Từ khóa hôm nay\n\n### Workflow Trade-offs (Đánh đổi quy trình)\n- **Nói dễ hiểu**: Việc cân nhắc giữa tốc độ phát hành nhanh chóng và mức độ an toàn kiểm soát chặt chẽ khi chọn quy trình.\n- **Ví dụ**: Một nhóm có thể chọn GitHub Flow để dùng PR ngắn; họ vẫn có thể bật cùng mức review và CI mà dùng với mô hình khác.\n- **Đừng nhầm**: Không có mô hình nào là hoàn hảo tuyệt đối cho mọi dự án; mô hình tốt nhất là mô hình giải quyết đúng nút thắt của nhóm.\n\n### CI/CD Maturity (Độ chín của CI/CD)\n- **Nói dễ hiểu**: Mức độ tự động hóa và độ tin cậy của hệ thống kiểm thử tự động, build và triển khai mã nguồn trong dự án.\n- **Ví dụ**: CI chạy kiểm thử quan trọng nhanh và báo kết quả rõ giúp nhóm phát hiện vấn đề sớm khi tích hợp thường xuyên.\n- **Đừng nhầm**: Không có một số lượng test hay thời gian chạy cụ thể chứng minh dự án đã sẵn sàng; độ tin cậy và cách xử lý lỗi cũng quan trọng.\n\n### Release Cadence (Chu kỳ phát hành)\n- **Nói dễ hiểu**: Nhịp độ và tần suất đưa phiên bản phần mềm mới đến tay người dùng (nhiều lần mỗi ngày, hàng tuần, hay định kỳ mỗi tháng).\n- **Ví dụ**: Một app mobile có thể phát hành theo lịch cửa hàng ứng dụng, còn backend có thể triển khai thường xuyên hơn; nhóm vẫn chọn cách phân nhánh theo nhu cầu của mình.\n- **Đừng nhầm**: Loại sản phẩm không tự quyết định workflow. Hãy xét cách kiểm thử, phê duyệt, triển khai và khả năng rollback.\n\n---\n\n## 📖 Định nghĩa\nBa workflow khác nhau chủ yếu ở cách tổ chức nhánh và nhịp tích hợp. Git Flow có nhánh dài hạn `develop` cùng nhánh release/hotfix; GitHub Flow thường dùng nhánh ngắn hạn và PR; Trunk-Based Development tích hợp thay đổi nhỏ thường xuyên vào nhánh chính. Không workflow nào tự quyết định mức an toàn, tốc độ release hay loại sản phẩm.\n\n---\n\n## 💡 Tại sao cần\nChọn workflow quá nặng có thể thêm bước nhóm không cần; chọn workflow nhẹ nhưng thiếu review, kiểm thử hoặc kế hoạch phục hồi có thể bỏ sót rủi ro. So sánh chi phí thực tế thay vì gán một mô hình cho một loại công ty.\n\n---\n\n## 🧠 Mental Model\nHãy hình dung ba cách tổ chức lịch làm việc: Git Flow tách giai đoạn phát triển và ổn định phiên bản; GitHub Flow đưa thay đổi qua PR; Trunk-Based Development ghép thay đổi nhỏ thường xuyên. Review, CI và release controls có thể được thêm vào từng mô hình.\n\n---\n\n## 📊 Sơ đồ minh họa\n```text\nBảng ma trận so sánh 3 mô hình Workflow hàng đầu:\n┌─────────────────┬──────────────────────┬──────────────────────┬──────────────────────┐\n│ Tiêu chí        │ Git Flow             │ GitHub Flow          │ Trunk-Based Dev      │\n├─────────────────┼──────────────────────┼──────────────────────┼──────────────────────┤\n│ Nhánh dài hạn   │ main + develop       │ thường là main       │ thường là main/trunk │\n│ Nhánh tạm       │ feature/release/hotfix│ feature ngắn hạn    │ trực tiếp hoặc ngắn  │\n│ Tích hợp        │ theo giai đoạn       │ qua PR                │ thường xuyên         │\n│ Release         │ nhóm lên lịch riêng  │ nhóm lên lịch riêng  │ nhóm lên lịch riêng  │\n│ CI / review     │ cấu hình theo nhóm   │ cấu hình theo nhóm   │ nhanh là hữu ích     │\n│ Phù hợp khi     │ cần nhánh release    │ cần PR làm trung tâm │ cần tích hợp nhỏ     │\n└─────────────────┴──────────────────────┴──────────────────────┴──────────────────────┘\n\nĐây là xu hướng phổ biến, không phải yêu cầu bắt buộc; một dự án có thể kết hợp hoặc điều chỉnh các ý tưởng.\n```\n\n---\n\n## 🏢 Ví dụ thực tế\nVí dụ: cùng một công ty có thể giữ nhánh release cho app cần kiểm tra trước lịch phát hành và dùng PR nhỏ, tích hợp thường xuyên cho một dịch vụ backend. Đây là quyết định theo nhu cầu vận hành, không do loại sản phẩm bắt buộc.\n\n---\n\n## 💻 Command & Cú pháp\n```bash\ngit log --oneline --graph --all\ngit branch --list\n```\n\n---\n\n## 🔍 Giải thích command\n- `git log --graph --all`: Xem các commit và nhánh còn thể hiện trong lịch sử; chỉ riêng đồ thị không chứng minh được workflow của nhóm.\n- `git branch --list`: Liệt kê nhánh local hiện có. Để hiểu quy trình, hỏi thêm về PR, bảo vệ nhánh, CI và release.\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Áp dụng máy móc**: Bắt nhóm nhỏ dùng nhiều nhánh dài hạn có thể tăng công sức mà không giải quyết vấn đề thực tế.\n2. **Tích hợp thường xuyên mà thiếu phản hồi**: Không có test/CI đáng tin cậy có thể làm nhóm phát hiện lỗi muộn; chọn cách kiểm tra phù hợp trước khi tăng nhịp tích hợp.\n3. **Thay đổi quy trình liên tục**: Đổi workflow quá thường xuyên làm đảo lộn thói quen và gây bối rối cho toàn bộ kỹ sư trong nhóm.\n\n---\n\n## 🧪 Lab thực hành\nBài học này là bài tự kiểm tra: bạn thao tác trực tiếp trên terminal của máy tính để làm quen với công cụ.\n1. Dùng `git log --oneline --graph --all` trong repo thử nghiệm để quan sát các nhánh còn thấy được.\n2. So sánh ba workflow theo nhánh dài hạn, cách review, nhịp tích hợp, kiểm thử và lịch phát hành.\n3. Chọn một workflow cho tình huống giả định, nêu một lợi ích, một chi phí và điều kiện khiến bạn đổi lựa chọn.\n\n---\n\n## 💡 Hint & mẹo\n> Hãy chọn theo cách nhóm tích hợp, kiểm thử và phát hành; đừng suy ra workflow chỉ từ tên sản phẩm.\n\n---\n\n## ✅ Validation & Kết quả mong đợi\n- Phân tích rạch ròi ưu nhược điểm của cả 3 mô hình Git Flow, GitHub Flow và Trunk-Based Development.\n- Giải thích lựa chọn dựa trên ràng buộc thực tế và nêu được ít nhất một đánh đổi.\n\n---\n\n## ❓ Quiz nhanh\nHãy làm bài trắc nghiệm dưới đây để đối chiếu và so sánh các mô hình workflow.\n\n---\n\n## 🚀 Thử thách nâng cao\nĐề xuất phương án chuyển dịch từng bước từ mô hình Git Flow sang Trunk-Based Development cho một dự án đang phát triển.\n\n---\n\n## 📝 Tổng kết\n- Workflow mô tả cách tổ chức nhánh và tích hợp; không tự ấn định tốc độ release.\n- CI, review, bảo vệ nhánh và lịch triển khai có thể cấu hình riêng cho từng workflow.\n- Chọn mô hình dựa trên yêu cầu phát hành, khả năng kiểm thử và chi phí phối hợp của nhóm.\n",
   "quiz": {
     "id": "quiz-06-06-workflow-comparison",
     "title": "Trắc nghiệm: So sánh các mô hình Workflow",
@@ -50,7 +50,7 @@ export const lesson: CourseLesson = {
         "type": "single",
         "options": [
           {
-            "text": "GitHub Flow vì tính tinh gọn, đơn giản và hỗ trợ triển khai liên tục hoàn hảo",
+            "text": "GitHub Flow là một ứng viên gọn nhẹ để thử nghiệm; nhóm vẫn cần chọn review, kiểm thử và cách phát hành",
             "correct": true
           },
           {
@@ -66,11 +66,11 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "GitHub Flow là lựa chọn lý tưởng nhất cho các nhóm web nhỏ cần sự linh hoạt, tránh các tầng thủ tục rườm rà không cần thiết."
+        "explanation": "GitHub Flow có thể phù hợp với nhịp phát hành này, nhưng nhóm nên điều chỉnh theo rủi ro, quy trình kiểm thử và yêu cầu vận hành."
       },
       {
         "id": "q2",
-        "question": "Mô hình nào sau đây đòi hỏi hệ thống kiểm thử tự động (Automated Testing / CI) ở mức độ hoàn thiện cao nhất để hoạt động an toàn?",
+        "question": "Trong mô hình nào việc tích hợp thường xuyên khiến phản hồi CI nhanh và đáng tin cậy đặc biệt hữu ích?",
         "type": "single",
         "options": [
           {
@@ -90,7 +90,7 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "Trunk-Based Development hợp nhất code liên tục vào Trunk, do đó nếu không có CI cực mạnh để phát hiện lỗi ngay lập tức thì nhánh chính sẽ liên tục bị gãy."
+        "explanation": "Trunk-Based Development dựa vào tích hợp thường xuyên; CI nhanh giúp tìm lỗi gần thời điểm thay đổi, dù cách kiểm tra có thể khác nhau giữa các nhóm."
       },
       {
         "id": "q3",
@@ -114,7 +114,7 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "Git Flow rất mạnh ở khâu đóng băng phiên bản (Release Freeze) để QA kiểm thử hồi quy và hỗ trợ bảo trì nhiều phiên bản cũ."
+        "explanation": "Nhánh release của Git Flow có thể hỗ trợ kiểm thử một phiên bản trong khi công việc khác tiếp tục; nó không phải lựa chọn duy nhất cho lịch phát hành này."
       },
       {
         "id": "q4",
@@ -122,7 +122,7 @@ export const lesson: CourseLesson = {
         "type": "single",
         "options": [
           {
-            "text": "Đều hướng tới việc giữ cho nhánh chính (main/trunk) luôn ổn định và sử dụng quy trình kiểm duyệt trước khi hợp nhất",
+            "text": "Đều tìm cách tích hợp thay đổi có kiểm soát vào nhánh chính; cách review, CI và nhánh sử dụng tùy mô hình/nhóm",
             "correct": true
           },
           {
@@ -138,15 +138,15 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "Dù cách thức phân nhánh khác nhau, mục tiêu tối thượng của mọi workflow chuyên nghiệp đều là bảo vệ chất lượng mã nguồn trên nhánh chính."
+        "explanation": "Các workflow tìm cách kiểm soát tích hợp, nhưng không phải mô hình nào cũng bắt buộc cùng một loại review hoặc cách bảo vệ main."
       },
       {
         "id": "q5",
-        "question": "Khi nào một đội ngũ phát triển nên chuyển từ Git Flow sang GitHub Flow hoặc Trunk-Based Development?",
+        "question": "Dấu hiệu nào gợi ý nhóm nên xem xét một mô hình đơn giản hơn Git Flow?",
         "type": "single",
         "options": [
           {
-            "text": "Khi đội ngũ chuyển dịch sang mô hình phân phối liên tục (Continuous Delivery) và thấy các nhánh trung gian gây chậm trễ phát hành",
+            "text": "Khi nhóm thấy các bước/nhánh trung gian không còn giúp kiểm soát rủi ro tương xứng với công sức đồng bộ",
             "correct": true
           },
           {
@@ -162,7 +162,7 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "Việc chuyển dịch sang Continuous Delivery đòi hỏi quy trình phân nhánh tinh gọn để mã nguồn đến tay khách hàng nhanh nhất mà không bị cản trở bởi các tầng trung gian."
+        "explanation": "Nhóm nên đánh giá chi phí và rủi ro thực tế; Continuous Delivery không bắt buộc dùng duy nhất một mô hình phân nhánh."
       }
     ]
   }

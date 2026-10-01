@@ -11,15 +11,9 @@ keywords:
 prerequisites:
   - 08-three-way-merge
 objectives:
-  - Hiểu rõ nguyên nhân căn bản phát sinh xung đột Merge Conflict trong quá
-    trình làm việc nhóm.
-  - "Nhận diện và phân tích cấu trúc của các vạch đánh dấu xung đột (Conflict
-    Markers): `<<<<<<<`, `=======`, `>>>>>>>`."
-  - Phân biệt rõ ràng giữa xung đột nội dung dòng code (Content conflict) và
-    xung đột tệp tin (File rename/delete conflict).
-  - Giữ bình tĩnh và thực hiện quy trình chẩn đoán trạng thái conflict một cách
-    bài bản.
+  - Giải thích vì sao Git phải dừng khi không thể tự kết hợp thay đổi.
+  - Nhận diện conflict markers và xác định nội dung của mỗi nhánh.
+  - Dùng `git status` để tìm các tệp đang chờ giải quyết.
 commands:
+  - git merge feature-conflict
   - git status
-  - git diff
-  - git merge --abort

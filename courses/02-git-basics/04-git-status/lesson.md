@@ -50,17 +50,12 @@ Hãy xem `git status` như bảng kiểm: phần nào đã chọn cho commit, ph
 
 ## 🖼 Sơ đồ
 ```text
-Ví dụ báo cáo từ git status:
+Ví dụ: repository mới, chưa có commit đầu tiên:
 ┌─────────────────────────────────────────────────────────────┐
 │ On branch main                                              │
-│                                                             │
+│ No commits yet                                              │
 │ Changes to be committed:          <── Đã staged             │
-│   (use "git restore --staged <file>" to unstage)            │
 │         new file:   index.html                              │
-│                                                             │
-│ Changes not staged for commit:    <── Chưa staged           │
-│   (use "git add <file>" to update what will be committed)   │
-│         modified:   styles.css                              │
 │                                                             │
 │ Untracked files:                  <── Chưa được theo dõi    │
 │         notes.txt                                           │
@@ -69,8 +64,10 @@ Ví dụ báo cáo từ git status:
 
 ---
 
+`Changes not staged for commit` xuất hiện khi bạn sửa một tệp Git đã theo dõi, thường là sau khi đã có commit. Repository mới chưa có commit nên ví dụ này chưa có tệp `modified`.
+
 ## 🌎 Ví dụ thực tế
-Bạn tạo `notes.txt` rồi sửa `styles.css`. Chạy `git status` để xem `notes.txt` trong nhóm Untracked và `styles.css` trong nhóm chưa staged.
+Bạn tạo `index.html` và `notes.txt`, rồi chỉ stage `index.html`. `git status` cho thấy tệp đầu đã staged còn tệp kia vẫn untracked.
 
 ---
 
@@ -78,13 +75,12 @@ Bạn tạo `notes.txt` rồi sửa `styles.css`. Chạy `git status` để xem 
 ```bash
 git status
 git status -s
-git status --short
 ```
 
 ---
 
 ## 🔍 Giải thích command
-- `git status`: Hiển thị báo cáo trạng thái chi tiết kèm theo các chỉ dẫn và câu lệnh gợi ý hoàn tác hữu ích.
+- `git status`: Hiển thị báo cáo trạng thái chi tiết. Một số gợi ý thao tác phụ thuộc vào trạng thái hiện tại của repository.
 - `git status -s` (hoặc `--short`): Hiển thị trạng thái gọn; cột trái nói về Staging Area, cột phải nói về Working Tree.
 
 ---
@@ -97,9 +93,10 @@ git status --short
 ---
 
 ## 🧪 Lab
-1. Chạy lệnh `git status` trong kho lưu trữ để làm quen với giao diện kết quả mặc định.
-2. Tạo một tệp mới và chạy `git status` để quan sát nhóm Untracked files.
-3. Thử nghiệm cờ rút gọn bằng câu lệnh `git status -s`.
+1. Chạy `git status` để xem trạng thái ban đầu.
+2. Tạo `index.html` và `notes.txt`.
+3. Chạy `git add index.html`, rồi kiểm tra bằng `git status`.
+4. Chạy `git status -s`; nhận ra `A  index.html` (tệp mới đã staged) và `?? notes.txt` (chưa được theo dõi).
 
 ---
 
@@ -119,7 +116,7 @@ Làm bài trắc nghiệm dưới đây để kiểm tra khả năng đọc hi�
 ---
 
 ## 🔥 Challenge
-Tạo một tệp mới, chạy `git status -s`, rồi giải thích vì sao tệp hiện ký hiệu `??`.
+Tạo hai tệp mới. Chỉ chạy `git add` cho một tệp, rồi dùng `git status -s` để giải thích sự khác nhau giữa `A ` và `??`.
 
 ---
 

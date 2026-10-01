@@ -13,7 +13,8 @@ questions:
         correct: false
       - text: Phím Enter
         correct: false
-    explanation: Trong trình xem phân trang thường dùng với Git, nhấn `q` để thoát.
+    explanation: >-
+      Trong trình xem phân trang thường dùng với Git, nhấn `q` để thoát.
   - id: q2
     question: Cờ tùy chọn `--oneline` trong lệnh git log mang lại tác dụng gì?
     type: single
@@ -41,23 +42,23 @@ questions:
         correct: false
       - text: git show -3 commits
         correct: false
-    explanation: Cú pháp `-n <số>` hoặc `-<số>` giới hạn số lượng commit được hiển
+    explanation: >-
+      Cú pháp `-n <số>` hoặc `-<số>` giới hạn số lượng commit được hiển
       thị trong kết quả log.
   - id: q4
-    question: Để xem đồ thị phân nhánh trực quan bằng các ký tự ASCII trong
-      terminal, bạn dùng cờ nào?
+    question: Theo thứ tự mặc định của `git log`, commit nào thường hiện ở đầu danh sách?
     type: single
     options:
-      - text: --graph
+      - text: Commit mới nhất mà nhánh hiện tại có thể đi tới
         correct: true
-      - text: --tree-view
+      - text: Commit cũ nhất trong toàn bộ kho Git
         correct: false
-      - text: --draw-diagram
+      - text: Commit đang chờ được tạo từ Staging Area
         correct: false
-      - text: --ascii-art
+      - text: Commit mới nhất trên GitHub, dù nhánh hiện tại không có commit đó
         correct: false
-    explanation: "`--graph` vẽ các đường nhánh và mốc hợp nhất commit bằng đồ thị ký
-      tự trực quan ngay trong terminal."
+    explanation: >-
+      `git log` bắt đầu từ vị trí hiện tại và hiển thị commit mới trước các commit cha của nó.
   - id: q5
     question: Nếu muốn xem lịch sử commit ở dạng gọn, mỗi commit một dòng, bạn dùng lệnh nào?
     type: single

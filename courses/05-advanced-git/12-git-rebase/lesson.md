@@ -4,8 +4,8 @@
 
 ## 🎯 Mục tiêu
 - Thực thi thành thạo câu lệnh `git rebase <upstream>` để đồng bộ nhánh tính năng với nhánh chính.
-- Khắc cốt ghi tâm "Quy tắc vàng của Rebase" (The Golden Rule of Rebasing): Không bao giờ rebase trên nhánh công khai.
-- Hiểu rõ quy trình xử lý khi cần cập nhật nhánh sau khi đã rebase bằng `git push --force-with-lease`.
+- Biết rủi ro khi rebase commit mà đồng đội đã dùng làm cơ sở.
+- Hiểu `--force-with-lease` là lựa chọn cần có quyền và cần phối hợp khi cập nhật nhánh cá nhân đã push sau rebase.
 - Định hình thói quen giữ lịch sử dự án luôn tinh gọn trước khi tạo Pull Request.
 
 ---
@@ -18,7 +18,7 @@
 - **Đừng nhầm**: Tái tạo lại commit với mã hash mới; không giữ nguyên mã SHA cũ của nhánh tính năng.
 
 ### the golden rule of rebase
-- **Nói dễ hiểu**: Quy tắc cấm kỵ: Tuyệt đối không bao giờ rebase trên các nhánh công khai dùng chung với người khác.
+- **Nói dễ hiểu**: Rebase tạo lại commit nên hash thay đổi. Tránh rebase commit đã chia sẻ, trừ khi nhóm đã thống nhất cách phối hợp.
 - **Ví dụ**: Không bao giờ gõ rebase khi đang đứng ở nhánh `main` hay nhánh develop chung của cả nhóm.
 - **Đừng nhầm**: Chỉ dùng rebase trên nhánh tính năng cá nhân của riêng bạn trước khi mở Pull Request.
 
@@ -75,13 +75,13 @@ git rebase --abort
 ## 🔍 Giải thích command
 - `git fetch origin`: Tải các commit mới nhất trên máy chủ về kho lưu trữ cục bộ.
 - `git rebase origin/main`: Dời gốc nhánh hiện tại lên đỉnh của nhánh origin/main.
-- `git push --force-with-lease`: Cập nhật nhánh lên server an toàn sau khi rebase (chỉ ghi đè nếu không có ai khác push chen ngang).
+- `git push --force-with-lease`: Cập nhật ref từ xa nếu giá trị từ xa vẫn như lần bạn biết gần nhất. Lệnh giảm rủi ro ghi đè thay đổi mới, nhưng không thay thế việc kiểm tra và thống nhất với nhóm.
 - `git rebase --abort`: Hủy bỏ hoàn toàn phiên rebase nếu gặp sự cố phức tạp và trở về trạng thái ban đầu.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Vi phạm Quy tắc vàng của Rebase**: Chạy rebase trên nhánh dùng chung như main hoặc develop khiến lịch sử của cả nhóm bị phá vỡ.
+1. **Viết lại nhánh mà người khác đang dùng**: Các commit đã được lấy về có hash cũ; thống nhất quy trình trước khi force update.
 2. **Dùng git push --force bừa bãi**: Có nguy cơ xóa đè commit mới mà đồng nghiệp vừa đẩy lên cùng nhánh.
 3. **Hoảng loạn khi Git tạm ngưng**: Git chỉ đang dừng lại chờ bạn xử lý xung đột dòng code nếu có; sửa xong chỉ cần gõ `git rebase --continue`.
 
@@ -97,7 +97,7 @@ Bài học này là bài tự kiểm tra: bạn thực hành rebase nhánh tính
 ---
 
 ## 💡 Hint & mẹo
-> Ghi nhớ quy tắc vàng: Chỉ rebase trên nhánh cục bộ cá nhân, tuyệt đối không bao giờ rebase trên nhánh công khai dùng chung.
+> Hãy rebase các commit riêng của bạn theo chính sách nhóm. Trước khi cập nhật nhánh đã push, kiểm tra remote và báo người cùng làm; không dùng force push tùy tiện.
 
 ---
 
@@ -113,11 +113,11 @@ Hãy làm bài kiểm tra trắc nghiệm dưới đây về câu lệnh git reb
 ---
 
 ## 🚀 Thử thách nâng cao
-Tìm hiểu cách cấu hình tự động bảo vệ nhánh trên GitHub để ngăn chặn mọi hành vi push force hoặc rebase lên nhánh `main`.
+Tìm hiểu quy tắc bảo vệ nhánh của kho dự án và ghi lại ai có quyền cập nhật `main`, cùng quy trình xử lý khi cần sửa lịch sử.
 
 ---
 
 ## 📝 Tổng kết
 - `git rebase` đưa các commit của nhánh tính năng lên đỉnh mới nhất của nhánh cơ sở.
-- Quy tắc vàng: Tuyệt đối không bao giờ rebase trên các nhánh công khai dùng chung.
+- Trước khi rebase commit đã push, phối hợp với nhóm vì commit mới sẽ có hash khác và có thể cần cập nhật remote theo quy ước của repo.
 - Luôn ưu tiên sử dụng `git push --force-with-lease` sau khi rebase nhánh cá nhân lên remote.

@@ -104,7 +104,7 @@ Hãy làm bài trắc nghiệm dưới đây về các thao tác hoàn tác vớ
 ---
 
 ## 🔥 Challenge
-Sửa tệp, stage một phần, rồi sửa thêm. Dùng `git diff` và `git diff --staged` để nói phần nào restore thường bỏ.
+Sửa tệp, chạy `git add <tệp>`, rồi sửa tiếp tệp đó. Dùng `git diff` và `git diff --staged` để giải thích phần nào chưa staged và phần nào đã staged.
 
 ---
 

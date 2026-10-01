@@ -39,7 +39,7 @@ questions:
         correct: false
       - text: ACTION_SHA
         correct: false
-    explanation: "`GITHUB_SHA` là biến môi trường tiêu chuẩn do GitHub tự động tiêm vào mọi Runner, chứa mã commit 40 ký tự."
+    explanation: "`GITHUB_SHA` là biến mặc định chứa SHA của commit liên quan đến sự kiện kích hoạt workflow; ý nghĩa cụ thể phụ thuộc loại sự kiện, nên không nên giả định độ dài cố định."
   - id: q4
     question: Để lưu một biến môi trường động cho các Step sau sử dụng, lệnh shell nào sau đây là chuẩn mực?
     type: single

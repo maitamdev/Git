@@ -13,12 +13,11 @@ prerequisites:
 objectives:
   - Nắm vững bản chất toán học của Git như một Đồ thị có hướng không chu trình
     (Directed Acyclic Graph - DAG).
-  - "Hiểu rõ khái niệm Reachability (Khả năng tiếp cận): đối tượng nào có thể
-    chạm tới từ các References và đối tượng nào bị mồ côi
-    (Dangling/Unreachable)."
+  - "Hiểu reachability từ refs, index và reflog; phân biệt dangling với
+    unreachable object."
   - Sử dụng lệnh plumbing git rev-list và git fsck để duyệt toàn bộ đồ thị và
     phát hiện đối tượng mất kết nối.
 commands:
   - git rev-list --all --count
-  - git fsck --unreachable
+  - git fsck --no-reflogs --unreachable
   - git log --graph --oneline --all

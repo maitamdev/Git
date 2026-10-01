@@ -8,6 +8,23 @@ describe('GitEngine Core Commands Comprehensive Tests', () => {
     engine = new GitEngine();
   });
 
+  it('prints the simulated Git version without requiring a repository', () => {
+    const res = engine.execute('git --version');
+
+    expect(res.success).toBe(true);
+    expect(res.stdout).toContain('git version 2.56.0');
+    expect(res.state.repositoryInitialized).toBe(false);
+  });
+
+  it('shows the simulated hidden .git directory with ls -la in an initialized repository', () => {
+    engine.execute('git init');
+
+    const res = engine.execute('ls -la');
+
+    expect(res.success).toBe(true);
+    expect(res.stdout).toContain('.git/');
+  });
+
   it('1. should initialize repository with git init', () => {
     const res = engine.execute('git init');
     expect(res.success).toBe(true);
@@ -20,6 +37,45 @@ describe('GitEngine Core Commands Comprehensive Tests', () => {
     const res = engine.execute('git status');
     expect(res.success).toBe(false);
     expect(res.stderr).toContain('fatal: not a git repository');
+  });
+
+  it('applies a simple .gitignore rule and reports its source with git check-ignore -v', () => {
+    engine.execute('git init');
+    engine.getFileSystem().writeFile('.gitignore', '*.log\nnode_modules/\n');
+    engine.getFileSystem().writeFile('debug.log', 'temporary output');
+    engine.getFileSystem().writeFile('node_modules/pkg/index.js', 'dependency');
+    engine.getFileSystem().writeFile('app.js', 'console.log("hello");');
+
+    const status = engine.execute('git status --short');
+    expect(status.success).toBe(true);
+    expect(status.stdout).toContain('?? .gitignore');
+    expect(status.stdout).toContain('?? app.js');
+    expect(status.stdout).not.toContain('debug.log');
+    expect(status.stdout).not.toContain('node_modules/pkg/index.js');
+
+    const ignored = engine.execute('git check-ignore -v debug.log');
+    expect(ignored.success).toBe(true);
+    expect(ignored.stdout).toBe('.gitignore:1:*.log\tdebug.log');
+    expect(engine.execute('git check-ignore -v node_modules/pkg/index.js').stdout).toBe(
+      '.gitignore:2:node_modules/\tnode_modules/pkg/index.js'
+    );
+
+    const addIgnored = engine.execute('git add debug.log');
+    expect(addIgnored.success).toBe(false);
+    expect(addIgnored.stderr).toContain('ignored by .gitignore');
+  });
+
+  it('continues reporting modifications to a tracked file even when it matches .gitignore', () => {
+    engine.execute('git init');
+    engine.getFileSystem().writeFile('local.env', 'MODE=demo');
+    engine.execute('git add local.env');
+    engine.execute('git commit -m "track sample config"');
+    engine.getFileSystem().writeFile('.gitignore', 'local.env\n');
+    engine.getFileSystem().writeFile('local.env', 'MODE=changed');
+
+    const status = engine.execute('git status --short');
+    expect(status.success).toBe(true);
+    expect(status.stdout).toContain(' M local.env');
   });
 
   it('3. should track files and display in git status', () => {
@@ -180,6 +236,39 @@ describe('GitEngine Core Commands Comprehensive Tests', () => {
     expect(delRes.success).toBe(true);
     expect(delRes.stdout).toContain("Deleted branch temp");
     expect(engine.getState().branches.some((b) => b.name === 'temp')).toBe(false);
+  });
+
+  it('renames a branch with git branch -m and keeps the current branch checked out', () => {
+    engine.execute('git init');
+    engine.getFileSystem().writeFile('a.txt', 'a');
+    engine.execute('git add a.txt');
+    engine.execute('git commit -m "init"');
+    engine.execute('git switch -c old-name');
+
+    const renameRes = engine.execute('git branch -m new-name');
+
+    expect(renameRes.success).toBe(true);
+    expect(engine.getState().currentBranch).toBe('new-name');
+    expect(engine.getState().head).toEqual({ type: 'branch', ref: 'new-name' });
+    expect(engine.getState().branches.some((branch) => branch.name === 'old-name')).toBe(false);
+  });
+
+  it('refuses to delete a branch with unmerged commits using git branch -d', () => {
+    engine.execute('git init');
+    engine.getFileSystem().writeFile('a.txt', 'base');
+    engine.execute('git add a.txt');
+    engine.execute('git commit -m "init"');
+    engine.execute('git switch -c feature');
+    engine.getFileSystem().writeFile('feature.txt', 'feature work');
+    engine.execute('git add feature.txt');
+    engine.execute('git commit -m "feature work"');
+    engine.execute('git switch main');
+
+    const deleteRes = engine.execute('git branch -d feature');
+
+    expect(deleteRes.success).toBe(false);
+    expect(deleteRes.stderr).toContain('not fully merged');
+    expect(engine.getState().branches.some((branch) => branch.name === 'feature')).toBe(true);
   });
 
   it('13. should compare diff in working tree with git diff', () => {

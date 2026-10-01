@@ -5,7 +5,7 @@ questions:
     question: "Tệp .git/HEAD thường chứa nội dung có định dạng như thế nào khi bạn đang ở trên nhánh main?"
     type: single
     options:
-      - text: "ref: refs/heads/main"
+      - text: "Thường là một symbolic ref tới refs/heads/main; xác minh bằng git symbolic-ref HEAD"
         correct: true
       - text: "Dãy số nhị phân không đọc được"
         correct: false
@@ -13,7 +13,7 @@ questions:
         correct: false
       - text: "Mã băm commit của lần đầu tiên tạo repo"
         correct: false
-    explanation: "Tệp HEAD là một symbolic reference trỏ tới tệp tham chiếu nhánh hiện tại dưới dạng văn bản: ref: refs/heads/<branch>."
+    explanation: "Khi ở trên branch, HEAD thường là symbolic ref trỏ tới refs/heads/<branch>; detached HEAD trỏ trực tiếp tới object ID."
   - id: q2
     question: "Thư mục nào bên trong .git/ chịu trách nhiệm lưu trữ tất cả các đối tượng Blob, Tree, Commit và Tag?"
     type: single
@@ -39,7 +39,7 @@ questions:
         correct: false
       - text: "Chỉ mục tìm kiếm của Google"
         correct: false
-    explanation: "Tệp nhị phân index ghi lại danh sách toàn bộ các tệp tin trong Staging Area cùng mã băm SHA-1 và quyền hạn tệp."
+    explanation: "Index là cấu trúc nhị phân lưu các entry đã stage, gồm đường dẫn, mode và object ID; hash algorithm phụ thuộc định dạng repo."
   - id: q4
     question: "Điều gì sẽ xảy ra nếu một lập trình viên xóa bỏ hoàn toàn thư mục .git/ khỏi dự án của họ?"
     type: single
@@ -65,4 +65,4 @@ questions:
         correct: false
       - text: "Toàn bộ nội dung của tệp .gitignore"
         correct: false
-    explanation: "Tệp .git/config chứa các thông số cấu hình cụ thể cho riêng repository hiện tại theo định dạng INI quen thuộc, bao gồm định nghĩa các remote và nhánh theo dõi."
+    explanation: "Git config cục bộ lưu thiết lập của repository như remote hoặc user; linked worktree và cấu hình nhiều cấp có thể có thêm tệp/giá trị khác."

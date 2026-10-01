@@ -1,21 +1,16 @@
 id: 04-git-architecture
-title: Git hoạt động như thế nào?
+title: Git hoạt động như thế nào? Snapshot và Diff
 duration: 25
 xp: 70
 keywords:
-  - kien truc git
   - snapshot
-  - delta
-  - dag
-  - blob
-  - tree
+  - diff
   - commit
+  - project history
 prerequisites:
   - 03-git-la-gi
 objectives:
-  - Giải thích được một commit ghi lại trạng thái dự án tại một thời điểm.
-  - Dùng từ Snapshot để hình dung trạng thái đã lưu và Diff để xem phần thay đổi.
-  - Dùng `git log --oneline` để xem các commit đã tạo.
-commands:
-  - git status
-  - git log --oneline
+  - Giải thích commit ghi nhận trạng thái dự án tại một thời điểm.
+  - Phân biệt Snapshot là trạng thái đã lưu với Diff là phần khác nhau.
+  - So sánh hai phiên bản mẫu để chỉ ra thay đổi cụ thể.
+commands: []

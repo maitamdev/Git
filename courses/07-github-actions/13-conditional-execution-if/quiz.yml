@@ -28,7 +28,7 @@ questions:
         correct: false
     explanation: Mặc định, GitHub Actions luôn tự động áp dụng `success()`, nghĩa là chỉ chạy khi tất cả các bước trước đó đều thành công.
   - id: q3
-    question: Để một bước dọn dẹp luôn luôn được chạy dù các bước trước thành công, thất bại hay bị hủy, ta dùng hàm nào?
+    question: Hàm nào trả về true kể cả khi workflow đã bị hủy, để một Step có thể thử chạy tác vụ như lưu log chẩn đoán?
     type: single
     options:
       - text: always()
@@ -39,7 +39,7 @@ questions:
         correct: false
       - text: run_anyway()
         correct: false
-    explanation: Hàm `always()` ép buộc bước thực thi trong mọi tình huống, rất lý tưởng cho các tác vụ giải phóng tài nguyên và dọn dẹp.
+    explanation: "`always()` trả về true kể cả sau khi workflow bị hủy. Điều đó không bảo đảm tác vụ hoàn tất nếu runner bị dừng, nên không nên dùng bừa cho thao tác thiết yếu hoặc có thể treo."
   - id: q4
     question: "Biểu thức `if: github.event_name == 'push' && success()` có ý nghĩa gì?"
     type: single
@@ -57,7 +57,7 @@ questions:
     question: "Hàm trạng thái `cancelled()` trong mệnh đề `if:` trả về true trong trường hợp nào?"
     type: single
     options:
-      - text: Khi tiến trình workflow bị người dùng chủ động bấm hủy hoặc bị ngắt do vượt quá thời gian timeout
+      - text: Khi một workflow run bị hủy
         correct: true
       - text: Khi có lỗi cú pháp thụt lề YAML trong tệp kịch bản
         correct: false
@@ -65,4 +65,4 @@ questions:
         correct: false
       - text: Khi người lập trình viên tắt màn hình máy tính cá nhân
         correct: false
-    explanation: Hàm `cancelled()` trả về true khi phiên chạy bị dừng đột ngột, giúp bạn kích hoạt các bước gửi thông báo cứu hộ hoặc hủy các tài nguyên đang cấp phát dở dang.
+    explanation: "`cancelled()` trả về true khi workflow run bị hủy. Hàm này không đồng nghĩa với mọi lỗi hoặc mọi trường hợp hết thời gian của một Step."

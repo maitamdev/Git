@@ -18,7 +18,7 @@ questions:
     question: "Khi đứng tại một Merge Commit, biểu thức HEAD^2 sẽ trỏ tới commit nào?"
     type: single
     options:
-      - text: "Commit cha thứ hai (commit đầu nhánh phụ được gộp vào)"
+      - text: "Commit cha thứ hai của merge commit"
         correct: true
       - text: "Commit đi lùi 2 bước trên nhánh chính"
         correct: false
@@ -26,9 +26,9 @@ questions:
         correct: false
       - text: "Commit của người review thứ 2"
         correct: false
-    explanation: "Số đứng sau dấu mũ ^ chỉ định số thứ tự của commit cha trong danh sách parent của commit hiện tại."
+    explanation: "Số sau dấu mũ chọn cha theo thứ tự được ghi trong commit; số thứ tự đó không tự cho biết tên nhánh."
   - id: q3
-    question: "Lệnh Plumbing nào sau đây nhận vào một biểu thức revision và in ra mã băm SHA-1 tương ứng?"
+    question: "Lệnh nào nhận vào một biểu thức revision và in ra object ID tương ứng?"
     type: single
     options:
       - text: "git rev-parse"
@@ -57,7 +57,7 @@ questions:
     question: "Sự khác biệt căn bản giữa toán tử dấu mũ (^) và toán tử dấu ngã (~) trong cú pháp Revision của Git là gì?"
     type: single
     options:
-      - text: "^ dùng để chọn cha thứ mấy trong merge commit, còn ~ dùng để đi lùi tuyến tính theo nhiều thế hệ cha đầu tiên"
+      - text: "^n chọn cha thứ n, còn ~n đi lùi n thế hệ theo chuỗi cha thứ nhất"
         correct: true
       - text: "^ chỉ dùng cho hệ điều hành Windows, còn ~ chỉ dùng cho Linux"
         correct: false
@@ -65,4 +65,4 @@ questions:
         correct: false
       - text: "Hai toán tử này hoàn toàn tương đương nhau trong mọi tình huống"
         correct: false
-    explanation: "Quy tắc vàng: HEAD~2 tương đương HEAD^^ (lùi 2 thế hệ theo cha thứ nhất), trong khi HEAD^2 trỏ tới commit cha thứ hai của một merge commit."
+    explanation: "`HEAD~2` tương đương `HEAD^^`; cả hai lần theo cha thứ nhất, còn `HEAD^2` chọn cha thứ hai nếu có."

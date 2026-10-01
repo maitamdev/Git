@@ -3,10 +3,10 @@
 ---
 
 ## 🎯 Mục tiêu
-- Nắm bắt toàn diện kiến trúc 5 loại nhánh trong mô hình kinh điển Git Flow do Vincent Driessen đề xuất.
+- Hiểu vai trò của `main`, `develop`, `feature`, `release` và `hotfix` trong mô hình Git Flow.
 - Phân biệt rõ ràng vai trò của 2 nhánh vĩnh cửu (main, develop) và 3 nhánh tạm thời (feature, release, hotfix).
-- Vận hành chuẩn xác vòng đời của nhánh release và nhánh hotfix từ khi rẽ nhánh đến khi hợp nhất kép (dual-merge).
-- Đánh giá được ưu nhược điểm và nhận diện các dự án phù hợp với Git Flow: ứng dụng mobile, phần mềm đóng gói, enterprise.
+- Mô tả cách release/hotfix quay về các nhánh dài hạn trong quy trình Git Flow.
+- Nhận biết lợi ích và chi phí của quy trình nhiều nhánh; lựa chọn theo chu kỳ release của nhóm.
 
 ---
 
@@ -15,27 +15,27 @@
 ### Git Flow
 - **Nói dễ hiểu**: Mô hình phân nhánh kinh điển với hai nhánh vĩnh cửu (`main`, `develop`) cùng các nhánh phụ (`feature`, `release`, `hotfix`).
 - **Ví dụ**: Dùng cho app ngân hàng di động phát hành bản cập nhật định kỳ mỗi tháng một lần lên App Store.
-- **Đừng nhầm**: Git Flow không tối ưu cho web app cần deploy liên tục hàng ngày; nó phù hợp cho sản phẩm đóng gói có lịch release cố định.
+- **Đừng nhầm**: Git Flow là một lựa chọn, không phải quy trình bắt buộc cho mobile hay enterprise. Nhóm có thể chọn workflow khác tùy cách release.
 
 ### Dual-Merge (Hợp nhất kép)
 - **Nói dễ hiểu**: Thao tác merge một nhánh (như release hoặc hotfix) vào cả hai nhánh vĩnh cửu `main` và `develop`.
 - **Ví dụ**: Sau khi vá lỗi trên `release/v2.5.0`, merge vào `main` để xuất bản và merge ngược vào `develop` để không mất bản vá.
-- **Đừng nhầm**: Nếu quên merge ngược về `develop`, các lỗi đã sửa trên production sẽ tái xuất hiện ở phiên bản kế tiếp.
+- **Đừng nhầm**: Nếu nhóm duy trì `develop`, họ thường tích hợp lại các bản vá cần thiết vào đó; Git Flow không tự làm bước này.
 
 ### Feature Freeze (Đóng băng tính năng)
 - **Nói dễ hiểu**: Giai đoạn dừng nhận thêm tính năng mới trên nhánh release để đội ngũ QA tập trung kiểm thử hồi quy và vá lỗi.
-- **Ví dụ**: Nhánh `release/v1.2.0` chỉ nhận commit sửa bug từ QA, tuyệt đối không thêm tính năng mới của sprint sau.
+- **Ví dụ**: Trong một quy trình Git Flow điển hình, nhánh `release/v1.2.0` chỉ nhận chỉnh sửa để ổn định bản phát hành; tính năng kế tiếp tiếp tục ở `develop`.
 - **Đừng nhầm**: Các tính năng mới của sprint sau vẫn được commit bình thường trên nhánh `develop`, không bị dừng lại.
 
 ---
 
 ## 📖 Định nghĩa
-Git Flow là mô hình phân nhánh chặt chẽ có hai nhánh vĩnh cửu: `main` (lưu trữ phiên bản phát hành chính thức) và `develop` (nhánh tích hợp tính năng mới), cùng 3 loại nhánh ngắn hạn hỗ trợ: `feature/*`, `release/*` và `hotfix/*`.
+Git Flow là mô hình phân nhánh nhiều tầng gồm hai nhánh dài hạn `main` và `develop`, cùng các nhánh ngắn hạn `feature`, `release`, `hotfix`. Mô hình này tách công việc đang phát triển khỏi giai đoạn ổn định một bản phát hành.
 
 ---
 
 ## 💡 Tại sao cần
-Với các sản phẩm như ứng dụng di động hoặc phần mềm doanh nghiệp, bạn không thể deploy liên tục mà cần giai đoạn đóng băng kiểm thử hồi quy và xét duyệt. Git Flow cung cấp cấu trúc rõ ràng và kiểm soát chặt chẽ cho toàn bộ quy trình phát hành phức tạp này.
+Mô hình này tạo các nhánh riêng cho phát triển, ổn định release và sửa lỗi khẩn cấp. Đổi lại, nhóm phải quản lý thêm nhánh và nhớ đồng bộ các bản vá giữa chúng.
 
 ---
 
@@ -59,18 +59,22 @@ develop:     ──┴─► C1 ──► C2 ──► C3 ─┴─────�
 ---
 
 ## 🏢 Ví dụ thực tế
-Ứng dụng ngân hàng di động áp dụng Git Flow. Đến ngày 20 hàng tháng, nhóm tạo nhánh `release/v2.5.0` từ `develop` để đóng băng tính năng cho QA kiểm thử. Sau khi vượt qua kiểm định an ninh, nhánh release được merge vào `main`, gắn tag `v2.5.0`, đồng thời merge ngược về `develop` để bảo toàn các bản vá lỗi.
+Ví dụ: nhóm có lịch phát hành định kỳ tạo `release/v2.5.0` từ `develop`, chỉ nhận bản sửa phục vụ ổn định release, rồi hợp nhất vào `main` và gắn tag. Nếu vẫn duy trì `develop`, nhóm tích hợp lại các bản sửa phù hợp vào đó.
 
 ---
 
 ## 💻 Command & Cú pháp
 ```bash
 git switch -c release/v1.2.0 develop
-git switch main && git merge --no-ff release/v1.2.0
+git switch main
+git merge --no-ff release/v1.2.0
 git tag -a v1.2.0 -m "Release v1.2.0"
-git switch develop && git merge --no-ff release/v1.2.0
+git switch develop
+git merge --no-ff release/v1.2.0
 git branch -d release/v1.2.0
 ```
+
+Đây là Git thật trong repo thử nghiệm đã có `main` và `develop`; Git Flow không tự tạo các nhánh hoặc quy tắc bảo vệ.
 
 ---
 
@@ -78,7 +82,7 @@ git branch -d release/v1.2.0
 - `git switch -c release/v1.2.0 develop`: Tạo nhánh phát hành xuất phát từ nhánh tích hợp develop.
 - `git merge --no-ff`: Hợp nhất có tạo merge commit để bảo toàn dấu vết lịch sử của nhánh release.
 - `git tag -a`: Đánh dấu mốc phiên bản phát hành chính thức trên nhánh main.
-- Hợp nhất ngược về `develop`: Bước bắt buộc để mang các lỗi đã sửa trên release quay về nhánh phát triển.
+- Hợp nhất ngược về `develop`: Trong Git Flow, tích hợp các bản sửa release cần giữ cho nhánh phát triển tiếp theo.
 
 ---
 
@@ -99,12 +103,12 @@ Bài học này là bài tự kiểm tra: bạn thao tác trực tiếp trên te
 ---
 
 ## 💡 Hint & mẹo
-> Nhánh release và hotfix luôn luôn phải được merge vào cả hai nhánh vĩnh cửu: main và develop để bảo toàn lịch sử.
+> Trong Git Flow, kiểm tra sau mỗi release/hotfix rằng các thay đổi cần giữ đã có trên cả nhánh phát hành và nhánh phát triển.
 
 ---
 
 ## ✅ Validation & Kết quả mong đợi
-- Hiểu rõ tại sao Git Flow cần quy trình hợp nhất kép (dual-merge) cho release và hotfix.
+- Mô tả được mục đích của việc đưa release/hotfix vào `main` và tích hợp lại thay đổi cần thiết vào `develop`.
 - Phân biệt rõ ràng mục đích sử dụng giữa 2 nhánh dài hạn và 3 nhánh ngắn hạn.
 
 ---
@@ -122,4 +126,4 @@ Mô tả chi tiết quy trình xử lý một sự cố khẩn cấp (Hotfix) tr
 ## 📝 Tổng kết
 - Git Flow là mô hình phân nhánh chặt chẽ lý tưởng cho các sản phẩm có chu kỳ phát hành cố định.
 - Duy trì 2 nhánh vĩnh cửu: `main` (Production) và `develop` (Integration).
-- Áp dụng hợp nhất kép (Dual-Merge) cho các nhánh `release` và `hotfix`.
+- Với Git Flow, tích hợp các bản sửa release/hotfix cần thiết về nhánh phát triển.

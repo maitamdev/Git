@@ -1,24 +1,20 @@
 id: 06-branch-isolation
-title: Nguyên lý cách ly không gian Branch Isolation
+title: Thay đổi đã commit được giữ riêng theo nhánh
 duration: 25
 xp: 80
 keywords:
   - branch isolation
-  - cach ly khong gian
-  - song song
-  - an toan nhanh
-  - doc lap
+  - cach ly nhanh
+  - lich su phan ky
 prerequisites:
   - 04-git-switch
 objectives:
-  - Hiểu rõ nguyên lý cách ly không gian (Branch Isolation) độc lập của các
-    luồng phát triển trong Git.
-  - Nhận biết phạm vi tác động của commit trên từng nhánh riêng biệt.
-  - Tự tin phát triển các tính năng thử nghiệm mạo hiểm mà không sợ làm ảnh
-    hưởng tới nhánh chính.
-  - Phân tích sự phân kỳ lịch sử (divergent history) khi hai nhánh cùng tiến về
-    phía trước.
+  - Giải thích vì sao commit trên nhánh tính năng chưa xuất hiện trên main.
+  - Tạo commit trên nhánh thử nghiệm rồi so sánh với main.
+  - Nhận biết sửa đổi chưa commit có thể còn đi theo khi chuyển nhánh.
 commands:
   - git switch -c <nhánh-thử-nghiệm>
-  - git log --oneline --graph --all
-  - git diff main..<nhánh-thử-nghiệm>
+  - git add <file>
+  - 'git commit -m "test: add isolated file"'
+  - git switch main
+  - git status

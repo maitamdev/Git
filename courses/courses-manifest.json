@@ -24,7 +24,7 @@
         },
         {
           "id": "02-vcs-types",
-          "title": "Local / Centralized / Distributed VCS",
+          "title": "Ba kiểu quản lý phiên bản: cục bộ, tập trung, phân tán",
           "duration": 25,
           "xp": 60,
           "prerequisites": [
@@ -39,7 +39,7 @@
         },
         {
           "id": "03-git-la-gi",
-          "title": "Git là gì? Kiến trúc phân tán",
+          "title": "Git là gì? VCS phân tán trên máy bạn",
           "duration": 25,
           "xp": 60,
           "prerequisites": [
@@ -54,7 +54,7 @@
         },
         {
           "id": "04-git-architecture",
-          "title": "Git hoạt động như thế nào?",
+          "title": "Git hoạt động như thế nào? Snapshot và Diff",
           "duration": 25,
           "xp": 70,
           "prerequisites": [
@@ -69,7 +69,7 @@
         },
         {
           "id": "05-git-vs-github",
-          "title": "Phân biệt Git vs GitHub",
+          "title": "Phân biệt Git và GitHub",
           "duration": 20,
           "xp": 50,
           "prerequisites": [
@@ -84,7 +84,7 @@
         },
         {
           "id": "06-git-installation",
-          "title": "Cài đặt & Môi trường Git",
+          "title": "Cài đặt Git và chọn terminal",
           "duration": 20,
           "xp": 50,
           "prerequisites": [
@@ -99,7 +99,7 @@
         },
         {
           "id": "07-git-config",
-          "title": "Cấu hình danh tính Git Config",
+          "title": "Cấu hình danh tính Git bằng git config",
           "duration": 25,
           "xp": 70,
           "prerequisites": [
@@ -197,7 +197,7 @@
         },
         {
           "id": "03-head-snapshot",
-          "title": "Repository & HEAD Snapshot",
+          "title": "Repository, commit và vị trí HEAD",
           "duration": 25,
           "xp": 70,
           "prerequisites": [
@@ -233,7 +233,7 @@
         },
         {
           "id": "05-git-add",
-          "title": "Đưa tệp vào staging với git add",
+          "title": "Đưa một tệp vào vùng chuẩn bị bằng git add",
           "duration": 25,
           "xp": 80,
           "prerequisites": [
@@ -332,7 +332,7 @@
         },
         {
           "id": "10-gitignore",
-          "title": "Bỏ qua tệp tin với .gitignore",
+          "title": "Bỏ qua tệp chưa cần đưa vào Git bằng .gitignore",
           "duration": 25,
           "xp": 80,
           "prerequisites": [
@@ -394,7 +394,7 @@
       "lessons": [
         {
           "id": "01-branch-concept",
-          "title": "Khái niệm Branch trong Git",
+          "title": "Khái niệm nhánh (branch) trong Git",
           "duration": 25,
           "xp": 80,
           "prerequisites": [
@@ -415,7 +415,7 @@
         },
         {
           "id": "02-head-pointer",
-          "title": "Con trỏ HEAD & Detached HEAD",
+          "title": "HEAD và trạng thái detached HEAD",
           "duration": 25,
           "xp": 80,
           "prerequisites": [
@@ -430,7 +430,7 @@
         },
         {
           "id": "03-git-branch",
-          "title": "Quản lý nhánh với git branch",
+          "title": "Xem và tạo nhánh bằng git branch",
           "duration": 25,
           "xp": 80,
           "prerequisites": [
@@ -451,7 +451,7 @@
         },
         {
           "id": "04-git-switch",
-          "title": "Chuyển nhánh với git switch",
+          "title": "Chuyển nhánh bằng git switch",
           "duration": 25,
           "xp": 80,
           "prerequisites": [
@@ -487,7 +487,7 @@
         },
         {
           "id": "06-branch-isolation",
-          "title": "Nguyên lý cách ly không gian Branch Isolation",
+          "title": "Thay đổi đã commit được giữ riêng theo nhánh",
           "duration": 25,
           "xp": 80,
           "prerequisites": [
@@ -505,7 +505,7 @@
         },
         {
           "id": "07-fast-forward-merge",
-          "title": "Hợp nhất nhanh Fast-forward merge",
+          "title": "Hợp nhất tua nhanh (fast-forward merge)",
           "duration": 30,
           "xp": 90,
           "prerequisites": [
@@ -526,7 +526,7 @@
         },
         {
           "id": "08-three-way-merge",
-          "title": "Hợp nhất rẽ nhánh 3-way merge",
+          "title": "Hợp nhất khi hai nhánh đã phân kỳ (3-way merge)",
           "duration": 35,
           "xp": 100,
           "prerequisites": [
@@ -547,7 +547,7 @@
         },
         {
           "id": "09-merge-commit",
-          "title": "Bản chất của Merge commit",
+          "title": "Merge commit là gì?",
           "duration": 25,
           "xp": 80,
           "prerequisites": [
@@ -637,11 +637,12 @@
         },
         {
           "id": "14-branching-challenge",
-          "title": "Thử thách tổng hợp Branching Master",
+          "title": "Thử thách cuối Level 3: tạo nhánh, xử lý conflict và merge",
           "duration": 40,
           "xp": 150,
           "prerequisites": [
-            "11-resolve-conflict"
+            "12-merge-abort",
+            "13-delete-rename-branch"
           ],
           "labIds": [
             "branching-challenge"

@@ -1,68 +1,68 @@
 id: quiz-03-04-git-switch
-title: "Trắc nghiệm: Chuyển nhánh với git switch"
+title: "Trắc nghiệm: Chuyển nhánh bằng git switch"
 questions:
   - id: q1
-    question: Lệnh nào dưới đây vừa tạo một nhánh mới có tên `feature-login` vừa chuyển sang nhánh đó ngay lập tức?
+    question: Lệnh nào vừa tạo nhánh `feature-login` vừa chuyển sang đó?
     type: single
     options:
       - text: git switch -c feature-login
         correct: true
-      - text: git switch --make feature-login
+      - text: git switch feature-login
         correct: false
-      - text: git switch feature-login --new
+      - text: git branch feature-login
         correct: false
-      - text: git switch -a feature-login
+      - text: git status feature-login
         correct: false
-    explanation: Cờ `-c` (viết tắt của create) vừa tạo nhánh mới vừa chuyển HEAD sang nhánh đó ngay.
+    explanation: "`git switch -c` tạo nhánh mới tại commit hiện tại rồi chuyển HEAD sang nhánh đó."
   - id: q2
-    question: Cú pháp phím tắt tiện lợi `git switch -` (dấu gạch nối ở cuối) thực hiện hành động gì?
+    question: Nhánh `feature-login` đã tồn tại. Bạn đang ở `main` và muốn chuyển sang nhánh đó. Nên chạy lệnh nào?
     type: single
     options:
-      - text: Chuyển quay trở lại nhánh mà bạn vừa đứng ngay trước đó
+      - text: git switch feature-login
         correct: true
-      - text: Xóa nhánh hiện tại ngay lập tức
+      - text: git branch feature-login
         correct: false
-      - text: Tắt kết nối mạng của Git
+      - text: git commit feature-login
         correct: false
-      - text: Đảo ngược thứ tự các commit trong lịch sử
+      - text: git add feature-login
         correct: false
-    explanation: Dấu gạch nối `-` đại diện cho nhánh trước đó mà bạn vừa làm việc trước khi chuyển đi.
+    explanation: "`git switch <tên>` chuyển sang một nhánh có sẵn; không cần tạo lại nhánh."
   - id: q3
-    question: Tại sao cộng đồng Git lại bổ sung lệnh `git switch` tách riêng khỏi lệnh cũ `git checkout`?
+    question: Bạn chạy `git switch -c feature-user`. Kết quả nào xác nhận bạn đã chuyển đúng?
     type: single
     options:
-      - text: Để phân tách rõ ràng trách nhiệm chuyển nhánh ra khỏi phục hồi tệp tin, tránh nguy cơ ghi đè nhầm
+      - text: "`git status` báo đang ở nhánh `feature-user`"
         correct: true
-      - text: Vì lệnh git checkout bị loại bỏ hoàn toàn khỏi tất cả hệ điều hành
+      - text: "`git log` không còn commit nào"
         correct: false
-      - text: Vì lệnh git switch giúp tăng tốc độ mạng Internet lên gấp mười lần
+      - text: Tệp dự án được gửi tự động lên GitHub
         correct: false
-      - text: Vì lệnh git checkout không cho phép tạo nhánh mới trên máy tính
+      - text: Nhánh `main` bị xóa
         correct: false
-    explanation: Git 2.23 chia checkout thành `git switch` (cho branch) và `git restore` (cho file) để tránh nhầm lẫn.
+    explanation: "`git status` cho biết nhánh hiện tại; sau lệnh tạo-và-chuyển, nhánh đó là `feature-user`."
   - id: q4
-    question: Khi bạn chuyển từ nhánh A sang nhánh B, các tệp tin trong Working Directory trên ổ đĩa sẽ như thế nào?
+    question: Bạn có sửa đổi chưa commit và việc chuyển nhánh sẽ ghi đè đúng tệp đó. Git thường làm gì?
     type: single
     options:
-      - text: Git tự động cập nhật nội dung các tệp trên đĩa khớp hoàn toàn với commit đỉnh của nhánh B
+      - text: Dừng và báo lỗi để tránh làm mất sửa đổi
         correct: true
-      - text: Các tệp tin bị xóa sạch hoàn toàn và bạn phải gõ lại code từ đầu
+      - text: Tự commit sửa đổi vào nhánh đích
         correct: false
-      - text: Nội dung các tệp vẫn giữ nguyên 100% của nhánh A mà không có thay đổi nào
+      - text: Xóa sửa đổi mà không báo
         correct: false
-      - text: Git tự động sao lưu tất cả tệp ra ngoài màn hình Desktop
+      - text: Đẩy sửa đổi lên remote
         correct: false
-    explanation: Git thay đổi trạng thái Working Directory để phản ánh chính xác snapshot của nhánh bạn vừa chuyển tới.
+    explanation: Git từ chối thao tác có thể ghi đè thay đổi cục bộ; hãy kiểm tra và lưu chúng trước.
   - id: q5
-    question: Điều gì xảy ra nếu bạn cố chạy git switch khi đang có sửa đổi chưa commit xung đột với nhánh đích?
+    question: Có hai lệnh nào để vừa tạo nhánh vừa chuyển sang đó?
     type: single
     options:
-      - text: Git sẽ dừng lại và báo lỗi để bảo vệ các sửa đổi chưa commit không bị ghi đè mất
+      - text: "`git switch -c <tên>` và `git branch <tên>` rồi `git switch <tên>`"
         correct: true
-      - text: Git sẽ âm thầm xóa vĩnh viễn các sửa đổi của bạn mà không thông báo
+      - text: "`git switch <tên>` và `git status`"
         correct: false
-      - text: Git tự động gom toàn bộ sửa đổi đó commit thẳng vào nhánh đích
+      - text: "`git branch -d <tên>` và `git log`"
         correct: false
-      - text: Git tự động tắt cửa sổ dòng lệnh terminal của bạn
+      - text: "`git add <tên>` và `git commit`"
         correct: false
-    explanation: Git luôn từ chối chuyển nhánh nếu các thay đổi chưa lưu có nguy cơ bị ghi đè bởi tệp ở nhánh đích.
+    explanation: "`git switch -c` gộp thao tác tạo và chuyển; cách khác là tạo bằng `git branch` rồi chuyển riêng."

@@ -5,7 +5,7 @@ export const lesson: CourseLesson = {
   "moduleId": "03-branching",
   "metadata": {
     "id": "04-git-switch",
-    "title": "Chuyển nhánh với git switch",
+    "title": "Chuyển nhánh bằng git switch",
     "level": "intermediate",
     "duration": 25,
     "xp": 80,
@@ -13,10 +13,9 @@ export const lesson: CourseLesson = {
       "03-git-branch"
     ],
     "objectives": [
-      "Nắm vững câu lệnh chuyên trách hiện đại `git switch` được giới thiệu từ Git 2.23.",
-      "Sử dụng thành thạo phím tắt vừa tạo vừa chuyển nhánh: `git switch -c <tên-nhánh>`.",
-      "Hiểu cách Git cập nhật Working Directory khi bạn chuyển dịch qua lại giữa các nhánh.",
-      "Xử lý tình huống không chuyển được nhánh do có thay đổi cục bộ chưa commit."
+      "Chuyển sang nhánh có sẵn bằng git switch <tên-nhánh>.",
+      "Tạo và chuyển sang nhánh mới bằng git switch -c <tên-nhánh>.",
+      "Biết Git dừng nếu chuyển nhánh có thể ghi đè thay đổi chưa commit."
     ],
     "completion": {
       "theoryViewed": true,
@@ -30,25 +29,23 @@ export const lesson: CourseLesson = {
     "keywords": [
       "git switch",
       "chuyen nhanh",
-      "switch branch",
       "tao nhanh moi",
       "working tree update"
     ],
     "commands": [
+      "git status",
       "git switch <tên-nhánh>",
-      "git switch -c <tên-nhánh-mới>",
-      "git switch -",
-      "git switch -d <commit-hash>"
+      "git switch -c <tên-nhánh-mới>"
     ]
   },
-  "content": "# Chuyển nhánh với git switch\n\n---\n\n## 🎯 Mục tiêu\n- Nắm vững câu lệnh chuyên trách `git switch` để di chuyển giữa các nhánh an toàn.\n- Sử dụng thành thạo phím tắt vừa tạo vừa chuyển nhánh: `git switch -c <tên-nhánh>`.\n- Hiểu cách Git tự động cập nhật thư mục làm việc khi bạn chuyển đổi giữa các nhánh.\n\n---\n\n## 🧩 Từ khóa hôm nay\n\n### git switch — chuyển nhánh hiện đại\n- **Nói dễ hiểu:** Câu lệnh chuyên trách để chuyển đổi không gian làm việc sang một nhánh khác.\n- **Ví dụ:** Chạy `git switch main` để đưa toàn bộ dự án quay trở lại nhánh chính.\n- **Đừng nhầm:** `git switch` chỉ đổi nhánh; việc khôi phục nội dung tệp đã được tách sang lệnh `git restore`.\n\n### git switch -c — vừa tạo vừa chuyển nhánh\n- **Nói dễ hiểu:** Phím tắt tạo một nhánh mới và lập tức chuyển bạn sang nhánh đó trong một bước.\n- **Ví dụ:** Chạy `git switch -c feature-search` để bắt đầu làm tính năng tìm kiếm mới.\n- **Đừng nhầm:** Bạn không cần gõ `git branch` rồi mới `git switch`; cờ `-c` kết hợp cả hai thao tác.\n\n### git switch - — quay lại nhánh trước\n- **Nói dễ hiểu:** Lệnh đưa bạn quay trở về nhánh mà bạn vừa đứng ngay trước đó.\n- **Ví dụ:** Đang ở `feature-login`, bạn chuyển sang `main` xem code, rồi gõ `git switch -` để quay lại `feature-login`.\n- **Đừng nhầm:** Dấu gạch ngang `-` chỉ nhớ một nhánh gần nhất bạn vừa rời đi.\n\n---\n\n## 📖 Định nghĩa\n`git switch` là lệnh chuyên trách từ phiên bản Git 2.23 dùng để chuyển đổi giữa các nhánh. Khi bạn chuyển nhánh, Git sẽ gắn con trỏ HEAD vào nhánh đích và cập nhật các tệp trong thư mục làm việc khớp với commit mới nhất của nhánh đó.\n\n---\n\n## 🤔 Tại sao cần?\nTrước đây, lệnh cũ `git checkout` vừa dùng để chuyển nhánh vừa dùng để phục hồi tệp tin, khiến người mới học rất dễ gõ nhầm và làm mất các thay đổi đang viết dở. `git switch` ra đời với mục đích duy nhất là chuyển nhánh, giúp thao tác an toàn và rõ ràng hơn.\n\n---\n\n## 🧠 Mental Model (Mô hình tư duy)\nHãy hình dung chuyển nhánh giống như đổi kênh trên tivi. Mỗi nhánh là một kênh truyền hình. Khi bạn chuyển kênh (`git switch`), toàn bộ màn hình trước mắt lập tức hiển thị nội dung của kênh mới, trong khi kênh cũ vẫn được lưu trữ nguyên vẹn ở phía sau mà không hề bị xáo trộn.\n\n---\n\n## 🖼 Sơ đồ\n```text\nTrước khi switch:\nHEAD ───> main (Thư mục làm việc đang hiển thị code của main)\n          feature-cart\n\nSau lệnh: git switch feature-cart\n          main\nHEAD ───> feature-cart (Thư mục làm việc tự cập nhật khớp với feature-cart)\n```\n\n---\n\n## 🌎 Ví dụ thực tế\nBạn Trang đang ở nhánh `main` thì được giao làm giao diện giỏ hàng mới. Trang mở terminal và gõ: `git switch -c feature-cart`. Lệnh này tạo nhánh `feature-cart` và đưa Trang sang nhánh mới ngay lập tức. Sau khi viết xong vài hàm, Trang gõ `git switch main` để xem lại mã nguồn chính, rồi gõ `git switch -` để quay lại tiếp tục công việc giỏ hàng.\n\n---\n\n## 💻 Command\n```bash\ngit switch <tên-nhánh>\ngit switch -c <tên-nhánh-mới>\ngit switch -\n```\n\n---\n\n## 🔍 Giải thích command\n- `git switch <tên-nhánh>`: Chuyển sang một nhánh đã tồn tại trong dự án.\n- `git switch -c <tên-nhánh-mới>`: Tạo mới một nhánh và chuyển sang nhánh đó ngay lập tức.\n- `git switch -`: Phím tắt quay lại nhánh bạn vừa đứng trước đó.\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Chuyển nhánh khi có tệp đang sửa xung đột với nhánh đích:** Git sẽ dừng lại và báo lỗi để bảo vệ code của bạn không bị ghi đè.\n2. **Quên dấu cờ `-c` khi muốn tạo nhánh mới:** Nếu gõ `git switch new-branch` khi nhánh chưa tồn tại, Git sẽ báo không tìm thấy nhánh.\n3. **Vẫn dùng lệnh cũ `git checkout`:** Dù vẫn chạy được, nhưng dùng `git switch` sẽ an toàn hơn và tránh nhầm lẫn với thao tác tệp.\n\n---\n\n## 🧪 Lab\nBài tập này được thực hành trên môi trường Git mô phỏng của hệ thống:\n1. Tạo và chuyển sang nhánh mới bằng lệnh `git switch -c feature-user`.\n2. Chạy `git status` để xác nhận dòng thông báo `On branch feature-user`.\n3. Chuyển quay lại nhánh chính bằng lệnh `git switch main`.\n4. Dùng phím tắt `git switch -` để quay trở lại nhánh `feature-user`.\n\n---\n\n## 💡 Hint\nHãy dùng `git switch -` bất cứ khi nào bạn cần qua lại nhanh giữa hai nhánh mà không cần gõ lại tên nhánh dài dòng.\n\n---\n\n## ✅ Validation\n- Nhánh `feature-user` được tạo thành công.\n- Lệnh `git switch main` đưa HEAD về nhánh `main`.\n- Lệnh `git switch -` đưa HEAD quay lại đúng nhánh `feature-user`.\n\n---\n\n## ❓ Quiz\nTrả lời các câu hỏi sau để kiểm tra mức độ thành thạo về lệnh chuyển nhánh `git switch`.\n\n---\n\n## 🔥 Challenge\nHãy thử tạo một tệp mới trên nhánh `feature-user`, commit lại, rồi switch về `main` để quan sát xem tệp đó có biến mất khỏi thư mục làm việc hay không.\n\n---\n\n## 📚 Tổng kết\n- `git switch` là lệnh hiện đại chuyên trách chuyển nhánh an toàn trong Git.\n- Cờ `-c` cho phép vừa tạo vừa chuyển sang nhánh mới trong một thao tác.\n- Dùng `git switch -` để nhảy nhanh về nhánh bạn vừa làm việc trước đó.\n",
+  "content": "# Chuyển nhánh bằng `git switch`\r\n\r\n---\r\n\r\n## 🎯 Mục tiêu\r\n- Chuyển sang một nhánh có sẵn bằng `git switch <tên-nhánh>`.\r\n- Tạo và chuyển sang nhánh mới bằng `git switch -c <tên-nhánh>`.\r\n- Biết Git dừng nếu chuyển nhánh có thể ghi đè thay đổi chưa commit.\r\n\r\n---\r\n\r\n## 🧩 Từ khóa hôm nay\r\n\r\n### `git switch` — chuyển nhánh\r\n- **Nói dễ hiểu:** Chuyển vị trí làm việc sang một nhánh có sẵn.\r\n- **Ví dụ:** `git switch main` quay về nhánh `main`.\r\n- **Đừng nhầm:** Lệnh không tạo commit cho thay đổi của bạn.\r\n\r\n### `-c` — tạo rồi chuyển\r\n- **Nói dễ hiểu:** Tạo tên nhánh mới tại commit hiện tại rồi chuyển sang đó.\r\n- **Ví dụ:** `git switch -c feature-user`.\r\n- **Đừng nhầm:** Dùng `git branch feature-user` chỉ tạo tên, không chuyển.\r\n\r\n### Thư mục làm việc\r\n- **Nói dễ hiểu:** Các tệp bạn đang xem và sửa trong dự án.\r\n- **Ví dụ:** Khi đổi nhánh, tệp tracked có thể cập nhật theo commit của nhánh mới.\r\n- **Đừng nhầm:** Tệp untracked không liên quan thường vẫn ở lại; Git dừng nếu tệp sắp bị ghi đè.\r\n\r\n---\r\n\r\n## 📖 Định nghĩa\r\n`git switch <tên-nhánh>` gắn HEAD vào nhánh có sẵn và cập nhật những tệp cần thiết để khớp với nhánh đó. Dùng `git switch -c <tên-mới>` để tạo nhánh tại commit hiện tại rồi chuyển sang đó. Nếu việc chuyển đi có thể ghi đè sửa đổi chưa commit, Git dừng để bảo vệ nội dung.\r\n\r\n---\r\n\r\n## 🤔 Tại sao cần?\r\nSau khi tạo nhánh, bạn cần chuyển sang đó để làm phần việc riêng. Chuyển về nhánh khác giúp kiểm tra trạng thái của nhánh đó. Git bảo vệ thay đổi cục bộ khi việc chuyển có thể ghi đè chúng; trước khi chuyển, hãy kiểm tra `git status` và quyết định commit hoặc giữ thay đổi lại.\r\n\r\n---\r\n\r\n## 🧠 Mental Model (Mô hình tư duy)\r\nHãy coi mỗi nhánh là một góc nhìn vào lịch sử dự án. `git switch` đổi góc nhìn hiện tại và cập nhật các tệp tracked cần thiết. Các sửa đổi không xung đột có thể được giữ lại; thay đổi có nguy cơ mất sẽ khiến Git từ chối chuyển.\r\n\r\n---\r\n\r\n## 🖼 Sơ đồ\r\n```text\r\nTrước: HEAD ──► main ──► Commit C3\r\n                    feature-user ──► Commit C3\r\n\r\nLệnh: git switch feature-user\r\n\r\nSau:  HEAD ──► feature-user\r\n      main vẫn trỏ tới Commit C3\r\n```\r\n\r\n---\r\n\r\n## 🌎 Ví dụ thực tế\r\nTrang tạo nhánh `feature-cart` để làm giao diện giỏ hàng. Trang dùng `git switch main` để xem nhánh tích hợp rồi `git switch feature-cart` để tiếp tục việc riêng. Nếu còn sửa đổi có thể bị nhánh đích ghi đè, Git sẽ báo dừng; Trang kiểm tra `git status` trước khi quyết định lưu hoặc giữ phần sửa.\r\n\r\n---\r\n\r\n## 💻 Command\r\n```bash\r\ngit status\r\ngit switch <tên-nhánh>\r\ngit switch -c <tên-nhánh-mới>\r\n```\r\n\r\n---\r\n\r\n## 🔍 Giải thích command\r\n- `git status`: Kiểm tra nhánh hiện tại và thay đổi chưa commit.\r\n- `git switch <tên-nhánh>`: Chuyển sang nhánh đã tồn tại.\r\n- `git switch -c <tên-nhánh-mới>`: Tạo nhánh mới và chuyển sang đó ngay.\r\n\r\n---\r\n\r\n## ⚠️ Sai lầm phổ biến\r\n1. **Quên `-c` khi tạo nhánh mới:** `git switch tên-mới` chỉ chuyển sang nhánh đã có.\r\n2. **Cứ thấy Git từ chối chuyển là thử ép:** Kiểm tra thay đổi trước; đừng dùng tùy chọn bỏ thay đổi khi chưa hiểu hậu quả.\r\n3. **Tưởng mọi sửa đổi luôn biến mất khi đổi nhánh:** Git có thể giữ sửa đổi không xung đột; nếu có nguy cơ ghi đè, Git dừng.\r\n\r\n---\r\n\r\n## 🧪 Lab\r\n1. Chạy `git switch -c feature-user` để tạo và chuyển sang nhánh mới.\r\n2. Chạy `git status`; xác nhận dòng đầu báo `On branch feature-user`.\r\n3. Chạy `git switch main`, rồi kiểm tra bằng `git status`.\r\n4. Chạy `git switch feature-user` để quay lại nhánh tính năng.\r\n\r\n---\r\n\r\n## 💡 Hint\r\n> Dùng `git branch` để xem tên nhánh; dùng `git switch` để chuyển sang một tên trong danh sách.\r\n\r\n---\r\n\r\n## ✅ Validation\r\n- `feature-user` xuất hiện trong `git branch`.\r\n- `git status` lần lượt báo `feature-user`, `main`, rồi `feature-user`.\r\n\r\n---\r\n\r\n## ❓ Quiz\r\nTrả lời các câu hỏi để kiểm tra thao tác tạo và chuyển nhánh.\r\n\r\n---\r\n\r\n## 🔥 Challenge\r\nTrên `feature-user`, tạo tệp `feature-note.txt`, stage rồi commit. Chuyển về `main` và quan sát tệp không có trong snapshot của `main`; quay lại `feature-user` để thấy tệp ở đó.\r\n\r\n---\r\n\r\n## 📚 Tổng kết\r\n- `git switch <tên>` chuyển sang nhánh đã có.\r\n- `git switch -c <tên>` vừa tạo nhánh vừa chuyển sang đó.\r\n- Kiểm tra thay đổi chưa commit trước khi chuyển để tránh bị ghi đè.\r\n",
   "quiz": {
     "id": "quiz-03-04-git-switch",
-    "title": "Trắc nghiệm: Chuyển nhánh với git switch",
+    "title": "Trắc nghiệm: Chuyển nhánh bằng git switch",
     "questions": [
       {
         "id": "q1",
-        "question": "Lệnh nào dưới đây vừa tạo một nhánh mới có tên `feature-login` vừa chuyển sang nhánh đó ngay lập tức?",
+        "question": "Lệnh nào vừa tạo nhánh `feature-login` vừa chuyển sang đó?",
         "type": "single",
         "options": [
           {
@@ -56,115 +53,115 @@ export const lesson: CourseLesson = {
             "correct": true
           },
           {
-            "text": "git switch --make feature-login",
+            "text": "git switch feature-login",
             "correct": false
           },
           {
-            "text": "git switch feature-login --new",
+            "text": "git branch feature-login",
             "correct": false
           },
           {
-            "text": "git switch -a feature-login",
+            "text": "git status feature-login",
             "correct": false
           }
         ],
-        "explanation": "Cờ `-c` (viết tắt của create) vừa tạo nhánh mới vừa chuyển HEAD sang nhánh đó ngay."
+        "explanation": "`git switch -c` tạo nhánh mới tại commit hiện tại rồi chuyển HEAD sang nhánh đó."
       },
       {
         "id": "q2",
-        "question": "Cú pháp phím tắt tiện lợi `git switch -` (dấu gạch nối ở cuối) thực hiện hành động gì?",
+        "question": "Nhánh `feature-login` đã tồn tại. Bạn đang ở `main` và muốn chuyển sang nhánh đó. Nên chạy lệnh nào?",
         "type": "single",
         "options": [
           {
-            "text": "Chuyển quay trở lại nhánh mà bạn vừa đứng ngay trước đó",
+            "text": "git switch feature-login",
             "correct": true
           },
           {
-            "text": "Xóa nhánh hiện tại ngay lập tức",
+            "text": "git branch feature-login",
             "correct": false
           },
           {
-            "text": "Tắt kết nối mạng của Git",
+            "text": "git commit feature-login",
             "correct": false
           },
           {
-            "text": "Đảo ngược thứ tự các commit trong lịch sử",
+            "text": "git add feature-login",
             "correct": false
           }
         ],
-        "explanation": "Dấu gạch nối `-` đại diện cho nhánh trước đó mà bạn vừa làm việc trước khi chuyển đi."
+        "explanation": "`git switch <tên>` chuyển sang một nhánh có sẵn; không cần tạo lại nhánh."
       },
       {
         "id": "q3",
-        "question": "Tại sao cộng đồng Git lại bổ sung lệnh `git switch` tách riêng khỏi lệnh cũ `git checkout`?",
+        "question": "Bạn chạy `git switch -c feature-user`. Kết quả nào xác nhận bạn đã chuyển đúng?",
         "type": "single",
         "options": [
           {
-            "text": "Để phân tách rõ ràng trách nhiệm chuyển nhánh ra khỏi phục hồi tệp tin, tránh nguy cơ ghi đè nhầm",
+            "text": "`git status` báo đang ở nhánh `feature-user`",
             "correct": true
           },
           {
-            "text": "Vì lệnh git checkout bị loại bỏ hoàn toàn khỏi tất cả hệ điều hành",
+            "text": "`git log` không còn commit nào",
             "correct": false
           },
           {
-            "text": "Vì lệnh git switch giúp tăng tốc độ mạng Internet lên gấp mười lần",
+            "text": "Tệp dự án được gửi tự động lên GitHub",
             "correct": false
           },
           {
-            "text": "Vì lệnh git checkout không cho phép tạo nhánh mới trên máy tính",
+            "text": "Nhánh `main` bị xóa",
             "correct": false
           }
         ],
-        "explanation": "Git 2.23 chia checkout thành `git switch` (cho branch) và `git restore` (cho file) để tránh nhầm lẫn."
+        "explanation": "`git status` cho biết nhánh hiện tại; sau lệnh tạo-và-chuyển, nhánh đó là `feature-user`."
       },
       {
         "id": "q4",
-        "question": "Khi bạn chuyển từ nhánh A sang nhánh B, các tệp tin trong Working Directory trên ổ đĩa sẽ như thế nào?",
+        "question": "Bạn có sửa đổi chưa commit và việc chuyển nhánh sẽ ghi đè đúng tệp đó. Git thường làm gì?",
         "type": "single",
         "options": [
           {
-            "text": "Git tự động cập nhật nội dung các tệp trên đĩa khớp hoàn toàn với commit đỉnh của nhánh B",
+            "text": "Dừng và báo lỗi để tránh làm mất sửa đổi",
             "correct": true
           },
           {
-            "text": "Các tệp tin bị xóa sạch hoàn toàn và bạn phải gõ lại code từ đầu",
+            "text": "Tự commit sửa đổi vào nhánh đích",
             "correct": false
           },
           {
-            "text": "Nội dung các tệp vẫn giữ nguyên 100% của nhánh A mà không có thay đổi nào",
+            "text": "Xóa sửa đổi mà không báo",
             "correct": false
           },
           {
-            "text": "Git tự động sao lưu tất cả tệp ra ngoài màn hình Desktop",
+            "text": "Đẩy sửa đổi lên remote",
             "correct": false
           }
         ],
-        "explanation": "Git thay đổi trạng thái Working Directory để phản ánh chính xác snapshot của nhánh bạn vừa chuyển tới."
+        "explanation": "Git từ chối thao tác có thể ghi đè thay đổi cục bộ; hãy kiểm tra và lưu chúng trước."
       },
       {
         "id": "q5",
-        "question": "Điều gì xảy ra nếu bạn cố chạy git switch khi đang có sửa đổi chưa commit xung đột với nhánh đích?",
+        "question": "Có hai lệnh nào để vừa tạo nhánh vừa chuyển sang đó?",
         "type": "single",
         "options": [
           {
-            "text": "Git sẽ dừng lại và báo lỗi để bảo vệ các sửa đổi chưa commit không bị ghi đè mất",
+            "text": "`git switch -c <tên>` và `git branch <tên>` rồi `git switch <tên>`",
             "correct": true
           },
           {
-            "text": "Git sẽ âm thầm xóa vĩnh viễn các sửa đổi của bạn mà không thông báo",
+            "text": "`git switch <tên>` và `git status`",
             "correct": false
           },
           {
-            "text": "Git tự động gom toàn bộ sửa đổi đó commit thẳng vào nhánh đích",
+            "text": "`git branch -d <tên>` và `git log`",
             "correct": false
           },
           {
-            "text": "Git tự động tắt cửa sổ dòng lệnh terminal của bạn",
+            "text": "`git add <tên>` và `git commit`",
             "correct": false
           }
         ],
-        "explanation": "Git luôn từ chối chuyển nhánh nếu các thay đổi chưa lưu có nguy cơ bị ghi đè bởi tệp ở nhánh đích."
+        "explanation": "`git switch -c` gộp thao tác tạo và chuyển; cách khác là tạo bằng `git branch` rồi chuyển riêng."
       }
     ]
   }

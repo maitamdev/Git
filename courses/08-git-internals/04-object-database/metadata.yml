@@ -15,8 +15,8 @@ objectives:
     Store đơn giản và thanh lịch.
   - "Hiểu rõ 4 loại đối tượng cơ bản trong Git: blob (nội dung), tree (thư mục),
     commit (lịch sử) và tag (chú thích)."
-  - "Khám phá cơ chế lưu trữ Loose Objects: cấu trúc phân chia thư mục 2 ký tự
-    đầu và 38 ký tự sau (.git/objects/xx/yyyy)."
+  - Phân biệt loose object với object trong packfile; dùng ví dụ SHA-1 khi xem
+    đường dẫn loose object.
 commands:
-  - find .git/objects -type f
   - git count-objects -v
+  - git cat-file -t <object-id>

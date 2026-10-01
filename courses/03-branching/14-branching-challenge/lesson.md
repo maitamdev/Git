@@ -1,127 +1,137 @@
-# Thử thách tổng hợp Branching Master
+# Thử thách cuối Level 3: tạo nhánh, xử lý conflict và merge
 
 ---
 
 ## 🎯 Mục tiêu
-- Áp dụng tổng hợp toàn bộ kỹ năng của Level 3 vào một tình huống phát triển phần mềm đa nhánh.
-- Thực hiện quy trình chuẩn: tách nhánh tính năng, chuyển nhánh, commit độc lập và xử lý xung đột.
-- Giải quyết thành công xung đột Merge Conflict và dọn dẹp nhánh sau khi hoàn thành.
+- Tự tạo hai nhánh có thay đổi riêng từ một commit chung.
+- Gây conflict có chủ đích, đọc và giải quyết conflict.
+- Tạo merge commit, kiểm tra kết quả rồi xóa nhánh đã merge an toàn.
 
 ---
 
 ## 🧩 Từ khóa hôm nay
 
-### Feature Branch Workflow — quy trình nhánh tính năng
-- **Nói dễ hiểu:** Quy trình chuẩn: tách nhánh làm việc riêng, kiểm thử xong mới gộp vào nhánh chính và xóa nhánh con.
-- **Ví dụ:** Tạo nhánh `feature-cart`, viết code trong 2 ngày, merge vào `main` rồi xóa nhánh `feature-cart`.
-- **Đừng nhầm:** Không bao giờ viết code tính năng mới trực tiếp trên nhánh `main` dùng chung của cả nhóm.
+### Feature branch — nhánh tính năng
+- **Nói dễ hiểu:** Nhánh riêng để phát triển một thay đổi mà chưa đưa thẳng vào nhánh chính.
+- **Ví dụ:** Làm phần giỏ hàng trên `feature-challenge`.
+- **Đừng nhầm:** Tách nhánh giúp cô lập lịch sử; nó không tự kiểm thử hay phê duyệt code.
 
-### Merge Conflict Resolution — giải quyết trọn vẹn xung đột
-- **Nói dễ hiểu:** Khả năng đọc hiểu cả hai đoạn code mâu thuẫn, chọn lọc giải pháp tối ưu và đưa mã nguồn về trạng thái chạy tốt.
-- **Ví dụ:** Giữ lại cả chính sách giá vé cuối tuần và giảm giá cho học sinh trong tệp bán vé mà không để sót vạch đánh dấu.
-- **Đừng nhầm:** Giải quyết xung đột không phải là xóa bừa code của ai đó; đó là sự tích hợp có trách nhiệm.
+### Resolve conflict — giải quyết xung đột
+- **Nói dễ hiểu:** Chọn nội dung cuối cùng khi Git không thể tự kết hợp hai thay đổi.
+- **Ví dụ:** Giữ được cả nội dung nhánh tính năng lẫn cập nhật của `main` trong một câu hợp lý.
+- **Đừng nhầm:** Không chọn máy móc Current hoặc Incoming; hiểu yêu cầu trước khi sửa.
 
-### Branch Cleanup — dọn dẹp nhánh sau khi hoàn thành
-- **Nói dễ hiểu:** Thao tác xóa các nhánh con sau khi đã gộp xong vào nhánh chính để giữ danh sách nhánh luôn ngắn gọn.
-- **Ví dụ:** Chạy `git branch -d feature-cart` để kết thúc trọn vẹn một chu kỳ phát triển tính năng.
-- **Đừng nhầm:** Xóa nhánh không làm mất commit hay lịch sử vì toàn bộ code đã nằm an toàn trong nhánh chính.
+### Merge commit — commit hợp nhất
+- **Nói dễ hiểu:** Commit nối nhánh hiện tại với nhánh được merge vào.
+- **Ví dụ:** Sau khi merge `feature-challenge` vào `main`, commit mới có hai commit cha.
+- **Đừng nhầm:** Lệnh merge cập nhật nhánh bạn đang đứng; vì vậy phải đứng trên `main` để nhận tính năng.
 
 ---
 
 ## 📖 Định nghĩa
-Thử thách tổng hợp Branching Master là bài thực hành toàn diện của Level 3, mô phỏng quy trình làm việc nhóm thực tế: bạn sẽ tạo nhánh tính năng, thực hiện gộp nhánh với lịch sử phân kỳ, tự tay xử lý xung đột phát sinh và hoàn tất việc dọn dẹp kho lưu trữ.
+Thử thách này mô phỏng một công việc thực tế theo thứ tự: tạo commit gốc, tách nhánh, commit thay đổi riêng ở mỗi nhánh, hợp nhất trên nhánh nhận, giải quyết conflict, xác nhận kết quả rồi dọn nhánh đã merge.
 
 ---
 
 ## 🤔 Tại sao cần?
-Hiểu lý thuyết về nhánh và gộp nhánh mới chỉ là một nửa chặng đường. Khả năng bình tĩnh xử lý các tình huống xung đột code và hoàn tất quy trình hợp nhất trong thực tế mới là thước đo năng lực thật sự của một lập trình viên khi làm việc trong các công ty phần mềm.
+Người học chỉ biết lệnh khi có thể tự chuẩn bị đúng trạng thái, hiểu kết quả của từng bước và biết cách kiểm tra mình đã làm xong. Bài này ghép các thao tác Level 3 thành một quy trình hoàn chỉnh.
 
 ---
 
 ## 🧠 Mental Model (Mô hình tư duy)
-Hãy hình dung thử thách này giống như bài thi sát hạch lái xe sa hình. Bạn đã học lý thuyết về vô lăng, chân ga và chân phanh (`branch`, `switch`, `merge`). Giờ là lúc bạn trực tiếp ngồi vào ghế lái, điều khiển xe vượt qua đoạn đường phân kỳ và xử lý chướng ngại vật xung đột để đưa chiếc xe về đích an toàn.
+Tạo một bản gốc, để hai nhánh sửa cùng một câu theo hai mục đích khác nhau, rồi đứng ở nhánh nhận để kết hợp thành câu cuối. Cuối cùng mới cất nhánh công việc đã được nhập.
 
 ---
 
 ## 🖼 Sơ đồ
 ```text
-Kịch bản thử thách tổng hợp Level 3:
-               Commit C2 ───> Commit C3 (feature-a)
-              /                                    \
-Commit C1 ───                                       ───> Commit C5 (Resolved Merge)
-              \                                    /
-               Commit C4 (main - both modified) ──┘
+                         F1 ── feature-challenge
+                        /                       \
+Base ──────────────────                           M1 ── main
+                        \                       /
+                         M0 ── cập nhật riêng trên main
+
+M1 là merge commit sau khi giải quyết conflict.
 ```
 
 ---
 
 ## 🌎 Ví dụ thực tế
-Trong kịch bản ứng dụng bán vé xem phim, nhánh `main` vừa cập nhật giá vé cuối tuần trong tệp `ticket.js`, trong khi nhánh `feature-discount` sửa logic giảm giá cho học sinh cũng tại tệp đó. Bạn tiến hành merge, bình tĩnh mở tệp xung đột ra kết hợp cả hai chính sách giá vé, xóa sạch các vạch đánh dấu, chạy `git add`, `git commit` và xóa nhánh tính năng an toàn.
+Nhánh tính năng cập nhật thông báo để nói rằng cửa hàng có ưu đãi. Trong lúc đó, `main` thay thông báo để nói cửa hàng đang bảo trì. Khi merge, bạn cần viết nội dung cuối vừa đúng tình trạng bảo trì vừa không làm mất thông tin ưu đãi cho thời điểm cửa hàng mở lại.
 
 ---
 
 ## 💻 Command
 ```bash
 git switch -c feature-challenge
-git merge main
+git switch main
+git merge feature-challenge
 git status
-git add <tên-tệp-đã-sửa>
-git commit
+git add challenge.txt
+git commit -m "merge: combine challenge changes"
+git show HEAD
 git branch -d feature-challenge
 ```
 
 ---
 
 ## 🔍 Giải thích command
-- `git switch -c <nhánh>`: Tạo nhánh giải quyết thử thách.
-- `git merge main`: Thực hiện hợp nhất và kích hoạt tình huống thử thách.
-- `git status`: Chẩn đoán danh sách các tệp đang chờ gỡ xung đột.
-- `git add <tên-tệp>`: Đánh dấu đã giải quyết xong xung đột cho tệp.
-- `git commit`: Hoàn tất tạo Merge Commit.
-- `git branch -d <nhánh>`: Dọn dẹp nhánh tính năng sau khi hoàn tất xuất sắc.
+- `git switch -c feature-challenge`: Tạo nhánh mới và chuyển sang đó.
+- `git switch main`: Quay về nhánh nhận trước khi merge.
+- `git merge feature-challenge`: Đưa nhánh tính năng vào nhánh hiện tại; ở đây là `main`.
+- `git status`: Tìm tệp conflict hoặc xác nhận tệp đã được stage.
+- `git add challenge.txt`: Báo với Git rằng nội dung conflict trong tệp đã được giải quyết.
+- `git commit -m "merge: combine challenge changes"`: Ghi merge commit sau khi tệp đã sạch marker và được stage.
+- `git show HEAD`: Xác nhận commit mới có hai commit cha.
+- `git branch -d feature-challenge`: Xóa nhánh sau khi công việc đã merge.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Commit khi chưa xóa hết vạch markers:** Khiến chương trình bị lỗi cú pháp và bài kiểm tra tự động đánh giá không đạt.
-2. **Dùng `git merge --abort` giữa chừng:** Lệnh này sẽ hủy bỏ bài làm và bạn phải thực hiện lại từ đầu.
-3. **Quên xóa nhánh sau khi gộp xong:** Để lại nhánh thừa không cần thiết trong danh sách nhánh của dự án.
+1. **Merge khi đang đứng trên nhánh tính năng:** Khi đó kết quả được đưa vào nhánh tính năng, không phải `main`.
+2. **Quên commit hai phía trước khi merge:** Không có hai thay đổi đã commit thì không tạo được tình huống conflict như bài tập.
+3. **Xóa branch trước khi merge hoặc trước khi rời branch đó:** `-d` sẽ chặn việc xóa commit chưa gộp và không xóa nhánh đang được checkout.
 
 ---
 
 ## 🧪 Lab
-Bài tập này được thực hành trên môi trường Git mô phỏng của hệ thống:
-1. Kiểm tra đồ thị nhánh hiện tại bằng lệnh `git log --graph --oneline --all`.
-2. Thực hiện hợp nhất nhánh tính năng vào nhánh chính.
-3. Mở tệp xung đột, phân tích và giải quyết mâu thuẫn theo yêu cầu nghiệp vụ.
-4. Đánh dấu hoàn tất bằng `git add` và kết thúc bằng `git commit`.
-5. Xóa nhánh tính năng bằng lệnh `git branch -d` để hoàn tất thử thách.
+Trong simulator, nhánh nhận của Level 3 là `main`. Nếu làm trên repository thật, dùng tên nhánh chính của dự án. Bắt đầu từ working tree sạch và repository có ít nhất một commit. Nếu `challenge.txt` đã tồn tại, chọn một tên tệp khác và thay tên đó trong các lệnh.
+1. Trên `main`, tạo `challenge.txt` với dòng `Thông báo: phiên bản đầu`; chạy `git add challenge.txt` và `git commit -m "docs: add challenge note"`.
+2. Chạy `git switch -c feature-challenge`. Đổi dòng thành `Thông báo: có ưu đãi`; add và commit với `git commit -m "feat: announce offer"`.
+3. Chạy `git switch main`. Đổi cùng dòng thành `Thông báo: cửa hàng đang bảo trì`; add và commit với `git commit -m "docs: announce maintenance"`.
+4. Chạy `git merge feature-challenge`. Xác nhận `git status` báo conflict trong `challenge.txt`.
+5. Mở tệp. Thay toàn bộ vùng có markers bằng nội dung cuối: `Thông báo: cửa hàng đang bảo trì; ưu đãi áp dụng khi mở cửa trở lại.` Lưu tệp.
+6. Chạy `git status`; xác nhận tệp còn cần được stage. Chạy `git add challenge.txt`, rồi `git status` lần nữa.
+7. Chạy `git commit -m "merge: combine challenge changes"`.
+8. Chạy `git status` và `git show HEAD`. Xác nhận working tree sạch, merge commit có hai cha, nội dung cuối vẫn trong tệp.
+9. Khi đang ở `main`, chạy `git branch -d feature-challenge` rồi `git branch` để xác nhận nhánh phụ được dọn sau merge.
 
 ---
 
 ## 💡 Hint
-Hãy đọc kỹ cả hai đoạn code để kết hợp hài hòa cả hai logic tính toán thay vì chỉ giữ một bên.
+Giải quyết theo ý nghĩa nghiệp vụ: thông báo nói cửa hàng đang bảo trì, còn ưu đãi sẽ áp dụng sau khi mở lại. Xóa đủ cả ba loại marker trước khi chạy `git add`.
 
 ---
 
 ## ✅ Validation
-- Đồ thị commit thể hiện rõ nút giao hợp nhất thành công.
-- Không còn bất kỳ tệp xung đột nào trong `git status`.
-- Nhánh phụ được dọn dẹp sạch sẽ sau khi merge.
+- Trước merge, `main` và `feature-challenge` có các commit riêng sau commit gốc.
+- Merge tạo conflict; sau khi sửa, `git status` không còn `Unmerged paths`.
+- Merge commit có hai commit cha và chứa câu đã kết hợp.
+- `git branch -d feature-challenge` thành công sau khi đứng trên `main`.
 
 ---
 
 ## ❓ Quiz
-Trả lời các câu hỏi tổng kết sau để củng cố toàn bộ kiến thức về Branching & Merging trong Level 3.
+Trả lời câu hỏi để kiểm tra hướng merge, quy trình giải quyết conflict và dọn nhánh.
 
 ---
 
 ## 🔥 Challenge
-Tự mình tái hiện lại toàn bộ kịch bản tạo nhánh, gây xung đột và giải quyết xung đột trên một kho Git mới trên máy tính của bạn mà không cần nhìn tài liệu.
+Tự làm lại quy trình trên với một tệp và thông báo khác. Trước mỗi lệnh, dự đoán nhánh hiện tại, tệp nào sẽ đổi và điều `git status` sẽ báo.
 
 ---
 
 ## 📚 Tổng kết
-- Nắm vững toàn bộ chu trình: tạo nhánh, chuyển nhánh, 3-way merge và gỡ xung đột.
-- Luôn bình tĩnh phân tích các vạch đánh dấu xung đột và trao đổi khi cần thiết.
-- Tạo thói quen dọn dẹp các nhánh đã hoàn thành để giữ kho lưu trữ luôn sạch sẽ và chuyên nghiệp.
+- Tạo commit trên cả hai nhánh trước khi merge để có lịch sử phân kỳ.
+- Đứng trên nhánh nhận, hiểu conflict, sửa tệp, stage rồi commit.
+- Kiểm tra kết quả và chỉ xóa nhánh sau khi đã merge.

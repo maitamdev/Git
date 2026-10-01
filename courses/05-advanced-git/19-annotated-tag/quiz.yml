@@ -15,10 +15,10 @@ questions:
         correct: false
     explanation: Cờ `-a` chỉ thị cho Git tạo một đối tượng tag đầy đủ (Annotated tag) trong cơ sở dữ liệu.
   - id: q2
-    question: Thông tin nào sau đây ĐƯỢC LƯU TRỮ bên trong một Annotated Tag mà Lightweight Tag KHÔNG CÓ?
+    question: Thông tin nào sau đây được lưu trong Annotated Tag nhưng Lightweight Tag không có?
     type: single
     options:
-      - text: Tên người tạo thẻ, email, thời gian tạo thẻ, thông điệp phát hành và chữ ký số GPG
+      - text: Người tạo thẻ, email, thời gian tạo và thông điệp; chữ ký số chỉ có nếu tag được ký
         correct: true
       - text: Mã commit hash mà thẻ trỏ tới
         correct: false
@@ -41,10 +41,10 @@ questions:
         correct: false
     explanation: "`git show <tag-name>` in ra thông tin chi tiết về Tagger, Date, Message và diff của commit được gắn thẻ."
   - id: q4
-    question: Tại sao trong các dự án thương mại, lập trình viên được yêu cầu PHẢI sử dụng Annotated Tag cho các bản phát hành Production?
+    question: Vì sao nhiều dự án dùng Annotated Tag cho bản phát hành?
     type: single
     options:
-      - text: Để đảm bảo tính xác thực, lưu vết kiểm toán rõ ràng về người phê duyệt và thời điểm phát hành
+      - text: Để lưu người tạo thẻ, thời điểm và thông điệp phát hành; quy ước cụ thể tùy dự án
         correct: true
       - text: Vì Lightweight tag sẽ tự động bị xóa sau 24 giờ
         correct: false
@@ -52,7 +52,7 @@ questions:
         correct: false
       - text: Vì GitHub không cho phép hiển thị Lightweight tag
         correct: false
-    explanation: Tính toàn vẹn và trách nhiệm giải trình của bản phát hành được đảm bảo nhờ siêu dữ liệu của Annotated tag.
+    explanation: Metadata giúp đọc lại ai tạo tag, lúc nào và ghi chú gì; nó không tự xác minh danh tính như chữ ký số.
   - id: q5
     question: Cú pháp chuẩn nào sau đây dùng để tạo một Annotated Tag `v2.0.0` với thông điệp phát hành "Release version 2.0.0"?
     type: single

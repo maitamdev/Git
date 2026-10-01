@@ -13,29 +13,29 @@
 ## 🧩 Từ khóa hôm nay
 
 ### Content-Addressable Storage
-- **Nói dễ hiểu**: Hệ thống lưu trữ dữ liệu mà địa chỉ truy cập của mỗi tệp tin chính là mã băm băm ra từ chính nội dung của tệp đó.
-- **Ví dụ**: Nội dung văn bản "hello world" luôn sinh ra mã băm SHA-1 duy nhất là `95d09f2b10159347eece71399a7e2e907ea3df4f`.
-- **Đừng nhầm**: Không dùng tên tệp trên ổ đĩa để tìm kiếm dữ liệu; hai tệp có tên khác nhau nhưng nội dung giống nhau chỉ tốn duy nhất một vị trí lưu trữ.
+- **Nói dễ hiểu**: Git định danh object bằng mã băm được tính từ loại, kích thước và nội dung; với blob, tên đường dẫn không nằm trong dữ liệu được băm.
+- **Ví dụ**: Trong repository SHA-1, nội dung blob gồm đúng byte `hello world\n` tạo object ID `95d09f2b10159347eece71399a7e2e907ea3df4f`.
+- **Đừng nhầm**: Tên tệp không nằm trong blob. Cùng loại và byte nội dung trong cùng định dạng hash thường cho cùng object; cách lưu có thể loose hoặc packed.
 
 ### Git Object Database
-- **Nói dễ hiểu**: Thư mục lưu trữ nhị phân `.git/objects/` chứa toàn bộ nội dung tệp tin, cây thư mục và lịch sử commit của kho lưu trữ.
-- **Ví dụ**: Mỗi khi chạy `git commit`, Git tạo ra các đối tượng blob, tree và commit được nén zlib trong kho đối tượng.
+- **Nói dễ hiểu**: Object database lưu các object như blob, tree, commit và tag; tùy cấu hình repo, object có thể nằm dạng loose hoặc trong packfile.
+- **Ví dụ**: Một commit thường tham chiếu tree và các commit cha; tree tham chiếu blob hoặc tree con.
 - **Đừng nhầm**: Không phải cơ sở dữ liệu quan hệ SQL; đây là một kho lưu trữ Key-Value cực kỳ đơn giản và nhanh chóng.
 
 ### Git References (Refs)
-- **Nói dễ hiểu**: Các tệp tin văn bản thuần túy nhỏ bé nằm trong `.git/refs/` chứa chuỗi mã băm 40 ký tự trỏ đến một commit cụ thể.
-- **Ví dụ**: Nhánh `main` thực chất là tệp `.git/refs/heads/main` chỉ chứa đúng 41 byte (40 ký tự SHA-1 cộng ký tự xuống dòng).
-- **Đừng nhầm**: Nhánh trong Git không phải là một chuỗi bản sao chép tệp tin khổng lồ; nó chỉ là một con trỏ siêu nhẹ.
+- **Nói dễ hiểu**: Ref là tên có thể tra ra object ID; branch thường trỏ tới commit, còn tag có thể trỏ tới object khác.
+- **Ví dụ**: `refs/heads/main` là tên ref của nhánh `main`; Git có thể lưu ref dạng file riêng hoặc gộp trong `packed-refs`.
+- **Đừng nhầm**: Không phải ref nào cũng là file riêng trong `.git/refs/`, và độ dài object ID phụ thuộc định dạng hash của repo.
 
 ---
 
 ## 📖 Định nghĩa
-Git Internals (Kiến trúc nội tại của Git) là toàn bộ các cấu trúc dữ liệu nhị phân, thuật toán băm mật mã học và cơ chế lưu trữ đĩa mà Git sử dụng để theo dõi phiên bản mã nguồn của bạn. Khác với quan niệm thông thường coi Git là một công cụ phức tạp huyền bí, nhà sáng lập Linus Torvalds thiết kế Git về bản chất chỉ là một hệ thống tệp tin định danh theo nội dung (Content-Addressable File System) cực kỳ tinh gọn, bên trên được bao bọc bởi một bộ giao diện quản lý phiên bản thân thiện với người dùng.
+Git Internals là các cấu trúc dữ liệu và quy tắc lưu trữ đứng sau các lệnh Git. Có thể hiểu Git như một kho object định danh theo nội dung, cùng các refs và index để quản lý lịch sử, nhánh và trạng thái chuẩn bị commit. Git thường dùng SHA-1; các bản Git hiện đại cũng hỗ trợ tạo repo SHA-256, nhưng hai định dạng repo chưa thể trao đổi trực tiếp với nhau trong mọi trường hợp.
 
 ---
 
 ## 💡 Tại sao cần
-Khi bạn chỉ biết các lệnh thông thường ở bề mặt, mỗi khi gặp sự cố phức tạp như xung đột rebase, nhánh bị rẽ nhánh ngoài ý muốn, hay mất commit, bạn sẽ cảm thấy hoang mang và sợ hãi làm mất dữ liệu. Khi bạn đã hiểu rõ Git Internals, toàn bộ Git trở nên trong suốt như pha lê: bạn hiểu commit chỉ là một tệp văn bản nhỏ trỏ tới một cây thư mục, nhánh chỉ là một con trỏ văn bản 41 byte, và mọi dữ liệu từng commit đều không bao giờ mất đi trong cơ sở dữ liệu đối tượng.
+Khi hiểu quan hệ giữa commit, tree, blob, refs và index, bạn sẽ biết nên kiểm tra phần nào khi nhánh di chuyển sai hoặc commit không còn trên nhánh. Object không còn được tham chiếu có thể vẫn còn một thời gian và có thể tìm qua reflog hoặc `git fsck`, nhưng Git có thể dọn chúng sau này; vì vậy đây không phải bản sao lưu và không nên hứa rằng dữ liệu luôn còn.
 
 ---
 
@@ -52,7 +52,7 @@ Kiến trúc 4 trụ cột của Git Internals:
 ├─────────────────────────────┬────────────────────────────┤
 │ 1. OBJECT DATABASE          │ 2. REFERENCES (REFS)       │
 │    .git/objects/            │    .git/refs/heads/        │
-│    (Blob, Tree, Commit, Tag)│    (Con trỏ trỏ tới SHA-1) │
+│    (Blob, Tree, Commit, Tag)│    (Tên ref → object ID)   │
 ├─────────────────────────────┼────────────────────────────┤
 │ 3. HEAD POINTER             │ 4. STAGING AREA (INDEX)    │
 │    .git/HEAD                │    .git/index              │
@@ -63,33 +63,33 @@ Kiến trúc 4 trụ cột của Git Internals:
 ---
 
 ## 🏢 Ví dụ thực tế
-Một kỹ sư phần mềm cao cấp tại một tập đoàn công nghệ lớn hỗ trợ một đồng nghiệp vừa vô tình gõ lệnh `git reset --hard` làm mất toàn bộ mã nguồn của ba ngày làm việc. Đồng nghiệp hoảng sợ tột độ vì tưởng rằng dữ liệu đã bị xóa vĩnh viễn khỏi ổ cứng. Kỹ sư cao cấp mỉm cười, mở terminal, truy cập trực tiếp vào cơ sở dữ liệu đối tượng của Git thông qua các công cụ tầng thấp, tìm thấy đối tượng commit mồ côi (dangling commit) vẫn đang nằm nguyên vẹn trong thư mục `.git/objects/` và khôi phục lại toàn bộ nhánh chỉ sau ba mươi giây. Sự khác biệt giữa người dùng Git thông thường và chuyên gia Git Internals nằm ở chính sự thấu hiểu này.
+Ví dụ: sau khi một nhánh bị reset, kỹ sư kiểm tra `git reflog` để tìm commit cũ còn được ghi nhận, rồi xác minh commit bằng `git show <sha>`. Nếu không thấy trong reflog, có thể tìm object chưa được thu gom bằng `git fsck --unreachable`; kết quả không được đảm bảo nếu object đã bị dọn. Trước mọi thao tác phục hồi, nên tạo ref hoặc bản sao an toàn để giữ commit tìm được.
 
 ---
 
 ## 💻 Command & Cú pháp
 ```bash
-# Kiểm tra đường dẫn thư mục quản trị .git
+# Kiểm tra đường dẫn Git thực sự dùng làm thư mục quản trị (có thể khác vị trí worktree)
 git rev-parse --git-dir
 
-# Liệt kê các thành phần bên trong thư mục .git
-ls -la .git
+# Hỏi Git đường dẫn tới object database
+git rev-parse --git-path objects
 
-# Đếm số lượng tệp đối tượng nhị phân đã lưu trữ
-find .git/objects -type f
+# Thống kê loose objects và packfiles
+git count-objects -v
 ```
 
 ---
 
 ## 🔍 Giải thích command
-- `git rev-parse --git-dir`: Lệnh tầng thấp (plumbing) trả về đường dẫn chính xác tới thư mục quản trị `.git` của kho làm việc hiện tại.
-- `ls -la .git`: Hiển thị tất cả các tệp cấu hình, con trỏ `HEAD`, tệp chỉ mục `index` và thư mục `objects`.
-- `find .git/objects -type f`: Quét và liệt kê tất cả các tệp nhị phân nén zlib đại diện cho các đối tượng Git.
+- `git rev-parse --git-dir`: In vị trí Git directory. Trong linked worktree hoặc submodule, `.git` ở thư mục dự án có thể là một file trỏ đến nơi lưu metadata.
+- `git rev-parse --git-path objects`: In đường dẫn object database mà Git đang dùng, kể cả khi vị trí được cấu hình riêng.
+- `git count-objects -v`: Thống kê object dạng loose và thông tin packfile; không phải phép đếm mọi file nằm dưới `.git/objects`.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Nghĩ rằng Git lưu vết dạng vi phân dòng code (diff/deltas)**: Thực chất Git lưu toàn bộ ảnh chụp (snapshot) của tệp tin dưới dạng đối tượng Blob độc lập.
+1. **Nghĩ rằng các commit chỉ lưu phần diff**: Về mặt logic, mỗi commit trỏ tới snapshot của cây thư mục; Git có thể nén và lưu các object theo delta trong packfile để tiết kiệm chỗ.
 2. **Sợ hãi khi nhìn vào thư mục `.git`**: Nghĩ rằng thư mục này là ma thuật đen không thể chạm vào, trong khi nó chỉ là tập hợp các tệp tin và thư mục thông thường.
 3. **Mở tệp đối tượng bằng trình soạn thảo văn bản thông thường**: Các tệp trong `.git/objects` được nén bằng thuật toán zlib, cần dùng lệnh chuyên dụng của Git như `git cat-file` để giải nén và đọc.
 
@@ -98,21 +98,20 @@ find .git/objects -type f
 ## 🧪 Lab thực hành
 Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
 
-1. **Bước 1**: Mở terminal trong một kho lưu trữ Git và chạy lệnh `git rev-parse --git-dir` để xác định vị trí thư mục quản trị.
-2. **Bước 2**: Chạy lệnh `ls -la .git` và xác định 4 thành phần: thư mục `objects/`, thư mục `refs/`, tệp `HEAD`, và tệp `index`.
-3. **Bước 3**: Chạy lệnh `cat .git/HEAD` để xem con trỏ HEAD đang trỏ tới nhánh nào.
-4. **Bước 4**: Tạo một file mới, commit và chạy lại `find .git/objects -type f` để quan sát số lượng đối tượng nhị phân tăng lên trong database.
+1. Chạy `git rev-parse --git-dir` và `git rev-parse --git-path objects` để xem Git đang lưu metadata và objects ở đâu.
+2. Chạy `git symbolic-ref -q HEAD` để xem tên nhánh nếu HEAD đang gắn với nhánh. Lệnh không in tên nhánh khi HEAD detached; khi đó dùng `git rev-parse HEAD` để xem commit hiện tại.
+3. Tạo một file nhỏ, `git add` rồi `git commit`; so sánh `git count-objects -v` trước và sau. Kết quả có thể khác nếu object đã tồn tại hoặc Git vừa pack dữ liệu.
 
 ---
 
 ## 💡 Hint & mẹo
-> Mọi dữ liệu lịch sử và cấu hình của Git đều nằm gói gọn bên trong duy nhất thư mục ẩn `.git`. Khi bạn muốn sao lưu toàn bộ kho mã nguồn cùng lịch sử, bạn chỉ cần sao chép nguyên vẹn thư mục này.
+> Đừng giả định `.git` luôn là thư mục hoặc chứa mọi thứ độc lập: linked worktree, bare repo, submodule và cấu hình object ngoài có cách bố trí khác. Hãy dùng lệnh Git để tra đường dẫn và dùng bản sao lưu repo đã kiểm tra được thay vì chép tay metadata.
 
 ---
 
 ## ✅ Validation & Kết quả mong đợi
-- Lệnh `cat .git/HEAD` hiển thị nội dung dạng `ref: refs/heads/main`.
-- Thư mục `.git/objects` xuất hiện các thư mục con 2 ký tự chứa các đối tượng nén của commit vừa tạo.
+- `git symbolic-ref -q HEAD` in tên ref nếu HEAD đang ở trên một nhánh; `git rev-parse HEAD` in object ID của commit hiện tại.
+- `git count-objects -v` cho biết số loose objects và thông tin pack, nhưng số đếm không nhất thiết tăng sau mỗi commit.
 
 ---
 
@@ -122,12 +121,12 @@ Hãy kiểm tra nhận thức tổng quan của bạn về kiến trúc nội t�
 ---
 
 ## 🚀 Thử thách nâng cao
-Tại sao Linus Torvalds lại khẳng định: "Git không phải là một hệ thống quản lý phiên bản ma thuật, nó chỉ là một cơ sở dữ liệu định danh theo nội dung cực kỳ đơn giản"? Hãy phân tích câu nói này dựa trên cấu trúc key-value của mã băm SHA-1.
+Hãy giải thích cách blob, tree, commit và ref phối hợp để biểu diễn một phiên bản dự án. Trong câu trả lời, phân biệt snapshot logic với cách Git nén object trên đĩa.
 
 ---
 
 ## 📝 Tổng kết
 - Git Internals nghiên cứu cấu trúc dữ liệu, thuật toán băm và cơ chế lưu trữ thực tế bên dưới của Git.
-- Hiểu rõ Git Internals giúp làm chủ hoàn toàn các thao tác cứu hộ, tối ưu hóa và gỡ lỗi phức tạp.
+- Hiểu Git Internals giúp bạn chọn lệnh kiểm tra và phục hồi phù hợp; object không còn được tham chiếu có thể bị garbage collection dọn.
 - Bốn trụ cột chính bao gồm: Object Database, References, HEAD pointer và Index binary file.
-- Mô hình lưu trữ ảnh chụp (Snapshot) giúp Git có tốc độ vượt trội so với các hệ thống VCS lưu trữ vi phân cũ.
+- Commit trỏ tới snapshot logic; Git có thể dùng packfile và delta compression để lưu trữ tiết kiệm.

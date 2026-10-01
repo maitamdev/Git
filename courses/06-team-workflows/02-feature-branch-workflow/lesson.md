@@ -13,9 +13,9 @@
 ## 🧩 Từ khóa hôm nay
 
 ### Feature Branch (Nhánh tính năng)
-- **Nói dễ hiểu**: Nhánh độc lập được rẽ từ nhánh main để phát triển duy nhất một tính năng hoặc sửa một lỗi cụ thể.
+- **Nói dễ hiểu**: Nhánh tạm thời để phát triển một phần việc; thường rẽ từ nhánh đích như `main`.
 - **Ví dụ**: Tạo nhánh `feat/google-auth` để thêm đăng nhập Google mà không đụng chạm đến code của đồng nghiệp.
-- **Đừng nhầm**: Không gom nhiều tính năng khác nhau vào một nhánh duy nhất vì sẽ khiến Pull Request quá lớn và khó kiểm duyệt.
+- **Đừng nhầm**: Một nhánh không tự cô lập thư mục làm việc khỏi nhánh khác; nó giúp tách lịch sử commit. Chia việc thành PR nhỏ thường dễ review hơn.
 
 ### Branch Naming Convention
 - **Nói dễ hiểu**: Quy ước đặt tên nhánh rõ ràng có tiền tố mục đích (feat/, fix/, chore/, docs/) theo dạng kebab-case.
@@ -23,19 +23,19 @@
 - **Đừng nhầm**: Tránh đặt tên tùy tiện như `test`, `branch-moi`, `nam-dev` khiến người khác không biết nhánh làm nhiệm vụ gì.
 
 ### Short-lived Branch
-- **Nói dễ hiểu**: Nhánh có vòng đời ngắn (chỉ kéo dài vài giờ đến 2-3 ngày) rồi hợp nhất ngay vào nhánh chính và xóa đi.
+- **Nói dễ hiểu**: Nhánh được giữ ngắn để tích hợp thay đổi thường xuyên; thời lượng cụ thể phụ thuộc vào cách nhóm chia việc.
 - **Ví dụ**: Hoàn thành form đổi mật khẩu trong 1 ngày, mở PR merge vào main rồi xóa nhánh để dọn dẹp kho lưu trữ.
-- **Đừng nhầm**: Giữ nhánh tính năng quá lâu (vài tuần hoặc vài tháng) sẽ gây ra xung đột mã nguồn khổng lồ khi merge.
+- **Đừng nhầm**: Nhánh sống lâu làm tăng khoảng cách với nhánh đích và có thể khiến tích hợp khó hơn, nhưng conflict không xảy ra trong mọi trường hợp.
 
 ---
 
 ## 📖 Định nghĩa
-Feature Branch Workflow là mô hình cộng tác Git trong đó mọi tính năng hoặc bản sửa lỗi đều được cô lập trên một nhánh rẽ riêng biệt. Nhánh chính chỉ chứa mã nguồn ổn định và chỉ nhận code sau khi vượt qua bài kiểm thử và được phê duyệt qua Pull Request.
+Feature Branch Workflow là cách phát triển thay đổi trên nhánh riêng rồi tích hợp vào nhánh đích. Nhóm có thể yêu cầu PR, review hoặc CI trước khi merge; các yêu cầu này do quy trình và cấu hình repo đặt ra.
 
 ---
 
 ## 💡 Tại sao cần
-Nếu nhiều người cùng làm trên một nhánh, code dở dang của người này sẽ làm hỏng môi trường của người khác. Feature Branch Workflow mang lại khả năng cô lập tuyệt đối, giúp mọi người làm việc song song mà không giẫm chân lên nhau.
+Nhánh riêng giúp lịch sử commit của một thay đổi không trộn ngay vào nhánh đích. Nó không ngăn mọi xung đột: thay đổi vẫn cần được tích hợp và có thể chạm cùng dòng code với nhánh khác.
 
 ---
 
@@ -65,44 +65,49 @@ Kỹ sư Trang làm chức năng đăng nhập Google. Trang cập nhật `main`
 ```bash
 git switch -c feat/<ten-tinh-nang>
 git push -u origin feat/<ten-tinh-nang>
-git switch main && git pull origin main
+git fetch origin
+git switch main
+git pull --ff-only origin main
 git branch -d feat/<ten-tinh-nang>
 ```
+
+Các lệnh fetch/pull/push cần remote `origin` và quyền truy cập phù hợp. Nếu nhánh mặc định của dự án không phải `main`, hãy dùng đúng tên nhánh đó.
 
 ---
 
 ## 🔍 Giải thích command
 - `git switch -c feat/<name>`: Vừa tạo vừa chuyển sang nhánh tính năng mới bắt đầu từ vị trí hiện tại.
 - `git push -u origin <name>`: Đẩy nhánh lên máy chủ và thiết lập liên kết theo dõi (upstream tracking).
-- `git switch main && git pull`: Quay về nhánh chính và đồng bộ mã nguồn mới nhất từ remote server.
+- `git fetch origin`: Cập nhật thông tin từ remote mà chưa thay đổi file trong nhánh hiện tại.
+- `git pull --ff-only origin main`: Cập nhật `main` nếu có thể tiến thẳng; dừng nếu hai lịch sử đã phân kỳ.
 - `git branch -d feat/<name>`: Xóa nhánh tính năng cục bộ một cách an toàn sau khi đã hợp nhất thành công.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Quên pull main trước khi tạo nhánh**: Khiến nhánh tính năng bắt đầu từ nền tảng code cũ, dễ gặp conflict khi hợp nhất.
+1. **Rẽ từ nhánh đích đã cũ**: Kiểm tra hướng dẫn của dự án và cập nhật đúng nhánh nền trước khi tạo nhánh tính năng.
 2. **Đặt tên nhánh tùy tiện**: Đặt tên tối nghĩa như `my-branch`, `test` khiến người khác không hiểu nội dung tính năng.
 3. **Gộp quá nhiều việc vào một nhánh**: Biến PR thành một khối khổng lồ làm đồng nghiệp quá tải khi review.
 
 ---
 
 ## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác trực tiếp trên terminal của máy tính để làm quen với công cụ.
-1. Đảm bảo nhánh main được cập nhật mới nhất bằng lệnh `git switch main && git pull origin main`.
+Làm trong repo thử nghiệm có remote mà bạn được phép push. Nếu chỉ dùng simulator không kết nối GitHub, làm các bước 1–2 rồi xem bước push/PR như phần đọc thêm.
+1. Chạy `git status` để bảo đảm không có thay đổi cần giữ, sau đó chuyển sang nhánh đích và cập nhật nó theo hướng dẫn của repo.
 2. Tạo một nhánh tính năng mới theo quy ước chuẩn: `git switch -c feat/user-profile`.
 3. Thực hiện một commit mẫu, sau đó đẩy nhánh lên remote bằng `git push -u origin feat/user-profile`.
-4. Quan sát liên kết theo dõi nhánh trên máy chủ.
+4. Xác nhận nhánh local và remote tracking bằng `git branch -vv`. Mở PR chỉ khi repo có remote GitHub và bạn có quyền truy cập.
 
 ---
 
 ## 💡 Hint & mẹo
-> Mỗi nhánh tính năng chỉ nên phục vụ một mục đích duy nhất và có vòng đời ngắn từ vài giờ đến vài ngày để giảm thiểu xung đột.
+> Chia PR đủ nhỏ để review được; tích hợp thường xuyên giúp giảm độ lớn của chênh lệch với nhánh đích.
 
 ---
 
 ## ✅ Validation & Kết quả mong đợi
-- Nhánh main luôn giữ được trạng thái có thể build và chạy thành công ở mọi thời điểm.
-- Nắm vững chu trình 5 bước từ rẽ nhánh, commit, push, review PR đến merge an toàn.
+- Tạo được nhánh cho một thay đổi và biết cách kiểm tra trạng thái của nó.
+- Nêu được bước nào phụ thuộc remote, quyền truy cập hoặc chính sách PR của dự án.
 
 ---
 
@@ -118,5 +123,5 @@ Trình bày cách xử lý nếu nhánh tính năng của bạn bị tụt hậu
 
 ## 📝 Tổng kết
 - Feature Branch Workflow cô lập toàn bộ công việc mới trên các nhánh rẽ riêng biệt.
-- Nhánh main luôn được bảo vệ nghiêm ngặt và chỉ chứa mã nguồn đã kiểm thử ổn định.
+- Nhánh tính năng tách commit khỏi nhánh đích cho tới khi tích hợp.
 - Pull Request là cầu nối trung tâm để thảo luận, duyệt code và tích hợp nhánh tính năng vào main.

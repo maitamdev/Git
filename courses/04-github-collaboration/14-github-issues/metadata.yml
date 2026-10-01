@@ -18,8 +18,7 @@ objectives:
     chi tiết.
   - Sử dụng các nhãn (Labels), mốc thời gian (Milestones) và người phụ trách
     (Assignees) để quản trị công việc.
-  - "Nắm vững các từ khóa liên kết tự động đóng Issue khi merge PR: `Fixes #12`,
-    `Closes #45`."
+  - Dùng closing keyword với số Issue thật và biết điều kiện để Issue tự đóng.
 commands:
   - gh issue list
   - gh issue create

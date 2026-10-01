@@ -1,93 +1,81 @@
 id: quiz-03-01-branch-concept
-title: "Trắc nghiệm: Bản chất của Branch trong Git"
+title: "Trắc nghiệm: Khái niệm nhánh trong Git"
 questions:
   - id: q1
-    question: Về mặt bản chất kỹ thuật lưu trữ bên trong Git, một Branch thực chất là gì?
+    question: Trong Git, một branch là gì?
     type: single
     options:
-      - text: Một con trỏ di động 41 byte trỏ trực tiếp vào một commit snapshot cụ thể
+      - text: Một tên trỏ tới một commit trong lịch sử
         correct: true
-      - text: Một bản sao chép đầy đủ toàn bộ thư mục mã nguồn sang ổ đĩa khác
+      - text: Một bản sao đầy đủ của dự án trong thư mục khác
         correct: false
-      - text: Một tệp tin nén zip chứa lịch sử của tháng trước
+      - text: Một commit chứa riêng mã nguồn trên GitHub
         correct: false
-      - text: Một tài khoản người dùng độc lập trên máy chủ GitHub
+      - text: Một tệp lưu danh sách người dùng của dự án
         correct: false
-    explanation: Git Branch chỉ là một con trỏ lưu trong tệp văn bản 41 byte tại
-      .git/refs/heads/<tên-nhánh>.
+    explanation: Branch là tên tham chiếu tới commit; nó không sao chép toàn bộ thư mục dự án.
   - id: q2
-    question: Lệnh nào dưới đây chỉ tạo một nhánh mới mà KHÔNG chuyển sang nhánh đó
-      ngay lập tức?
+    question: Bạn muốn tạo nhánh tên `feature-cart` nhưng vẫn ở nhánh hiện tại. Nên chạy lệnh nào?
     type: single
     options:
-      - text: git branch <tên-nhánh>
+      - text: git branch feature-cart
         correct: true
-      - text: git switch -c <tên-nhánh>
+      - text: git switch feature-cart
         correct: false
-      - text: git checkout -b <tên-nhánh>
+      - text: git commit -m "feature-cart"
         correct: false
-      - text: git jump <tên-nhánh>
+      - text: git branch -d feature-cart
         correct: false
-    explanation: "`git branch <name>` tạo con trỏ nhánh mới; để vừa tạo vừa chuyển
-      sang nhánh mới phải dùng `switch -c` hoặc `checkout -b`."
+    explanation: "`git branch <tên>` tạo một nhánh mới tại commit hiện tại nhưng không tự chuyển sang nhánh đó."
   - id: q3
-    question: Tại sao việc tạo nhánh trong Git lại nhanh hơn gấp nhiều lần so với
-      các hệ thống VCS tập trung như SVN?
+    question: Sau khi tạo nhánh mới bằng `git branch feature-cart`, bạn vẫn đang ở đâu?
     type: single
     options:
-      - text: Vì Git chỉ ghi 40 ký tự hash vào một tệp nhỏ thay vì sao chép toàn bộ cây
-          mã nguồn
+      - text: Vẫn ở nhánh đang có dấu `*` trước khi chạy lệnh
         correct: true
-      - text: Vì Git sử dụng trí tuệ nhân tạo để đoán trước tương lai của dự án
+      - text: Tự động ở nhánh `feature-cart`
         correct: false
-      - text: Vì Git bắt buộc máy tính phải có card đồ họa chuyên dụng cao cấp
+      - text: Ở trạng thái detached HEAD
         correct: false
-      - text: Vì Git bỏ qua hoàn toàn các bài kiểm tra an toàn dữ liệu
+      - text: Trên nhánh remote `origin/feature-cart`
         correct: false
-    explanation: Tạo branch trong Git chỉ mất thao tác ghi 41 byte vào đĩa, bất kể
-      dự án nặng hàng gigabyte.
+    explanation: "`git branch` chỉ tạo tên nhánh; muốn đổi chỗ làm việc cần dùng lệnh chuyển nhánh riêng."
   - id: q4
-    question: Ký tự nào đứng trước tên nhánh trong kết quả lệnh `git branch` để chỉ
-      ra nhánh hiện tại?
+    question: Kết quả `git branch` dùng dấu nào để đánh dấu nhánh hiện tại?
     type: single
     options:
-      - text: Dấu sao (*)
+      - text: Dấu sao `*`
         correct: true
-      - text: Dấu thăng (#)
+      - text: Dấu cộng `+`
         correct: false
-      - text: Dấu chấm than (!)
+      - text: Dấu thăng `#`
         correct: false
-      - text: Dấu ngã (~)
+      - text: Dấu chấm `.`
         correct: false
-    explanation: Dấu sao `*` màu xanh lục đánh dấu nhánh mà con trỏ HEAD đang gắn vào.
+    explanation: Dấu sao ở đầu dòng đánh dấu tên nhánh mà HEAD đang theo trong trạng thái bình thường.
   - id: q5
-    question: Tên quy ước chuẩn quốc tế phổ biến cho nhánh chứa mã nguồn sẵn sàng
-      đưa vào vận hành thực tế là gì?
+    question: Tên `main` cho biết chắc chắn điều gì về repository?
     type: single
     options:
-      - text: main (hoặc master trong các dự án cũ)
+      - text: Đây là một tên nhánh phổ biến; vai trò cụ thể do nhóm quy định
         correct: true
-      - text: draft-temp
+      - text: Nội dung trên nhánh luôn đang chạy production
         correct: false
-      - text: scratchpad
+      - text: Git không cho phép tạo thêm nhánh khác
         correct: false
-      - text: junk-box
+      - text: Đây là tên cố định mà mọi repository bắt buộc phải dùng
         correct: false
-    explanation: "`main` là tên nhánh chính mặc định hiện đại theo chuẩn quốc tế của
-      Git và GitHub."
+    explanation: "`main` thường được chọn làm nhánh mặc định, nhưng Git không gán vai trò production cố định cho tên này."
   - id: q6
-    question: Khi bạn tạo một commit mới trên nhánh hiện tại, điều gì sẽ xảy ra với
-      con trỏ của nhánh đó?
+    question: Bạn tạo commit mới khi đang ở một nhánh. Thông thường, điều gì xảy ra với nhánh đó?
     type: single
     options:
-      - text: Con trỏ nhánh tự động di chuyển tiến lên chỉ vào commit snapshot mới vừa
-          tạo
+      - text: Tên nhánh cập nhật để trỏ tới commit mới
         correct: true
-      - text: Con trỏ nhánh đứng yên ở vị trí commit ban đầu
+      - text: Tên nhánh bị xóa sau khi commit
         correct: false
-      - text: Con trỏ nhánh bị xóa bỏ và bạn phải gõ lệnh tạo lại
+      - text: Mọi nhánh khác cũng tự chuyển tới commit mới
         correct: false
-      - text: Con trỏ nhánh sẽ nhảy lùi về commit đầu tiên của dự án
+      - text: Commit mới không được thêm vào lịch sử nào
         correct: false
-    explanation: Mỗi khi commit sinh ra, con trỏ nhánh hiện tại tự động cập nhật mã
-      hash của commit mới đó.
+    explanation: Khi commit trên một nhánh, Git thường cập nhật con trỏ của nhánh đó tới commit mới.

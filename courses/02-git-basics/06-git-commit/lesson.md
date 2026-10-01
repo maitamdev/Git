@@ -1,11 +1,11 @@
-# Lưu snapshot với git commit
+# Lưu một mốc bằng `git commit`
 
 ---
 
 ## 🎯 Mục tiêu
-- Tạo một commit từ những thay đổi đã staged.
-- Viết lời nhắn ngắn mô tả thay đổi bằng `git commit -m`.
-- Phân biệt commit trên máy với việc gửi commit lên GitHub.
+- Tạo commit từ thay đổi đã staged.
+- Viết lời nhắn ngắn bằng `git commit -m`.
+- Phân biệt commit trên máy với việc gửi commit lên dịch vụ trực tuyến.
 
 ---
 
@@ -13,95 +13,105 @@
 
 ### Commit — mốc lưu trong lịch sử
 - **Nói dễ hiểu:** Bản ghi lưu trạng thái đã chọn trong Staging Area.
-- **Ví dụ:** Tạo commit sau khi chọn các tệp sẽ đưa vào mốc.
-- **Đừng nhầm:** Commit thông thường chỉ lấy phần đã staged.
+- **Ví dụ:** Sau khi chọn tệp, tạo commit để lưu một mốc.
+- **Đừng nhầm:** Commit thông thường lấy nội dung đã staged.
+
+### Staged — đã chọn cho commit
+- **Nói dễ hiểu:** Nội dung đã được đưa vào Staging Area.
+- **Ví dụ:** `git status` liệt kê `main.js` trong “Changes to be committed”.
+- **Đừng nhầm:** Staged chưa phải commit.
 
 ### Commit message — lời nhắn của mốc
-- **Nói dễ hiểu:** Câu ngắn mô tả lý do hoặc nội dung chính của commit.
+- **Nói dễ hiểu:** Câu ngắn mô tả thay đổi chính của commit.
 - **Ví dụ:** `git commit -m "docs: add setup guide"`.
 - **Đừng nhầm:** Message giúp người đọc; nó không mô tả hết mọi dòng code.
-
-### `-a` — rút gọn cho tệp đã theo dõi
-- **Nói dễ hiểu:** Với `git commit -a`, Git tự chọn các tệp tracked đã sửa hoặc xóa.
-- **Ví dụ:** Dùng cho thay đổi của tệp cũ đã được theo dõi.
-- **Đừng nhầm:** Cờ này không tự đưa tệp mới untracked vào commit.
 
 ---
 
 ## 📖 Định nghĩa
-`git commit` ghi các thay đổi đã chọn trong Staging Area thành một mốc trong lịch sử Git. Bạn có thể thêm lời nhắn bằng `-m`. Commit được lưu trong repository trên máy; nó chưa tự gửi lên GitHub.
+`git commit` ghi các thay đổi đã chọn trong Staging Area thành một mốc trong lịch sử Git. Cờ `-m` cho phép thêm lời nhắn. Commit được lưu trong repository trên máy; lệnh này chưa tự gửi commit lên GitHub.
 
 ---
 
 ## 🤔 Tại sao cần?
-Commit giúp bạn chia công việc thành các mốc có thể xem lại. Một mốc nhỏ, tập trung thường dễ hiểu và dễ kiểm tra hơn một commit gom nhiều việc không liên quan.
+Commit chia công việc thành các mốc có thể xem lại. Một mốc nhỏ, tập trung thường dễ hiểu và dễ kiểm tra hơn một commit gom nhiều việc không liên quan.
 
 ---
 
 ## 🧠 Mental Model (Mô hình tư duy)
-Hãy nghĩ commit như một mốc trong nhật ký dự án. `git add` chọn nội dung trước; `git commit` ghi lựa chọn đó thành mốc.
+`git add` chọn nội dung trước; `git commit` ghi lựa chọn đó thành một mốc trong lịch sử.
 
 ---
 
 ## 🖼 Sơ đồ
 ```text
-Tệp đang sửa ──git add──► Staging Area ──git commit──► Commit mới trên máy
-                                                    └──git push──► GitHub (bài sau)
+Tệp đang sửa ──git add──► Staging Area ──git commit──► Commit lưu trên máy
+                                                         │
+                                                  git push (bài sau)
+                                                         ▼
+                                                       GitHub
 ```
 
 ---
 
 ## 🌎 Ví dụ thực tế
-Bạn sửa `main.js`, xem `git status`, rồi chạy `git add main.js` để chọn tệp. Sau `git commit -m "feat: add main page"`, kiểm tra mốc mới bằng `git log --oneline`. Commit này vẫn đang ở máy bạn cho tới khi push.
+Bạn sửa `main.js`, chạy `git add main.js`, rồi tạo mốc bằng `git commit -m "feat: add main page"`. Commit đã lưu trên máy; muốn chia sẻ lên dịch vụ từ xa thì cần bước push học sau.
 
 ---
 
 ## 💻 Command
 ```bash
-git commit -m "feat: your commit message"
-git commit -am "fix: quick fix"
+git status
+git add main.js
+git commit -m "feat: initialize main app"
+git log --oneline
 ```
 
 ---
 
 ## 🔍 Giải thích command
-- `git commit -m "<thông-điệp>"`: Tạo một commit mới từ các tệp tin đã nằm trong Staging Area kèm thông điệp mô tả tóm tắt ngắn gọn.
-- `git commit -am "<thông-điệp>"`: Phím tắt tự động stage tất cả các tệp Modified và tạo commit mà không cần chạy git add trước (không áp dụng cho tệp Untracked).
+- `git status`: Kiểm tra thay đổi trước khi commit.
+- `git add main.js`: Đưa trạng thái hiện tại của tệp vào Staging Area.
+- `git commit -m "<thông-điệp>"`: Tạo commit từ thay đổi đã staged, kèm lời nhắn.
+- `git log --oneline`: Xem các commit đã tạo dưới dạng gọn.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Thông điệp commit vô nghĩa**:  Viết những câu như "fix", "update", "asdfgh" khiến đồng nghiệp và chính bạn sau này không thể hiểu commit đó làm gì.
-2. **Commit quá lớn**: Gom nhiều việc không liên quan làm mốc khó hiểu và khó xem lại.
-3. **Nghĩ commit đã lên mạng**: Commit được lưu trên máy; muốn chia sẻ cần push sau này.
+1. **Thông điệp quá chung chung**: “update” không nói rõ thay đổi gì.
+2. **Quên stage tệp**: Commit chỉ lấy nội dung đã staged; kiểm tra bằng `git status` trước khi commit.
+3. **Nghĩ commit đã lên mạng**: Commit nằm trong repository trên máy cho tới khi push.
 
 ---
 
 ## 🧪 Lab
-1. Tạo hoặc chỉnh sửa tệp `main.js` với nội dung mới.
-2. Đưa tệp vào Staging Area bằng lệnh `git add main.js`.
-3. Tạo commit đầu tiên bằng câu lệnh `git commit -m "feat: initialize main app"`.
-4. Kiểm tra lại bằng `git log --oneline` để thấy commit mới sinh ra.
+1. Tạo hoặc chỉnh sửa tệp `main.js` để có thay đổi cần lưu.
+2. Chạy `git status` để xem thay đổi.
+3. Chạy `git add main.js`.
+4. Chạy lại `git status`; xác nhận `main.js` nằm trong “Changes to be committed”.
+5. Chạy `git commit -m "feat: initialize main app"`.
+6. Chạy `git log --oneline` để thấy commit vừa tạo. Trong repository mới, đây là commit đầu tiên; nếu đã có lịch sử, đây là commit mới tiếp theo.
 
 ---
 
 ## 💡 Hint
-> Một commit tốt nên tập trung vào một nhiệm vụ duy nhất và có thông điệp rõ ràng.
+> Nếu Git báo “nothing to commit”, hãy kiểm tra xem tệp có thay đổi và đã staged chưa.
 
 ---
 
 ## ✅ Validation
-- Kiểm tra `git log` có xuất hiện commit với đúng thông điệp đã nhập.
+- `git status` xác nhận thay đổi đã staged trước khi commit.
+- `git log --oneline` hiển thị commit với đúng lời nhắn.
 
 ---
 
 ## ❓ Quiz
-Làm bài trắc nghiệm dưới đây để kiểm tra hiểu biết sâu sắc về câu lệnh git commit.
+Làm bài trắc nghiệm dưới đây để kiểm tra cách tạo commit từ thay đổi đã staged.
 
 ---
 
 ## 🔥 Challenge
-Tạo một commit cho một thay đổi nhỏ rồi giải thích vì sao nó chưa xuất hiện trên GitHub.
+Tạo commit cho một thay đổi nhỏ rồi giải thích vì sao commit vẫn xem được ở máy dù chưa push lên máy chủ.
 
 ---
 

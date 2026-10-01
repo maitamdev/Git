@@ -5,7 +5,7 @@ questions:
     question: Điểm khác biệt căn bản nhất giữa một con trỏ nhánh (Branch) và một con trỏ thẻ (Tag) là gì?
     type: single
     options:
-      - text: Nhánh tự động di chuyển tiến lên khi có commit mới, còn Tag đứng yên vĩnh viễn tại commit được gắn
+      - text: Nhánh thường tiến lên khi có commit mới trên nhánh đó; tag không tự tiến lên nhưng có thể được di chuyển thủ công
         correct: true
       - text: Tag chỉ dùng được trên máy chủ GitHub, còn nhánh chỉ dùng trên máy cá nhân
         correct: false
@@ -13,7 +13,7 @@ questions:
         correct: false
       - text: Hai khái niệm này hoàn toàn giống hệt nhau không khác gì
         correct: false
-    explanation: Branch là con trỏ động di chuyển theo commit mới; Tag là con trỏ tĩnh cố định đóng vai trò mốc tham chiếu.
+    explanation: Branch được cập nhật khi commit mới được tạo trên nhánh. Tag là ref không tự cập nhật theo cách đó, nhưng người dùng vẫn có thể xóa hoặc tạo lại tag.
   - id: q2
     question: Khi bạn chạy câu lệnh `git push origin main`, các thẻ Tag mới tạo ở máy cục bộ có được tự động đẩy lên GitHub không?
     type: single

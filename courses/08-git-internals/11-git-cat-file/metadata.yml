@@ -14,8 +14,7 @@ objectives:
   - "Làm chủ lệnh plumbing cứu hộ đa năng: git cat-file."
   - "Sử dụng thành thạo 3 cờ quan sát cốt lõi: -p (pretty-print nội dung), -t
     (kiểm tra loại đối tượng), và -s (xem kích thước byte)."
-  - Có khả năng kiểm tra bất kỳ đối tượng nhị phân nào trong .git/objects/ chỉ
-    bằng tiền tố mã băm (hash prefix).
+  - Tra cứu object bằng object ID đầy đủ hoặc tiền tố ngắn không mơ hồ.
 commands:
   - git cat-file -p <hash>
   - git cat-file -t <hash>

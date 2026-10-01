@@ -1,95 +1,81 @@
 id: quiz-03-07-fast-forward-merge
-title: "Trắc nghiệm: Hợp nhất nhanh Fast-forward merge"
+title: "Trắc nghiệm: Hợp nhất tua nhanh"
 questions:
   - id: q1
-    question: Điều kiện tiên quyết để Git có thể thực hiện Fast-forward merge là gì?
+    question: Điều kiện nào cho phép Git thực hiện fast-forward từ `feature` vào `main`?
     type: single
     options:
-      - text: Nhánh đích (ví dụ main) không có bất kỳ commit mới nào kể từ khi nhánh
-          tính năng được tách ra
+      - text: Commit hiện tại của `main` là tổ tiên của commit trên `feature`
         correct: true
-      - text: Dự án phải có dung lượng dưới 10 megabyte
+      - text: Hai nhánh có tên giống nhau
         correct: false
-      - text: Cả hai lập trình viên phải sử dụng cùng một phiên bản hệ điều hành
+      - text: Repository có ít hơn mười tệp
         correct: false
-      - text: Lệnh phải được thực thi vào lúc 12 giờ đêm
+      - text: Người dùng đã kết nối Internet
         correct: false
-    explanation: Nếu nhánh đích không có commit mới, con đường lịch sử là hoàn toàn
-      tuyến tính và Git có thể tua nhanh con trỏ.
+    explanation: Git có thể tua con trỏ main khi lịch sử của main nằm trên đường dẫn tới commit feature.
   - id: q2
-    question: Trong quá trình thực hiện Fast-forward merge thành công, Git có sinh
-      ra một commit mới hay không?
+    question: Fast-forward merge tạo ra thay đổi nào trong lịch sử?
     type: single
     options:
-      - text: Không, Git chỉ đơn thuần dịch chuyển con trỏ của nhánh đích tiến lên chỉ
-          vào commit đỉnh của nhánh tính năng
+      - text: Di chuyển con trỏ nhánh đích tới commit mới hơn mà không tạo merge commit
         correct: true
-      - text: Có, Git luôn luôn bắt buộc tạo ra một commit có hai cha
+      - text: Xóa toàn bộ commit của nhánh nguồn
         correct: false
-      - text: Có, nhưng commit đó sẽ tự động bị ẩn đi sau 1 giờ
+      - text: Tạo commit có hai cha trong mọi trường hợp
         correct: false
-      - text: Git sẽ xóa toàn bộ các commit cũ và thay bằng một commit duy nhất
+      - text: Đổi tên nhánh nguồn thành nhánh đích
         correct: false
-    explanation: Fast-forward không tạo commit mới, chỉ di chuyển con trỏ tiến lên
-      phía trước.
+    explanation: Fast-forward đưa nhánh đích tới commit đã có trên nhánh nguồn; không tạo commit mới.
   - id: q3
-    question: Trước khi chạy lệnh `git merge feature-login` để gộp tính năng vào
-      nhánh chính, bạn bắt buộc phải làm gì?
+    question: Muốn gộp `feature-login` vào `main`, bạn cần đứng trên nhánh nào trước khi chạy `git merge feature-login`?
     type: single
     options:
-      - text: Chuyển về nhánh đích đón nhận code bằng lệnh `git switch main`
+      - text: "`main`, vì đó là nhánh nhận thay đổi"
         correct: true
-      - text: Xóa nhánh feature-login trước
+      - text: "`feature-login`, vì merge luôn cập nhật nhánh nguồn"
         correct: false
-      - text: Tắt kết nối mạng Internet
+      - text: Nhánh remote `origin`
         correct: false
-      - text: Đóng trình duyệt web
+      - text: Không quan trọng nhánh nào đang chọn
         correct: false
-    explanation: Bạn luôn phải đứng ở nhánh đích (nơi muốn nhận code) trước khi ra
-      lệnh merge nhánh nguồn vào.
+    explanation: Lệnh `git merge` cập nhật nhánh hiện tại bằng cách hợp nhất nhánh được nêu làm nguồn.
   - id: q4
-    question: Cờ tùy chọn nào ép buộc Git tạo một Merge Commit mới ngay cả khi đủ
-      điều kiện thực hiện Fast-forward?
+    question: Khi có thể fast-forward nhưng bạn muốn lưu một commit riêng cho lần tích hợp, dùng cờ nào?
     type: single
     options:
       - text: --no-ff
         correct: true
-      - text: --force-merge
+      - text: --oneline
         correct: false
-      - text: --create-commit
+      - text: --staged
         correct: false
-      - text: --always-new
+      - text: --cached
         correct: false
-    explanation: "`--no-ff` (no fast-forward) bắt buộc tạo một merge commit riêng
-      biệt để lưu lại bằng chứng của nhánh tính năng."
+    explanation: "`git merge --no-ff` yêu cầu Git tạo merge commit thay vì chỉ di chuyển con trỏ."
   - id: q5
-    question: Cờ `--ff-only` trong lệnh git merge mang lại sự an toàn nào cho quy
-      trình CI/CD?
+    question: Vì sao một nhóm có thể chọn `--no-ff` dù fast-forward đang khả thi?
     type: single
     options:
-      - text: Từ chối hợp nhất và báo lỗi nếu nhánh đích bị phân kỳ, bảo đảm lịch sử dự
-          án luôn là một đường thẳng
+      - text: Muốn lưu riêng một mốc thể hiện lần tích hợp nhánh tính năng
         correct: true
-      - text: Tự động chấp nhận tất cả các lỗi xung đột code mà không hỏi người dùng
+      - text: Muốn xóa lịch sử cũ khỏi repository
         correct: false
-      - text: Xóa bỏ tất cả các bài kiểm tra tự động
+      - text: Muốn bỏ qua việc kiểm tra thay đổi
         correct: false
-      - text: Tự động tăng số sao trên GitHub của dự án
+      - text: Muốn tự động đẩy commit lên GitHub
         correct: false
-    explanation: "`--ff-only` ngăn chặn việc vô tình sinh ra merge commit khi lịch
-      sử đã bị phân kỳ."
+    explanation: Merge commit tạo dấu mốc riêng cho lần tích hợp, theo quy ước của nhóm.
   - id: q6
-    question: Khi quan sát `git log --graph --oneline` sau một Fast-forward merge,
-      đồ thị nhánh sẽ có dạng gì?
+    question: Sau fast-forward, điều gì đúng về hai con trỏ `main` và `feature`?
     type: single
     options:
-      - text: Một đường thẳng tắp duy nhất không có bất kỳ nút giao rẽ nhánh nào
+      - text: Cả hai có thể cùng trỏ tới commit mới nhất
         correct: true
-      - text: Một vòng tròn khép kín vô tận
+      - text: "`feature` bị xóa tự động"
         correct: false
-      - text: Một hình sao năm cánh phức tạp
+      - text: "`main` quay lại commit đầu tiên"
         correct: false
-      - text: Đồ thị bị biến mất hoàn toàn không xem được
+      - text: Cả hai chuyển thành remote branch
         correct: false
-    explanation: Do không có merge commit, các commit nối tiếp nhau trên một đường
-      thẳng duy nhất.
+    explanation: Fast-forward di chuyển main tới commit feature; nhánh feature vẫn tồn tại nếu chưa bị xóa riêng.

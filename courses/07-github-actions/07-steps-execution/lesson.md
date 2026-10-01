@@ -13,8 +13,8 @@
 
 ### Fail-fast Mechanism
 - **Nói dễ hiểu**: Khi một bước bị lỗi (mã thoát khác 0), toàn bộ các bước phía sau tự động dừng lại ngay lập tức.
-- **Ví dụ**: Nếu lệnh `npm test` ở bước 3 bị lỗi, bước 4 `npm run build` sẽ bị bỏ qua để tránh đóng gói code lỗi.
-- **Đừng nhầm**: Đây là tính năng bảo vệ an toàn chứ không phải lỗi hệ thống; có thể vượt qua bằng `continue-on-error: true`.
+- **Ví dụ**: Nếu lệnh `npm test` ở bước 3 trả mã lỗi, bước 4 thường bị bỏ qua theo điều kiện mặc định.
+- **Đừng nhầm**: Step có `if` riêng như `failure()` vẫn có thể chạy; `continue-on-error: true` cho phép tiếp tục nhưng có thể khiến kết quả Job vẫn xanh.
 
 ### Step Outputs
 - **Nói dễ hiểu**: Dữ liệu do một bước tạo ra và xuất ra để các bước tiếp theo trong cùng Job có thể đọc lại.
@@ -22,10 +22,10 @@
 - **Đừng nhầm**: Bắt buộc phải đặt thuộc tính `id` cho bước đó thì các bước sau mới có thể tham chiếu giá trị output.
 
 ## 📖 Định nghĩa
-Steps (Các bước) là mảng tuần tự các tác vụ cụ thể cần thực hiện bên trong một Job. Mỗi Step có thể là một câu lệnh terminal (`run`) hoặc một action đóng gói sẵn (`uses`). Các Step trong cùng một Job thực thi tuần tự từ trên xuống dưới trên cùng một máy ảo Runner, dùng chung hệ thống tệp tin và các biến môi trường được thiết lập trong suốt phiên làm việc.
+Steps (Các bước) là danh sách tác vụ trong một Job. Mỗi Step dùng `run` để chạy lệnh shell hoặc `uses` để gọi Action. Steps được xét theo thứ tự khai báo và dùng chung workspace; sau lỗi, các step sau mặc định bị bỏ qua trừ khi điều kiện hoặc `continue-on-error` thay đổi hành vi.
 
 ## 💡 Tại sao cần
-Hiểu rõ cơ chế của Step giúp bạn kiểm soát toàn bộ chu trình xử lý mã nguồn: từ kéo mã nguồn, cài đặt môi trường, chạy kiểm thử cho đến khi dọn dẹp. Cơ chế ngắt khẩn cấp khi một Step thất bại bảo đảm hệ thống không bao giờ tiếp tục xây dựng hoặc phát hành một sản phẩm đang bị lỗi logic.
+Hiểu cơ chế Step giúp bạn kiểm soát chu trình xử lý mã nguồn. Mặc định, bước sau không chạy sau lỗi; điều kiện riêng vẫn có thể cho bước khác chạy, nên hãy đặt phụ thuộc phát hành rõ ràng.
 
 ## 🧠 Mental Model
 Hãy tưởng tượng các Step như công thức làm bánh ngọt từng bước: Bước 1: Đập trứng; Bước 2: Đánh tan trứng; Bước 3: Cho đường và sữa; Bước 4: Nướng bánh trong lò. Bạn không thể nướng bánh trước khi đập trứng. Và nếu ở Bước 1 quả trứng bị hỏng (`Step 1 Failed`), bạn phải dừng lại ngay lập tức chứ không được tiếp tục đổ sữa và nướng.
@@ -33,10 +33,11 @@ Hãy tưởng tượng các Step như công thức làm bánh ngọt từng bư�
 ## 📊 Sơ đồ minh họa
 ```mermaid
 flowchart TD
-    S1[Step 1: actions/checkout@v4 - Thành công] --> S2[Step 2: npm install - Thành công]
+    S1[Step 1: actions/checkout@v7 - Thành công] --> S2[Step 2: npm install - Thành công]
     S2 --> S3{Step 3: npm test}
-    S3 -- Thành công --> S4[Step 4: npm run build - Triển khai]
-    S3 -- Thất bại (Fail-fast) --> Cancel[Step 4: Bị hủy bỏ tự động]
+    S3 -- Thành công --> S4[Step 4: npm run build]
+    S3 -- Thất bại --> Skip[Step 4 mặc định bị bỏ qua]
+    S3 -- Thất bại, if riêng --> Rescue[Step có if: failure() vẫn có thể chạy]
 ```
 
 ## 🏢 Ví dụ thực tế
@@ -53,7 +54,7 @@ gh run view --log
 
 ## 🔍 Giải thích command
 - `echo "Hello Step"`: Ví dụ về một câu lệnh shell đơn giản được thực thi trực tiếp bên trong từ khóa `run` của step.
-- `gh run view --log`: Hiển thị toàn bộ dữ liệu đầu ra console của từng step trong Job để phục vụ chẩn đoán lỗi.
+- `gh run view --log`: Hiển thị log của workflow run; cần cài GitHub CLI và quyền đọc repo.
 
 ## ⚠️ Sai lầm phổ biến
 - Cho rằng mỗi Step chạy trong một thư mục riêng biệt (thực tế toàn bộ các Step dùng chung `github.workspace`).
@@ -84,11 +85,11 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
 
 ## 💡 Hint & mẹo
 - Luôn đặt tên `name` mô tả rõ hành động (ví dụ: "Cài đặt dependencies", "Chạy unit test") thay vì để trống.
-- Nếu muốn một bước dọn dẹp luôn luôn chạy kể cả khi test bị lỗi, hãy dùng điều kiện `if: always()`.
+- Với bước dọn dẹp ngắn sau thành công hoặc lỗi, cân nhắc `if: ${{ !cancelled() }}`; chỉ dùng `always()` khi cần thử chạy cả sau khi bị hủy và bước đó kết thúc nhanh.
 
 ## ✅ Validation & Kết quả mong đợi
 - Các Step thực thi đúng theo thứ tự khai báo từ trên xuống dưới trên cùng một Runner.
-- Cơ chế Fail-fast ngăn chặn các bước sau thực thi khi bước trước đó trả về mã lỗi.
+- Sau lỗi, step sau mặc định bị bỏ qua; điều kiện riêng và `continue-on-error` có thể làm thay đổi luồng chạy.
 
 ## ❓ Quiz nhanh
 Hãy làm bài trắc nghiệm bên dưới để kiểm tra mức độ hiểu biết của bạn về cơ chế thực thi của các Step trong Job.
@@ -98,5 +99,5 @@ Tìm hiểu cách sử dụng hàm điều kiện `if: failure()` để chỉ k�
 
 ## 📝 Tổng kết
 - Các Step trong Job luôn thực thi tuần tự từ trên xuống dưới trên cùng một Runner.
-- Nếu một Step gặp lỗi (exit code khác 0), mặc định các Step tiếp theo sẽ bị hủy bỏ ngay lập tức.
+- Nếu một Step lỗi, các Step tiếp theo mặc định bị bỏ qua; có thể chạy bước xử lý lỗi bằng `if: failure()`.
 - Đặt `id` cho Step cho phép chia sẻ dữ liệu đầu ra giữa các bước một cách mạch lạc.

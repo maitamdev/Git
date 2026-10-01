@@ -17,10 +17,10 @@
 - **Ví dụ**: Khi gõ `git push origin main`, origin trỏ đến URL máy chủ lưu trữ dự án.
 - **Đừng nhầm**: Không phải lệnh của Git hay từ khóa bắt buộc của hệ thống; đây chỉ là tên quy ước.
 
-### default remote alias
-- **Nói dễ hiểu**: Tên gọi đại diện được quy ước ngầm định sẵn để mọi người và công cụ tự động hóa cùng hiểu.
-- **Ví dụ**: Đa số tài liệu và quy trình CI/CD đều mặc định tìm máy chủ có tên `origin`.
-- **Đừng nhầm**: Không có nghĩa là Git cấm đổi tên; bạn vẫn có quyền đặt tên khác nếu thực sự cần.
+### remote alias — bí danh remote
+- **Nói dễ hiểu**: Tên ngắn đại diện cho URL của một remote. `origin` là tên Git thường dùng khi clone.
+- **Ví dụ**: `git push origin main` gửi nhánh `main` tới remote có bí danh `origin`.
+- **Đừng nhầm**: Git không bắt buộc mọi remote phải tên `origin`; một script riêng có thể được cấu hình theo tên khác.
 
 ### git remote rename
 - **Nói dễ hiểu**: Câu lệnh cho phép bạn đổi tên bí danh của kho từ xa từ tên cũ sang tên mới.
@@ -80,22 +80,22 @@ git remote rename my-server origin
 
 ## ⚠️ Sai lầm phổ biến
 1. **Nghĩ origin là một lệnh đặc biệt**: Lầm tưởng origin có chức năng riêng mà không biết nó chỉ là tên gọi đại diện cho URL.
-2. **Đặt tên remote tùy tiện trong dự án nhóm**: Gây khó khăn cho đồng nghiệp và các script tự động hóa CI/CD vốn mặc định tìm tên origin.
+2. **Cho rằng mọi công cụ đều bắt buộc remote tên origin**: Đây là quy ước phổ biến; một số script có thể dựa vào nó, nhưng Git cho phép dùng tên khác.
 3. **Hoang mang khi gặp dự án có nhiều remote**: Khi gặp cả origin và upstream, chỉ cần nhớ mỗi tên là một đích đến độc lập.
 
 ---
 
 ## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác đổi tên remote trên terminal và đối chiếu kết quả.
-1. Chạy lệnh `git remote` và xác nhận kết quả in ra là `origin`.
-2. Đổi tên thử nghiệm bằng `git remote rename origin central-hub`.
-3. Chạy `git remote -v` để thấy bí danh mới hoạt động bình thường.
-4. Đổi lại tên chuẩn bằng `git remote rename central-hub origin`.
+Thử đổi tên một remote mà không tác động tới máy chủ. Nếu đã có remote `origin`, dùng nó; nếu chưa có, tạo remote thử nghiệm theo bước 1.
+1. Chạy `git remote -v` để xem `origin` đang trỏ tới đâu (nếu có).
+2. Tạo một remote riêng cho bài tập: `git remote add training-origin https://example.com/team/project.git`.
+3. Đổi tên thử nghiệm: `git remote rename training-origin my-server`; dùng `git remote -v` để xác nhận URL không đổi.
+4. Đổi lại bằng `git remote rename my-server training-origin`, rồi xóa remote thử nghiệm bằng `git remote remove training-origin`.
 
 ---
 
 ## 💡 Hint & mẹo
-> Luôn giữ tên `origin` cho remote chính trong dự án để các tài liệu hướng dẫn và pipeline CI/CD hoạt động trơn tru.
+> Giữ tên `origin` khi dự án và nhóm đã dùng quy ước đó. Nếu đổi tên, kiểm tra tài liệu và script trong dự án để cập nhật chỗ nào còn tham chiếu tới tên cũ.
 
 ---
 
@@ -111,7 +111,7 @@ Hãy hoàn thành các câu hỏi trắc nghiệm dưới đây để củng c�
 ---
 
 ## 🚀 Thử thách nâng cao
-Mở file `.git/config` và tìm dòng `[remote "origin"]` để thấy trực tiếp mối quan hệ giữa tên gọi `origin` và URL của máy chủ.
+Trong kho Git thật, tìm mục `[remote "origin"]` trong `.git/config` rồi đối chiếu với `git remote -v`. Không sửa file cấu hình bằng tay.
 
 ---
 

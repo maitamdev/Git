@@ -55,6 +55,28 @@ export class SwitchCommand implements GitCommand {
     }
 
     const targetBranchName = args[0];
+    const wantsDetached = Boolean(flags['detach'] || flags['d']);
+    if (wantsDetached) {
+      const sourceTree = ctx.stateManager.getHeadTree();
+      const commitHash = ctx.stateManager.resolveRef(targetBranchName);
+      const commit = commitHash ? ctx.stateManager.getCommit(commitHash) : null;
+      if (!commit) {
+        return { stdout: '', stderr: `fatal: invalid reference: ${targetBranchName}`, exitCode: 128 };
+      }
+
+      const conflict = this.findCheckoutConflict(commit.tree, ctx);
+      if (conflict) return conflict;
+
+      state.head = { type: 'detached', ref: commit.hash };
+      this.updateWorkingTree(sourceTree, commit.tree, ctx);
+      ctx.stateManager.addReflog('checkout', null, commit.hash, `moving to ${commit.shortHash}`);
+      return {
+        stdout: `HEAD is now at ${commit.shortHash} ${commit.message}`,
+        stderr: '',
+        exitCode: 0,
+      };
+    }
+
     const targetBranch = ctx.stateManager.getBranch(targetBranchName);
 
     if (!targetBranch) {
@@ -65,7 +87,7 @@ export class SwitchCommand implements GitCommand {
       };
     }
 
-    if (targetBranchName === currentBranch) {
+    if (targetBranchName === currentBranch && state.head.type === 'branch') {
       return {
         stdout: `Already on '${targetBranchName}'`,
         stderr: '',
@@ -73,20 +95,16 @@ export class SwitchCommand implements GitCommand {
       };
     }
 
-    ctx.stateManager.switchBranch(targetBranchName);
-
-    // Update working directory to match target branch commit tree
     const targetCommit = targetBranch.commitHash
       ? ctx.stateManager.getCommit(targetBranch.commitHash)
       : null;
+    const targetTree = targetCommit?.tree || {};
+    const conflict = this.findCheckoutConflict(targetTree, ctx);
+    if (conflict) return conflict;
 
-    if (targetCommit) {
-      // Synchronize virtual filesystem with the commit tree
-      ctx.fs.clear();
-      for (const [path, content] of Object.entries(targetCommit.tree)) {
-        ctx.fs.writeFile(path, content);
-      }
-    }
+    const sourceTree = ctx.stateManager.getHeadTree();
+    this.updateWorkingTree(sourceTree, targetTree, ctx);
+    ctx.stateManager.switchBranch(targetBranchName);
 
     ctx.events.emit('branch:switched', { from: currentBranch, to: targetBranchName });
 
@@ -95,5 +113,60 @@ export class SwitchCommand implements GitCommand {
       stderr: '',
       exitCode: 0,
     };
+  }
+
+  private findCheckoutConflict(
+    targetTree: Record<string, string>,
+    ctx: CommandContext
+  ): CommandExecutionResult | null {
+    const state = ctx.stateManager.getState();
+    const currentTree = ctx.stateManager.getHeadTree();
+    const fileStates = ctx.fs.computeFileStates(state.stagingArea, currentTree);
+    const changedPaths = new Set([
+      ...fileStates.stagingStates.map((item) => item.path),
+      ...fileStates.modifiedUnstaged,
+    ]);
+
+    const conflicts = Array.from(changedPaths).filter((path) => {
+      if (targetTree[path] === currentTree[path]) return false;
+      const currentContent = ctx.fs.readFile(path);
+      const targetContent = targetTree[path];
+      return currentContent === null ? targetContent !== undefined : targetContent !== currentContent;
+    });
+
+    for (const path of fileStates.untrackedFiles) {
+      if (path in targetTree) conflicts.push(path);
+    }
+
+    if (conflicts.length === 0) return null;
+    return {
+      stdout: '',
+      stderr: `error: local changes would be overwritten by switching branches:\n${conflicts.map((path) => `\t${path}`).join('\n')}\nPlease commit or stash your changes before switching branches.`,
+      exitCode: 1,
+    };
+  }
+
+  private updateWorkingTree(
+    sourceTree: Record<string, string>,
+    targetTree: Record<string, string>,
+    ctx: CommandContext
+  ): void {
+    const state = ctx.stateManager.getState();
+    const fileStates = ctx.fs.computeFileStates(state.stagingArea, sourceTree);
+    const preservePaths = new Set([
+      ...fileStates.stagingStates.map((item) => item.path),
+      ...fileStates.modifiedUnstaged,
+      ...fileStates.untrackedFiles,
+    ]);
+    const paths = new Set([...Object.keys(sourceTree), ...Object.keys(targetTree)]);
+    for (const path of paths) {
+      if (preservePaths.has(path) && targetTree[path] === sourceTree[path]) continue;
+      const targetContent = targetTree[path];
+      if (targetContent === undefined) {
+        ctx.fs.deleteFile(path);
+      } else {
+        ctx.fs.writeFile(path, targetContent);
+      }
+    }
   }
 }

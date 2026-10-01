@@ -18,12 +18,8 @@ objectives:
     nghiệm sang nhánh production.
   - Phân biệt rõ ràng giữa việc merge toàn bộ nhánh và việc chọn lọc từng commit
     đơn lẻ.
-  - Xử lý mâu thuẫn xung đột (conflict) phát sinh trong quá trình cherry-pick
-    commit.
+  - Biết quy trình Git thật để xử lý conflict khi cherry-pick; simulator hiện chưa hỗ trợ trạng thái tiếp tục/hủy.
 commands:
   - git cherry-pick <commit-hash>
-  - git cherry-pick <hash-1> <hash-2>
-  - git cherry-pick <hash-start>..<hash-end>
-  - git cherry-pick -n <commit-hash>
-  - git cherry-pick --continue
-  - git cherry-pick --abort
+  - git status
+  - git log --oneline

@@ -130,13 +130,27 @@ export class MergeCommand implements GitCommand {
       };
     }
 
+    const canFastForward = ctx.stateManager.isAncestor(currentHead.hash, targetCommit.hash);
+    const targetIsAlreadyIncluded = ctx.stateManager.isAncestor(targetCommit.hash, currentHead.hash);
+    if (targetIsAlreadyIncluded) {
+      return { stdout: 'Already up to date.', stderr: '', exitCode: 0 };
+    }
+
+    if (flags['ff-only'] && !canFastForward) {
+      return {
+        stdout: '',
+        stderr: 'fatal: Not possible to fast-forward, aborting.',
+        exitCode: 1,
+      };
+    }
+
     ctx.events.emit('merge:started', {
       source: targetBranchName,
       target: currentBranch,
     });
 
     // 2. Check Fast-Forward: is currentHead an ancestor of targetCommit?
-    if (ctx.stateManager.isAncestor(currentHead.hash, targetCommit.hash)) {
+    if (canFastForward && !flags['no-ff']) {
       ctx.stateManager.updateHeadPointer(targetCommit.hash);
 
       // Update working directory to match targetCommit

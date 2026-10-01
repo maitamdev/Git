@@ -15,18 +15,18 @@
 ### Review Assignment
 - **Nói dễ hiểu**: Tính năng GitHub tự động gửi lời mời review cho đúng chuyên gia phụ trách khi có Pull Request đụng vào file của họ.
 - **Ví dụ**: Khi sửa file `schema.prisma`, GitHub tự động gán kỹ sư dữ liệu `@db-admin` vào danh sách reviewers.
-- **Đừng nhầm**: Không cần tự gán tay reviewer mỗi khi mở Pull Request; hệ thống hoàn toàn tự động đối soát.
+- **Đừng nhầm**: GitHub có thể gửi yêu cầu review khi điều kiện phù hợp, nhưng điều đó không có nghĩa owner đã duyệt hoặc việc merge bị chặn.
 
 ### Path Pattern Matching
 - **Nói dễ hiểu**: Quy tắc so khớp đường dẫn tương tự `.gitignore` để gán quyền sở hữu theo thư mục hoặc định dạng tệp.
 - **Ví dụ**: Dòng `*.md @tech-writers` gán mọi tệp tài liệu markdown cho đội ngũ viết tài liệu.
-- **Đừng nhầm**: Dòng bên dưới sẽ ghi đè dòng bên trên nếu có tệp tin khớp với cả hai quy tắc.
+- **Đừng nhầm**: Với một đường dẫn khớp nhiều mẫu, mẫu khớp cuối cùng quyết định owner; cú pháp gần `.gitignore` nhưng không giống hoàn toàn.
 
 ## 📖 Định nghĩa
-CODEOWNERS là tệp tin cấu hình được đặt tại `.github/CODEOWNERS`, thư mục gốc hoặc `docs/`. Tệp này ánh xạ các mẫu đường dẫn tệp tin tới những cá nhân hoặc nhóm kỹ thuật chịu trách nhiệm, giúp GitHub tự động chỉ định reviewer thích hợp và bắt buộc họ phê duyệt trước khi mã nguồn được hợp nhất.
+CODEOWNERS là tệp cấu hình có thể đặt tại `.github/CODEOWNERS`, `/CODEOWNERS` hoặc `docs/CODEOWNERS`. GitHub dùng mẫu đường dẫn trong tệp để yêu cầu review từ owner khi PR sửa các file tương ứng. Để review của code owner thành điều kiện bắt buộc, nhánh đích còn phải bật **Require review from Code Owners**. Tệp cần có trên nhánh đích của PR, và owner phải có quyền ghi vào repository để GitHub nhận diện họ.
 
 ## 💡 Tại sao cần
-Trong kho lưu trữ quy mô lớn với nhiều nhóm cùng làm việc, không cá nhân nào có thể nắm vững toàn bộ codebase. Thiếu CODEOWNERS khiến lập trình viên lúng túng khi chọn người kiểm duyệt, hoặc chọn người không đúng chuyên môn khiến lỗi nghiêm trọng lọt vào các module thanh toán hay bảo mật cốt lõi.
+Trong repository có nhiều khu vực chuyên môn, CODEOWNERS giúp PR đến đúng nhóm phụ trách. Tệp chỉ đề xuất/yêu cầu reviewer theo cấu hình; tự nó không giới hạn quyền truy cập file và cũng không bắt buộc phê duyệt nếu branch rule chưa yêu cầu.
 
 ## 🧠 Mental Model
 Hãy hình dung bệnh viện đa khoa lớn với các khoa chuyên biệt. Khi bệnh nhân cần khám tim, hồ sơ tự động chuyển về khoa Tim mạch; khi có ca gãy xương, hồ sơ chuyển đến khoa Chấn thương. Tệp CODEOWNERS là bảng phân khoa tự động: file thanh toán gửi đến kỹ sư tài chính, file hạ tầng gửi đến nhóm DevOps.
@@ -37,13 +37,15 @@ flowchart TD
     PR[Pull Request sửa file /src/billing/stripe.ts] --> Check{GitHub đối soát CODEOWNERS}
     Check --> Match[Khớp dòng: /src/billing/ @fintech-team]
     Match --> Assign[Tự động gán @fintech-team làm Reviewer]
-    Assign --> Gate{Có Approve từ @fintech-team?}
-    Gate -- Chưa --> Block[Khóa nút Merge trên GitHub]
-    Gate -- Đã duyệt --> Allow[Cho phép Merge vào main]
+    Assign --> Gate{Bật Require review from Code Owners?}
+    Gate -- Không --> Optional[Review được yêu cầu nhưng chưa phải điều kiện bắt buộc]
+    Gate -- Có --> Approval{Owner đã approve?}
+    Approval -- Chưa --> Block[Chưa đủ điều kiện này để merge]
+    Approval -- Rồi --> Allow[Đạt điều kiện code owner; còn phải kiểm tra rule khác]
 ```
 
 ## 🏢 Ví dụ thực tế
-Một ứng dụng đặt vé du lịch có hàng trăm nghìn dòng mã. Họ cấu hình CODEOWNERS để thư mục `/src/payment/` thuộc về nhóm `@finance-devs` và `/deploy/` thuộc về `@devops-engineers`. Khi một kỹ sư tạo Pull Request tích hợp cổng ví điện tử, GitHub lập tức gắn nhãn yêu cầu phê duyệt gửi tới `@finance-devs`. Nút Merge chỉ mở khóa sau khi đại diện nhóm tài chính bấm Approve.
+Ví dụ giả định: một nhóm cấu hình `/src/payment/ @org/finance-devs` và `/deploy/ @org/devops-engineers`. Tệp này cần nằm trên nhánh đích và các nhóm cần quyền ghi. GitHub yêu cầu review từ owner khi PR ở trạng thái sẵn sàng review; merge chỉ bị chặn vì thiếu approval của owner nếu branch protection bật **Require review from Code Owners** và không có ngoại lệ bypass.
 
 ## 💻 Command & Cú pháp
 ```bash
@@ -71,18 +73,17 @@ git commit -m "chore: setup CODEOWNERS for security and billing modules"
 Bài học này là bài tự kiểm tra: bạn thao tác tạo tệp CODEOWNERS và đối chiếu theo hướng dẫn bên dưới.
 
 1. Tạo thư mục `.github` và tạo tệp `.github/CODEOWNERS`.
-2. Khai báo quy tắc toàn cục ở dòng đầu: `* @your-username`.
-3. Khai báo quy tắc cụ thể cho tài liệu: `/docs/ @your-username`.
-4. Đẩy commit lên GitHub và tạo một Pull Request mẫu chỉnh sửa tệp trong thư mục `docs/`.
-5. Quan sát danh sách Reviewers bên phải của PR xem GitHub có tự động gán tên tài khoản của bạn hay không.
+2. Ghi `* @owner-account`, rồi khai báo một nhóm/cộng tác viên khác có quyền ghi cho tài liệu: `/docs/ @org/docs-team`.
+3. Commit và đẩy tệp lên nhánh mặc định; từ tài khoản khác tạo PR sửa một file trong `docs/`.
+4. Chuyển PR từ Draft sang Ready for review nếu cần và quan sát review request. Nếu chưa có cộng tác viên thứ hai, hãy kiểm tra mẫu và dự đoán owner thay vì tự gán tác giả làm reviewer.
 
 ## 💡 Hint & mẹo
 - Bạn có thể khai báo một tài khoản cá nhân `@username` hoặc một nhóm trong tổ chức `@org/team-name`.
-- Dòng bên dưới luôn có độ ưu tiên cao hơn dòng bên trên, nên hãy đặt quy tắc chung toàn repo ở trên cùng và quy tắc thư mục hẹp ở dưới.
+- Đặt quy tắc rộng trước, quy tắc cụ thể sau; với một file khớp nhiều mẫu, owner của mẫu khớp cuối cùng được dùng.
 
 ## ✅ Validation & Kết quả mong đợi
-- Tệp `.github/CODEOWNERS` được Git theo dõi và lưu trữ trên nhánh chính.
-- Khi mở Pull Request thay đổi bất kỳ tệp nào, hệ thống tự động gán đúng reviewer tương ứng trong danh sách Reviewers.
+- Tệp CODEOWNERS hợp lệ có trên nhánh đích của PR và owner có quyền ghi.
+- Xác định được review request nào GitHub gửi và liệu nó có bắt buộc để merge hay không.
 
 ## ❓ Quiz nhanh
 Hãy hoàn thành bài trắc nghiệm bên dưới để kiểm tra mức độ nắm vững cú pháp và cơ chế phân quyền tự động của CODEOWNERS.
@@ -91,6 +92,6 @@ Hãy hoàn thành bài trắc nghiệm bên dưới để kiểm tra mức độ
 Thiết kế cấu trúc tệp CODEOWNERS cho hệ thống Monorepo gồm ba dịch vụ độc lập: frontend (React), backend (Go) và infrastructure (Terraform), bảo đảm mỗi đội chỉ duyệt code của dịch vụ mình.
 
 ## 📝 Tổng kết
-- CODEOWNERS giúp tự động hóa việc gán reviewer có chuyên môn chính xác nhất cho từng tệp tin.
-- Cú pháp đơn giản tương tự `.gitignore` với nguyên tắc dòng bên dưới ghi đè dòng bên trên.
-- Kết hợp với Branch Protection tạo nên chốt chặn an toàn vững chắc cho các hệ thống phần mềm lớn.
+- CODEOWNERS ánh xạ mẫu đường dẫn tới owner và có thể tạo review request.
+- Quy tắc khớp cuối cùng cho một đường dẫn quyết định owner; pattern gần `.gitignore` nhưng có khác biệt.
+- Chỉ khi nhánh yêu cầu review từ Code Owners thì approval mới là điều kiện bắt buộc.

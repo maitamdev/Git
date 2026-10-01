@@ -30,7 +30,7 @@
 ---
 
 ## 📖 Định nghĩa
-Interactive Rebase (`git rebase -i`) là công cụ biên tập tương tác cho phép xem lại danh sách commit cũ và chọn hành động cụ thể cho từng commit: giữ nguyên, đổi tên, sửa nội dung, gộp lại hoặc xóa bỏ hoàn toàn.
+Interactive Rebase (`git rebase -i`) mở danh sách các commit để bạn chọn cách xử lý từng commit, chẳng hạn giữ, đổi thông điệp, sửa, gộp hoặc bỏ. Thao tác này tạo lịch sử mới và cần cẩn thận nếu các commit đã được chia sẻ.
 
 ---
 
@@ -84,30 +84,30 @@ git rebase --abort
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Xóa dòng trong file Todo List**: Trong interactive rebase, xóa một dòng commit đồng nghĩa với việc Git sẽ loại bỏ hoàn toàn (drop) commit đó khỏi lịch sử.
-2. **Rebase trên nhánh chung đã push**: Thay đổi lịch sử của nhánh chung công khai sẽ gây xung đột và rối loạn cho toàn bộ nhóm làm việc.
+1. **Xóa dòng trong todo list mà không để ý**: Dòng bị xóa nghĩa là commit đó không được phát lại vào lịch sử mới.
+2. **Rebase commit mà người khác đã dùng**: Việc viết lại hash khiến người cùng làm phải xử lý lịch sử lệch; hãy theo chính sách của nhóm.
 3. **Hoảng sợ khi editor mở ra**: Bình tĩnh đọc kỹ phần hướng dẫn giải thích ý nghĩa các lệnh ở nửa dưới của tệp todo list do Git tạo ra.
 
 ---
 
 ## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác trực tiếp trên terminal của máy tính để làm quen với công cụ.
-1. Tạo liên tiếp 3 commit thử nghiệm nhỏ trong kho chứa bài tập cá nhân.
-2. Chạy lệnh `git rebase -i HEAD~3` để mở trình soạn thảo Todo List.
-3. Đổi từ `pick` ở dòng thứ 2 thành `reword` để đổi tên thông điệp commit.
-4. Lưu và đóng file lại, sau đó nhập thông điệp mới theo yêu cầu của Git.
-5. Kiểm tra lại `git log --oneline` để chiêm ngưỡng kết quả lịch sử đã được cập nhật.
+Interactive Rebase cần editor tương tác. Dùng Git thật trong kho thử nghiệm riêng; simulator hiện chỉ in todo list và chưa cho sửa hành động từ terminal.
+1. Tạo commit nền, rồi thêm ba commit có nội dung nhỏ và thông điệp phân biệt được.
+2. Chạy `git rebase -i HEAD~3`. Todo list liệt kê ba commit theo thứ tự cũ đến mới.
+3. Đổi `pick` của commit thứ hai thành `reword`, lưu và đóng editor.
+4. Nhập thông điệp mới khi Git mở editor lần nữa; lưu và đóng.
+5. Chạy `git log --oneline -4`, xác nhận nội dung commit còn đủ và chỉ thông điệp commit thứ hai đổi.
 
 ---
 
 ## 💡 Hint & mẹo
-> Nếu lỡ tay làm hỏng Todo List trong khi soạn thảo, chỉ cần xóa sạch nội dung file hoặc đóng lại mà không lưu rồi gõ `git rebase --abort` để quay về an toàn.
+> Nếu chưa chắc lựa chọn trong todo list, thoát editor mà không lưu hoặc hủy tiến trình; đừng xóa dòng tùy tiện. Giữ bản sao kho thử nghiệm trước khi luyện sửa lịch sử.
 
 ---
 
 ## ✅ Validation & Kết quả mong đợi
-- Làm chủ giao diện Todo List của Interactive Rebase và thực hiện thành thạo các chỉ thị biên tập cơ bản.
-- Biết cách sử dụng `git rebase --abort` và `git rebase --continue` một cách tự tin.
+- Mô tả đúng thứ tự commit trong todo list và thực hiện được một thao tác `reword` trên kho thử nghiệm.
+- Biết khi nào cần tiếp tục hoặc hủy tiến trình rebase theo thông báo Git.
 
 ---
 

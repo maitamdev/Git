@@ -5,7 +5,7 @@ questions:
     question: "Khi một câu lệnh vô tình in giá trị của một GitHub Secret ra màn hình, hệ thống log sẽ hiển thị nội dung gì?"
     type: single
     options:
-      - text: "Chuỗi ba dấu sao (***)"
+      - text: "Thường được che thành ***, nhưng masking không được đảm bảo nên không được in secret"
         correct: true
       - text: "Nguyên văn giá trị bí mật"
         correct: false
@@ -13,12 +13,12 @@ questions:
         correct: false
       - text: "Màn hình bị đen toàn bộ"
         correct: false
-    explanation: "GitHub Actions tích hợp sẵn bộ lọc Secret Masking tự động nhận diện và thay thế mọi chuỗi ký tự khớp với secret thành ba dấu sao."
+    explanation: "GitHub cố gắng mask các giá trị secret nhận diện được, nhưng giá trị đã biến đổi có thể lọt qua; tuyệt đối không dựa vào masking."
   - id: q2
     question: "Sự khác biệt chính giữa GitHub Variables và GitHub Secrets là gì?"
     type: single
     options:
-      - text: "Variables là thông tin cấu hình không mã hóa (hiển thị rõ), còn Secrets được mã hóa an toàn và bị che trong log"
+      - text: "Variables dùng cho cấu hình không nhạy cảm; Secrets dùng cho dữ liệu nhạy cảm và chỉ được cấp theo quyền/phạm vi"
         correct: true
       - text: "Variables chỉ dùng được trên hệ điều hành Windows"
         correct: false

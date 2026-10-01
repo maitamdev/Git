@@ -5,8 +5,7 @@ questions:
     question: Mục đích chính cốt lõi của việc tạo ra nhánh Release Branch là gì?
     type: single
     options:
-      - text: Cô lập mã nguồn để đóng băng tính năng, kiểm thử toàn diện và sửa lỗi ổn
-          định hóa trước khi xuất bản
+      - text: Tách phiên bản cần ổn định để kiểm thử và chuẩn bị phát hành; đây là lựa chọn của nhóm
         correct: true
       - text: Để các lập trình viên bắt đầu viết các tính năng thử nghiệm hoàn toàn mới
         correct: false
@@ -14,15 +13,13 @@ questions:
         correct: false
       - text: Để giảm bớt dung lượng của thư mục .git
         correct: false
-    explanation: Release Branch giúp tạo một môi trường tĩnh lặng cho QA kiểm thử
-      hồi quy mà không bị xáo trộn bởi code mới từ các tính năng khác.
+    explanation: Nhánh release giúp nhóm kiểm tra một trạng thái cụ thể trong khi công việc khác có thể tiếp tục trên nhánh phát triển.
   - id: q2
     question: Quy tắc "Feature Freeze" (Đóng băng tính năng) trên Release Branch quy
       định điều gì?
     type: single
     options:
-      - text: Nghiêm cấm thêm bất kỳ tính năng mới nào, chỉ chấp nhận các commit sửa lỗi
-          và tinh chỉnh tài liệu
+      - text: Theo chính sách của nhóm, hạn chế nhận tính năng mới để tập trung kiểm tra và sửa lỗi release
         correct: true
       - text: Tắt máy chủ không cho bất kỳ ai truy cập mã nguồn trong 1 tuần
         correct: false
@@ -30,11 +27,9 @@ questions:
         correct: false
       - text: Chỉ cho phép lập trình viên làm việc trong phòng có máy lạnh thật lạnh
         correct: false
-    explanation: Đóng băng tính năng ngăn chặn nguy cơ đưa thêm các lỗi mới vào hệ
-      thống ngay sát giờ phát hành sản phẩm.
+    explanation: Feature Freeze giảm thay đổi phạm vi trong giai đoạn ổn định; nó không tự bảo đảm phát hành không có lỗi.
   - id: q3
-    question: Sau khi một nhánh Release Branch hoàn tất kiểm thử, nó bắt buộc phải
-      được hợp nhất vào những nhánh nào?
+    question: Trong Git Flow cổ điển, sau khi release hoàn tất, nơi nào nhận bản phát hành và nơi nào nhận lại sửa đổi cần giữ?
     type: single
     options:
       - text: Hợp nhất vào nhánh main để phát hành và hợp nhất ngược về develop để đồng
@@ -46,11 +41,9 @@ questions:
         correct: false
       - text: Không được hợp nhất vào đâu cả
         correct: false
-    explanation: Hợp nhất kép (Dual-merge) bảo đảm rằng các bugfix quý giá phát hiện
-      trong giai đoạn release sẽ không bị mất trong các sprint tương lai.
+    explanation: Git Flow tích hợp release vào `main` và đồng bộ các sửa đổi cần giữ về `develop`; cách cụ thể tùy workflow nhóm.
   - id: q4
-    question: Tại sao việc dùng cờ `--no-ff` (No Fast-Forward) lại được khuyến nghị
-      mạnh mẽ khi merge Release Branch?
+    question: Tác dụng của cờ `--no-ff` khi merge một nhánh release là gì?
     type: single
     options:
       - text: Để tạo một Merge Commit rõ ràng ghi nhận đầy đủ dấu vết lịch sử của đợt
@@ -62,15 +55,12 @@ questions:
         correct: false
       - text: Vì lệnh git không cho phép merge nếu thiếu cờ đó
         correct: false
-    explanation: Cờ `--no-ff` bảo toàn hình hài của nhánh release trong biểu đồ lịch
-      sử, giúp việc tra cứu các mốc phát hành sau này cực kỳ trực quan.
+    explanation: "`--no-ff` tạo merge commit kể cả khi có thể fast-forward; dùng hay không là lựa chọn về cách lưu lịch sử."
   - id: q5
-    question: Ai là người nên có quyền quyết định cuối cùng phê duyệt cho phép một
-      nhánh release được merge vào main?
+    question: Nhóm nên xác định ai chịu trách nhiệm chấp thuận phát hành dựa trên điều gì?
     type: single
     options:
-      - text: Trưởng nhóm kỹ thuật (Tech Lead) hoặc người quản lý phát hành (Release
-          Manager) sau khi có xác nhận từ QA
+      - text: Vai trò được nhóm giao trách nhiệm phát hành và tiêu chí kiểm tra đã thống nhất
         correct: true
       - text: Bất kỳ thực tập sinh nào rảnh rỗi
         correct: false
@@ -78,15 +68,12 @@ questions:
         correct: false
       - text: Một thuật toán ngẫu nhiên trên mạng
         correct: false
-    explanation: Phát hành sản phẩm ra người dùng là quyết định quan trọng đòi hỏi
-      sự thẩm định của người chịu trách nhiệm kỹ thuật cao nhất.
+    explanation: Git không chỉ định người phê duyệt release; nhóm cần phân công vai trò và nêu rõ tiêu chí.
   - id: q6
-    question: Sau khi hợp nhất thành công Release Branch vào nhánh main, thao tác
-      chuẩn tiếp theo không thể thiếu là gì?
+    question: Trong workflow dùng tag release, thao tác nào đánh dấu commit phát hành để tra cứu lại?
     type: single
     options:
-      - text: Gắn thẻ Annotated Tag (ví dụ v1.2.0) có chữ ký hoặc thông điệp rõ ràng để
-          đánh dấu cột mốc phiên bản
+      - text: Gắn tag vào commit dự định phát hành theo chính sách phiên bản của nhóm
         correct: true
       - text: Xóa toàn bộ các tệp tin trong thư mục gốc của dự án
         correct: false
@@ -94,5 +81,4 @@ questions:
         correct: false
       - text: Tạo thêm 10 nhánh release rỗng để dự phòng
         correct: false
-    explanation: Git Tag đánh dấu vĩnh viễn trạng thái chính xác của commit phát
-      hành, làm căn cứ truy cứu và kích hoạt pipeline triển khai sản phẩm.
+    explanation: Tag giúp đặt tên commit phát hành; Git không bắt buộc tag và tag không tự kích hoạt deploy nếu chưa cấu hình pipeline.

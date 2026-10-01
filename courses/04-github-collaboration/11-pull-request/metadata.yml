@@ -12,14 +12,11 @@ keywords:
 prerequisites:
   - 09-fork
 objectives:
-  - Nắm vững khái niệm và ý nghĩa cốt lõi của Pull Request (PR) trong phát triển
-    phần mềm hiện đại.
+  - Hiểu PR là yêu cầu review/integrate thay đổi từ nhánh nguồn vào nhánh đích.
   - 'Hiểu rõ thuật ngữ: Vì sao lại gọi là "Pull Request" (yêu cầu người khác kéo
     code của mình về gộp).'
-  - Thực hiện quy trình tạo một Pull Request hoàn chỉnh trên giao diện web của
-    GitHub.
-  - Viết mô tả PR (PR Description) rõ ràng, súc tích tuân thủ theo biểu mẫu
-    chuẩn (PR Template).
+  - Tạo PR thử nghiệm trên GitHub nếu có tài khoản, quyền truy cập và nhánh đã push.
+  - Viết mô tả nêu mục tiêu, thay đổi và cách kiểm tra.
 commands:
   - git switch -c feat/my-feature
   - git push -u origin feat/my-feature

@@ -18,7 +18,7 @@ questions:
     question: Điều gì sẽ xảy ra nếu bạn cố gắng dùng `git worktree add` để mở một nhánh đang được mở ở một worktree khác?
     type: single
     options:
-      - text: Git sẽ từ chối và báo lỗi vì một nhánh không được phép checkout đồng thời ở hai nơi để tránh xung đột
+      - text: Mặc định Git từ chối vì nhánh đó đã được checkout ở worktree khác
         correct: true
       - text: Git tự động xóa thư mục làm việc cũ
         correct: false

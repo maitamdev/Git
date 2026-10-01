@@ -12,14 +12,8 @@ keywords:
 prerequisites:
   - 12-git-rebase
 objectives:
-  - Hiểu rõ sức mạnh vượt trội của Interactive Rebase (`git rebase -i`) như một
-    công cụ biên tập lịch sử tối thượng.
-  - "Đọc hiểu và sử dụng thành thạo danh sách lệnh Todo của Interactive Rebase:
-    pick, reword, edit, squash, fixup, drop."
-  - Sắp xếp lại thứ tự xuất hiện của các commit trong chuỗi lịch sử cục bộ.
-  - Chuẩn bị một chuỗi commit chuyên nghiệp, sắc nét trước khi mở Pull Request.
+  - Hiểu ý nghĩa các chỉ thị trong todo list và thứ tự commit được phát lại.
+  - Thực hành `reword` trên Git thật trong kho riêng; simulator hiện chưa cho chỉnh sửa todo list.
 commands:
-  - git rebase -i HEAD~<số-lượng-commit>
-  - git rebase -i <commit-hash-gốc>
-  - git rebase --continue
-  - git rebase --abort
+  - git log --oneline
+  - git status

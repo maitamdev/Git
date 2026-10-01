@@ -1,120 +1,124 @@
-# Phân biệt Git vs GitHub
+# Phân biệt Git với GitHub
 
 ---
 
 ## 🎯 Mục tiêu
-- Nói được Git là công cụ còn GitHub là dịch vụ trực tuyến.
-- Phân biệt việc lưu trên máy với việc chia sẻ qua mạng.
-- Biết GitHub không phải nơi duy nhất có thể lưu repository từ xa.
+- Nói được Git là công cụ cục bộ, còn GitHub là dịch vụ trực tuyến.
+- Phân biệt commit trên máy với commit đã chia sẻ lên GitHub.
+- Nêu được khi nào `push` và `pull` cần mạng.
 
 ---
 
 ## 🧩 Từ khóa hôm nay
 
 ### Git — công cụ quản lý phiên bản
-- **Nói dễ hiểu:** Phần mềm trên máy giúp bạn lưu mốc và xem lịch sử của dự án.
-- **Ví dụ:** Bạn dùng lệnh Git để lưu thay đổi trong bài tập của mình.
-- **Đừng nhầm:** Git không phải một trang web; nhiều thao tác của Git chạy ngay trên máy.
+- **Nói dễ hiểu:** Phần mềm trên máy giúp bạn quản lý và xem lịch sử dự án.
+- **Ví dụ:** Bạn tạo commit bằng Git trong repository trên laptop.
+- **Đừng nhầm:** Git không phải tài khoản hay trang web.
 
 ### GitHub — dịch vụ cộng tác trực tuyến
-- **Nói dễ hiểu:** Một dịch vụ trên Internet để lưu repository Git và phối hợp với người khác.
-- **Ví dụ:** Nhóm có thể đưa repository lên GitHub để cùng xem và góp ý.
-- **Đừng nhầm:** GitHub không phải tên khác của Git; còn có dịch vụ khác như GitLab.
+- **Nói dễ hiểu:** Dịch vụ trên Internet để lưu repository Git và giúp mọi người chia sẻ, xem xét công việc.
+- **Ví dụ:** Nhóm đưa repository lên GitHub để các thành viên cùng xem và góp ý.
+- **Đừng nhầm:** GitHub là một dịch vụ dùng Git; GitLab và các dịch vụ khác cũng có thể lưu repository Git.
 
-### Remote — kho lưu trữ từ xa
-- **Nói dễ hiểu:** Repository ở một nơi khác mà kho Git trên máy có thể trao đổi dữ liệu với.
-- **Ví dụ:** Nhóm đặt một remote trỏ tới repository trên GitHub.
-- **Đừng nhầm:** Có remote không làm Git tự đồng bộ; bạn vẫn cần gửi hoặc lấy thay đổi.
+### Remote — tên kết nối tới kho Git khác
+- **Nói dễ hiểu:** Một tên trong repository cục bộ trỏ tới kho Git ở nơi khác để Git biết nơi gửi hoặc lấy dữ liệu.
+- **Ví dụ:** `origin` thường là tên remote trỏ tới repository nhóm trên GitHub.
+- **Đừng nhầm:** Có remote không làm Git tự đồng bộ; bạn vẫn phải yêu cầu gửi hoặc lấy dữ liệu.
 
-### Push — gửi commit lên remote
-- **Nói dễ hiểu:** Thao tác chuyển commit từ kho trên máy lên nơi chia sẻ.
-- **Ví dụ:** Push commit sau khi hoàn thành một phần bài tập để bạn cùng nhóm xem.
-- **Đừng nhầm:** Commit chưa tự xuất hiện trên GitHub nếu bạn chưa push.
+### Push — gửi commit lên kho khác
+- **Nói dễ hiểu:** Gửi các commit đã lưu trong repository trên máy tới remote.
+- **Ví dụ:** Push commit lên GitHub để thành viên khác có thể lấy về.
+- **Đừng nhầm:** Push cần có remote, mạng và quyền truy cập phù hợp; lệnh không tạo commit thay bạn.
 
----
-
-## 📖 Định nghĩa
-Git là công cụ quản lý lịch sử trên máy tính của bạn. GitHub là một dịch vụ trực tuyến có thể lưu repository Git và giúp nhóm cộng tác. Bạn có thể tạo commit khi offline; để gửi commit lên GitHub thì cần kết nối mạng và quyền truy cập phù hợp.
+### Pull — lấy và tích hợp thay đổi
+- **Nói dễ hiểu:** Lấy thay đổi từ remote về rồi tích hợp chúng vào nhánh bạn đang làm.
+- **Ví dụ:** Pull thay đổi mới mà nhóm đã gửi lên GitHub trước khi bạn tiếp tục làm.
+- **Đừng nhầm:** Pull có thể cần xử lý xung đột; nó không đơn giản chỉ tải một tệp ZIP.
 
 ---
 
 ## 🤔 Tại sao cần?
-Người mới thường tưởng Git chỉ dùng được khi mở GitHub. Thực ra Git lưu lịch sử trên máy; GitHub là một nơi trực tuyến để chia sẻ repository. Phân biệt hai việc này giúp bạn biết khi nào cần Internet.
+Git lưu lịch sử trong repository trên máy; GitHub là một nơi trực tuyến để chia sẻ repository với nhóm. Bạn có thể làm nhiều việc cục bộ khi offline. Muốn đồng nghiệp nhận commit của bạn hoặc muốn lấy commit họ đã chia sẻ, bạn cần kết nối và dùng push hoặc pull.
+
+---
+
+## 📖 Định nghĩa
+Git là công cụ quản lý phiên bản chạy trên máy bạn. GitHub là một dịch vụ trực tuyến để lưu repository Git và hỗ trợ cộng tác. Một commit mới tạo trong repository cục bộ chưa tự có trên GitHub; push gửi commit đi, còn pull lấy và tích hợp thay đổi từ kho đã kết nối.
 
 ---
 
 ## 🧠 Mental Model (Mô hình tư duy)
-Hãy nghĩ Git là cuốn sổ lịch sử nằm trên máy bạn. GitHub là một bản repository đặt trên mạng để bạn gửi commit lên hoặc lấy thay đổi về.
+Hãy nghĩ repository trên laptop là cuốn sổ lịch sử của bạn. GitHub là một cuốn sổ khác mà nhóm cùng truy cập. Push gửi mốc từ sổ của bạn sang sổ nhóm; pull lấy mốc từ sổ nhóm về để tiếp tục làm.
 
 ---
 
 ## 🖼 Sơ đồ
 ```text
-Máy của bạn                         Dịch vụ trực tuyến
-┌─────────────────────┐   push    ┌─────────────────────┐
-│ Git                 │ ────────► │ GitHub              │
-│ commit được lưu đây │ ◄──────── │ repository được lưu │
-└─────────────────────┘   pull    └─────────────────────┘
+Repository trên máy bạn                 Repository trên GitHub
+       [commit cục bộ] ─── push ───► [commit nhóm có thể nhận]
+       [các tệp hiện tại] ◄── pull ─ [thay đổi nhóm đã chia sẻ]
+
+Commit được tạo trên máy chưa tự xuất hiện ở phía GitHub.
 ```
 
 ---
 
 ## 🌎 Ví dụ thực tế
-Bạn đang đi học và mất mạng. Bạn vẫn có thể sửa bài và tạo commit bằng Git trên máy. Khi có mạng lại, bạn dùng `git push` để gửi commit lên GitHub. Việc push còn cần remote đã được cấu hình và quyền truy cập phù hợp.
+Bạn đang đi học và mất mạng. Bạn vẫn mở dự án và tạo commit trong repository trên laptop. Khi mạng có lại, bạn push commit lên GitHub để nhóm nhận. Nếu một thành viên đã gửi thay đổi trước đó, bạn pull chúng về trước khi tiếp tục. Push/pull chỉ chạy được khi remote đã cấu hình và bạn có quyền truy cập.
 
 ---
 
 ## 💻 Command
 ```bash
 git remote -v
-git push
-git pull
 ```
 
 ---
 
 ## 🔍 Giải thích command
-- `git remote -v`: Xem nơi repository trên máy đang kết nối tới, nếu có.
-- `git push`: Gửi commit từ máy lên remote.
-- `git pull`: Lấy thay đổi từ remote về và tích hợp vào nhánh hiện tại.
+`git remote -v` liệt kê tên và địa chỉ các remote đã cấu hình. `git push origin main` gửi commit lên remote tên `origin`; `git pull origin main` lấy và tích hợp thay đổi từ đó. Hai lệnh sau chỉ chạy khi remote, nhánh và quyền truy cập đã sẵn sàng.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Gọi GitHub là Git**: Git là công cụ; GitHub là một dịch vụ có dùng Git.
-2. **Tưởng commit tự xuất hiện trên GitHub**: Commit trên máy chưa được gửi đi cho tới khi push.
-3. **Tưởng luôn cần Internet**: Nhiều thao tác Git cục bộ vẫn dùng được offline.
+1. **Gọi GitHub là Git:** Git quản lý lịch sử; GitHub là dịch vụ trực tuyến dùng để chia sẻ repository.
+2. **Tưởng commit tự xuất hiện trên GitHub:** Cần push commit lên remote để người khác nhận được.
+3. **Pull nghĩa là chỉ tải tệp:** Pull còn tích hợp thay đổi vào nhánh hiện tại và đôi khi cần xử lý xung đột.
 
 ---
 
 ## 🧪 Lab
-1. Chạy `git remote -v` để kiểm tra repository đã có remote chưa.
-2. Nếu kết quả trống, ghi lại: “Chưa có nơi từ xa được cấu hình”.
-3. Giải thích khi nào bạn cần mạng: lúc muốn trao đổi commit với remote.
+1. Chạy `git remote -v` trong terminal mô phỏng.
+2. Nếu chưa có kết quả, ghi “repository này chưa cấu hình nơi chia sẻ”; đừng chạy push hoặc pull.
+3. Phân loại bốn việc: tạo commit, xem tệp trên máy, push commit, pull thay đổi.
+4. Giải thích vì sao một commit vừa tạo trên máy chưa chắc đã hiện trên GitHub.
 
 ---
 
 ## 💡 Hint
-> Git lưu lịch sử trên máy; push và pull trao đổi thay đổi với remote.
+Commit được lưu cục bộ trước. Push gửi commit đi; pull nhận thay đổi về. Nếu `git remote -v` trống, máy chưa biết nơi trao đổi dữ liệu.
 
 ---
 
 ## ✅ Validation
-- Phân biệt chính xác vai trò của Git cục bộ và nền tảng đám mây GitHub.
+- Phân biệt đúng Git, GitHub và remote.
+- Nói được push gửi commit, pull lấy và tích hợp thay đổi.
+- Nhận ra commit cục bộ chưa tự xuất hiện trên GitHub.
 
 ---
 
 ## ❓ Quiz
-Làm bài trắc nghiệm sau để xác thực sự phân biệt giữa Git và GitHub.
+Trả lời các câu hỏi sau. Khi sai, đọc giải thích rồi thử lại.
 
 ---
 
 ## 🔥 Challenge
-Viết hai câu mô tả khác nhau: một câu cho Git và một câu cho GitHub.
+Giải thích tình huống: “Tôi đã tạo commit nhưng bạn cùng nhóm chưa thấy trên GitHub.” Nêu bước còn thiếu và điều kiện để bước đó chạy được.
 
 ---
 
 ## 📚 Tổng kết
-- Git giúp lưu và xem lịch sử dự án trên máy.
-- GitHub là một dịch vụ trực tuyến để lưu repository Git và cộng tác.
-- Push gửi commit lên remote; pull lấy thay đổi từ remote về.
+- Git lưu lịch sử trong repository trên máy; GitHub là dịch vụ để chia sẻ repository.
+- Remote lưu tên kết nối tới một kho Git khác.
+- Push gửi commit đi; pull lấy và tích hợp thay đổi về.

@@ -5,7 +5,7 @@ questions:
     question: Đặc điểm nhận diện nổi bật nhất của các nhánh làm việc trong mô hình Trunk-Based Development là gì?
     type: single
     options:
-      - text: Tuổi thọ cực kỳ ngắn hạn, thường chỉ kéo dài vài giờ đến tối đa một hoặc hai ngày
+      - text: Nhánh phụ thường ngắn hạn để thay đổi được tích hợp thường xuyên vào nhánh chính
         correct: true
       - text: Tồn tại ít nhất 6 tháng để kiểm thử thật kỹ lưỡng
         correct: false
@@ -13,12 +13,12 @@ questions:
         correct: false
       - text: Không bao giờ được phép merge vào nhánh main
         correct: false
-    explanation: Nhánh siêu ngắn hạn giúp các lập trình viên tích hợp mã nguồn liên tục, loại bỏ hoàn toàn nguy cơ xung đột lớn khi sáp nhập.
+    explanation: Tích hợp thường xuyên giúp giới hạn độ lệch so với nhánh chính, nhưng không loại bỏ mọi xung đột.
   - id: q2
-    question: Kỹ thuật nào là "bạn đồng hành" không thể thiếu giúp Trunk-Based Development an toàn khi code chưa hoàn thiện 100%?
+    question: Kỹ thuật nào thường được dùng để ẩn tính năng chưa sẵn sàng trong khi mã đã được tích hợp?
     type: single
     options:
-      - text: Feature Flags (Cờ tính năng) cho phép ẩn đoạn mã mới khỏi người dùng trên môi trường thực tế
+      - text: Feature flag có thể bật/tắt tính năng theo cấu hình; cần thiết kế và kiểm tra riêng
         correct: true
       - text: Tắt hoàn toàn máy chủ cơ sở dữ liệu khi có người commit
         correct: false
@@ -26,12 +26,12 @@ questions:
         correct: false
       - text: Chỉ cho phép giám đốc điều hành được quyền gõ bàn phím
         correct: false
-    explanation: Feature Flags cho phép đưa code lên production an toàn và chỉ kích hoạt khi tính năng đã hoàn thiện và sẵn sàng phục vụ khách hàng.
+    explanation: Feature flags là một kỹ thuật phổ biến, không bắt buộc trong mọi nhóm; cờ cần được quản lý để tránh bật nhầm hoặc tồn đọng lâu.
   - id: q3
-    question: Tại sao các tập đoàn công nghệ khổng lồ như Google và Meta lại ưa chuộng Trunk-Based Development?
+    question: Vì sao việc tích hợp thường xuyên có thể hữu ích trong Trunk-Based Development?
     type: single
     options:
-      - text: Vì nó loại bỏ "Địa ngục hợp nhất" (Merge Hell) và thúc đẩy tốc độ tích hợp liên tục ở quy mô hàng ngàn kỹ sư
+      - text: Vì thay đổi nhỏ được đưa vào nhánh chung thường xuyên, giúp giảm thời gian phát hiện tích hợp lệch nhau
         correct: true
       - text: Vì Trunk-Based Development không yêu cầu viết kiểm thử tự động
         correct: false
@@ -39,12 +39,12 @@ questions:
         correct: false
       - text: Vì nó giúp máy tính của kỹ sư chạy mát hơn mà không cần quạt tản nhiệt
         correct: false
-    explanation: Ở quy mô lớn, việc duy trì các nhánh dài hạn là bất khả thi; mô hình Trunk-Based giữ cho codebase chung luôn tươi mới và được kiểm định liên tục từng phút.
+    explanation: Nhánh ngắn hạn và tích hợp thường xuyên có thể giảm kích thước chênh lệch; nhóm vẫn cần quan sát build và phối hợp khi có lỗi.
   - id: q4
-    question: Yêu cầu kỹ thuật bắt buộc phải có để một tổ chức có thể áp dụng thành công Trunk-Based Development là gì?
+    question: Năng lực kỹ thuật nào giúp nhóm nhận phản hồi nhanh khi tích hợp thường xuyên vào nhánh chính?
     type: single
     options:
-      - text: Hệ thống CI tự động chạy kiểm thử nhanh chóng và toàn diện để bảo vệ chất lượng nhánh Trunk
+      - text: Một vòng kiểm tra nhanh, đáng tin cậy (thường có CI); phạm vi và cách thực thi tùy nhóm
         correct: true
       - text: Một phòng họp thật lớn để tất cả mọi người cùng ngồi làm việc chung
         correct: false
@@ -52,7 +52,7 @@ questions:
         correct: false
       - text: Cài đặt ít nhất 10 hệ điều hành khác nhau trên máy tính
         correct: false
-    explanation: Nếu không có CI kiểm tra tự động vững chắc, các commit liên tục vào Trunk có thể dễ dàng làm vỡ bản build và gây tê liệt cả nhóm.
+    explanation: CI nhanh giúp phát hiện vấn đề sớm; trunk-based development vẫn có thể triển khai với quy trình khác, nhưng cần cách giữ nhánh chung dùng được.
   - id: q5
     question: Tên gọi "Trunk" trong mô hình Trunk-Based Development tương đương với khái niệm nhánh nào trong Git?
     type: single

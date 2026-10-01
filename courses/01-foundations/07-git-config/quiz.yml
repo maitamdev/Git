@@ -1,55 +1,82 @@
 id: quiz-07-git-config
-title: "Trắc nghiệm: Cấu hình danh tính với git config"
+title: "Trắc nghiệm: Cấu hình danh tính Git"
 questions:
   - id: q1
-    question: Cặp thông tin nào Git thường ghi vào commit để nhận biết tác giả?
+    question: "Thông tin nào Git thường dùng làm tên và email tác giả cho commit mới?"
     type: single
     options:
-      - text: user.name và user.email
+      - text: "`user.name` và `user.email`"
         correct: true
-      - text: user.password và user.token
+      - text: "`commit.title` và `commit.branch`"
         correct: false
-      - text: system.port và network.ip
+      - text: "`remote.name` và `remote.url`"
         correct: false
-      - text: github.username và github.apikey
+      - text: "Tên tài khoản và mật khẩu đăng nhập GitHub"
         correct: false
-    explanation: "Git lưu `user.name` và `user.email` trong thông tin tác giả của commit."
+    explanation: >-
+      Git dùng `user.name` và `user.email` làm thông tin tác giả trong commit.
+      Chúng không phải mật khẩu đăng nhập GitHub.
+
   - id: q2
-    question: Cấp độ cấu hình nào có độ ưu tiên cao nhất trong Git?
+    question: "Trong ba phạm vi system, global và local đang học, phạm vi nào được ưu tiên cao nhất?"
     type: single
     options:
-      - text: --local (Cấu hình riêng trong repository hiện tại)
+      - text: "`--local`, vì chỉ áp dụng trong repository hiện tại"
         correct: true
-      - text: --global (Cấu hình cho toàn bộ tài khoản người dùng)
+      - text: "`--system`, vì áp dụng cho tất cả người dùng trên máy"
         correct: false
-      - text: --system (Cấu hình cho toàn bộ máy tính)
+      - text: "`--global`, vì áp dụng cho nhiều repository của một tài khoản"
         correct: false
-      - text: Tất cả các cấp độ đều có độ ưu tiên ngang nhau
+      - text: "Cả ba phạm vi luôn có giá trị ngang nhau"
         correct: false
-    explanation: Giá trị local áp dụng riêng trong repository và ghi đè giá trị global.
+    explanation: >-
+      Trong ba phạm vi này, cấu hình local của repository ưu tiên global;
+      global lại ưu tiên system.
+
   - id: q3
-    question: Lệnh nào liệt kê các thiết lập cấu hình Git hiện có?
+    question: "Lệnh nào liệt kê các giá trị cấu hình Git hiện có?"
     type: single
     options:
-      - text: git config --list
+      - text: "`git config --list`"
         correct: true
-      - text: git show-config-all
+      - text: "`git config user.name`"
         correct: false
-      - text: git config --print-screen
+      - text: "`git status --short`"
         correct: false
-      - text: git status --config
+      - text: "`git log --oneline`"
         correct: false
-    explanation: "`git config --list` liệt kê các cặp tên và giá trị cấu hình Git hiện có."
+    explanation: >-
+      `git config --list` liệt kê các thiết lập Git mà chương trình đang đọc.
+      Lệnh truy vấn riêng chỉ hiển thị một giá trị.
+
   - id: q4
-    question: "`user.email` trong Git config có phải mật khẩu đăng nhập GitHub không?"
+    question: "`user.email` có phải mật khẩu dùng để đăng nhập GitHub không?"
     type: single
     options:
-      - text: Không, đây là email gắn vào thông tin tác giả của commit
+      - text: "Không; đó là email được ghi trong thông tin commit mới"
         correct: true
-      - text: Có, đây là mật khẩu GitHub đã mã hóa
+      - text: "Có; Git mã hóa email thành mật khẩu trước khi push"
         correct: false
-      - text: Có, đây là mã xác nhận push code
+      - text: "Có; đó là mã xác nhận để cấp quyền push"
         correct: false
-      - text: Không, đây là địa chỉ của remote
+      - text: "Không; đó là địa chỉ remote của repository"
         correct: false
-    explanation: "Email chỉ là thông tin tác giả trong commit; nó không cấp quyền đăng nhập."
+    explanation: >-
+      Email cấu hình giúp nhận diện tác giả trong commit. Nó không đăng nhập
+      vào GitHub và không tự cấp quyền truy cập repository.
+
+  - id: q5
+    question: "Bạn muốn dùng email tác giả riêng chỉ trong một repository. Nên chọn phạm vi nào?"
+    type: single
+    options:
+      - text: "`--local`, khi đang ở repository đó"
+        correct: true
+      - text: "`--global`, để đổi mặc định cho mọi repository của tài khoản"
+        correct: false
+      - text: "`--system`, để đổi mặc định cho tất cả người dùng trên máy"
+        correct: false
+      - text: "Không cần phạm vi; Git sẽ tự chọn email theo tên thư mục"
+        correct: false
+    explanation: >-
+      Cấu hình local chỉ áp dụng cho repository hiện tại. Cần chạy lệnh
+      bên trong repository muốn đặt email riêng.

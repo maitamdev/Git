@@ -1,122 +1,126 @@
-# Hợp nhất rẽ nhánh 3-way merge
+# Hợp nhất khi hai nhánh đã phân kỳ (3-way merge)
 
 ---
 
 ## 🎯 Mục tiêu
-- Nắm vững nguyên lý hoạt động của thuật toán hợp nhất ba chiều (Three-way merge).
-- Nhận diện 3 điểm cốt lõi: Tổ tiên chung (Base), đỉnh nhánh hiện tại (Ours) và đỉnh nhánh được gộp (Theirs).
-- Hiểu được Merge Commit là commit đặc biệt có 2 commit cha để nối liền hai luồng lịch sử.
+- Giải thích vai trò của tổ tiên chung, nhánh hiện tại và nhánh nguồn.
+- Nhận biết khi hai nhánh có commit riêng thì cần hợp nhất ba chiều.
+- Tạo merge commit và xác nhận thay đổi của cả hai nhánh được giữ lại.
 
 ---
 
 ## 🧩 Từ khóa hôm nay
 
-### 3-way Merge — hợp nhất ba chiều
-- **Nói dễ hiểu:** Thuật toán gộp hai nhánh dựa trên 3 điểm: tổ tiên chung, đỉnh nhánh hiện tại và đỉnh nhánh cần gộp.
-- **Ví dụ:** Khi cả `main` và `feature` đều có commit mới độc lập, Git tự động kích hoạt 3-way merge.
-- **Đừng nhầm:** 3-way merge không có nghĩa là bị lỗi xung đột; nếu sửa khác tệp hoặc khác dòng, Git tự gộp hoàn toàn tự động.
+### 3-way merge — hợp nhất ba chiều
+- **Nói dễ hiểu:** Git so sánh mốc chung với hai phiên bản nhánh để kết hợp thay đổi.
+- **Ví dụ:** `main` sửa `about.html`, `feature` thêm `contact.html`.
+- **Đừng nhầm:** 3-way merge không đồng nghĩa với conflict.
 
-### Common Ancestor (Merge Base) — mốc tổ tiên chung
-- **Nói dễ hiểu:** Commit cuối cùng mà cả hai nhánh cùng chia sẻ trước khi rẽ sang hai hướng phát triển riêng.
-- **Ví dụ:** Commit C2 là điểm rẽ nhánh; Git dùng C2 làm thước đo để biết mỗi bên đã sửa những dòng nào.
-- **Đừng nhầm:** Bạn không phải tự tìm commit này bằng mắt; Git tự động tính toán mốc tổ tiên chung gần nhất.
+### Common ancestor — tổ tiên chung
+- **Nói dễ hiểu:** Mốc commit gần nhất mà hai nhánh cùng có trước khi tách.
+- **Ví dụ:** Hai nhánh đều xuất phát từ Commit C2.
+- **Đừng nhầm:** Git tự tìm mốc này; thường bạn không phải tự chọn.
 
-### Merge Commit — commit hợp nhất
-- **Nói dễ hiểu:** Một commit đặc biệt nối hai nhánh lại với nhau và có hai commit cha ở phía trước.
-- **Ví dụ:** Commit có thông điệp mặc định `Merge branch 'feature-search' into main`.
-- **Đừng nhầm:** Hợp nhất kiểu Fast-forward không tạo ra commit này; chỉ 3-way merge mới sinh ra commit hợp nhất có 2 cha.
+### Merge commit — commit hợp nhất
+- **Nói dễ hiểu:** Commit nối lịch sử của hai nhánh và có hai commit cha.
+- **Ví dụ:** Git tạo mốc mới sau khi kết hợp `main` và `feature-contact`.
+- **Đừng nhầm:** Fast-forward không cần tạo merge commit.
 
 ---
 
 ## 📖 Định nghĩa
-Three-way merge (hợp nhất 3 chiều) là thuật toán chuẩn của Git khi hai nhánh đã bị phân kỳ (mỗi nhánh đều có commit mới kể từ mốc rẽ nhánh). Git đối chiếu 3 mốc: tổ tiên chung, nhánh hiện tại và nhánh cần gộp. Nếu các thay đổi không đá nhau trên cùng dòng, Git tự động kết hợp và tạo ra một Merge Commit mới.
+Khi nhánh hiện tại và nhánh nguồn đều có commit riêng sau tổ tiên chung, Git không thể chỉ tua con trỏ. Git so sánh ba trạng thái: tổ tiên chung, nhánh hiện tại và nhánh nguồn. Nếu các thay đổi có thể kết hợp, Git tạo một merge commit có hai commit cha. Nếu cùng một phần nội dung bị sửa theo cách không tương thích, sẽ có conflict; cách xử lý học ở bài sau.
 
 ---
 
 ## 🤔 Tại sao cần?
-Trong thực tế làm việc nhóm, nhánh `main` hiếm khi đứng yên chờ một mình bạn. Đồng nghiệp liên tục đưa các tính năng khác vào `main`. Thuật toán 3-way merge cho phép bạn tích hợp nhánh của mình vào nhánh chính đã có thay đổi mới mà không làm mất công sức của bất kỳ ai.
+Trong nhóm, `main` có thể tiếp tục nhận thay đổi trong lúc bạn làm tính năng. 3-way merge giúp Git kết hợp công việc của hai nhánh thay vì bỏ một bên. Biết ba mốc so sánh giúp bạn hiểu vì sao Git tự gộp được hai tệp khác nhau nhưng có thể cần bạn giải quyết khi sửa cùng một dòng.
 
 ---
 
 ## 🧠 Mental Model (Mô hình tư duy)
-Hãy hình dung hai bạn cùng dịch tiếp một cuốn sách từ chương 5 (tổ tiên chung). Bạn A dịch các chương đầu (nhánh `main`), bạn B dịch phần phụ lục cuối sách (nhánh `feature`). Khi nộp bài, người biên tập cầm bản gốc chương 5 ra đối chiếu với bản của A và B. Thấy hai người dịch ở hai phần riêng biệt, người biên tập gom cả hai lại đóng thành một cuốn sách xuất bản hoàn chỉnh (Merge Commit).
+Hãy tưởng tượng hai người cùng sửa một tài liệu từ một bản gốc. Người thứ nhất thêm mục giới thiệu; người thứ hai thêm mục liên hệ. Khi đối chiếu bản gốc với hai bản mới, có thể ghép cả hai phần mà không phải chọn bỏ nội dung của ai.
 
 ---
 
 ## 🖼 Sơ đồ
 ```text
-Cấu trúc 3 điểm trong thuật toán Three-way merge:
-                 (Base - Tổ tiên chung)
-                          Commit C2
-                         /         \
-                        /           \
-           Commit C3 (Ours)       Commit C4 (Theirs)
-                        \           /
-                         \         /
-                          Commit C5 (Merge Commit - có 2 cha C3 & C4)
+                  C3  main (Ours)
+                 /   \
+Base C2 ────────       M5  main sau merge
+                 \   /
+                  C4  feature (Theirs)
+
+M5 có hai commit cha: C3 và C4.
 ```
 
 ---
 
 ## 🌎 Ví dụ thực tế
-Bạn Huy tạo nhánh `feature-search` từ commit C2 của `main` để làm tệp `search.js`. Cùng lúc đó trên `main`, bạn Mai sửa giao diện trong tệp `styles.css`. Khi Huy chạy lệnh gộp nhánh `feature-search` vào `main`, Git nhận thấy hai bạn sửa ở hai tệp hoàn toàn khác nhau. Git tự động gộp cả hai tệp vào một commit hợp nhất mới C5 mà không phát sinh xung đột nào.
+Huy tạo `feature-contact` từ `main` và thêm `contact.html`. Trong lúc đó, Mai tạo một commit trên `main` để sửa `about.html`. Khi đứng trên `main` và merge `feature-contact`, Git so sánh mốc chung cùng hai nhánh. Vì thay đổi nằm ở hai tệp khác nhau, Git có thể giữ cả hai và tạo merge commit.
 
 ---
 
 ## 💻 Command
 ```bash
 git switch main
-git merge <tên-nhánh-tính-năng>
-git log --oneline --graph
+git merge feature-contact
+git status
+git log --oneline
 ```
 
 ---
 
 ## 🔍 Giải thích command
-- `git switch main`: Chuyển về nhánh đích đón nhận kết quả hợp nhất.
-- `git merge <tên-nhánh>`: Thực thi thuật toán 3-way merge và mở trình soạn thảo để xác nhận thông điệp commit hợp nhất.
-- `git log --oneline --graph`: Vẽ đồ thị kiểm tra nút giao hợp nhất có hai đường dẫn về hai nhánh cha.
+- `git switch main`: Chuyển sang nhánh sẽ nhận thay đổi.
+- `git merge feature-contact`: Kết hợp lịch sử nhánh nguồn vào nhánh hiện tại.
+- `git status`: Kiểm tra kết quả và xác nhận không còn thao tác dở.
+- `git log --oneline`: Xem lời nhắn của merge commit trong lịch sử hiện tại.
+- Simulator tự hoàn tất merge commit và dùng lời nhắn mặc định; trong terminal Git thật, editor có thể mở tùy cấu hình.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Bất ngờ khi trình soạn thảo tự động mở lên:** Khi tạo Merge Commit, Git yêu cầu xác nhận thông điệp; bạn chỉ cần lưu và đóng trình soạn thảo lại.
-2. **Nghĩ 3-way merge luôn gây ra xung đột:** Nếu hai nhánh sửa khác tệp hoặc khác dòng, Git tự động gộp êm đẹp 100%.
-3. **Quên kiểm tra lại ứng dụng sau khi merge:** Dù Git gộp văn bản thành công, bạn vẫn nên chạy thử chương trình để đảm bảo tính năng hoạt động tương thích.
+1. **Tưởng 3-way merge luôn gây conflict:** Thay đổi độc lập thường được kết hợp tự động.
+2. **Đứng trên nhánh nguồn thay vì nhánh nhận:** `git merge` cập nhật nhánh hiện tại.
+3. **Cho rằng merge thành công nghĩa ứng dụng chắc chắn chạy đúng:** Chạy kiểm thử hoặc mở ứng dụng sau khi hợp nhất.
 
 ---
 
 ## 🧪 Lab
-Bài tập này được thực hành trên môi trường Git mô phỏng của hệ thống:
-1. Tạo nhánh `feature-contact` và sửa tệp `contact.html`.
-2. Chuyển về nhánh `main` và sửa tệp `about.html` để tạo ra lịch sử phân kỳ.
-3. Chạy lệnh `git merge feature-contact` từ nhánh `main`.
-4. Quan sát Git tự động hoàn tất 3-way merge và tạo ra commit hợp nhất mới.
+Yêu cầu: repository có ít nhất một commit và thư mục làm việc sạch. Nếu chưa có commit, hoàn thành bài tạo commit ở Level 2 trước.
+1. Chạy `git switch main` rồi `git switch -c feature-contact`.
+2. Tạo `contact.html`, thêm nội dung, rồi chạy `git add contact.html` và `git commit -m "feat: add contact page"`.
+3. Chạy `git switch main`.
+4. Tạo `about.html`, thêm nội dung, rồi chạy `git add about.html` và `git commit -m "docs: add about page"`.
+5. Chạy `git merge feature-contact`.
+6. Kiểm tra `git status`, rồi dùng `git log --oneline` để thấy merge commit.
 
 ---
 
 ## 💡 Hint
-Khi hai nhánh sửa hai tệp khác nhau, Git sẽ tự động gộp mà không cần bạn phải can thiệp thủ công.
+> Nếu mỗi nhánh sửa một tệp khác nhau, Git thường có thể gộp tự động.
 
 ---
 
 ## ✅ Validation
-- Lệnh `git log --graph --oneline` hiển thị rõ hai nhánh gộp lại tại một commit hợp nhất.
-- Cả hai tệp `contact.html` và `about.html` đều có mặt với nội dung đầy đủ trên nhánh `main`.
+- `about.html` và `contact.html` đều còn trên `main` sau merge.
+- `git log --oneline` có một merge commit mới.
+- `git status` không báo merge đang dở.
 
 ---
 
 ## ❓ Quiz
-Trả lời các câu hỏi sau để nắm vững nguyên lý hoạt động của thuật toán Three-way merge.
+Trả lời các câu hỏi để kiểm tra ba mốc Git dùng khi hợp nhất lịch sử đã phân kỳ.
 
 ---
 
 ## 🔥 Challenge
-Chạy lệnh `git merge-base main feature-contact` để xem Git in ra chính xác mã hash của commit tổ tiên chung giữa hai nhánh.
+Dựa vào sơ đồ và kết quả `git show HEAD`, chỉ ra commit nào là tổ tiên chung, nhánh hiện tại, nhánh nguồn và merge commit. Nêu hai commit cha của merge commit.
 
 ---
 
 ## 📚 Tổng kết
-- Three-way merge dùng 3 snapshot: Tổ tiên chung, nhánh hiện tại và nhánh cần gộp.
-- Tự động kích hoạt khi hai nhánh đã có sự phân kỳ độc lập trong lịch sử.
-- Tự động tạo ra một Merge Commit mới có hai commit cha khi không có xung đột dòng.
+- 3-way merge so sánh tổ tiên chung với hai nhánh.
+- Khi thay đổi kết hợp được, Git tạo merge commit có hai commit cha.
+- Thay đổi cùng dòng có thể cần giải quyết conflict ở bài tiếp theo.

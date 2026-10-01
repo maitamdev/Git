@@ -39,14 +39,14 @@ export const lesson: CourseLesson = {
       "git tag -a v2.0.0 -m \"Release v2.0.0: breaking change drop legacy browsers\""
     ]
   },
-  "content": "# Semantic Versioning\n\n## 🎯 Mục tiêu\n- Nắm vững đặc tả Semantic Versioning 2.0.0 (SemVer) với định dạng chuẩn 3 con số: MAJOR.MINOR.PATCH.\n- Áp dụng chính xác quy tắc tăng số: khi nào tăng PATCH (sửa lỗi), khi nào tăng MINOR (tính năng), khi nào tăng MAJOR (phá vỡ tương thích).\n- Hiểu rõ ý nghĩa của các hậu tố tiền phát hành (Pre-release) như `-alpha`, `-beta`, `-rc.1` và thông tin bản dựng.\n- Tích hợp tư duy SemVer vào quy trình quản lý thẻ Git Tag và phát hành thư viện phần mềm chuyên nghiệp.\n\n## 🧩 Từ khóa hôm nay\n### Semantic Versioning\n- **Nói dễ hiểu**: Quy chuẩn đánh số phiên bản gồm ba phần MAJOR.MINOR.PATCH giúp người dùng hiểu ngay mức độ thay đổi của mã nguồn.\n- **Ví dụ**: Bản cập nhật từ `1.2.0` lên `1.2.1` là sửa lỗi nhỏ, còn lên `2.0.0` là có thay đổi lớn phá vỡ tính tương thích cũ.\n- **Đừng nhầm**: Không phải số đếm ngẫu nhiên theo ngày tháng hay sở thích cá nhân, mà tuân thủ quy tắc kỹ thuật nghiêm ngặt.\n\n### Breaking Change\n- **Nói dễ hiểu**: Thay đổi làm thay đổi giao diện hàm hoặc cách gọi cũ khiến ứng dụng của người dùng bị lỗi khi cập nhật.\n- **Ví dụ**: Xóa bỏ một tham số bắt buộc trong hàm API khiến các phần mềm bên ngoài gọi vào bị vỡ.\n- **Đừng nhầm**: Bất kể thay đổi nhỏ hay lớn, chỉ cần làm hỏng code hiện có của người dùng thì bắt buộc phải tăng số MAJOR.\n\n### Pre-release\n- **Nói dễ hiểu**: Hậu tố đánh dấu bản phát hành thử nghiệm để kiểm thử trước khi tung ra bản chính thức cho công chúng.\n- **Ví dụ**: Phiên bản `2.0.0-rc.1` là bản ứng viên phát hành lần một trước khi ra mắt bản `2.0.0` ổn định.\n- **Đừng nhầm**: Bản pre-release có thứ tự ưu tiên thấp hơn bản chính thức cùng số phiên bản.\n\n## 📖 Định nghĩa\nSemantic Versioning (SemVer) là đặc tả kỹ thuật định nghĩa quy tắc đánh số phiên bản phần mềm theo định dạng ba cụm số nguyên: `MAJOR.MINOR.PATCH`. Mỗi con số phản ánh rõ ràng tính chất thay đổi của mã nguồn: sửa lỗi, bổ sung tính năng tương thích ngược, hoặc thay đổi phá vỡ tính tương thích cũ.\n\n## 💡 Tại sao cần\nKhông có SemVer, các lập trình viên rơi vào khủng hoảng quản lý phụ thuộc (Dependency Hell). Người dùng không thể biết việc cập nhật một thư viện có làm sập hệ thống hay không. SemVer đem lại sự an tâm tuyệt đối: chỉ cần tăng PATCH hoặc MINOR là người dùng an tâm cập nhật tự động mà không lo gãy đổ ứng dụng.\n\n## 🧠 Mental Model\nHãy hình dung việc thay thế ổ cắm điện. Sửa lỗi (`PATCH`: 1.0.0 lên 1.0.1) như siết lại ốc vít lỏng: giữ nguyên mọi thứ và phích cắm cũ dùng bình thường. Thêm tính năng (`MINOR`: 1.0.0 lên 1.1.0) như gắn thêm cổng USB bên cạnh ổ cắm: có thêm tiện ích mới mà phích cắm cũ vẫn cắm vừa. Phá vỡ tương thích (`MAJOR`: 1.0.0 lên 2.0.0) như đổi ổ cắm tròn thành ổ cắm ba chấu vuông: toàn bộ phích cắm cũ không dùng được nữa nếu không có đầu chuyển đổi.\n\n## 📊 Sơ đồ minh họa\n```mermaid\nflowchart LR\n    V[\"MAJOR . MINOR . PATCH\"]\n    V --> Maj[\"MAJOR: Phá vỡ tương thích cũ (Breaking Change)\"]\n    V --> Min[\"MINOR: Thêm tính năng mới (Tương thích ngược)\"]\n    V --> Pat[\"PATCH: Vá lỗi bảo mật, logic (Tương thích ngược)\"]\n```\n\n## 🏢 Ví dụ thực tế\nMột nhóm phát triển thư viện giao diện phát hành bản `1.0.0`. Khi sửa lỗi hiển thị nút bấm trên trình duyệt Safari, nhóm phát hành thẻ tag `v1.0.1` (tăng PATCH). Một tháng sau, nhóm bổ sung linh kiện Lịch chọn ngày mà không làm hỏng linh kiện cũ, nhóm phát hành `v1.1.0` (tăng MINOR và reset PATCH về 0). Sau một năm, nhóm bỏ hỗ trợ các trình duyệt cũ và thay đổi toàn bộ API thuộc tính, nhóm phát hành `v2.0.0` (tăng MAJOR).\n\n## 💻 Command & Cú pháp\n```bash\n# Tạo thẻ tag bản vá lỗi nhỏ tăng PATCH\ngit tag -a v1.0.1 -m \"Release v1.0.1: fix button safari bug\"\n\n# Tạo thẻ tag bổ sung tính năng mới tăng MINOR\ngit tag -a v1.1.0 -m \"Release v1.1.0: add datepicker component\"\n\n# Tạo thẻ tag phiên bản lớn có breaking change tăng MAJOR\ngit tag -a v2.0.0 -m \"Release v2.0.0: drop legacy browser support\"\n```\n\n## 🔍 Giải thích command\n- `git tag -a v1.0.1`: Đánh dấu bản phát hành sửa lỗi nhỏ, người dùng có thể cập nhật an toàn mà không cần sửa code.\n- `git tag -a v1.1.0`: Đánh dấu bản phát hành thêm tính năng mới tương thích ngược, reset chỉ số PATCH về 0.\n- `git tag -a v2.0.0`: Đánh dấu bản phát hành lớn có breaking change, cảnh báo người dùng cần đọc tài liệu nâng cấp.\n\n## ⚠️ Sai lầm phổ biến\n- Tăng số MAJOR cho những thay đổi nhỏ chỉ để làm thương hiệu hoặc tiếp thị mà không có breaking change thực tế.\n- Đưa thay đổi phá vỡ tương thích ngược vào một bản phát hành chỉ tăng PATCH hoặc MINOR.\n- Quên reset các chỉ số phía sau về 0 khi tăng con số phía trước (ví dụ tăng từ 1.2.5 lên 2.0.0 thay vì 2.2.5).\n\n## 🧪 Lab thực hành\nBài học này là bài tự kiểm tra: bạn thao tác tạo thẻ Git Tag theo chuẩn SemVer và đối chiếu theo hướng dẫn bên dưới.\n\n1. Khởi tạo kho Git và gắn thẻ phiên bản phát hành đầu tiên: `git tag -a v1.0.0 -m \"Release v1.0.0\"`.\n2. Tạo commit sửa lỗi chính tả và gắn thẻ: `git tag -a v1.0.1 -m \"Release v1.0.1: fix typo\"`.\n3. Tạo commit bổ sung một module mới và gắn thẻ: `git tag -a v1.1.0 -m \"Release v1.1.0: add auth service\"`.\n4. Xem danh sách toàn bộ các thẻ tag bằng lệnh `git tag -n` để kiểm tra thông điệp đi kèm từng phiên bản.\n\n## 💡 Hint & mẹo\n- Khi phân vân giữa MINOR và MAJOR, hãy tự hỏi: Mã nguồn hiện tại của người dùng có nguy cơ bị lỗi khi nâng cấp không? Nếu có, bắt buộc phải tăng MAJOR.\n- Nhớ đẩy thẻ lên máy chủ từ xa bằng lệnh `git push origin --tags`.\n\n## ✅ Validation & Kết quả mong đợi\n- Danh sách tag trong Git tuân thủ đúng thứ tự số học và phản ánh chính xác bản chất thay đổi.\n- Các công cụ quản lý gói như npm, yarn hay pip có thể tự động tải bản cập nhật an toàn theo ký hiệu phiên bản quy ước.\n\n## ❓ Quiz nhanh\nHãy làm bài trắc nghiệm bên dưới để kiểm tra mức độ thấu hiểu của bạn về các nguyên tắc tăng số trong Semantic Versioning.\n\n## 🚀 Thử thách nâng cao\nTìm hiểu ý nghĩa của các ký tự đại diện `^` (caret) và `~` (tilde) trong tệp `package.json` khi cài đặt thư viện Node.js và giải thích cách chúng bảo vệ dự án khỏi các lỗi tương thích.\n\n## 📝 Tổng kết\n- SemVer chuẩn hóa định dạng phiên bản theo cấu trúc ba con số MAJOR.MINOR.PATCH.\n- PATCH tăng khi sửa lỗi, MINOR tăng khi thêm tính năng mới, MAJOR tăng khi có thay đổi phá vỡ tương thích.\n- Tuân thủ SemVer đem lại khả năng tương thích dự đoán trước được và sự an tâm cho toàn bộ người dùng phần mềm.\n",
+  "content": "# Semantic Versioning\n\n## 🎯 Mục tiêu\n- Nắm vững đặc tả Semantic Versioning 2.0.0 (SemVer) với định dạng chuẩn 3 con số: MAJOR.MINOR.PATCH.\n- Áp dụng quy tắc tăng số cho phần mềm đã công bố public API và đang ở phiên bản `1.0.0` trở lên.\n- Hiểu rõ ý nghĩa của các hậu tố tiền phát hành (Pre-release) như `-alpha`, `-beta`, `-rc.1` và thông tin bản dựng.\n- Tích hợp tư duy SemVer vào quy trình quản lý thẻ Git Tag và phát hành thư viện phần mềm chuyên nghiệp.\n\n## 🧩 Từ khóa hôm nay\n### Semantic Versioning\n- **Nói dễ hiểu**: Quy chuẩn đánh số phiên bản gồm ba phần MAJOR.MINOR.PATCH giúp người dùng hiểu ngay mức độ thay đổi của mã nguồn.\n- **Ví dụ**: Bản cập nhật từ `1.2.0` lên `1.2.1` là sửa lỗi nhỏ, còn lên `2.0.0` là có thay đổi lớn phá vỡ tính tương thích cũ.\n- **Đừng nhầm**: SemVer chỉ có ý nghĩa khi dự án xác định public API và tuân theo đặc tả; `0.y.z` dành cho giai đoạn phát triển ban đầu.\n\n### Breaking Change\n- **Nói dễ hiểu**: Thay đổi không còn tương thích với public API đã công bố, nên một số chương trình đang dùng API đó có thể phải sửa.\n- **Ví dụ**: Xóa bỏ một tham số bắt buộc trong hàm API khiến các phần mềm bên ngoài gọi vào bị vỡ.\n- **Đừng nhầm**: Quy tắc MAJOR áp dụng cho thay đổi không tương thích với public API đã công bố khi `MAJOR` lớn hơn 0; dự án `0.y.z` chưa cam kết API ổn định.\n\n### Pre-release\n- **Nói dễ hiểu**: Hậu tố đánh dấu bản phát hành thử nghiệm để kiểm thử trước khi tung ra bản chính thức cho công chúng.\n- **Ví dụ**: Phiên bản `2.0.0-rc.1` là bản ứng viên phát hành lần một trước khi ra mắt bản `2.0.0` ổn định.\n- **Đừng nhầm**: Bản pre-release có thứ tự ưu tiên thấp hơn bản chính thức cùng số phiên bản.\n\n### Build Metadata (Thông tin bản dựng)\n- **Nói dễ hiểu**: Phần tùy chọn sau dấu `+` dùng để ghi thông tin build như số pipeline hoặc mã build.\n- **Ví dụ**: `1.2.3+build.17` có metadata `build.17`.\n- **Đừng nhầm**: Metadata không làm thay đổi thứ tự ưu tiên SemVer; không dùng nó thay cho PATCH/MINOR/MAJOR.\n\n## 📖 Định nghĩa\nSemantic Versioning 2.0.0 (SemVer) là đặc tả phiên bản `MAJOR.MINOR.PATCH` cho phần mềm có public API được khai báo. Với bản ổn định `1.0.0` trở lên: PATCH là sửa lỗi tương thích ngược, MINOR là thêm chức năng tương thích ngược, MAJOR là đổi public API không tương thích ngược. Trước `1.0.0`, API được xem là chưa ổn định và có thể thay đổi. Nhãn phiên bản chỉ giúp người dùng dự đoán mức thay đổi nếu nhà phát hành tuân thủ đặc tả.\n\n## 💡 Tại sao cần\nSemVer giúp người dùng hiểu mức độ tương thích mà nhà phát hành cam kết giữa các phiên bản. Nó không bảo đảm bản cập nhật không có lỗi; người dùng vẫn cần kiểm thử, xem ghi chú phát hành và chọn dải phiên bản phù hợp.\n\n## 🧠 Mental Model\nHãy hình dung ổ cắm là public API mà nhà phát hành cam kết. PATCH sửa lỗi mà không đổi cách cắm; MINOR thêm cổng mới nhưng giữ cổng cũ; MAJOR đổi chuẩn cổng đã công bố nên chương trình dùng chuẩn cũ có thể cần cập nhật.\n\n## 📊 Sơ đồ minh họa\n```mermaid\nflowchart LR\n    V[\"MAJOR . MINOR . PATCH\"]\n    V --> Maj[\"MAJOR: Phá vỡ tương thích cũ (Breaking Change)\"]\n    V --> Min[\"MINOR: Thêm tính năng mới (Tương thích ngược)\"]\n    V --> Pat[\"PATCH: Sửa lỗi tương thích ngược\"]\n```\n\n## 🏢 Ví dụ thực tế\nMột nhóm phát hành thư viện có public API ở bản `1.0.0`. Sửa lỗi tương thích ngược có thể thành `1.0.1`; thêm API mới tương thích ngược có thể thành `1.1.0`. Nếu nhóm bỏ một API đã công bố hoặc phá vỡ cam kết tương thích, nhóm phát hành MAJOR, ví dụ `2.0.0`. Các tag Git thường thêm tiền tố `v` như `v1.0.1`, nhưng tiền tố đó không thuộc chuỗi SemVer.\n\n## 💻 Command & Cú pháp\n```bash\n# Tạo thẻ tag bản vá lỗi nhỏ tăng PATCH\n# Chạy mỗi lệnh tại commit phát hành tương ứng, không gắn tất cả tag vào cùng một commit\ngit tag -a v1.0.1 -m \"Release v1.0.1: fix button safari bug\"\n\n# Tạo thẻ tag bổ sung tính năng mới tăng MINOR\ngit tag -a v1.1.0 -m \"Release v1.1.0: add datepicker component\"\n\n# Tạo thẻ tag phiên bản lớn có breaking change tăng MAJOR\ngit tag -a v2.0.0 -m \"Release v2.0.0: drop legacy browser support\"\n```\n\nTiền tố `v` là quy ước tên Git tag thường gặp; SemVer ở ví dụ trên là `2.0.0`. Metadata build dùng dấu `+`, ví dụ `2.0.0+build.17`.\n\n## 🔍 Giải thích command\n- `git tag -a v1.0.1`: Gắn nhãn cho commit phát hành PATCH; lệnh tag không tự kiểm tra nội dung có tương thích hay không.\n- `git tag -a v1.1.0`: Gắn nhãn cho commit phát hành MINOR; nhóm chọn số này theo thay đổi public API và chính sách phát hành.\n- `git tag -a v2.0.0`: Gắn nhãn cho commit phát hành MAJOR có thay đổi public API không tương thích.\n\n## ⚠️ Sai lầm phổ biến\n- Tăng số MAJOR cho những thay đổi nhỏ chỉ để làm thương hiệu hoặc tiếp thị mà không có breaking change thực tế.\n- Đưa thay đổi phá vỡ tương thích ngược vào một bản phát hành chỉ tăng PATCH hoặc MINOR.\n- Quên reset các chỉ số phía sau về 0 khi tăng con số phía trước (ví dụ tăng từ 1.2.5 lên 2.0.0 thay vì 2.2.5).\n\n## 🧪 Lab thực hành\nLàm trong repo thử nghiệm đã có commit và danh tính Git được cấu hình. Mỗi tag phải gắn sau khi commit thay đổi tương ứng.\n\n1. Trong repo thử nghiệm đã có ít nhất một commit, gắn tag `v1.0.0` cho commit hiện tại: `git tag -a v1.0.0 -m \"Release v1.0.0\"`.\n2. Sửa một lỗi tương thích ngược trong file thử nghiệm, chạy `git add <tệp>` rồi `git commit -m \"fix: correct example\"`; sau đó gắn tag `v1.0.1`.\n3. Thêm một API/khả năng mới tương thích ngược, stage và commit riêng; sau đó gắn tag `v1.1.0`.\n4. So sánh `2.0.0-rc.1` với `2.0.0`, rồi giải thích vì sao `2.0.0+build.17` có cùng thứ tự ưu tiên với `2.0.0`.\n5. Xem từng tag và commit đích bằng `git show --no-patch <tag>`; `git tag -n` liệt kê tên tag/thông điệp nhưng không tự xác minh SemVer.\n\n## 💡 Hint & mẹo\n- Trước khi chọn mức tăng, hãy xác định public API, compatibility policy và liệu dự án đã phát hành `1.0.0` hay chưa.\n- Nhớ đẩy thẻ lên máy chủ từ xa bằng lệnh `git push origin --tags`.\n\n## ✅ Validation & Kết quả mong đợi\n- Các tag trỏ tới commit phát hành dự định; Git tag không xác thực SemVer hay nội dung commit.\n- Giải thích được vì sao dải phiên bản package manager không bảo đảm một bản mới không có lỗi.\n\n## ❓ Quiz nhanh\nHãy làm bài trắc nghiệm bên dưới để kiểm tra mức độ thấu hiểu của bạn về các nguyên tắc tăng số trong Semantic Versioning.\n\n## 🚀 Thử thách nâng cao\nTìm hiểu ý nghĩa của các ký tự đại diện `^` (caret) và `~` (tilde) trong tệp `package.json` khi cài đặt thư viện Node.js và giải thích cách chúng bảo vệ dự án khỏi các lỗi tương thích.\n\n## 📝 Tổng kết\n- SemVer chuẩn hóa định dạng phiên bản theo cấu trúc ba con số MAJOR.MINOR.PATCH.\n- PATCH tăng khi sửa lỗi, MINOR tăng khi thêm tính năng mới, MAJOR tăng khi có thay đổi phá vỡ tương thích.\n- SemVer là cam kết tương thích của nhà phát hành đối với public API đã khai báo, không phải bảo đảm phần mềm không lỗi.\n- `0.y.z` là giai đoạn phát triển ban đầu; các quy tắc ổn định dành cho phiên bản `1.0.0` trở lên.\n- Pre-release có thứ tự thấp hơn bản phát hành thường tương ứng; build metadata bị bỏ qua khi so sánh thứ tự.\n",
   "quiz": {
     "id": "quiz-06-11-semantic-versioning",
     "title": "Trắc nghiệm: Semantic Versioning",
     "questions": [
       {
         "id": "q1",
-        "question": "Khi bạn chỉ thực hiện sửa lỗi mã nguồn mà không thêm tính năng mới và không làm hỏng tương thích ngược thì con số nào tăng lên?",
+        "question": "Với thư viện đang ở phiên bản ổn định `1.0.0` trở lên, sửa một lỗi tương thích ngược thì tăng thành phần nào?",
         "type": "single",
         "options": [
           {
@@ -66,11 +66,11 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "Chỉ số PATCH dành riêng cho các bản vá lỗi (bug fixes) bảo đảm an toàn và tương thích tuyệt đối cho người dùng."
+        "explanation": "SemVer quy định PATCH cho bản phát hành sửa lỗi tương thích ngược; điều này không bảo đảm bản phát hành không còn lỗi."
       },
       {
         "id": "q2",
-        "question": "Khi một thư viện xóa bỏ hoàn toàn một hàm công khai mà khách hàng đang sử dụng, thư viện đó BẮT BUỘC phải tăng con số nào?",
+        "question": "Với thư viện từ phiên bản `1.0.0` trở lên, nếu xóa một hàm thuộc public API đã công bố thì theo SemVer cần tăng thành phần nào?",
         "type": "single",
         "options": [
           {
@@ -90,7 +90,7 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "Bất kỳ thay đổi nào khiến mã nguồn của người dùng hiện tại bị lỗi khi nâng cấp đều bắt buộc phải tăng MAJOR theo chuẩn SemVer."
+        "explanation": "Từ `1.0.0`, thay đổi public API không tương thích ngược cần tăng MAJOR; trước `1.0.0`, SemVer chưa cam kết API ổn định."
       },
       {
         "id": "q3",
@@ -114,7 +114,7 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "Theo đặc tả SemVer, khi một con số ở bậc cao hơn tăng lên, tất cả các con số ở bậc thấp hơn phía sau nó bắt buộc phải được reset về số 0."
+        "explanation": "Khi tăng MINOR, PATCH trở về 0; vì vậy mức MINOR kế tiếp sau `1.4.3` là `1.5.0`."
       },
       {
         "id": "q4",
@@ -138,7 +138,7 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "Giai đoạn `0.x.x` dành cho các sản phẩm sơ khai đang hoàn thiện kiến trúc, không ràng buộc bởi quy tắc tương thích nghiêm ngặt của phiên bản ổn định 1.0.0."
+        "explanation": "SemVer gọi `0.y.z` là giai đoạn phát triển ban đầu và API chưa được xem là ổn định; nhà phát hành vẫn nên ghi rõ thay đổi."
       },
       {
         "id": "q5",
@@ -163,6 +163,30 @@ export const lesson: CourseLesson = {
           }
         ],
         "explanation": "Hậu tố pre-release như 1.0.0-rc.1 biểu thị bản phát hành thử nghiệm cho cộng đồng kiểm thử trước khi phát hành phiên bản chính thức 1.0.0."
+      },
+      {
+        "id": "q6",
+        "question": "Theo SemVer, thông tin sau dấu `+` như `1.2.3+build.17` có tác dụng gì khi so sánh độ ưu tiên phiên bản?",
+        "type": "single",
+        "options": [
+          {
+            "text": "Ghi metadata bản dựng; phần này không ảnh hưởng thứ tự ưu tiên SemVer",
+            "correct": true
+          },
+          {
+            "text": "Tăng PATCH lên `1.2.4`",
+            "correct": false
+          },
+          {
+            "text": "Làm bản phát hành có độ ưu tiên thấp hơn như pre-release",
+            "correct": false
+          },
+          {
+            "text": "Thay thế thành phần MAJOR",
+            "correct": false
+          }
+        ],
+        "explanation": "Build metadata có thể ghi số build hoặc mã pipeline; SemVer bỏ qua phần này khi so sánh độ ưu tiên."
       }
     ]
   }

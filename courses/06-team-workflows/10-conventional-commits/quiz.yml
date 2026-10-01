@@ -29,8 +29,7 @@ questions:
         correct: false
       - text: perf
         correct: false
-    explanation: "`docs` là tiền tố dành riêng cho các thay đổi liên quan đến tài
-      liệu, hướng dẫn hoặc tài liệu API."
+    explanation: "`docs` là type thường dùng do nhóm quy ước cho thay đổi tài liệu; đặc tả không ấn định riêng type này hoặc mức tăng SemVer cho nó."
   - id: q3
     question: Cách thức chuẩn mực nào sau đây được dùng để báo hiệu một thay đổi phá
       vỡ tính tương thích ngược (Breaking Change)?
@@ -60,15 +59,12 @@ questions:
         correct: false
       - text: Cập nhật phiên bản thư viện trong package.json
         correct: false
-    explanation: "`refactor` chỉ tái cấu trúc mã nguồn để tăng tính dễ đọc và bảo
-      trì mà giữ nguyên vẹn hành vi bên ngoài của phần mềm."
+    explanation: "`refactor` thường được nhóm dùng cho thay đổi cấu trúc không đổi hành vi, nhưng đây là quy ước của nhóm chứ không phải type có ý nghĩa SemVer được đặc tả ấn định."
   - id: q5
-    question: Theo quy chuẩn thực hành tốt nhất của Conventional Commits, dòng tiêu
-      đề đầu tiên nên được viết như thế nào?
+    question: Cấu trúc cơ bản nào được Conventional Commits quy định cho dòng tiêu đề commit?
     type: single
     options:
-      - text: Viết ngắn gọn súc tích ở thể mệnh lệnh, chữ thường và không kết thúc bằng
-          dấu chấm
+      - text: "`<type>[optional scope]: <description>`; scope là tùy chọn"
         correct: true
       - text: Viết một đoạn văn dài ít nhất 200 chữ có nhiều dấu chấm cảm
         correct: false
@@ -76,15 +72,12 @@ questions:
         correct: false
       - text: Viết bằng bất kỳ biểu tượng cảm xúc emoji nào tùy thích
         correct: false
-    explanation: Tiêu đề súc tích không có dấu chấm ở cuối giúp hiển thị sạch sẽ
-      trên giao diện GitHub và các công cụ dòng lệnh.
+    explanation: Đặc tả yêu cầu type và mô tả, cho phép scope tùy chọn; độ dài, thể mệnh lệnh và dấu câu có thể do repository quy định riêng.
   - id: q6
-    question: Lợi ích tự động hóa lớn nhất mà Conventional Commits mang lại cho quy
-      trình CI/CD hiện đại là gì?
+    question: Khi dự án đã cấu hình công cụ tương thích Conventional Commits, công cụ có thể dùng commit message để làm gì?
     type: single
     options:
-      - text: Tự động tính toán số phiên bản phát hành mới (SemVer) và tự động tạo tệp
-          CHANGELOG.md chuyên nghiệp
+      - text: Phân loại thay đổi để gợi ý mức SemVer và tạo changelog theo cấu hình dự án
         correct: true
       - text: Tự động viết toàn bộ mã nguồn của dự án mà không cần lập trình viên
         correct: false
@@ -92,5 +85,4 @@ questions:
         correct: false
       - text: Tự động phát hiện lỗi chính tả tiếng Việt trong bình luận
         correct: false
-    explanation: Công cụ tự động có thể quét các commit `feat` để tăng MINOR, commit
-      `fix` để tăng PATCH, và `BREAKING CHANGE` để tăng MAJOR.
+    explanation: Theo đặc tả, `feat` tương ứng MINOR, `fix` tương ứng PATCH và breaking change tương ứng MAJOR; công cụ phải được cấu hình và có thể có chính sách riêng.

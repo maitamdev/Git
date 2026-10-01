@@ -32,8 +32,7 @@ questions:
     explanation: "`git remote add <tên> <url>` là cú pháp chuẩn để gắn thêm liên kết
       remote mới."
   - id: q3
-    question: Quy trình chuẩn 3 bước để đồng bộ mã nguồn mới nhất từ kho gốc về kho
-      fork cá nhân trên GitHub là gì?
+    question: "Trong mô hình fork phổ biến, nếu nhánh đích tên `main` và nhóm đồng bộ bằng merge, trình tự nào phù hợp?"
     type: single
     options:
       - text: git fetch upstream -> git merge upstream/main -> git push origin main
@@ -47,12 +46,10 @@ questions:
     explanation: Tải từ gốc (fetch upstream) -> gộp vào máy (merge) -> đẩy lên fork
       cá nhân (push origin).
   - id: q4
-    question: Điều gì sẽ xảy ra nếu bạn cố gắng chạy lệnh `git push upstream main`
-      trên một dự án mã nguồn mở lớn?
+    question: "Nếu bạn không có quyền ghi vào remote `upstream`, điều gì thường xảy ra khi push tới đó?"
     type: single
     options:
-      - text: Lệnh sẽ bị từ chối với lỗi Permission denied vì bạn không có quyền ghi
-          trực tiếp vào kho của tác giả
+      - text: Máy chủ từ chối cập nhật nhánh vì tài khoản của bạn không được cấp quyền ghi
         correct: true
       - text: Mã nguồn của bạn sẽ tự động ghi đè lên toàn bộ hệ thống của tác giả
         correct: false
@@ -60,15 +57,13 @@ questions:
         correct: false
       - text: Máy tính của bạn sẽ bị mất bản quyền Git
         correct: false
-    explanation: Bạn chỉ có quyền đọc (clone/fetch) kho gốc; quyền ghi chỉ dành cho
-      maintainers của dự án.
+    explanation: Push yêu cầu quyền ghi; người đóng góp thường chỉ có quyền đọc kho gốc và push lên fork của mình.
   - id: q5
     question: Sự khác biệt then chốt về vai trò giữa hai remote `origin` và `upstream`
       trong Forking Workflow là gì?
     type: single
     options:
-      - text: origin là kho fork của bạn có toàn quyền push, còn upstream là kho gốc
-          của dự án mà bạn chỉ có quyền fetch/pull để đồng bộ
+      - text: Trong quy trình thường gặp, origin trỏ tới fork của bạn và upstream trỏ tới kho gốc; quyền thực tế phụ thuộc tài khoản
         correct: true
       - text: origin chỉ dùng cho máy Mac, còn upstream chỉ dùng cho máy Windows
         correct: false
@@ -76,6 +71,4 @@ questions:
         correct: false
       - text: upstream tự động xóa sạch mã nguồn trên máy sau khi đóng cửa sổ terminal
         correct: false
-    explanation: Bạn có toàn quyền ghi vào origin (kho cá nhân) để tạo PR, trong khi
-      upstream là nguồn chuẩn của dự án mà bạn chỉ đọc về để đồng bộ.
-
+    explanation: Origin và upstream là bí danh do cấu hình đặt; hãy kiểm tra URL và quyền trước khi đồng bộ hoặc push.
