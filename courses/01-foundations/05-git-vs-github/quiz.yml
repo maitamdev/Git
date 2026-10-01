@@ -2,19 +2,18 @@ id: quiz-05-git-vs-github
 title: "Trắc nghiệm: Phân biệt Git và GitHub"
 questions:
   - id: q1
-    question: Phát biểu nào sau đây miêu tả chính xác nhất bản chất của Git?
+    question: Git và GitHub khác nhau thế nào?
     type: single
     options:
-      - text: Là công cụ phần mềm quản lý phiên bản phân tán chạy trực tiếp trên máy
-          tính cá nhân
+      - text: Git là công cụ trên máy; GitHub là dịch vụ trực tuyến để lưu và cộng tác
         correct: true
-      - text: Là một mạng xã hội dành cho các lập trình viên đăng ảnh bài viết
+      - text: Git và GitHub đều là một loại tài khoản đăng nhập
         correct: false
-      - text: Là một ngôn ngữ lập trình mới dùng để thay thế JavaScript
+      - text: Git chỉ chạy trên GitHub
         correct: false
-      - text: Là một trang web tuyển dụng việc làm công nghệ thông tin
+      - text: GitHub là phần mềm cài để thay thế Git
         correct: false
-    explanation: Git là phần mềm mã nguồn mở chạy cục bộ để quản lý phiên bản mã nguồn.
+    explanation: Git có thể lưu lịch sử ngay trên máy; GitHub là dịch vụ riêng trên Internet.
   - id: q2
     question: GitHub đóng vai trò gì trong hệ sinh thái phát triển phần mềm?
     type: single
@@ -28,35 +27,30 @@ questions:
         correct: false
       - text: Là phần mềm diệt virus bảo vệ mã nguồn máy tính
         correct: false
-    explanation: GitHub là nền tảng máy chủ đám mây lưu trữ repo Git và bổ sung tính
-      năng cộng tác nhóm.
+    explanation: GitHub lưu repository Git trực tuyến và cung cấp công cụ để nhóm cộng tác.
   - id: q3
-    question: Nếu bạn làm việc tại một công ty bảo mật không cho phép đưa code lên
-      mạng Internet, bạn sẽ làm gì?
+    question: Bạn có thể tạo commit bằng Git khi máy đang offline không?
     type: single
     options:
-      - text: Vẫn sử dụng Git bình thường và có thể lưu trữ trên máy chủ nội bộ GitLab
-          riêng của công ty
+      - text: Có, commit được lưu trong repository trên máy
         correct: true
-      - text: Bắt buộc phải bỏ dùng Git và quay về cách copy paste thủ công
+      - text: Không, mọi lệnh Git đều cần Internet
         correct: false
-      - text: Không thể lập trình được vì Git bắt buộc phải kết nối Internet
+      - text: Chỉ khi đăng nhập GitHub trước
         correct: false
-      - text: Phải xin phép ban quản trị GitHub để mở kênh bí mật
+      - text: Chỉ khi máy kết nối cùng mạng Wi-Fi với GitHub
         correct: false
-    explanation: Git hoạt động độc lập và hoàn toàn có thể tự dựng máy chủ nội bộ
-      (on-premises) bằng GitLab hoặc Gitea.
+    explanation: Tạo commit là thao tác cục bộ; Internet cần thiết khi trao đổi với remote.
   - id: q4
-    question: Dịch vụ nào dưới đây có tính năng tương đương với GitHub?
+    question: Lệnh `git push` làm gì khi đã cấu hình remote?
     type: single
     options:
-      - text: GitLab và Bitbucket
+      - text: Gửi commit từ máy lên repository từ xa
         correct: true
-      - text: Photoshop và Illustrator
+      - text: Tạo commit mới mà không cần bạn yêu cầu
         correct: false
-      - text: VLC Media Player
+      - text: Xóa repository trên máy
         correct: false
-      - text: Microsoft Excel
+      - text: Cài đặt GitHub vào máy
         correct: false
-    explanation: GitLab và Bitbucket là hai nền tảng lưu trữ và cộng tác mã nguồn
-      Git tương đương với GitHub.
+    explanation: Push gửi những commit đã tạo trên máy tới nơi lưu trữ từ xa đã cấu hình.

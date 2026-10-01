@@ -16,21 +16,20 @@ questions:
     explanation: Linus Torvalds đã viết nên Git vào năm 2005 để phục vụ việc quản lý
       mã nguồn dự án nhân hệ điều hành Linux.
   - id: q2
-    question: Cơ chế nào giúp Git đảm bảo rằng nội dung tệp tin trong lịch sử không
-      bao giờ bị can thiệp âm thầm?
+    question: Bạn đã tạo commit trong kho Git trên laptop nhưng chưa gửi lên GitHub.
+      Nơi nào đang có commit đó?
     type: single
     options:
-      - text: Sử dụng mã băm mật mã học (Cryptographic Hash) để định danh mọi đối tượng
-          dữ liệu
+      - text: Kho Git trên laptop; GitHub chưa nhận commit đó
         correct: true
-      - text: Khóa tệp tin bằng mật khẩu quản trị viên hệ điều hành
+      - text: Chỉ có GitHub; commit không được lưu trên laptop
         correct: false
-      - text: Gửi mã nguồn lên máy chủ cảnh sát mạng để xác thực định kỳ
+      - text: Cả laptop lẫn GitHub, vì commit được đồng bộ tự động
         correct: false
-      - text: In mã nguồn ra giấy và cất vào két sắt công ty
+      - text: Không nơi nào; Git không lưu commit khi không có mạng
         correct: false
-    explanation: Mọi đối tượng commit, tree và blob trong Git đều được băm bằng
-      thuật toán SHA để bảo vệ tính toàn vẹn dữ liệu.
+    explanation: Commit được tạo trong repository cục bộ trước. Muốn người khác
+      thấy nó trên GitHub, bạn cần push lên remote.
   - id: q3
     question: Đặc điểm nào dưới đây KHÔNG PHẢI là mục tiêu thiết kế ban đầu của Git?
     type: single
@@ -43,8 +42,8 @@ questions:
         correct: false
       - text: Khả năng vận hành offline trơn tru không cần kết nối mạng liên tục
         correct: false
-    explanation: Git được thiết kế để phân tán phi tập trung, xóa bỏ sự phụ thuộc
-      vào máy chủ trung tâm duy nhất.
+    explanation: Git có thể quản lý lịch sử trong repository cục bộ mà không cần
+      liên hệ với một máy chủ trung tâm. Nhóm vẫn có thể dùng GitHub để chia sẻ.
   - id: q4
     question: Lệnh nào hiển thị tài liệu hướng dẫn tra cứu chi tiết của lệnh `git
       commit`?

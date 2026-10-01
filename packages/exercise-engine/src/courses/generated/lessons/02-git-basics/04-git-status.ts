@@ -13,9 +13,9 @@ export const lesson: CourseLesson = {
       "03-head-snapshot"
     ],
     "objectives": [
-      "Đọc và phân tích thành thạo toàn bộ các phần thông tin hiển thị bởi lệnh `git status`.",
-      "Phân biệt rõ ràng giữa Changes to be committed, Changes not staged for commit, và Untracked files.",
-      "Sử dụng định dạng ngắn gọn `git status -s` để quan sát trạng thái nhanh chóng."
+      "Chạy git status để biết tệp mới, đã sửa hoặc đã staged.",
+      "Phân biệt nhóm staged, chưa staged và untracked.",
+      "Đọc hai cột trạng thái cơ bản trong git status -s."
     ],
     "completion": {
       "theoryViewed": true,
@@ -30,8 +30,7 @@ export const lesson: CourseLesson = {
       "git status",
       "trang thai",
       "kiem tra",
-      "short format",
-      "porcelain"
+      "short format"
     ],
     "commands": [
       "git status",
@@ -39,7 +38,7 @@ export const lesson: CourseLesson = {
       "git status --short"
     ]
   },
-  "content": "# Kiểm tra trạng thái với git status\n\n---\n\n## 🎯 Mục tiêu\n- Đọc và phân tích thành thạo toàn bộ các phần thông tin hiển thị bởi lệnh `git status`.\n- Phân biệt rõ ràng giữa Changes to be committed, Changes not staged for commit, và Untracked files.\n- Sử dụng định dạng ngắn gọn `git status -s` để quan sát trạng thái nhanh chóng.\n\n---\n\n## 📖 Định nghĩa\n> `git status` là câu lệnh được sử dụng với tần suất cao nhất trong Git, có nhiệm vụ hiển thị bức tranh toàn cảnh về sự khác biệt giữa ba khu vực: Working Tree, Staging Area và con trỏ HEAD của Repository. Lệnh này phân loại rõ ràng các tệp tin theo từng nhóm trạng thái màu sắc trực quan: tệp đã được đưa vào Staging Area sẵn sàng commit, tệp đã theo dõi nhưng bị chỉnh sửa mà chưa stage, và các tệp mới hoàn toàn chưa từng được Git quản lý.\n\n---\n\n## 🤔 Tại sao cần?\nViệc chạy `git status` trước và sau mỗi thao tác Git là thói quen sống còn của mọi kỹ sư phần mềm chuyên nghiệp. Nó giúp bạn tránh được những tai nạn ngớ ngẩn như commit nhầm file rác, quên chưa stage các thay đổi quan trọng, hoặc vô tình đang đứng sai nhánh mà không hay biết. Có thể nói, `git status` giống như bảng đồng hồ tốc độ và cảm biến an toàn trên chiếc xe ô tô mà bạn lái mỗi ngày.\n\n---\n\n## 🧠 Mental Model (Mô hình tư duy)\nHãy hình dung `git status` giống như một người bác sĩ chụp X-quang toàn thân cho dự án phần mềm của bạn. Mỗi khi bạn bước vào phòng khám (mở terminal), người bác sĩ sẽ quét một lượt từ đầu đến chân và đưa ra một bản chẩn đoán rõ ràng: bộ phận nào đang khỏe mạnh ổn định (Unmodified), bộ phận nào đang có biểu hiện viêm nhiễm cần xử lý (Modified), và có dị vật nào mới xuất hiện trong cơ thể hay không (Untracked).\n\n---\n\n## 🖼 Sơ đồ\n```text\nBản chẩn đoán trạng thái git status:\n┌─────────────────────────────────────────────────────────────┐\n│ On branch main                                              │\n│                                                             │\n│ Changes to be committed:          <── (Màu xanh lá - Staged)│\n│   (use \"git restore --staged <file>\" to unstage)            │\n│         new file:   index.html                              │\n│                                                             │\n│ Changes not staged for commit:    <── (Màu đỏ - Modified)   │\n│   (use \"git add <file>\" to update what will be committed)   │\n│         modified:   styles.css                              │\n│                                                             │\n│ Untracked files:                  <── (Màu đỏ - Untracked)  │\n│         notes.txt                                           │\n└─────────────────────────────────────────────────────────────┘\n```\n\n---\n\n## 🌎 Ví dụ thực tế\nMột kỹ sư mở máy tính vào sáng thứ Hai sau kỳ nghỉ cuối tuần. Không nhớ rõ thứ Sáu tuần trước mình đã làm dở những gì, kỹ sư mở terminal tại dự án và gõ ngay lệnh git status. Màn hình thông báo nhánh hiện tại là feature-login, có hai tệp auth.js và login.html đã nằm trong Staging Area, cùng một tệp test.log đang ở mục Untracked. Nhờ thông tin rõ ràng đó, kỹ sư lập tức nắm bắt lại ngữ cảnh làm việc và tiếp tục công việc một cách tự tin, đồng thời chủ động loại bỏ tệp log rác trước khi tiến hành đóng gói commit hoàn thiện.\n\n---\n\n## 💻 Command\n```bash\ngit status\ngit status -s\ngit status --short\n```\n\n---\n\n## 🔍 Giải thích command\n- `git status`: Hiển thị báo cáo trạng thái chi tiết kèm theo các chỉ dẫn và câu lệnh gợi ý hoàn tác hữu ích.\n- `git status -s` (hoặc `--short`): Hiển thị trạng thái dưới định dạng hai ký tự ngắn gọn gọn gàng và dễ nhìn hơn.\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Gõ lệnh mù quáng mà không kiểm tra git status trước**:  Dẫn đến việc add hoặc commit nhầm các file không mong muốn.\n2. **Bỏ qua thông báo tệp Untracked**:  Tưởng rằng code đã được lưu an toàn nhưng thực tế file mới tạo chưa hề được đưa vào Git.\n3. **Hiểu sai định dạng git status -s**:  Nhầm lẫn giữa cột ký tự bên trái (Staging Area) và cột bên phải (Working Tree).\n\n---\n\n## 🧪 Lab\n1. Chạy lệnh `git status` trong kho lưu trữ để làm quen với giao diện kết quả mặc định.\n2. Tạo một tệp mới và chạy `git status` để quan sát nhóm Untracked files.\n3. Thử nghiệm cờ rút gọn bằng câu lệnh `git status -s`.\n\n---\n\n## 💡 Hint\n> Hãy tạo phản xạ gõ `git status` trước bất kỳ lệnh add, commit hay chuyển nhánh nào.\n\n---\n\n## ✅ Validation\n- Thực thi thành công `git status` và nhận diện đúng các khu vực trạng thái.\n\n---\n\n## ❓ Quiz\nLàm bài trắc nghiệm dưới đây để kiểm tra khả năng đọc hiểu lệnh git status.\n\n---\n\n## 🔥 Challenge\nGiải thích ý nghĩa của hai ký tự `M ` (M ở cột 1) và ` M` (M ở cột 2) trong `git status -s`.\n\n---\n\n## 📚 Tổng kết\n- `git status` là công cụ chẩn đoán quan trọng nhất để xem tình trạng 3 khu vực của Git.\n- Phân tách rõ ràng: Changes to be committed (xanh), Not staged (đỏ), và Untracked (đỏ).\n- Nên sử dụng thường xuyên để kiểm soát tuyệt đối các tệp tin trước khi đóng gói commit.\n",
+  "content": "# Kiểm tra trạng thái với git status\n\n---\n\n## 🎯 Mục tiêu\n- Chạy `git status` để biết tệp nào mới, đã sửa hoặc đã staged.\n- Phân biệt ba nhóm: staged, chưa staged và untracked.\n- Đọc hai cột trạng thái cơ bản trong `git status -s`.\n\n---\n\n## 🧩 Từ khóa hôm nay\n\n### `git status` — xem tình trạng tệp\n- **Nói dễ hiểu:** Lệnh cho biết tệp nào mới, đã sửa hoặc đã chọn để commit.\n- **Ví dụ:** Chạy `git status` sau khi tạo `note.txt`.\n- **Đừng nhầm:** Lệnh chỉ báo trạng thái, không tự sửa tệp.\n\n### Untracked — chưa được theo dõi\n- **Nói dễ hiểu:** Tệp mới mà Git chưa được yêu cầu đưa vào lịch sử.\n- **Ví dụ:** `note.txt` mới thường hiện ở mục “Untracked files”.\n- **Đừng nhầm:** Untracked không có nghĩa Git đã xóa tệp.\n\n### Staged — đã chuẩn bị cho commit\n- **Nói dễ hiểu:** Thay đổi đã được chọn vào mốc commit kế tiếp.\n- **Ví dụ:** `git status` liệt kê tệp dưới “Changes to be committed”.\n- **Đừng nhầm:** Staged không có nghĩa commit đã được tạo.\n\n### Unstaged — chưa chuẩn bị cho commit\n- **Nói dễ hiểu:** Tệp đã sửa nhưng thay đổi mới chưa được chọn vào commit.\n- **Ví dụ:** Sửa tệp sau khi đã chạy `git add`.\n- **Đừng nhầm:** Tệp vẫn nằm trên máy; thay đổi này chỉ chưa staged.\n\n---\n\n## 📖 Định nghĩa\n`git status` là lệnh báo cáo tình trạng hiện tại của kho Git. Hãy đọc tên nhóm thay đổi; màu chữ có thể khác nhau theo terminal.\n\n---\n\n## 🤔 Tại sao cần?\nChạy `git status` trước khi commit giúp bạn biết chính xác thay đổi nào sẽ được lưu, thay đổi nào còn ở ngoài. Đây là cách đơn giản để phát hiện tệp chưa được chọn hoặc đang sửa dở.\n\n---\n\n## 🧠 Mental Model (Mô hình tư duy)\nHãy xem `git status` như bảng kiểm: phần nào đã chọn cho commit, phần nào còn sửa, và tệp nào Git chưa theo dõi.\n\n---\n\n## 🖼 Sơ đồ\n```text\nVí dụ báo cáo từ git status:\n┌─────────────────────────────────────────────────────────────┐\n│ On branch main                                              │\n│                                                             │\n│ Changes to be committed:          <── Đã staged             │\n│   (use \"git restore --staged <file>\" to unstage)            │\n│         new file:   index.html                              │\n│                                                             │\n│ Changes not staged for commit:    <── Chưa staged           │\n│   (use \"git add <file>\" to update what will be committed)   │\n│         modified:   styles.css                              │\n│                                                             │\n│ Untracked files:                  <── Chưa được theo dõi    │\n│         notes.txt                                           │\n└─────────────────────────────────────────────────────────────┘\n```\n\n---\n\n## 🌎 Ví dụ thực tế\nBạn tạo `notes.txt` rồi sửa `styles.css`. Chạy `git status` để xem `notes.txt` trong nhóm Untracked và `styles.css` trong nhóm chưa staged.\n\n---\n\n## 💻 Command\n```bash\ngit status\ngit status -s\ngit status --short\n```\n\n---\n\n## 🔍 Giải thích command\n- `git status`: Hiển thị báo cáo trạng thái chi tiết kèm theo các chỉ dẫn và câu lệnh gợi ý hoàn tác hữu ích.\n- `git status -s` (hoặc `--short`): Hiển thị trạng thái gọn; cột trái nói về Staging Area, cột phải nói về Working Tree.\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Không kiểm tra trạng thái trước khi commit**:  Có thể bỏ sót hoặc đưa nhầm tệp vào commit.\n2. **Bỏ qua tệp Untracked**:  Tệp mới chưa được Git theo dõi và chưa nằm trong commit.\n3. **Hiểu sai định dạng git status -s**:  Nhầm lẫn giữa cột ký tự bên trái (Staging Area) và cột bên phải (Working Tree).\n\n---\n\n## 🧪 Lab\n1. Chạy lệnh `git status` trong kho lưu trữ để làm quen với giao diện kết quả mặc định.\n2. Tạo một tệp mới và chạy `git status` để quan sát nhóm Untracked files.\n3. Thử nghiệm cờ rút gọn bằng câu lệnh `git status -s`.\n\n---\n\n## 💡 Hint\n> Hãy tạo phản xạ gõ `git status` trước bất kỳ lệnh add, commit hay chuyển nhánh nào.\n\n---\n\n## ✅ Validation\n- Thực thi thành công `git status` và nhận diện đúng các khu vực trạng thái.\n\n---\n\n## ❓ Quiz\nLàm bài trắc nghiệm dưới đây để kiểm tra khả năng đọc hiểu lệnh git status.\n\n---\n\n## 🔥 Challenge\nTạo một tệp mới, chạy `git status -s`, rồi giải thích vì sao tệp hiện ký hiệu `??`.\n\n---\n\n## 📚 Tổng kết\n- `git status` báo cáo những thay đổi staged, chưa staged và untracked.\n- Màu sắc chỉ để trang trí; đọc tên nhóm hoặc ký hiệu trạng thái.\n- Dùng lệnh này trước commit để biết mình sắp lưu những gì.\n",
   "quiz": {
     "id": "quiz-02-04-git-status",
     "title": "Trắc nghiệm: Kiểm tra trạng thái với git status",
@@ -138,7 +137,31 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "Kiểm tra trạng thái liên tục giúp bạn kiểm soát tuyệt đối mã nguồn trước khi ghi lại vào lịch sử."
+        "explanation": "Kiểm tra trạng thái cho biết những gì đang chờ commit để bạn rà lại trước khi lưu."
+      },
+      {
+        "id": "q5",
+        "question": "Trong `git status -s`, hai cột trạng thái lần lượt nói về khu vực nào?",
+        "type": "single",
+        "options": [
+          {
+            "text": "Cột trái là Staging Area; cột phải là Working Tree",
+            "correct": true
+          },
+          {
+            "text": "Cột trái là GitHub; cột phải là máy tính cá nhân",
+            "correct": false
+          },
+          {
+            "text": "Cột trái là tên nhánh; cột phải là tên người commit",
+            "correct": false
+          },
+          {
+            "text": "Cả hai cột đều là màu hiển thị, không mang ý nghĩa",
+            "correct": false
+          }
+        ],
+        "explanation": "Ký tự bên trái biểu thị trạng thái trong Index; ký tự bên phải biểu thị thay đổi trong Working Tree."
       }
     ]
   }

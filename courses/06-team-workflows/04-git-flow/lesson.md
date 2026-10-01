@@ -10,27 +10,46 @@
 
 ---
 
+## 🧩 Từ khóa hôm nay
+
+### Git Flow
+- **Nói dễ hiểu**: Mô hình phân nhánh kinh điển với hai nhánh vĩnh cửu (`main`, `develop`) cùng các nhánh phụ (`feature`, `release`, `hotfix`).
+- **Ví dụ**: Dùng cho app ngân hàng di động phát hành bản cập nhật định kỳ mỗi tháng một lần lên App Store.
+- **Đừng nhầm**: Git Flow không tối ưu cho web app cần deploy liên tục hàng ngày; nó phù hợp cho sản phẩm đóng gói có lịch release cố định.
+
+### Dual-Merge (Hợp nhất kép)
+- **Nói dễ hiểu**: Thao tác merge một nhánh (như release hoặc hotfix) vào cả hai nhánh vĩnh cửu `main` và `develop`.
+- **Ví dụ**: Sau khi vá lỗi trên `release/v2.5.0`, merge vào `main` để xuất bản và merge ngược vào `develop` để không mất bản vá.
+- **Đừng nhầm**: Nếu quên merge ngược về `develop`, các lỗi đã sửa trên production sẽ tái xuất hiện ở phiên bản kế tiếp.
+
+### Feature Freeze (Đóng băng tính năng)
+- **Nói dễ hiểu**: Giai đoạn dừng nhận thêm tính năng mới trên nhánh release để đội ngũ QA tập trung kiểm thử hồi quy và vá lỗi.
+- **Ví dụ**: Nhánh `release/v1.2.0` chỉ nhận commit sửa bug từ QA, tuyệt đối không thêm tính năng mới của sprint sau.
+- **Đừng nhầm**: Các tính năng mới của sprint sau vẫn được commit bình thường trên nhánh `develop`, không bị dừng lại.
+
+---
+
 ## 📖 Định nghĩa
-> Git Flow là mô hình phân nhánh Git kinh điển và có cấu trúc chặt chẽ nhất, được kỹ sư Vincent Driessen giới thiệu vào năm 2010. Mô hình này thiết lập một quy trình làm việc nghiêm ngặt xoay quanh việc phát hành các phiên bản phần mềm có kế hoạch định kỳ (Scheduled Releases). Git Flow phân định mã nguồn thành hai nhánh trường tồn vĩnh viễn: `main` (lưu trữ lịch sử các bản phát hành chính thức cho khách hàng) và `develop` (nhánh tích hợp trung tâm của các tính năng mới), cùng với 3 nhóm nhánh ngắn hạn hỗ trợ: `feature/*`, `release/*` và `hotfix/*`.
+Git Flow là mô hình phân nhánh chặt chẽ có hai nhánh vĩnh cửu: `main` (lưu trữ phiên bản phát hành chính thức) và `develop` (nhánh tích hợp tính năng mới), cùng 3 loại nhánh ngắn hạn hỗ trợ: `feature/*`, `release/*` và `hotfix/*`.
 
 ---
 
-## 🤔 Tại sao cần?
-Đối với các sản phẩm như ứng dụng di động trên App Store/Google Play, phần mềm nhúng hoặc các giải pháp phần mềm doanh nghiệp (Enterprise), bạn không thể tùy tiện triển khai code mới lên người dùng nhiều lần mỗi ngày. Bạn cần một giai đoạn đóng băng tính năng (Feature Freeze) để đội QA kiểm thử hồi quy toàn diện, chuẩn bị tài liệu hướng dẫn và làm thủ tục phê duyệt ứng dụng. Git Flow cung cấp một cấu trúc vững chắc và dự đoán trước được cho toàn bộ các khâu phức tạp đó.
+## 💡 Tại sao cần
+Với các sản phẩm như ứng dụng di động hoặc phần mềm doanh nghiệp, bạn không thể deploy liên tục mà cần giai đoạn đóng băng kiểm thử hồi quy và xét duyệt. Git Flow cung cấp cấu trúc rõ ràng và kiểm soát chặt chẽ cho toàn bộ quy trình phát hành phức tạp này.
 
 ---
 
-## 🧠 Mental Model (Mô hình tư duy)
-Hãy hình dung một xưởng đóng tàu thủy quân sự. Nhánh `main` là hạm đội tàu chiến đã được bàn giao và đang thực hiện nhiệm vụ trên biển khơi. Nhánh `develop` là xưởng đóng tàu ngầm khổng lồ nơi các đội công nhân đang lắp ráp các bộ phận mới. Khi một con tàu mới hoàn thiện phần thô, nó được đưa ra ụ thử nghiệm riêng (`release branch`) để kiểm tra chống thấm nước và sơn tĩnh điện mà không làm cản trở công nhân đóng các con tàu tiếp theo trong xưởng. Nếu một tàu chiến ngoài biển bị thủng vỏ bất ngờ, một đội cứu hộ khẩn cấp (`hotfix branch`) xuất phát ngay từ `main` để sửa chữa rồi báo cáo kết quả cho cả hai nơi.
+## 🧠 Mental Model
+Hãy hình dung xưởng đóng tàu quân sự. Nhánh main là hạm đội tàu chiến đang hoạt động trên biển. Nhánh develop là xưởng ngầm lắp ráp linh kiện mới. Khi hoàn thiện phần thô, tàu được đưa ra ụ thử nghiệm riêng (release) để sơn và chống thấm. Khi tàu ngoài biển thủng vỏ, đội cứu hộ (hotfix) xuất phát từ main để xử lý khẩn cấp.
 
 ---
 
-## 🖼 Sơ đồ
+## 📊 Sơ đồ minh họa
 ```text
 Cấu trúc 5 loại nhánh trong mô hình Git Flow kinh điển:
 main:        v1.0 ────────────────────────────────────────── v1.1 (Production)
                ▲                                              ▲
-               │                     ┌── release/1.1 ─────────┤
+               │                     ┌── release/1.1 ─────────┤ (Dual-merge!)
                │                     │                        ▼
 develop:     ──┴─► C1 ──► C2 ──► C3 ─┴─────────────────────── C4 ──► (Next sprint)
                     │      ▲
@@ -39,12 +58,12 @@ develop:     ──┴─► C1 ──► C2 ──► C3 ─┴─────�
 
 ---
 
-## 🌎 Ví dụ thực tế
-Một công ty phát triển ứng dụng ngân hàng di động trên iOS và Android áp dụng mô hình Git Flow. Nhánh `develop` là nơi 15 lập trình viên tích hợp các tính năng chuyển tiền và quét mã QR. Đến ngày 20 hàng tháng theo kế hoạch sprint, đội trưởng kỹ thuật tạo nhánh `release/v2.5.0` từ `develop`. Trong 5 ngày tiếp theo, nhánh này bị đóng băng tính năng, nhóm QA chỉ tập trung tìm lỗi và các lập trình viên chỉ commit sửa lỗi trực tiếp trên nhánh release này. Khi bản build vượt qua mọi bài kiểm thử an ninh, nhánh release được gộp vào `main`, gắn thẻ tag `v2.5.0`, đồng thời được gộp ngược lại vào `develop` để bảo đảm các bản sửa lỗi không bị thất lạc.
+## 🏢 Ví dụ thực tế
+Ứng dụng ngân hàng di động áp dụng Git Flow. Đến ngày 20 hàng tháng, nhóm tạo nhánh `release/v2.5.0` từ `develop` để đóng băng tính năng cho QA kiểm thử. Sau khi vượt qua kiểm định an ninh, nhánh release được merge vào `main`, gắn tag `v2.5.0`, đồng thời merge ngược về `develop` để bảo toàn các bản vá lỗi.
 
 ---
 
-## 💻 Command
+## 💻 Command & Cú pháp
 ```bash
 git switch -c release/v1.2.0 develop
 git switch main && git merge --no-ff release/v1.2.0
@@ -64,39 +83,43 @@ git branch -d release/v1.2.0
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Quên hợp nhất ngược nhánh release hoặc hotfix về develop**:  Dẫn đến việc các lỗi nghiêm trọng đã sửa trên production lại tái xuất hiện ở phiên bản sau.
-2. **Tiếp tục code tính năng mới trên nhánh release đang đóng băng**:  Phá vỡ mục tiêu ổn định hóa của giai đoạn chuẩn bị phát hành.
-3. **Áp dụng Git Flow cho các website đơn giản cần deploy 10 lần một ngày**:  Gây lãng phí công sức và làm chậm tiến độ dự án nghiêm trọng.
+1. **Quên merge ngược về develop**: Khiến các bản vá lỗi trên nhánh release hoặc hotfix bị thất lạc ở phiên bản tiếp theo.
+2. **Thêm tính năng vào nhánh release**: Phá vỡ nguyên tắc đóng băng tính năng (Feature Freeze) để ổn định mã nguồn.
+3. **Lạm dụng cho dự án web đơn giản**: Áp dụng mô hình nhiều nhánh cồng kềnh cho sản phẩm cần deploy liên tục sẽ gây lãng phí nguồn lực.
 
 ---
 
-## 🧪 Lab
+## 🧪 Lab thực hành
+Bài học này là bài tự kiểm tra: bạn thao tác trực tiếp trên terminal của máy tính để làm quen với công cụ.
 1. Khởi tạo hai nhánh dài hạn `main` và `develop` trong kho lưu trữ thử nghiệm.
-2. Mô phỏng quy trình tạo một nhánh `release/v1.0.0` từ `develop`, sửa một lỗi nhỏ và gộp vào cả `main` lẫn `develop`.
+2. Tạo nhánh tính năng `feature/demo` từ `develop` và gộp lại vào `develop`.
+3. Mô phỏng quy trình tạo một nhánh `release/v1.0.0` từ `develop`, sửa một lỗi nhỏ và gộp vào cả `main` lẫn `develop`.
+4. Gắn thẻ Annotated Tag `v1.0.0` trên nhánh `main`.
 
 ---
 
-## 💡 Hint
-> Nhánh release và hotfix luôn luôn phải được merge vào cả hai nhánh vĩnh cửu: main và develop.
+## 💡 Hint & mẹo
+> Nhánh release và hotfix luôn luôn phải được merge vào cả hai nhánh vĩnh cửu: main và develop để bảo toàn lịch sử.
 
 ---
 
-## ✅ Validation
+## ✅ Validation & Kết quả mong đợi
 - Hiểu rõ tại sao Git Flow cần quy trình hợp nhất kép (dual-merge) cho release và hotfix.
+- Phân biệt rõ ràng mục đích sử dụng giữa 2 nhánh dài hạn và 3 nhánh ngắn hạn.
 
 ---
 
-## ❓ Quiz
+## ❓ Quiz nhanh
 Hãy làm bài trắc nghiệm dưới đây về mô hình đa nhánh Git Flow.
 
 ---
 
-## 🔥 Challenge
+## 🚀 Thử thách nâng cao
 Mô tả chi tiết quy trình xử lý một sự cố khẩn cấp (Hotfix) trong Git Flow từ lúc nhận báo cáo lỗi đến khi deploy xong.
 
 ---
 
-## 📚 Tổng kết
+## 📝 Tổng kết
 - Git Flow là mô hình phân nhánh chặt chẽ lý tưởng cho các sản phẩm có chu kỳ phát hành cố định.
-- Sở hữu 2 nhánh vĩnh cửu (main, develop) và 3 nhánh tạm thời (feature, release, hotfix).
-- Quy trình đóng băng tính năng trên release branch bảo đảm chất lượng và sự ổn định cao nhất trước khi xuất bản.
+- Duy trì 2 nhánh vĩnh cửu: `main` (Production) và `develop` (Integration).
+- Áp dụng hợp nhất kép (Dual-Merge) cho các nhánh `release` và `hotfix`.

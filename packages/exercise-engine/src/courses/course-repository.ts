@@ -1,4 +1,5 @@
 import { CourseLesson, CourseManifest, CourseRepository } from '@git-academy/shared';
+import { BUILTIN_SCENARIOS } from '@git-academy/git-scenarios';
 import { COURSE_MANIFEST, loadLessonContent } from './generated/course-data';
 
 export class BuiltinCourseRepository implements CourseRepository {
@@ -32,9 +33,16 @@ export class BuiltinCourseRepository implements CourseRepository {
     // Try dynamic loading on demand
     const loaded = await loadLessonContent(moduleId, lessonId);
     if (loaded) {
-      this.lessons.set(combinedKey, loaded);
-      this.lessons.set(lessonId, loaded);
-      return loaded;
+      const manifestLesson = this.manifest.curriculum
+        .find((module) => module.id === moduleId)?.lessons
+        .find((lesson) => lesson.id === lessonId);
+      const scenarios = manifestLesson?.labIds
+        ?.map((id) => BUILTIN_SCENARIOS[id as keyof typeof BUILTIN_SCENARIOS])
+        .filter((scenario) => Boolean(scenario));
+      const hydrated = scenarios?.length ? { ...loaded, labScenarios: scenarios } : loaded;
+      this.lessons.set(combinedKey, hydrated);
+      this.lessons.set(lessonId, hydrated);
+      return hydrated;
     }
 
     // Handle legacy numbering aliases (e.g. 05-git-commit vs 06-git-commit vs 09-git-commit)

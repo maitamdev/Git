@@ -33,10 +33,11 @@ export const lesson: CourseLesson = {
     "commands": [
       "echo \"node_modules/\" >> .gitignore",
       "echo \".env\" >> .gitignore",
-      "git check-ignore -v <file>"
+      "git check-ignore -v <file>",
+      "git rm --cached <file>"
     ]
   },
-  "content": "# Bỏ qua tệp tin với .gitignore\n\n---\n\n## 🎯 Mục tiêu\n- Hiểu rõ mục đích và tầm quan trọng của tệp tin cấu hình `.gitignore`.\n- Nắm bắt các quy tắc mẫu (glob patterns) phổ biến: đuôi tệp, thư mục, ngoại lệ phủ định.\n- Biết cách xử lý tình huống tệp tin đã vô tình bị theo dõi trước khi thêm vào .gitignore.\n\n---\n\n## 📖 Định nghĩa\n> `.gitignore` là một tệp văn bản thuần túy đặt tại thư mục gốc (hoặc các thư mục con) của kho lưu trữ, chứa danh sách các mẫu quy tắc khớp đường dẫn (glob patterns) chỉ định cho Git biết những tệp tin hoặc thư mục nào cần phải bỏ qua hoàn toàn, không hiển thị trong mục Untracked files và không bao giờ được đưa vào commit. Các tệp này thường bao gồm các tệp biên dịch trung gian, thư viện phụ thuộc (`node_modules`), tệp môi trường chứa mật khẩu bí mật (`.env`), và tệp tạm thời của hệ điều hành.\n\n---\n\n## 🤔 Tại sao cần?\nKhông sử dụng `.gitignore` hoặc cấu hình sơ sài là nguyên nhân hàng đầu gây ra các thảm họa bảo mật và phình to kho chứa trong thực tế. Đã có vô số trường hợp lập trình viên vô tình commit tệp `.env` chứa mật khẩu cơ sở dữ liệu và khóa bí mật AWS lên GitHub công khai, dẫn đến việc bị tin tặc chiếm quyền điều khiển tài nguyên đám mây và gây thiệt hại hàng chục ngàn đô-la chỉ sau vài phút. Ngoài ra, việc commit hàng trăm nghìn tệp trong `node_modules` sẽ làm đơ nghẽn mạng và lãng phí dung lượng vô ích.\n\n---\n\n## 🧠 Mental Model (Mô hình tư duy)\nHãy hình dung tệp `.gitignore` giống như một danh sách đen (Blacklist) được trao cho người bảo vệ an ninh đứng gác tại cổng ra vào tòa nhà kho lưu trữ. Người bảo vệ có nhiệm vụ chặn đứng tất cả những ai hoặc những món hàng nào nằm trong danh sách đen này: không cho phép rác thải công nghiệp (build artifacts), người lạ không có thẻ (tệp nháp tạm thời) hay đồ vật nguy hiểm cháy nổ (khóa bí mật mật khẩu) được bước chân vào kho hàng.\n\n---\n\n## 🖼 Sơ đồ\n```text\nHoạt động của màng lọc .gitignore:\nWorking Directory:                   Màng lọc .gitignore:             Staging Area:\n├── app.js            ─────────────► [Cho qua]          ────────────► [app.js]\n├── package.json      ─────────────► [Cho qua]          ────────────► [package.json]\n├── .env              ─────────────► [CHẶN: .env]       ────────────► (Bị bỏ qua)\n└── node_modules/     ─────────────► [CHẶN: node_modules/] ─────────► (Bị bỏ qua)\n```\n\n---\n\n## 🌎 Ví dụ thực tế\nMột nhóm lập trình viên phát triển ứng dụng web Node.js và React chuyên nghiệp cho khách hàng doanh nghiệp. Trong cấu trúc dự án, thư mục node_modules chứa hơn bốn mươi lăm nghìn tệp tin thư viện với dung lượng lên đến nửa gigabyte, và tệp .env chứa toàn bộ chuỗi kết nối cơ sở dữ liệu MongoDB kèm mật khẩu bí mật của môi trường phát triển. Trưởng nhóm tạo ngay một tệp .gitignore tại thư mục gốc dự án và khai báo các dòng quy tắc loại trừ bao gồm node_modules/, *.log, và .env. Kể từ giây phút đó, Git hoàn toàn bỏ qua các mục này trong mọi báo cáo trạng thái, bảo vệ kho mã nguồn luôn nhẹ nhàng và an toàn.\n\n---\n\n## 💻 Command\n```bash\necho \"node_modules/\" >> .gitignore\necho \".env\" >> .gitignore\ngit check-ignore -v <file>\n```\n\n---\n\n## 🔍 Giải thích command\n- `echo \"pattern\" >> .gitignore`: Ghi thêm một quy tắc mẫu đường dẫn loại trừ vào cuối tệp tin cấu hình .gitignore một cách nhanh chóng ngay trên terminal.\n- `git check-ignore -v <file>`: Lệnh chẩn đoán chuyên sâu giúp bạn kiểm tra chi tiết xem một tệp tin cụ thể đang bị quy tắc nào, ở dòng số mấy trong .gitignore chặn lại, vô cùng hữu ích khi gỡ lỗi.\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Thêm tệp vào .gitignore sau khi đã commit**:  .gitignore chỉ có tác dụng với tệp Untracked; nếu tệp đã được commit trước đó, bạn phải dùng `git rm --cached` để gỡ bỏ theo dõi.\n2. **Viết sai đường dẫn hoặc thiếu dấu gạch chéo**:  Gõ `build` thay vì `build/` có thể vô tình chặn cả tệp mã nguồn mang tên build.js.\n3. **Quên không commit chính tệp .gitignore**:  Khiến đồng nghiệp trong nhóm không nhận được danh sách bỏ qua và tiếp tục commit nhầm file rác.\n\n---\n\n## 🧪 Lab\n1. Tạo một tệp tạm thời mang tên `secret.env` và quan sát nó xuất hiện trong `git status` màu đỏ.\n2. Tạo tệp `.gitignore` và thêm dòng `*.env` vào bên trong.\n3. Chạy lại lệnh `git status` và xác nhận tệp `secret.env` đã hoàn toàn biến mất khỏi danh sách theo dõi.\n\n---\n\n## 💡 Hint\n> Tệp .gitignore cũng cần phải được `git add` và `git commit` để chia sẻ cho cả nhóm.\n\n---\n\n## ✅ Validation\n- Kiểm tra `git status` không còn liệt kê các tệp đã được khai báo trong .gitignore.\n\n---\n\n## ❓ Quiz\nHãy làm bài kiểm tra trắc nghiệm dưới đây về cách sử dụng tệp .gitignore.\n\n---\n\n## 🔥 Challenge\nNêu cú pháp dùng dấu chấm than `!` trong .gitignore để tạo quy tắc ngoại lệ bỏ qua.\n\n---\n\n## 📚 Tổng kết\n- `.gitignore` ngăn chặn Git theo dõi các tệp tin rác, tệp biên dịch và thông tin bí mật.\n- Chỉ áp dụng tự động cho các tệp Untracked; tệp đã tracked cần chạy `git rm --cached`.\n- Bắt buộc phải commit `.gitignore` vào kho chứa để đồng bộ quy tắc cho toàn bộ thành viên nhóm.\n",
+  "content": "# Bỏ qua tệp tin với .gitignore\n\n---\n\n## 🎯 Mục tiêu\n- Hiểu rõ mục đích và tầm quan trọng của tệp tin cấu hình `.gitignore`.\n- Nắm bắt các quy tắc mẫu (glob patterns) phổ biến: đuôi tệp, thư mục, ngoại lệ phủ định.\n- Biết cách xử lý tình huống tệp tin đã vô tình bị theo dõi trước khi thêm vào .gitignore.\n\n---\n\n## 🧩 Từ khóa hôm nay\n\n### `.gitignore` — danh sách mẫu bỏ qua\n- **Nói dễ hiểu:** Tệp ghi tên hoặc mẫu tệp chưa được theo dõi mà Git nên bỏ qua.\n- **Ví dụ:** Thêm `node_modules/` để bỏ qua thư mục thư viện sinh tự động.\n- **Đừng nhầm:** Mẫu này không làm Git ngừng theo dõi tệp đã tracked.\n\n### Pattern — mẫu tên cần khớp\n- **Nói dễ hiểu:** Quy tắc tên dùng để nhận diện một nhóm tệp.\n- **Ví dụ:** `*.log` khớp các tệp có đuôi `.log`.\n- **Đừng nhầm:** Mẫu được xét theo vị trí của tệp `.gitignore`.\n\n### Tracked file — tệp đã được theo dõi\n- **Nói dễ hiểu:** Tệp Git đã bắt đầu quản lý từ trước.\n- **Ví dụ:** Tệp đã commit vẫn hiện khi thêm tên của nó vào `.gitignore`.\n- **Đừng nhầm:** Muốn bỏ theo dõi cần thao tác riêng; chỉ thêm mẫu là chưa đủ.\n\n### `!` — ngoại lệ trong mẫu bỏ qua\n- **Nói dễ hiểu:** Dấu này có thể đưa một tệp trở lại sau mẫu bỏ qua.\n- **Ví dụ:** Bỏ qua `*.log` nhưng giữ lại `important.log` bằng `!important.log`.\n- **Đừng nhầm:** Quy tắc ở thư mục cha có thể ảnh hưởng kết quả.\n\n---\n\n## 📖 Định nghĩa\n`.gitignore` là tệp văn bản chứa các mẫu để Git bỏ qua đường dẫn chưa được theo dõi khi liệt kê hoặc thêm thay đổi thông thường. Nó không xóa tệp và không ảnh hưởng tệp đã tracked. Thường dùng để bỏ qua tệp sinh tự động, thư mục phụ thuộc hoặc cấu hình cục bộ.\n\n---\n\n## 🤔 Tại sao cần?\n`.gitignore` giúp giảm tệp tạm không cần thiết trong lịch sử dự án. Tệp chứa mật khẩu cần được bảo vệ riêng; `.gitignore` chỉ giúp tránh thêm nhầm tệp chưa tracked và không xóa bí mật đã commit trước đó.\n\n---\n\n## 🧠 Mental Model (Mô hình tư duy)\nHãy nghĩ `.gitignore` như danh sách nhắc Git bỏ qua một số tệp mới trong thư mục. Danh sách này không xóa tệp trên máy và không thay đổi những tệp Git đã theo dõi.\n\n---\n\n## 🖼 Sơ đồ\n```text\nHoạt động của màng lọc .gitignore:\nWorking Directory:                   Màng lọc .gitignore:             Staging Area:\n├── app.js            ─────────────► [Cho qua]          ────────────► [app.js]\n├── package.json      ─────────────► [Cho qua]          ────────────► [package.json]\n├── .env (untracked)  ─────────────► [bỏ qua theo mẫu]  ────────────► (không stage tự động)\n├── node_modules/     ─────────────► [bỏ qua theo mẫu]  ────────────► (không stage tự động)\n└── .env (tracked)    ─────────────► [mẫu không áp dụng] ──────────► (vẫn được theo dõi)\n```\n\n---\n\n## 🌎 Ví dụ thực tế\nTrong bài tập web, `node_modules/` chứa thư viện được cài tự động và `.env` có thể chứa cấu hình riêng. Thêm chúng vào `.gitignore` giúp Git bỏ qua chúng khi chưa được theo dõi. Kiểm tra `git status` trước khi commit; nếu bí mật đã từng commit, hãy báo người phụ trách và thay bí mật đó.\n\n---\n\n## 💻 Command\n```bash\necho \"node_modules/\" >> .gitignore\necho \".env\" >> .gitignore\ngit check-ignore -v <file>\ngit rm --cached <file>\n```\n\n---\n\n## 🔍 Giải thích command\n- `echo \"pattern\" >> .gitignore`: Ghi thêm một quy tắc mẫu đường dẫn loại trừ vào cuối tệp tin cấu hình .gitignore một cách nhanh chóng ngay trên terminal.\n- `git check-ignore -v <file>`: Lệnh chẩn đoán chuyên sâu giúp bạn kiểm tra chi tiết xem một tệp tin cụ thể đang bị quy tắc nào, ở dòng số mấy trong .gitignore chặn lại, vô cùng hữu ích khi gỡ lỗi.\n- `git rm --cached <file>`: Bỏ tệp đã tracked khỏi Index để các commit sau ngừng theo dõi; bản tệp trên máy vẫn còn.\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Thêm tệp vào .gitignore sau khi đã commit**:  .gitignore chỉ có tác dụng với tệp Untracked; nếu tệp đã được commit trước đó, bạn phải dùng `git rm --cached` để gỡ bỏ theo dõi.\n2. **Viết sai đường dẫn hoặc thiếu dấu gạch chéo**:  Gõ `build` thay vì `build/` có thể vô tình chặn cả tệp mã nguồn mang tên build.js.\n3. **Tưởng xóa khỏi lịch sử khi thêm ignore**: `git rm --cached <file>` ngừng theo dõi cho các commit sau nhưng không xóa commit cũ. Nếu đã lộ mật khẩu, hãy đổi mật khẩu đó.\n\n---\n\n## 🧪 Lab\n1. Tạo tệp mới `secret.env` và dùng `git status` để thấy tệp trong nhóm Untracked.\n2. Tạo tệp `.gitignore` và thêm dòng `*.env` vào bên trong.\n3. Chạy `git status` để xác nhận tệp không còn hiện trong nhóm Untracked; chạy `git check-ignore -v secret.env` để xem quy tắc khớp.\n\n---\n\n## 💡 Hint\n> Chỉ tệp `.gitignore` đã được commit mới chia sẻ quy tắc với nhóm.\n\n---\n\n## ✅ Validation\n- Tệp mới khớp mẫu không còn hiện trong mục Untracked; tệp tracked vẫn có thể hiện.\n\n---\n\n## ❓ Quiz\nHãy làm bài kiểm tra trắc nghiệm dưới đây về cách sử dụng tệp .gitignore.\n\n---\n\n## 🔥 Challenge\nNêu cú pháp dùng dấu chấm than `!` trong .gitignore để tạo quy tắc ngoại lệ bỏ qua.\n\n---\n\n## 📚 Tổng kết\n- `.gitignore` giúp Git bỏ qua các đường dẫn chưa được theo dõi.\n- Nó không ảnh hưởng tệp tracked và không xóa bí mật đã commit.\n- Commit `.gitignore` để chia sẻ quy tắc với nhóm.\n",
   "quiz": {
     "id": "quiz-02-10-gitignore",
     "title": "Trắc nghiệm: Bỏ qua tệp tin với .gitignore",
@@ -47,7 +48,7 @@ export const lesson: CourseLesson = {
         "type": "single",
         "options": [
           {
-            "text": "Chỉ định danh sách các tệp tin và thư mục mà Git cần bỏ qua không theo dõi và không commit",
+            "text": "Chỉ định mẫu để Git bỏ qua các đường dẫn chưa được theo dõi",
             "correct": true
           },
           {
@@ -63,7 +64,7 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "`.gitignore` khai báo các mẫu tệp rác hoặc tệp nhạy cảm mà Git không bao giờ được đưa vào commit."
+        "explanation": "`.gitignore` giúp bỏ qua tệp chưa tracked; nó không ngăn mọi cách thêm tệp vào commit."
       },
       {
         "id": "q2",
@@ -95,7 +96,7 @@ export const lesson: CourseLesson = {
         "type": "single",
         "options": [
           {
-            "text": "Không, .gitignore chỉ có tác dụng với tệp Untracked; bạn phải dùng git rm --cached để gỡ bỏ",
+            "text": "Không; `git rm --cached` có thể ngừng theo dõi cho commit sau, còn commit cũ vẫn còn",
             "correct": true
           },
           {
@@ -111,7 +112,7 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "Tệp đã được track thì .gitignore không có tác dụng; bạn phải chạy `git rm --cached <file>` để ngừng theo dõi tệp."
+        "explanation": "Tệp tracked không bị ignore; `git rm --cached` ngừng theo dõi về sau nhưng không xóa lịch sử cũ."
       },
       {
         "id": "q4",
@@ -136,6 +137,30 @@ export const lesson: CourseLesson = {
           }
         ],
         "explanation": "Dấu gạch chéo ở cuối `node_modules/` chỉ định bỏ qua toàn bộ thư mục và mọi nội dung con bên trong nó."
+      },
+      {
+        "id": "q5",
+        "question": "Một tệp đã được Git theo dõi từ trước có tự bị bỏ qua chỉ vì bạn thêm nó vào `.gitignore` không?",
+        "type": "single",
+        "options": [
+          {
+            "text": "Không; `.gitignore` không ngừng theo dõi một tệp đã tracked",
+            "correct": true
+          },
+          {
+            "text": "Có; Git xóa tệp khỏi mọi commit cũ ngay lập tức",
+            "correct": false
+          },
+          {
+            "text": "Có; nội dung tệp tự được mã hóa",
+            "correct": false
+          },
+          {
+            "text": "Không; `.gitignore` chỉ dùng khi có kết nối Internet",
+            "correct": false
+          }
+        ],
+        "explanation": "`.gitignore` áp dụng với đường dẫn chưa được theo dõi; cần hành động riêng để ngừng track tệp đã tracked."
       }
     ]
   }

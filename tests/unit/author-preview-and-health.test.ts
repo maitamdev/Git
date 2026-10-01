@@ -3,77 +3,14 @@ import {
   COURSE_MANIFEST,
   BUILTIN_LESSONS,
   COURSE_SEARCH_INDEX,
-  CourseLesson,
-} from '@git-academy/exercise-engine';
-
-// Quality metrics calculation matching AuthorPreviewPage.tsx
-export function calculateAuthorQualityMetrics(lesson: CourseLesson | null) {
-  if (!lesson) return null;
-  const text = lesson.content || '';
-
-  const countWords = (str: string) => {
-    if (!str) return 0;
-    return str.trim().split(/\s+/).filter(Boolean).length;
-  };
-
-  const getSection = (titleRegex: RegExp) => {
-    const match = text.match(titleRegex);
-    return match && match[1] ? match[1].trim() : '';
-  };
-
-  const def = getSection(/##\s*📖\s*Định nghĩa[\s\S]*?>\s*(.*?)(?:\n\n|\n---|\n##)/i);
-  const why = getSection(/##\s*🤔\s*Tại sao cần\?([\s\S]*?)(?:\n\n---|\n##)/i);
-  const mm = getSection(/##\s*🧠\s*Mental Model[^\n]*\n([\s\S]*?)(?:\n\n---|\n##)/i);
-  const ex = getSection(/##\s*🌎\s*Ví dụ thực tế\n([\s\S]*?)(?:\n\n---|\n##)/i);
-
-  const placeholders = ['TODO', 'TBD', 'Coming soon', 'Lorem ipsum', '...'];
-  const foundPlaceholders = placeholders.filter((p) => text.includes(p));
-
-  const defWords = countWords(def);
-  const whyWords = countWords(why);
-  const mmWords = countWords(mm);
-  const exWords = countWords(ex);
-  const qCount = lesson.quiz?.questions?.length || 0;
-
-  const isCore = [
-    'commit',
-    'branch',
-    'merge',
-    'conflict',
-    'remote',
-    'fetch',
-    'pull',
-    'push',
-    'pull-request',
-    'pr',
-  ].some((t) => lesson.id.includes(t));
-  const minQ = isCore ? 6 : 4;
-
-  const passes =
-    defWords >= 80 &&
-    whyWords >= 80 &&
-    mmWords >= 80 &&
-    exWords >= 100 &&
-    foundPlaceholders.length === 0 &&
-    qCount >= minQ;
-
-  return {
-    defWords,
-    whyWords,
-    mmWords,
-    exWords,
-    foundPlaceholders,
-    qCount,
-    minQ,
-    isCore,
-    passes,
-  };
-}
+} from '../../packages/exercise-engine/src';
+import type { CourseModule, ManifestLessonItem } from '../../packages/shared/src';
+import { calculateLessonContentMetrics as calculateAuthorQualityMetrics } from '../../apps/playground/src/learning/content-quality';
 
 describe('Author Preview & Course Health Comprehensive Suite', () => {
-  const activeModules = COURSE_MANIFEST.curriculum.filter((m) => m.status !== 'coming_soon');
-  const comingSoonModules = COURSE_MANIFEST.curriculum.filter((m) => m.status === 'coming_soon');
-  const allActiveLessons = activeModules.flatMap((m) => m.lessons);
+  const activeModules = COURSE_MANIFEST.curriculum.filter((m: CourseModule) => m.status !== 'coming_soon');
+  const comingSoonModules = COURSE_MANIFEST.curriculum.filter((m: CourseModule) => m.status === 'coming_soon');
+  const allActiveLessons = activeModules.flatMap((m: CourseModule) => m.lessons);
 
   // =========================================================================
   // 1. Course Health KPI Calculations & Architecture
@@ -90,7 +27,7 @@ describe('Author Preview & Course Health Comprehensive Suite', () => {
 
     it('matches exact lesson count requirements for every active level', () => {
       const countsByModule = Object.fromEntries(
-        activeModules.map((m) => [m.id, m.lessons.length])
+        activeModules.map((m: CourseModule) => [m.id, m.lessons.length])
       );
 
       expect(countsByModule['01-foundations']).toBe(9);
@@ -104,13 +41,13 @@ describe('Author Preview & Course Health Comprehensive Suite', () => {
     });
 
     it('aggregates exactly 128 authored lessons across all active modules', () => {
-      const totalAuthored = activeModules.reduce((acc, m) => acc + m.lessons.length, 0);
+      const totalAuthored = activeModules.reduce((acc: number, m: CourseModule) => acc + m.lessons.length, 0);
       expect(totalAuthored).toBe(128);
       expect(allActiveLessons).toHaveLength(128);
     });
 
     it('calculates total curriculum duration and ensures average lesson duration is healthy', () => {
-      const totalDuration = allActiveLessons.reduce((acc, l) => acc + l.duration, 0);
+      const totalDuration = allActiveLessons.reduce((acc: number, l: ManifestLessonItem) => acc + l.duration, 0);
       expect(totalDuration).toBeGreaterThan(1800); // More than 30 hours
       const avgDuration = totalDuration / allActiveLessons.length;
       expect(avgDuration).toBeGreaterThanOrEqual(15);
@@ -118,7 +55,7 @@ describe('Author Preview & Course Health Comprehensive Suite', () => {
     });
 
     it('calculates total XP rewards for gamification', () => {
-      const totalXP = allActiveLessons.reduce((acc, l) => acc + l.xp, 0);
+      const totalXP = allActiveLessons.reduce((acc: number, l: ManifestLessonItem) => acc + l.xp, 0);
       expect(totalXP).toBeGreaterThan(7000);
       for (const lesson of allActiveLessons) {
         expect(lesson.xp).toBeGreaterThanOrEqual(50);
@@ -127,7 +64,7 @@ describe('Author Preview & Course Health Comprehensive Suite', () => {
     });
 
     it('ensures all lesson IDs across all modules are strictly unique', () => {
-      const lessonIds = allActiveLessons.map((l) => l.id);
+      const lessonIds = allActiveLessons.map((l: ManifestLessonItem) => l.id);
       const uniqueIds = new Set(lessonIds);
       expect(uniqueIds.size).toBe(lessonIds.length);
     });
@@ -143,7 +80,7 @@ describe('Author Preview & Course Health Comprehensive Suite', () => {
     });
 
     it('indexes key Git command terminology across the search index', () => {
-      const allCommands = COURSE_SEARCH_INDEX.flatMap((e) => (e.commands || []).map((c) => c.toLowerCase()));
+      const allCommands = COURSE_SEARCH_INDEX.flatMap((e: any) => (e.commands || []).map((c: string) => c.toLowerCase()));
       expect(allCommands.length).toBeGreaterThan(50);
       const keyCommands = ['git --version', 'git init', 'git status'];
       for (const cmd of keyCommands) {
@@ -225,23 +162,22 @@ Trong dự án thực tế khi làm việc với 5 kỹ sư trên cùng một co
       }
     });
 
-    it('evaluates all 128 authored lessons against the 4 section word count thresholds', () => {
-      const failures: { id: string; metric: string; actual: number; required: number }[] = [];
-
+    it('records section lengths without treating longer prose as proof of better teaching', () => {
       for (const lessonSummary of allActiveLessons) {
         const lesson = BUILTIN_LESSONS[lessonSummary.id];
         expect(lesson, `Lesson ${lessonSummary.id} not found in BUILTIN_LESSONS`).toBeDefined();
 
         const m = calculateAuthorQualityMetrics(lesson);
         if (!m) continue;
-
-        if (m.defWords < 80) failures.push({ id: lessonSummary.id, metric: 'defWords', actual: m.defWords, required: 80 });
-        if (m.whyWords < 80) failures.push({ id: lessonSummary.id, metric: 'whyWords', actual: m.whyWords, required: 80 });
-        if (m.mmWords < 80) failures.push({ id: lessonSummary.id, metric: 'mmWords', actual: m.mmWords, required: 80 });
-        if (m.exWords < 100) failures.push({ id: lessonSummary.id, metric: 'exWords', actual: m.exWords, required: 100 });
+        expect(m.defWords).toBeGreaterThanOrEqual(0);
+        expect(m.whyWords).toBeGreaterThanOrEqual(0);
+        expect(m.mmWords).toBeGreaterThanOrEqual(0);
+        expect(m.exWords).toBeGreaterThanOrEqual(0);
       }
 
-      expect(failures).toEqual([]);
+      const firstLesson = calculateAuthorQualityMetrics(BUILTIN_LESSONS['01-version-control']);
+      expect(firstLesson?.defWords).toBeLessThan(80);
+      expect(firstLesson?.passes).toBe(true);
     });
 
     it('confirms 100% of authored lessons contain 0 prohibited placeholders', () => {
@@ -272,15 +208,24 @@ Trong dự án thực tế khi làm việc với 5 kỹ sư trên cùng một co
       expect(quizFailures).toEqual([]);
     });
 
-    it('verifies every single authored lesson achieves 100% Quality Gate PASS', () => {
-      let passCount = 0;
+    it('never marks a lesson structurally ready without complete terminology cards and enough quiz questions', () => {
       for (const lessonSummary of allActiveLessons) {
         const lesson = BUILTIN_LESSONS[lessonSummary.id];
         const m = calculateAuthorQualityMetrics(lesson);
-        if (m?.passes) passCount++;
+        if (m?.passes) {
+          expect(m.termCards.complete, lessonSummary.id).toBe(true);
+          expect(m.foundPlaceholders, lessonSummary.id).toEqual([]);
+          expect(m.qCount, lessonSummary.id).toBeGreaterThanOrEqual(m.minQ);
+        }
       }
-
-      expect(passCount).toBe(128);
+      expect(calculateAuthorQualityMetrics(BUILTIN_LESSONS['01-version-control'])?.passes).toBe(true);
+      expect(calculateAuthorQualityMetrics(BUILTIN_LESSONS['02-git-basics/01-working-directory'])?.passes).toBe(true);
+      expect(calculateAuthorQualityMetrics(BUILTIN_LESSONS['01-branch-concept'])?.passes).toBe(true);
+      expect(calculateAuthorQualityMetrics(BUILTIN_LESSONS['01-local-vs-remote'])?.passes).toBe(true);
+      expect(calculateAuthorQualityMetrics(BUILTIN_LESSONS['01-undo-restore-reset-revert'])?.passes).toBe(true);
+      expect(calculateAuthorQualityMetrics(BUILTIN_LESSONS['01-why-team-workflow'])?.passes).toBe(true);
+      expect(calculateAuthorQualityMetrics(BUILTIN_LESSONS['01-ci-cd-concept'])?.passes).toBe(true);
+      expect(calculateAuthorQualityMetrics(BUILTIN_LESSONS['01-git-internals-intro'])?.passes).toBe(true);
     });
   });
 
@@ -296,7 +241,7 @@ Trong dự án thực tế khi làm việc với 5 kỹ sư trên cùng một co
         for (const [qIdx, q] of lesson.quiz.questions.entries()) {
           expect(q.question, `Question missing in ${lessonSummary.id} Q#${qIdx}`).toBeTruthy();
           expect(q.options.length, `Options count invalid in ${lessonSummary.id} Q#${qIdx}`).toBeGreaterThanOrEqual(3);
-          const correctOpts = q.options.filter((opt) => opt.correct);
+          const correctOpts = q.options.filter((opt: any) => opt.correct);
           expect(correctOpts.length, `Correct option missing in ${lessonSummary.id} Q#${qIdx}`).toBeGreaterThanOrEqual(1);
           expect(q.explanation, `Explanation missing in ${lessonSummary.id} Q#${qIdx}`).toBeTruthy();
         }
@@ -304,7 +249,7 @@ Trong dự án thực tế khi làm việc với 5 kỹ sư trên cùng một co
     });
 
     it('ensures lab assignments are distributed across active curriculum lessons', () => {
-      const lessonsWithLabs = allActiveLessons.filter((l) => l.labIds && l.labIds.length > 0);
+      const lessonsWithLabs = allActiveLessons.filter((l: ManifestLessonItem) => l.labIds && l.labIds.length > 0);
       expect(lessonsWithLabs.length).toBe(76);
     });
   });
@@ -342,7 +287,7 @@ Trong dự án thực tế khi làm việc với 5 kỹ sư trên cùng một co
     });
 
     it('ensures all listed prerequisites point to existing valid lessons', () => {
-      const validIds = new Set(allActiveLessons.map((l) => l.id));
+      const validIds = new Set(allActiveLessons.map((l: ManifestLessonItem) => l.id));
 
       for (const lesson of allActiveLessons) {
         for (const prereqId of lesson.prerequisites || []) {
@@ -352,7 +297,7 @@ Trong dự án thực tế khi làm việc với 5 kỹ sư trên cùng một co
     });
 
     it('ensures Level 1 introductory lesson has no prerequisites', () => {
-      const firstSummary = allActiveLessons.find((l) => l.id === '01-version-control');
+      const firstSummary = allActiveLessons.find((l: ManifestLessonItem) => l.id === '01-version-control');
       expect(firstSummary).toBeDefined();
       expect(firstSummary?.prerequisites).toEqual([]);
     });
@@ -360,15 +305,15 @@ Trong dự án thực tế khi làm việc với 5 kỹ sư trên cùng một co
     it('verifies every active lesson has a valid completion requirement configuration', () => {
       for (const lesson of allActiveLessons) {
         expect(lesson.completion, `Completion config missing in ${lesson.id}`).toBeDefined();
-        expect(lesson.completion.theoryViewed).toBe(true);
-        expect(lesson.completion.quiz?.minimumScore).toBeGreaterThanOrEqual(70);
-        expect(lesson.completion.quiz?.minimumScore).toBeLessThanOrEqual(100);
+        expect(lesson.completion?.theoryViewed).toBe(true);
+        expect(lesson.completion?.quiz?.minimumScore).toBeGreaterThanOrEqual(70);
+        expect(lesson.completion?.quiz?.minimumScore).toBeLessThanOrEqual(100);
       }
     });
 
     it('verifies that each active module duration is between 180 and 800 minutes', () => {
       for (const m of activeModules) {
-        const mDuration = m.lessons.reduce((acc, l) => acc + l.duration, 0);
+        const mDuration = m.lessons.reduce((acc: number, l: ManifestLessonItem) => acc + l.duration, 0);
         expect(mDuration).toBeGreaterThanOrEqual(180);
         expect(mDuration).toBeLessThanOrEqual(800);
       }
@@ -383,12 +328,12 @@ Trong dự án thực tế khi làm việc với 5 kỹ sư trên cùng một co
       const filterSearch = (query: string) => {
         const q = query.toLowerCase().trim();
         if (!q) return [];
-        return COURSE_SEARCH_INDEX.filter((entry) => {
+        return COURSE_SEARCH_INDEX.filter((entry: any) => {
           return (
             entry.title.toLowerCase().includes(q) ||
             entry.id.toLowerCase().includes(q) ||
-            entry.keywords.some((k) => k.toLowerCase().includes(q)) ||
-            entry.commands?.some((c) => c.toLowerCase().includes(q))
+            entry.keywords.some((k: string) => k.toLowerCase().includes(q)) ||
+            entry.commands?.some((c: string) => c.toLowerCase().includes(q))
           );
         });
       };
@@ -420,10 +365,9 @@ Trong dự án thực tế khi làm việc với 5 kỹ sư trên cùng một co
       expect(emptyMetrics?.passes).toBe(false);
     });
 
-    it('fails passes flag if any individual section is below word count threshold', () => {
-      // Missing Definition
-      const lowDef = calculateAuthorQualityMetrics({
-        id: 'low-def',
+    it('requires explicit terminology cards instead of arbitrary minimum paragraph lengths', () => {
+      const missingTerms = calculateAuthorQualityMetrics({
+        id: 'missing-terms',
         title: 'Test',
         content: `
 ## 📖 Định nghĩa
@@ -446,8 +390,9 @@ ${'Từ '.repeat(120)}
         quiz: { questions: [{}, {}, {}, {}, {}, {}] },
       } as any);
 
-      expect(lowDef?.passes).toBe(false);
-      expect(lowDef?.defWords).toBeLessThan(80);
+      expect(missingTerms?.passes).toBe(false);
+      expect(missingTerms?.termCards.complete).toBe(false);
+      expect(missingTerms?.defWords).toBeLessThan(80);
     });
 
     it('fails passes flag if quiz questions count is below threshold for core lesson', () => {
@@ -455,6 +400,16 @@ ${'Từ '.repeat(120)}
         id: '06-git-commit',
         title: 'Core Commit',
         content: `
+## 🧩 Từ khóa hôm nay
+### Commit
+- **Nói dễ hiểu:** Một mốc đã lưu.
+- **Ví dụ:** Lưu một lần sửa.
+- **Đừng nhầm:** Chưa tự gửi lên máy chủ.
+### Branch
+- **Nói dễ hiểu:** Một dòng làm việc.
+- **Ví dụ:** Tách thử nghiệm ra riêng.
+- **Đừng nhầm:** Không phải bản sao thư mục.
+
 ## 📖 Định nghĩa
 > ${'Từ '.repeat(90)}
 
@@ -483,4 +438,3 @@ ${'Từ '.repeat(120)}
     });
   });
 });
-

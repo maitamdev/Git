@@ -64,3 +64,19 @@ questions:
         correct: false
     explanation: Git áp dụng commit theo thứ tự từ trên xuống dưới trong Todo list;
       đổi vị trí dòng là đổi thứ tự commit.
+  - id: q5
+    question: Trong tệp Todo List của Interactive Rebase, chỉ thị `pick` ở đầu mỗi dòng
+      có ý nghĩa gì?
+    type: single
+    options:
+      - text: Giữ lại commit đó và áp dụng vào cây lịch sử mới
+        correct: true
+      - text: Xóa bỏ vĩnh viễn commit đó khỏi dự án
+        correct: false
+      - text: Nén commit đó vào commit liền trước
+        correct: false
+      - text: Dừng tiến trình để sửa code bên trong commit
+        correct: false
+    explanation: "`pick` là hành vi mặc định, báo cho Git tiếp tục giữ lại và phát
+      lại commit đó vào chuỗi commit mới."
+

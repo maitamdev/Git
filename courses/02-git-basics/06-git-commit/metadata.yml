@@ -6,20 +6,12 @@ keywords:
   - git commit
   - snapshot
   - commit message
-  - checkpoint
-  - save point
-  - sha-1
 prerequisites:
   - 05-git-add
 objectives:
-  - Nắm vững bản chất kỹ thuật của Commit trong Git như một snapshot toàn vẹn
-    của cây thư mục.
-  - Sử dụng thành thạo các câu lệnh `git commit -m "<thông-điệp>"` và `git
-    commit -am "<thông-điệp>`.
-  - Hiểu cách Git liên kết các commit qua cấu trúc Directed Acyclic Graph (DAG)
-    và mã băm SHA.
-  - Tuân thủ quy ước viết thông điệp commit rõ ràng và súc tích.
+  - Tạo commit từ thay đổi đã staged.
+  - Viết lời nhắn ngắn bằng `git commit -m`.
+  - Phân biệt commit trên máy với push lên dịch vụ trực tuyến.
 commands:
   - 'git commit -m "feat: your commit message"'
   - 'git commit -am "fix: quick fix"'
-  - git commit --amend

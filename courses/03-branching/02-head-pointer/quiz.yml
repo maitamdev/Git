@@ -2,55 +2,46 @@ id: quiz-03-02-head-pointer
 title: "Trắc nghiệm: Con trỏ HEAD và Detached HEAD"
 questions:
   - id: q1
-    question: Trong trạng thái làm việc bình thường, tệp tin `.git/HEAD` chứa thông
-      tin gì?
+    question: Trong trạng thái làm việc bình thường, con trỏ HEAD trong Git có vai trò gì?
     type: single
     options:
-      - text: "Đường dẫn tham chiếu tượng trưng tới nhánh hiện tại (ví dụ: ref:
-          refs/heads/main)"
+      - text: Chỉ định nhánh và commit hiện tại mà thư mục làm việc đang hiển thị
         correct: true
-      - text: Mật khẩu mã hóa của toàn bộ kho lưu trữ Git
+      - text: Mật khẩu bảo mật dùng để đăng nhập vào máy chủ GitHub
         correct: false
-      - text: Danh sách các lập trình viên bị cấm truy cập dự án
+      - text: Danh sách các thành viên được cấp quyền ghi vào dự án
         correct: false
-      - text: Toàn bộ mã nguồn của trang chủ website
+      - text: Bản sao lưu dự phòng của toàn bộ mã nguồn trên đám mây
         correct: false
-    explanation: "Tệp .git/HEAD chứa dòng `ref: refs/heads/<nhánh>` chỉ định nhánh
-      hiện tại đang được kích hoạt."
+    explanation: HEAD là con trỏ đại diện cho vị trí hiện tại bạn đang đứng trong kho lưu trữ Git.
   - id: q2
-    question: Hiện tượng "Detached HEAD" xảy ra khi nào?
+    question: Trạng thái Detached HEAD xảy ra khi nào?
     type: single
     options:
-      - text: Khi con trỏ HEAD trỏ trực tiếp vào một mã băm commit cụ thể thay vì trỏ
-          vào một nhánh
+      - text: Khi con trỏ HEAD trỏ trực tiếp vào một commit cụ thể thay vì trỏ qua tên nhánh
         correct: true
-      - text: Khi máy tính bị mất kết nối mạng cáp quang quốc tế
+      - text: Khi máy tính bị ngắt kết nối mạng Internet hoặc cáp quang
         correct: false
-      - text: Khi ổ cứng máy tính bị đầy dung lượng không thể ghi thêm
+      - text: Khi ổ đĩa của bạn bị đầy dung lượng và không thể lưu tệp
         correct: false
-      - text: Khi bạn gõ sai mật khẩu đăng nhập vào máy tính
+      - text: Khi bạn đặt sai thông tin người dùng trong cấu hình Git
         correct: false
-    explanation: Detached HEAD xuất hiện khi bạn checkout trực tiếp tới một commit
-      hoặc tag thay vì một branch.
+    explanation: Detached HEAD xuất hiện khi bạn checkout trực tiếp tới một mã hash commit thay vì một tên nhánh.
   - id: q3
-    question: Nếu bạn lỡ tạo một số commit quan trọng trong trạng thái Detached
-      HEAD, làm thế nào để lưu giữ chúng an toàn?
+    question: Nếu bạn đã tạo một số commit thử nghiệm trong trạng thái Detached HEAD, làm sao để giữ lại an toàn?
     type: single
     options:
-      - text: Chạy lệnh `git switch -c <tên-nhánh-mới>` để tạo ngay một nhánh mới giữ
-          lấy commit đó
+      - text: Dùng lệnh `git switch -c <tên-nhánh-mới>` để gắn nhánh mới vào commit hiện tại
         correct: true
-      - text: Tắt máy tính và khởi động lại ngay lập tức
+      - text: Tắt máy tính và khởi động lại để Git tự khôi phục dữ liệu
         correct: false
-      - text: Xóa toàn bộ thư mục dự án và tải lại từ đầu
+      - text: Xóa thư mục dự án và tải lại từ đầu từ máy chủ
         correct: false
-      - text: Bấm tổ hợp phím Ctrl + Z trên bàn phím mười lần
+      - text: Nhấn tổ hợp phím Ctrl + Z nhiều lần trong trình soạn thảo
         correct: false
-    explanation: "`git switch -c <name>` gắn một con trỏ nhánh mới vào commit hiện
-      tại, cứu commit không bị mồ côi."
+    explanation: Lệnh `git switch -c <tên>` tạo một nhánh mới ngay tại commit hiện tại, giữ commit không bị mồ côi.
   - id: q4
-    question: Lệnh nào là cách hiện đại và an toàn nhất để đưa HEAD thoát khỏi
-      Detached HEAD quay về nhánh main?
+    question: Lệnh nào là cách an toàn và rõ ràng nhất để đưa HEAD thoát khỏi Detached HEAD quay về nhánh main?
     type: single
     options:
       - text: git switch main
@@ -61,5 +52,17 @@ questions:
         correct: false
       - text: git close-all
         correct: false
-    explanation: "`git switch main` là câu lệnh hiện đại (từ Git 2.23) chuyên trách
-      chuyển về nhánh chỉ định."
+    explanation: Lệnh `git switch main` chuyển vùng làm việc và gắn con trỏ HEAD trở lại nhánh `main`.
+  - id: q5
+    question: Khi bạn đang ở trên nhánh main và thực hiện một commit mới, điều gì xảy ra với HEAD?
+    type: single
+    options:
+      - text: HEAD cùng với con trỏ main tiếp tục trỏ tới commit mới nhất vừa tạo
+        correct: true
+      - text: HEAD đứng yên ở commit cũ và tự động rơi vào trạng thái Detached HEAD
+        correct: false
+      - text: HEAD bị xóa khỏi kho lưu trữ và phải gõ lệnh tạo lại thủ công
+        correct: false
+      - text: HEAD tự động chuyển sang nhánh khác ngẫu nhiên trong dự án
+        correct: false
+    explanation: Ở trạng thái bình thường, HEAD trỏ vào nhánh `main`. Khi `main` tiến lên commit mới, vị trí hiện tại của HEAD cũng tiến theo.

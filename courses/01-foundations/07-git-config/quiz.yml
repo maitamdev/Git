@@ -2,8 +2,7 @@ id: quiz-07-git-config
 title: "Trắc nghiệm: Cấu hình danh tính với git config"
 questions:
   - id: q1
-    question: Hai thông số cấu hình tối thiểu bắt buộc phải thiết lập trước khi tạo
-      commit đầu tiên là gì?
+    question: Cặp thông tin nào Git thường ghi vào commit để nhận biết tác giả?
     type: single
     options:
       - text: user.name và user.email
@@ -14,8 +13,7 @@ questions:
         correct: false
       - text: github.username và github.apikey
         correct: false
-    explanation: Git yêu cầu tên tác giả (user.name) và email (user.email) để nhúng
-      vào thông tin commit.
+    explanation: "Git lưu `user.name` và `user.email` trong thông tin tác giả của commit."
   - id: q2
     question: Cấp độ cấu hình nào có độ ưu tiên cao nhất trong Git?
     type: single
@@ -28,11 +26,9 @@ questions:
         correct: false
       - text: Tất cả các cấp độ đều có độ ưu tiên ngang nhau
         correct: false
-    explanation: Cấu hình `--local` ghi trong `.git/config` có độ ưu tiên cao nhất,
-      đè lên `--global` và `--system`.
+    explanation: Giá trị local áp dụng riêng trong repository và ghi đè giá trị global.
   - id: q3
-    question: Lệnh nào sau đây dùng để xem tất cả các thiết lập cấu hình Git đang có
-      hiệu lực?
+    question: Lệnh nào liệt kê các thiết lập cấu hình Git hiện có?
     type: single
     options:
       - text: git config --list
@@ -43,19 +39,17 @@ questions:
         correct: false
       - text: git status --config
         correct: false
-    explanation: "`git config --list` hoặc `git config -l` in ra toàn bộ các cặp
-      key=value đang có hiệu lực."
+    explanation: "`git config --list` liệt kê các cặp tên và giá trị cấu hình Git hiện có."
   - id: q4
-    question: Thông tin `user.email` trong git config có vai trò gì trên GitHub?
+    question: "`user.email` trong Git config có phải mật khẩu đăng nhập GitHub không?"
     type: single
     options:
-      - text: Dùng để ánh xạ commit vào tài khoản GitHub tương ứng và tính điểm đóng góp
+      - text: Không, đây là email gắn vào thông tin tác giả của commit
         correct: true
-      - text: Dùng làm mật khẩu để đăng nhập vào trang web GitHub
+      - text: Có, đây là mật khẩu GitHub đã mã hóa
         correct: false
-      - text: Dùng để gửi email thông báo mã nguồn bị lỗi cú pháp
+      - text: Có, đây là mã xác nhận push code
         correct: false
-      - text: Dùng để thanh toán hóa đơn lưu trữ đám mây hàng tháng
+      - text: Không, đây là địa chỉ của remote
         correct: false
-    explanation: GitHub đối chiếu email trong tác giả commit với email trong tài
-      khoản để hiển thị avatar và biểu đồ đóng góp.
+    explanation: "Email chỉ là thông tin tác giả trong commit; nó không cấp quyền đăng nhập."

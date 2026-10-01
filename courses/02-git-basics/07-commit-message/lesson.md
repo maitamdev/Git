@@ -3,24 +3,53 @@
 ---
 
 ## 🎯 Mục tiêu
-- Nắm vững cấu trúc chuẩn của quy ước Conventional Commits quốc tế.
-- Sử dụng thành thạo các tiền tố tiêu chuẩn: feat, fix, docs, style, refactor, test, chore.
-- Hiểu tầm quan trọng của việc viết thông điệp commit rõ ràng phục vụ việc sinh tự động Changelog.
+- Nhận biết dạng `type(scope): description`; scope có thể bỏ.
+- Chọn `feat`, `fix` hoặc `docs` cho ví dụ đơn giản.
+- Viết message đủ rõ để người khác hiểu commit nói về gì.
+
+---
+
+## 🧩 Từ khóa hôm nay
+
+### Commit message — lời nhắn cho commit
+- **Nói dễ hiểu:** Câu tóm tắt thay đổi để người đọc hiểu commit này làm gì.
+- **Ví dụ:** `fix: correct total price`.
+- **Đừng nhầm:** Message không thay thế việc xem diff khi cần chi tiết.
+
+### Conventional Commits — quy ước viết message
+- **Nói dễ hiểu:** Một cách thống nhất để bắt đầu message bằng loại thay đổi.
+- **Ví dụ:** `feat: add search` và `fix: correct typo`.
+- **Đừng nhầm:** Git không bắt buộc dự án phải dùng quy ước này.
+
+### Type — loại thay đổi
+- **Nói dễ hiểu:** Từ đứng đầu message, thường cho biết loại công việc.
+- **Ví dụ:** `feat` thường dùng khi thêm tính năng; `fix` khi sửa lỗi.
+- **Đừng nhầm:** Từ loại không tự xác nhận code đã đúng.
+
+### Scope — phần bị ảnh hưởng
+- **Nói dễ hiểu:** Nhãn tùy chọn trong ngoặc cho biết commit liên quan tới phần nào.
+- **Ví dụ:** `feat(auth): add login` nói thay đổi thuộc phần đăng nhập.
+- **Đừng nhầm:** Tên scope do dự án chọn; Git không áp đặt danh sách.
+
+### Breaking Change — thay đổi làm hỏng tương thích
+- **Nói dễ hiểu:** Thay đổi khiến cách dùng cũ không còn hoạt động như trước.
+- **Ví dụ:** `feat(api)!: remove old endpoint` báo một thay đổi không tương thích.
+- **Đừng nhầm:** Dấu `!` ghi nhận thay đổi; nó không tự nâng phiên bản nếu thiếu công cụ cấu hình.
 
 ---
 
 ## 📖 Định nghĩa
-> Quy ước Commit Message (tiêu biểu nhất là chuẩn Conventional Commits) là một tập hợp các nguyên tắc định dạng thông điệp commit có cấu trúc rõ ràng và chặt chẽ, giúp con người và các công cụ tự động hóa dễ dàng đọc hiểu bản chất thay đổi trong lịch sử phát triển dự án. Cấu trúc chuẩn bao gồm: tiền tố loại thay đổi (`type`), phạm vi module tùy chọn (`scope`), dấu hai chấm và mô tả ngắn gọn súc tích (`description`). Ví dụ tiêu biểu: `feat(auth): add google oauth2 login`. Quy ước này loại bỏ sự tùy tiện và nâng cao tính chuyên nghiệp của toàn đội ngũ.
+Conventional Commits là quy ước viết message theo dạng `type(scope): description`, trong đó scope là tùy chọn. Ví dụ: `feat(auth): add login`. Git vẫn chấp nhận message khác; đây là thỏa thuận giúp người đọc và các công cụ đã cấu hình hiểu loại thay đổi.
 
 ---
 
 ## 🤔 Tại sao cần?
-Một dự án phần mềm chuyên nghiệp có thể kéo dài nhiều năm với sự tham gia của hàng trăm kỹ sư. Nếu mọi người đều viết commit vô tội vạ như "fix bug", "done", "test", lịch sử dự án sẽ trở thành một mớ bòng bong không thể kiểm toán. Áp dụng chuẩn Conventional Commits giúp toàn bộ đội ngũ nắm bắt được tiến độ tính năng mới (feat) hay sửa lỗi (fix), đồng thời cho phép các công cụ CI/CD tự động tính toán số phiên bản Semantic Versioning và xuất file nhật ký thay đổi CHANGELOG.md tức thì.
+Khi message ghi rõ loại và phần bị ảnh hưởng, đồng đội đọc lịch sử dễ hơn. Dự án cũng có thể cấu hình công cụ để tạo changelog hoặc tính phiên bản từ các message này; quy ước tự nó không chạy các công cụ đó.
 
 ---
 
 ## 🧠 Mental Model (Mô hình tư duy)
-Hãy hình dung commit message giống như tiêu đề của một bài báo tin tức trên trang nhất nhật báo buổi sáng. Người biên tập báo không bao giờ giật tít mơ hồ là "Hôm nay có việc xảy ra". Thay vào đó, tít báo luôn có chuyên mục và hành động rõ ràng: "[Kinh tế] Giá vàng lập đỉnh mới sáng nay" hoặc "[Giao thông] Khởi công tuyến đường vành đai 4". Nhờ đó, độc giả chỉ cần lướt qua mục lục là nắm trọn vẹn tình hình trong ngày.
+Viết loại thay đổi trước, phần bị ảnh hưởng nếu cần, rồi mô tả ngắn: `fix(auth): handle empty password`.
 
 ---
 
@@ -30,17 +59,16 @@ Cấu trúc chuẩn Conventional Commits:
 ┌───────────────┬───────────┬───────────────────────────────────────────┐
 │ Type (Loại)   │ Scope     │ Description (Mô tả súc tích)              │
 ├───────────────┼───────────┼───────────────────────────────────────────┤
-│ feat          │ (auth)    │ add jwt token refresh mechanism           │
-│ fix           │ (payment) │ handle stripe webhook timeout exception   │
-│ docs          │ (readme)  │ update installation commands for windows  │
-│ refactor      │ (api)     │ simplify user profile data serializer     │
+│ feat          │ (auth)    │ add login form                             │
+│ fix           │ (payment) │ correct total                              │
+│ docs          │ (readme)  │ explain installation                      │
 └───────────────┴───────────┴───────────────────────────────────────────┘
 ```
 
 ---
 
 ## 🌎 Ví dụ thực tế
-Khi phát triển tính năng lọc sản phẩm theo mức giá trên trang thương mại điện tử, kỹ sư viết commit: `feat(product): add price range filter component`. Khi sửa một lỗi hiển thị tiền tệ bị lệch số 0 trên hóa đơn, kỹ sư viết: `fix(billing): format currency display for vietnam dong`. Khi đọc lại lịch sử qua git log, bất kỳ ai trong nhóm cũng biết chính xác chức năng nào được thêm mới và lỗi nào vừa được khắc phục. Hệ thống CI/CD cũng nhờ đó mà tự động nhận diện bản phát hành tiếp theo là bản cập nhật tính năng hay chỉ là bản vá lỗi nhỏ.
+Thêm trang tìm kiếm? Viết `feat(search): add search page`. Sửa lỗi tổng tiền? Viết `fix(cart): correct total`. Người đọc lịch sử hiểu được loại thay đổi và phần liên quan.
 
 ---
 
@@ -53,15 +81,15 @@ git commit -m "fix: resolve memory leak in worker"
 ---
 
 ## 🔍 Giải thích command
-- `git commit -m "feat: <mô-tả>"`: Tạo commit thêm mới một tính năng người dùng trong hệ thống phần mềm, kích hoạt nâng số phiên bản MINOR trong Semantic Versioning.
-- `git commit -m "fix: <mô-tả>"`: Tạo commit sửa chữa một lỗi phần mềm đã được phát hiện trong mã nguồn, kích hoạt nâng số phiên bản PATCH.
+- `git commit -m "feat: <mô-tả>"`: Tạo commit có message bắt đầu bằng `feat`.
+- `git commit -m "fix: <mô-tả>"`: Tạo commit có message bắt đầu bằng `fix`.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Viết thông điệp quá dài dòng ở dòng tiêu đề đầu tiên**:  Dòng đầu tiên chỉ nên gói gọn dưới 50 đến 72 ký tự.
-2. **Sử dụng thì quá khứ thay vì thể mệnh lệnh hiện tại**:  Nên viết "add feature" thay vì "added feature".
-3. **Lẫn lộn giữa feat và fix**:  Dùng nhãn fix cho một tính năng hoàn toàn mới hoặc ngược lại.
+1. **Message quá chung chung**: “update” không cho người đọc biết nội dung thay đổi.
+2. **Ghi scope dù không giúp ích**: Chỉ thêm scope khi nó làm rõ phần bị ảnh hưởng.
+3. **Nhầm `feat` với `fix`**: `feat` thường chỉ tính năng mới; `fix` chỉ sửa lỗi.
 
 ---
 
@@ -73,7 +101,7 @@ git commit -m "fix: resolve memory leak in worker"
 ---
 
 ## 💡 Hint
-> Sử dụng các tiền tố: feat, fix, docs, refactor, test, chore.
+> Bài này dùng ba ví dụ: `feat` thêm tính năng, `fix` sửa lỗi, `docs` sửa tài liệu.
 
 ---
 
@@ -93,6 +121,6 @@ Nêu ý nghĩa của dấu chấm than `feat!:` trong quy ước Conventional Co
 ---
 
 ## 📚 Tổng kết
-- Conventional Commits cung cấp định dạng chuẩn: type(scope): description.
-- Các loại type phổ biến nhất gồm: feat (tính năng mới), fix (sửa lỗi), docs (tài liệu), chore (bảo trì).
-- Giúp tự động hóa việc tính toán phiên bản SemVer và sinh CHANGELOG.
+- Dạng thường dùng là `type(scope): description`; scope có thể bỏ.
+- `feat` thường là tính năng mới; `fix` thường là sửa lỗi.
+- Chỉ công cụ được cấu hình mới tự sinh changelog hoặc tính phiên bản.

@@ -2,8 +2,7 @@ id: quiz-06-09-codeowners
 title: "Trắc nghiệm: CODEOWNERS"
 questions:
   - id: q1
-    question: Tệp tin CODEOWNERS phải được lưu trữ ở những vị trí hợp lệ nào sau đây
-      để GitHub có thể nhận diện?
+    question: Tệp tin CODEOWNERS phải được lưu trữ ở những vị trí hợp lệ nào sau đây để GitHub có thể nhận diện?
     type: single
     options:
       - text: Thư mục .github/, thư mục gốc của repository, hoặc thư mục docs/
@@ -14,15 +13,12 @@ questions:
         correct: false
       - text: Thư mục node_modules/
         correct: false
-    explanation: "GitHub chỉ tìm kiếm tệp CODEOWNERS tại 3 vị trí quy định:
-      `.github/CODEOWNERS`, `/CODEOWNERS`, hoặc `docs/CODEOWNERS`."
+    explanation: "GitHub chỉ tìm kiếm tệp CODEOWNERS tại 3 vị trí quy định: `.github/CODEOWNERS`, `/CODEOWNERS`, hoặc `docs/CODEOWNERS`."
   - id: q2
-    question: Điều gì xảy ra một cách tự động khi bạn mở một Pull Request chỉnh sửa
-      tệp tin đã được khai báo trong CODEOWNERS?
+    question: Điều gì xảy ra một cách tự động khi bạn mở một Pull Request chỉnh sửa tệp tin đã được khai báo trong CODEOWNERS?
     type: single
     options:
-      - text: GitHub tự động gửi yêu cầu đánh giá mã nguồn (Review request) tới các chủ
-          sở hữu đã khai báo
+      - text: GitHub tự động gửi yêu cầu đánh giá mã nguồn (Review request) tới các chủ sở hữu đã khai báo
         correct: true
       - text: GitHub tự động từ chối và đóng ngay Pull Request đó
         correct: false
@@ -30,11 +26,9 @@ questions:
         correct: false
       - text: Toàn bộ máy chủ của công ty sẽ bị ngắt kết nối Internet
         correct: false
-    explanation: Hệ thống tự động kích hoạt yêu cầu xem xét mã nguồn gửi trực tiếp
-      tới các cá nhân hoặc nhóm kỹ sư phụ trách module đó.
+    explanation: Hệ thống tự động kích hoạt yêu cầu xem xét mã nguồn gửi trực tiếp tới các cá nhân hoặc nhóm kỹ sư phụ trách module đó.
   - id: q3
-    question: Trong tệp CODEOWNERS, nếu có nhiều quy tắc trùng lặp với cùng một tệp
-      tin thì quy tắc nào sẽ được ưu tiên áp dụng?
+    question: Trong tệp CODEOWNERS, nếu có nhiều quy tắc trùng lặp với cùng một tệp tin thì quy tắc nào sẽ được ưu tiên áp dụng?
     type: single
     options:
       - text: Quy tắc xuất hiện sau cùng (ở dòng thấp hơn phía dưới của tệp tin)
@@ -45,15 +39,12 @@ questions:
         correct: false
       - text: GitHub sẽ tung đồng xu ngẫu nhiên để chọn
         correct: false
-    explanation: Tương tự như cú pháp của `.gitignore`, quy tắc khớp cuối cùng nằm ở
-      phía dưới của tệp tin sẽ ghi đè các quy tắc chung bên trên.
+    explanation: Tương tự như cú pháp của `.gitignore`, quy tắc khớp cuối cùng nằm ở phía dưới của tệp tin sẽ ghi đè các quy tắc chung bên trên.
   - id: q4
-    question: Khi kết hợp CODEOWNERS với tùy chọn "Require review from Code Owners"
-      trong Branch Protection, điều kiện để merge là gì?
+    question: Khi kết hợp CODEOWNERS với tùy chọn "Require review from Code Owners" trong Branch Protection, điều kiện để merge là gì?
     type: single
     options:
-      - text: Bắt buộc phải có ít nhất một phê duyệt chính thức từ đúng chủ sở hữu được
-          khai báo trong CODEOWNERS
+      - text: Bắt buộc phải có ít nhất một phê duyệt chính thức từ đúng chủ sở hữu được khai báo trong CODEOWNERS
         correct: true
       - text: Chỉ cần một đồng nghiệp bất kỳ bấm duyệt là có thể merge được ngay
         correct: false
@@ -61,5 +52,17 @@ questions:
         correct: false
       - text: Chủ sở hữu phải trực tiếp gõ lệnh merge từ terminal của máy họ
         correct: false
-    explanation: Ràng buộc này bảo đảm việc duyệt code không thể bị bỏ qua bởi những
-      người ngoài chuyên môn của module liên quan.
+    explanation: Ràng buộc này bảo đảm việc duyệt code không thể bị bỏ qua bởi những người ngoài chuyên môn của module liên quan.
+  - id: q5
+    question: Cú pháp khai báo chủ sở hữu cho một nhóm làm việc (team) trong tệp CODEOWNERS trên GitHub là gì?
+    type: single
+    options:
+      - text: "@org-name/team-name (bắt đầu bằng ký tự @ kèm tên tổ chức và tên nhóm)"
+        correct: true
+      - text: "#team-name (dấu thăng kèm tên nhóm)"
+        correct: false
+      - text: "group://team-name (dạng URI giao thức)"
+        correct: false
+      - text: "team:team-name (dạng nhãn khóa giá trị)"
+        correct: false
+    explanation: Để chỉ định một nhóm làm việc trong tổ chức GitHub làm chủ sở hữu, bạn dùng cú pháp @org-name/team-name giúp tự động gán review cho cả nhóm.

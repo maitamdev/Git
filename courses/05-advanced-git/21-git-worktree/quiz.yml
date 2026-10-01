@@ -2,12 +2,10 @@ id: quiz-05-21-git-worktree
 title: "Trắc nghiệm: git worktree"
 questions:
   - id: q1
-    question: Lợi ích đột phá lớn nhất của `git worktree` so with việc chuyển nhánh
-      (`git switch`) thông thường là gì?
+    question: Lợi ích đột phá lớn nhất của `git worktree` so với việc chuyển nhánh (`git switch`) thông thường là gì?
     type: single
     options:
-      - text: Cho phép bạn mở và chỉnh sửa song song hai hay nhiều nhánh ở các thư mục
-          riêng biệt mà không cần phải stash hay tắt server
+      - text: Cho phép bạn mở và chỉnh sửa song song hai hay nhiều nhánh ở các thư mục riêng biệt mà không cần phải stash hay tắt server
         correct: true
       - text: Tự động tăng gấp đôi tốc độ mạng Internet khi push code
         correct: false
@@ -15,15 +13,12 @@ questions:
         correct: false
       - text: Tự động chuyển đổi mã nguồn sang ngôn ngữ máy tính khác
         correct: false
-    explanation: "Worktree cho phép đa nhiệm thực sự: mỗi nhánh có một thư mục riêng
-      biệt trên đĩa cứng cùng chia sẻ chung một kho `.git`."
+    explanation: "Worktree cho phép đa nhiệm thực sự: mỗi nhánh có một thư mục riêng biệt trên đĩa cứng cùng chia sẻ chung một kho `.git`."
   - id: q2
-    question: Điều gì sẽ xảy ra nếu bạn cố gắng dùng `git worktree add` để mở một
-      nhánh đang được mở ở một worktree khác?
+    question: Điều gì sẽ xảy ra nếu bạn cố gắng dùng `git worktree add` để mở một nhánh đang được mở ở một worktree khác?
     type: single
     options:
-      - text: Git sẽ từ chối và báo lỗi vì một nhánh không được phép checkout đồng thời
-          ở hai nơi để tránh xung đột
+      - text: Git sẽ từ chối và báo lỗi vì một nhánh không được phép checkout đồng thời ở hai nơi để tránh xung đột
         correct: true
       - text: Git tự động xóa thư mục làm việc cũ
         correct: false
@@ -31,11 +26,9 @@ questions:
         correct: false
       - text: Máy tính sẽ bị khóa tài khoản
         correct: false
-    explanation: Git ngăn chặn hai worktree cùng trỏ vào một nhánh để bảo vệ tính
-      toàn vẹn của con trỏ nhánh và reflog.
+    explanation: Git ngăn chặn hai worktree cùng trỏ vào một nhánh để bảo vệ tính toàn vẹn của con trỏ nhánh và reflog.
   - id: q3
-    question: Lệnh nào sau đây dùng để xem danh sách tất cả các thư mục worktree
-      đang hoạt động trong dự án?
+    question: Lệnh nào sau đây dùng để xem danh sách tất cả các thư mục worktree đang hoạt động trong dự án?
     type: single
     options:
       - text: git worktree list
@@ -46,11 +39,9 @@ questions:
         correct: false
       - text: git list --worktrees
         correct: false
-    explanation: "`git worktree list` liệt kê đường dẫn tuyệt đối của từng worktree
-      kèm commit hash và nhánh đang gắn."
+    explanation: "`git worktree list` liệt kê đường dẫn tuyệt đối của từng worktree kèm commit hash và nhánh đang gắn."
   - id: q4
-    question: Lệnh chuẩn mực để dọn dẹp và xóa bỏ một thư mục worktree sau khi hoàn
-      thành nhiệm vụ là gì?
+    question: Lệnh chuẩn mực để dọn dẹp và xóa bỏ một thư mục worktree sau khi hoàn thành nhiệm vụ là gì?
     type: single
     options:
       - text: git worktree remove <đường-dẫn-thư-mục>
@@ -61,5 +52,17 @@ questions:
         correct: false
       - text: git destroy worktree <đường-dẫn>
         correct: false
-    explanation: "`git worktree remove <path>` xóa tệp trên đĩa và dọn dẹp siêu dữ
-      liệu quản trị trong thư mục `.git/worktrees`."
+    explanation: "`git worktree remove <path>` xóa tệp trên đĩa và dọn dẹp siêu dữ liệu quản trị trong thư mục `.git/worktrees`."
+  - id: q5
+    question: Câu lệnh nào sau đây dùng để tạo một worktree mới tại thư mục `../hotfix-dir` và gắn vào nhánh mới `hotfix-login`?
+    type: single
+    options:
+      - text: git worktree add -b hotfix-login ../hotfix-dir
+        correct: true
+      - text: git create worktree ../hotfix-dir hotfix-login
+        correct: false
+      - text: git branch --worktree ../hotfix-dir hotfix-login
+        correct: false
+      - text: git checkout -b hotfix-login --worktree ../hotfix-dir
+        correct: false
+    explanation: 'Cú pháp `git worktree add -b <tên-nhánh-mới> <đường-dẫn>` vừa tạo nhánh mới vừa checkout ra thư mục worktree riêng biệt.'

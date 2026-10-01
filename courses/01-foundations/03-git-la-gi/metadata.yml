@@ -11,11 +11,9 @@ keywords:
 prerequisites:
   - 02-vcs-types
 objectives:
-  - Nắm bắt nguồn gốc ra đời của Git do Linus Torvalds khởi xướng vào năm 2005.
-  - "Hiểu rõ các triết lý thiết kế cơ bản: tốc độ, an toàn dữ liệu, hỗ trợ phân
-    nhánh phi tuyến tính."
-  - Xác định được vai trò trung tâm của Git trong quy trình CI/CD và văn hóa
-    DevOps hiện đại.
+  - Giải thích Git là một VCS phân tán.
+  - Phân biệt Git với GitHub.
+  - Nêu việc nào Git làm trên máy và việc nào cần mạng.
 commands:
-  - git --help
+  - git status
   - git --version

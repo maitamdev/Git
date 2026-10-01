@@ -10,22 +10,41 @@
 
 ---
 
+## 🧩 Từ khóa hôm nay
+
+### feature branch workflow
+- **Nói dễ hiểu**: Quy trình làm việc nhóm quy định mọi tính năng hoặc bản sửa lỗi đều phải làm trên nhánh riêng, không đụng vào nhánh chính.
+- **Ví dụ**: Tạo nhánh `feat/biometric-login` để code rồi mở PR xin gộp vào `main`.
+- **Đừng nhầm**: Không phải quy trình chỉ dùng cho dự án lớn; dự án 2 người cũng nên áp dụng để tránh ghi đè code của nhau.
+
+### production-ready main
+- **Nói dễ hiểu**: Nguyên tắc giữ nhánh `main` luôn ở trạng thái sạch sẽ, hoàn thiện và sẵn sàng phát hành cho khách hàng bất cứ lúc nào.
+- **Ví dụ**: Không bao giờ commit code thử nghiệm hay code đang bị lỗi dở dang vào nhánh main.
+- **Đừng nhầm**: Không có nghĩa là main không bao giờ thay đổi; main chỉ nhận code hoàn chỉnh qua Pull Request đã duyệt.
+
+### merge hell
+- **Nói dễ hiểu**: Cơn ác mộng xung đột khi giữ một nhánh tính năng quá lâu hàng tháng trời mà không đồng bộ với nhánh chính.
+- **Ví dụ**: Nhánh của bạn bị tụt lại 200 commit so với main, khi gộp sẽ phát sinh hàng chục file xung đột phức tạp.
+- **Đừng nhầm**: Có thể tránh hoàn toàn bằng cách chia nhỏ tính năng, mở PR sớm và định kỳ rebase/pull từ main về nhánh.
+
+---
+
 ## 📖 Định nghĩa
-> Feature Branch Workflow là quy trình cộng tác phát triển phần mềm chuẩn mực và phổ biến bậc nhất trong ngành công nghệ thông tin toàn cầu. Quy tắc cốt lõi của quy trình này là: Nhánh chính (`main` hoặc `master`) được coi là thánh đường ổn định (Production-ready) và luôn trong trạng thái có thể triển khai; mọi tính năng mới, bản sửa lỗi hay thử nghiệm đều BẮT BUỘC phải được phát triển trên một nhánh riêng biệt (Feature Branch), trải qua quá trình Pull Request và Code Review kỹ lưỡng trước khi được phép hòa nhập vào nhánh chính.
+Feature Branch Workflow là quy trình cộng tác phát triển chuẩn mực trong ngành phần mềm. Quy tắc cốt lõi: Nhánh chính (`main`) được bảo vệ nghiêm ngặt và luôn ở trạng thái sẵn sàng phát hành; mọi tính năng mới hay bản vá lỗi đều phải thực hiện trên một nhánh tính năng riêng biệt và chỉ được gộp qua Pull Request đã qua kiểm duyệt.
 
 ---
 
-## 🤔 Tại sao cần?
-Khi làm việc một mình, bạn có thể commit tùy hứng. Nhưng khi bước vào môi trường doanh nghiệp với hàng chục kỹ sư cùng làm việc trên một sản phẩm, việc thiếu một quy trình chuẩn hóa sẽ dẫn đến thảm họa: code bị ghi đè, hệ thống liên tục sập, và xung đột triền miên không hồi kết. Feature Branch Workflow mang lại sự an toàn tuyệt đối, phân định trách nhiệm minh bạch và giúp nhóm phát hành tính năng liên tục với chất lượng cao nhất.
+## 💡 Tại sao cần
+Khi làm việc trong nhóm nhiều kỹ sư, việc thiếu quy trình chuẩn hóa sẽ dẫn đến thảm họa: code bị ghi đè lẫn nhau, hệ thống liên tục sập và xung đột triền miên. Feature Branch Workflow mang lại sự an toàn, phân định trách nhiệm rõ ràng và giúp nhóm bàn giao tính năng liên tục với chất lượng cao.
 
 ---
 
-## 🧠 Mental Model (Mô hình tư duy)
-Hãy hình dung một dàn nhạc giao hưởng lớn đang biểu diễn trước hàng ngàn khán giả (nhánh main trên sân khấu). Không một nhạc công nào được phép tự ý mang một giai điệu mới toanh vừa nghĩ ra trong đầu lên sân khấu chơi thử ngay trước mặt khán giả. Từng nghệ sĩ phải vào phòng tập riêng cách âm (Feature Branch), luyện tập thành thục giai điệu đó, trình diễn cho nhạc trưởng duyệt (Code Review & PR). Khi nhạc trưởng gật đầu hài lòng, giai điệu mới được hòa vào bản giao hưởng chính.
+## 🧠 Mental Model
+Hãy hình dung một dàn nhạc giao hưởng đang biểu diễn trên sân khấu (nhánh main). Không nhạc công nào được tự ý đem một đoạn nhạc vừa nghĩ ra chơi thử ngay trước mặt khán giả. Từng nghệ sĩ phải vào phòng tập cách âm riêng (Feature Branch), luyện tập nhuần nhuyễn rồi trình diễn cho nhạc trưởng duyệt (Review PR) trước khi hòa vào bản nhạc chính.
 
 ---
 
-## 🖼 Sơ đồ
+## 📊 Sơ đồ minh họa
 ```text
 Chuỗi 7 bước chuẩn mực của Feature Branch Workflow:
 [1. Nhận Issue] ──► [2. git pull main] ──► [3. git switch -c feat/xyz]
@@ -39,12 +58,12 @@ Chuỗi 7 bước chuẩn mực của Feature Branch Workflow:
 
 ---
 
-## 🌎 Ví dụ thực tế
-Đội ngũ kỹ thuật gồm 10 thành viên của một ứng dụng ngân hàng vận hành nghiêm ngặt theo đúng Feature Branch Workflow tiêu chuẩn. Mỗi buổi sáng, từng lập trình viên chọn một Issue từ bảng Kanban, cập nhật mã nguồn mới nhất bằng `git pull origin main`, tạo nhánh riêng biệt mang tên `feat/biometric-login`, viết code và thực hiện kiểm thử tự động cục bộ. Khi hoàn thành, lập trình viên đẩy nhánh lên GitHub, mở PR kèm bản danh sách checklist kiểm tra an ninh bảo mật. Hai kỹ sư senior vào xem xét, phản biện và phê duyệt. PR được squash-merge vào nhánh main và hệ thống tự động triển khai mã nguồn mới lên môi trường kiểm thử mà không phát sinh bất kỳ sự cố gián đoạn nào.
+## 🏢 Ví dụ thực tế
+Đội ngũ phát triển ứng dụng ngân hàng vận hành theo Feature Branch Workflow. Mỗi sáng, lập trình viên nhận một Issue, cập nhật `git pull origin main`, tạo nhánh `feat/biometric-login`, viết code và kiểm thử tự động. Khi hoàn thành, bạn đẩy nhánh lên GitHub, mở PR kèm checklist an ninh. Hai senior kiểm tra và phê duyệt trước khi squash-merge vào main an toàn.
 
 ---
 
-## 💻 Command
+## 💻 Command & Cú pháp
 ```bash
 git switch main
 git pull origin main
@@ -64,13 +83,14 @@ git branch -d feat/<tên-tính-năng>
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Tiện tay commit thẳng lên nhánh main**:  Vi phạm quy tắc an toàn cơ bản nhất của phát triển phần mềm.
-2. **Tạo nhánh từ một nhánh tính năng dở dang khác thay vì tách từ main**:  Làm dây chuyền các lỗi chưa kiểm chứng sang tính năng mới.
-3. **Giữ nhánh tính năng quá lâu suốt nhiều tháng không merge**:  Dẫn đến "Merge Hell" với hàng trăm xung đột không thể giải quyết.
+1. **Tiện tay commit thẳng lên nhánh main**: Vi phạm nguyên tắc bảo vệ nhánh chính và dễ làm gián đoạn bản phát hành chung.
+2. **Tách nhánh từ một nhánh tính năng dở dang khác**: Làm dây chuyền các lỗi chưa kiểm chứng sang nhánh mới thay vì xuất phát từ main chuẩn.
+3. **Giữ nhánh tính năng quá lâu nhiều tuần không merge**: Gây ra tình trạng Merge Hell với hàng loạt xung đột mã nguồn nan giải.
 
 ---
 
-## 🧪 Lab
+## 🧪 Lab thực hành
+Bài học này là bài tự kiểm tra: bạn thực hành chu trình 7 bước từ tạo nhánh đến merge PR.
 1. Chuyển về nhánh `main` và kéo code mới nhất bằng `git pull origin main`.
 2. Tạo nhánh tính năng chuẩn quy ước `feat/user-profile` bằng `git switch -c feat/user-profile`.
 3. Thực hiện một số commit có thông điệp chuẩn mực trên nhánh này.
@@ -78,27 +98,28 @@ git branch -d feat/<tên-tính-năng>
 
 ---
 
-## 💡 Hint
-> Nhớ câu thần chú: Nhánh main luôn luôn sạch sẽ, ổn định và có thể release bất cứ lúc nào.
+## 💡 Hint & mẹo
+> Nhớ câu khẩu quyết: Nhánh main luôn luôn sạch sẽ, ổn định và có thể release bất cứ lúc nào.
 
 ---
 
-## ✅ Validation
+## ✅ Validation & Kết quả mong đợi
 - Vận hành thành thạo toàn bộ chu kỳ 7 bước của Feature Branch Workflow.
+- Nhánh main trên cả máy và GitHub không có bất kỳ commit nháp trực tiếp nào.
 
 ---
 
-## ❓ Quiz
-Hãy làm bài kiểm tra trắc nghiệm dưới đây về quy trình Feature Branch Workflow.
+## ❓ Quiz nhanh
+Hãy hoàn thành các câu hỏi trắc nghiệm dưới đây để kiểm tra hiểu biết về Feature Branch Workflow.
 
 ---
 
-## 🔥 Challenge
-Nêu sự khác biệt giữa Feature Branch Workflow và quy trình Git Flow phức tạp có thêm nhánh develop và release.
+## 🚀 Thử thách nâng cao
+Tìm hiểu sự khác biệt giữa Feature Branch Workflow tinh gọn và mô hình Git Flow truyền thống có các nhánh dài hạn như `develop` và `release`.
 
 ---
 
-## 📚 Tổng kết
+## 📝 Tổng kết
 - Feature Branch Workflow là tiêu chuẩn vàng của cộng tác nhóm hiện đại.
 - Nhánh main luôn bất biến và ổn định; mọi tính năng đều nằm trên nhánh riêng.
 - Quy trình 7 bước: Nhận việc -> Tách nhánh -> Code -> Push -> PR -> Review -> Merge.

@@ -2,11 +2,10 @@ id: quiz-02-06-git-commit
 title: "Trắc nghiệm chuyên sâu: Bản chất lệnh git commit"
 questions:
   - id: q1
-    question: Bản chất kỹ thuật của một commit trong Git là gì?
+    question: Khi bạn chạy `git commit`, Git tạo ra điều gì?
     type: single
     options:
-      - text: Một ảnh chụp toàn diện (Snapshot) của toàn bộ cây thư mục tại một thời
-          điểm cụ thể
+      - text: Một commit ghi lại snapshot của dự án dựa trên nội dung trong Staging Area
         correct: true
       - text: Một bản ghi chứa các dòng code bị xóa khỏi ổ cứng
         correct: false
@@ -14,8 +13,7 @@ questions:
         correct: false
       - text: Một tệp sao lưu nén định dạng zip đặt ngoài màn hình Desktop
         correct: false
-    explanation: Git lưu trữ commit dưới dạng một snapshot toàn vẹn của cây thư mục,
-      tái sử dụng các tệp không đổi qua con trỏ.
+    explanation: Git tạo commit từ trạng thái trong Staging Area. Thay đổi chưa staged không được thêm vào commit này.
   - id: q2
     question: Lệnh nào dưới đây tạo commit mới với thông điệp ngắn gọn mà không cần
       mở trình soạn thảo văn bản?
@@ -51,7 +49,7 @@ questions:
       ở đâu?
     type: single
     options:
-      - text: Nằm an toàn trong kho lưu trữ Git cục bộ trên ổ cứng máy bạn
+      - text: Được ghi vào kho Git cục bộ; chưa tự gửi lên GitHub
         correct: true
       - text: Đã tự động xuất hiện trên trang web GitHub của cả nhóm
         correct: false
@@ -62,31 +60,28 @@ questions:
     explanation: Git commit chỉ ghi nhận dữ liệu vào cơ sở dữ liệu cục bộ; cần dùng
       lệnh `git push` để đẩy lên máy chủ GitHub.
   - id: q5
-    question: Mỗi đối tượng commit trong Git bắt buộc phải chứa thông tin nào sau đây?
+    question: Bạn sửa một tệp mới và muốn đưa nó vào commit. Cần làm gì trước?
     type: single
     options:
-      - text: Con trỏ tới cây thư mục (Tree), thông tin tác giả, mốc thời gian và thông
-          điệp commit
+      - text: Chạy `git add <file>` để chọn tệp, rồi mới commit
         correct: true
-      - text: Số chứng minh nhân dân hoặc căn cước của lập trình viên
+      - text: Chạy `git push` để tệp tự được commit
         correct: false
-      - text: Mật khẩu thẻ tín dụng dùng để thanh toán phí bản quyền
+      - text: Đổi tên tệp thành `commit.txt`
         correct: false
-      - text: Địa chỉ nhà riêng và số điện thoại của tác giả
+      - text: Chỉ cần lưu tệp trong trình soạn thảo
         correct: false
-    explanation: Một commit object chuẩn của Git gồm mã hash cây thư mục, commit
-      cha, tác giả (author/committer), timestamp và message.
+    explanation: Tệp mới chưa được chọn tự động; `git add` đưa phiên bản của nó vào vùng chuẩn bị.
   - id: q6
-    question: Lệnh `git commit --amend` thường được sử dụng trong trường hợp nào?
+    question: Lệnh nào giúp bạn kiểm tra xem commit mới đã được tạo chưa?
     type: single
     options:
-      - text: Bổ sung tệp tin bị bỏ sót hoặc sửa lại thông điệp của commit gần nhất
+      - text: "`git log --oneline`"
         correct: true
-      - text: Xóa toàn bộ kho lưu trữ Git để làm lại từ đầu
+      - text: "`git status --delete`"
         correct: false
-      - text: Tạo một nhánh mới có tên là amend
+      - text: "`git push --check`"
         correct: false
-      - text: Khóa kho chứa để không ai được phép commit nữa
+      - text: "`git commit --list`"
         correct: false
-    explanation: "`--amend` cho phép sửa đổi snapshot hoặc message của commit ngay
-      trên đỉnh HEAD mà không tạo thêm commit rác."
+    explanation: "`git log --oneline` liệt kê các commit đã lưu với lời nhắn ngắn gọn."

@@ -2,63 +2,67 @@ id: quiz-08-git-internals-16-object-graph-traversal
 title: "Trắc nghiệm: Duyệt đồ thị đối tượng có hướng (Directed Acyclic Graph)"
 questions:
   - id: q1
-    question: Tính chất "Không chu trình" (Acyclic) trong đồ thị DAG của Git đảm bảo
-      điều gì?
+    question: "Tính chất Không chu trình (Acyclic) trong đồ thị DAG của Git đảm bảo điều gì?"
     type: single
     options:
-      - text: Không bao giờ xảy ra trường hợp một commit lại trở thành tổ tiên của chính
-          mình (không có vòng lặp vô hạn)
+      - text: "Không bao giờ xảy ra trường hợp một commit lại trở thành tổ tiên của chính mình (không có vòng lặp vô hạn)"
         correct: true
-      - text: Các commit không bao giờ được phép phân nhánh
+      - text: "Các commit không bao giờ được phép phân nhánh"
         correct: false
-      - text: Chỉ có đúng một người được phép commit
+      - text: "Chỉ có đúng một người được phép commit"
         correct: false
-      - text: Dung lượng repository không bao giờ vượt quá 1 GB
+      - text: "Dung lượng repository không bao giờ vượt quá 1 GB"
         correct: false
-    explanation: Vì các cạnh đồ thị trỏ ngược về quá khứ theo mã băm mật mã, không
-      thể tạo ra một chu trình khép kín quay lại chính mình.
+    explanation: "Vì các cạnh đồ thị trỏ ngược về quá khứ theo mã băm mật mã, không thể tạo ra một chu trình khép kín quay lại chính mình."
   - id: q2
-    question: Thuật ngữ "Dangling Commit" (Commit mồ côi) trong Git ám chỉ điều gì?
+    question: "Thuật ngữ Dangling Commit (Commit mồ côi) trong Git ám chỉ điều gì?"
     type: single
     options:
-      - text: Một commit vẫn tồn tại trong cơ sở dữ liệu đối tượng nhưng không có bất kỳ
-          nhánh hay thẻ nào trỏ tới để tiếp cận
+      - text: "Một commit vẫn tồn tại trong cơ sở dữ liệu đối tượng nhưng không có bất kỳ nhánh hay thẻ nào trỏ tới để tiếp cận"
         correct: true
-      - text: Một commit bị nhiễm virus máy tính
+      - text: "Một commit bị nhiễm virus máy tính"
         correct: false
-      - text: Một commit được tạo bởi người dùng ẩn danh
+      - text: "Một commit được tạo bởi người dùng ẩn danh"
         correct: false
-      - text: Một commit không chứa bất kỳ dòng mã nào
+      - text: "Một commit không chứa bất kỳ dòng mã nào"
         correct: false
-    explanation: Dangling commit là node bị đứt kết nối khỏi hệ thống tham chiếu của
-      đồ thị, thường do reset hard hoặc xóa nhánh.
+    explanation: "Dangling commit là node bị đứt kết nối khỏi hệ thống tham chiếu của đồ thị, thường do reset hard hoặc xóa nhánh."
   - id: q3
-    question: Lệnh Plumbing nào dùng để kiểm tra tính toàn vẹn của đồ thị đối tượng
-      và liệt kê các đối tượng không thể tiếp cận?
+    question: "Lệnh Plumbing nào dùng để kiểm tra tính toàn vẹn của đồ thị đối tượng và liệt kê các đối tượng không thể tiếp cận?"
     type: single
     options:
-      - text: git fsck
+      - text: "git fsck"
         correct: true
-      - text: git graph-check
+      - text: "git graph-check"
         correct: false
-      - text: git repair-dag
+      - text: "git repair-dag"
         correct: false
-      - text: git scan-lost
+      - text: "git scan-lost"
         correct: false
-    explanation: "`git fsck` (File System Consistency Check) là lệnh chuyên dụng để
-      xác thực đồ thị đối tượng và tìm các đối tượng mồ côi."
+    explanation: "git fsck (File System Consistency Check) là lệnh chuyên dụng để xác thực đồ thị đối tượng và tìm các đối tượng mồ côi."
   - id: q4
-    question: Trong đồ thị Git, hướng của các cạnh liên kết giữa các commit diễn ra
-      như thế nào?
+    question: "Trong đồ thị Git, hướng của các cạnh liên kết giữa các commit diễn ra như thế nào?"
     type: single
     options:
-      - text: Trỏ ngược từ commit con về commit cha (ngược chiều thời gian)
+      - text: "Trỏ ngược từ commit con về commit cha (ngược chiều thời gian)"
         correct: true
-      - text: Trỏ xuôi từ commit cha tới commit con
+      - text: "Trỏ xuôi từ commit cha tới commit con"
         correct: false
-      - text: Trỏ hai chiều qua lại
+      - text: "Trỏ hai chiều qua lại"
         correct: false
-      - text: Không có hướng xác định
+      - text: "Không có hướng xác định"
         correct: false
-    explanation: Khi tạo commit mới, nó ghi mã băm của commit cha đã có sẵn; do đó
-      mũi tên liên kết luôn trỏ ngược về quá khứ.
+    explanation: "Khi tạo commit mới, nó ghi mã băm của commit cha đã có sẵn; do đó mũi tên liên kết luôn trỏ ngược về quá khứ."
+  - id: q5
+    question: "Lệnh git rev-list được sử dụng cho mục đích gì khi duyệt đồ thị commit?"
+    type: single
+    options:
+      - text: "Duyệt đồ thị commit theo thứ tự thời gian hoặc topo và in ra danh sách các mã băm commit theo điều kiện lọc"
+        correct: true
+      - text: "Tự động đảo ngược toàn bộ lịch sử commit"
+        correct: false
+      - text: "Xóa sạch các commit cũ trong kho lưu trữ"
+        correct: false
+      - text: "Đếm số dòng mã nguồn trong mỗi commit"
+        correct: false
+    explanation: "Lệnh git rev-list là động cơ duyệt đồ thị nền tảng bên dưới lệnh git log, cho phép lọc commit theo khoảng cách, nhánh và thời gian."

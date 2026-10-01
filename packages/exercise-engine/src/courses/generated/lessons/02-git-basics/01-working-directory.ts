@@ -13,9 +13,9 @@ export const lesson: CourseLesson = {
       "09-git-init"
     ],
     "objectives": [
-      "Hiểu rõ khái niệm và vai trò của Working Directory trong kiến trúc 3 khu vực của Git.",
-      "Phân biệt giữa tệp tin được Git theo dõi (Tracked) và tệp tin chưa được theo dõi (Untracked).",
-      "Nắm bắt cách các thao tác chỉnh sửa tệp tin bên ngoài terminal ảnh hưởng trực tiếp tới Working Directory."
+      "Chỉ ra thư mục làm việc và biết nơi mình sửa tệp.",
+      "Phân biệt tệp Git đã theo dõi với tệp mới chưa được theo dõi.",
+      "Dùng git status để xem những tệp đó."
     ],
     "completion": {
       "theoryViewed": true,
@@ -31,11 +31,10 @@ export const lesson: CourseLesson = {
       "khu vuc git"
     ],
     "commands": [
-      "git status",
-      "ls -la"
+      "git status"
     ]
   },
-  "content": "# Working Directory (Thư mục làm việc)\n\n---\n\n## 🎯 Mục tiêu\n- Hiểu rõ khái niệm và vai trò của Working Directory trong kiến trúc 3 khu vực của Git.\n- Phân biệt giữa tệp tin được Git theo dõi (Tracked) và tệp tin chưa được theo dõi (Untracked).\n- Nắm bắt cách các thao tác chỉnh sửa tệp tin bên ngoài terminal ảnh hưởng trực tiếp tới Working Directory.\n\n---\n\n## 📖 Định nghĩa\n> Working Directory (hay còn gọi là Working Tree - Thư mục làm việc) là một thư mục vật lý thực tế trên hệ thống tệp tin ổ đĩa máy tính của bạn, nơi chứa toàn bộ mã nguồn, tài nguyên hình ảnh và các tệp cấu hình của dự án mà bạn có thể trực tiếp nhìn thấy, mở bằng trình soạn thảo mã nguồn như VS Code và chỉnh sửa hàng ngày. Khi một kho lưu trữ Git được khởi tạo, mọi tệp tin mới tạo ra trong thư mục này ban đầu đều ở trạng thái chưa được theo dõi (Untracked) cho đến khi bạn chủ động đưa chúng vào khu vực chuẩn bị.\n\n---\n\n## 🤔 Tại sao cần?\nNắm vững bản chất của Working Directory là bước đầu tiên để làm chủ luồng làm việc 3 khu vực nổi tiếng của Git. Nếu không hiểu rõ sự độc lập giữa Working Directory và cơ sở dữ liệu Git, bạn sẽ rất dễ rơi vào bẫy tâm lý lầm tưởng rằng chỉ cần bấm phím lưu tệp trong VS Code là Git đã tự động ghi nhớ phiên bản. Bạn cần hiểu rằng Working Directory chỉ là không gian nháp làm việc tạm thời, mọi thay đổi trong đó chưa hề được bảo vệ an toàn cho đến khi đi qua Staging Area và vào Commit.\n\n---\n\n## 🧠 Mental Model (Mô hình tư duy)\nHãy hình dung Working Directory giống như chiếc bàn làm việc bằng gỗ trong phòng vẽ tranh của một họa sĩ. Trên chiếc bàn này, các hộp màu, cọ vẽ, bút chì và những tờ giấy nháp đang nằm ngổn ngang để bạn thao tác. Chiếc bàn làm việc cho phép bạn tự do tẩy xóa, vẽ thêm nét mực mới hay thậm chí vò nát một bản nháp mà không ảnh hưởng gì tới các tác phẩm hoàn thiện đã được đóng khung treo trang trọng trong phòng trưng bày Repository.\n\n---\n\n## 🖼 Sơ đồ\n```text\nKiến trúc 3 khu vực của Git:\n┌──────────────────────┐     git add      ┌──────────────────────┐    git commit    ┌──────────────────────┐\n│  Working Directory   │ ───────────────► │     Staging Area     │ ───────────────► │      Repository      │\n│ (Thư mục làm việc)   │                  │   (Vùng chuẩn bị)    │                  │  (Kho lưu trữ HEAD)  │\n│  - Chỉnh sửa code    │                  │  - Chọn lọc commit   │                  │  - Lưu snapshot vĩnh │\n└──────────────────────┘                  └──────────────────────┘                  └──────────────────────┘\n```\n\n---\n\n## 🌎 Ví dụ thực tế\nMột kỹ sư phần mềm mở dự án website bán hàng và tạo thêm một tệp tin mới mang tên payment-gateway.js để lập trình tính năng thanh toán. Khi mở cửa sổ terminal và gõ lệnh git status, Git sẽ liệt kê tệp payment-gateway.js dưới mục màu đỏ mang tên Untracked files. Điều này có nghĩa là tệp tin này đã tồn tại thực tế trên ổ cứng trong Working Directory, nhưng cơ sở dữ liệu của Git hoàn toàn chưa hề để mắt tới nó. Chỉ khi kỹ sư thực hiện lệnh thêm tệp, Git mới bắt đầu theo dõi vòng đời của nó vào dự án.\n\n---\n\n## 💻 Command\n```bash\ngit status\nls -la\n```\n\n---\n\n## 🔍 Giải thích command\n- `git status`: Lệnh kiểm tra trạng thái toàn diện, hiển thị chi tiết các tệp tin trong Working Directory đang bị sửa đổi hoặc chưa được đưa vào diện theo dõi.\n- `ls -la`: Liệt kê tất cả các tệp tin và thư mục thực tế đang có mặt trong thư mục làm việc bao gồm cả các tệp ẩn.\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Nghĩ lưu tệp là Git đã ghi nhớ**:  Lưu tệp trong trình soạn thảo chỉ cập nhật dữ liệu trên ổ cứng tại Working Directory, hoàn toàn chưa tạo snapshot trong Git.\n2. **Sợ rằng sửa file trong Working Directory làm hỏng commit cũ**:  Commit cũ được bảo vệ vĩnh viễn trong cơ sở dữ liệu, việc sửa code trên bàn làm việc không làm thay đổi lịch sử đã qua.\n3. **Nhầm lẫn Working Directory với Staging Area**:  Không phân biệt được tệp đang sửa với tệp đã sẵn sàng để commit.\n\n---\n\n## 🧪 Lab\n1. Mở terminal tại thư mục dự án và tạo một tệp tin mới bằng lệnh `echo \"console.log(1);\" > script.js`.\n2. Chạy lệnh `git status` để quan sát tệp `script.js` xuất hiện trong mục Untracked files màu đỏ.\n3. Nhận biết rằng tệp tin này đang nằm trong Working Directory nhưng chưa hề được đưa vào Staging Area.\n\n---\n\n## 💡 Hint\n> Mọi tệp tin bạn nhìn thấy và sửa đổi trong VS Code đều nằm trong Working Directory.\n\n---\n\n## ✅ Validation\n- Tạo tệp thành công và `git status` nhận diện tệp là untracked trong working tree.\n\n---\n\n## ❓ Quiz\nHãy hoàn thành bài kiểm tra trắc nghiệm dưới đây về Working Directory trong Git.\n\n---\n\n## 🔥 Challenge\nMô tả điều gì sẽ xảy ra với các tệp trong Working Directory nếu bạn chuyển sang một nhánh hoàn toàn khác.\n\n---\n\n## 📚 Tổng kết\n- Working Directory (Working Tree) là thư mục vật lý nơi bạn trực tiếp xem và chỉnh sửa tệp tin.\n- Là khu vực đầu tiên trong kiến trúc 3 khu vực của Git: Working Tree -> Staging Area -> Repository.\n- Mọi thay đổi trong Working Directory chỉ mang tính tạm thời cho đến khi được stage và commit.\n",
+  "content": "# Working Directory (Thư mục làm việc)\n\n---\n\n## 🎯 Mục tiêu\n- Chỉ ra thư mục làm việc và biết nơi mình sửa tệp.\n- Phân biệt tệp Git đã theo dõi với tệp mới chưa được theo dõi.\n- Dùng `git status` để xem những tệp đó.\n\n---\n\n## 🧩 Từ khóa hôm nay\n\n### Working Directory — thư mục làm việc\n- **Nói dễ hiểu:** Các tệp dự án trên máy mà bạn mở và sửa.\n- **Ví dụ:** Tệp `index.html` đang mở trong trình soạn thảo nằm ở đây.\n- **Đừng nhầm:** Sửa ở đây chưa tự đưa thay đổi vào commit.\n\n### Tracked — đã được Git theo dõi\n- **Nói dễ hiểu:** Tệp Git đã biết và có thể so sánh với trạng thái đã lưu.\n- **Ví dụ:** README sau khi được thêm vào lịch sử sẽ là tracked.\n- **Đừng nhầm:** Tracked không có nghĩa sửa đổi mới đã được commit.\n\n### Untracked — chưa được Git theo dõi\n- **Nói dễ hiểu:** Tệp mới nằm trong thư mục nhưng Git chưa được yêu cầu theo dõi.\n- **Ví dụ:** Tạo `note.txt` mới rồi chạy `git status`.\n- **Đừng nhầm:** Tệp vẫn nằm trên máy; chỉ là chưa được chọn vào Git.\n\n---\n\n## 📖 Định nghĩa\nWorking Directory (còn gọi là Working Tree trong nhiều hướng dẫn) là các tệp dự án bạn mở và sửa trên máy. Tạo tệp mới chưa tự đưa tệp vào Git; `git status` sẽ báo tệp là untracked cho tới khi bạn chọn theo dõi.\n\n---\n\n## 🤔 Tại sao cần?\nLưu tệp trong trình soạn thảo chỉ cập nhật tệp trên máy. Git chưa đưa thay đổi đó vào lịch sử; việc này cần các bước `git add` và `git commit`.\n\n---\n\n## 🧠 Mental Model (Mô hình tư duy)\nWorking Directory là bản dự án bạn đang nhìn và sửa trên máy; commit là mốc đã lưu riêng trong lịch sử.\n\n---\n\n## 🖼 Sơ đồ\n```text\nKiến trúc 3 khu vực của Git:\n┌──────────────────────┐     git add      ┌──────────────────────┐    git commit    ┌──────────────────────┐\n│  Working Directory   │ ───────────────► │     Staging Area     │ ───────────────► │      Repository      │\n│ (Thư mục làm việc)   │                  │   (Vùng chuẩn bị)    │                  │  (các commit đã lưu) │\n│  - Chỉnh sửa tệp     │                  │  - Chọn thay đổi     │                  │  - Lưu các commit     │\n└──────────────────────┘                  └──────────────────────┘                  └──────────────────────┘\n```\n\n---\n\n## 🌎 Ví dụ thực tế\nTạo `payment.js`, rồi chạy `git status`. Git báo tệp là Untracked: tệp có trên máy nhưng chưa được chọn để theo dõi.\n\n---\n\n## 💻 Command\n```bash\ngit status\n```\n\n---\n\n## 🔍 Giải thích command\n- `git status`: Báo tệp nào đã sửa, đã staged hoặc chưa được theo dõi.\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Nghĩ lưu tệp là Git đã tạo mốc**:  Lưu trong trình soạn thảo chưa tạo commit.\n2. **Nhầm Working Directory với Staging Area**:  Tệp đang sửa chưa chắc đã được chọn cho commit.\n3. **Nhầm lẫn Working Directory với Staging Area**:  Không phân biệt được tệp đang sửa với tệp đã sẵn sàng để commit.\n\n---\n\n## 🧪 Lab\n1. Mở terminal tại thư mục dự án và tạo một tệp tin mới bằng lệnh `echo \"console.log(1);\" > script.js`.\n2. Chạy `git status` để thấy `script.js` trong mục Untracked files.\n3. Nhận biết rằng tệp tin này đang nằm trong Working Directory nhưng chưa hề được đưa vào Staging Area.\n\n---\n\n## 💡 Hint\n> Mọi tệp tin bạn nhìn thấy và sửa đổi trong VS Code đều nằm trong Working Directory.\n\n---\n\n## ✅ Validation\n- Tạo tệp thành công và `git status` nhận diện tệp là untracked trong working tree.\n\n---\n\n## ❓ Quiz\nHãy hoàn thành bài kiểm tra trắc nghiệm dưới đây về Working Directory trong Git.\n\n---\n\n## 🔥 Challenge\nMô tả điều gì sẽ xảy ra với các tệp trong Working Directory nếu bạn chuyển sang một nhánh hoàn toàn khác.\n\n---\n\n## 📚 Tổng kết\n- Working Directory là dự án bạn đang mở và sửa trên máy.\n- Tệp mới chưa được chọn sẽ hiện là Untracked.\n- Lưu tệp chưa tạo commit; dùng `git status` để kiểm tra trạng thái.\n",
   "quiz": {
     "id": "quiz-02-01-working-directory",
     "title": "Trắc nghiệm: Working Directory trong Git",
@@ -78,7 +77,7 @@ export const lesson: CourseLesson = {
             "correct": false
           },
           {
-            "text": "Committed (Đã lưu vào lịch sử vĩnh viễn)",
+            "text": "Tracked (Git đã bắt đầu theo dõi tệp)",
             "correct": false
           },
           {
@@ -86,7 +85,7 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "Tệp mới tạo chưa từng được git add sẽ luôn ở trạng thái Untracked. Đáp án B sai vì cần chạy git add; C sai vì cần commit; D sai vì chỉ ignored nếu có trong .gitignore."
+        "explanation": "Tệp mới thường là Untracked cho tới khi bạn chọn theo dõi bằng `git add`. Đáp án B sai vì cần chạy git add; C sai vì cần commit; D sai vì chỉ ignored nếu có trong .gitignore."
       },
       {
         "id": "q3",
@@ -114,11 +113,11 @@ export const lesson: CourseLesson = {
       },
       {
         "id": "q4",
-        "question": "Khu vực nào tiếp nhận dữ liệu ngay sau khi tệp tin rời khỏi Working Directory qua lệnh git add?",
+        "question": "Sau khi chạy `git add`, chuyện gì xảy ra với tệp đang ở Working Directory?",
         "type": "single",
         "options": [
           {
-            "text": "Staging Area (Vùng chuẩn bị)",
+            "text": "Tệp vẫn ở đó; trạng thái hiện tại được chọn vào Staging Area",
             "correct": true
           },
           {
@@ -134,7 +133,31 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "Lệnh `git add` chuyển tệp từ Working Directory sang Staging Area (Index). Đáp án B sai vì cần git push; C và D hoàn toàn sai lệch bản chất."
+        "explanation": "`git add` không di chuyển tệp khỏi thư mục; nó chọn phiên bản để chuẩn bị commit."
+      },
+      {
+        "id": "q5",
+        "question": "Bạn sửa một tệp đã được Git theo dõi rồi lưu lại. Thay đổi mới đang ở trạng thái nào?",
+        "type": "single",
+        "options": [
+          {
+            "text": "Modified trong Working Directory, chưa tự staged",
+            "correct": true
+          },
+          {
+            "text": "Một commit mới đã tự được tạo",
+            "correct": false
+          },
+          {
+            "text": "Tệp đã bị xóa khỏi dự án",
+            "correct": false
+          },
+          {
+            "text": "Thay đổi đã được gửi lên GitHub",
+            "correct": false
+          }
+        ],
+        "explanation": "Lưu tệp chỉ cập nhật Working Directory. Bạn cần dùng `git add` để stage và `git commit` để tạo mốc lịch sử."
       }
     ]
   }

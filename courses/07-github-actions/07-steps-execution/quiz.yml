@@ -13,15 +13,12 @@ questions:
         correct: false
       - text: Ngẫu nhiên tùy theo tải của máy chủ
         correct: false
-    explanation: Các Step trong một Job luôn tuân thủ nguyên tắc thực thi tuần tự từ
-      trên xuống dưới.
+    explanation: Các Step trong một Job luôn tuân thủ nguyên tắc thực thi tuần tự từ trên xuống dưới.
   - id: q2
-    question: Điều gì xảy ra với các Step phía sau nếu một Step bị lỗi (exit code
-      khác 0)?
+    question: Điều gì xảy ra với các Step phía sau nếu một Step bị lỗi (exit code khác 0)?
     type: single
     options:
-      - text: Mặc định toàn bộ các Step phía sau sẽ bị hủy bỏ (skipped) và Job báo thất
-          bại
+      - text: Mặc định toàn bộ các Step phía sau sẽ bị hủy bỏ (skipped) và Job báo thất bại
         correct: true
       - text: Hệ thống tự động khởi động lại máy tính của lập trình viên
         correct: false
@@ -29,11 +26,9 @@ questions:
         correct: false
       - text: Toàn bộ kho lưu trữ GitHub bị khóa tạm thời
         correct: false
-    explanation: "GitHub Actions có cơ chế Fail-fast: khi một bước bị lỗi, các bước
-      sau sẽ không được chạy để tránh hậu quả sai lệch."
+    explanation: "GitHub Actions có cơ chế Fail-fast: khi một bước bị lỗi, các bước sau sẽ không được chạy để tránh hậu quả sai lệch."
   - id: q3
-    question: Thuộc tính nào giúp một Step vẫn tiếp tục chạy mà không làm dừng Job
-      kể cả khi lệnh bên trong bị lỗi?
+    question: Thuộc tính nào giúp một Step vẫn tiếp tục chạy mà không làm dừng Job kể cả khi lệnh bên trong bị lỗi?
     type: single
     options:
       - text: "continue-on-error: true"
@@ -44,14 +39,12 @@ questions:
         correct: false
       - text: "force-run: true"
         correct: false
-    explanation: "`continue-on-error: true` cho phép Job tiếp tục chạy các bước sau
-      dù bước hiện tại trả về mã lỗi thất bại."
+    explanation: "`continue-on-error: true` cho phép Job tiếp tục chạy các bước sau dù bước hiện tại trả về mã lỗi thất bại."
   - id: q4
     question: Mục đích chính của thuộc tính `id` trong một Step là gì?
     type: single
     options:
-      - text: Đặt tên định danh để các Step sau có thể truy cập biến đầu ra (outputs)
-          của Step này
+      - text: Đặt tên định danh để các Step sau có thể truy cập biến đầu ra (outputs) của Step này
         correct: true
       - text: Để GitHub trừ tiền vào tài khoản người dùng
         correct: false
@@ -59,5 +52,17 @@ questions:
         correct: false
       - text: Bắt buộc phải có thì Step mới chạy được
         correct: false
-    explanation: Gán `id` cho Step giúp bạn có thể tham chiếu các giá trị output qua
-      cú pháp `${{ steps.my_id.outputs.my_var }}`.
+    explanation: Gán `id` cho Step giúp bạn có thể tham chiếu các giá trị output qua cú pháp `${{ steps.my_id.outputs.my_var }}`.
+  - id: q5
+    question: Mỗi Step bên trong một Job thường thực hiện công việc qua từ khóa nào sau đây?
+    type: single
+    options:
+      - text: Chạy câu lệnh shell bằng `run` hoặc gọi Action đóng gói sẵn bằng `uses`
+        correct: true
+      - text: Bắt buộc phải kết hợp cả hai từ khóa `run` và `uses` trong cùng một Step
+        correct: false
+      - text: Chỉ có thể gửi email chứ không thể chạy bất kỳ dòng lệnh nào
+        correct: false
+      - text: Tự động khởi động lại máy chủ mỗi khi chạy xong một lệnh
+        correct: false
+    explanation: Một Step thường hoặc là thực thi lệnh shell qua `run`, hoặc tái sử dụng một action có sẵn qua `uses`.

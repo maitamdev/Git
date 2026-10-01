@@ -4,58 +4,58 @@
 
 repository:
   vi: kho lưu trữ
-  preferred: "Repository (kho lưu trữ)"
-  description: "Cơ sở dữ liệu chứa toàn bộ lịch sử commit, nhánh và đối tượng của dự án."
+  preferred: "Repository (kho Git)"
+  description: "Nơi Git quản lý tệp của dự án và lưu lịch sử các mốc bạn đã tạo. Kho có thể nằm trên máy hoặc ở một dịch vụ từ xa."
 
 working-tree:
   vi: thư mục làm việc
   preferred: "Working Tree (thư mục làm việc)"
-  description: "Thư mục vật lý trên ổ đĩa chứa các file bạn đang trực tiếp xem và chỉnh sửa."
+  description: "Các tệp trong thư mục dự án mà bạn đang xem và sửa trực tiếp. Thay đổi ở đây chưa tự trở thành một commit."
 
 staging-area:
   vi: vùng chuẩn bị
   preferred: "Staging Area (vùng chuẩn bị)"
-  description: "Khu vực trung gian (index) lưu lại các thay đổi đã chọn lọc sẵn sàng để commit."
+  description: "Bản chọn các thay đổi bạn muốn đưa vào commit tiếp theo. Dùng git add để chọn hoặc cập nhật nội dung trong vùng này."
 
 branch:
   vi: nhánh
   preferred: "Nhánh (branch)"
-  description: "Con trỏ có thể di chuyển trỏ tới một commit cụ thể trong đồ thị DAG."
+  description: "Một dòng làm việc có tên trỏ đến commit hiện tại. Tạo nhánh giúp thử tính năng riêng mà chưa trộn vào nhánh khác."
 
 commit:
   vi: commit
   preferred: "Commit (ảnh chụp snapshot)"
-  description: "Ảnh chụp toàn bộ trạng thái repository tại một thời điểm xác định."
+  description: "Một mốc đã lưu trong lịch sử Git, gồm trạng thái các tệp được chọn cùng thông tin và lời nhắn về mốc đó."
 
 merge:
   vi: hợp nhất
   preferred: "Merge (hợp nhất)"
-  description: "Quá trình gộp lịch sử và thay đổi của hai nhánh lại với nhau."
+  description: "Đưa lịch sử và thay đổi từ một nhánh vào nhánh hiện tại. Nếu hai nhánh sửa cùng một chỗ theo cách khác nhau, bạn có thể cần giải quyết xung đột."
 
 remote:
   vi: kho từ xa
   preferred: "Remote (kho từ xa)"
-  description: "Bản sao repository được lưu trữ trên máy chủ từ xa như GitHub, GitLab."
+  description: "Tên kết nối lưu địa chỉ của một repository khác, thường ở dịch vụ như GitHub hoặc GitLab. Dữ liệu chỉ trao đổi khi bạn fetch, pull hoặc push."
 
 clone:
   vi: nhân bản
   preferred: "Clone (nhân bản kho chứa)"
-  description: "Tải toàn bộ repository từ remote về máy cục bộ kèm đầy đủ lịch sử."
+  description: "Tạo một kho Git trên máy từ một kho khác. Bản clone đầy đủ thông thường mang theo lịch sử để bạn làm việc cục bộ."
 
 fetch:
   vi: lấy dữ liệu
   preferred: "Fetch (lấy dữ liệu từ xa)"
-  description: "Tải các commit và ref từ remote về nhưng chưa gộp vào nhánh cục bộ."
+  description: "Lấy thông tin và commit mới từ remote về kho cục bộ để bạn xem; không tự đưa chúng vào nhánh đang làm."
 
 pull:
   vi: kéo và gộp
   preferred: "Pull (kéo và gộp code)"
-  description: "Tải về và tự động gộp các thay đổi từ remote vào nhánh làm việc hiện tại."
+  description: "Lấy thay đổi từ remote rồi tích hợp vào nhánh hiện tại theo cấu hình Git; có thể cần xử lý xung đột."
 
 push:
   vi: đẩy dữ liệu
   preferred: "Push (đẩy commit lên remote)"
-  description: "Đưa các commit từ nhánh cục bộ lên nhánh tương ứng trên server từ xa."
+  description: "Gửi commit từ kho cục bộ lên remote để chia sẻ. Push có thể bị từ chối nếu lịch sử từ xa cần được tích hợp trước."
 
 rebase:
   vi: tái thiết lập gốc

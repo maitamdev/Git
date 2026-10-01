@@ -2,8 +2,7 @@ id: quiz-06-11-semantic-versioning
 title: "Trắc nghiệm: Semantic Versioning"
 questions:
   - id: q1
-    question: Khi bạn chỉ thực hiện sửa lỗi mã nguồn mà không thêm tính năng mới và
-      không làm hỏng tương thích ngược thì con số nào tăng lên?
+    question: Khi bạn chỉ thực hiện sửa lỗi mã nguồn mà không thêm tính năng mới và không làm hỏng tương thích ngược thì con số nào tăng lên?
     type: single
     options:
       - text: PATCH (ví dụ từ 1.0.0 lên 1.0.1)
@@ -14,11 +13,9 @@ questions:
         correct: false
       - text: Không được tăng số nào cả
         correct: false
-    explanation: Chỉ số PATCH dành riêng cho các bản vá lỗi (bug fixes) bảo đảm an
-      toàn và tương thích tuyệt đối cho người dùng.
+    explanation: Chỉ số PATCH dành riêng cho các bản vá lỗi (bug fixes) bảo đảm an toàn và tương thích tuyệt đối cho người dùng.
   - id: q2
-    question: Khi một thư viện xóa bỏ hoàn toàn một hàm công khai mà khách hàng đang
-      sử dụng, thư viện đó BẮT BUỘC phải tăng con số nào?
+    question: Khi một thư viện xóa bỏ hoàn toàn một hàm công khai mà khách hàng đang sử dụng, thư viện đó BẮT BUỘC phải tăng con số nào?
     type: single
     options:
       - text: MAJOR vì đây là thay đổi phá vỡ tính tương thích ngược (Breaking Change)
@@ -29,11 +26,9 @@ questions:
         correct: false
       - text: Giữ nguyên phiên bản cũ
         correct: false
-    explanation: Bất kỳ thay đổi nào khiến mã nguồn của người dùng hiện tại bị lỗi
-      khi nâng cấp đều bắt buộc phải tăng MAJOR theo chuẩn SemVer.
+    explanation: Bất kỳ thay đổi nào khiến mã nguồn của người dùng hiện tại bị lỗi khi nâng cấp đều bắt buộc phải tăng MAJOR theo chuẩn SemVer.
   - id: q3
-    question: Sau khi tăng chỉ số MINOR từ phiên bản `1.4.3`, số phiên bản mới chính
-      xác sẽ là gì?
+    question: Sau khi tăng chỉ số MINOR từ phiên bản `1.4.3`, số phiên bản mới chính xác sẽ là gì?
     type: single
     options:
       - text: 1.5.0 (chỉ số PATCH được reset về 0)
@@ -44,15 +39,12 @@ questions:
         correct: false
       - text: 1.4.4
         correct: false
-    explanation: Theo đặc tả SemVer, khi một con số ở bậc cao hơn tăng lên, tất cả
-      các con số ở bậc thấp hơn phía sau nó bắt buộc phải được reset về số 0.
+    explanation: Theo đặc tả SemVer, khi một con số ở bậc cao hơn tăng lên, tất cả các con số ở bậc thấp hơn phía sau nó bắt buộc phải được reset về số 0.
   - id: q4
-    question: Các phiên bản có số MAJOR bằng 0 (ví dụ `0.3.2`) mang ý nghĩa quy ước
-      gì trong SemVer?
+    question: Các phiên bản có số MAJOR bằng 0 (ví dụ `0.3.2`) mang ý nghĩa quy ước gì trong SemVer?
     type: single
     options:
-      - text: Giai đoạn phát triển thử nghiệm ban đầu (Initial Development), API chưa ổn
-          định và có thể thay đổi bất cứ lúc nào
+      - text: Giai đoạn phát triển thử nghiệm ban đầu (Initial Development), API chưa ổn định và có thể thay đổi bất cứ lúc nào
         correct: true
       - text: Phiên bản hoàn hảo không bao giờ có lỗi
         correct: false
@@ -60,6 +52,17 @@ questions:
         correct: false
       - text: Phần mềm chỉ chạy được trên hệ điều hành 32-bit
         correct: false
-    explanation: Giai đoạn `0.x.x` dành cho các sản phẩm sơ khai đang hoàn thiện
-      kiến trúc, không ràng buộc bởi quy tắc tương thích nghiêm ngặt của phiên
-      bản ổn định 1.0.0.
+    explanation: Giai đoạn `0.x.x` dành cho các sản phẩm sơ khai đang hoàn thiện kiến trúc, không ràng buộc bởi quy tắc tương thích nghiêm ngặt của phiên bản ổn định 1.0.0.
+  - id: q5
+    question: Hậu tố pre-release như `-alpha`, `-beta`, hoặc `-rc.1` trong định dạng SemVer mang ý nghĩa quy ước gì?
+    type: single
+    options:
+      - text: Đánh dấu phiên bản thử nghiệm phát hành trước khi ra mắt bản chính thức, có độ ưu tiên thấp hơn bản chính thức cùng số
+        correct: true
+      - text: Đánh dấu phiên bản chỉ chạy được duy nhất trên hệ điều hành Linux
+        correct: false
+      - text: Đánh dấu phiên bản phần mềm đã hết hạn bản quyền thương mại
+        correct: false
+      - text: Đánh dấu phần mềm chứa mã độc cần bị cách ly khẩn cấp
+        correct: false
+    explanation: Hậu tố pre-release như 1.0.0-rc.1 biểu thị bản phát hành thử nghiệm cho cộng đồng kiểm thử trước khi phát hành phiên bản chính thức 1.0.0.

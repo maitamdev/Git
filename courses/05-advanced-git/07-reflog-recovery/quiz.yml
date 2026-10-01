@@ -64,3 +64,20 @@ questions:
         correct: false
     explanation: Gõ nhiều lệnh dịch chuyển HEAD sẽ tạo thêm nhiều dòng `HEAD@{n}`,
       làm phức tạp và đẩy xa vị trí commit cần cứu.
+  - id: q5
+    question: Khi bạn tạo nhánh mới tại commit tìm được từ reflog bằng cú pháp `git branch
+      rescue-branch <commit-hash>`, điều gì xảy ra với nhánh hiện tại?
+    type: single
+    options:
+      - text: Nhánh hiện tại hoàn toàn không bị ảnh hưởng; Git chỉ tạo thêm một con trỏ
+          nhánh mới neo giữ commit đó
+        correct: true
+      - text: Nhánh hiện tại bị xóa sạch sẽ khỏi dự án
+        correct: false
+      - text: Toàn bộ lịch sử của nhánh hiện tại bị ghi đè hoàn toàn
+        correct: false
+      - text: Git bắt buộc phải kích hoạt xung đột merge ngay lập tức
+        correct: false
+    explanation: Lệnh `git branch <tên> <hash>` là thao tác an toàn 100%, chỉ tạo thêm
+      con trỏ tham chiếu mà không chạm vào nhánh làm việc hiện tại.
+

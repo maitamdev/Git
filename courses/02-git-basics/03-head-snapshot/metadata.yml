@@ -11,13 +11,9 @@ keywords:
 prerequisites:
   - 02-staging-area
 objectives:
-  - "Hiểu rõ khu vực thứ ba trong kiến trúc Git: Repository và cơ sở dữ liệu đối
-    tượng."
-  - Nắm bắt khái niệm con trỏ HEAD và cách nó trỏ tới commit hiện tại của nhánh
-    làm việc.
-  - Phân biệt snapshot bất biến trong Repository với các tệp tin khả biến trong
-    Working Tree.
+  - Nhận biết `HEAD` là vị trí hiện tại trong lịch sử Git.
+  - Phân biệt tệp đang sửa với trạng thái đã lưu trong commit.
+  - Dùng `git show HEAD` để xem commit hiện tại.
 commands:
   - git log --oneline
   - git show HEAD
-  - cat .git/HEAD

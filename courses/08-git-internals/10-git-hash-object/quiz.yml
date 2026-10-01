@@ -2,62 +2,67 @@ id: quiz-08-git-internals-10-git-hash-object
 title: "Trắc nghiệm: Tạo và băm đối tượng thủ công với git hash-object"
 questions:
   - id: q1
-    question: Tùy chọn nào của lệnh `git hash-object` bắt buộc phải có để đối tượng
-      thực sự được ghi xuống ổ đĩa trong .git/objects/?
+    question: "Tùy chọn nào của lệnh git hash-object bắt buộc phải có để đối tượng thực sự được ghi xuống ổ đĩa trong .git/objects/?"
     type: single
     options:
-      - text: -w (write)
+      - text: "-w (write)"
         correct: true
-      - text: -s (save)
+      - text: "-s (save)"
         correct: false
-      - text: -f (force)
+      - text: "-f (force)"
         correct: false
-      - text: -c (commit)
+      - text: "-c (commit)"
         correct: false
-    explanation: Cờ `-w` yêu cầu Git ghi đối tượng vào Object Database; nếu không có
-      cờ này, lệnh chỉ in mã băm ra màn hình.
+    explanation: "Cờ -w yêu cầu Git ghi đối tượng vào Object Database; nếu không có cờ này, lệnh chỉ in mã băm ra màn hình."
   - id: q2
-    question: Tùy chọn `--stdin` trong lệnh `git hash-object` có tác dụng gì?
+    question: "Tùy chọn --stdin trong lệnh git hash-object có tác dụng gì?"
     type: single
     options:
-      - text: Đọc nội dung dữ liệu từ luồng đầu vào tiêu chuẩn (Standard Input) thay vì
-          đọc từ tệp tin trên đĩa
+      - text: "Đọc nội dung dữ liệu từ luồng đầu vào tiêu chuẩn (Standard Input) thay vì đọc từ tệp tin trên đĩa"
         correct: true
-      - text: Bắt buộc người dùng phải nhập mật khẩu
+      - text: "Bắt buộc người dùng phải nhập mật khẩu"
         correct: false
-      - text: Chạy lệnh với quyền quản trị viên
+      - text: "Chạy lệnh với quyền quản trị viên"
         correct: false
-      - text: Tự động sửa lỗi cú pháp
+      - text: "Tự động sửa lỗi cú pháp"
         correct: false
-    explanation: '`--stdin` cho phép bạn truyền dữ liệu qua đường ống pipe (ví dụ:
-      `echo "data" | git hash-object --stdin`).'
+    explanation: "--stdin cho phép bạn truyền dữ liệu qua đường ống pipe từ luồng terminal vào Git hash-object."
   - id: q3
-    question: Mặc định nếu không chỉ định cờ `-t`, lệnh `git hash-object` sẽ tạo ra
-      loại đối tượng nào?
+    question: "Mặc định nếu không chỉ định cờ -t, lệnh git hash-object sẽ tạo ra loại đối tượng nào?"
     type: single
     options:
-      - text: blob
+      - text: "blob"
         correct: true
-      - text: tree
+      - text: "tree"
         correct: false
-      - text: commit
+      - text: "commit"
         correct: false
-      - text: tag
+      - text: "tag"
         correct: false
-    explanation: Loại đối tượng mặc định của `git hash-object` luôn luôn là `blob`.
+    explanation: "Loại đối tượng mặc định của git hash-object luôn luôn là blob."
   - id: q4
-    question: Sau khi chạy lệnh `git hash-object -w myfile.txt`, tệp `myfile.txt` đã
-      được đưa vào Staging Area chưa?
+    question: "Sau khi chạy lệnh git hash-object -w myfile.txt, tệp myfile.txt đã được đưa vào Staging Area chưa?"
     type: single
     options:
-      - text: Chưa, lệnh này chỉ ghi đối tượng vào Object Database, hoàn toàn không tác
-          động đến tệp .git/index
+      - text: "Chưa, lệnh này chỉ ghi đối tượng vào Object Database, hoàn toàn không tác động đến tệp .git/index"
         correct: true
-      - text: Rồi, nó tương đương với git add
+      - text: "Rồi, nó tương đương với git add"
         correct: false
-      - text: Tự động commit luôn
+      - text: "Tự động commit luôn"
         correct: false
-      - text: Tệp bị xóa khỏi thư mục làm việc
+      - text: "Tệp bị xóa khỏi thư mục làm việc"
         correct: false
-    explanation: "Đây là sự khác biệt giữa Plumbing và Porcelain: `hash-object` chỉ
-      thao tác với object store, không chạm vào staging area."
+    explanation: "Đây là sự khác biệt giữa Plumbing và Porcelain: hash-object chỉ thao tác với object store, không chạm vào staging area."
+  - id: q5
+    question: "Tùy chọn -t trong lệnh git hash-object cho phép chỉ định những loại đối tượng nào?"
+    type: single
+    options:
+      - text: "blob, tree, commit, hoặc tag"
+        correct: true
+      - text: "text, json, xml, hoặc binary"
+        correct: false
+      - text: "main, master, staging, hoặc production"
+        correct: false
+      - text: "Chỉ duy nhất một loại là blob"
+        correct: false
+    explanation: "Cờ -t cho phép bạn chỉ định loại đối tượng cần tạo trong 4 kiểu nguyên thủy của Git: blob, tree, commit, hoặc tag."

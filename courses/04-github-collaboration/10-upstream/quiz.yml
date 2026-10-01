@@ -62,3 +62,20 @@ questions:
         correct: false
     explanation: Bạn chỉ có quyền đọc (clone/fetch) kho gốc; quyền ghi chỉ dành cho
       maintainers của dự án.
+  - id: q5
+    question: Sự khác biệt then chốt về vai trò giữa hai remote `origin` và `upstream`
+      trong Forking Workflow là gì?
+    type: single
+    options:
+      - text: origin là kho fork của bạn có toàn quyền push, còn upstream là kho gốc
+          của dự án mà bạn chỉ có quyền fetch/pull để đồng bộ
+        correct: true
+      - text: origin chỉ dùng cho máy Mac, còn upstream chỉ dùng cho máy Windows
+        correct: false
+      - text: origin chỉ tải về commit mới nhất, còn upstream tải toàn bộ lịch sử commit
+        correct: false
+      - text: upstream tự động xóa sạch mã nguồn trên máy sau khi đóng cửa sổ terminal
+        correct: false
+    explanation: Bạn có toàn quyền ghi vào origin (kho cá nhân) để tạo PR, trong khi
+      upstream là nguồn chuẩn của dự án mà bạn chỉ đọc về để đồng bộ.
+

@@ -11,6 +11,7 @@ export interface ContentValidationResult {
   errors: string[];
   warnings: string[];
   metrics: {
+    termCardsCount: number;
     definitionWords: number;
     whyWords: number;
     mentalModelWords: number;
@@ -82,6 +83,7 @@ export function validateSingleLesson(
   const metaPath = path.join(lessonDir, 'metadata.yml');
 
   const metrics = {
+    termCardsCount: 0,
     definitionWords: 0,
     whyWords: 0,
     mentalModelWords: 0,
@@ -131,38 +133,40 @@ export function validateSingleLesson(
     }
   }
 
-  // 3. Word Count Thresholds (P1.2)
+  // 3. Beginner-friendly terminology and concise teaching sections
+  const vocabularyText = extractSection(content, /từ khóa hôm nay|thuật ngữ/i);
+  const termCards = vocabularyText.match(/^###\s+.+$/gm) || [];
+  metrics.termCardsCount = termCards.length;
+  if (metrics.termCardsCount < 2 || metrics.termCardsCount > 5) {
+    errors.push(`Mục "Từ khóa hôm nay" cần từ 2 đến 5 thẻ thuật ngữ (hiện có ${metrics.termCardsCount})`);
+  }
+  const termParts = vocabularyText.split(/^###\s+/m).slice(1);
+  termParts.forEach((part, index) => {
+    const labels = ['Nói dễ hiểu', 'Ví dụ', 'Đừng nhầm'];
+    const missing = labels.filter((label) => !new RegExp(`^\\s*[-*]?\\s*\\*{0,2}${label}\\*{0,2}:`, 'im').test(part));
+    if (missing.length) errors.push(`Thẻ thuật ngữ #${index + 1} thiếu: ${missing.join(', ')}`);
+  });
+
+  // Keep explanations short enough to teach in screens; length alone never proves clarity.
   const defText = extractSection(content, /định nghĩa/i);
   metrics.definitionWords = countWords(defText);
-  if (metrics.definitionWords < 80) {
-    errors.push(
-      `Mục "Định nghĩa" quá ngắn (${metrics.definitionWords} từ < tiêu chuẩn tối thiểu 80 từ)`
-    );
-  }
+  if (metrics.definitionWords < 10) warnings.push(`Mục "Định nghĩa" cần thêm một giải thích cụ thể (${metrics.definitionWords} từ)`);
+  if (metrics.definitionWords > 80) warnings.push(`Mục "Định nghĩa" dài ${metrics.definitionWords} từ; cân nhắc tách thành ý nhỏ`);
 
   const whyText = extractSection(content, /tại sao cần/i);
   metrics.whyWords = countWords(whyText);
-  if (metrics.whyWords < 80) {
-    errors.push(
-      `Mục "Tại sao cần" quá ngắn (${metrics.whyWords} từ < tiêu chuẩn tối thiểu 80 từ)`
-    );
-  }
+  if (metrics.whyWords < 12) warnings.push(`Mục "Tại sao cần" cần thêm tình huống cụ thể (${metrics.whyWords} từ)`);
+  if (metrics.whyWords > 110) warnings.push(`Mục "Tại sao cần" dài ${metrics.whyWords} từ; cân nhắc chia nhỏ`);
 
   const mmText = extractSection(content, /mental model|mô hình tư duy/i);
   metrics.mentalModelWords = countWords(mmText);
-  if (metrics.mentalModelWords < 80) {
-    errors.push(
-      `Mục "Mental Model" quá ngắn (${metrics.mentalModelWords} từ < tiêu chuẩn tối thiểu 80 từ)`
-    );
-  }
+  if (metrics.mentalModelWords < 12) warnings.push(`Mục "Mental Model" cần hình ảnh hoặc ví dụ dễ nhớ (${metrics.mentalModelWords} từ)`);
+  if (metrics.mentalModelWords > 100) warnings.push(`Mục "Mental Model" dài ${metrics.mentalModelWords} từ; cân nhắc tách nhỏ`);
 
   const exText = extractSection(content, /ví dụ/i);
   metrics.exampleWords = countWords(exText);
-  if (metrics.exampleWords < 100) {
-    errors.push(
-      `Mục "Ví dụ thực tế" quá ngắn (${metrics.exampleWords} từ < tiêu chuẩn tối thiểu 100 từ)`
-    );
-  }
+  if (metrics.exampleWords < 12) warnings.push(`Mục "Ví dụ thực tế" cần thêm tình huống cụ thể (${metrics.exampleWords} từ)`);
+  if (metrics.exampleWords > 110) warnings.push(`Mục "Ví dụ thực tế" dài ${metrics.exampleWords} từ; cân nhắc tách nhỏ`);
 
   // Common mistakes >= 3 items
   const mistakesText = extractSection(content, /sai lầm/i);
@@ -193,7 +197,7 @@ export function validateSingleLesson(
   const hasGitCommands = commandSection.includes('git ');
   if (hasGitCommands) {
     const explanationSection = extractSection(content, /giải thích/i);
-    if (!explanationSection || countWords(explanationSection) < 40) {
+    if (!explanationSection || countWords(explanationSection) < 8) {
       errors.push(`Bài học có Git command nhưng mục "Giải thích command" quá sơ sài hoặc thiếu`);
     }
   }

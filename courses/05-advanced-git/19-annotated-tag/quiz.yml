@@ -2,8 +2,7 @@ id: quiz-05-19-annotated-tag
 title: "Trắc nghiệm: Annotated Tag"
 questions:
   - id: q1
-    question: Cờ tùy chọn nào trong lệnh `git tag` được sử dụng để tạo một thẻ chú
-      giải Annotated Tag?
+    question: Cờ tùy chọn nào trong lệnh `git tag` được sử dụng để tạo một thẻ chú giải Annotated Tag?
     type: single
     options:
       - text: -a (viết tắt của --annotate)
@@ -14,15 +13,12 @@ questions:
         correct: false
       - text: -f (viết tắt của --full)
         correct: false
-    explanation: Cờ `-a` chỉ thị cho Git tạo một đối tượng tag đầy đủ (Annotated
-      tag) trong cơ sở dữ liệu.
+    explanation: Cờ `-a` chỉ thị cho Git tạo một đối tượng tag đầy đủ (Annotated tag) trong cơ sở dữ liệu.
   - id: q2
-    question: Thông tin nào sau đây ĐƯỢC LƯU TRỮ bên trong một Annotated Tag mà
-      Lightweight Tag KHÔNG CÓ?
+    question: Thông tin nào sau đây ĐƯỢC LƯU TRỮ bên trong một Annotated Tag mà Lightweight Tag KHÔNG CÓ?
     type: single
     options:
-      - text: Tên người tạo thẻ, email, thời gian tạo thẻ, thông điệp phát hành và chữ
-          ký số GPG
+      - text: Tên người tạo thẻ, email, thời gian tạo thẻ, thông điệp phát hành và chữ ký số GPG
         correct: true
       - text: Mã commit hash mà thẻ trỏ tới
         correct: false
@@ -30,11 +26,9 @@ questions:
         correct: false
       - text: Không có thông tin nào khác biệt
         correct: false
-    explanation: Lightweight tag chỉ là một con trỏ lưu mã hash; Annotated tag là
-      đối tượng lưu đầy đủ metadata tác giả và thông điệp.
+    explanation: Lightweight tag chỉ là một con trỏ lưu mã hash; Annotated tag là đối tượng lưu đầy đủ metadata tác giả và thông điệp.
   - id: q3
-    question: Lệnh nào sau đây dùng để xem chi tiết toàn bộ siêu dữ liệu (metadata)
-      và thông điệp của một Annotated Tag?
+    question: Lệnh nào sau đây dùng để xem chi tiết toàn bộ siêu dữ liệu (metadata) và thông điệp của một Annotated Tag?
     type: single
     options:
       - text: git show <tên-thẻ>
@@ -45,15 +39,12 @@ questions:
         correct: false
       - text: git inspect-tag <tên-thẻ>
         correct: false
-    explanation: "`git show <tag-name>` in ra thông tin chi tiết về Tagger, Date,
-      Message và diff của commit được gắn thẻ."
+    explanation: "`git show <tag-name>` in ra thông tin chi tiết về Tagger, Date, Message và diff của commit được gắn thẻ."
   - id: q4
-    question: Tại sao trong các dự án thương mại, lập trình viên được yêu cầu PHẢI
-      sử dụng Annotated Tag cho các bản phát hành Production?
+    question: Tại sao trong các dự án thương mại, lập trình viên được yêu cầu PHẢI sử dụng Annotated Tag cho các bản phát hành Production?
     type: single
     options:
-      - text: Để đảm bảo tính xác thực, lưu vết kiểm toán rõ ràng về người phê duyệt và
-          thời điểm phát hành
+      - text: Để đảm bảo tính xác thực, lưu vết kiểm toán rõ ràng về người phê duyệt và thời điểm phát hành
         correct: true
       - text: Vì Lightweight tag sẽ tự động bị xóa sau 24 giờ
         correct: false
@@ -61,5 +52,17 @@ questions:
         correct: false
       - text: Vì GitHub không cho phép hiển thị Lightweight tag
         correct: false
-    explanation: Tính toàn vẹn và trách nhiệm giải trình của bản phát hành được đảm
-      bảo nhờ siêu dữ liệu của Annotated tag.
+    explanation: Tính toàn vẹn và trách nhiệm giải trình của bản phát hành được đảm bảo nhờ siêu dữ liệu của Annotated tag.
+  - id: q5
+    question: Cú pháp chuẩn nào sau đây dùng để tạo một Annotated Tag `v2.0.0` với thông điệp phát hành "Release version 2.0.0"?
+    type: single
+    options:
+      - text: 'git tag -a v2.0.0 -m "Release version 2.0.0"'
+        correct: true
+      - text: 'git tag -m "Release version 2.0.0" v2.0.0'
+        correct: false
+      - text: 'git annotated-tag v2.0.0 "Release version 2.0.0"'
+        correct: false
+      - text: 'git tag --create v2.0.0 --note "Release version 2.0.0"'
+        correct: false
+    explanation: 'Cú pháp chuẩn để tạo Annotated Tag với thông điệp kèm theo là `git tag -a <tên-thẻ> -m "<thông-điệp>"`. Cờ `-a` báo hiệu tạo thẻ chú giải.'

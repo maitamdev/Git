@@ -16,48 +16,41 @@ questions:
     explanation: Git coi dữ liệu như một chuỗi các snapshot của hệ thống tệp tin tại
       từng thời điểm commit.
   - id: q2
-    question: Điều gì xảy ra khi bạn tạo một commit mới nhưng có rất nhiều tệp tin
-      không hề bị chỉnh sửa?
+    question: Diff giúp bạn làm việc gì?
     type: single
     options:
-      - text: Git chỉ lưu một con trỏ tham chiếu trỏ lại tệp tin cũ đã có trong cơ sở dữ
-          liệu
+      - text: Xem phần khác nhau giữa hai trạng thái dự án
         correct: true
-      - text: Git nhân bản toàn bộ các tệp tin đó sang thư mục mới gây tốn dung lượng
+      - text: Tự động tạo một commit mới
         correct: false
-      - text: Git tự động xóa bỏ các tệp tin không bị chỉnh sửa khỏi dự án
+      - text: Đổi tên nhánh hiện tại
         correct: false
-      - text: Git báo lỗi từ chối commit vì tệp tin không có sự thay đổi
+      - text: Cài Git vào máy tính
         correct: false
-    explanation: Để tối ưu tốc độ và dung lượng, Git tái sử dụng con trỏ tới các
-      blob tệp tin cũ không có thay đổi.
+    explanation: Diff giúp đọc phần thay đổi giữa hai trạng thái; bản thân nó không lưu commit.
   - id: q3
-    question: Cấu trúc dữ liệu nào được Git sử dụng để tổ chức mối liên kết lịch sử
-      giữa các commit?
+    question: Bạn sửa README nhưng chưa chạy lệnh tạo commit. Việc gì đã xảy ra?
     type: single
     options:
-      - text: Directed Acyclic Graph - DAG (Đồ thị có hướng không chu trình)
+      - text: Nội dung tệp đã đổi, nhưng chưa có mốc mới trong lịch sử
         correct: true
-      - text: Mảng một chiều tuyến tính cố định kích thước
+      - text: Git tự tạo commit ngay khi lưu tệp
         correct: false
-      - text: Ngăn xếp theo nguyên lý vào trước ra trước (FIFO Queue)
+      - text: Git đã gửi README lên GitHub
         correct: false
-      - text: Bảng băm đơn cấp không có con trỏ cha con
+      - text: README bị xóa khỏi máy
         correct: false
-    explanation: Lịch sử Git là một DAG (Directed Acyclic Graph), trong đó mỗi
-      commit trỏ về một hoặc nhiều commit cha của nó.
+    explanation: Sửa tệp chỉ đổi nội dung trong dự án; bạn phải tạo commit riêng để lưu mốc.
   - id: q4
-    question: Mã băm SHA của một commit trong Git được sinh ra dựa trên những yếu tố nào?
+    question: Lệnh `git log --oneline` giúp bạn xem điều gì?
     type: single
     options:
-      - text: Nội dung cây thư mục, thông điệp commit, tác giả, thời gian và mã hash của
-          commit cha
+      - text: Danh sách commit dưới dạng ngắn gọn
         correct: true
-      - text: Chỉ dựa trên số thứ tự commit do người dùng tự nhập
+      - text: Nội dung mọi tệp đang sửa
         correct: false
-      - text: Tên của máy tính và địa chỉ IP kết nối mạng của bạn
+      - text: Các ứng dụng đã cài trên máy
         correct: false
-      - text: Số lượng dòng code có trong tệp tin lớn nhất của dự án
+      - text: Tên người dùng GitHub của bạn
         correct: false
-    explanation: Mã băm SHA là hàm mật mã học tính toán từ toàn bộ dữ liệu nội dung,
-      siêu dữ liệu tác giả, ngày giờ và cha của commit.
+    explanation: Lệnh này hiển thị các mốc commit đã có; nó không tự tạo mốc mới.

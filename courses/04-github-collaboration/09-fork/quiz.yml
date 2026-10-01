@@ -65,3 +65,20 @@ questions:
         correct: false
     explanation: Kho fork là không gian an toàn biệt lập 100%; tác giả kho gốc chỉ
       nhận code khi duyệt Pull Request.
+  - id: q5
+    question: Khi thực hiện Fork trên GitHub, bạn có thể chọn sao chép những nhánh nào
+      sang tài khoản của mình?
+    type: single
+    options:
+      - text: Mặc định GitHub chỉ sao chép nhánh chính (default branch), hoặc bạn có thể
+          bỏ chọn để sao chép tất cả các nhánh
+        correct: true
+      - text: Bắt buộc phải sao chép toàn bộ các nhánh mà không có lựa chọn nào khác
+        correct: false
+      - text: Chỉ được phép sao chép các nhánh đã được gộp (merged branches)
+        correct: false
+      - text: Không có nhánh nào được chép sang, bạn phải tự tạo lại từng nhánh từ đầu
+        correct: false
+    explanation: Trên giao diện Fork của GitHub, tùy chọn 'Copy the default branch only'
+      được bật mặc định, cho phép linh hoạt chọn copy một hay toàn bộ nhánh.
+

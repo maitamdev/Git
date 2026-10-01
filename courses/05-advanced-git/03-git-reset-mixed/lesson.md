@@ -10,22 +10,41 @@
 
 ---
 
+## 🧩 Từ khóa hôm nay
+
+### git reset --mixed
+- **Nói dễ hiểu**: Lệnh rút lại commit đồng thời xóa sạch Staging Area, đưa toàn bộ thay đổi về trạng thái chưa add trong thư mục làm việc.
+- **Ví dụ**: `git reset --mixed HEAD~1` khi muốn dỡ commit ra để chia nhỏ thành nhiều commit riêng.
+- **Đừng nhầm**: Không xóa file hay mất code; các thay đổi vẫn nằm nguyên trong Working Directory dưới dạng màu đỏ.
+
+### default reset mode
+- **Nói dễ hiểu**: Hành vi ngầm định của Git mỗi khi bạn gõ lệnh `git reset` mà không cung cấp cờ `--soft` hay `--hard`.
+- **Ví dụ**: Gõ `git reset HEAD~1` thì Git sẽ tự động hiểu và chạy như `git reset --mixed HEAD~1`.
+- **Đừng nhầm**: Không tương đương với `--soft`; nếu không gõ cờ, Staging Area sẽ bị làm sạch thay vì giữ nguyên staged.
+
+### unstaged changes
+- **Nói dễ hiểu**: Trạng thái các file có chỉnh sửa trong thư mục làm việc nhưng chưa được đưa vào hàng đợi chuẩn bị commit.
+- **Ví dụ**: Trong `git status`, file hiển thị màu đỏ dưới mục "Changes not staged for commit".
+- **Đừng nhầm**: Không phải file mới chưa theo dõi (untracked); đây là file đã có trong Git nhưng đang có sửa đổi mới chưa add.
+
+---
+
 ## 📖 Định nghĩa
-> `git reset --mixed <commit-target>` (hoặc cú pháp ngắn gọn `git reset <commit-target>`) là chế độ hoạt động mặc định của câu lệnh reset trong Git. Khi được gọi, Git sẽ đồng thời thực hiện hai thao tác: dịch chuyển con trỏ HEAD và con trỏ nhánh hiện tại lùi về commit mục tiêu được chỉ định, đồng thời cập nhật lại Staging Area (Index) sao cho khớp hoàn toàn với snapshot của commit đó. Tuy nhiên, nội dung trong thư mục làm việc Working Directory vẫn được bảo toàn nguyên vẹn.
+`git reset --mixed <commit-target>` (cú pháp ngắn gọn `git reset <commit-target>`) là chế độ mặc định của lệnh reset trong Git. Khi chạy, Git di chuyển con trỏ HEAD và nhánh hiện tại lùi về commit mục tiêu, đồng thời xóa trạng thái staged trong Staging Area nhưng bảo toàn 100% nội dung trong Working Directory.
 
 ---
 
-## 🤔 Tại sao cần?
-Trong công việc hàng ngày, rất thường xuyên bạn gõ lệnh `git add .` theo thói quen và vô tình đưa hàng chục tệp tin không liên quan vào Staging Area, hoặc bạn commit một loạt thay đổi nhưng sau đó muốn phân chia chúng thành các commit nhỏ gọn gàng hơn. `git reset --mixed` chính là công cụ phân tách tuyệt vời: nó tháo dỡ toàn bộ các thay đổi ra khỏi Staging Area về lại Working Tree dưới dạng unstaged, trao cho bạn quyền chọn lọc lại từng dòng code để chuẩn bị commit.
+## 💡 Tại sao cần
+Khi gõ `git add .` theo thói quen, bạn dễ đưa nhiều file không liên quan vào Staging Area, hoặc bạn commit một loạt thay đổi lớn nhưng sau đó muốn chia nhỏ. Lệnh `git reset --mixed` tháo dỡ các thay đổi ra khỏi Staging về lại Working Tree dưới dạng unstaged để bạn tự do chọn lọc commit từng phần.
 
 ---
 
-## 🧠 Mental Model (Mô hình tư duy)
-Tiếp tục với hình ảnh gửi kiện hàng qua bưu điện. Trong trường hợp này, bạn đã đóng gói hàng và dán băng dính niêm phong hộp cẩn thận (Staging Area). Khi bạn nhận ra mình đã đóng nhầm cả tài liệu bí mật của công ty vào trong thùng hàng, bạn quyết định rạch băng dính và dỡ toàn bộ đồ vật trong thùng ra đặt lại trên bàn làm việc của bạn (`git reset --mixed`). Mọi món đồ vẫn còn nguyên vẹn trên bàn, bạn có thể thong thả phân loại lại món nào cần gửi và món nào giữ lại.
+## 🧠 Mental Model
+Hãy hình dung bạn đóng gói đồ đạc vào thùng và dán băng dính niêm phong (Staging Area). Khi nhận ra đã bỏ nhầm tài liệu cơ quan vào thùng, bạn rạch băng dính và dỡ toàn bộ đồ vật trong thùng ra đặt lại trên bàn làm việc (`--mixed`). Đồ vật vẫn còn nguyên trên bàn, bạn thong thả lựa chọn món nào cần gửi và món nào giữ lại.
 
 ---
 
-## 🖼 Sơ đồ
+## 📊 Sơ đồ minh họa
 ```text
 Cơ chế hoạt động của git reset --mixed HEAD~1:
 Trước khi reset:
@@ -41,12 +60,12 @@ Working Tree:     Chứa toàn bộ thay đổi của C3 (Chưa staged - màu đ
 
 ---
 
-## 🌎 Ví dụ thực tế
-Kỹ sư Lan thực hiện chỉnh sửa trên 5 tệp tin khác nhau và tiện tay tạo ngay một commit với thông điệp chung chung: "update various files". Nhận thấy commit này quá lộn xộn, thiếu tính nguyên tử và vi phạm quy chuẩn chia nhỏ commit của công ty, Lan chạy lệnh: `git reset HEAD~1` (chính là chế độ mặc định mixed). Con trỏ nhánh lùi lại 1 commit, và khi Lan gõ `git status`, cả 5 tệp tin đều xuất hiện dưới màu đỏ trong mục "Changes not staged for commit". Từ đây, Lan lần lượt dùng `git add file1` và commit riêng, sau đó `git add file2 file3` và commit riêng rẽ từng phần một cách vô cùng ngăn nắp và rõ ràng.
+## 🏢 Ví dụ thực tế
+Kỹ sư Lan sửa 5 file khác nhau rồi commit chung với thông điệp: "update various files". Thấy commit quá cồng kềnh, Lan chạy `git reset HEAD~1` (chế độ mixed mặc định). Nhánh lùi lại 1 commit, cả 5 file xuất hiện màu đỏ unstaged trong `git status`. Lan lần lượt `git add` và commit riêng từng file theo từng logic rõ ràng, giúp lịch sử dự án trở nên cực kỳ chuyên nghiệp.
 
 ---
 
-## 💻 Command
+## 💻 Command & Cú pháp
 ```bash
 git reset HEAD~1
 git reset --mixed HEAD~1
@@ -57,21 +76,22 @@ git status
 ---
 
 ## 🔍 Giải thích command
-- `git reset HEAD~1`: Cú pháp mặc định tương đương với `--mixed`, đưa thay đổi của commit gần nhất về Working Directory.
-- `git reset --mixed <hash>`: Lùi lịch sử về commit chỉ định và đồng bộ lại Staging Area.
+- `git reset HEAD~1`: Cú pháp mặc định tương đương `--mixed`, đưa thay đổi của commit gần nhất về Working Directory.
+- `git reset --mixed <hash>`: Lùi lịch sử về commit chỉ định và đồng bộ lại Staging Area theo commit đó.
 - `git reset <tệp>`: Bỏ staged một tệp tin cụ thể (chức năng tương đương `git restore --staged`).
 - `git status`: Quan sát các tệp tin xuất hiện ở trạng thái màu đỏ chưa staged.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Hoảng hốt khi thấy git status đổi từ màu xanh sang màu đỏ**:  Tưởng rằng code bị mất, thực tế code vẫn nằm an toàn trong Working Directory.
-2. **Không nhận biết rằng git reset không cờ chính là git reset --mixed.**: Không nhận biết rằng git reset không cờ chính là git reset --mixed.
-3. **Lạm dụng reset mixed trên các commit đã chia sẻ cho đồng nghiệp trên nhánh chung.**: Lạm dụng reset mixed trên các commit đã chia sẻ cho đồng nghiệp trên nhánh chung.
+1. **Hoảng hốt khi thấy git status đổi từ màu xanh sang màu đỏ**: Tưởng code bị mất, thực tế code vẫn an toàn trong Working Directory.
+2. **Quên rằng git reset không cờ chính là chế độ --mixed**: Dẫn đến bối rối vì sao các file vừa add bị chuyển sang unstaged.
+3. **Chạy reset trên các commit đã push lên nhánh dùng chung**: Làm sai lệch lịch sử của đồng nghiệp và gây xung đột khi đồng bộ.
 
 ---
 
-## 🧪 Lab
+## 🧪 Lab thực hành
+Bài học này là bài tự kiểm tra: bạn thao tác reset --mixed và bóc tách commit trên terminal.
 1. Tạo 2 tệp mới `a.txt` và `b.txt`, đưa vào staging bằng `git add .` và commit.
 2. Chạy lệnh `git reset HEAD~1` để hoàn tác commit ở chế độ mặc định mixed.
 3. Gõ `git status` và quan sát 2 tệp xuất hiện ở trạng thái Untracked/Modified màu đỏ.
@@ -79,27 +99,28 @@ git status
 
 ---
 
-## 💡 Hint
+## 💡 Hint & mẹo
 > Gõ `git reset` không kèm cờ thì Git sẽ luôn luôn mặc định sử dụng chế độ `--mixed`.
 
 ---
 
-## ✅ Validation
-- Thực hiện thành công reset mixed để tháo dỡ commit và tổ chức lại các thay đổi.
+## ✅ Validation & Kết quả mong đợi
+- Toàn bộ thay đổi của commit trước quay trở về trạng thái unstaged (màu đỏ) trong `git status`.
+- Working Directory giữ nguyên vẹn nội dung file mà không bị mất mát dữ liệu.
 
 ---
 
-## ❓ Quiz
+## ❓ Quiz nhanh
 Hãy làm bài kiểm tra trắc nghiệm dưới đây về câu lệnh git reset --mixed.
 
 ---
 
-## 🔥 Challenge
-So sánh sự khác biệt cốt lõi giữa `git reset --soft HEAD~1` và `git reset --mixed HEAD~1`.
+## 🚀 Thử thách nâng cao
+Sử dụng `git reset <tên-file>` để chỉ rút duy nhất một file nhạy cảm ra khỏi Staging Area mà vẫn giữ lại các file khác đang chuẩn bị commit.
 
 ---
 
-## 📚 Tổng kết
+## 📝 Tổng kết
 - `git reset --mixed` là chế độ mặc định, dịch chuyển HEAD và reset Staging Area.
 - Bảo tồn toàn vẹn Working Directory, đưa các thay đổi về trạng thái unstaged.
 - Rất hữu hiệu để bóc tách một commit lớn thành nhiều commit nhỏ có ý nghĩa.

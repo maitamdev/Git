@@ -2,8 +2,7 @@ id: quiz-06-04-git-flow
 title: "Trắc nghiệm: Git Flow"
 questions:
   - id: q1
-    question: Hai nhánh vĩnh cửu (long-lived branches) song hành xuyên suốt vòng đời
-      dự án trong Git Flow là gì?
+    question: Hai nhánh vĩnh cửu (long-lived branches) song hành xuyên suốt vòng đời dự án trong Git Flow là gì?
     type: single
     options:
       - text: main và develop
@@ -14,12 +13,9 @@ questions:
         correct: false
       - text: test và production
         correct: false
-    explanation: Trong kiến trúc Git Flow chuẩn, `main` và `develop` là hai nhánh
-      tồn tại vĩnh viễn, trong khi các nhánh khác đều bị xóa sau khi hoàn thành
-      nhiệm vụ.
+    explanation: Trong kiến trúc Git Flow chuẩn, `main` và `develop` là hai nhánh tồn tại vĩnh viễn, trong khi các nhánh khác đều bị xóa sau khi hoàn thành nhiệm vụ.
   - id: q2
-    question: Khi một nhánh `release/*` hoàn tất quá trình kiểm thử và sẵn sàng xuất
-      bản, nó bắt buộc phải được merge vào những nhánh nào?
+    question: Khi một nhánh `release/*` hoàn tất quá trình kiểm thử và sẵn sàng xuất bản, nó bắt buộc phải được merge vào những nhánh nào?
     type: single
     options:
       - text: Merge vào cả nhánh main và nhánh develop (hợp nhất kép)
@@ -30,12 +26,9 @@ questions:
         correct: false
       - text: Không được merge vào đâu mà giữ nguyên làm kho lưu trữ
         correct: false
-    explanation: Bắt buộc phải merge vào `main` để phát hành và merge ngược vào
-      `develop` để bảo đảm các bugfix trong giai đoạn release không bị mất ở
-      phiên bản tiếp theo.
+    explanation: Bắt buộc phải merge vào `main` để phát hành và merge ngược vào `develop` để bảo đảm các bugfix trong giai đoạn release không bị mất ở phiên bản tiếp theo.
   - id: q3
-    question: Nhánh `hotfix/*` trong Git Flow được rẽ nhánh trực tiếp từ đâu để giải
-      quyết sự cố sản xuất?
+    question: Nhánh `hotfix/*` trong Git Flow được rẽ nhánh trực tiếp từ đâu để giải quyết sự cố sản xuất?
     type: single
     options:
       - text: Rẽ nhánh trực tiếp từ nhánh main nơi phiên bản lỗi đang chạy thực tế
@@ -46,16 +39,12 @@ questions:
         correct: false
       - text: Rẽ nhánh từ máy tính cá nhân của lập trình viên thực tập
         correct: false
-    explanation: Hotfix phải xuất phát trực tiếp từ commit bị lỗi trên `main` để
-      tránh đưa nhầm các tính năng chưa hoàn thiện trên `develop` ra môi trường
-      sản xuất.
+    explanation: Hotfix phải xuất phát trực tiếp từ commit bị lỗi trên `main` để tránh đưa nhầm các tính năng chưa hoàn thiện trên `develop` ra môi trường sản xuất.
   - id: q4
-    question: Nhược điểm lớn nhất khiến nhiều nhóm phần mềm hiện đại chuyển dịch từ
-      Git Flow sang các mô hình tinh gọn hơn là gì?
+    question: Nhược điểm lớn nhất khiến nhiều nhóm phần mềm hiện đại chuyển dịch từ Git Flow sang các mô hình tinh gọn hơn là gì?
     type: single
     options:
-      - text: Quy trình nhiều nhánh phức tạp, cồng kềnh và làm chậm chu kỳ triển khai
-          liên tục (CI/CD)
+      - text: Quy trình nhiều nhánh phức tạp, cồng kềnh và làm chậm chu kỳ triển khai liên tục (CI/CD)
         correct: true
       - text: Git Flow không hỗ trợ ngôn ngữ lập trình JavaScript
         correct: false
@@ -63,5 +52,17 @@ questions:
         correct: false
       - text: Git Flow làm mất toàn bộ các commit cũ sau 30 ngày
         correct: false
-    explanation: Độ trễ do việc duy trì nhiều nhánh trung gian khiến Git Flow không
-      phù hợp với các đội ngũ cần phát hành phiên bản mới liên tục hàng ngày.
+    explanation: Độ trễ do việc duy trì nhiều nhánh trung gian khiến Git Flow không phù hợp với các đội ngũ cần phát hành phiên bản mới liên tục hàng ngày.
+  - id: q5
+    question: Khi nào một đội ngũ phát triển phần mềm NÊN cân nhắc sử dụng Git Flow cổ điển thay vì GitHub Flow?
+    type: single
+    options:
+      - text: Khi sản phẩm có chu kỳ phát hành phiên bản cố định định kỳ (như app di động, phần mềm nhúng) và cần duy trì nhiều phiên bản cũ song song
+        correct: true
+      - text: Khi dự án chỉ có một lập trình viên duy nhất làm việc cá nhân
+        correct: false
+      - text: Khi toàn bộ ứng dụng chỉ là một trang HTML đơn giản
+        correct: false
+      - text: Khi đội ngũ muốn triển khai mã nguồn lên production hàng chục lần mỗi ngày
+        correct: false
+    explanation: Git Flow lý tưởng cho các sản phẩm đóng gói phân phối theo phiên bản hoặc ứng dụng di động cần quy trình kiểm thử đóng băng release nghiêm ngặt.

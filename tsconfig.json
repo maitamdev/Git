@@ -1,0 +1,26 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "jsx": "react-jsx",
+    "paths": {
+      "@git-academy/shared": ["packages/shared/src"],
+      "@git-academy/git-engine": ["packages/git-engine/src"],
+      "@git-academy/git-scenarios": ["packages/git-scenarios/src"],
+      "@git-academy/exercise-engine": ["packages/exercise-engine/src"],
+      "@git-academy/github-simulator": ["packages/github-simulator/src"],
+      "@git-academy/actions-simulator": ["packages/actions-simulator/src"],
+      "@git-academy/git-internals": ["packages/git-internals/src"],
+      "@git-academy/auth": ["packages/auth/src"],
+      "@git-academy/gradebook": ["packages/gradebook/src"],
+      "@git-academy/git-visualizer": ["apps/git-visualizer/src"]
+    },
+    "noEmit": true
+  },
+  "include": [
+    "tests/**/*"
+  ],
+  "exclude": [
+    "tests/e2e/**/*"
+  ]
+}

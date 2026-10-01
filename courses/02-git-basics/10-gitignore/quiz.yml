@@ -5,8 +5,7 @@ questions:
     question: Mục đích cốt lõi của tệp .gitignore trong một dự án Git là gì?
     type: single
     options:
-      - text: Chỉ định danh sách các tệp tin và thư mục mà Git cần bỏ qua không theo dõi
-          và không commit
+      - text: Chỉ định mẫu để Git bỏ qua các đường dẫn chưa được theo dõi
         correct: true
       - text: Tự động xóa vĩnh viễn các tệp mã nguồn bị lỗi cú pháp
         correct: false
@@ -14,8 +13,7 @@ questions:
         correct: false
       - text: Chặn quyền truy cập mạng Internet của các thành viên trong nhóm
         correct: false
-    explanation: "`.gitignore` khai báo các mẫu tệp rác hoặc tệp nhạy cảm mà Git
-      không bao giờ được đưa vào commit."
+    explanation: "`.gitignore` giúp bỏ qua tệp chưa tracked; nó không ngăn mọi cách thêm tệp vào commit."
   - id: q2
     question: Quy tắc nào trong .gitignore sẽ bỏ qua toàn bộ các tệp tin có phần mở
       rộng là `.log`?
@@ -36,8 +34,7 @@ questions:
       chỉ thêm tên tệp đó vào .gitignore có giúp loại bỏ nó khỏi lịch sử không?
     type: single
     options:
-      - text: Không, .gitignore chỉ có tác dụng với tệp Untracked; bạn phải dùng git rm
-          --cached để gỡ bỏ
+      - text: Không; `git rm --cached` có thể ngừng theo dõi cho commit sau, còn commit cũ vẫn còn
         correct: true
       - text: Có, Git sẽ tự động xóa sạch tệp đó khỏi toàn bộ các commit trong quá khứ
         correct: false
@@ -45,8 +42,7 @@ questions:
         correct: false
       - text: Git sẽ lập tức báo lỗi và từ chối khởi động
         correct: false
-    explanation: Tệp đã được track thì .gitignore không có tác dụng; bạn phải chạy
-      `git rm --cached <file>` để ngừng theo dõi tệp.
+    explanation: Tệp tracked không bị ignore; `git rm --cached` ngừng theo dõi về sau nhưng không xóa lịch sử cũ.
   - id: q4
     question: Quy tắc thư mục nào dưới đây bỏ qua trọn vẹn thư mục `node_modules` ở
       bất kỳ cấp độ nào?
@@ -62,3 +58,16 @@ questions:
         correct: false
     explanation: Dấu gạch chéo ở cuối `node_modules/` chỉ định bỏ qua toàn bộ thư
       mục và mọi nội dung con bên trong nó.
+  - id: q5
+    question: Một tệp đã được Git theo dõi từ trước có tự bị bỏ qua chỉ vì bạn thêm nó vào `.gitignore` không?
+    type: single
+    options:
+      - text: Không; `.gitignore` không ngừng theo dõi một tệp đã tracked
+        correct: true
+      - text: Có; Git xóa tệp khỏi mọi commit cũ ngay lập tức
+        correct: false
+      - text: Có; nội dung tệp tự được mã hóa
+        correct: false
+      - text: Không; `.gitignore` chỉ dùng khi có kết nối Internet
+        correct: false
+    explanation: "`.gitignore` áp dụng với đường dẫn chưa được theo dõi; cần hành động riêng để ngừng track tệp đã tracked."

@@ -60,3 +60,16 @@ questions:
         correct: false
     explanation: "`git add .` gom bừa toàn bộ mọi thứ, rất dễ làm rò rỉ tệp chứa
       khóa bí mật hoặc làm loãng lịch sử."
+  - id: q5
+    question: Bạn chạy `git add app.js` rồi sửa tiếp `app.js`. Việc gì cần làm để đưa phần sửa mới vào commit?
+    type: single
+    options:
+      - text: Chạy `git add app.js` thêm lần nữa
+        correct: true
+      - text: Chạy `git status` vì lệnh này tự stage mọi phần sửa
+        correct: false
+      - text: Chạy `git push` để Git tự stage phần sửa
+        correct: false
+      - text: Không cần làm gì; Git cập nhật phần đã staged tự động
+        correct: false
+    explanation: "`git add` chọn trạng thái tại thời điểm chạy. Phần sửa sau đó vẫn chưa staged cho tới khi bạn add lại."

@@ -17,11 +17,10 @@ questions:
     explanation: "`git restore <tên-tệp>` là lệnh chuyên trách từ Git 2.23 để hoàn
       tác thay đổi trong thư mục làm việc."
   - id: q2
-    question: Điều gì sẽ xảy ra với các dòng code bạn vừa viết thêm trong tệp nếu
-      bạn chạy lệnh `git restore <file>` khi chưa từng commit chúng?
+    question: Tệp đã được theo dõi; bạn sửa nhưng chưa stage. Điều gì xảy ra khi chạy `git restore <file>`?
     type: single
     options:
-      - text: Các dòng code đó sẽ bị xóa vĩnh viễn và không thể khôi phục lại bằng Git
+      - text: Git thay nội dung tệp bằng bản staged; nếu chưa stage, Git không giữ phần sửa mới
         correct: true
       - text: Git sẽ tự động lưu các dòng đó vào hòm thư điện tử cá nhân
         correct: false
@@ -29,8 +28,7 @@ questions:
         correct: false
       - text: Các dòng đó sẽ được cất vào thùng rác máy tính để phục hồi sau
         correct: false
-    explanation: Git chỉ có thể phục hồi những gì đã từng được lưu vào cơ sở dữ liệu
-      commit; thay đổi chưa commit sẽ mất vĩnh viễn.
+    explanation: "`git restore <file>` lấy phiên bản trong Index và bỏ phần sửa chưa staged của tệp đó."
   - id: q3
     question: Lệnh `git restore --staged index.html` thực hiện hành động gì?
     type: single
@@ -47,8 +45,7 @@ questions:
     explanation: Cờ `--staged` chỉ hủy bỏ việc stage trong Index, không làm mất bất
       kỳ dòng code nào bạn đã gõ trong Working Tree.
   - id: q4
-    question: Lệnh nào sau đây hủy bỏ tất cả các thay đổi chưa staged trên toàn bộ
-      các tệp tin trong thư mục hiện tại?
+    question: Lệnh nào khôi phục các tệp tracked chưa staged trong thư mục hiện tại?
     type: single
     options:
       - text: git restore .
@@ -59,4 +56,17 @@ questions:
         correct: false
       - text: git clear-tree
         correct: false
-    explanation: "`git restore .` áp dụng hoàn tác cho toàn bộ thư mục hiện tại trở xuống."
+    explanation: "`git restore .` khôi phục tệp tracked chưa staged trong thư mục hiện tại và thư mục con."
+  - id: q5
+    question: Bạn stage một tệp, rồi chạy `git restore --staged file.txt`. Phần nội dung đã sửa sẽ ra sao?
+    type: single
+    options:
+      - text: Tệp bị bỏ khỏi Staging Area nhưng phần sửa vẫn còn trong Working Directory
+        correct: true
+      - text: Tệp bị xóa hoàn toàn khỏi máy
+        correct: false
+      - text: Một commit mới được tạo
+        correct: false
+      - text: Tệp tự được đẩy lên remote
+        correct: false
+    explanation: "`--staged` gỡ lựa chọn khỏi Index; nó không hủy phần sửa trong Working Directory."

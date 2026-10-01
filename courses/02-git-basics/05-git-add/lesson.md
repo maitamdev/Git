@@ -3,40 +3,62 @@
 ---
 
 ## 🎯 Mục tiêu
-- Sử dụng thành thạo câu lệnh `git add` với các cú pháp: tệp chỉ định, thư mục, và `git add .`.
-- Hiểu rõ sự khác biệt và rủi ro tiềm ẩn giữa `git add <file>` có chọn lọc và `git add .`.
-- Làm quen với kỹ thuật stage từng khối dòng code bằng cờ `-p` (patch mode).
+- Chọn một tệp bằng `git add <file>` và xác nhận lựa chọn bằng `git status`.
+- Giải thích được `git add .` chọn thay đổi dưới thư mục hiện tại.
+- Biết `git add -p` dùng để chọn từng nhóm thay đổi.
+
+---
+
+## 🧩 Từ khóa hôm nay
+
+### `git add` — chọn thay đổi cho commit
+- **Nói dễ hiểu:** Đưa trạng thái hiện tại của tệp vào vùng chuẩn bị.
+- **Ví dụ:** `git add README.md` chọn riêng tệp README.
+- **Đừng nhầm:** `git add` chưa tạo commit.
+
+### Path — đường dẫn tệp
+- **Nói dễ hiểu:** Tên cho Git biết bạn muốn chọn tệp hoặc thư mục nào.
+- **Ví dụ:** `README.md` là đường dẫn tới một tệp trong dự án.
+- **Đừng nhầm:** Chọn một tệp khác với chọn toàn bộ dự án.
+
+### `git add .` — chọn thay đổi ở thư mục hiện tại
+- **Nói dễ hiểu:** Thêm các thay đổi phù hợp bên dưới thư mục đang đứng.
+- **Ví dụ:** Chạy lệnh ở thư mục dự án để chọn nhiều tệp.
+- **Đừng nhầm:** Xem `git status` để chắc bạn không chọn nhầm tệp.
+
+### Patch mode — chọn từng phần thay đổi
+- **Nói dễ hiểu:** `git add -p` cho phép chọn từng nhóm dòng thay vì cả tệp.
+- **Ví dụ:** Chỉ đưa phần sửa lỗi vào commit, để phần làm dở lại.
+- **Đừng nhầm:** Đây là chế độ tương tác; đọc từng câu hỏi trước khi chọn.
 
 ---
 
 ## 📖 Định nghĩa
-> `git add` là câu lệnh thiết yếu dùng để chuyển các thay đổi trên tệp tin từ Working Directory vào Staging Area (vùng chuẩn bị). Lệnh này thông báo cho Git biết rằng bạn muốn đưa trạng thái hiện tại của tệp tin được chỉ định vào ảnh chụp snapshot sắp tới. Bạn có thể thêm từng tệp đơn lẻ (`git add file.txt`), thêm toàn bộ một thư mục (`git add src/`), hoặc thêm tất cả các thay đổi có trong thư mục hiện tại (`git add .`). Đối với tệp tin mới tạo, `git add` bắt đầu đưa tệp vào diện theo dõi (Tracked).
+`git add` chụp trạng thái hiện tại của thay đổi vào Staging Area để chuẩn bị cho commit kế tiếp. Tệp vẫn nằm nguyên trong thư mục dự án. Ví dụ: `git add file.txt` chọn một tệp; `git add .` chọn thay đổi bên dưới thư mục hiện tại.
 
 ---
 
 ## 🤔 Tại sao cần?
-Làm chủ lệnh `git add` chính là kỹ năng làm chủ nghệ thuật đóng gói commit sạch sẽ trong quy trình phát triển phần mềm chuyên nghiệp. Rất nhiều lập trình viên mới có thói quen lười biếng luôn gõ `git add .` trong mọi tình huống, dẫn đến việc vô tình đưa cả tệp cấu hình chứa mật khẩu database, file binary nặng hàng trăm megabyte hoặc code thử nghiệm dở dang lên kho chứa chung. Sử dụng `git add` có chọn lọc là thước đo tính kỷ luật của một kỹ sư phần mềm.
+`git add` cho phép chọn phần thay đổi muốn đưa vào commit. Kiểm tra `git status` trước và sau lệnh để tránh chọn nhầm.
 
 ---
 
 ## 🧠 Mental Model (Mô hình tư duy)
-Hãy hình dung việc chạy lệnh `git add` giống như hành động bạn cầm một món hàng từ trên kệ siêu thị (Working Directory) và đặt nó vào giỏ hàng của bạn (Staging Area). Khi bạn đi dạo quanh siêu thị, bạn có thể xem xét và chạm vào hàng chục món đồ khác nhau. Nhưng chỉ những món đồ nào bạn quyết định đặt vào giỏ hàng thì lát nữa khi ra quầy thu ngân thanh toán (git commit), nhân viên mới tính tiền và in hóa đơn ghi nhận quyền sở hữu cho bạn.
+Hãy nghĩ `git add` như chụp một bản của thay đổi vào khay chuẩn bị. Bản gốc vẫn ở trong thư mục; lần sửa tiếp theo chưa tự động cập nhật bản đã staged.
 
 ---
 
 ## 🖼 Sơ đồ
 ```text
-Thao tác đưa tệp vào giỏ hàng:
-[Working Directory]                                      [Staging Area]
-  ├── index.html ──(git add index.html)────────────────► index.html (đã staged)
-  ├── styles.css ──(git add styles.css)────────────────► styles.css (đã staged)
-  └── temp.log   ──(không add)─────────────────────────► (vẫn ở Working Tree)
+`git add` chụp trạng thái tệp vào Staging Area, không di chuyển tệp:
+[Working Directory: file.txt] -- git add file.txt --> [Staging Area: bản đã chọn]
+          tệp vẫn còn ở đây                     bản gốc vẫn còn ở đây
 ```
 
 ---
 
 ## 🌎 Ví dụ thực tế
-Kỹ sư đang phát triển tính năng xác thực hai yếu tố cho hệ thống ngân hàng trực tuyến. Kỹ sư sửa đổi mã nguồn trong src/auth.js, viết tệp kiểm thử tests/auth.test.js, và ghi chép một số ghi chú nháp vào notes.txt. Khi chuẩn bị commit, kỹ sư chạy lệnh git add src/auth.js tests/auth.test.js. Tệp notes.txt không được thêm và vẫn nằm an toàn trên máy cá nhân mà không bị commit nhầm vào lịch sử chung của cả nhóm dự án, bảo đảm tính bảo mật tối đa cho toàn bộ mã nguồn của ngân hàng. Sau đó, kỹ sư cẩn thận kiểm tra lại trạng thái bằng git status để đảm bảo chỉ đúng hai tệp trên đã chuyển sang màu xanh trong vùng Staging Area, hoàn toàn an tâm trước khi thực hiện bước đóng gói snapshot tiếp theo.
+Sửa `app.js`, chạy `git add app.js`, rồi sửa thêm lần nữa. Chạy `git status`: phiên bản đầu đang staged, phần sửa sau vẫn chưa staged.
 
 ---
 
@@ -51,25 +73,25 @@ git add -p
 ---
 
 ## 🔍 Giải thích command
-- `git add <file>`: Đưa một tệp tin cụ thể vào Staging Area có chọn lọc an toàn tuyệt đối.
-- `git add .`: Đưa toàn bộ các thay đổi trong thư mục hiện tại trở xuống vào Staging Area.
-- `git add -A`: Đưa tất cả thay đổi trên toàn bộ kho lưu trữ vào Staging Area bất kể thư mục hiện tại.
+- `git add <file>`: Chọn một tệp cụ thể; kiểm tra tên tệp trước khi chạy.
+- `git add .`: Chọn các thay đổi bên dưới thư mục hiện tại.
+- `git add -A`: Chọn các thay đổi trong toàn bộ kho lưu trữ.
 - `git add -p`: Chế độ tương tác từng khối thay đổi (patch) cho phép bạn duyệt từng dòng code.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Luôn luôn gõ git add . mà không kiểm tra git status trước**:  Dẫn đến việc commit nhầm các file bí mật như `.env`, khóa API hoặc file rác hệ thống.
-2. **Nghĩ git add là đã lưu vào lịch sử vĩnh viễn**:  `git add` mới chỉ đưa vào phòng chuẩn bị, nếu máy tính bị sập nguồn hoặc xóa thư mục trước khi `git commit`, dữ liệu vẫn có thể bị thất lạc.
+1. **Chạy `git add .` mà không kiểm tra trạng thái**:  Có thể chọn cả tệp hoặc phần sửa bạn chưa định đưa vào commit.
+2. **Nghĩ `git add` đã tạo commit**:  Thay đổi mới chỉ nằm trong Staging Area; cần chạy `git commit` để tạo mốc lịch sử.
 3. **Không đọc kỹ thông báo khi git add gặp file quá lớn**:  Cố gắng add các file video hoặc zip nặng khiến Git chạy chậm chạp.
 
 ---
 
 ## 🧪 Lab
 1. Tạo tệp `app.js` với nội dung `console.log("Git Add Lab");`.
-2. Chạy `git status` để thấy tệp đang ở danh sách Untracked màu đỏ.
+2. Chạy `git status` để thấy tệp trong danh sách Untracked.
 3. Chạy lệnh `git add app.js` để đưa tệp vào Staging Area.
-4. Chạy lại `git status` để xác nhận tệp đã chuyển sang màu xanh lá cây.
+4. Chạy lại `git status` để xác nhận tệp nằm trong mục Changes to be committed.
 
 ---
 
@@ -94,6 +116,6 @@ Tìm hiểu cờ `git add -p` (patch) và giải thích lợi ích của việc 
 ---
 
 ## 📚 Tổng kết
-- `git add` đưa các thay đổi từ Working Directory vào Staging Area sẵn sàng để commit.
-- Bắt đầu theo dõi các tệp tin mới (chuyển trạng thái từ Untracked thành Tracked/Staged).
-- Nên ưu tiên add có chọn lọc từng tệp thay vì lạm dụng `git add .` để tránh commit nhầm tệp rác.
+- `git add` chụp thay đổi vào Staging Area; tệp gốc vẫn ở nguyên chỗ.
+- Tệp mới được chọn bằng `git add` sẽ được theo dõi và staged.
+- Xem `git status` để biết chính xác nội dung nào đã chọn.

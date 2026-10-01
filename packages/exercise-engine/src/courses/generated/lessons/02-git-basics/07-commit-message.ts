@@ -13,9 +13,9 @@ export const lesson: CourseLesson = {
       "06-git-commit"
     ],
     "objectives": [
-      "Nắm vững cấu trúc chuẩn của quy ước Conventional Commits quốc tế.",
-      "Sử dụng thành thạo các tiền tố tiêu chuẩn: feat, fix, docs, style, refactor, test, chore.",
-      "Hiểu tầm quan trọng của việc viết thông điệp commit rõ ràng phục vụ việc sinh tự động Changelog."
+      "Nhận biết dạng type(scope): description; scope có thể bỏ.",
+      "Chọn feat, fix hoặc docs cho ví dụ đơn giản.",
+      "Viết message đủ rõ để người khác hiểu commit nói về gì."
     ],
     "completion": {
       "theoryViewed": true,
@@ -35,7 +35,7 @@ export const lesson: CourseLesson = {
       "git commit -m \"fix: resolve memory leak in worker\""
     ]
   },
-  "content": "# Chuẩn quy ước Commit Message\n\n---\n\n## 🎯 Mục tiêu\n- Nắm vững cấu trúc chuẩn của quy ước Conventional Commits quốc tế.\n- Sử dụng thành thạo các tiền tố tiêu chuẩn: feat, fix, docs, style, refactor, test, chore.\n- Hiểu tầm quan trọng của việc viết thông điệp commit rõ ràng phục vụ việc sinh tự động Changelog.\n\n---\n\n## 📖 Định nghĩa\n> Quy ước Commit Message (tiêu biểu nhất là chuẩn Conventional Commits) là một tập hợp các nguyên tắc định dạng thông điệp commit có cấu trúc rõ ràng và chặt chẽ, giúp con người và các công cụ tự động hóa dễ dàng đọc hiểu bản chất thay đổi trong lịch sử phát triển dự án. Cấu trúc chuẩn bao gồm: tiền tố loại thay đổi (`type`), phạm vi module tùy chọn (`scope`), dấu hai chấm và mô tả ngắn gọn súc tích (`description`). Ví dụ tiêu biểu: `feat(auth): add google oauth2 login`. Quy ước này loại bỏ sự tùy tiện và nâng cao tính chuyên nghiệp của toàn đội ngũ.\n\n---\n\n## 🤔 Tại sao cần?\nMột dự án phần mềm chuyên nghiệp có thể kéo dài nhiều năm với sự tham gia của hàng trăm kỹ sư. Nếu mọi người đều viết commit vô tội vạ như \"fix bug\", \"done\", \"test\", lịch sử dự án sẽ trở thành một mớ bòng bong không thể kiểm toán. Áp dụng chuẩn Conventional Commits giúp toàn bộ đội ngũ nắm bắt được tiến độ tính năng mới (feat) hay sửa lỗi (fix), đồng thời cho phép các công cụ CI/CD tự động tính toán số phiên bản Semantic Versioning và xuất file nhật ký thay đổi CHANGELOG.md tức thì.\n\n---\n\n## 🧠 Mental Model (Mô hình tư duy)\nHãy hình dung commit message giống như tiêu đề của một bài báo tin tức trên trang nhất nhật báo buổi sáng. Người biên tập báo không bao giờ giật tít mơ hồ là \"Hôm nay có việc xảy ra\". Thay vào đó, tít báo luôn có chuyên mục và hành động rõ ràng: \"[Kinh tế] Giá vàng lập đỉnh mới sáng nay\" hoặc \"[Giao thông] Khởi công tuyến đường vành đai 4\". Nhờ đó, độc giả chỉ cần lướt qua mục lục là nắm trọn vẹn tình hình trong ngày.\n\n---\n\n## 🖼 Sơ đồ\n```text\nCấu trúc chuẩn Conventional Commits:\n┌───────────────┬───────────┬───────────────────────────────────────────┐\n│ Type (Loại)   │ Scope     │ Description (Mô tả súc tích)              │\n├───────────────┼───────────┼───────────────────────────────────────────┤\n│ feat          │ (auth)    │ add jwt token refresh mechanism           │\n│ fix           │ (payment) │ handle stripe webhook timeout exception   │\n│ docs          │ (readme)  │ update installation commands for windows  │\n│ refactor      │ (api)     │ simplify user profile data serializer     │\n└───────────────┴───────────┴───────────────────────────────────────────┘\n```\n\n---\n\n## 🌎 Ví dụ thực tế\nKhi phát triển tính năng lọc sản phẩm theo mức giá trên trang thương mại điện tử, kỹ sư viết commit: `feat(product): add price range filter component`. Khi sửa một lỗi hiển thị tiền tệ bị lệch số 0 trên hóa đơn, kỹ sư viết: `fix(billing): format currency display for vietnam dong`. Khi đọc lại lịch sử qua git log, bất kỳ ai trong nhóm cũng biết chính xác chức năng nào được thêm mới và lỗi nào vừa được khắc phục. Hệ thống CI/CD cũng nhờ đó mà tự động nhận diện bản phát hành tiếp theo là bản cập nhật tính năng hay chỉ là bản vá lỗi nhỏ.\n\n---\n\n## 💻 Command\n```bash\ngit commit -m \"feat(scope): short description\"\ngit commit -m \"fix: resolve memory leak in worker\"\n```\n\n---\n\n## 🔍 Giải thích command\n- `git commit -m \"feat: <mô-tả>\"`: Tạo commit thêm mới một tính năng người dùng trong hệ thống phần mềm, kích hoạt nâng số phiên bản MINOR trong Semantic Versioning.\n- `git commit -m \"fix: <mô-tả>\"`: Tạo commit sửa chữa một lỗi phần mềm đã được phát hiện trong mã nguồn, kích hoạt nâng số phiên bản PATCH.\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Viết thông điệp quá dài dòng ở dòng tiêu đề đầu tiên**:  Dòng đầu tiên chỉ nên gói gọn dưới 50 đến 72 ký tự.\n2. **Sử dụng thì quá khứ thay vì thể mệnh lệnh hiện tại**:  Nên viết \"add feature\" thay vì \"added feature\".\n3. **Lẫn lộn giữa feat và fix**:  Dùng nhãn fix cho một tính năng hoàn toàn mới hoặc ngược lại.\n\n---\n\n## 🧪 Lab\n1. Tạo một tệp `auth.js` và đưa vào Staging Area.\n2. Thực hiện commit với tiền tố chuẩn: `git commit -m \"feat(auth): create basic login structure\"`.\n3. Quan sát commit hiển thị trong `git log --oneline`.\n\n---\n\n## 💡 Hint\n> Sử dụng các tiền tố: feat, fix, docs, refactor, test, chore.\n\n---\n\n## ✅ Validation\n- Kiểm tra commit message tuân thủ định dạng Conventional Commits.\n\n---\n\n## ❓ Quiz\nHãy trả lời các câu hỏi sau về quy ước viết commit message chuyên nghiệp.\n\n---\n\n## 🔥 Challenge\nNêu ý nghĩa của dấu chấm than `feat!:` trong quy ước Conventional Commits.\n\n---\n\n## 📚 Tổng kết\n- Conventional Commits cung cấp định dạng chuẩn: type(scope): description.\n- Các loại type phổ biến nhất gồm: feat (tính năng mới), fix (sửa lỗi), docs (tài liệu), chore (bảo trì).\n- Giúp tự động hóa việc tính toán phiên bản SemVer và sinh CHANGELOG.\n",
+  "content": "# Chuẩn quy ước Commit Message\n\n---\n\n## 🎯 Mục tiêu\n- Nhận biết dạng `type(scope): description`; scope có thể bỏ.\n- Chọn `feat`, `fix` hoặc `docs` cho ví dụ đơn giản.\n- Viết message đủ rõ để người khác hiểu commit nói về gì.\n\n---\n\n## 🧩 Từ khóa hôm nay\n\n### Commit message — lời nhắn cho commit\n- **Nói dễ hiểu:** Câu tóm tắt thay đổi để người đọc hiểu commit này làm gì.\n- **Ví dụ:** `fix: correct total price`.\n- **Đừng nhầm:** Message không thay thế việc xem diff khi cần chi tiết.\n\n### Conventional Commits — quy ước viết message\n- **Nói dễ hiểu:** Một cách thống nhất để bắt đầu message bằng loại thay đổi.\n- **Ví dụ:** `feat: add search` và `fix: correct typo`.\n- **Đừng nhầm:** Git không bắt buộc dự án phải dùng quy ước này.\n\n### Type — loại thay đổi\n- **Nói dễ hiểu:** Từ đứng đầu message, thường cho biết loại công việc.\n- **Ví dụ:** `feat` thường dùng khi thêm tính năng; `fix` khi sửa lỗi.\n- **Đừng nhầm:** Từ loại không tự xác nhận code đã đúng.\n\n### Scope — phần bị ảnh hưởng\n- **Nói dễ hiểu:** Nhãn tùy chọn trong ngoặc cho biết commit liên quan tới phần nào.\n- **Ví dụ:** `feat(auth): add login` nói thay đổi thuộc phần đăng nhập.\n- **Đừng nhầm:** Tên scope do dự án chọn; Git không áp đặt danh sách.\n\n### Breaking Change — thay đổi làm hỏng tương thích\n- **Nói dễ hiểu:** Thay đổi khiến cách dùng cũ không còn hoạt động như trước.\n- **Ví dụ:** `feat(api)!: remove old endpoint` báo một thay đổi không tương thích.\n- **Đừng nhầm:** Dấu `!` ghi nhận thay đổi; nó không tự nâng phiên bản nếu thiếu công cụ cấu hình.\n\n---\n\n## 📖 Định nghĩa\nConventional Commits là quy ước viết message theo dạng `type(scope): description`, trong đó scope là tùy chọn. Ví dụ: `feat(auth): add login`. Git vẫn chấp nhận message khác; đây là thỏa thuận giúp người đọc và các công cụ đã cấu hình hiểu loại thay đổi.\n\n---\n\n## 🤔 Tại sao cần?\nKhi message ghi rõ loại và phần bị ảnh hưởng, đồng đội đọc lịch sử dễ hơn. Dự án cũng có thể cấu hình công cụ để tạo changelog hoặc tính phiên bản từ các message này; quy ước tự nó không chạy các công cụ đó.\n\n---\n\n## 🧠 Mental Model (Mô hình tư duy)\nViết loại thay đổi trước, phần bị ảnh hưởng nếu cần, rồi mô tả ngắn: `fix(auth): handle empty password`.\n\n---\n\n## 🖼 Sơ đồ\n```text\nCấu trúc chuẩn Conventional Commits:\n┌───────────────┬───────────┬───────────────────────────────────────────┐\n│ Type (Loại)   │ Scope     │ Description (Mô tả súc tích)              │\n├───────────────┼───────────┼───────────────────────────────────────────┤\n│ feat          │ (auth)    │ add login form                             │\n│ fix           │ (payment) │ correct total                              │\n│ docs          │ (readme)  │ explain installation                      │\n└───────────────┴───────────┴───────────────────────────────────────────┘\n```\n\n---\n\n## 🌎 Ví dụ thực tế\nThêm trang tìm kiếm? Viết `feat(search): add search page`. Sửa lỗi tổng tiền? Viết `fix(cart): correct total`. Người đọc lịch sử hiểu được loại thay đổi và phần liên quan.\n\n---\n\n## 💻 Command\n```bash\ngit commit -m \"feat(scope): short description\"\ngit commit -m \"fix: resolve memory leak in worker\"\n```\n\n---\n\n## 🔍 Giải thích command\n- `git commit -m \"feat: <mô-tả>\"`: Tạo commit có message bắt đầu bằng `feat`.\n- `git commit -m \"fix: <mô-tả>\"`: Tạo commit có message bắt đầu bằng `fix`.\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Message quá chung chung**: “update” không cho người đọc biết nội dung thay đổi.\n2. **Ghi scope dù không giúp ích**: Chỉ thêm scope khi nó làm rõ phần bị ảnh hưởng.\n3. **Nhầm `feat` với `fix`**: `feat` thường chỉ tính năng mới; `fix` chỉ sửa lỗi.\n\n---\n\n## 🧪 Lab\n1. Tạo một tệp `auth.js` và đưa vào Staging Area.\n2. Thực hiện commit với tiền tố chuẩn: `git commit -m \"feat(auth): create basic login structure\"`.\n3. Quan sát commit hiển thị trong `git log --oneline`.\n\n---\n\n## 💡 Hint\n> Bài này dùng ba ví dụ: `feat` thêm tính năng, `fix` sửa lỗi, `docs` sửa tài liệu.\n\n---\n\n## ✅ Validation\n- Kiểm tra commit message tuân thủ định dạng Conventional Commits.\n\n---\n\n## ❓ Quiz\nHãy trả lời các câu hỏi sau về quy ước viết commit message chuyên nghiệp.\n\n---\n\n## 🔥 Challenge\nNêu ý nghĩa của dấu chấm than `feat!:` trong quy ước Conventional Commits.\n\n---\n\n## 📚 Tổng kết\n- Dạng thường dùng là `type(scope): description`; scope có thể bỏ.\n- `feat` thường là tính năng mới; `fix` thường là sửa lỗi.\n- Chỉ công cụ được cấu hình mới tự sinh changelog hoặc tính phiên bản.\n",
   "quiz": {
     "id": "quiz-02-07-commit-message",
     "title": "Trắc nghiệm: Chuẩn quy ước Commit Message",
@@ -90,27 +90,27 @@ export const lesson: CourseLesson = {
       },
       {
         "id": "q3",
-        "question": "Độ dài khuyến nghị tối đa cho dòng tiêu đề đầu tiên của một commit message là bao nhiêu?",
+        "question": "Cấu trúc thường dùng của Conventional Commits là gì?",
         "type": "single",
         "options": [
           {
-            "text": "Khoảng 50 đến 72 ký tự",
+            "text": "type(scope): description, trong đó scope có thể bỏ",
             "correct": true
           },
           {
-            "text": "Tối thiểu 500 từ",
+            "text": "description/type/scope, bắt buộc đủ ba phần",
             "correct": false
           },
           {
-            "text": "Không giới hạn, càng dài càng tốt",
+            "text": "type - password - description",
             "correct": false
           },
           {
-            "text": "Chính xác 10 ký tự",
+            "text": "scope(description): type",
             "correct": false
           }
         ],
-        "explanation": "Tiêu đề commit nên ngắn gọn súc tích dưới 50-72 ký tự để hiển thị trọn vẹn trên terminal và giao diện GitHub."
+        "explanation": "Cấu trúc thường dùng là type, scope tùy chọn và mô tả sau dấu hai chấm."
       },
       {
         "id": "q4",
@@ -118,7 +118,7 @@ export const lesson: CourseLesson = {
         "type": "single",
         "options": [
           {
-            "text": "Lịch sử rõ ràng, dễ tìm kiếm, tự động sinh nhật ký thay đổi và nâng version phần mềm",
+            "text": "Lịch sử rõ hơn; công cụ được cấu hình có thể đọc message để tự động hóa",
             "correct": true
           },
           {
@@ -134,7 +134,7 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "Quy ước commit chuẩn hóa là nền tảng của tự động hóa DevOps, tạo CHANGELOG tự động và nâng version chuẩn."
+        "explanation": "Quy ước làm message dễ đọc và có thể dùng với công cụ tự động hóa đã cấu hình."
       },
       {
         "id": "q5",
@@ -182,7 +182,7 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "Dấu chấm than `!` ngay trước dấu hai chấm biểu thị Breaking Change, kích hoạt nâng MAJOR version trong SemVer."
+        "explanation": "Dấu `!` trước dấu hai chấm báo có Breaking Change; công cụ có thể xử lý theo cấu hình."
       }
     ]
   }

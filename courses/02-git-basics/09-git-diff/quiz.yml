@@ -31,11 +31,10 @@ questions:
     explanation: "`git diff --staged` (đồng nghĩa với `--cached`) so sánh nội dung
       trong Staging Area với snapshot HEAD gần nhất."
   - id: q3
-    question: Trong kết quả hiển thị của git diff, một dòng bắt đầu bằng dấu cộng
-      `+` màu xanh lá có ý nghĩa gì?
+    question: Trong kết quả `git diff`, một dòng nội dung bắt đầu bằng dấu `+` có ý nghĩa gì?
     type: single
     options:
-      - text: Dòng code đó vừa mới được bổ sung thêm vào tệp tin
+      - text: Dòng đó thuộc phần mới được thêm vào so với bản cũ
         correct: true
       - text: Dòng code đó đã bị xóa bỏ khỏi dự án
         correct: false
@@ -43,8 +42,7 @@ questions:
         correct: false
       - text: Dòng code đó được tải về từ kho lưu trữ của đối thủ
         correct: false
-    explanation: Quy ước Unified Diff sử dụng dấu cộng `+` để biểu diễn dòng văn bản
-      mới được thêm vào.
+    explanation: Dấu `+` biểu thị một dòng thuộc phiên bản mới; màu sắc tùy terminal.
   - id: q4
     question: Tại sao lập trình viên nên chạy git diff trước khi commit code?
     type: single
@@ -58,5 +56,17 @@ questions:
         correct: false
       - text: Để kích hoạt bản quyền dùng thử miễn phí của phần mềm
         correct: false
-    explanation: Tự duyệt diff là bước tự kiểm tra (Self-review) quan trọng hàng đầu
-      của một kỹ sư phần mềm cẩn trọng.
+    explanation: Đọc diff giúp bạn kiểm tra chính xác phần mình sắp đưa vào commit.
+  - id: q5
+    question: Trong một đoạn thay đổi của `git diff`, dòng nội dung bắt đầu bằng dấu `-` thuộc phần nào?
+    type: single
+    options:
+      - text: Phiên bản cũ; dòng đó đã bị bỏ hoặc thay thế
+        correct: true
+      - text: Phiên bản mới được thêm vào
+        correct: false
+      - text: Thông tin tài khoản GitHub
+        correct: false
+      - text: Dòng lệnh phải gõ vào terminal
+        correct: false
+    explanation: Dấu `-` chỉ nội dung có trong bản cũ nhưng không còn nguyên trạng trong bản mới.

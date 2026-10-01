@@ -2,60 +2,67 @@ id: quiz-08-git-internals-06-blob-object
 title: "Trắc nghiệm: Đối tượng Blob: Lưu trữ nội dung nhị phân và tệp tin"
 questions:
   - id: q1
-    question: Đối tượng Blob trong Git chứa những thông tin nào sau đây?
+    question: "Đối tượng Blob trong Git chứa những thông tin nào sau đây?"
     type: single
     options:
-      - text: Chỉ chứa nội dung dữ liệu thô của tệp tin
+      - text: "Chỉ chứa nội dung dữ liệu thô của tệp tin"
         correct: true
-      - text: Chứa tên tệp tin, ngày tạo và nội dung
+      - text: "Chứa tên tệp tin, ngày tạo và nội dung"
         correct: false
-      - text: Chứa tên tác giả và thông điệp commit
+      - text: "Chứa tên tác giả và thông điệp commit"
         correct: false
-      - text: Chứa danh sách các tệp tin trong thư mục
+      - text: "Chứa danh sách các tệp tin trong thư mục"
         correct: false
-    explanation: Blob chỉ tập trung làm một việc duy nhất là lưu trữ nội dung thô
-      (payload), mọi siêu dữ liệu khác do đối tượng Tree quản lý.
+    explanation: "Blob chỉ tập trung làm một việc duy nhất là lưu trữ nội dung thô, mọi siêu dữ liệu khác do đối tượng Tree quản lý."
   - id: q2
-    question: "Tên của tệp tin (ví dụ: `index.ts`) được lưu trữ ở đâu trong kiến
-      trúc Git?"
+    question: "Tên của tệp tin (ví dụ: index.ts) được lưu trữ ở đâu trong kiến trúc Git?"
     type: single
     options:
-      - text: Được lưu trữ bên trong đối tượng Tree (cây thư mục)
+      - text: "Được lưu trữ bên trong đối tượng Tree (cây thư mục)"
         correct: true
-      - text: Được lưu trữ bên trong đối tượng Blob
+      - text: "Được lưu trữ bên trong đối tượng Blob"
         correct: false
-      - text: Được lưu trên máy chủ của GitHub
+      - text: "Được lưu trên máy chủ của GitHub"
         correct: false
-      - text: Git hoàn toàn không nhớ tên tệp tin
+      - text: "Git hoàn toàn không nhớ tên tệp tin"
         correct: false
-    explanation: Đối tượng Tree đóng vai trò như một thư mục, ánh xạ tên tệp tin với
-      mã băm Blob tương ứng.
+    explanation: "Đối tượng Tree đóng vai trò như một thư mục, ánh xạ tên tệp tin với mã băm Blob tương ứng."
   - id: q3
-    question: Lệnh nào sau đây dùng để xem loại của một đối tượng Git từ mã băm
-      SHA-1 của nó?
+    question: "Lệnh nào sau đây dùng để xem loại của một đối tượng Git từ mã băm SHA-1 của nó?"
     type: single
     options:
-      - text: git cat-file -t <hash>
+      - text: "git cat-file -t <hash>"
         correct: true
-      - text: git cat-file -p <hash>
+      - text: "git cat-file -p <hash>"
         correct: false
-      - text: git type-of <hash>
+      - text: "git type-of <hash>"
         correct: false
-      - text: git inspect <hash>
+      - text: "git inspect <hash>"
         correct: false
-    explanation: Cờ `-t` viết tắt của type, yêu cầu Git in ra định danh loại đối
-      tượng (blob, tree, commit hoặc tag).
+    explanation: "Cờ -t viết tắt của type, yêu cầu Git in ra định danh loại đối tượng (blob, tree, commit hoặc tag)."
   - id: q4
-    question: Chữ viết tắt Blob là đại diện cho cụm từ tiếng Anh nào?
+    question: "Chữ viết tắt Blob là đại diện cho cụm từ tiếng Anh nào?"
     type: single
     options:
-      - text: Binary Large Object
+      - text: "Binary Large Object"
         correct: true
-      - text: Basic Line of Branch
+      - text: "Basic Line of Branch"
         correct: false
-      - text: Backup Log of Binary
+      - text: "Backup Log of Binary"
         correct: false
-      - text: Build Link of Base
+      - text: "Build Link of Base"
         correct: false
-    explanation: Blob là thuật ngữ khoa học máy tính kinh điển chỉ khối dữ liệu nhị
-      phân lớn không có cấu trúc nội tại xác định.
+    explanation: "Blob là thuật ngữ khoa học máy tính kinh điển chỉ khối dữ liệu nhị phân lớn không có cấu trúc nội tại xác định."
+  - id: q5
+    question: "Cờ -s trong lệnh git cat-file -s <hash> dùng để làm gì?"
+    type: single
+    options:
+      - text: "In ra kích thước chính xác theo đơn vị byte của đối tượng"
+        correct: true
+      - text: "Xóa sạch đối tượng khỏi cơ sở dữ liệu"
+        correct: false
+      - text: "Gửi đối tượng lên máy chủ remote server"
+        correct: false
+      - text: "Mã hóa đối tượng bằng mật khẩu bảo vệ"
+        correct: false
+    explanation: "Cờ -s viết tắt của size, cho phép bạn truy vấn nhanh kích thước tệp tin thực tế mà không cần phải in toàn bộ nội dung ra màn hình."

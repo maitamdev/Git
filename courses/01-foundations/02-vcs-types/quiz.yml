@@ -6,8 +6,7 @@ questions:
       Centralized VCS (như SVN) là gì?
     type: single
     options:
-      - text: Mỗi máy trạm trong DVCS đều có một bản sao đầy đủ của toàn bộ kho lưu trữ
-          và lịch sử dự án
+      - text: Một bản clone Git đầy đủ thông thường có kho cục bộ kèm lịch sử dự án
         correct: true
       - text: DVCS chỉ hoạt động trên hệ điều hành Linux còn CVCS chỉ chạy trên Windows
         correct: false
@@ -15,16 +14,15 @@ questions:
         correct: false
       - text: DVCS yêu cầu phải trả phí bản quyền hàng tháng còn CVCS hoàn toàn miễn phí
         correct: false
-    explanation: Trong DVCS, mỗi client clone về một kho chứa đầy đủ 100% lịch sử và
-      đối tượng dữ liệu, không phụ thuộc vào server để thực hiện các thao tác
-      thường ngày.
+    explanation: Với một bản clone đầy đủ thông thường, Git có dữ liệu và lịch sử
+      cục bộ để bạn làm nhiều thao tác mà không cần hỏi máy chủ. Một số chế độ
+      clone rút gọn là chủ đề nâng cao.
   - id: q2
     question: Nếu máy chủ trung tâm bị mất kết nối mạng Internet, lập trình viên sử
       dụng Git có thể làm những gì?
     type: single
     options:
-      - text: Vẫn có thể commit, tạo nhánh, kiểm tra diff và xem lịch sử bình thường
-          trên máy cục bộ
+      - text: Vẫn có thể commit, tạo nhánh, xem khác biệt và lịch sử đã có trên máy
         correct: true
       - text: Không thể làm bất cứ thao tác gì vì Git sẽ bị khóa hoàn toàn
         correct: false
@@ -32,8 +30,8 @@ questions:
         correct: false
       - text: Chỉ có thể đọc code chứ không được phép chỉnh sửa tệp tin
         correct: false
-    explanation: Vì sở hữu trọn vẹn bản sao kho lưu trữ cục bộ, lập trình viên có
-      thể thực hiện mọi tác vụ quản lý phiên bản hoàn toàn offline.
+    explanation: Git xử lý các thao tác trên kho cục bộ mà không cần Internet. Gửi
+      commit lên server hoặc lấy thay đổi mới từ server thì cần kết nối.
   - id: q3
     question: Khái niệm "Single Point of Failure" (Điểm nghẽn đơn độc) phản ánh
       nhược điểm nguy hiểm của mô hình nào?
@@ -47,8 +45,9 @@ questions:
         correct: false
       - text: Mô hình điện toán đám mây hiện đại
         correct: false
-    explanation: Trong CVCS, nếu server trung tâm bị hỏng thì toàn bộ dự án và lịch
-      sử bị tê liệt hoặc biến mất nếu không có backup.
+    explanation: CVCS phụ thuộc vào máy chủ trung tâm cho các thao tác chia sẻ lịch
+      sử. Nếu máy chủ gặp sự cố, nhóm bị ảnh hưởng; mất dữ liệu lâu dài còn phụ
+      thuộc vào bản sao lưu.
   - id: q4
     question: Đại diện tiêu biểu nhất của hệ thống quản lý phiên bản phân tán hiện
       nay là phần mềm nào?

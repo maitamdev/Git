@@ -2,62 +2,67 @@ id: quiz-08-git-internals-12-references-and-heads
 title: "Trắc nghiệm: Cơ chế References (Refs): heads, tags và remotes"
 questions:
   - id: q1
-    question: Về mặt vật lý trên ổ đĩa, một nhánh Git (Branch) được lưu trữ dưới
-      hình thức nào?
+    question: "Về mặt vật lý trên ổ đĩa, một nhánh Git (Branch) được lưu trữ dưới hình thức nào?"
     type: single
     options:
-      - text: Một tệp văn bản nhỏ 41 bytes chứa duy nhất mã băm SHA-1 của commit đầu
-          nhánh
+      - text: "Một tệp văn bản nhỏ 41 bytes chứa duy nhất mã băm SHA-1 của commit đầu nhánh"
         correct: true
-      - text: Một bản sao chép toàn bộ thư mục dự án sang một thư mục mới
+      - text: "Một bản sao chép toàn bộ thư mục dự án sang một thư mục mới"
         correct: false
-      - text: Một tệp nén zip chứa toàn bộ mã nguồn
+      - text: "Một tệp nén zip chứa toàn bộ mã nguồn"
         correct: false
-      - text: Một bản ghi trong Registry hệ điều hành
+      - text: "Một bản ghi trong Registry hệ điều hành"
         correct: false
-    explanation: Một nhánh chỉ là một con trỏ văn bản tĩnh trỏ tới một commit; nó
-      cực kỳ nhẹ và không tốn dung lượng ổ đĩa.
+    explanation: "Một nhánh chỉ là một con trỏ văn bản tĩnh trỏ tới một commit; nó cực kỳ nhẹ và không tốn dung lượng ổ đĩa."
   - id: q2
-    question: Các nhánh cục bộ (local branches) được lưu trữ trong thư mục nào dưới đây?
+    question: "Các nhánh cục bộ (local branches) được lưu trữ trong thư mục nào dưới đây?"
     type: single
     options:
-      - text: .git/refs/heads/
+      - text: ".git/refs/heads/"
         correct: true
-      - text: .git/refs/remotes/
+      - text: ".git/refs/remotes/"
         correct: false
-      - text: .git/refs/tags/
+      - text: ".git/refs/tags/"
         correct: false
-      - text: .git/branches_dir/
+      - text: ".git/branches_dir/"
         correct: false
-    explanation: Thư mục `refs/heads/` là nơi chứa tất cả các tệp con trỏ nhánh cục
-      bộ của kho lưu trữ.
+    explanation: "Thư mục refs/heads/ là nơi chứa tất cả các tệp con trỏ nhánh cục bộ của kho lưu trữ."
   - id: q3
-    question: Lệnh Plumbing chuẩn mực nào được sử dụng để cập nhật con trỏ của một
-      tham chiếu an toàn?
+    question: "Lệnh Plumbing chuẩn mực nào được sử dụng để cập nhật con trỏ của một tham chiếu an toàn?"
     type: single
     options:
-      - text: git update-ref
+      - text: "git update-ref"
         correct: true
-      - text: git set-branch
+      - text: "git set-branch"
         correct: false
-      - text: git point-to
+      - text: "git point-to"
         correct: false
-      - text: git move-pointer
+      - text: "git move-pointer"
         correct: false
-    explanation: "`git update-ref <ref> <newvalue>` là lệnh plumbing chuyên dụng để
-      sửa đổi giá trị tham chiếu một cách an toàn."
+    explanation: "Lệnh git update-ref là lệnh plumbing chuyên dụng để sửa đổi giá trị tham chiếu một cách an toàn."
   - id: q4
-    question: Khi bạn chạy lệnh xóa nhánh `git branch -d feature`, điều gì thực sự
-      diễn ra trên ổ cứng?
+    question: "Khi bạn chạy lệnh xóa nhánh git branch -d feature, điều gì thực sự diễn ra trên ổ cứng?"
     type: single
     options:
-      - text: Git chỉ đơn giản là xóa tệp văn bản `.git/refs/heads/feature` khỏi đĩa
+      - text: "Git chỉ đơn giản là xóa tệp văn bản .git/refs/heads/feature khỏi đĩa"
         correct: true
-      - text: Git quét và xóa vĩnh viễn tất cả các commit mà nhánh đó từng tạo ra
+      - text: "Git quét và xóa vĩnh viễn tất cả các commit mà nhánh đó từng tạo ra"
         correct: false
-      - text: Git gửi yêu cầu đóng tài khoản GitHub của bạn
+      - text: "Git gửi yêu cầu đóng tài khoản GitHub của bạn"
         correct: false
-      - text: Hệ điều hành format lại phân vùng ổ đĩa
+      - text: "Hệ điều hành format lại phân vùng ổ đĩa"
         correct: false
-    explanation: Xóa nhánh chỉ là xóa con trỏ; các đối tượng commit thực sự vẫn nằm
-      an toàn trong cơ sở dữ liệu cho đến khi bị dọn rác (GC).
+    explanation: "Xóa nhánh chỉ là xóa con trỏ; các đối tượng commit thực sự vẫn nằm an toàn trong cơ sở dữ liệu cho đến khi bị dọn rác."
+  - id: q5
+    question: "Tệp tin .git/packed-refs có vai trò gì trong việc quản lý các tham chiếu References?"
+    type: single
+    options:
+      - text: "Gom hàng ngàn tệp tin ref riêng lẻ vào một tệp văn bản duy nhất để tối ưu hóa hệ thống tệp"
+        correct: true
+      - text: "Mã hóa toàn bộ mật khẩu remote repository"
+        correct: false
+      - text: "Lưu giữ danh sách các commit bị xóa"
+        correct: false
+      - text: "Chứa bản sao lưu của tệp .gitignore"
+        correct: false
+    explanation: "Khi chạy git gc, Git nén các tệp rời rạc trong refs/heads và refs/tags vào một tệp duy nhất tên là packed-refs để giảm số lượng tệp nhỏ trên đĩa."

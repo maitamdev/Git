@@ -1,68 +1,68 @@
 id: quiz-07-github-actions-20-ci-cd-capstone
-title: "Trắc nghiệm: Capstone Project: Xây dựng hoàn chỉnh CI/CD Pipeline cho
-  Web Application"
+title: "Trắc nghiệm: Capstone Project: Xây dựng hoàn chỉnh CI/CD Pipeline cho Web Application"
 questions:
   - id: q1
-    question: Trong một đường ống CI/CD hoàn chỉnh, thứ tự thực thi chuẩn mực nhất
-      của các giai đoạn là gì?
+    question: "Trong một đường ống CI/CD hoàn chỉnh, thứ tự thực thi chuẩn mực nhất của các giai đoạn là gì?"
     type: single
     options:
-      - text: Lint & Test -> Build & Package -> Deploy Staging -> Phê duyệt -> Deploy
-          Production
+      - text: "Lint & Test -> Build & Package -> Deploy Staging -> Phê duyệt -> Deploy Production"
         correct: true
-      - text: Deploy Production -> Build -> Test -> Lint
+      - text: "Deploy Production -> Build -> Test -> Lint"
         correct: false
-      - text: Deploy Staging -> Lint -> Deploy Production -> Test
+      - text: "Deploy Staging -> Lint -> Deploy Production -> Test"
         correct: false
-      - text: Chỉ cần Deploy Production, không cần kiểm thử
+      - text: "Chỉ cần Deploy Production, không cần kiểm thử"
         correct: false
-    explanation: Quy trình chuẩn luôn đi từ kiểm tra chất lượng mã nguồn sớm nhất,
-      sau đó mới đóng gói, thử nghiệm trên staging và cuối cùng mới lên
-      production.
+    explanation: "Quy trình chuẩn luôn đi từ kiểm tra chất lượng mã nguồn sớm nhất, sau đó mới đóng gói, thử nghiệm trên staging và cuối cùng mới lên production."
   - id: q2
-    question: Thành phần nào đóng vai trò như chốt chặn an ninh ngăn không cho mã
-      nguồn lỗi lọt vào nhánh chính?
+    question: "Thành phần nào đóng vai trò như chốt chặn an ninh ngăn không cho mã nguồn lỗi lọt vào nhánh chính?"
     type: single
     options:
-      - text: Branch Protection Rules kết hợp với Required Status Checks của CI
+      - text: "Branch Protection Rules kết hợp với Required Status Checks của CI"
         correct: true
-      - text: Tệp tin .gitignore
+      - text: "Tệp tin .gitignore"
         correct: false
-      - text: Lời nhắc nhở bằng miệng giữa các đồng nghiệp
+      - text: "Lời nhắc nhở bằng miệng giữa các đồng nghiệp"
         correct: false
-      - text: Phần mềm diệt virus trên máy tính cá nhân
+      - text: "Phần mềm diệt virus trên máy tính cá nhân"
         correct: false
-    explanation: Quy tắc bảo vệ nhánh kết hợp với CI Status Check là giải pháp cơ
-      học tự động hóa không thể bị qua mặt bằng sự bất cẩn của con người.
+    explanation: "Quy tắc bảo vệ nhánh kết hợp với CI Status Check là giải pháp cơ học tự động hóa không thể bị qua mặt bằng sự bất cẩn của con người."
   - id: q3
-    question: Khi triển khai lên môi trường Production, thực hành nào sau đây là
-      quan trọng nhất để đảm bảo an toàn?
+    question: "Khi triển khai lên môi trường Production, thực hành nào sau đây là quan trọng nhất để đảm bảo an toàn?"
     type: single
     options:
-      - text: Áp dụng Environment Protection Rules với Required Reviewers và sử dụng
-          Secrets riêng biệt
+      - text: "Áp dụng Environment Protection Rules với Required Reviewers và sử dụng Secrets riêng biệt"
         correct: true
-      - text: Triển khai vào lúc nửa đêm để không ai biết
+      - text: "Triển khai vào lúc nửa đêm để không ai biết"
         correct: false
-      - text: Tắt toàn bộ hệ thống tường lửa trước khi deploy
+      - text: "Tắt toàn bộ hệ thống tường lửa trước khi deploy"
         correct: false
-      - text: Xóa toàn bộ các bản sao lưu cũ để giải phóng dung lượng
+      - text: "Xóa toàn bộ các bản sao lưu cũ để giải phóng dung lượng"
         correct: false
-    explanation: Sự phê duyệt của con người kết hợp với sự phân tách bí mật theo môi
-      trường là chốt chặn bảo vệ tối hậu cho hệ thống sản xuất.
+    explanation: "Sự phê duyệt của con người kết hợp với sự phân tách bí mật theo môi trường là chốt chặn bảo vệ tối hậu cho hệ thống sản xuất."
   - id: q4
-    question: Lợi ích lớn nhất mà một kỹ sư phần mềm đạt được sau khi làm chủ GitHub
-      Actions là gì?
+    question: "Lợi ích lớn nhất mà một kỹ sư phần mềm đạt được sau khi làm chủ GitHub Actions là gì?"
     type: single
     options:
-      - text: Tự động hóa toàn diện quy trình phát triển, giảm thiểu lỗi thủ công và
-          nâng cao tốc độ chuyển giao phần mềm chất lượng cao
+      - text: "Tự động hóa toàn diện quy trình phát triển, giảm thiểu lỗi thủ công và nâng cao tốc độ chuyển giao phần mềm chất lượng cao"
         correct: true
-      - text: Không bao giờ phải viết mã nguồn cho ứng dụng nữa
+      - text: "Không bao giờ phải viết mã nguồn cho ứng dụng nữa"
         correct: false
-      - text: Máy tính không bao giờ bị hỏng phần cứng
+      - text: "Máy tính không bao giờ bị hỏng phần cứng"
         correct: false
-      - text: Tự động nhận được chứng chỉ tốt nghiệp mà không cần học
+      - text: "Tự động nhận được chứng chỉ tốt nghiệp mà không cần học"
         correct: false
-    explanation: Làm chủ CI/CD giúp bạn nâng tầm từ một người chỉ biết viết code
-      thành một kỹ sư phần mềm toàn diện có tư duy tự động hóa hiện đại.
+    explanation: "Làm chủ CI/CD giúp bạn nâng tầm từ một người chỉ biết viết code thành một kỹ sư phần mềm toàn diện có tư duy tự động hóa hiện đại."
+  - id: q5
+    question: "Bước cuối cùng sau khi hoàn tất triển khai (Post-deployment) trong một pipeline CD chuyên nghiệp nên là gì?"
+    type: single
+    options:
+      - text: "Thực hiện Smoke Test kiểm tra sức khỏe ứng dụng và gửi thông báo trạng thái tới kênh liên lạc của đội ngũ"
+        correct: true
+      - text: "Tắt toàn bộ hệ thống giám sát server"
+        correct: false
+      - text: "Xóa toàn bộ commit trên nhánh main"
+        correct: false
+      - text: "Xóa sạch cơ sở dữ liệu để giải phóng bộ nhớ"
+        correct: false
+    explanation: "Sau khi triển khai thành công, việc chạy Smoke Test tự động và thông báo kết quả qua Slack hoặc Discord giúp đội ngũ phát hiện tức thì nếu hệ thống gặp sự cố sau phát hành."

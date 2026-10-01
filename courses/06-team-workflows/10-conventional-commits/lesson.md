@@ -1,103 +1,94 @@
 # Conventional Commits
 
----
-
 ## 🎯 Mục tiêu
 - Hiểu rõ đặc tả chuẩn Conventional Commits phiên bản 1.0.0 và giá trị to lớn của nó đối với tự động hóa phần mềm.
-- Làm chủ cấu trúc chuẩn: `<type>[optional scope]: <description>` cùng các phần tùy chọn tử tế Body và Footer.
+- Làm chủ cấu trúc chuẩn: `<type>[optional scope]: <description>` cùng các phần tùy chọn Body và Footer.
 - Sử dụng chính xác các tiền tố định danh phổ biến: feat, fix, docs, style, refactor, perf, test, build, ci, chore.
 - Biểu diễn các thay đổi phá vỡ tính tương thích ngược (BREAKING CHANGE) bằng dấu chấm than `!` hoặc footer chuyên dụng.
 
----
+## 🧩 Từ khóa hôm nay
+### Conventional Commits
+- **Nói dễ hiểu**: Quy ước viết thông điệp commit theo cấu trúc chuẩn để cả người và máy đều đọc hiểu dễ dàng.
+- **Ví dụ**: Viết `feat(auth): add google login button` thay vì chỉ ghi chung chung `update code`.
+- **Đừng nhầm**: Không phải câu lệnh Git riêng biệt, mà là chuẩn mực thỏa thuận chung của cộng đồng lập trình.
+
+### Commit Type
+- **Nói dễ hiểu**: Từ khóa phân loại mục đích chính của commit như tính năng mới (`feat`) hay sửa lỗi (`fix`).
+- **Ví dụ**: Dùng `docs: update readme` khi chỉ bổ sung hướng dẫn cài đặt mà không đụng vào mã nguồn.
+- **Đừng nhầm**: `feat` và `fix` mang giá trị cho người dùng cuối; công việc nội bộ như dọn dẹp thư viện dùng `chore`.
+
+### Breaking Change
+- **Nói dễ hiểu**: Thay đổi làm thay đổi cách thức hoạt động cũ, buộc người dùng hoặc hệ thống khác phải cập nhật theo.
+- **Ví dụ**: Đổi tên trường API từ `user_id` sang `account_id` khiến ứng dụng cũ không gọi được nữa.
+- **Đừng nhầm**: Không chỉ là lỗi làm crash app, mà là sự thay đổi giao diện hoặc hợp đồng dữ liệu phá vỡ tính tương thích ngược.
 
 ## 📖 Định nghĩa
-> Conventional Commits là một quy ước định dạng thông điệp commit có cấu trúc chuẩn mực cao và dễ đọc cho cả con người lẫn máy tính. Đặc tả này thiết lập một bộ quy tắc nhẹ nhàng nhưng nhất quán, yêu cầu mọi commit phải bắt đầu bằng một định danh thể loại rõ ràng (như `feat`, `fix`, `chore`, `refactor`), đi kèm với phạm vi tác động tùy chọn, mô tả súc tích và phần nội dung mở rộng. Nhờ có cấu trúc máy tính có thể phân tích cú pháp (parseable) này, hệ thống CI/CD có thể tự động tính toán số phiên bản Semantic Versioning và tự động sinh nhật ký thay đổi (Changelog) hoàn hảo.
+Conventional Commits là đặc tả định dạng thông điệp commit có cấu trúc nhẹ nhàng nhưng chặt chẽ. Cú pháp cơ bản gồm tiền tố loại commit, phạm vi tác động tùy chọn và mô tả súc tích, cho phép công cụ CI/CD tự động phân tích cú pháp để tính toán số phiên bản Semantic Versioning và tạo nhật ký thay đổi.
 
----
+## 💡 Tại sao cần
+Lịch sử commit với những thông điệp mơ hồ như "update", "fix bug" gây khó khăn lớn khi điều tra lỗi hoặc phát hành sản phẩm. Conventional Commits biến lịch sử dự án thành tài liệu có trật tự cao, giúp mọi thành viên nắm bắt ngay bức tranh phát triển và hỗ trợ tự động hóa hoàn toàn quy trình release.
 
-## 🤔 Tại sao cần?
-Lịch sử commit với những câu từ mơ hồ, vô nghĩa như "fix bug", "update", "done task", hay "asdasd" là một cơn ác mộng khi cần truy tìm nguyên nhân phát sinh lỗi hoặc tổng hợp tài liệu phát hành cho khách hàng. Conventional Commits biến lịch sử dự án thành một câu chuyện tường minh, có tính tổ chức cao: nhìn vào danh sách commit, bất kỳ ai cũng biết ngay có bao nhiêu tính năng mới được thêm vào, bao nhiêu lỗi đã sửa và có thay đổi nào gây hỏng tương thích với phiên bản cũ hay không.
+## 🧠 Mental Model
+Hãy hình dung hệ thống phân loại bưu kiện tự động. Mỗi kiện hàng được dán nhãn chuẩn hóa: Thư hỏa tốc (`feat`), Bảo hành (`fix`), Bảo trì định kỳ (`chore`), kèm địa chỉ cụ thể `(checkout)`. Máy quét mã vạch đọc nhãn và tự động phân luồng bưu kiện chính xác vào từng toa tàu mà không cần bóc gói hàng.
 
----
-
-## 🧠 Mental Model (Mô hình tư duy)
-Hãy hình dung bạn đang phân loại hồ sơ bệnh án hoặc kiện hàng bưu chính. Thay vì dán một mảnh giấy viết tay nghuệch ngoạc "kiện hàng", bưu điện yêu cầu dán nhãn chuẩn hóa có mã vạch: loại dịch vụ Hỏa tốc (`feat`), Sửa chữa bảo hành (`fix`), Bảo trì bảo dưỡng (`chore`), cùng điểm đến cụ thể `(checkout)`. Nhờ nhãn chuẩn này, hệ thống băng chuyền tự động có thể quét mã vạch và phân loại hàng ngàn kiện hàng vào đúng toa tàu mà không cần con người phải bóc từng kiện ra đọc nội dung.
-
----
-
-## 🖼 Sơ đồ
-```text
-Cấu trúc giải phẫu của một Conventional Commit chuẩn mực:
-<type>[optional scope]: <description>
-
-[optional body]
-
-[optional footer(s)]
-
-Ví dụ thực tế:
-feat(auth)!: add OAuth2 login with Google and GitHub
-
-BREAKING CHANGE: The legacy basic auth endpoint /api/v1/login is removed.
-Refs: #452
+## 📊 Sơ đồ minh họa
+```mermaid
+flowchart TD
+    Commit["Cú pháp: type(scope)!: description"] --> Type["Loại: feat, fix, chore, docs"]
+    Commit --> Scope["Phạm vi: (auth), (api), (cart)"]
+    Commit --> Bang["Dấu !: Báo hiệu Breaking Change"]
+    Commit --> Desc["Mô tả: súc tích, chữ thường, không chấm cuối"]
 ```
 
----
+## 🏢 Ví dụ thực tế
+Một kỹ sư phần mềm tuân thủ nghiêm ngặt chuẩn Conventional Commits. Khi tích hợp cổng thanh toán PayPal, kỹ sư commit: `feat(payment): add PayPal smart button integration`. Khi sửa lỗi làm tròn tiền tệ, kỹ sư ghi: `fix(cart): correct currency rounding for Japanese Yen`. Đến ngày phát hành, công cụ tự động quét lịch sử và tự tạo file changelog chi tiết cùng số phiên bản mới trong vài giây.
 
-## 🌎 Ví dụ thực tế
-Một kỹ sư phần mềm thực hiện một loạt các thay đổi trong ngày làm việc. Thay vì viết thông điệp lộn xộn, kỹ sư tuân thủ nghiêm ngặt chuẩn Conventional Commits. Khi thêm cổng thanh toán PayPal, kỹ sư commit: `feat(payment): add PayPal smart button integration`. Khi sửa lỗi làm tròn số tiền tệ ở giỏ hàng, kỹ sư commit: `fix(cart): correct currency rounding for Japanese Yen`. Khi tái cấu trúc lại thư mục tiện ích mà không thay đổi tính năng, kỹ sư viết: `refactor(utils): split date helpers into separate modular files`. Đến cuối tuần khi chuẩn bị phát hành, công cụ tự động quét qua 50 commit này và tạo ra một tệp CHANGELOG.md đẹp mắt cùng số phiên bản mới mà kỹ sư không cần tốn một giây gõ tay nào.
-
----
-
-## 💻 Command
+## 💻 Command & Cú pháp
 ```bash
-git commit -m "feat(api): add endpoint for user registration"
-git commit -m "fix(auth): prevent session timeout during checkout"
+# Thêm tính năng mới cho module xác thực
+git commit -m "feat(auth): add endpoint for user registration"
+
+# Sửa lỗi tính toán trong giỏ hàng
+git commit -m "fix(cart): prevent session timeout during checkout"
+
+# Thay đổi phá vỡ tương thích ngược với dấu chấm than
 git commit -m "feat(core)!: drop support for Node 16"
 ```
 
----
-
 ## 🔍 Giải thích command
-- `feat(scope)`: Khai báo tính năng mới cung cấp giá trị trực tiếp cho người sử dụng phần mềm.
-- `fix(scope)`: Khai báo việc vá một lỗi phát sinh trong mã nguồn hiện tại.
-- `!` sau scope: Đánh dấu có thay đổi phá vỡ tương thích ngược (Breaking Change) cần tăng Major version.
-
----
+- `feat(auth)`: Định danh thêm tính năng mới cho module đăng nhập, giúp công cụ tự động tăng Minor version.
+- `fix(cart)`: Định danh việc sửa lỗi trong giỏ hàng, giúp công cụ tự động tăng Patch version khi phát hành.
+- `!` sau scope: Đánh dấu có thay đổi phá vỡ tương thích ngược để công cụ tự động tăng Major version.
 
 ## ⚠️ Sai lầm phổ biến
-1. **Viết chữ in hoa cho type hoặc viết sai chính tả, ví dụ gõ `Feat**: `, `FEATURE
-2. **Đặt dấu chấm ở cuối dòng tiêu đề description đầu tiên**:  Quy chuẩn khuyến nghị không dùng dấu chấm cuối tiêu đề.
-3. **Sử dụng `feat` cho các công việc nội bộ như nâng cấp thư viện phụ thuộc (phải dùng `chore` hoặc `build`).**: Sử dụng `feat` cho các công việc nội bộ như nâng cấp thư viện phụ thuộc (phải dùng `chore` hoặc `build`).
+- Viết chữ in hoa cho type hoặc viết sai chính tả như `Feat: ` hoặc `FEATURE: `.
+- Đặt dấu chấm câu ở cuối dòng tiêu đề mô tả đầu tiên.
+- Lạm dụng `feat` cho các công việc bảo trì nội bộ thay vì dùng đúng `chore` hoặc `build`.
 
----
+## 🧪 Lab thực hành
+Bài học này là bài tự kiểm tra: bạn thao tác tạo các commit tuân thủ quy chuẩn trên máy và đối chiếu theo hướng dẫn bên dưới.
 
-## 🧪 Lab
-1. Viết 3 commit mẫu tuân thủ đúng chuẩn Conventional Commits cho các hành động: thêm trang, sửa lỗi nút bấm và viết tài liệu hướng dẫn.
-2. Sử dụng dấu chấm than `!` để đánh dấu một thay đổi làm thay đổi định dạng dữ liệu API trả về.
+1. Khởi tạo kho thử nghiệm và tạo tệp `home.html`.
+2. Commit với chuẩn tính năng mới: `git commit -m "feat(home): add hero banner section"`.
+3. Sửa một lỗi hiển thị và commit: `git commit -m "fix(home): correct button alignment on mobile"`.
+4. Viết tài liệu và commit: `git commit -m "docs: add getting started guide in readme"`.
+5. Dùng `git log --oneline` để kiểm tra danh sách commit xem có ngay ngắn và dễ đọc hay không.
 
----
+## 💡 Hint & mẹo
+- Giữ dòng tiêu đề đầu tiên ngắn gọn dưới 72 ký tự và luôn viết ở thể mệnh lệnh hiện tại.
+- Nếu có nội dung giải thích dài hơn, hãy để một dòng trống sau dòng tiêu đề rồi mới viết phần Body chi tiết.
 
-## 💡 Hint
-> Dòng tiêu đề đầu tiên luôn viết ở thể mệnh lệnh hiện tại ngắn gọn dưới 72 ký tự.
+## ✅ Validation & Kết quả mong đợi
+- Lịch sử Git hiển thị rõ ràng từng loại công việc qua tiền tố `feat`, `fix`, `docs`.
+- Các công cụ tự động hóa như standard-version hay semantic-release có thể đọc và phân tích cú pháp toàn bộ commit.
 
----
+## ❓ Quiz nhanh
+Hãy hoàn thành bài trắc nghiệm bên dưới để kiểm tra mức độ hiểu biết của bạn về đặc tả Conventional Commits.
 
-## ✅ Validation
-- Các công cụ tự động hóa như standard-version hoặc semantic-release có thể đọc và phân tích cú pháp toàn bộ commit.
+## 🚀 Thử thách nâng cao
+Tìm hiểu cách cài đặt công cụ commitlint kết hợp với Husky để tự động từ chối bất kỳ commit nào không tuân thủ chuẩn Conventional Commits ngay từ máy lập trình viên.
 
----
-
-## ❓ Quiz
-Hãy làm bài trắc nghiệm dưới đây về chuẩn thông điệp Conventional Commits.
-
----
-
-## 🔥 Challenge
-Thiết lập công cụ commitlint bằng husky trong dự án để tự động từ chối bất kỳ commit nào không tuân thủ Conventional Commits.
-
----
-
-## 📚 Tổng kết
-- Conventional Commits chuẩn hóa thông điệp commit theo cấu trúc mà máy tính có thể phân tích cú pháp được.
-- Phân loại rõ ràng mục đích thay đổi qua các tiền tố: feat, fix, chore, refactor, docs, test.
-- Là nền tảng tự động hóa việc tính toán số phiên bản Semantic Versioning và sinh Changelog tự động.
+## 📝 Tổng kết
+- Conventional Commits mang lại cấu trúc nhất quán và ý nghĩa rõ ràng cho lịch sử dự án.
+- Các tiền tố `feat`, `fix`, `chore` phản ánh chính xác bản chất thay đổi của từng commit.
+- Chuẩn hóa thông điệp là nền tảng để tự động hóa phát hành phần mềm và tạo changelog chuyên nghiệp.

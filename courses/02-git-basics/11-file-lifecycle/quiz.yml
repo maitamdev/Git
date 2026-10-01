@@ -20,8 +20,7 @@ questions:
     question: Trạng thái Unmodified của một tệp tin có ý nghĩa kỹ thuật gì?
     type: single
     options:
-      - text: Nội dung tệp trong Working Tree đang trùng khớp hoàn toàn 100% với
-          snapshot gần nhất trong commit
+      - text: Nội dung tệp trong Working Tree đang khớp với phiên bản đã lưu gần nhất
         correct: true
       - text: Tệp tin đó đã bị khóa và không ai được phép sửa đổi nữa
         correct: false
@@ -29,8 +28,7 @@ questions:
         correct: false
       - text: Tệp tin bị lỗi cú pháp chưa biên dịch được
         correct: false
-    explanation: Unmodified nghĩa là nội dung trong Working Tree hoàn toàn giống với
-      commit gần nhất, không có thay đổi nào dở dang.
+    explanation: Unmodified nghĩa là Git chưa thấy sửa đổi mới trong Working Tree so với trạng thái đã lưu.
   - id: q3
     question: Lệnh nào đưa một tệp tin từ trạng thái Modified sang trạng thái Staged?
     type: single
@@ -60,3 +58,16 @@ questions:
         correct: false
     explanation: Ký tự M thứ nhất là Staged, ký tự M thứ hai là Modified trong
       Working Tree; nghĩa là tệp đã add nhưng sau đó lại bị sửa tiếp.
+  - id: q5
+    question: Đâu là thứ tự thường gặp của một tệp mới khi bạn muốn lưu nó vào lịch sử Git?
+    type: single
+    options:
+      - text: Untracked → Staged → sau commit, tệp thành tracked và Unmodified
+        correct: true
+      - text: Committed → Untracked → Modified → Staged
+        correct: false
+      - text: Modified → Unmodified → Untracked → Committed
+        correct: false
+      - text: Staged → Deleted → Remote → Unmodified
+        correct: false
+    explanation: Tệp mới bắt đầu là Untracked; `git add` stage tệp và `git commit` ghi mốc. Nếu không sửa thêm, trạng thái sau commit là Unmodified.

@@ -1,103 +1,101 @@
 # .github/workflows và cú pháp YAML chuẩn
 
----
-
-## 🎯 Mục tiêu bài học
-- Nắm vững vị trí bắt buộc của tệp workflow: thư mục .github/workflows/ với phần mở rộng .yml hoặc .yaml.
+## 🎯 Mục tiêu
+- Nắm vững vị trí bắt buộc của tệp workflow: thư mục `.github/workflows/` với phần mở rộng `.yml` hoặc `.yaml`.
 - Làm chủ các quy tắc định dạng YAML: thụt lề bằng 2 dấu cách, danh sách gạch đầu dòng, cặp key-value.
 - Nhận biết và khắc phục các lỗi cú pháp thụt lề YAML phổ biến làm workflow bị từ chối biên dịch.
 
----
+## 🧩 Từ khóa hôm nay
+### YAML Indentation
+- **Nói dễ hiểu**: Quy tắc bắt buộc dùng dấu cách Space để thụt đầu dòng thể hiện quan hệ cha con giữa các khối dữ liệu.
+- **Ví dụ**: Dùng đúng 2 dấu cách cho mỗi cấp độ phân cấp; `steps` thụt vào 4 khoảng trắng dưới `jobs`.
+- **Đừng nhầm**: Nghiêm cấm dùng phím Tab; dùng Tab sẽ khiến trình phân tích YAML báo lỗi ngay lập tức.
+
+### .github/workflows
+- **Nói dễ hiểu**: Thư mục quy ước duy nhất nơi GitHub tự động quét tìm và kích hoạt các tệp kịch bản Actions.
+- **Ví dụ**: Đặt tệp `.github/workflows/ci.yml` ở thư mục gốc của repository.
+- **Đừng nhầm**: Chú ý chữ `workflows` có chữ `s` ở cuối; nếu đặt ở `.github/workflow/` thì hệ thống sẽ bỏ qua hoàn toàn.
+
+### Key-Value Mapping
+- **Nói dễ hiểu**: Cặp khóa - giá trị phân tách bởi dấu hai chấm và khoảng trắng biểu diễn dữ liệu trong YAML.
+- **Ví dụ**: Cặp `runs-on: ubuntu-latest` gán giá trị hệ điều hành cho thuộc tính của Job.
+- **Đừng nhầm**: Bắt buộc phải có một khoảng trắng sau dấu hai chấm (`name: Build` chứ không được viết liền `name:Build`).
 
 ## 📖 Định nghĩa
-> Trong GitHub Actions, toàn bộ định nghĩa luồng công việc phải được lưu trữ dưới dạng các tệp văn bản định dạng YAML nằm chính xác tại thư mục .github/workflows/ trong nhánh gốc của kho lưu trữ. Cú pháp YAML (YAML Ain't Markup Language) là định dạng dữ liệu có cấu trúc dựa trên thụt lề khoảng trắng (indentation) nghiêm ngặt để biểu diễn quan hệ cha con giữa các khối dữ liệu, danh sách và ánh xạ từ khóa một cách mạch lạc và chuẩn mực.
+Trong GitHub Actions, toàn bộ kịch bản tự động hóa bắt buộc phải được lưu trữ dưới dạng các tệp văn bản YAML nằm chính xác tại thư mục `.github/workflows/` trong nhánh của kho lưu trữ. Cú pháp YAML dựa trên thụt lề khoảng trắng nghiêm ngặt để biểu diễn phân cấp giữa workflow, job, step và các tham số cấu hình.
 
----
+## 💡 Tại sao cần
+Hơn 80% sự cố ban đầu của kỹ sư mới làm quen với GitHub Actions bắt nguồn từ việc vi phạm cú pháp YAML: dùng phím Tab thay vì dấu cách Space, thụt dòng sai cấp độ giữa steps và jobs, hoặc viết sai đường dẫn thư mục. Nắm vững cú pháp YAML chuẩn giúp bạn viết kịch bản sạch sẽ, dễ bảo trì và loại bỏ lỗi ngớ ngẩn.
 
-## 🤔 Tại sao cần?
-Hơn 80% sự cố ban đầu của các kỹ sư mới làm quen với CI/CD bắt nguồn từ việc vi phạm quy tắc thụt dòng trong tệp YAML, chẳng hạn như dùng phím Tab thay vì dấu cách Space, thụt dòng sai cấp độ giữa steps và jobs, hoặc đặt sai vị trí thư mục khiến GitHub hoàn toàn không nhận diện được workflow. Việc thành thạo cấu trúc YAML chuẩn giúp bạn viết kịch bản sạch sẽ, dễ đọc và loại bỏ hoàn toàn các lỗi cú pháp ngớ ngẩn gây gián đoạn đường ống.
+## 🧠 Mental Model
+Hãy hình dung tệp YAML như sơ đồ tổ chức phòng ban của công ty. Mỗi cấp bậc quản lý được biểu diễn bằng khoảng thụt lề 2 bước chân (2 spaces). Nếu một nhân viên thực thi (`step`) đứng ngang hàng với trưởng phòng (`job`), toàn bộ trật tự quản lý sẽ bị xáo trộn và hệ thống quét tự động sẽ từ chối phê duyệt ngay.
 
----
-
-## 🧠 Mental Model & Mô hình tư duy
-Hãy hình dung tệp YAML như một bản vẽ sơ đồ tổ chức phòng ban trong một tập đoàn. Mỗi cấp bậc quản lý được biểu diễn bằng một khoảng thụt lề thụt vào trong 2 bước chân (2 spaces). Nếu một nhân viên thực thi (step) đứng ngang hàng với giám đốc bộ phận (job), toàn bộ cấu trúc quyền lực sẽ bị xáo trộn và máy quét kiểm duyệt tự động sẽ từ chối phê duyệt văn bản ngay lập tức.
-
----
-
-## 🖼️ Sơ đồ minh họa
-```text
-Thư mục kho lưu trữ (Repo Root)
-└── .github/
-    └── workflows/
-        ├── ci.yml          <── Tệp cấu hình chuẩn (.yml hoặc .yaml)
-        └── release.yml
-
-Quy tắc 2 Spaces Indentation:
-name: CI Pipeline           # Cấp 0 (Không thụt lề)
-on: push                    # Cấp 0
-jobs:                       # Cấp 0
-  test:                     # Cấp 1 (Thụt vào 2 spaces: Tên Job)
-    runs-on: ubuntu-latest  # Cấp 2 (Thụt vào 4 spaces: Thuộc tính Job)
-    steps:                  # Cấp 2
-      - name: Checkout      # Cấp 3 (Thụt vào 6 spaces: Danh sách Step)
+## 📊 Sơ đồ minh họa
+```mermaid
+flowchart TD
+    Root[Thư mục gốc Repository] --> DotGithub[Thư mục: .github/]
+    DotGithub --> Workflows[Thư mục: workflows/ - có chữ s]
+    Workflows --> File1[ci.yml - Kịch bản kiểm thử]
+    Workflows --> File2[deploy.yml - Kịch bản phát hành]
 ```
 
----
+## 🏢 Ví dụ thực tế
+Một kỹ sư tạo tệp `.github/workflows/ci.yml` cho dự án Node.js. Ban đầu, kỹ sư vô tình dùng phím Tab trên bàn phím để thụt dòng mục steps. Khi đẩy lên GitHub, thẻ Actions báo lỗi đỏ: "Invalid workflow file: mapping values are not allowed in this context". Kỹ sư mở VS Code, bật hiển thị ký tự ẩn, thay toàn bộ ký tự Tab bằng 2 dấu cách Space và đẩy lại. GitHub lập tức nhận diện thành công và hiển thị tiến trình đang chạy màu vàng.
 
-## 🌎 Ví dụ thực tế
-Một kỹ sư phần mềm tạo tệp cấu hình .github/workflows/ci.yml cho dự án Node.js. Ban đầu, kỹ sư này vô tình dùng phím Tab trên bàn phím để thụt dòng mục steps. Khi đẩy lên GitHub, tab Actions hiển thị thông báo lỗi màu đỏ đậm: "Invalid workflow file: mapping values are not allowed in this context". Kỹ sư mở trình soạn thảo, kích hoạt chế độ hiển thị ký tự ẩn (Show Invisibles), thay thế toàn bộ ký tự Tab bằng 2 dấu cách Space và đẩy lại commit. GitHub lập tức nhận diện thành công và huy hiệu build chuyển sang màu vàng đang chạy.
-
----
-
-## 💻 Command & Lệnh thao tác
+## 💻 Command & Cú pháp
 ```bash
+# Tạo thư mục chuẩn workflows
 mkdir -p .github/workflows
+
+# Tạo tệp cấu hình kịch bản tự động
 touch .github/workflows/ci.yml
+
+# Kiểm tra cú pháp YAML bằng công cụ dòng lệnh nếu có
 yamllint .github/workflows/ci.yml
 ```
 
----
+## 🔍 Giải thích command
+- `mkdir -p .github/workflows`: Tạo cấu trúc thư mục quy chuẩn theo đúng đặc tả của GitHub Actions.
+- `touch .github/workflows/ci.yml`: Khởi tạo tệp cấu hình mới với phần mở rộng `.yml` hợp lệ.
+- `yamllint`: Kiểm tra tính hợp lệ về thụt lề và quy tắc định dạng của tệp trước khi đẩy lên máy chủ.
 
-## 🔍 Giải thích chi tiết lệnh
-Lệnh mkdir -p tạo cây thư mục chuẩn .github/workflows, touch tạo tệp cấu hình mới, và yamllint kiểm tra tính hợp lệ về thụt lề và cú pháp của tệp YAML trước khi đưa vào hệ thống kiểm soát phiên bản để ngăn chặn lỗi sớm.
+## ⚠️ Sai lầm phổ biến
+- Dùng phím Tab thay vì dấu cách Space để thụt lề (YAML cấm tuyệt đối ký tự Tab).
+- Đặt tệp sai đường dẫn như `.github/workflow/` (thiếu chữ s) khiến GitHub hoàn toàn bỏ qua kịch bản.
+- Viết sai phần mở rộng tệp thành `.json` hoặc `.txt` thay vì `.yml` hoặc `.yaml`.
 
----
+## 🧪 Lab thực hành
+Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
 
-## ⚠️ Sai lầm phổ biến & Cách phòng tránh
-1. **Sử dụng phím Tab thay vì dấu cách Space**:  YAML tiêu chuẩn nghiêm cấm tuyệt đối ký tự Tab để thụt dòng.
-2. **Đặt tệp sai đường dẫn như `.github/workflow/` (thiếu chữ s) khiến GitHub hoàn toàn bỏ qua tệp.**: 
-3. **Viết sai phần mở rộng tệp thành `.json` hoặc `.txt` thay vì `.yml` hoặc `.yaml`.**: 
+1. Mở terminal và tạo thư mục `.github/workflows/` bằng lệnh `mkdir -p .github/workflows`.
+2. Tạo tệp `ci.yml` trong thư mục vừa tạo với nội dung mẫu:
+   ```yaml
+   name: CI Pipeline
+   on: [push]
+   jobs:
+     test:
+       runs-on: ubuntu-latest
+       steps:
+         - run: echo "Hello GitHub Actions"
+   ```
+3. Kiểm tra xem mỗi tầng thụt lề có dùng đúng 2 dấu cách Space hay không.
+4. Đẩy commit lên GitHub và vào tab Actions để quan sát workflow đầu tiên được thực thi.
 
----
+## 💡 Hint & mẹo
+- Trong trình soạn thảo VS Code, bạn nên cài đặt `"editor.tabSize": 2` và `"editor.insertSpaces": true` để khi gõ phím Tab hệ thống tự động đổi thành 2 dấu cách.
+- Cài tiện ích mở rộng GitHub Actions trên VS Code để được gợi ý cú pháp và bắt lỗi YAML ngay khi gõ.
 
-## 🧪 Bài thực hành Lab (Hands-on)
-1. Tạo cấu trúc thư mục `.github/workflows/` trong kho lưu trữ thử nghiệm.
-2. Khởi tạo tệp tin `ci.yml` và nhập cấu hình mẫu tối thiểu gồm name, on, jobs.
-3. Kiểm tra định dạng và đảm bảo toàn bộ tệp chỉ sử dụng 2 dấu cách cho mỗi cấp độ thụt lề.
+## ✅ Validation & Kết quả mong đợi
+- Tệp YAML được phân tích cú pháp hợp lệ mà không có lỗi thụt lề hoặc lỗi mapping.
+- Tab Actions trên GitHub nhận diện được workflow và tự động kích hoạt khi có commit mới.
 
----
+## ❓ Quiz nhanh
+Hãy làm bài trắc nghiệm bên dưới để kiểm tra mức độ nắm vững quy tắc định dạng YAML và vị trí tệp workflow.
 
-## 💡 Gợi ý thực hiện (Hint)
-> Hãy cấu hình trình soạn thảo VS Code với thuộc tính `"editor.tabSize": 2` và `"editor.insertSpaces": true`.
+## 🚀 Thử thách nâng cao
+Giải thích tại sao định dạng YAML lại được chọn cho GitHub Actions thay vì JSON hay XML, và ưu thế của nó về tính trực quan đối với con người là gì?
 
----
-
-## ✅ Kiểm tra kết quả (Validation)
-Tệp YAML được phân tích cú pháp hợp lệ mà không có bất kỳ lỗi linter nào.
-
----
-
-## ❓ Câu hỏi ôn tập (Quiz)
-Kiểm tra kiến thức về quy tắc định dạng YAML và cấu trúc tệp workflow qua các câu hỏi sau.
-
----
-
-## 🔥 Thử thách nâng cao (Challenge)
-Giải thích tại sao định dạng YAML lại được chọn cho GitHub Actions thay vì JSON hay XML, và ưu thế của nó về khả năng đọc hiểu của con người là gì?
-
----
-
-## 📚 Tổng kết kiến thức
-- Tệp Workflow bắt buộc phải nằm trong thư mục `.github/workflows/` với đuôi `.yml` hoặc `.yaml`.
-- YAML sử dụng thụt dòng bằng 2 dấu cách Space để phân cấp dữ liệu, cấm dùng phím Tab.
-- Cấu trúc tối thiểu của một workflow luôn cần có các khóa: `name`, `on`, và `jobs`.
+## 📝 Tổng kết
+- Tệp workflow bắt buộc phải đặt tại `.github/workflows/` với phần mở rộng `.yml` hoặc `.yaml`.
+- Luôn sử dụng 2 dấu cách Space cho mỗi cấp độ thụt lề và không bao giờ dùng phím Tab.
+- Cú pháp YAML phân cấp rõ ràng giúp kịch bản tự động hóa dễ đọc và dễ bảo trì.

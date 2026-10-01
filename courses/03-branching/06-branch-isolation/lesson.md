@@ -3,41 +3,59 @@
 ---
 
 ## 🎯 Mục tiêu
-- Hiểu rõ nguyên lý cách ly không gian (Branch Isolation) độc lập của các luồng phát triển trong Git.
-- Nhận biết phạm vi tác động của commit trên từng nhánh riêng biệt.
-- Tự tin phát triển các tính năng thử nghiệm mạo hiểm mà không sợ làm ảnh hưởng tới nhánh chính.
-- Phân tích sự phân kỳ lịch sử (divergent history) khi hai nhánh cùng tiến về phía trước.
+- Hiểu rõ nguyên lý cách ly độc lập giữa các nhánh trong Git.
+- Nhận biết phạm vi tác động của một commit chỉ nằm trên nhánh đang làm việc.
+- Tự tin thử nghiệm ý tưởng mới trên nhánh riêng mà không sợ hỏng mã nguồn chính.
+
+---
+
+## 🧩 Từ khóa hôm nay
+
+### Branch Isolation — nguyên lý cách ly nhánh
+- **Nói dễ hiểu:** Mọi commit tạo ra trên một nhánh chỉ tồn tại và ảnh hưởng trong nội bộ nhánh đó.
+- **Ví dụ:** Bạn tạo tệp `chat.js` trên nhánh `feature-chat`, khi về `main` tệp này hoàn toàn không xuất hiện.
+- **Đừng nhầm:** Tính cách ly chỉ áp dụng cho commit đã lưu; các tệp sửa dở chưa commit có thể đi theo khi đổi nhánh.
+
+### Divergent History — lịch sử phân kỳ
+- **Nói dễ hiểu:** Tình trạng hai nhánh cùng tách ra từ một commit cũ, sau đó mỗi nhánh tiếp tục có các commit mới riêng biệt.
+- **Ví dụ:** Nhánh `main` có commit cập nhật tài liệu, nhánh `feature` có commit thêm nút bấm, tạo thành ngã rẽ chữ Y.
+- **Đừng nhầm:** Lịch sử phân kỳ không phải là lỗi; đây là quy trình làm việc song song bình thường của nhóm.
+
+### Merge — hành động hợp nhất nhánh
+- **Nói dễ hiểu:** Thao tác chủ động gom toàn bộ thay đổi từ nhánh tính năng đưa vào nhánh chính.
+- **Ví dụ:** Sau khi tính năng thanh toán được kiểm tra kỹ, bạn gộp `feature-pay` vào nhánh `main`.
+- **Đừng nhầm:** Git không bao giờ tự động gộp các nhánh; bạn luôn phải chủ động thực hiện lệnh hợp nhất.
 
 ---
 
 ## 📖 Định nghĩa
-> Nguyên lý cách ly không gian (Branch Isolation) là đặc tính kiến trúc cốt lõi của Git, bảo đảm rằng mọi thay đổi đã được commit trên một nhánh chỉ tồn tại và ảnh hưởng độc quyền trên luồng lịch sử của chính nhánh đó. Nhánh chính (`main`) và các nhánh tính năng khác hoàn toàn không hề hay biết hay chịu bất kỳ tác động nào từ những sửa đổi này cho đến khi bạn chủ động thực hiện hành động hợp nhất (Merge hoặc Rebase).
+Nguyên lý cách ly nhánh (Branch Isolation) đảm bảo rằng những commit trên một nhánh chỉ thuộc về luồng lịch sử của nhánh đó. Nhánh chính (`main`) và các nhánh khác không bị ảnh hưởng cho tới khi bạn chủ động gộp chúng lại với nhau.
 
 ---
 
 ## 🤔 Tại sao cần?
-Khả năng cách ly tuyệt đối giải phóng sự sáng tạo của lập trình viên khỏi nỗi sợ hãi làm hỏng mã nguồn đang vận hành. Bạn có thể thoải mái thử nghiệm viết lại toàn bộ kiến trúc ứng dụng, cài đặt các thư viện mới hoặc xóa bỏ các module cũ trên một nhánh riêng biệt. Nếu thử nghiệm thành công rực rỡ, bạn sẽ gộp vào dự án chung; nếu thất bại thảm hại, bạn chỉ việc xóa nhánh đó đi chỉ trong một giây mà kho lưu trữ chính vẫn hoàn toàn nguyên vẹn.
+Nhờ tính cách ly, bạn có thể tự do thử nghiệm các giải pháp phức tạp hoặc viết lại code mà không sợ làm gián đoạn sản phẩm đang chạy. Nếu thử nghiệm thành công, bạn gộp vào nhánh chính; nếu thất bại, bạn chỉ cần xóa nhánh con đi là dự án lại nguyên vẹn như cũ.
 
 ---
 
 ## 🧠 Mental Model (Mô hình tư duy)
-Hãy hình dung nguyên lý cách ly nhánh giống như các phòng thí nghiệm an toàn sinh học cấp độ 4 độc lập trong cùng một viện nghiên cứu. Mỗi nhà khoa học được cấp một căn phòng kín với hệ thống lọc khí riêng biệt để nghiên cứu các mẫu thử nghiệm mới. Bất kể phòng thí nghiệm số 1 có xảy ra sự cố cháy nổ hay đổ vỡ ống nghiệm, căn phòng chính số 0 và các phòng thí nghiệm lân cận vẫn hoàn toàn sạch sẽ, an toàn tuyệt đối và hoạt động bình thường.
+Hãy hình dung mỗi nhánh như một phòng thí nghiệm riêng biệt trong cùng một tòa nhà. Bạn làm việc, thử nghiệm và thậm chí làm hỏng thiết bị trong phòng của mình thì các phòng khác và sảnh chính của tòa nhà vẫn hoàn toàn an toàn và hoạt động bình thường.
 
 ---
 
 ## 🖼 Sơ đồ
 ```text
-Lịch sử phân kỳ độc lập giữa hai nhánh:
-Nhánh main:            C1 ──► C2 ──► C3 ──► C5 (main)
-                              │
-Nhánh feature-login:          └──► C4 ──► C6 (feature-login)
+Commit chung C2:
+Nhánh main:            C1 ───> C2 ───> C3 ───> C5 (main)
+                               │
+Nhánh feature-login:          └───> C4 ───> C6 (feature-login)
 (Commit C4 và C6 hoàn toàn không xuất hiện trên nhánh main)
 ```
 
 ---
 
 ## 🌎 Ví dụ thực tế
-Lập trình viên An tạo nhánh experiment-ai để thử nghiệm tích hợp một mô hình trí tuệ nhân tạo nhận diện giọng nói vào ứng dụng di động. Sau ba ngày thử nghiệm và tạo 8 commit, An nhận thấy mô hình này tiêu tốn quá nhiều pin và không phù hợp với điện thoại đời cũ. Nhờ nguyên lý cách ly nhánh, toàn bộ mã nguồn của nhóm trên nhánh main vẫn đang chạy ổn định 100%. An chỉ việc chuyển về main và gõ `git branch -D experiment-ai` để loại bỏ thử nghiệm mà không để lại bất kỳ tì vết nào trong lịch sử chính.
+Bạn An tạo nhánh `test-darkmode` để thử đổi toàn bộ giao diện sang màu tối. Sau khi sửa 10 tệp CSS và commit 3 lần, An thấy màu sắc chưa hài hòa và quyết định dừng lại. Nhờ tính cách ly của nhánh, mã nguồn trên `main` của cả nhóm vẫn hiển thị giao diện sáng chuẩn mực. An chỉ việc chuyển về `main` và xóa nhánh thử nghiệm mà không để lại bất kỳ rác thừa nào.
 
 ---
 
@@ -51,48 +69,50 @@ git diff main..<nhánh-thử-nghiệm>
 ---
 
 ## 🔍 Giải thích command
-- `git switch -c <nhánh-thử-nghiệm>`: Tạo một không gian cách ly an toàn mới để bắt đầu phát triển tính năng.
-- `git log --oneline --graph --all`: Quan sát bức tranh phân kỳ lịch sử trực quan của tất cả các nhánh độc lập.
-- `git diff main..<nhánh>`: Xem tổng hợp tất cả sự khác biệt mà nhánh thử nghiệm đã tạo ra so với nhánh main.
+- `git switch -c <nhánh-thử-nghiệm>`: Tạo ra một không gian làm việc độc lập mới để bắt đầu thử nghiệm.
+- `git log --oneline --graph --all`: Xem sơ đồ cây phân nhánh trực quan của tất cả các nhánh trong dự án.
+- `git diff main..<nhánh>`: So sánh tổng thể những khác biệt giữa nhánh thử nghiệm và nhánh chính.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Nghĩ commit trên nhánh con sẽ tự động xuất hiện trên nhánh main**:  Bạn bắt buộc phải thực hiện merge thì code mới sang main.
-2. **Sợ hãi không dám tạo nhánh thử nghiệm**:  Hãy nhớ tạo nhánh là hoàn toàn miễn phí và an toàn tuyệt đối.
-3. **Để lại các tệp chưa commit khi chuyển nhánh**:  Thay đổi chưa commit có thể đi theo sang nhánh khác nếu không bị xung đột.
+1. **Nghĩ commit nhánh con sẽ tự sang nhánh main:** Bạn bắt buộc phải chủ động chạy lệnh hợp nhất thì code mới vào `main`.
+2. **Lo lắng khi tệp của nhánh con biến mất khi chuyển về main:** Đây là hành vi đúng của Git nhằm phản ánh chính xác trạng thái của nhánh hiện tại.
+3. **Để tệp sửa dở khi chuyển nhánh:** Nên commit hoặc cất tệp tạm trước khi chuyển nhánh để tránh mang nhầm code chưa hoàn thiện sang nhánh khác.
 
 ---
 
 ## 🧪 Lab
-1. Tạo nhánh cách ly `test-isolation` bằng `git switch -c test-isolation`.
+Bài tập này được thực hành trên môi trường Git mô phỏng của hệ thống:
+1. Tạo nhánh cách ly bằng lệnh `git switch -c test-isolation`.
 2. Tạo tệp mới `secret-test.txt` và commit vào nhánh này.
-3. Chuyển về nhánh chính bằng lệnh `git switch main`.
-4. Kiểm tra thư mục làm việc và thấy tệp `secret-test.txt` hoàn toàn không tồn tại trên main.
+3. Chuyển quay trở lại nhánh chính bằng lệnh `git switch main`.
+4. Quan sát danh sách tệp và nhận thấy `secret-test.txt` hoàn toàn không có mặt trên nhánh `main`.
 
 ---
 
 ## 💡 Hint
-> Nhánh con cách ly hoàn toàn; khi về nhánh main, các tệp của nhánh con sẽ biến mất trên ổ đĩa.
+Khi chuyển về nhánh `main`, Git tự động dọn dẹp các tệp chỉ thuộc về nhánh con để giữ thư mục làm việc luôn đúng chuẩn.
 
 ---
 
 ## ✅ Validation
-- Xác nhận tệp tin mới tạo ở nhánh con không xuất hiện trên nhánh main.
+- Tệp `secret-test.txt` chỉ xuất hiện khi bạn đứng ở nhánh `test-isolation`.
+- Thư mục làm việc trên nhánh `main` hoàn toàn sạch sẽ, không có tệp đó.
 
 ---
 
 ## ❓ Quiz
-Hãy làm bài trắc nghiệm dưới đây về nguyên lý cách ly nhánh Branch Isolation.
+Trả lời các câu hỏi sau để kiểm tra sự hiểu biết về nguyên lý cách ly không gian nhánh trong Git.
 
 ---
 
 ## 🔥 Challenge
-Vẽ sơ đồ phân kỳ commit khi hai lập trình viên cùng tạo nhánh từ một commit cha và commit độc lập.
+Chạy lệnh `git log --graph --oneline --all` sau khi đã commit trên cả hai nhánh để tự mình nhìn thấy ngã rẽ đồ thị chữ Y trên màn hình dòng lệnh.
 
 ---
 
 ## 📚 Tổng kết
-- Branch Isolation đảm bảo các thay đổi đã commit trên một nhánh không ảnh hưởng tới nhánh khác.
-- Thoải mái thử nghiệm các ý tưởng mới trên nhánh riêng mà không sợ hỏng code của nhóm.
-- Chỉ khi nào thực hiện Merge hoặc Rebase thì mã nguồn giữa các nhánh mới được tích hợp.
+- Branch Isolation đảm bảo các thay đổi đã commit trên nhánh này không làm ảnh hưởng nhánh khác.
+- Bạn có thể thoải mái thử nghiệm ý tưởng mới trên nhánh riêng với rủi ro bằng không.
+- Mã nguồn chỉ được chia sẻ giữa các nhánh khi có lệnh hợp nhất rõ ràng.

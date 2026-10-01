@@ -2,8 +2,7 @@ id: quiz-02-08-git-log
 title: "Trắc nghiệm: Tra cứu lịch sử với git log"
 questions:
   - id: q1
-    question: Phím nào trên bàn phím dùng để thoát khỏi màn hình hiển thị danh sách
-      git log dài?
+    question: Nếu Git mở kết quả log theo từng trang, phím nào đưa bạn về terminal?
     type: single
     options:
       - text: Phím q (quit)
@@ -14,8 +13,7 @@ questions:
         correct: false
       - text: Phím Enter
         correct: false
-    explanation: Git log sử dụng trình xem văn bản `less` của Unix, nhấn phím `q` để
-      thoát ra dòng lệnh.
+    explanation: Trong trình xem phân trang thường dùng với Git, nhấn `q` để thoát.
   - id: q2
     question: Cờ tùy chọn `--oneline` trong lệnh git log mang lại tác dụng gì?
     type: single
@@ -32,7 +30,7 @@ questions:
     explanation: "`--oneline` là tùy chọn cực kỳ phổ biến giúp hiển thị lịch sử cô
       đọng, dễ đọc lướt nhanh."
   - id: q3
-    question: Lệnh nào sau đây chỉ hiển thị đúng 3 commit gần đây nhất trong lịch sử?
+    question: Lệnh nào giới hạn kết quả còn tối đa 3 commit gần nhất?
     type: single
     options:
       - text: git log -n 3 hoặc git log -3
@@ -60,3 +58,16 @@ questions:
         correct: false
     explanation: "`--graph` vẽ các đường nhánh và mốc hợp nhất commit bằng đồ thị ký
       tự trực quan ngay trong terminal."
+  - id: q5
+    question: Nếu muốn xem lịch sử commit ở dạng gọn, mỗi commit một dòng, bạn dùng lệnh nào?
+    type: single
+    options:
+      - text: "`git log --oneline`"
+        correct: true
+      - text: "`git status --short`"
+        correct: false
+      - text: "`git diff --staged`"
+        correct: false
+      - text: "`git add --oneline`"
+        correct: false
+    explanation: "`git log --oneline` hiển thị mỗi commit trên một dòng với mã hash ngắn và thông điệp."

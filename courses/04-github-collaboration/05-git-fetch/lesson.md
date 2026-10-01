@@ -10,22 +10,41 @@
 
 ---
 
+## 🧩 Từ khóa hôm nay
+
+### git fetch
+- **Nói dễ hiểu**: Lệnh tải về các commit và nhánh mới từ máy chủ về kho ngầm mà không làm thay đổi file đang soạn thảo.
+- **Ví dụ**: `git fetch origin` để kiểm tra xem đồng nghiệp đã đẩy commit mới nào lên chưa.
+- **Đừng nhầm**: Không gộp code vào nhánh bạn đang đứng; lệnh chỉ cập nhật nhánh theo dõi từ xa như `origin/main`.
+
+### remote-tracking branch
+- **Nói dễ hiểu**: Con trỏ nhánh cục bộ phản chiếu trạng thái gần nhất của nhánh tương ứng trên máy chủ từ xa.
+- **Ví dụ**: `origin/main` là con trỏ cho biết nhánh `main` trên máy chủ `origin` đang đứng ở commit nào.
+- **Đừng nhầm**: Bạn không thể trực tiếp gõ lệnh chuyển vào nhánh này để commit; Git tự động quản lý nó.
+
+### behind commit
+- **Nói dễ hiểu**: Trạng thái nhánh cục bộ của bạn đang bị thiếu các commit mà trên máy chủ đã có.
+- **Ví dụ**: `Your branch is behind 'origin/main' by 2 commits` nghĩa là server đang có 2 commit mới hơn máy bạn.
+- **Đừng nhầm**: Không có nghĩa là code của bạn bị lỗi; chỉ cần gộp (merge/pull) để đưa 2 commit đó vào nhánh cá nhân.
+
+---
+
 ## 📖 Định nghĩa
-> `git fetch` là câu lệnh đồng bộ an toàn của Git, có nhiệm vụ liên hệ với kho lưu trữ từ xa trên mạng, kiểm tra xem có những commit, nhánh hoặc thẻ tag mới nào mà máy cục bộ chưa có hay không, rồi tải toàn bộ dữ liệu mới đó về lưu trữ trong cơ sở dữ liệu của bạn. Điểm đặc biệt quan trọng nhất: `git fetch` chỉ cập nhật các con trỏ nhánh theo dõi từ xa (Remote-tracking branches như `origin/main`) mà KHÔNG BAO GIỜ tự ý gộp code hay chạm vào các tệp tin trong Working Directory của bạn.
+`git fetch` là câu lệnh đồng bộ an toàn của Git, có nhiệm vụ liên hệ với kho từ xa và tải về toàn bộ các commit, nhánh mới mà máy cục bộ chưa có. Điểm then chốt: `git fetch` chỉ cập nhật các con trỏ nhánh theo dõi từ xa (như `origin/main`) mà không bao giờ tự ý sửa đổi file trong Working Directory.
 
 ---
 
-## 🤔 Tại sao cần?
-Trong môi trường làm việc nhóm chuyên nghiệp, bạn không bao giờ nên mù quáng gộp code của người khác vào không gian làm việc của mình khi chưa biết họ đã thay đổi những gì. `git fetch` cho phép bạn xem trước những gì đồng nghiệp vừa đưa lên máy chủ: bạn có thể đọc diff, xem log và đánh giá nguy cơ xung đột một cách hoàn toàn an toàn và chủ động trước khi đưa ra quyết định hợp nhất.
+## 💡 Tại sao cần
+Trong làm việc nhóm, bạn không nên gộp ngay code của người khác vào không gian làm việc của mình khi chưa biết họ thay đổi gì. `git fetch` giúp bạn xem trước các thay đổi mới, đọc commit log và phân tích xung đột một cách an toàn trước khi tích hợp.
 
 ---
 
-## 🧠 Mental Model (Mô hình tư duy)
-Hãy hình dung `git fetch` giống như nhân viên bưu tá giao các kiện hàng mới của đồng nghiệp gửi về để vào chiếc hộp thư trước cửa nhà bạn (cập nhật Remote-tracking branches). Bưu tá chỉ đặt kiện hàng vào hộp thư an toàn chứ không tự ý mở cửa bước vào phòng khách của bạn và không tự ý xáo trộn đồ đạc trên bàn làm việc của bạn (Working Directory giữ nguyên 100%). Bạn có thể ra mở hộp thư ngắm nghía kiện hàng trước khi quyết định mang vào nhà.
+## 🧠 Mental Model
+Hãy hình dung `git fetch` như nhân viên bưu tá đặt kiện hàng mới vào hòm thư trước cửa nhà bạn. Người giao hàng không tự mở cửa bước vào phòng khách hay xáo trộn bàn làm việc của bạn. Bạn có thể thong thả kiểm tra bưu kiện trong hòm thư rồi mới mang vào nhà.
 
 ---
 
-## 🖼 Sơ đồ
+## 📊 Sơ đồ minh họa
 ```text
 Cơ chế an toàn của git fetch:
 Kho trên GitHub:              Máy tính của bạn (Local):
@@ -36,12 +55,12 @@ Commit C4 mới trên main ──► Tải về lưu vào: origin/main (C4)
 
 ---
 
-## 🌎 Ví dụ thực tế
-Lập trình viên Lan đang viết dở tính năng đặt hàng trên nhánh main tại commit C3. Lan muốn biết đồng nghiệp Hùng có đưa bản sửa lỗi thanh toán nào lên server hay chưa. Lan chạy câu lệnh: `git fetch origin`. Git thông báo đã tải về các đối tượng mới và cập nhật con trỏ `origin/main` lên commit C4. Lan chạy lệnh `git log main..origin/main --oneline` để đọc qua thông điệp commit của Hùng. Thấy Hùng sửa ở một module hoàn toàn khác, Lan yên tâm tiếp tục công việc của mình mà không sợ bị xung đột hay mất mát dữ liệu đang soạn thảo.
+## 🏢 Ví dụ thực tế
+Lập trình viên Lan đang viết dở tính năng đặt hàng trên nhánh main tại commit C3. Lan chạy `git fetch origin` để kiểm tra cập nhật. Git tải về các commit mới và cập nhật con trỏ `origin/main` lên C4. Lan kiểm tra bằng `git log main..origin/main --oneline`, thấy đồng nghiệp chỉ sửa file cấu hình khác nên an tâm tiếp tục công việc mà không sợ xung đột.
 
 ---
 
-## 💻 Command
+## 💻 Command & Cú pháp
 ```bash
 git fetch
 git fetch origin
@@ -62,41 +81,43 @@ git diff HEAD..origin/main
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Tưởng chạy git fetch xong là code trong editor sẽ tự cập nhật**:  Fetch chỉ tải về cơ sở dữ liệu ngầm, bạn phải merge thì code mới vào Working Tree.
-2. **Sợ hãi git fetch sẽ làm mất code đang gõ dở**:  Fetch là lệnh an toàn nhất trong Git, không bao giờ ghi đè lên file đang sửa.
-3. **Quên kiểm tra diff trước khi merge**:  Bỏ lỡ cơ hội đánh giá xung đột tiềm ẩn.
+1. **Nghĩ chạy git fetch xong là file trong editor tự đổi**: Fetch chỉ tải dữ liệu về kho ngầm `.git`, cần gộp vào nhánh mới thấy thay đổi trong editor.
+2. **Lo sợ git fetch làm mất code đang sửa**: Fetch không bao giờ ghi đè lên Working Directory, hoàn toàn an toàn khi đang code dở.
+3. **Bỏ qua bước so sánh diff trước khi gộp**: Không kiểm tra `git diff HEAD..origin/main` khiến bạn bị bất ngờ khi xảy ra xung đột mã nguồn.
 
 ---
 
-## 🧪 Lab
+## 🧪 Lab thực hành
+Bài học này là bài tự kiểm tra: bạn thao tác tải dữ liệu từ remote và đối chiếu con trỏ theo dõi từ xa.
 1. Chạy lệnh `git fetch origin` để đồng bộ dữ liệu mới nhất từ remote.
 2. Quan sát thông báo cập nhật các nhánh `origin/*`.
-3. Sử dụng lệnh `git log origin/main --oneline -n 5` để xem các commit mới trên remote.
-4. Chạy `git status` để kiểm tra thông báo nhánh của bạn đang bị tụt lại (behind) bao nhiêu commit.
+3. Dùng lệnh `git log origin/main --oneline -n 5` để xem các commit mới nhất trên server.
+4. Chạy `git status` để xem thông tin nhánh của bạn đang behind bao nhiêu commit so với remote.
 
 ---
 
-## 💡 Hint
-> Nhớ nguyên tắc: `git fetch` = Tải dữ liệu về nhưng chưa gộp; an toàn tuyệt đối 100%.
+## 💡 Hint & mẹo
+> Ghi nhớ quy tắc: `git fetch` = Tải dữ liệu về kho nhưng chưa gộp; an toàn tuyệt đối 100%.
 
 ---
 
-## ✅ Validation
-- Cập nhật thành công nhánh remote-tracking mà không làm thay đổi Working Directory.
+## ✅ Validation & Kết quả mong đợi
+- Nhánh `origin/main` trỏ tới commit mới nhất trên remote.
+- Toàn bộ file và thay đổi chưa commit trong Working Directory được giữ nguyên vẹn.
 
 ---
 
-## ❓ Quiz
-Hãy làm bài kiểm tra trắc nghiệm dưới đây về cơ chế an toàn của git fetch.
+## ❓ Quiz nhanh
+Hãy hoàn thành các câu hỏi trắc nghiệm dưới đây để củng cố hiểu biết về cơ chế hoạt động của git fetch.
 
 ---
 
-## 🔥 Challenge
-Nêu sự khác biệt giữa hai con trỏ `main` và `origin/main` sau khi chạy lệnh `git fetch`.
+## 🚀 Thử thách nâng cao
+Sử dụng câu lệnh `git diff HEAD..origin/main` để xem chi tiết từng dòng code sắp được tích hợp vào dự án của bạn.
 
 ---
 
-## 📚 Tổng kết
+## 📝 Tổng kết
 - `git fetch` tải các commit mới từ remote về cơ sở dữ liệu cục bộ.
 - Chỉ cập nhật nhánh theo dõi từ xa `origin/main`, không chạm vào Working Directory.
 - Là thao tác an toàn tuyệt đối để xem trước thay đổi trước khi quyết định tích hợp.

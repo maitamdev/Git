@@ -2,12 +2,10 @@ id: quiz-06-13-hotfix-workflow
 title: "Trắc nghiệm: Hotfix Workflow"
 questions:
   - id: q1
-    question: Nhánh Hotfix bắt buộc phải được rẽ nhánh xuất phát trực tiếp từ đâu để
-      giải quyết sự cố sản xuất?
+    question: Nhánh Hotfix bắt buộc phải được rẽ nhánh xuất phát trực tiếp từ đâu để giải quyết sự cố sản xuất?
     type: single
     options:
-      - text: Trực tiếp từ nhánh main nơi phiên bản lỗi đang chạy thực tế trên
-          production
+      - text: Trực tiếp từ nhánh main nơi phiên bản lỗi đang chạy thực tế trên production
         correct: true
       - text: Từ nhánh develop nơi chứa các tính năng mới nhất của sprint hiện tại
         correct: false
@@ -15,15 +13,12 @@ questions:
         correct: false
       - text: Từ nhánh master của một kho lưu trữ mã nguồn mở khác
         correct: false
-    explanation: Tách từ `main` giúp bản vá độc lập hoàn toàn với các tính năng dở
-      dang chưa qua kiểm duyệt đang nằm trên `develop`.
+    explanation: Tách từ `main` giúp bản vá độc lập hoàn toàn với các tính năng dở dang chưa qua kiểm duyệt đang nằm trên `develop`.
   - id: q2
-    question: Nguyên tắc vàng về phạm vi chỉnh sửa mã nguồn bên trong một nhánh
-      Hotfix là gì?
+    question: Nguyên tắc vàng về phạm vi chỉnh sửa mã nguồn bên trong một nhánh Hotfix là gì?
     type: single
     options:
-      - text: Chỉ thực hiện thay đổi tối thiểu cần thiết để sửa dứt điểm lỗi nghiêm
-          trọng, tuyệt đối không thêm tính năng mới
+      - text: Chỉ thực hiện thay đổi tối thiểu cần thiết để sửa dứt điểm lỗi nghiêm trọng, tuyệt đối không thêm tính năng mới
         correct: true
       - text: Nhân tiện viết lại toàn bộ kiến trúc dự án sang ngôn ngữ lập trình khác
         correct: false
@@ -31,15 +26,12 @@ questions:
         correct: false
       - text: Xóa toàn bộ các tệp tin cấu hình bảo mật
         correct: false
-    explanation: Bản vá càng nhỏ gọn thì rủi ro phát sinh lỗi phụ càng thấp, giúp
-      việc kiểm thử và triển khai diễn ra nhanh nhất có thể.
+    explanation: Bản vá càng nhỏ gọn thì rủi ro phát sinh lỗi phụ càng thấp, giúp việc kiểm thử và triển khai diễn ra nhanh nhất có thể.
   - id: q3
-    question: Điều gì sẽ xảy ra nếu một đội ngũ kỹ thuật quên không hợp nhất ngược
-      nhánh Hotfix về nhánh develop?
+    question: Điều gì sẽ xảy ra nếu một đội ngũ kỹ thuật quên không hợp nhất ngược nhánh Hotfix về nhánh develop?
     type: single
     options:
-      - text: Lỗi sản xuất vừa sửa thành công sẽ bị tái phát trở lại ở đợt phát hành sản
-          phẩm tiếp theo
+      - text: Lỗi sản xuất vừa sửa thành công sẽ bị tái phát trở lại ở đợt phát hành sản phẩm tiếp theo
         correct: true
       - text: Máy chủ GitHub sẽ tự động khóa vĩnh viễn kho lưu trữ
         correct: false
@@ -47,11 +39,9 @@ questions:
         correct: false
       - text: Tất cả các commit trên nhánh develop sẽ bị xóa sạch
         correct: false
-    explanation: Nếu không merge về `develop`, nhánh `develop` vẫn giữ đoạn mã lỗi
-      cũ và khi release phiên bản mới sẽ đè lại lỗi đó lên production.
+    explanation: Nếu không merge về `develop`, nhánh `develop` vẫn giữ đoạn mã lỗi cũ và khi release phiên bản mới sẽ đè lại lỗi đó lên production.
   - id: q4
-    question: Theo chuẩn Semantic Versioning, bản phát hành sau khi áp dụng Hotfix
-      thành công sẽ tăng chỉ số nào?
+    question: Theo chuẩn Semantic Versioning, bản phát hành sau khi áp dụng Hotfix thành công sẽ tăng chỉ số nào?
     type: single
     options:
       - text: Chỉ số PATCH (ví dụ từ v2.3.1 lên v2.3.2)
@@ -62,5 +52,17 @@ questions:
         correct: false
       - text: Không được phép thay đổi số phiên bản
         correct: false
-    explanation: Hotfix là bản sửa lỗi bảo đảm tính tương thích tuyệt đối nên chỉ số
-      PATCH sẽ được tăng thêm một đơn vị.
+    explanation: Hotfix là bản sửa lỗi bảo đảm tính tương thích tuyệt đối nên chỉ số PATCH sẽ được tăng thêm một đơn vị.
+  - id: q5
+    question: Nếu kho lưu trữ đang có một nhánh release đang hoạt động song song khi phát sinh hotfix, nhánh hotfix cần được hợp nhất vào những đâu?
+    type: single
+    options:
+      - text: Hợp nhất vào main để vá sản xuất, đồng thời hợp nhất vào nhánh release và develop để tránh tái phát lỗi
+        correct: true
+      - text: Chỉ hợp nhất vào main rồi xóa ngay lập tức
+        correct: false
+      - text: Hủy bỏ toàn bộ nhánh release hiện tại và bắt đầu lại từ đầu
+        correct: false
+      - text: Chỉ hợp nhất vào máy trạm cá nhân của người phát hiện lỗi
+        correct: false
+    explanation: Khi có nhánh release đang chạy, bản sửa lỗi hotfix phải được tích hợp vào cả release branch và develop để đợt phát hành kế tiếp không bị ghi đè lỗi cũ.

@@ -2,62 +2,67 @@ id: quiz-08-git-internals-09-tag-object
 title: "Trắc nghiệm: Đối tượng Tag: Đánh dấu phiên bản có chú thích (Annotated Tag)"
 questions:
   - id: q1
-    question: Lệnh nào sau đây dùng để tạo một Annotated Tag (thẻ có chú thích lưu
-      thành đối tượng riêng)?
+    question: "Lệnh nào sau đây dùng để tạo một Annotated Tag (thẻ có chú thích lưu thành đối tượng riêng)?"
     type: single
     options:
-      - text: git tag -a v1.0.0 -m "Release version 1.0.0"
+      - text: "git tag -a v1.0.0 -m 'Release version 1.0.0'"
         correct: true
-      - text: git tag v1.0.0
+      - text: "git tag v1.0.0"
         correct: false
-      - text: git create-tag v1.0.0
+      - text: "git create-tag v1.0.0"
         correct: false
-      - text: git tag --fast v1.0.0
+      - text: "git tag --fast v1.0.0"
         correct: false
-    explanation: Cờ `-a` (annotated) kết hợp với `-m` (message) báo cho Git tạo ra
-      một đối tượng Tag chính thức trong Object Store.
+    explanation: "Cờ -a (annotated) kết hợp với -m (message) báo cho Git tạo ra một đối tượng Tag chính thức trong Object Store."
   - id: q2
-    question: Khi bạn chạy lệnh `git cat-file -t` đối với một Lightweight Tag, Git
-      sẽ trả về loại đối tượng nào?
+    question: "Khi bạn chạy lệnh git cat-file -t đối với một Lightweight Tag, Git sẽ trả về loại đối tượng nào?"
     type: single
     options:
-      - text: commit
+      - text: "commit"
         correct: true
-      - text: tag
+      - text: "tag"
         correct: false
-      - text: blob
+      - text: "blob"
         correct: false
-      - text: lightweight
+      - text: "lightweight"
         correct: false
-    explanation: Vì Lightweight Tag không có đối tượng Tag riêng mà trỏ thẳng tới
-      commit, nên loại đối tượng trả về là `commit`.
+    explanation: "Vì Lightweight Tag không có đối tượng Tag riêng mà trỏ thẳng tới commit, nên loại đối tượng trả về là commit."
   - id: q3
-    question: Một đối tượng Tag hoàn chỉnh (Annotated Tag) chứa những thông tin cốt
-      lõi nào?
+    question: "Một đối tượng Tag hoàn chỉnh (Annotated Tag) chứa những thông tin cốt lõi nào?"
     type: single
     options:
-      - text: Đối tượng được trỏ tới (object), loại đối tượng (type), tên thẻ (tag),
-          người gắn thẻ (tagger), và thông điệp
+      - text: "Đối tượng được trỏ tới (object), loại đối tượng (type), tên thẻ (tag), người gắn thẻ (tagger), và thông điệp"
         correct: true
-      - text: Toàn bộ mã nguồn của dự án được nén lại
+      - text: "Toàn bộ mã nguồn của dự án được nén lại"
         correct: false
-      - text: Mật khẩu tài khoản GitHub của người quản trị
+      - text: "Mật khẩu tài khoản GitHub của người quản trị"
         correct: false
-      - text: Danh sách các bug còn tồn đọng
+      - text: "Danh sách các bug còn tồn đọng"
         correct: false
-    explanation: Đối tượng Tag lưu trữ thông tin kiểm toán hoàn chỉnh về việc ai gắn
-      thẻ, gắn vào đối tượng nào và vào thời điểm nào.
+    explanation: "Đối tượng Tag lưu trữ thông tin kiểm toán hoàn chỉnh về việc ai gắn thẻ, gắn vào đối tượng nào và vào thời điểm nào."
   - id: q4
-    question: Các con trỏ Tag được lưu trữ vật lý ở đường dẫn nào trong thư mục .git/?
+    question: "Các con trỏ Tag được lưu trữ vật lý ở đường dẫn nào trong thư mục .git/?"
     type: single
     options:
-      - text: .git/refs/tags/
+      - text: ".git/refs/tags/"
         correct: true
-      - text: .git/objects/tags/
+      - text: ".git/objects/tags/"
         correct: false
-      - text: .git/tags_list/
+      - text: ".git/tags_list/"
         correct: false
-      - text: .git/branches/tags/
+      - text: ".git/branches/tags/"
         correct: false
-    explanation: Mọi con trỏ thẻ phiên bản đều nằm trong thư mục tham chiếu
-      `.git/refs/tags/`.
+    explanation: "Mọi con trỏ thẻ phiên bản đều nằm trong thư mục tham chiếu .git/refs/tags/."
+  - id: q5
+    question: "Ngoài đối tượng Commit, đối tượng Tag trong Git có thể trỏ trực tiếp tới loại đối tượng nào khác?"
+    type: single
+    options:
+      - text: "Bất kỳ loại đối tượng nào trong Git (Tree, Blob, hoặc thậm chí một Tag khác)"
+        correct: true
+      - text: "Chỉ duy nhất con trỏ HEAD"
+        correct: false
+      - text: "Chỉ các tệp tin có đuôi .zip"
+        correct: false
+      - text: "Không thể trỏ tới đối tượng nào khác ngoài Commit"
+        correct: false
+    explanation: "Về mặt thiết kế kỹ thuật, trường object trong đối tượng Tag có thể lưu mã SHA-1 của bất kỳ đối tượng Git nào (blob, tree, commit hoặc tag)."

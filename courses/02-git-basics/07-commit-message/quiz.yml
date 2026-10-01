@@ -31,26 +31,23 @@ questions:
     explanation: "`docs:` là loại commit chuyên biệt cho các thay đổi trên tài liệu
       văn bản mà không tác động tới mã logic."
   - id: q3
-    question: Độ dài khuyến nghị tối đa cho dòng tiêu đề đầu tiên của một commit
-      message là bao nhiêu?
+    question: Cấu trúc thường dùng của Conventional Commits là gì?
     type: single
     options:
-      - text: Khoảng 50 đến 72 ký tự
+      - text: "type(scope): description, trong đó scope có thể bỏ"
         correct: true
-      - text: Tối thiểu 500 từ
+      - text: description/type/scope, bắt buộc đủ ba phần
         correct: false
-      - text: Không giới hạn, càng dài càng tốt
+      - text: type - password - description
         correct: false
-      - text: Chính xác 10 ký tự
+      - text: "scope(description): type"
         correct: false
-    explanation: Tiêu đề commit nên ngắn gọn súc tích dưới 50-72 ký tự để hiển thị
-      trọn vẹn trên terminal và giao diện GitHub.
+    explanation: Cấu trúc thường dùng là type, scope tùy chọn và mô tả sau dấu hai chấm.
   - id: q4
     question: Lợi ích chính của việc cả nhóm cùng tuân thủ Conventional Commits là gì?
     type: single
     options:
-      - text: Lịch sử rõ ràng, dễ tìm kiếm, tự động sinh nhật ký thay đổi và nâng
-          version phần mềm
+      - text: Lịch sử rõ hơn; công cụ được cấu hình có thể đọc message để tự động hóa
         correct: true
       - text: Giúp mã nguồn chạy nhanh hơn gấp đôi mà không cần tối ưu thuật toán
         correct: false
@@ -58,8 +55,7 @@ questions:
         correct: false
       - text: Tránh phải trả tiền bản quyền hàng năm cho Microsoft
         correct: false
-    explanation: Quy ước commit chuẩn hóa là nền tảng của tự động hóa DevOps, tạo
-      CHANGELOG tự động và nâng version chuẩn.
+    explanation: Quy ước làm message dễ đọc và có thể dùng với công cụ tự động hóa đã cấu hình.
   - id: q5
     question: Phạm vi tùy chọn (scope) trong Conventional Commits như `feat(auth):`
       có mục đích gì?
@@ -89,5 +85,4 @@ questions:
         correct: false
       - text: Thêm từ khóa DANGER vào đầu dòng tiêu đề
         correct: false
-    explanation: Dấu chấm than `!` ngay trước dấu hai chấm biểu thị Breaking Change,
-      kích hoạt nâng MAJOR version trong SemVer.
+    explanation: Dấu `!` trước dấu hai chấm báo có Breaking Change; công cụ có thể xử lý theo cấu hình.

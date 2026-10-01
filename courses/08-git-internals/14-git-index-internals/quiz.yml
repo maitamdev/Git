@@ -2,61 +2,67 @@ id: quiz-08-git-internals-14-git-index-internals
 title: "Trắc nghiệm: Cấu trúc tệp nhị phân .git/index (Staging Area Internals)"
 questions:
   - id: q1
-    question: Tệp tin nào trên ổ đĩa đại diện trực tiếp cho Staging Area trong kho
-      lưu trữ Git?
+    question: "Tệp tin nào trên ổ đĩa đại diện trực tiếp cho Staging Area trong kho lưu trữ Git?"
     type: single
     options:
-      - text: .git/index
+      - text: ".git/index"
         correct: true
-      - text: .git/staging/
+      - text: ".git/staging/"
         correct: false
-      - text: .git/cache/
+      - text: ".git/cache/"
         correct: false
-      - text: .git/stage.txt
+      - text: ".git/stage.txt"
         correct: false
-    explanation: Staging Area không phải là một thư mục, mà là một tệp nhị phân duy
-      nhất có tên `.git/index`.
+    explanation: "Staging Area không phải là một thư mục, mà là một tệp nhị phân duy nhất có tên .git/index."
   - id: q2
-    question: Lệnh Plumbing nào dùng để xem danh sách các tệp tin trong Index kèm mã
-      mode, mã băm Blob và stage number?
+    question: "Lệnh Plumbing nào dùng để xem danh sách các tệp tin trong Index kèm mã mode, mã băm Blob và stage number?"
     type: single
     options:
-      - text: git ls-files --stage
+      - text: "git ls-files --stage"
         correct: true
-      - text: git show-index
+      - text: "git show-index"
         correct: false
-      - text: git list-stage
+      - text: "git list-stage"
         correct: false
-      - text: git inspect-cache
+      - text: "git inspect-cache"
         correct: false
-    explanation: "`git ls-files --stage` (hoặc `-s`) hiển thị bảng chi tiết các bản
-      ghi đang được lập chỉ mục trong Staging Area."
+    explanation: "git ls-files --stage (hoặc -s) hiển thị bảng chi tiết các bản ghi đang được lập chỉ mục trong Staging Area."
   - id: q3
-    question: Khi xảy ra xung đột merge conflict trên một tệp tin, stage number `2`
-      trong index đại diện cho phiên bản nào?
+    question: "Khi xảy ra xung đột merge conflict trên một tệp tin, stage number 2 trong index đại diện cho phiên bản nào?"
     type: single
     options:
-      - text: Phiên bản của nhánh hiện tại của bạn (ours)
+      - text: "Phiên bản của nhánh hiện tại của bạn (ours)"
         correct: true
-      - text: Phiên bản tổ tiên chung (base)
+      - text: "Phiên bản tổ tiên chung (base)"
         correct: false
-      - text: Phiên bản của nhánh đang được gộp vào (theirs)
+      - text: "Phiên bản của nhánh đang được gộp vào (theirs)"
         correct: false
-      - text: Phiên bản đã giải quyết xong
+      - text: "Phiên bản đã giải quyết xong"
         correct: false
-    explanation: "Trong quy ước 3-way merge của Git: stage 1 là base (tổ tiên
-      chung), stage 2 là ours (nhánh ta), stage 3 là theirs (nhánh bạn)."
+    explanation: "Trong quy ước 3-way merge của Git: stage 1 là base (tổ tiên chung), stage 2 là ours (nhánh ta), stage 3 là theirs (nhánh bạn)."
   - id: q4
-    question: Bốn byte ký tự đầu tiên trong tiêu đề của tệp nhị phân `.git/index` là gì?
+    question: "Bốn byte ký tự đầu tiên trong tiêu đề của tệp nhị phân .git/index là gì?"
     type: single
     options:
-      - text: DIRC (Directory Cache)
+      - text: "DIRC (Directory Cache)"
         correct: true
-      - text: GITI (Git Index)
+      - text: "GITI (Git Index)"
         correct: false
-      - text: BLOB
+      - text: "BLOB"
         correct: false
-      - text: PACK
+      - text: "PACK"
         correct: false
-    explanation: Chữ ký nhị phân (magic signature) của tệp index trong mã nguồn Git
-      là 4 ký tự ASCII "DIRC".
+    explanation: "Chữ ký nhị phân (magic signature) của tệp index trong mã nguồn Git là 4 ký tự ASCII DIRC."
+  - id: q5
+    question: "Ngoài mã băm SHA-1 và đường dẫn tệp, tệp tin .git/index còn lưu thông tin gì để giúp lệnh git status chạy cực nhanh?"
+    type: single
+    options:
+      - text: "Dấu thời gian sửa đổi (mtime), kích thước tệp và inode để phát hiện thay đổi tức thì"
+        correct: true
+      - text: "Toàn bộ mã nguồn của dự án dưới dạng nén"
+        correct: false
+      - text: "Lịch sử duyệt web của lập trình viên"
+        correct: false
+      - text: "Mật khẩu mã hóa của SSH key"
+        correct: false
+    explanation: "Nhờ cơ chế cache các thuộc tính stat (mtime, size) của hệ điều hành trong .git/index, Git có thể so sánh siêu dữ liệu trong tích tắc mà không cần phải băm lại từng tệp tin trên đĩa."

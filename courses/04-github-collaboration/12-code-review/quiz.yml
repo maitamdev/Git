@@ -65,3 +65,20 @@ questions:
         correct: false
     explanation: Review hời hợt tạo ra ảo tưởng về sự an toàn và là con đường ngắn
       nhất để lọt các lỗi chết người vào production.
+  - id: q5
+    question: Khi là tác giả nhận được phản hồi góp ý từ người review, thái độ và hành
+      động chuyên nghiệp nhất là gì?
+    type: single
+    options:
+      - text: Đón nhận phản hồi mang tính xây dựng, trao đổi logic kỹ thuật rõ ràng và
+          commit các chỉnh sửa bổ sung lên nhánh PR
+        correct: true
+      - text: Tức giận, công kích cá nhân người review và từ chối hợp tác tiếp
+        correct: false
+      - text: Ngay lập tức đóng PR và xóa toàn bộ tài khoản GitHub cá nhân
+        correct: false
+      - text: Bỏ qua ý kiến phản hồi rồi ép merge thẳng vào main bằng quyền admin
+        correct: false
+    explanation: Tác giả PR chuyên nghiệp luôn trao đổi trên tinh thần kỹ thuật, kiểm
+      tra lại logic và cập nhật commit mới để hoàn thiện code.
+

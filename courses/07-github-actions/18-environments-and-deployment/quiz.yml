@@ -1,67 +1,68 @@
 id: quiz-07-github-actions-18-environments-and-deployment
-title: "Trắc nghiệm: Môi trường triển khai (Environments) & Cổng phê duyệt
-  Protection Rules"
+title: "Trắc nghiệm: Môi trường triển khai (Environments) & Cổng phê duyệt Protection Rules"
 questions:
   - id: q1
-    question: Thuộc tính nào trong Job của GitHub Actions được sử dụng để liên kết
-      với một môi trường triển khai?
+    question: "Thuộc tính nào trong Job của GitHub Actions được sử dụng để liên kết với một môi trường triển khai?"
     type: single
     options:
-      - text: environment
+      - text: "environment"
         correct: true
-      - text: deploy_to
+      - text: "deploy_to"
         correct: false
-      - text: target_stage
+      - text: "target_stage"
         correct: false
-      - text: server_env
+      - text: "server_env"
         correct: false
-    explanation: Từ khóa `environment:` chỉ định môi trường triển khai và kích hoạt
-      các quy tắc bảo vệ tương ứng của môi trường đó.
+    explanation: "Từ khóa environment chỉ định môi trường triển khai và kích hoạt các quy tắc bảo vệ tương ứng của môi trường đó."
   - id: q2
-    question: Khi một Job liên kết với môi trường có quy tắc "Required reviewers",
-      Job sẽ chuyển sang trạng thái nào?
+    question: "Khi một Job liên kết với môi trường có quy tắc Required reviewers, Job sẽ chuyển sang trạng thái nào?"
     type: single
     options:
-      - text: Waiting for review (tạm dừng chờ người được chỉ định phê duyệt)
+      - text: "Waiting for review (tạm dừng chờ người được chỉ định phê duyệt)"
         correct: true
-      - text: Thất bại ngay lập tức
+      - text: "Thất bại ngay lập tức"
         correct: false
-      - text: Tự động chạy qua mà không cần đợi
+      - text: "Tự động chạy qua mà không cần đợi"
         correct: false
-      - text: Tự động hủy toàn bộ kho lưu trữ
+      - text: "Tự động hủy toàn bộ kho lưu trữ"
         correct: false
-    explanation: Job sẽ kiên nhẫn chờ đợi tín hiệu Approve từ một trong những người
-      kiểm duyệt được chỉ định trước khi bắt đầu chạy các Step.
+    explanation: "Job sẽ kiên nhẫn chờ đợi tín hiệu Approve từ một trong những người kiểm duyệt được chỉ định trước khi bắt đầu chạy các Step."
   - id: q3
-    question: Lợi ích của việc lưu trữ Secret ở cấp độ Environment thay vì cấp độ
-      Repository là gì?
+    question: "Lợi ích của việc lưu trữ Secret ở cấp độ Environment thay vì cấp độ Repository là gì?"
     type: single
     options:
-      - text: Chỉ các Job được cấp quyền chạy trên môi trường đó mới có thể giải mã và
-          đọc được Secret này
+      - text: "Chỉ các Job được cấp quyền chạy trên môi trường đó mới có thể giải mã và đọc được Secret này"
         correct: true
-      - text: Làm cho Secret có thể xem được bởi tất cả mọi người trên mạng
+      - text: "Làm cho Secret có thể xem được bởi tất cả mọi người trên mạng"
         correct: false
-      - text: Secret sẽ tự động đổi mật khẩu mỗi ngày
+      - text: "Secret sẽ tự động đổi mật khẩu mỗi ngày"
         correct: false
-      - text: Không có lợi ích gì khác biệt
+      - text: "Không có lợi ích gì khác biệt"
         correct: false
-    explanation: "Environment Secrets giúp cách ly tuyệt đối thông tin nhạy cảm: ví
-      dụ token production không bao giờ bị lộ cho các Job chạy trên môi trường
-      staging."
+    explanation: "Environment Secrets giúp cách ly tuyệt đối thông tin nhạy cảm: token production không bao giờ bị lộ cho các Job chạy trên staging."
   - id: q4
-    question: Ai có quyền bấm nút phê duyệt (Approve) cho một Job đang chờ kiểm
-      duyệt môi trường?
+    question: "Ai có quyền bấm nút phê duyệt (Approve) cho một Job đang chờ kiểm duyệt môi trường?"
     type: single
     options:
-      - text: Các cá nhân hoặc nhóm người dùng được chỉ định cụ thể trong danh sách
-          Required Reviewers của môi trường đó
+      - text: "Các cá nhân hoặc nhóm người dùng được chỉ định cụ thể trong danh sách Required Reviewers của môi trường đó"
         correct: true
-      - text: Bất kỳ người dùng nào ghé thăm trang web GitHub
+      - text: "Bất kỳ người dùng nào ghé thăm trang web GitHub"
         correct: false
-      - text: Chỉ duy nhất người đã viết dòng code đó
+      - text: "Chỉ duy nhất người đã viết dòng code đó"
         correct: false
-      - text: Robot tự động của GitHub
+      - text: "Robot tự động của GitHub"
         correct: false
-    explanation: Người quản trị có toàn quyền chỉ định danh sách các kỹ sư đáng tin
-      cậy chịu trách nhiệm ký duyệt cho từng môi trường.
+    explanation: "Người quản trị có toàn quyền chỉ định danh sách các kỹ sư đáng tin cậy chịu trách nhiệm ký duyệt cho từng môi trường."
+  - id: q5
+    question: "Thuộc tính nào trong cấu hình environment cho phép hiển thị liên kết trực tiếp tới ứng dụng sau khi deploy thành công trên giao diện GitHub?"
+    type: single
+    options:
+      - text: "url"
+        correct: true
+      - text: "link"
+        correct: false
+      - text: "website"
+        correct: false
+      - text: "target_address"
+        correct: false
+    explanation: "Khi cấu hình environment với thuộc tính url, GitHub sẽ hiển thị nút View Deployment dẫn trực tiếp tới địa chỉ trang web sản phẩm."

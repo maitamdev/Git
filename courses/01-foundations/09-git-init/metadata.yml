@@ -11,11 +11,9 @@ keywords:
 prerequisites:
   - 08-repository
 objectives:
-  - Sử dụng thành thạo câu lệnh `git init` để biến một thư mục thông thường
-    thành một Git repository.
-  - "Hiểu các hành vi ngầm của Git khi khởi tạo: tạo thư mục `.git`, thiết lập
-    nhánh mặc định."
-  - Biết cách khởi tạo kho chứa với tên nhánh mặc định tùy chỉnh như `main`.
+  - Chạy `git init` để bắt đầu quản lý thư mục hiện tại bằng Git.
+  - Dùng `git status` để kiểm tra repository vừa tạo.
+  - Đặt tên nhánh ban đầu khi cần bằng `git init -b main`.
 commands:
   - git init
   - git init -b main

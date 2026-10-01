@@ -11,11 +11,9 @@ keywords:
 prerequisites:
   - 04-git-architecture
 objectives:
-  - Phân biệt rạch ròi giữa công cụ dòng lệnh Git và dịch vụ nền tảng lưu trữ
-    đám mây GitHub.
-  - Kể tên các dịch vụ tương đương với GitHub như GitLab, Bitbucket.
-  - Hiểu cách Git và GitHub phối hợp để tạo nên quy trình làm việc nhóm chuyên
-    nghiệp.
+  - Nói được Git là công cụ quản lý lịch sử trên máy còn GitHub là dịch vụ trực tuyến.
+  - Tạo commit cục bộ mà không cần Internet.
+  - Giải thích được `push` dùng để gửi commit lên remote.
 commands:
   - git remote -v
   - git push

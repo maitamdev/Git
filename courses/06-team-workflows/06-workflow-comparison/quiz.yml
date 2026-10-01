@@ -2,12 +2,10 @@ id: quiz-06-06-workflow-comparison
 title: "Trắc nghiệm: So sánh các mô hình Workflow"
 questions:
   - id: q1
-    question: Một công ty khởi nghiệp gồm 4 lập trình viên đang xây dựng một ứng
-      dụng web SaaS cần deploy nhiều lần mỗi ngày thì nên chọn mô hình nào?
+    question: Một công ty khởi nghiệp gồm 4 lập trình viên đang xây dựng một ứng dụng web SaaS cần deploy nhiều lần mỗi ngày thì nên chọn mô hình nào?
     type: single
     options:
-      - text: GitHub Flow vì tính tinh gọn, đơn giản và hỗ trợ triển khai liên tục hoàn
-          hảo
+      - text: GitHub Flow vì tính tinh gọn, đơn giản và hỗ trợ triển khai liên tục hoàn hảo
         correct: true
       - text: Git Flow vì nó có đủ 5 loại nhánh phức tạp
         correct: false
@@ -15,11 +13,9 @@ questions:
         correct: false
       - text: Mô hình thác nước cổ điển Waterfall không phân nhánh
         correct: false
-    explanation: GitHub Flow là lựa chọn lý tưởng nhất cho các nhóm web nhỏ cần sự
-      linh hoạt, tránh các tầng thủ tục rườm rà không cần thiết.
+    explanation: GitHub Flow là lựa chọn lý tưởng nhất cho các nhóm web nhỏ cần sự linh hoạt, tránh các tầng thủ tục rườm rà không cần thiết.
   - id: q2
-    question: Mô hình nào sau đây đòi hỏi hệ thống kiểm thử tự động (Automated
-      Testing / CI) ở mức độ hoàn thiện cao nhất để hoạt động an toàn?
+    question: Mô hình nào sau đây đòi hỏi hệ thống kiểm thử tự động (Automated Testing / CI) ở mức độ hoàn thiện cao nhất để hoạt động an toàn?
     type: single
     options:
       - text: Trunk-Based Development
@@ -30,15 +26,12 @@ questions:
         correct: false
       - text: Lập trình một mình không chia sẻ
         correct: false
-    explanation: Trunk-Based Development hợp nhất code liên tục vào Trunk, do đó nếu
-      không có CI cực mạnh để phát hiện lỗi ngay lập tức thì nhánh chính sẽ liên
-      tục bị gãy.
+    explanation: Trunk-Based Development hợp nhất code liên tục vào Trunk, do đó nếu không có CI cực mạnh để phát hiện lỗi ngay lập tức thì nhánh chính sẽ liên tục bị gãy.
   - id: q3
     question: Dự án nào sau đây phù hợp nhất với mô hình Git Flow truyền thống?
     type: single
     options:
-      - text: Ứng dụng ngân hàng di động trên iOS/Android phát hành định kỳ mỗi tháng
-          một lần và cần kiểm định an ninh nghiêm ngặt
+      - text: Ứng dụng ngân hàng di động trên iOS/Android phát hành định kỳ mỗi tháng một lần và cần kiểm định an ninh nghiêm ngặt
         correct: true
       - text: Một trang blog cá nhân cập nhật bài viết mỗi giờ
         correct: false
@@ -46,15 +39,12 @@ questions:
         correct: false
       - text: Một kịch bản tự động hóa sao lưu dữ liệu đơn giản
         correct: false
-    explanation: Git Flow rất mạnh ở khâu đóng băng phiên bản (Release Freeze) để QA
-      kiểm thử hồi quy và hỗ trợ bảo trì nhiều phiên bản cũ.
+    explanation: Git Flow rất mạnh ở khâu đóng băng phiên bản (Release Freeze) để QA kiểm thử hồi quy và hỗ trợ bảo trì nhiều phiên bản cũ.
   - id: q4
-    question: Điểm chung quan trọng nhất giữa cả 3 mô hình GitHub Flow, Git Flow và
-      Trunk-Based Development là gì?
+    question: Điểm chung quan trọng nhất giữa cả 3 mô hình GitHub Flow, Git Flow và Trunk-Based Development là gì?
     type: single
     options:
-      - text: Đều hướng tới việc giữ cho nhánh chính (main/trunk) luôn ổn định và sử
-          dụng quy trình kiểm duyệt trước khi hợp nhất
+      - text: Đều hướng tới việc giữ cho nhánh chính (main/trunk) luôn ổn định và sử dụng quy trình kiểm duyệt trước khi hợp nhất
         correct: true
       - text: Đều bắt buộc phải có nhánh develop
         correct: false
@@ -62,5 +52,17 @@ questions:
         correct: false
       - text: Đều cấm sử dụng câu lệnh git merge
         correct: false
-    explanation: Dù cách thức phân nhánh khác nhau, mục tiêu tối thượng của mọi
-      workflow chuyên nghiệp đều là bảo vệ chất lượng mã nguồn trên nhánh chính.
+    explanation: Dù cách thức phân nhánh khác nhau, mục tiêu tối thượng của mọi workflow chuyên nghiệp đều là bảo vệ chất lượng mã nguồn trên nhánh chính.
+  - id: q5
+    question: Khi nào một đội ngũ phát triển nên chuyển từ Git Flow sang GitHub Flow hoặc Trunk-Based Development?
+    type: single
+    options:
+      - text: Khi đội ngũ chuyển dịch sang mô hình phân phối liên tục (Continuous Delivery) và thấy các nhánh trung gian gây chậm trễ phát hành
+        correct: true
+      - text: Khi đội ngũ không muốn viết commit message nữa
+        correct: false
+      - text: Khi toàn bộ máy tính của công ty bị mất kết nối Internet
+        correct: false
+      - text: Khi số lượng lập trình viên giảm xuống bằng 0
+        correct: false
+    explanation: Việc chuyển dịch sang Continuous Delivery đòi hỏi quy trình phân nhánh tinh gọn để mã nguồn đến tay khách hàng nhanh nhất mà không bị cản trở bởi các tầng trung gian.

@@ -8,8 +8,22 @@
 
 ---
 
+## 🧩 Từ khóa hôm nay
+
+### Thuật ngữ 1 — nghĩa ngắn bằng tiếng Việt
+- **Nói dễ hiểu:** Giải thích bằng một câu, không dùng thuật ngữ mới chưa dạy.
+- **Ví dụ:** Một tình huống nhỏ cho thấy thuật ngữ xuất hiện khi nào.
+- **Đừng nhầm:** Nêu một khái niệm gần giống nhưng khác điểm nào.
+
+### Thuật ngữ 2 — nghĩa ngắn bằng tiếng Việt
+- **Nói dễ hiểu:** Giải thích thuật ngữ thứ hai bằng lời của người mới học.
+- **Ví dụ:** Một ví dụ cụ thể.
+- **Đừng nhầm:** Một hiểu nhầm thường gặp cần tránh.
+
+---
+
 ## 📖 Định nghĩa
-> Khái niệm chính xác và cô đọng.
+Giải thích khái niệm chính bằng lời dễ hiểu sau khi các từ khóa đã được giới thiệu.
 
 ---
 

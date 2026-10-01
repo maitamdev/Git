@@ -2,12 +2,10 @@ id: quiz-06-05-trunk-based-development
 title: "Trắc nghiệm: Trunk-Based Development"
 questions:
   - id: q1
-    question: Đặc điểm nhận diện nổi bật nhất của các nhánh làm việc trong mô hình
-      Trunk-Based Development là gì?
+    question: Đặc điểm nhận diện nổi bật nhất của các nhánh làm việc trong mô hình Trunk-Based Development là gì?
     type: single
     options:
-      - text: Tuổi thọ cực kỳ ngắn hạn, thường chỉ kéo dài vài giờ đến tối đa một hoặc
-          hai ngày
+      - text: Tuổi thọ cực kỳ ngắn hạn, thường chỉ kéo dài vài giờ đến tối đa một hoặc hai ngày
         correct: true
       - text: Tồn tại ít nhất 6 tháng để kiểm thử thật kỹ lưỡng
         correct: false
@@ -15,15 +13,12 @@ questions:
         correct: false
       - text: Không bao giờ được phép merge vào nhánh main
         correct: false
-    explanation: Nhánh siêu ngắn hạn giúp các lập trình viên tích hợp mã nguồn liên
-      tục, loại bỏ hoàn toàn nguy cơ xung đột lớn khi sáp nhập.
+    explanation: Nhánh siêu ngắn hạn giúp các lập trình viên tích hợp mã nguồn liên tục, loại bỏ hoàn toàn nguy cơ xung đột lớn khi sáp nhập.
   - id: q2
-    question: Kỹ thuật nào là "bạn đồng hành" không thể thiếu giúp Trunk-Based
-      Development an toàn khi code chưa hoàn thiện 100%?
+    question: Kỹ thuật nào là "bạn đồng hành" không thể thiếu giúp Trunk-Based Development an toàn khi code chưa hoàn thiện 100%?
     type: single
     options:
-      - text: Feature Flags (Cờ tính năng) cho phép ẩn đoạn mã mới khỏi người dùng trên
-          môi trường thực tế
+      - text: Feature Flags (Cờ tính năng) cho phép ẩn đoạn mã mới khỏi người dùng trên môi trường thực tế
         correct: true
       - text: Tắt hoàn toàn máy chủ cơ sở dữ liệu khi có người commit
         correct: false
@@ -31,15 +26,12 @@ questions:
         correct: false
       - text: Chỉ cho phép giám đốc điều hành được quyền gõ bàn phím
         correct: false
-    explanation: Feature Flags cho phép đưa code lên production an toàn và chỉ kích
-      hoạt khi tính năng đã hoàn thiện và sẵn sàng phục vụ khách hàng.
+    explanation: Feature Flags cho phép đưa code lên production an toàn và chỉ kích hoạt khi tính năng đã hoàn thiện và sẵn sàng phục vụ khách hàng.
   - id: q3
-    question: Tại sao các tập đoàn công nghệ khổng lồ như Google và Meta lại ưa
-      chuộng Trunk-Based Development?
+    question: Tại sao các tập đoàn công nghệ khổng lồ như Google và Meta lại ưa chuộng Trunk-Based Development?
     type: single
     options:
-      - text: Vì nó loại bỏ "Địa ngục hợp nhất" (Merge Hell) và thúc đẩy tốc độ tích hợp
-          liên tục ở quy mô hàng ngàn kỹ sư
+      - text: Vì nó loại bỏ "Địa ngục hợp nhất" (Merge Hell) và thúc đẩy tốc độ tích hợp liên tục ở quy mô hàng ngàn kỹ sư
         correct: true
       - text: Vì Trunk-Based Development không yêu cầu viết kiểm thử tự động
         correct: false
@@ -47,16 +39,12 @@ questions:
         correct: false
       - text: Vì nó giúp máy tính của kỹ sư chạy mát hơn mà không cần quạt tản nhiệt
         correct: false
-    explanation: Ở quy mô lớn, việc duy trì các nhánh dài hạn là bất khả thi; mô
-      hình Trunk-Based giữ cho codebase chung luôn tươi mới và được kiểm định
-      liên tục từng phút.
+    explanation: Ở quy mô lớn, việc duy trì các nhánh dài hạn là bất khả thi; mô hình Trunk-Based giữ cho codebase chung luôn tươi mới và được kiểm định liên tục từng phút.
   - id: q4
-    question: Yêu cầu kỹ thuật bắt buộc phải có để một tổ chức có thể áp dụng thành
-      công Trunk-Based Development là gì?
+    question: Yêu cầu kỹ thuật bắt buộc phải có để một tổ chức có thể áp dụng thành công Trunk-Based Development là gì?
     type: single
     options:
-      - text: Hệ thống CI tự động chạy kiểm thử nhanh chóng và toàn diện để bảo vệ chất
-          lượng nhánh Trunk
+      - text: Hệ thống CI tự động chạy kiểm thử nhanh chóng và toàn diện để bảo vệ chất lượng nhánh Trunk
         correct: true
       - text: Một phòng họp thật lớn để tất cả mọi người cùng ngồi làm việc chung
         correct: false
@@ -64,5 +52,17 @@ questions:
         correct: false
       - text: Cài đặt ít nhất 10 hệ điều hành khác nhau trên máy tính
         correct: false
-    explanation: Nếu không có CI kiểm tra tự động vững chắc, các commit liên tục vào
-      Trunk có thể dễ dàng làm vỡ bản build và gây tê liệt cả nhóm.
+    explanation: Nếu không có CI kiểm tra tự động vững chắc, các commit liên tục vào Trunk có thể dễ dàng làm vỡ bản build và gây tê liệt cả nhóm.
+  - id: q5
+    question: Tên gọi "Trunk" trong mô hình Trunk-Based Development tương đương với khái niệm nhánh nào trong Git?
+    type: single
+    options:
+      - text: Nhánh chính trung tâm (thường là main hoặc master)
+        correct: true
+      - text: Nhánh develop
+        correct: false
+      - text: Nhánh release
+        correct: false
+      - text: Nhánh hotfix
+        correct: false
+    explanation: '"Trunk" là thuật ngữ truyền thống chỉ thân cây chính (tương ứng với nhánh main trong Git), nơi mọi kỹ sư tích hợp code thường xuyên.'

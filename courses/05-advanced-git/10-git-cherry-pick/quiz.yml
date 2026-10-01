@@ -62,3 +62,19 @@ questions:
         correct: false
     explanation: "`--no-commit` cho phép bạn nhặt nhiều thay đổi về Staging Area để
       kiểm tra hoặc gộp chung trước khi commit."
+  - id: q5
+    question: Nếu gặp xung đột phức tạp trong lúc cherry-pick và muốn hủy bỏ thao tác
+      để quay lại trạng thái ban đầu, bạn dùng lệnh nào?
+    type: single
+    options:
+      - text: git cherry-pick --abort
+        correct: true
+      - text: git cherry-pick --cancel
+        correct: false
+      - text: git cherry-pick --stop
+        correct: false
+      - text: git reset --abort-pick
+        correct: false
+    explanation: "`git cherry-pick --abort` hủy bỏ tiến trình đang dở dang và khôi phục
+      HEAD lẫn Working Directory về nguyên trạng trước khi chạy lệnh."
+

@@ -64,3 +64,19 @@ questions:
         correct: false
     explanation: "`git rebase --abort` dừng toàn bộ tiến trình rebase và đưa nhánh
       của bạn quay về trạng thái y hệt lúc trước khi gõ lệnh."
+  - id: q5
+    question: Sau khi giải quyết xong xung đột và chạy `git add .` trong một bước rebase,
+      lệnh tiếp theo bạn cần thực hiện là gì?
+    type: single
+    options:
+      - text: git rebase --continue
+        correct: true
+      - text: git commit -m "resolve conflict"
+        correct: false
+      - text: git push --force
+        correct: false
+      - text: git rebase --finish
+        correct: false
+    explanation: Khi giải quyết xong conflict trong rebase, dùng `git rebase --continue`
+      để Git áp dụng tiếp các commit còn lại mà không tự tạo commit merge rác.
+

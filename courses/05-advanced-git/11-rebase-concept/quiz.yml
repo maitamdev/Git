@@ -64,3 +64,20 @@ questions:
         correct: false
     explanation: Trường phái Rebase coi lịch sử như một tác phẩm hoàn chỉnh cần được
       biên tập gọn gàng trước khi xuất bản.
+  - id: q5
+    question: Quy tắc vàng bất di bất dịch của Git Rebase (The Golden Rule of Rebase)
+      quy định điều gì?
+    type: single
+    options:
+      - text: Tuyệt đối không bao giờ rebase trên các nhánh công khai dùng chung với người
+          khác
+        correct: true
+      - text: Bắt buộc phải rebase toàn bộ các nhánh trước khi đi ngủ mỗi ngày
+        correct: false
+      - text: Chỉ được phép chạy lệnh rebase khi không có kết nối Internet
+        correct: false
+      - text: Không bao giờ được phép rebase các commit có gắn thẻ tag
+        correct: false
+    explanation: Viết lại lịch sử bằng rebase trên nhánh dùng chung phá vỡ mối quan
+      hệ commit của đồng nghiệp, gây ra xung đột phân kỳ lịch sử nghiêm trọng.
+

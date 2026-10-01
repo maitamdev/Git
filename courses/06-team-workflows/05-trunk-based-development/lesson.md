@@ -10,38 +10,57 @@
 
 ---
 
+## 🧩 Từ khóa hôm nay
+
+### Trunk
+- **Nói dễ hiểu**: Nhánh chính trung tâm (thường là main), nơi toàn bộ kỹ sư tích hợp các mẩu code nhỏ mỗi ngày.
+- **Ví dụ**: Thay vì để code trên nhánh phụ suốt 2 tuần, kỹ sư merge các phần nhỏ vào Trunk mỗi vài tiếng.
+- **Đừng nhầm**: Trunk chính là nhánh main; thuật ngữ bắt nguồn từ hình tượng thân cây trong các hệ thống VCS trước đây.
+
+### Short-Lived Branches (< 1-2 Days)
+- **Nói dễ hiểu**: Các nhánh rẽ có tuổi thọ siêu ngắn chỉ kéo dài vài giờ đến tối đa 1-2 ngày rồi hợp nhất ngay.
+- **Ví dụ**: Tạo nhánh nhỏ chỉ chứa 50 dòng code để sửa một hàm, mở PR review xong merge vào Trunk trong ngày.
+- **Đừng nhầm**: Khác với nhánh feature truyền thống kéo dài hàng tuần hoặc suốt cả kỳ sprint.
+
+### Feature Flags (Cờ tính năng)
+- **Nói dễ hiểu**: Công tắc logic trong code cho phép đưa code lên production nhưng ẩn đi, chỉ bật cho người dùng khi đã sẵn sàng.
+- **Ví dụ**: Đặt điều kiện `if (features.enableNewRanking)` để code mới chạy ngầm an toàn mà không ảnh hưởng giao diện cũ.
+- **Đừng nhầm**: Feature flag là logic điều khiển trong mã nguồn hoặc cấu hình, không phải là một nhánh của Git.
+
+---
+
 ## 📖 Định nghĩa
-> Trunk-Based Development là một chiến lược phân nhánh mã nguồn hiện đại, trong đó tất cả các kỹ sư cùng hợp nhất những thay đổi nhỏ, thường xuyên trực tiếp vào một nhánh duy nhất gọi là "Trunk" (thường là nhánh `main`). Thay vì duy trì các nhánh tính năng kéo dài hàng tuần gây ra xung đột hợp nhất thảm khốc, các nhà phát triển trong mô hình Trunk-Based chỉ tạo các nhánh cực ngắn hạn (vài giờ đến tối đa 1 hoặc 2 ngày) hoặc thậm chí commit trực tiếp vào Trunk với sự hỗ trợ của các bộ kiểm thử tự động hóa cao và kỹ thuật Feature Flags.
+Trunk-Based Development là chiến lược phân nhánh trong đó toàn bộ kỹ sư liên tục hợp nhất các thay đổi nhỏ trực tiếp vào một nhánh chính duy nhất gọi là "Trunk" (main). Các nhánh rẽ có tuổi thọ cực ngắn, kết hợp chặt chẽ với kiểm thử tự động CI và cờ tính năng Feature Flags.
 
 ---
 
-## 🤔 Tại sao cần?
-Các tập đoàn công nghệ hàng đầu thế giới như Google, Meta, Netflix và Amazon đều áp dụng Trunk-Based Development bởi vì mô hình này tối đa hóa tốc độ phát triển và triệt tiêu hoàn toàn "Địa ngục hợp nhất" (Merge Hell). Bằng cách tích hợp mã nguồn nhiều lần trong ngày, mọi xung đột đều được phát hiện ngay khi còn rất nhỏ và dễ giải quyết, ngăn ngừa tình trạng tách biệt mã nguồn và thúc đẩy văn hóa phản hồi tức thì giữa các thành viên.
+## 💡 Tại sao cần
+Các công ty công nghệ hàng đầu như Google và Meta ưa chuộng mô hình này vì nó triệt tiêu hoàn toàn "Địa ngục hợp nhất" (Merge Hell). Tích hợp mã nguồn nhiều lần trong ngày giúp phát hiện xung đột sớm và thúc đẩy văn hóa phản hồi tức thì.
 
 ---
 
-## 🧠 Mental Model (Mô hình tư duy)
-Hãy hình dung một con sông lớn đại diện cho Trunk (`main`). Trong các mô hình cũ, từng nhóm kỹ sư đào những con kênh rất dài chạy song song suốt nhiều tháng, đến khi đục thông đê để hợp nhất nước vào sông chính thì lưu lượng quá lớn gây ngập lụt kinh hoàng (Merge Hell). Trong Trunk-Based Development, các kỹ sư chỉ đào những rãnh nước rất ngắn, xả nước vào dòng sông chính từng gáo nhỏ mỗi giờ. Nước sông luôn cuộn chảy ổn định, không bao giờ xảy ra lũ lụt bất ngờ.
+## 🧠 Mental Model
+Hãy hình dung con sông lớn là Trunk. Thay vì đào những con kênh dài chạy song song suốt nhiều tháng rồi đục thông gây ngập lụt kinh hoàng, các kỹ sư chỉ đào những rãnh nước rất ngắn, xả nước vào dòng sông từng gáo nhỏ mỗi giờ. Dòng sông luôn cuộn chảy ổn định, không bao giờ ngập lụt.
 
 ---
 
-## 🖼 Sơ đồ
+## 📊 Sơ đồ minh họa
 ```text
 Mô hình Trunk-Based Development với các nhánh cực ngắn:
 Trunk (main): ──●────●────●────●────●────●────●────●────● (Tích hợp liên tục nhiều lần/ngày)
                 │   ▲    │   ▲    │   ▲
                 └───┘    └───┘    └───┘
-              (Nhánh siêu ngắn < 1 ngày, nén commit nhỏ)
+              (Nhánh siêu ngắn < 1-2 ngày, commit nhỏ gọn)
 ```
 
 ---
 
-## 🌎 Ví dụ thực tế
-Tại một nhóm kỹ thuật phát triển công cụ tìm kiếm, kỹ sư Dũng cần phát triển một thuật toán xếp hạng mới dự kiến mất 3 tuần. Thay vì giữ một nhánh riêng suốt 3 tuần, Dũng sử dụng Trunk-Based Development kết hợp Feature Flag: `if (features.useNewRankingAlgo)`. Mỗi ngày, Dũng viết xong một hàm nhỏ, kiểm thử đơn vị xanh và mở Pull Request nhỏ chỉ khoảng 50 dòng code để gộp thẳng vào Trunk. Đoạn mã mới được đẩy lên production ngay nhưng bị ẩn đi sau Feature Flag. Nhờ vậy, Dũng không bao giờ bị lệch code so với đồng nghiệp và hệ thống vẫn chạy ổn định 100%.
+## 🏢 Ví dụ thực tế
+Kỹ sư Dũng làm thuật toán xếp hạng mới dự kiến 3 tuần. Thay vì giữ nhánh 3 tuần, Dũng dùng Feature Flag ẩn code mới. Mỗi ngày Dũng mở PR nhỏ 50 dòng gộp thẳng vào Trunk. Code lên production liên tục nhưng vẫn an toàn tuyệt đối, không lo lệch nhánh với đồng nghiệp.
 
 ---
 
-## 💻 Command
+## 💻 Command & Cú pháp
 ```bash
 git switch main && git pull --rebase origin main
 git switch -c short-feat/add-rating-model
@@ -58,39 +77,43 @@ git push origin short-feat/add-rating-model
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Giữ nhánh quá lâu nhiều ngày mà không tích hợp vào Trunk**:  Biến mô hình Trunk-Based thành Feature Branch Workflow thông thường.
-2. **Đưa code dở dang lên Trunk mà không che chắn bằng Feature Flag**:  Khiến giao diện hoặc logic hỏng hiển thị ra người dùng cuối.
-3. **Thiếu hệ thống CI tự động kiểm tra nghiêm ngặt**:  Khiến Trunk dễ bị vỡ và chặn đứng công việc của cả công ty.
+1. **Giữ nhánh quá lâu**: Giữ nhánh nhiều tuần biến mô hình thành Feature Branch truyền thống và tích tụ conflict lớn.
+2. **Không dùng Feature Flag**: Đưa code dở dang lên Trunk mà không che chắn khiến người dùng gặp lỗi logic.
+3. **Thiếu hệ thống CI tự động**: Không có bộ kiểm thử tự động nhanh và chuẩn sẽ dễ khiến nhánh Trunk bị vỡ.
 
 ---
 
-## 🧪 Lab
-1. Chia nhỏ một bài toán lớn thành 3 đầu việc nhỏ có thể hoàn thành trong 1 ngày.
-2. Viết mã nguồn kết hợp điều kiện if-else mô phỏng cơ chế Feature Flag bảo vệ tính năng mới.
+## 🧪 Lab thực hành
+Bài học này là bài tự kiểm tra: bạn thao tác trực tiếp trên terminal của máy tính để làm quen với công cụ.
+1. Chia nhỏ một bài toán lớn thành 3 đầu việc nhỏ có thể hoàn thành trong 1 ngày làm việc.
+2. Tạo nhánh siêu ngắn hạn `short-feat/demo-flag` từ main.
+3. Viết mã nguồn kết hợp điều kiện if-else mô phỏng cơ chế Feature Flag bảo vệ tính năng mới.
+4. Mở PR nhỏ gọn và kiểm tra việc tích hợp nhanh chóng vào nhánh chính.
 
 ---
 
-## 💡 Hint
+## 💡 Hint & mẹo
 > Trunk-Based Development chỉ thực sự phát huy sức mạnh khi đi đôi với bộ kiểm thử tự động vững chắc và văn hóa review code nhanh.
 
 ---
 
-## ✅ Validation
+## ✅ Validation & Kết quả mong đợi
 - Hiểu rõ sự khác biệt giữa thời điểm đưa mã nguồn lên máy chủ (Deployment) và thời điểm mở tính năng cho người dùng (Release).
+- Nắm vững cách chia nhỏ công việc thành các nhánh siêu ngắn dưới 2 ngày.
 
 ---
 
-## ❓ Quiz
+## ❓ Quiz nhanh
 Hãy làm bài trắc nghiệm dưới đây về mô hình Trunk-Based Development.
 
 ---
 
-## 🔥 Challenge
+## 🚀 Thử thách nâng cao
 Phân tích cơ chế hoạt động của Feature Flags trong việc giảm thiểu rủi ro khi triển khai code liên tục vào Trunk.
 
 ---
 
-## 📚 Tổng kết
+## 📝 Tổng kết
 - Trunk-Based Development tập trung hợp nhất các thay đổi nhỏ vào một nhánh chính duy nhất thường xuyên.
 - Tuổi thọ của các nhánh tính năng cực ngắn, thường không vượt quá một đến hai ngày làm việc.
 - Kết hợp với Feature Flags để tách biệt việc đưa code lên hệ thống và kích hoạt tính năng cho người dùng.

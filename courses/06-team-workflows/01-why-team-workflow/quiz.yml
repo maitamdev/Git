@@ -2,12 +2,10 @@ id: quiz-06-01-why-team-workflow
 title: "Trắc nghiệm: Vì sao team cần workflow?"
 questions:
   - id: q1
-    question: Lợi ích cốt lõi quan trọng nhất của việc áp dụng Git Workflow trong
-      một đội ngũ phần mềm là gì?
+    question: Lợi ích cốt lõi quan trọng nhất của việc áp dụng Git Workflow trong một đội ngũ phần mềm là gì?
     type: single
     options:
-      - text: Giảm thiểu xung đột, ngăn ngừa ghi đè mã nguồn và bảo đảm chất lượng phần
-          mềm trước khi phát hành
+      - text: Giảm thiểu xung đột, ngăn ngừa ghi đè mã nguồn và bảo đảm chất lượng phần mềm trước khi phát hành
         correct: true
       - text: Làm tăng dung lượng lưu trữ của máy chủ đám mây
         correct: false
@@ -15,15 +13,12 @@ questions:
         correct: false
       - text: Tự động sửa toàn bộ các lỗi thuật toán logic trong chương trình
         correct: false
-    explanation: Quy trình làm việc nhóm giúp chuẩn hóa việc tích hợp mã nguồn, ngăn
-      ngừa rủi ro hỏng hóc hệ thống và giữ nhánh chính luôn ổn định.
+    explanation: Quy trình làm việc nhóm giúp chuẩn hóa việc tích hợp mã nguồn, ngăn ngừa rủi ro hỏng hóc hệ thống và giữ nhánh chính luôn ổn định.
   - id: q2
-    question: Hành động nào sau đây bị xem là thiếu chuyên nghiệp và tiềm ẩn nguy cơ
-      cao nhất trong làm việc nhóm?
+    question: Hành động nào sau đây bị xem là thiếu chuyên nghiệp và tiềm ẩn nguy cơ cao nhất trong làm việc nhóm?
     type: single
     options:
-      - text: Mọi thành viên đều commit và push trực tiếp các đoạn code chưa kiểm thử
-          vào nhánh main
+      - text: Mọi thành viên đều commit và push trực tiếp các đoạn code chưa kiểm thử vào nhánh main
         correct: true
       - text: Tạo nhánh riêng cho từng tính năng mới cần phát triển
         correct: false
@@ -31,15 +26,12 @@ questions:
         correct: false
       - text: Chạy kiểm thử tự động trước khi hợp nhất mã nguồn vào nhánh chính
         correct: false
-    explanation: Commit thẳng lên nhánh main dễ khiến code lỗi chưa qua kiểm thử phá
-      hỏng phiên bản chạy thực tế của khách hàng.
+    explanation: Commit thẳng lên nhánh main dễ khiến code lỗi chưa qua kiểm thử phá hỏng phiên bản chạy thực tế của khách hàng.
   - id: q3
-    question: Yếu tố nào sau đây KHÔNG phải là một thành phần bắt buộc của một Git
-      Workflow tiêu chuẩn?
+    question: Yếu tố nào sau đây KHÔNG phải là một thành phần bắt buộc của một Git Workflow tiêu chuẩn?
     type: single
     options:
-      - text: Quy định mọi kỹ sư phải sử dụng cùng một loại bàn phím máy tính giống hệt
-          nhau
+      - text: Quy định mọi kỹ sư phải sử dụng cùng một loại bàn phím máy tính giống hệt nhau
         correct: true
       - text: Chiến lược đặt tên và phân tách các nhánh chức năng
         correct: false
@@ -47,15 +39,12 @@ questions:
         correct: false
       - text: Quy trình kiểm duyệt và điều kiện phê duyệt Pull Request
         correct: false
-    explanation: Git Workflow tập trung vào quy ước quản lý mã nguồn và nhánh, không
-      can thiệp vào trang thiết bị phần cứng của lập trình viên.
+    explanation: Git Workflow tập trung vào quy ước quản lý mã nguồn và nhánh, không can thiệp vào trang thiết bị phần cứng của lập trình viên.
   - id: q4
-    question: Khi một lập trình viên mới gia nhập đội ngũ dự án, tài liệu đầu tiên
-      họ cần đọc và tuân thủ là gì?
+    question: Khi một lập trình viên mới gia nhập đội ngũ dự án, tài liệu đầu tiên họ cần đọc và tuân thủ là gì?
     type: single
     options:
-      - text: Tài liệu hướng dẫn quy ước làm việc nhóm và chiến lược phân nhánh Git
-          Workflow của dự án
+      - text: Tài liệu hướng dẫn quy ước làm việc nhóm và chiến lược phân nhánh Git Workflow của dự án
         correct: true
       - text: Toàn bộ hợp đồng lao động của tất cả các nhân viên trong công ty
         correct: false
@@ -63,5 +52,17 @@ questions:
         correct: false
       - text: Lịch sử tin nhắn cá nhân của người quản lý dự án
         correct: false
-    explanation: Nắm vững Git Workflow giúp thành viên mới nhanh chóng hòa nhập,
-      đóng góp mã nguồn an toàn mà không phá vỡ cấu trúc kho lưu trữ.
+    explanation: Nắm vững Git Workflow giúp thành viên mới nhanh chóng hòa nhập, đóng góp mã nguồn an toàn mà không phá vỡ cấu trúc kho lưu trữ.
+  - id: q5
+    question: Khái niệm "Production-ready" của nhánh chính (main) trong một workflow chuẩn có ý nghĩa là gì?
+    type: single
+    options:
+      - text: Nhánh chính luôn ở trạng thái ổn định tuyệt đối, đã qua kiểm thử và có thể triển khai lên môi trường thực tế bất kỳ lúc nào
+        correct: true
+      - text: Nhánh chính chứa toàn bộ mã nguồn nháp của tất cả các lập trình viên
+        correct: false
+      - text: Nhánh chính chỉ được phép đọc bởi ban giám đốc công ty
+        correct: false
+      - text: Nhánh chính sẽ tự động xóa sau mỗi lần phát hành phiên bản
+        correct: false
+    explanation: Nguyên tắc bất biến của các Git workflow hiện đại là giữ nhánh chính luôn ổn định và sẵn sàng triển khai cho khách hàng.

@@ -61,3 +61,19 @@ questions:
         correct: false
     explanation: Cả hai đều giữ Working Tree, nhưng `--soft` giữ Staging còn
       `--mixed` reset luôn cả Staging.
+  - id: q5
+    question: Khi bạn lỡ chạy `git add .` và muốn hủy trạng thái staged của toàn bộ các
+      tệp tin mà không làm mất nội dung sửa, lệnh nào phù hợp nhất?
+    type: single
+    options:
+      - text: git reset (tương đương git reset --mixed HEAD)
+        correct: true
+      - text: git reset --hard HEAD
+        correct: false
+      - text: git clean -fd
+        correct: false
+      - text: git revert HEAD
+        correct: false
+    explanation: Lệnh `git reset` không kèm cờ sẽ chạy `--mixed`, làm sạch Staging Area
+      và giữ nguyên toàn bộ thay đổi trong Working Directory.
+

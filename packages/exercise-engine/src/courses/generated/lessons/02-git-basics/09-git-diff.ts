@@ -13,9 +13,9 @@ export const lesson: CourseLesson = {
       "08-git-log"
     ],
     "objectives": [
-      "Đọc hiểu cú pháp hiển thị khác biệt theo từng dòng code của `git diff`.",
-      "Phân biệt rõ ràng giữa so sánh Working Tree (`git diff`) và so sánh Staging Area (`git diff --staged`).",
-      "So sánh sự khác biệt giữa hai commit hoặc hai nhánh bất kỳ."
+      "Đọc dấu - và + để nhận ra dòng cũ bị bỏ và dòng mới được thêm.",
+      "Phân biệt git diff với git diff --staged.",
+      "Xem lại thay đổi trước khi đưa vào commit."
     ],
     "completion": {
       "theoryViewed": true,
@@ -35,12 +35,10 @@ export const lesson: CourseLesson = {
     ],
     "commands": [
       "git diff",
-      "git diff --staged",
-      "git diff HEAD",
-      "git diff <commit1> <commit2>"
+      "git diff --staged"
     ]
   },
-  "content": "# So sánh khác biệt với git diff\n\n---\n\n## 🎯 Mục tiêu\n- Đọc hiểu cú pháp hiển thị khác biệt theo từng dòng code của `git diff`.\n- Phân biệt rõ ràng giữa so sánh Working Tree (`git diff`) và so sánh Staging Area (`git diff --staged`).\n- So sánh sự khác biệt giữa hai commit hoặc hai nhánh bất kỳ.\n\n---\n\n## 📖 Định nghĩa\n> `git diff` là câu lệnh chuyên dụng để tính toán và hiển thị trực quan sự khác biệt chi tiết theo từng dòng code giữa các vùng làm việc của Git. Định dạng hiển thị của diff tuân theo chuẩn Unified Diff: các dòng bị xóa bắt đầu bằng dấu trừ màu đỏ (`-`), các dòng được thêm mới bắt đầu bằng dấu cộng màu xanh lá (`+`), và các dòng giữ nguyên không đổi xung quanh đóng vai trò ngữ cảnh định vị vị trí sửa đổi trong tệp.\n\n---\n\n## 🤔 Tại sao cần?\nTrước khi đưa code vào Staging Area hoặc tạo commit, việc rà soát kỹ lưỡng từng dòng code bạn vừa thay đổi là thói quen sống còn để loại bỏ các lỗi sơ đẳng như in log rác, biến thử nghiệm chưa xóa, hoặc vô tình sửa nhầm dòng code của tính năng khác. `git diff` chính là chiếc gương soi giúp bạn tự kiểm duyệt (Self-review) chất lượng sản phẩm của chính mình trước khi công khai nó cho đồng nghiệp xem.\n\n---\n\n## 🧠 Mental Model (Mô hình tư duy)\nHãy tưởng tượng git diff giống như tính năng So sánh văn bản (Track Changes) trong Microsoft Word hoặc tính năng so màu ảnh cũ và ảnh mới của một bức danh họa sau khi hoàn tất công đoạn trùng tu tỉ mỉ. Hai bức tranh được xếp chồng lên nhau dưới ánh sáng laser đặc biệt: những nét vẽ cũ đã bị cạo đi hoặc thay thế sẽ phát sáng màu đỏ rực rỡ, còn những nét vẽ mới vừa được người phục chế thêm vào sẽ phát sáng màu xanh lá cây tươi sáng. Nhờ đó, người thẩm định có thể nhìn thấy từng nét cọ sai lệch mà không bỏ sót bất kỳ chi tiết nhỏ nào.\n\n---\n\n## 🖼 Sơ đồ\n```text\nCấu trúc hiển thị Unified Diff:\ndiff --git a/app.js b/app.js\n--- a/app.js  (Phiên bản cũ trước khi sửa)\n+++ b/app.js  (Phiên bản mới đang sửa)\n@@ -1,3 +1,4 @@\n function calculateTotal(price) {\n-    return price * 0.1;       <── Dòng cũ bị xóa bỏ (màu đỏ)\n+    const tax = 0.08;         <── Dòng mới được thêm vào (màu xanh lá)\n+    return price * (1 + tax); <── Dòng mới được thêm vào (màu xanh lá)\n }\n```\n\n---\n\n## 🌎 Ví dụ thực tế\nKỹ sư đang sửa lỗi tính sai thuế giá trị gia tăng trong tệp thanh toán invoice.js của cổng thanh toán trực tuyến. Sau khi gõ code xong trong trình soạn thảo VS Code, kỹ sư mở cửa sổ dòng lệnh terminal và gõ ngay lệnh `git diff` để tự kiểm tra lại. Màn hình hiển thị rõ ràng dòng tính thuế cũ mười phần trăm bị gạch đỏ có dấu trừ ở đầu, và dòng tính thuế mới tám phần trăm có dấu cộng màu xanh lá. Sau khi đối chiếu cẩn thận và chắc chắn không có bất kỳ dòng log thử nghiệm nào bị bỏ quên, kỹ sư mới an tâm thực hiện lệnh `git add invoice.js` để đóng gói commit an toàn.\n\n---\n\n## 💻 Command\n```bash\ngit diff\ngit diff --staged\ngit diff HEAD\ngit diff <commit1> <commit2>\n```\n\n---\n\n## 🔍 Giải thích command\n- `git diff`: So sánh sự khác biệt giữa Working Directory và Staging Area (những thay đổi chưa được add).\n- `git diff --staged` (hoặc `--cached`): So sánh sự khác biệt giữa Staging Area và commit gần nhất tại HEAD (những thay đổi chuẩn bị commit).\n- `git diff HEAD`: So sánh toàn bộ thay đổi trong thư mục làm việc so với commit gần nhất tại HEAD.\n- `git diff <commit1> <commit2>`: So sánh sự khác biệt tổng thể giữa hai mốc commit bất kỳ trong lịch sử.\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Chạy git diff sau khi đã git add và tưởng code bị mất**:  Khi đã add vào Staging Area, bạn phải dùng `git diff --staged` mới xem được khác biệt.\n2. **Sợ hãi các ký hiệu @@ trong kết quả diff**:  Không hiểu rằng `@@ -a,b +c,d @@` chỉ là tọa độ số dòng code trong tệp tin.\n3. **Không đọc diff trước khi commit**:  Thói quen xấu dẫn đến việc commit cả mật khẩu hoặc các câu lệnh console.log thử nghiệm.\n\n---\n\n## 🧪 Lab\n1. Chỉnh sửa một dòng code trong tệp `app.js` và lưu lại.\n2. Chạy lệnh `git diff` để quan sát dòng code cũ màu đỏ và dòng code mới màu xanh.\n3. Chạy `git add app.js`, sau đó chạy lại `git diff` (kết quả sẽ rỗng).\n4. Chạy `git diff --staged` để thấy lại các dòng thay đổi đang nằm trong vùng chuẩn bị.\n\n---\n\n## 💡 Hint\n> Nhớ quy tắc: `git diff` xem tệp chưa add; `git diff --staged` xem tệp đã add.\n\n---\n\n## ✅ Validation\n- Đọc hiểu chính xác các dòng cộng trừ trong kết quả hiển thị của git diff.\n\n---\n\n## ❓ Quiz\nHãy làm bài trắc nghiệm sau về cách sử dụng câu lệnh so sánh git diff.\n\n---\n\n## 🔥 Challenge\nGiải thích ý nghĩa của dòng tọa độ hunk header `@@ -15,7 +15,9 @@` trong kết quả diff.\n\n---\n\n## 📚 Tổng kết\n- `git diff` so sánh Working Directory với Staging Area (code chưa staged).\n- `git diff --staged` so sánh Staging Area với HEAD (code chuẩn bị commit).\n- Dấu trừ màu đỏ thể hiện dòng bị xóa; dấu cộng màu xanh thể hiện dòng được thêm mới.\n",
+  "content": "# So sánh khác biệt với git diff\n\n---\n\n## 🎯 Mục tiêu\n- Đọc dấu `-` và `+` để nhận ra dòng cũ bị bỏ và dòng mới được thêm.\n- Phân biệt `git diff` với `git diff --staged`.\n- Xem lại thay đổi trước khi đưa vào commit.\n\n---\n\n## 🧩 Từ khóa hôm nay\n\n### Diff — phần thay đổi giữa hai phiên bản\n- **Nói dễ hiểu:** Bản so sánh cho biết dòng nào được thêm, bỏ hoặc sửa.\n- **Ví dụ:** Diff cho thấy tiêu đề `Home` được đổi thành `Trang chủ`.\n- **Đừng nhầm:** Diff trình bày thay đổi; nó không tạo commit.\n\n### `git diff` — so sánh bản đang sửa\n- **Nói dễ hiểu:** Mặc định, lệnh cho thấy thay đổi chưa staged.\n- **Ví dụ:** Chạy `git diff` sau khi sửa một tệp tracked.\n- **Đừng nhầm:** Lệnh thường không hiện thay đổi mới đã staged.\n\n### `--staged` — xem phần đã chuẩn bị\n- **Nói dễ hiểu:** Chọn xem khác biệt giữa vùng chuẩn bị và commit hiện tại.\n- **Ví dụ:** Chạy `git diff --staged` trước khi commit.\n- **Đừng nhầm:** Tùy chọn này không đưa thay đổi vào Staging Area.\n\n### Hunk — một nhóm dòng thay đổi\n- **Nói dễ hiểu:** Một đoạn trong diff gom các dòng gần nhau có thay đổi.\n- **Ví dụ:** Một diff có thể có nhiều hunk nếu sửa hai vị trí xa nhau.\n- **Đừng nhầm:** Hunk không phải một tệp hay một commit riêng.\n\n---\n\n## 📖 Định nghĩa\n`git diff` hiển thị những dòng khác nhau giữa hai trạng thái của tệp. Dòng bắt đầu bằng `-` thuộc phiên bản cũ; dòng bắt đầu bằng `+` thuộc phiên bản mới. Màu sắc có thể khác nhau tùy terminal.\n\n---\n\n## 🤔 Tại sao cần?\nĐọc diff trước khi commit giúp phát hiện sửa nhầm, dòng thử nghiệm còn sót hoặc phần thay đổi chưa định gửi.\n\n---\n\n## 🧠 Mental Model (Mô hình tư duy)\nHãy xem diff như bản đối chiếu hai phiên bản: dấu `-` chỉ dòng ở bản cũ, dấu `+` chỉ dòng ở bản mới.\n\n---\n\n## 🖼 Sơ đồ\n```diff\n-Hello\n+Hello, world!\n```\nTrong kết quả thật, dòng `@@ -1,1 +1,1 @@` đánh dấu vị trí của một nhóm thay đổi (hunk); nó không phải nội dung tệp.\n\n---\n\n## 🌎 Ví dụ thực tế\nBạn đổi `Hello` thành `Hello, world!` trong `app.js`. Chạy `git diff`: dòng cũ có dấu `-`, dòng mới có dấu `+`. Đọc cả hai để xác nhận mình sửa đúng.\n\n---\n\n## 💻 Command\n```bash\ngit diff\ngit diff --staged\n```\n\n---\n\n## 🔍 Giải thích command\n- `git diff`: So sánh sự khác biệt giữa Working Directory và Staging Area (những thay đổi chưa được add).\n- `git diff --staged` (hoặc `--cached`): So sánh sự khác biệt giữa Staging Area và commit gần nhất tại HEAD (những thay đổi chuẩn bị commit).\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Chạy git diff sau khi đã git add và tưởng code bị mất**:  Khi đã add vào Staging Area, bạn phải dùng `git diff --staged` mới xem được khác biệt.\n2. **Nhầm dòng `@@ -1,1 +1,1 @@` với nội dung tệp**:  Đây là dấu vị trí của một nhóm thay đổi (hunk).\n3. **Không đọc diff trước khi commit**:  Thói quen xấu dẫn đến việc commit cả mật khẩu hoặc các câu lệnh console.log thử nghiệm.\n\n---\n\n## 🧪 Lab\n1. Chỉnh sửa một dòng code trong tệp `app.js` và lưu lại.\n2. Chạy lệnh `git diff`; dòng cũ có dấu `-`, dòng mới có dấu `+`.\n3. Chạy `git add app.js`, sau đó chạy lại `git diff` (phần vừa staged không còn hiện ở đây).\n4. Chạy `git diff --staged` để thấy lại các dòng thay đổi đang nằm trong vùng chuẩn bị.\n\n---\n\n## 💡 Hint\n> Nhớ quy tắc: `git diff` xem tệp chưa add; `git diff --staged` xem tệp đã add.\n\n---\n\n## ✅ Validation\n- Đọc hiểu chính xác các dòng cộng trừ trong kết quả hiển thị của git diff.\n\n---\n\n## ❓ Quiz\nHãy làm bài trắc nghiệm sau về cách sử dụng câu lệnh so sánh git diff.\n\n---\n\n## 🔥 Challenge\nSau khi chạy `git add app.js`, giải thích vì sao `git diff` và `git diff --staged` cho kết quả khác nhau.\n\n---\n\n## 📚 Tổng kết\n- `git diff` so sánh Working Directory với Staging Area (code chưa staged).\n- `git diff --staged` so sánh Staging Area với HEAD (code chuẩn bị commit).\n- Dấu `-` chỉ dòng ở bản cũ; dấu `+` chỉ dòng ở bản mới. Màu sắc chỉ là cách hiển thị.\n",
   "quiz": {
     "id": "quiz-02-09-git-diff",
     "title": "Trắc nghiệm: So sánh khác biệt với git diff",
@@ -95,11 +93,11 @@ export const lesson: CourseLesson = {
       },
       {
         "id": "q3",
-        "question": "Trong kết quả hiển thị của git diff, một dòng bắt đầu bằng dấu cộng `+` màu xanh lá có ý nghĩa gì?",
+        "question": "Trong kết quả `git diff`, một dòng nội dung bắt đầu bằng dấu `+` có ý nghĩa gì?",
         "type": "single",
         "options": [
           {
-            "text": "Dòng code đó vừa mới được bổ sung thêm vào tệp tin",
+            "text": "Dòng đó thuộc phần mới được thêm vào so với bản cũ",
             "correct": true
           },
           {
@@ -115,7 +113,7 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "Quy ước Unified Diff sử dụng dấu cộng `+` để biểu diễn dòng văn bản mới được thêm vào."
+        "explanation": "Dấu `+` biểu thị một dòng thuộc phiên bản mới; màu sắc tùy terminal."
       },
       {
         "id": "q4",
@@ -139,7 +137,31 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "Tự duyệt diff là bước tự kiểm tra (Self-review) quan trọng hàng đầu của một kỹ sư phần mềm cẩn trọng."
+        "explanation": "Đọc diff giúp bạn kiểm tra chính xác phần mình sắp đưa vào commit."
+      },
+      {
+        "id": "q5",
+        "question": "Trong một đoạn thay đổi của `git diff`, dòng nội dung bắt đầu bằng dấu `-` thuộc phần nào?",
+        "type": "single",
+        "options": [
+          {
+            "text": "Phiên bản cũ; dòng đó đã bị bỏ hoặc thay thế",
+            "correct": true
+          },
+          {
+            "text": "Phiên bản mới được thêm vào",
+            "correct": false
+          },
+          {
+            "text": "Thông tin tài khoản GitHub",
+            "correct": false
+          },
+          {
+            "text": "Dòng lệnh phải gõ vào terminal",
+            "correct": false
+          }
+        ],
+        "explanation": "Dấu `-` chỉ nội dung có trong bản cũ nhưng không còn nguyên trạng trong bản mới."
       }
     ]
   }

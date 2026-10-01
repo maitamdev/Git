@@ -10,22 +10,41 @@
 
 ---
 
+## 🧩 Từ khóa hôm nay
+
+### git cherry-pick
+- **Nói dễ hiểu**: Lệnh nhặt riêng một commit từ nhánh khác để dán thành một commit mới trên nhánh hiện tại.
+- **Ví dụ**: Đang ở nhánh `main`, chạy `git cherry-pick a1b2c3d` để lấy bản vá lỗi từ nhánh thử nghiệm sang.
+- **Đừng nhầm**: Không gộp toàn bộ nhánh; lệnh chỉ lấy đúng những thay đổi trong commit được chỉ định.
+
+### selective integration
+- **Nói dễ hiểu**: Chiến lược tích hợp có chọn lọc từng tính năng hoặc bản sửa lỗi mà không kéo theo code thừa dở dang.
+- **Ví dụ**: Nhánh tính năng có 10 commit nhưng chỉ có 1 commit hotfix cần đưa vào bản phát hành gấp.
+- **Đừng nhầm**: Không nên lạm dụng để thay thế merge; lạm dụng cherry-pick sẽ sinh ra nhiều commit trùng lặp.
+
+### --abort vs --continue
+- **Nói dễ hiểu**: Cặp cờ điều khiển khi gặp xung đột: `--abort` hủy bỏ quay về đầu, `--continue` tiếp tục sau khi sửa xong conflict.
+- **Ví dụ**: Sửa xung đột xong, gõ `git add .` rồi chạy `git cherry-pick --continue`.
+- **Đừng nhầm**: Không gõ `git commit` thủ công sau khi sửa conflict; phải dùng `--continue` để Git hoàn tất quy trình.
+
+---
+
 ## 📖 Định nghĩa
-> `git cherry-pick <commit-hash>` là câu lệnh trích xuất và sao chép chọn lọc vô cùng linh hoạt trong Git, cho phép bạn lựa chọn duy nhất một (hoặc một dải) commit cụ thể từ một nhánh bất kỳ trong lịch sử và sao chép chính xác những thay đổi của commit đó để áp dụng thành một commit mới trên đỉnh của nhánh hiện tại bạn đang đứng. Đây là phương thức phẫu thuật mã nguồn tinh vi mà không cần phải gộp (merge) toàn bộ cả nhánh dở dang.
+`git cherry-pick <commit-hash>` là câu lệnh trích xuất và sao chép chọn lọc trong Git, cho phép bạn chọn duy nhất một commit cụ thể từ nhánh bất kỳ trong lịch sử và sao chép những thay đổi của commit đó thành một commit mới trên đỉnh nhánh hiện tại mà không cần merge toàn bộ nhánh dở dang.
 
 ---
 
-## 🤔 Tại sao cần?
-Hãy tưởng tượng bạn đang phát triển một nhánh tính năng lớn gồm 20 commit dở dang và chưa sẵn sàng phát hành. Đột nhiên bạn phát hiện ra trong 20 commit đó có commit số 5 chứa một bản sửa lỗi bảo mật cực kỳ xuất sắc mà môi trường production đang rất cần ngay lập tức. Bạn không thể merge cả nhánh vì sẽ kéo theo 19 commit lỗi chưa hoàn thiện. `git cherry-pick` chính là chiếc gắp y tế: bạn chỉ việc gắp đúng commit số 5 đó đưa sang nhánh main để phát hành ngay.
+## 💡 Tại sao cần
+Khi đang phát triển nhánh tính năng lớn gồm nhiều commit chưa hoàn thiện, bạn bất ngờ phát hiện một commit trong đó chứa bản sửa lỗi bảo mật cực kỳ cấp bách cần đưa lên production ngay. Bạn không thể merge cả nhánh vì sẽ mang theo code lỗi dở dang. `git cherry-pick` giúp bạn gắp đúng bản vá đó sang main để phát hành tức thì.
 
 ---
 
-## 🧠 Mental Model (Mô hình tư duy)
-Hãy hình dung một chiếc bánh gato lớn phủ đầy những quả cherry ngọt ngào và các lớp kem đang làm dở. Bạn không muốn ăn cả chiếc bánh chưa nướng chín. Bạn chỉ dùng chiếc nĩa cẩn thận gắp đúng một quả cherry ngon lành nhất trên mặt bánh đưa sang chiếc đĩa ăn tráng miệng của bạn (`git cherry-pick`). Chiếc đĩa của bạn có thêm một quả cherry tuyệt ngon, trong khi chiếc bánh lớn vẫn ở nguyên vị trí của nó.
+## 🧠 Mental Model
+Hãy hình dung một chiếc bánh ngọt lớn trang trí nhiều quả cherry và các lớp kem đang làm dở. Bạn không muốn ăn cả chiếc bánh chưa nướng chín. Bạn chỉ dùng chiếc nĩa cẩn thận gắp đúng một quả cherry chín mọng trên mặt bánh đặt sang đĩa ăn tráng miệng của mình (`cherry-pick`). Đĩa của bạn có món ngon, còn chiếc bánh lớn vẫn ở nguyên chỗ cũ.
 
 ---
 
-## 🖼 Sơ đồ
+## 📊 Sơ đồ minh họa
 ```text
 Cơ chế gắp commit của git cherry-pick:
 Nhánh feature:   C1 ──► C2 ──► C3 (Bản vá quan trọng!) ──► C4
@@ -37,12 +56,12 @@ Nhánh main:      M1 ──► M2 ──► C3' (Commit mới chứa nội dung 
 
 ---
 
-## 🌎 Ví dụ thực tế
-Kỹ sư Long đang làm việc trên nhánh `experimental-auth` và tạo commit `b4c5d6e` sửa lỗi rò rỉ bộ nhớ nghiêm trọng của máy chủ. Trong khi đó, nhánh chính `main` đang chuẩn bị đóng gói phát hành phiên bản mới cho khách hàng. Long chuyển sang nhánh main bằng câu lệnh `git switch main`, sau đó thực thi lệnh: `git cherry-pick b4c5d6e`. Git lập tức đọc diff của commit đó, áp dụng vào mã nguồn của nhánh main và tự động tạo commit mới mang cùng thông điệp. Đội ngũ kiểm thử xác nhận lỗi bộ nhớ được khắc phục hoàn toàn trên main mà không hề bị kéo theo bất kỳ đoạn mã thử nghiệm chưa hoàn thiện nào.
+## 🏢 Ví dụ thực tế
+Kỹ sư Long đang làm nhánh `experimental-auth` và tạo commit `b4c5d6e` sửa lỗi rò rỉ bộ nhớ nghiêm trọng. Nhánh chính `main` đang cần đóng gói phát hành gấp. Long chuyển về main bằng `git switch main` rồi chạy `git cherry-pick b4c5d6e`. Git tự động áp dụng diff vào main và tạo commit mới, giải quyết triệt để lỗi mà không kéo theo code thử nghiệm dở dang.
 
 ---
 
-## 💻 Command
+## 💻 Command & Cú pháp
 ```bash
 git cherry-pick <commit-hash>
 git cherry-pick <hash-1> <hash-2>
@@ -64,13 +83,14 @@ git cherry-pick --abort
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Cherry-pick bừa bãi quá nhiều commit**:  Dẫn đến tình trạng trùng lặp commit (duplicate commits) gây rắc rối khi merge nhánh sau này.
-2. **Quên rằng cherry-pick tạo ra mã SHA-1 mới**:  Dù nội dung giống nhau nhưng commit mới trên nhánh hiện tại có mã hash khác với commit gốc.
-3. **Bối rối khi gặp conflict**:  Tương tự như merge, cần mở file giải quyết xung đột, `git add` và gõ `git cherry-pick --continue`.
+1. **Lạm dụng cherry-pick thay cho merge**: Tạo ra nhiều commit trùng lặp nội dung với mã hash khác nhau gây rắc rối khi gộp nhánh sau này.
+2. **Quên rằng cherry-pick tạo ra mã hash mới**: Dù nội dung tương tự nhưng commit mới trên nhánh đích có mã SHA khác với commit gốc.
+3. **Tự ý gõ git commit khi sửa xong xung đột**: Phải dùng `git add` rồi gõ `git cherry-pick --continue` để hoàn tất quy trình chuẩn.
 
 ---
 
-## 🧪 Lab
+## 🧪 Lab thực hành
+Bài học này là bài tự kiểm tra: bạn thao tác cherry-pick commit qua nhánh khác trên terminal.
 1. Tạo nhánh `feature-patch` và commit một bản sửa lỗi nhỏ.
 2. Chuyển về nhánh `main` và lấy mã hash của commit vừa tạo.
 3. Thực hiện `git cherry-pick <commit-hash>` trên nhánh `main`.
@@ -83,22 +103,23 @@ git cherry-pick --abort
 
 ---
 
-## ✅ Validation
-- Sao chép thành công một commit chỉ định sang nhánh khác bằng câu lệnh git cherry-pick.
+## ✅ Validation & Kết quả mong đợi
+- Commit mới xuất hiện trên nhánh hiện tại với nội dung thay đổi tương đương commit gốc.
+- Lệnh `git status` báo trạng thái sạch sẽ sau khi hoàn tất.
 
 ---
 
-## ❓ Quiz
+## ❓ Quiz nhanh
 Hãy làm bài kiểm tra trắc nghiệm dưới đây về câu lệnh chọn lọc git cherry-pick.
 
 ---
 
-## 🔥 Challenge
-Nêu những hệ quả tiêu cực tiềm ẩn đối với lịch sử Git nếu một nhóm lập trình viên lạm dụng cherry-pick thay vì merge.
+## 🚀 Thử thách nâng cao
+Sử dụng cú pháp dải commit `git cherry-pick A..B` để gắp một chuỗi 3 commit liên tiếp từ nhánh tính năng sang nhánh release.
 
 ---
 
-## 📚 Tổng kết
+## 📝 Tổng kết
 - `git cherry-pick` sao chép một commit cụ thể từ nhánh khác và áp dụng lên nhánh hiện tại.
 - Tạo ra commit mới có nội dung tương tự nhưng mã băm SHA-1 khác biệt.
 - Cực kỳ hữu ích để đưa các bản vá khẩn cấp (hotfix) sang nhánh release hoặc main.

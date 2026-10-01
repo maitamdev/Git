@@ -1,106 +1,105 @@
 # Team Conflict Scenario
 
----
-
 ## 🎯 Mục tiêu
 - Phân tích nguyên nhân gốc rễ gây ra xung đột hợp nhất (Merge Conflict) trong môi trường làm việc nhóm thực tế.
 - Làm chủ quy trình xử lý xung đột an toàn tại máy cục bộ (Local Resolution) trước khi cập nhật lại Pull Request.
 - Sử dụng kỹ thuật `git fetch` và `git rebase origin/main` để đưa nhánh tính năng lên đầu lịch sử mới nhất.
 - Giao tiếp hiệu quả và phối hợp nhịp nhàng với đồng nghiệp khi gặp xung đột logic kinh doanh phức tạp.
 
----
+## 🧩 Từ khóa hôm nay
+### Merge Conflict
+- **Nói dễ hiểu**: Tình huống Git dừng lại vì hai người cùng sửa đổi một vùng mã nguồn và không biết nên giữ đoạn nào.
+- **Ví dụ**: Đồng nghiệp vừa merge nhánh đổi màu nút sang xanh, còn bạn gửi PR đổi màu nút sang đỏ trên cùng một dòng CSS.
+- **Đừng nhầm**: Không phải lỗi hệ thống bị hỏng, mà là cơ chế bảo vệ an toàn để lập trình viên tự quyết định logic đúng.
+
+### Local Resolution
+- **Nói dễ hiểu**: Quy trình kéo code mới về máy tính cá nhân để chạy thử, giải quyết xung đột và kiểm thử kỹ càng trước khi đẩy lên.
+- **Ví dụ**: Dùng VS Code trên máy để chọn Accept Incoming Change, chạy test xong mới push lên GitHub.
+- **Đừng nhầm**: Tránh sửa conflict trực tiếp trên web GitHub với các file phức tạp vì không thể biên dịch hay chạy test.
+
+### Force With Lease
+- **Nói dễ hiểu**: Cờ đẩy code có kiểm tra an toàn, chỉ cho phép ghi đè lịch sử nếu chưa có ai khác đẩy thêm commit mới lên nhánh.
+- **Ví dụ**: Chạy `git push --force-with-lease` sau khi rebase xong để cập nhật lại Pull Request của chính mình.
+- **Đừng nhầm**: Khác với `git push --force` mù quáng sẽ ghi đè bất chấp mọi công sức của đồng nghiệp làm chung nhánh.
 
 ## 📖 Định nghĩa
-> Team Conflict Scenario (Kịch bản giải quyết xung đột nhóm) là tình huống thực chiến kinh điển xảy ra khi hai hoặc nhiều lập trình viên cùng chỉnh sửa trên các vùng mã nguồn trùng lặp hoặc phụ thuộc lẫn nhau trên các nhánh riêng biệt, và một người đã hợp nhất thành công vào nhánh chính trước. Khi người thứ hai cố gắng mở hoặc hợp nhất Pull Request, hệ thống Git sẽ từ chối tự động gộp và thông báo xung đột, đòi hỏi người lập trình viên phải chủ động kéo mã nguồn mới nhất về máy cá nhân để đối soát và giải quyết mâu thuẫn.
+Team Conflict Scenario là tình huống thực chiến xảy ra khi nhiều lập trình viên cùng thay đổi các phần mã nguồn liên quan trên các nhánh độc lập, và một nhánh đã được hợp nhất vào nhánh chính trước. Khi nhánh còn lại được merge, Git sẽ thông báo xung đột, đòi hỏi lập trình viên phải tải mã mới về máy cục bộ để đối soát và xử lý an toàn.
 
----
+## 💡 Tại sao cần
+Xung đột mã nguồn là hiện tượng bình thường trong quá trình cộng tác phần mềm. Một kỹ sư chuyên nghiệp không bao giờ hoảng sợ hay đổ lỗi cho đồng nghiệp khi gặp conflict. Thay vào đó, họ bình tĩnh áp dụng quy trình xử lý bài bản: trao đổi trực tiếp với người viết đoạn code liên quan, làm rõ ngữ cảnh và giải quyết dứt điểm trên môi trường máy cá nhân.
 
-## 🤔 Tại sao cần?
-Xung đột mã nguồn không phải là lỗi của hệ thống, mà là hệ quả tất yếu và hoàn toàn bình thường trong quá trình cộng tác phát triển phần mềm hiện đại. Một kỹ sư chuyên nghiệp không bao giờ hoảng sợ hay đổ lỗi cho đồng nghiệp khi gặp conflict; thay vào đó, họ nắm vững quy trình xử lý xung đột bài bản: giữ bình tĩnh, trao đổi trực tiếp với tác giả đoạn code liên quan để hiểu rõ ngữ cảnh, và giải quyết xung đột một cách minh bạch, an toàn trên máy cục bộ.
+## 🧠 Mental Model
+Hãy hình dung hai kiến trúc sư cùng thiết kế một phòng khách. Người A đề xuất đặt đàn piano ở góc phòng và đã được duyệt bản vẽ trước (`merged into main`). Người B vừa nộp bản vẽ đặt giá sách lớn đúng vào góc đó (`PR conflict`). Người B không thể tự ý ném cây đàn đi, mà phải mang bản vẽ mới về bàn, trao đổi với người A để thống nhất dời giá sách hoặc kết hợp cả hai.
 
----
-
-## 🧠 Mental Model (Mô hình tư duy)
-Hãy hình dung hai kiến trúc sư cùng thiết kế nội thất cho một căn phòng khách. Kiến trúc sư A muốn đặt một chiếc đàn piano ở góc phòng và bản thiết kế của anh ta đã được chủ nhà duyệt trước (`merged into main`). Kiến trúc sư B không biết điều đó và vừa gửi bản vẽ đề xuất đặt một giá sách lớn đúng vào góc phòng đó (`Pull Request conflict`). Kiến trúc sư B không thể tự ý ném chiếc đàn piano đi. Anh ta phải mang bản vẽ mới nhất về bàn làm việc, gọi điện trao đổi với kiến trúc sư A để thống nhất dời giá sách sang góc khác hoặc kết hợp hài hòa cả hai món đồ.
-
----
-
-## 🖼 Sơ đồ
-```text
-Kịch bản xung đột nhóm và cách giải quyết cục bộ:
-main:      C1 ──────── C2 (Tính năng của Dev A được merge trước!)
-            │           ▲
-            │           │ (Git từ chối merge do xung đột!)
-feat/devB:  └── C3 ─────┘
-
-Các bước giải cứu chuẩn mực của Dev B:
-1. git fetch origin
-2. git rebase origin/main (hoặc git merge origin/main)
-3. Mở VS Code giải quyết Conflict ──► git add <files>
-4. git rebase --continue
-5. git push --force-with-lease origin feat/devB ──► PR hết xung đột!
+## 📊 Sơ đồ minh họa
+```mermaid
+flowchart TD
+    PR[Pull Request bị Conflict trên GitHub] --> Fetch[Chạy git fetch origin trên máy]
+    Fetch --> Rebase[Chạy git rebase origin/main]
+    Rebase --> Stop[Git tạm dừng tại commit có xung đột]
+    Stop --> Discuss[Trao đổi với đồng nghiệp & sửa file]
+    Discuss --> Add[git add cac-file-da-sua]
+    Add --> Cont[git rebase --continue]
+    Cont --> Push[git push --force-with-lease origin branch]
+    Push --> Green[Pull Request xanh lại và sẵn sàng merge]
 ```
 
----
+## 🏢 Ví dụ thực tế
+Kỹ sư Tuấn đang làm nhánh `feat/cart-discount` thì thấy Pull Request báo xung đột. Tuấn kiểm tra thấy đồng nghiệp vừa merge nhánh sửa đổi cách tính thuế trong tệp `pricing.ts`. Thay vì sửa vội trên web GitHub, Tuấn chạy `git fetch origin` và `git rebase origin/main` trên máy. Terminal dừng lại ở hàm tính tiền. Tuấn trao đổi nhanh 2 phút với đồng nghiệp để thống nhất thứ tự trừ giảm giá trước hay tính thuế trước. Sau đó Tuấn lưu code, chạy test thành công và push lên an toàn.
 
-## 🌎 Ví dụ thực tế
-Kỹ sư Tuấn đang làm nhánh `feat/cart-discount` thì nhận thấy nút Merge trên Pull Request của mình bị chuyển sang màu xám với dòng chữ "This branch has conflicts that must be resolved". Tuấn kiểm tra lịch sử và thấy kỹ sư Lan vừa merge một nhánh sửa đổi cách tính thuế trong tệp `pricing.ts`. Tuấn không bấm sửa trực tiếp trên giao diện web GitHub vì rất dễ sót lỗi. Thay vào đó, trên terminal máy mình, Tuấn chạy `git fetch origin` rồi `git rebase origin/main`. Terminal tạm dừng và báo conflict tại hàm `calculateTotal`. Tuấn mở VS Code, sang bàn làm việc của Lan để trao đổi nhanh trong 2 phút về thứ tự áp dụng giảm giá trước hay tính thuế trước. Sau khi thống nhất logic, Tuấn lưu code, chạy `git add pricing.ts` và `git rebase --continue`. Cuối cùng Tuấn gõ `git push --force-with-lease` và Pull Request của Tuấn xanh trở lại.
-
----
-
-## 💻 Command
+## 💻 Command & Cú pháp
 ```bash
+# Tải các commit mới nhất từ máy chủ về máy
 git fetch origin
-git rebase origin/main
-git status
-git add <tệp-đã-sửa>
-git rebase --continue
-git push --force-with-lease origin <tên-nhánh>
-```
 
----
+# Đưa các commit của nhánh hiện tại lên trên đầu nhánh chính mới nhất
+git rebase origin/main
+
+# Đánh dấu các tệp tin đã được giải quyết xung đột xong
+git add src/pricing.ts
+
+# Tiếp tục hành trình rebase sau khi giải quyết xong xung đột
+git rebase --continue
+
+# Đẩy lịch sử đã được rebase lên nhánh từ xa một cách an toàn
+git push --force-with-lease origin feat/cart-discount
+```
 
 ## 🔍 Giải thích command
-- `git fetch origin`: Tải toàn bộ các commit mới nhất từ máy chủ về máy mà không làm xáo trộn working tree.
-- `git rebase origin/main`: Đặt lại nền tảng nhánh của bạn lên trên commit mới nhất của nhánh chính.
-- `git push --force-with-lease`: Cập nhật nhánh remote an toàn tuyệt đối, chỉ cho phép force push nếu không có ai khác đẩy code mới lên nhánh đó.
-
----
+- `git fetch origin`: Cập nhật dữ liệu từ xa mà không làm thay đổi thư mục làm việc hiện tại của bạn.
+- `git rebase origin/main`: Đặt lại gốc nhánh của bạn lên commit mới nhất của `main`, tái hiện các commit trên nền mới.
+- `git add <tệp>`: Báo cho Git biết bạn đã hoàn tất việc chỉnh sửa thủ công các đoạn mâu thuẫn trong tệp.
+- `git push --force-with-lease`: Cập nhật nhánh remote có kiểm tra điều kiện an toàn, chống ghi đè công sức của người khác.
 
 ## ⚠️ Sai lầm phổ biến
-1. **Tự ý xóa code của đồng nghiệp khi giải quyết xung đột mà không hề trao đổi hay hiểu rõ mục đích của đoạn code đó.**: Tự ý xóa code của đồng nghiệp khi giải quyết xung đột mà không hề trao đổi hay hiểu rõ mục đích của đoạn code đó.
-2. **Giải quyết các xung đột lớn phức tạp trực tiếp trên trình soạn thảo web của GitHub**:  Dễ gây lỗi cú pháp và không thể chạy kiểm thử.
-3. **Sử dụng `git push --force` thông thường thay vì `--force-with-lease`**:  Tiềm ẩn nguy cơ vô tình ghi đè commit của đồng nghiệp cùng làm chung nhánh.
+- Tự ý xóa code của đồng nghiệp khi giải quyết xung đột mà không trao đổi để hiểu rõ mục đích của đoạn code đó.
+- Sửa các xung đột logic nghiệp vụ phức tạp trực tiếp trên trình soạn thảo web của GitHub mà không chạy test.
+- Sử dụng `git push --force` mù quáng thay vì dùng `--force-with-lease`, có nguy cơ làm mất code của đồng nghiệp.
 
----
+## 🧪 Lab thực hành
+Bài học này là bài tự kiểm tra: bạn thao tác mô phỏng kịch bản xung đột trên máy và đối chiếu theo hướng dẫn bên dưới.
 
-## 🧪 Lab
-1. Tạo kịch bản xung đột giữa hai nhánh cùng sửa một dòng trong tệp `index.html`.
-2. Thực hiện lệnh `git fetch` và `git rebase origin/main` để giải quyết mâu thuẫn trên VS Code.
+1. Tạo hai nhánh cùng sửa một dòng trong tệp `calculator.ts`.
+2. Hợp nhất nhánh thứ nhất vào `main`.
+3. Chuyển sang nhánh thứ hai, chạy `git rebase main` và quan sát các dấu mốc conflict `<<<<<<<` và `>>>>>>>`.
+4. Mở trình soạn thảo, chọn giữ lại logic phù hợp và xóa bỏ các ký hiệu đánh dấu.
+5. Chạy `git add calculator.ts`, sau đó gõ `git rebase --continue` để hoàn tất quy trình xử lý.
 
----
+## 💡 Hint & mẹo
+- Trao đổi trực tiếp giữa người với người luôn là phương pháp giải quyết xung đột nhanh và chính xác nhất.
+- Bạn có thể gõ `git rebase --abort` bất cứ lúc nào nếu muốn dừng lại và quay về trạng thái ban đầu an toàn.
 
-## 💡 Hint
-> Giao tiếp giữa con người với con người luôn là công cụ giải quyết xung đột mã nguồn hiệu quả nhất.
+## ✅ Validation & Kết quả mong đợi
+- Lệnh `git status` báo `nothing to commit, working tree clean`.
+- Nhánh của bạn sở hữu lịch sử commit thẳng thớm và Pull Request trên GitHub chuyển sang trạng thái sẵn sàng hợp nhất.
 
----
+## ❓ Quiz nhanh
+Hãy hoàn thành bài trắc nghiệm bên dưới để kiểm tra kỹ năng phân tích và xử lý xung đột nhóm trong Git.
 
-## ✅ Validation
-- Pull Request trên GitHub tự động chuyển sang trạng thái sẵn sàng hợp nhất mà không còn bất kỳ xung đột nào.
+## 🚀 Thử thách nâng cao
+So sánh sự khác biệt về lịch sử commit giữa việc giải quyết xung đột bằng `git merge main` so với `git rebase origin/main` trong môi trường nhóm đông thành viên.
 
----
-
-## ❓ Quiz
-Hãy làm bài trắc nghiệm dưới đây về kỹ năng giải quyết xung đột nhóm trong Git.
-
----
-
-## 🔥 Challenge
-So sánh ưu nhược điểm giữa việc dùng `git merge main` và `git rebase origin/main` khi giải quyết xung đột cho một nhánh tính năng.
-
----
-
-## 📚 Tổng kết
-- Xung đột mã nguồn trong làm việc nhóm là điều hoàn toàn tự nhiên và bình thường.
-- Luôn ưu tiên kéo mã nguồn mới về máy cá nhân và giải quyết xung đột cục bộ kèm chạy kiểm thử.
-- Sử dụng `git push --force-with-lease` để cập nhật lại nhánh tính năng sau khi rebase giải quyết xung đột an toàn.
+## 📝 Tổng kết
+- Xung đột là một phần tất yếu của quá trình cộng tác nhóm trong mọi dự án phần mềm.
+- Luôn giải quyết xung đột tại máy cá nhân để bảo đảm kiểm thử và biên dịch thành công trước khi đẩy lên.
+- Phối hợp và giao tiếp cởi mở với đồng nghiệp là chìa khóa để xử lý mọi xung đột logic an toàn.

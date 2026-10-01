@@ -6,7 +6,7 @@
 export const API_BASE_URL: string =
   typeof import.meta !== 'undefined' && (import.meta as any).env?.VITE_API_URL
     ? (import.meta as any).env.VITE_API_URL.replace(/\/+$/, '')
-    : '';
+    : (typeof import.meta !== 'undefined' && (import.meta as any).env?.DEV ? 'http://127.0.0.1:3001' : '');
 
 export async function apiFetch<T = any>(
   path: string,

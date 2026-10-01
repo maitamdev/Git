@@ -3,24 +3,43 @@
 ---
 
 ## 🎯 Mục tiêu
-- Nắm vững bản chất kỹ thuật của Staging Area (Index) như một vùng đệm chọn lọc commit.
-- Hiểu vì sao Git thiết kế Staging Area thay vì commit trực tiếp từ Working Directory như SVN.
-- Sử dụng git add để đưa các thay đổi mong muốn vào vùng chuẩn bị.
+- Giải thích Staging Area là nơi chọn thay đổi cho commit kế tiếp.
+- Dùng `git add` để chọn một tệp.
+- Dùng `git status` để xác nhận lựa chọn.
+
+---
+
+## 🧩 Từ khóa hôm nay
+
+### Staging Area — vùng chuẩn bị
+- **Nói dễ hiểu:** Chỗ bạn chọn phiên bản thay đổi sẽ đi vào commit kế tiếp.
+- **Ví dụ:** Thêm `README.md` vào vùng này trước khi lưu mốc.
+- **Đừng nhầm:** Thay đổi đang ở đây chưa phải commit.
+
+### Index — tên Git dùng cho vùng chuẩn bị
+- **Nói dễ hiểu:** Git gọi dữ liệu chuẩn bị cho commit là index.
+- **Ví dụ:** `git status` liệt kê tệp ở “Changes to be committed”.
+- **Đừng nhầm:** Trong bài cơ bản, index và Staging Area chỉ cùng một khái niệm.
+
+### Staged — đã được chọn cho commit
+- **Nói dễ hiểu:** Phiên bản hiện tại của tệp đã được đưa vào vùng chuẩn bị.
+- **Ví dụ:** Chạy `git add README.md`, rồi xem lại bằng `git status`.
+- **Đừng nhầm:** Nếu sửa tệp lần nữa, sửa đổi mới chưa tự được staged.
 
 ---
 
 ## 📖 Định nghĩa
-> Staging Area (hay còn được gọi trong nội bộ mã nguồn Git là Index hoặc Cache) là một vùng trung gian lưu trữ siêu dữ liệu và ảnh chụp chuẩn bị trước cho lần commit kế tiếp. Về mặt kỹ thuật, Staging Area là một tệp nhị phân đơn lẻ mang tên `.git/index` chứa danh sách các tệp tin kèm mã băm SHA tương ứng đại diện chính xác cho trạng thái mà bạn mong muốn đóng gói vào snapshot lịch sử. Staging Area mang lại cho lập trình viên toàn quyền kiểm soát những gì sẽ được ghi nhận vào lịch sử.
+Staging Area là vùng bạn chọn các thay đổi sẽ đi vào commit kế tiếp. Git lưu thông tin vùng này trong tệp nội bộ `.git/index`, vì vậy tài liệu kỹ thuật cũng gọi nó là index. Dùng `git status` để xem thay đổi nào đã được chọn.
 
 ---
 
 ## 🤔 Tại sao cần?
-Sự tồn tại của Staging Area chính là một trong những ưu thế kiến trúc đột phá nhất của Git so với các hệ thống quản lý phiên bản cổ điển. Trong các hệ thống cũ, mọi sửa đổi trong thư mục làm việc đều bị ép buộc phải commit cùng một lúc. Với Staging Area, bạn có thể chỉnh sửa 10 tệp tin khác nhau nhưng chỉ chọn lọc 2 tệp liên quan đến tính năng đăng nhập để đưa vào Staging Area và tạo một commit gọn gàng, trong khi 8 tệp còn lại vẫn giữ nguyên để tiếp tục hoàn thiện sau.
+Nếu sửa nhiều tệp, Staging Area cho phép chọn tệp đã sẵn sàng và để phần việc còn dở cho lần sau.
 
 ---
 
 ## 🧠 Mental Model (Mô hình tư duy)
-Hãy hình dung Staging Area giống như chiếc bàn đóng gói kiện hàng trước khi gửi bưu điện. Trong kho hàng của bạn (Working Directory) có hàng trăm món đồ khác nhau. Bạn không ném bừa tất cả vào một chiếc thùng lớn. Thay vào đó, bạn lấy ra một chiếc hộp các-tông (Staging Area), cẩn thận chọn ra đúng chiếc áo và chiếc quần mà khách hàng đặt mua, xếp ngay ngắn vào hộp rồi dán băng dính niêm phong lại trước khi đóng dấu giao hàng (commit).
+Hãy nghĩ Staging Area như danh sách thay đổi bạn đã chọn cho commit tiếp theo.
 
 ---
 
@@ -36,7 +55,7 @@ Quy trình đóng gói có chọn lọc:
 ---
 
 ## 🌎 Ví dụ thực tế
-Một lập trình viên đang tiến hành sửa lỗi bảo mật khẩn cấp tại tệp user-controller.js. Trong lúc đọc code, lập trình viên thấy một đoạn code khác bị sai định dạng thụt đầu dòng nên tiện tay format lại tệp style.css và tệp helper.js. Khi chuẩn bị commit, nhờ có Staging Area, lập trình viên chỉ gõ lệnh git add user-controller.js để commit riêng một bản vá lỗi bảo mật sạch sẽ gửi lên cho trưởng nhóm duyệt, tránh làm loãng lịch sử bởi những thay đổi định dạng không liên quan. Điều này giúp đồng nghiệp khi thực hiện code review có thể tập trung 100% vào logic bảo mật mà không bị phân tâm bởi hàng chục dòng thay đổi khoảng trắng vô nghĩa.
+Bạn sửa `auth.js` và `style.css`, nhưng chỉ hoàn tất `auth.js`. Chạy `git add auth.js`; tệp kia chưa được chọn cho commit.
 
 ---
 
@@ -50,23 +69,23 @@ git restore --staged <file>
 ---
 
 ## 🔍 Giải thích command
-- `git status`: Kiểm tra danh sách các tệp đã nằm trong Staging Area (màu xanh) và tệp chưa được staged (màu đỏ).
+- `git status`: Kiểm tra tệp đã staged và thay đổi chưa staged.
 - `git add <file>`: Đưa nội dung hiện tại của tệp tin từ Working Directory vào Staging Area.
 - `git restore --staged <file>`: Rút tệp tin ra khỏi Staging Area trở lại Working Directory mà không làm mất nội dung code.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Nghĩ Staging Area lưu một bản copy vật lý đầy đủ**:  Git Index chỉ lưu siêu dữ liệu và trỏ tới các blob đối tượng trong cơ sở dữ liệu Git.
-2. **Sửa tiếp file sau khi đã git add rồi vội vã commit**:  Git chỉ commit phiên bản của tệp tại thời điểm bạn chạy lệnh git add, phần sửa sau đó sẽ bị bỏ lại.
-3. **Commit một đống thay đổi hỗn độn**:  Bỏ qua lợi ích chọn lọc của Staging Area và luôn commit toàn bộ mọi thứ bừa bãi.
+1. **Nghĩ `git add` đã tạo commit**:  Lệnh này chỉ chọn thay đổi; cần `git commit` để lưu mốc.
+2. **Sửa tệp sau khi đã add mà không kiểm tra lại**:  Phần sửa mới chưa được staged cho tới khi bạn add lại.
+3. **Không xem lại những gì đã chọn**:  Chạy `git status` trước khi commit.
 
 ---
 
 ## 🧪 Lab
 1. Tạo tệp `app.js` và thêm vào nội dung `console.log("Staging lab");`.
 2. Chạy lệnh `git add app.js` để đưa tệp vào Staging Area.
-3. Chạy `git status` và quan sát tệp `app.js` nằm dưới tiêu đề Changes to be committed màu xanh lá.
+3. Chạy `git status` và quan sát tệp `app.js` nằm dưới tiêu đề Changes to be committed.
 
 ---
 
@@ -91,6 +110,6 @@ Giải thích điều gì xảy ra nếu bạn sửa tiếp tệp app.js sau khi
 ---
 
 ## 📚 Tổng kết
-- Staging Area (Index) là vùng đệm lưu trữ ảnh chụp chuẩn bị cho commit kế tiếp.
-- Cho phép chọn lọc chính xác từng tệp tin cần ghi nhận vào lịch sử phiên bản.
-- Tệp tin trong Staging Area được hiển thị trong mục Changes to be committed khi gõ git status.
+- Staging Area là nơi chọn thay đổi cho commit kế tiếp.
+- `git add <file>` chọn tệp; sửa tiếp thì cần add lại.
+- `git status` cho biết những gì đang chờ commit.

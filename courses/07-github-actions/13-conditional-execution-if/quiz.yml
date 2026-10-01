@@ -2,8 +2,7 @@ id: quiz-07-github-actions-13-conditional-execution-if
 title: "Trắc nghiệm: Thực thi có điều kiện với if: always(), success(), failure()"
 questions:
   - id: q1
-    question: Hàm trạng thái nào giúp một Step chỉ chạy khi có ít nhất một bước
-      trước đó trong Job bị thất bại?
+    question: Hàm trạng thái nào giúp một Step chỉ chạy khi có ít nhất một bước trước đó trong Job bị thất bại?
     type: single
     options:
       - text: failure()
@@ -14,11 +13,9 @@ questions:
         correct: false
       - text: on_error()
         correct: false
-    explanation: Hàm `failure()` trả về giá trị `true` khi bất kỳ bước tiên quyết
-      nào trong Job trước đó gặp sự cố thất bại.
+    explanation: Hàm `failure()` trả về giá trị `true` khi bất kỳ bước tiên quyết nào trong Job trước đó gặp sự cố thất bại.
   - id: q2
-    question: Điều kiện mặc định cho một Step nếu bạn không khai báo thuộc tính
-      `if:` là gì?
+    question: "Điều kiện mặc định cho một Step nếu bạn không khai báo thuộc tính `if:` là gì?"
     type: single
     options:
       - text: success()
@@ -29,11 +26,9 @@ questions:
         correct: false
       - text: cancelled()
         correct: false
-    explanation: Mặc định, GitHub Actions luôn tự động áp dụng `success()`, nghĩa là
-      chỉ chạy khi tất cả các bước trước đó đều thành công.
+    explanation: Mặc định, GitHub Actions luôn tự động áp dụng `success()`, nghĩa là chỉ chạy khi tất cả các bước trước đó đều thành công.
   - id: q3
-    question: Để một bước dọn dẹp luôn luôn được chạy dù các bước trước thành công,
-      thất bại hay bị hủy, ta dùng hàm nào?
+    question: Để một bước dọn dẹp luôn luôn được chạy dù các bước trước thành công, thất bại hay bị hủy, ta dùng hàm nào?
     type: single
     options:
       - text: always()
@@ -44,8 +39,7 @@ questions:
         correct: false
       - text: run_anyway()
         correct: false
-    explanation: Hàm `always()` ép buộc bước thực thi trong mọi tình huống, rất lý
-      tưởng cho các tác vụ giải phóng tài nguyên và dọn dẹp.
+    explanation: Hàm `always()` ép buộc bước thực thi trong mọi tình huống, rất lý tưởng cho các tác vụ giải phóng tài nguyên và dọn dẹp.
   - id: q4
     question: "Biểu thức `if: github.event_name == 'push' && success()` có ý nghĩa gì?"
     type: single
@@ -58,5 +52,17 @@ questions:
         correct: false
       - text: Từ chối mọi sự kiện push
         correct: false
-    explanation: Biểu thức kết hợp điều kiện loại sự kiện (`push`) và trạng thái
-      thành công của các bước đi trước bằng toán tử logic `&&`.
+    explanation: Biểu thức kết hợp điều kiện loại sự kiện (`push`) và trạng thái thành công của các bước đi trước bằng toán tử logic `&&`.
+  - id: q5
+    question: "Hàm trạng thái `cancelled()` trong mệnh đề `if:` trả về true trong trường hợp nào?"
+    type: single
+    options:
+      - text: Khi tiến trình workflow bị người dùng chủ động bấm hủy hoặc bị ngắt do vượt quá thời gian timeout
+        correct: true
+      - text: Khi có lỗi cú pháp thụt lề YAML trong tệp kịch bản
+        correct: false
+      - text: Khi tất cả các bài kiểm thử hoàn thành xuất sắc mà không có lỗi
+        correct: false
+      - text: Khi người lập trình viên tắt màn hình máy tính cá nhân
+        correct: false
+    explanation: Hàm `cancelled()` trả về true khi phiên chạy bị dừng đột ngột, giúp bạn kích hoạt các bước gửi thông báo cứu hộ hoặc hủy các tài nguyên đang cấp phát dở dang.

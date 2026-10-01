@@ -62,3 +62,20 @@ questions:
         correct: false
     explanation: Git chỉ có thể bảo vệ và ghi vết những gì đã từng được đóng dấu
       commit; tệp chưa commit không nằm trong cơ sở dữ liệu Git.
+  - id: q5
+    question: Theo cấu hình mặc định của Git, các bản ghi nhật ký trong `git reflog`
+      được lưu trữ trong khoảng thời gian bao lâu trước khi bị dọn dẹp?
+    type: single
+    options:
+      - text: Từ 30 đến 90 ngày (90 ngày cho commit có thể chạm tới và 30 ngày cho commit
+          mồ côi)
+        correct: true
+      - text: Chỉ duy nhất 24 giờ sau khi thực hiện thao tác
+        correct: false
+      - text: Lưu trữ vĩnh viễn suốt đời và không bao giờ bị xóa
+        correct: false
+      - text: Bị xóa sạch sẽ ngay sau khi bạn đóng cửa sổ terminal
+        correct: false
+    explanation: Mặc định Git cấu hình gc.reflogExpire là 90 ngày và gc.reflogExpireUnreachable
+      là 30 ngày, mang lại thời gian cứu nguy rất thoải mái.
+

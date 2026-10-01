@@ -3,24 +3,48 @@
 ---
 
 ## 🎯 Mục tiêu
-- Nắm bắt các phương thức cài đặt Git trên các hệ điều hành phổ biến: Windows, macOS, Linux.
-- Hiểu vai trò của Git Bash trên môi trường Windows.
-- Làm quen với các tùy chọn cấu hình dòng kết thúc tệp tin (crlf vs lf) khi cài đặt.
+- Biết cần cài Git một lần trước khi dùng lệnh Git trên máy.
+- Mở được terminal và kiểm tra Git bằng `git --version`.
+- Biết Git Bash là một lựa chọn trên Windows, không phải GitHub.
+
+---
+
+## 🧩 Từ khóa hôm nay
+
+### Terminal — cửa sổ nhập lệnh
+- **Nói dễ hiểu:** Ứng dụng cho phép bạn gõ lệnh để yêu cầu máy tính làm việc.
+- **Ví dụ:** PowerShell trên Windows hoặc Terminal trên macOS.
+- **Đừng nhầm:** Terminal là nơi gõ lệnh; Git là một công cụ có thể chạy bên trong đó.
+
+### Git CLI — bộ lệnh Git
+- **Nói dễ hiểu:** Cách dùng Git bằng cách gõ lệnh thay vì chỉ bấm nút trong giao diện.
+- **Ví dụ:** `git --version` hỏi Git đang cài phiên bản nào.
+- **Đừng nhầm:** CLI là cách điều khiển công cụ; GitHub là dịch vụ trực tuyến riêng.
+
+### Git Bash — terminal đi kèm Git for Windows
+- **Nói dễ hiểu:** Một lựa chọn trên Windows cung cấp terminal và các lệnh Git quen thuộc.
+- **Ví dụ:** Bạn mở Git Bash rồi chạy `git status`.
+- **Đừng nhầm:** Bạn không bắt buộc phải dùng Git Bash; PowerShell cũng có thể chạy Git nếu Git đã cài đúng.
+
+### PATH — danh sách nơi hệ điều hành tìm chương trình
+- **Nói dễ hiểu:** Thiết lập giúp Windows tìm được lệnh `git` khi bạn gõ lệnh.
+- **Ví dụ:** Nếu terminal báo không nhận ra `git`, Git có thể chưa cài xong hoặc chưa được thêm vào PATH.
+- **Đừng nhầm:** PATH không phải thư mục dự án và không chứa lịch sử Git.
 
 ---
 
 ## 📖 Định nghĩa
-> Cài đặt Git là quy trình thiết lập bộ công cụ dòng lệnh Git (Git CLI) lên hệ điều hành máy tính cá nhân. Trên hệ điều hành Windows, gói cài đặt Git for Windows cung cấp công cụ Git Bash - một môi trường giả lập shell Unix cho phép lập trình viên thực thi các lệnh bash quen thuộc. Quá trình cài đặt bao gồm việc thiết lập biến môi trường PATH để câu lệnh `git` có thể được gọi từ bất kỳ cửa sổ dòng lệnh nào trên hệ thống.
+Cài đặt Git là đưa công cụ Git vào máy để terminal có thể chạy lệnh `git`. Trên Windows, Git for Windows thường cung cấp Git Bash; bạn cũng có thể dùng PowerShell nếu lệnh Git đã có trong PATH. Sau khi cài, hãy chạy `git --version` để kiểm tra.
 
 ---
 
 ## 🤔 Tại sao cần?
-Một môi trường Git được cài đặt chuẩn xác là nền móng bảo đảm các công cụ soạn thảo như Visual Studio Code, JetBrains IDE hay terminal có thể nhận diện và thao tác trơn tru với kho lưu trữ. Nếu cài đặt sai tùy chọn kết thúc dòng (Line Ending) giữa Windows (CRLF) và Linux/macOS (LF), dự án của bạn sẽ liên tục gặp cảnh báo giả mạo rằng toàn bộ file bị sửa đổi dù bạn chưa hề gõ một chữ nào.
+Trước khi học lệnh Git, hãy kiểm tra máy đã chạy được Git chưa. Nếu `git --version` báo lỗi, bạn sẽ biết cần cài Git hoặc sửa cách terminal tìm chương trình.
 
 ---
 
 ## 🧠 Mental Model (Mô hình tư duy)
-Hãy hình dung việc cài đặt Git giống như việc lắp đặt một bộ đồ nghề cơ khí đa năng vào cốp xe của bạn. Bộ đồ nghề này bao gồm đủ các loại cờ-lê, mỏ-lết và tuốc-nơ-vít tiêu chuẩn quốc tế. Dù chiếc xe của bạn mang thương hiệu gì (Windows, macOS hay Linux), chỉ cần có bộ đồ nghề này bên mình, bạn đều có thể xử lý và bảo trì chiếc xe theo cùng một tiêu chuẩn kỹ thuật thống nhất.
+Git là một chương trình. Terminal là cửa sổ để bạn gõ lệnh gọi chương trình đó. `git --version` là câu hỏi kiểm tra xem lời gọi có thành công không.
 
 ---
 
@@ -42,45 +66,43 @@ Hệ điều hành:
 ---
 
 ## 🌎 Ví dụ thực tế
-Một lập trình viên sử dụng máy tính Windows tham gia vào dự án phát triển backend chạy trên máy chủ Ubuntu Linux. Khi cài đặt Git, lập trình viên chọn tùy chọn `core.autocrlf = true`. Khi tải code từ Linux về Windows, Git tự động chuyển đổi ký tự xuống dòng sang CRLF để hiển thị đúng trong Notepad, và khi commit đẩy lên server, Git tự động chuyển đổi ngược lại thành LF. Nhờ đó, các kỹ sư dùng máy tính khác nhau không bao giờ bị xung đột định dạng dòng vô cớ, giúp quy trình tích hợp liên tục CI/CD diễn ra hoàn toàn êm đẹp mà không bị gián đoạn kiểm thử.
+Bạn vừa cài Git for Windows. Mở PowerShell và chạy `git --version`. Nếu màn hình in ra số phiên bản, bạn có thể tiếp tục học bằng PowerShell; nếu lệnh không được nhận diện, hãy kiểm tra cài đặt hoặc mở terminal mới.
 
 ---
 
 ## 💻 Command
 ```bash
 git --version
-git config --system --list
 ```
 
 ---
 
 ## 🔍 Giải thích command
-- `git --version`: Xác nhận công cụ Git đã được cài đặt thành công và đường dẫn thực thi đã được tích hợp chuẩn xác vào biến môi trường PATH của hệ điều hành.
-- `git config --system --list`: Hiển thị toàn bộ các thiết lập cấu hình ở cấp độ toàn hệ thống máy tính, áp dụng chung cho mọi tài khoản người dùng đăng nhập.
+- `git --version`: Hiển thị phiên bản để xác nhận terminal chạy được Git.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Không tích hợp Git vào biến môi trường PATH**:  Khiến cho terminal thông báo lỗi `command not found
-2. **Chọn sai cấu hình xuống dòng**:  Dẫn đến việc Git báo toàn bộ dòng code bị thay đổi định dạng ký tự trắng ẩn.
-3. **Sợ hãi giao diện dòng lệnh (CLI)**:  Cố gắng tìm phần mềm đồ họa ngay từ đầu thay vì rèn luyện bản chất câu lệnh.
+1. **Cài Git xong nhưng chưa mở terminal mới**: Mở terminal mới rồi thử lại lệnh.
+2. **Tưởng bắt buộc phải dùng Git Bash**: PowerShell cũng chạy được Git for Windows.
+3. **Nhầm terminal với Git**: Terminal nhận lệnh; Git là chương trình được gọi.
 
 ---
 
 ## 🧪 Lab
-1. Mở terminal và gõ lệnh `git --version` để kiểm tra môi trường.
-2. Xác nhận thông điệp trả về có dạng `git version 2.x.x`.
-3. Thử nghiệm gọi lệnh `git` không có đối số để xem gợi ý sử dụng cơ bản.
+1. Mở PowerShell, Git Bash hoặc Terminal trên máy.
+2. Chạy `git --version`.
+3. Ghi lại kết quả. Nếu có lỗi, chép nguyên dòng lỗi để nhờ giảng viên hỗ trợ.
 
 ---
 
 ## 💡 Hint
-> Giao diện dòng lệnh (CLI) là cách nhanh nhất và chính xác nhất để điều khiển Git.
+> Nếu vừa cài Git mà terminal báo lỗi, hãy mở cửa sổ terminal mới rồi thử lại.
 
 ---
 
 ## ✅ Validation
-- Lệnh `git --version` thực thi thành công trả về mã thoát 0.
+- Terminal hiển thị phiên bản Git mà không báo lỗi.
 
 ---
 
@@ -90,11 +112,11 @@ Hãy làm bài trắc nghiệm dưới đây để kiểm tra hiểu biết về
 ---
 
 ## 🔥 Challenge
-Giải thích sự khác nhau giữa ký tự xuống dòng CRLF trên Windows và LF trên Unix/Linux.
+Mở cả PowerShell và Git Bash rồi kiểm tra Git trong mỗi terminal. Ghi lại kết quả.
 
 ---
 
 ## 📚 Tổng kết
-- Cài đặt Git CLI là bước đầu tiên để sử dụng Git trên bất kỳ hệ điều hành nào.
-- Git for Windows cung cấp môi trường Git Bash mô phỏng chuẩn dòng lệnh Unix.
-- Cần chú ý thiết lập chuẩn xuống dòng để tránh xung đột định dạng khi làm việc nhóm đa nền tảng.
+- Cài Git trước khi dùng lệnh Git trong terminal.
+- Dùng `git --version` để kiểm tra Git có chạy không.
+- PowerShell và Git Bash đều có thể dùng với Git for Windows.

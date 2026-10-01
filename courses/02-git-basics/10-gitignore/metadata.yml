@@ -20,3 +20,4 @@ commands:
   - echo "node_modules/" >> .gitignore
   - echo ".env" >> .gitignore
   - git check-ignore -v <file>
+  - git rm --cached <file>

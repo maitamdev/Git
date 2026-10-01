@@ -13,11 +13,9 @@ keywords:
 prerequisites:
   - 03-git-la-gi
 objectives:
-  - Phân biệt rõ ràng sự khác biệt giữa mô hình lưu trữ Delta (sự khác biệt) và
-    Snapshot (ảnh chụp tức thời).
-  - Hiểu khái niệm Directed Acyclic Graph (DAG) và cách Git liên kết các commit
-    bằng mã băm SHA.
-  - "Nắm bắt sơ bộ cấu trúc các đối tượng cốt lõi trong Git: Blob, Tree, Commit."
+  - Giải thích được một commit ghi lại trạng thái dự án tại một thời điểm.
+  - Dùng từ Snapshot để hình dung trạng thái đã lưu và Diff để xem phần thay đổi.
+  - Dùng `git log --oneline` để xem các commit đã tạo.
 commands:
   - git status
   - git log --oneline

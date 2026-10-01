@@ -2,12 +2,10 @@ id: quiz-07-github-actions-15-artifacts-sharing
 title: "Trắc nghiệm: Lưu trữ và chia sẻ sản phẩm build với Artifacts"
 questions:
   - id: q1
-    question: Tại sao cần phải sử dụng Artifacts để truyền tệp tin giữa hai Job khác
-      nhau trong cùng một workflow?
+    question: Tại sao cần phải sử dụng Artifacts để truyền tệp tin giữa hai Job khác nhau trong cùng một workflow?
     type: single
     options:
-      - text: Vì mỗi Job chạy trên một máy ảo riêng biệt và ổ đĩa của chúng hoàn toàn
-          cách ly với nhau
+      - text: Vì mỗi Job chạy trên một máy ảo riêng biệt và ổ đĩa của chúng hoàn toàn cách ly với nhau
         correct: true
       - text: Vì GitHub bắt buộc phải thu phí dịch vụ lưu trữ
         correct: false
@@ -15,11 +13,9 @@ questions:
         correct: false
       - text: Vì các tệp tin trong Git tự động bị xóa sau 1 phút
         correct: false
-    explanation: Do tính chất cô lập của máy ảo Runner, các tệp tin cục bộ ở Job 1
-      sẽ không thể nhìn thấy ở Job 2 nếu không qua cơ chế trung gian Artifacts.
+    explanation: Do tính chất cô lập của máy ảo Runner, các tệp tin cục bộ ở Job 1 sẽ không thể nhìn thấy ở Job 2 nếu không qua cơ chế trung gian Artifacts.
   - id: q2
-    question: Action nào sau đây được cộng đồng sử dụng phổ biến nhất để tải tệp tin
-      lên hệ thống lưu trữ Artifact?
+    question: Action nào sau đây được cộng đồng sử dụng phổ biến nhất để tải tệp tin lên hệ thống lưu trữ Artifact?
     type: single
     options:
       - text: actions/upload-artifact
@@ -30,14 +26,12 @@ questions:
         correct: false
       - text: actions/cloud-storage
         correct: false
-    explanation: "`actions/upload-artifact` là action chính thức của GitHub để đóng
-      gói và đưa tệp tin lên hệ thống lưu trữ Artifacts."
+    explanation: "`actions/upload-artifact` là action chính thức của GitHub để đóng gói và đưa tệp tin lên hệ thống lưu trữ Artifacts."
   - id: q3
     question: Tham số `retention-days` trong cấu hình upload-artifact có ý nghĩa gì?
     type: single
     options:
-      - text: Số ngày tệp artifact sẽ được lưu trữ trên GitHub trước khi tự động bị xóa
-          bỏ
+      - text: Số ngày tệp artifact sẽ được lưu trữ trên GitHub trước khi tự động bị xóa bỏ
         correct: true
       - text: Số ngày cần để tải tệp lên máy chủ
         correct: false
@@ -45,8 +39,7 @@ questions:
         correct: false
       - text: Số ngày tối đa một lập trình viên được nghỉ phép
         correct: false
-    explanation: "`retention-days` quy định vòng đời lưu trữ của tệp tin, giúp dọn
-      dẹp dung lượng tự động sau một khoảng thời gian quy định."
+    explanation: "`retention-days` quy định vòng đời lưu trữ của tệp tin, giúp dọn dẹp dung lượng tự động sau một khoảng thời gian quy định."
   - id: q4
     question: Thư mục nào sau đây KHÔNG NÊN đưa vào artifact tải lên?
     type: single
@@ -59,6 +52,17 @@ questions:
         correct: false
       - text: release.zip (gói phần mềm đã đóng gói)
         correct: false
-    explanation: "`node_modules` chứa các thư viện có thể tải lại dễ dàng bằng
-      package manager, việc nén và tải lên hàng nghìn tệp nhỏ gây chậm trễ
-      nghiêm trọng."
+    explanation: "`node_modules` chứa các thư viện có thể tải lại dễ dàng bằng package manager, việc nén và tải lên hàng nghìn tệp nhỏ gây chậm trễ nghiêm trọng."
+  - id: q5
+    question: Để tải về một artifact đã được lưu trữ từ Job trước đó trong cùng workflow, bạn sử dụng action chính thức nào?
+    type: single
+    options:
+      - text: actions/download-artifact
+        correct: true
+      - text: actions/pull-disk
+        correct: false
+      - text: actions/extract-zip
+        correct: false
+      - text: actions/fetch-files
+        correct: false
+    explanation: Action `actions/download-artifact` tải về các tệp tin đã được lưu trữ bởi `upload-artifact` trước đó và giải nén trực tiếp vào thư mục làm việc của Job hiện tại.

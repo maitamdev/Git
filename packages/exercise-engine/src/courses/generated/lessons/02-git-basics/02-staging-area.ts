@@ -13,9 +13,9 @@ export const lesson: CourseLesson = {
       "01-working-directory"
     ],
     "objectives": [
-      "Nắm vững bản chất kỹ thuật của Staging Area (Index) như một vùng đệm chọn lọc commit.",
-      "Hiểu vì sao Git thiết kế Staging Area thay vì commit trực tiếp từ Working Directory như SVN.",
-      "Sử dụng git add để đưa các thay đổi mong muốn vào vùng chuẩn bị."
+      "Giải thích Staging Area là nơi chọn thay đổi cho commit kế tiếp.",
+      "Dùng git add để chọn một tệp.",
+      "Dùng git status để xác nhận lựa chọn."
     ],
     "completion": {
       "theoryViewed": true,
@@ -29,7 +29,6 @@ export const lesson: CourseLesson = {
     "keywords": [
       "staging area",
       "index",
-      "cache",
       "vung chuan bi",
       "git add"
     ],
@@ -39,7 +38,7 @@ export const lesson: CourseLesson = {
       "git restore --staged <file>"
     ]
   },
-  "content": "# Staging Area (Vùng chuẩn bị)\n\n---\n\n## 🎯 Mục tiêu\n- Nắm vững bản chất kỹ thuật của Staging Area (Index) như một vùng đệm chọn lọc commit.\n- Hiểu vì sao Git thiết kế Staging Area thay vì commit trực tiếp từ Working Directory như SVN.\n- Sử dụng git add để đưa các thay đổi mong muốn vào vùng chuẩn bị.\n\n---\n\n## 📖 Định nghĩa\n> Staging Area (hay còn được gọi trong nội bộ mã nguồn Git là Index hoặc Cache) là một vùng trung gian lưu trữ siêu dữ liệu và ảnh chụp chuẩn bị trước cho lần commit kế tiếp. Về mặt kỹ thuật, Staging Area là một tệp nhị phân đơn lẻ mang tên `.git/index` chứa danh sách các tệp tin kèm mã băm SHA tương ứng đại diện chính xác cho trạng thái mà bạn mong muốn đóng gói vào snapshot lịch sử. Staging Area mang lại cho lập trình viên toàn quyền kiểm soát những gì sẽ được ghi nhận vào lịch sử.\n\n---\n\n## 🤔 Tại sao cần?\nSự tồn tại của Staging Area chính là một trong những ưu thế kiến trúc đột phá nhất của Git so với các hệ thống quản lý phiên bản cổ điển. Trong các hệ thống cũ, mọi sửa đổi trong thư mục làm việc đều bị ép buộc phải commit cùng một lúc. Với Staging Area, bạn có thể chỉnh sửa 10 tệp tin khác nhau nhưng chỉ chọn lọc 2 tệp liên quan đến tính năng đăng nhập để đưa vào Staging Area và tạo một commit gọn gàng, trong khi 8 tệp còn lại vẫn giữ nguyên để tiếp tục hoàn thiện sau.\n\n---\n\n## 🧠 Mental Model (Mô hình tư duy)\nHãy hình dung Staging Area giống như chiếc bàn đóng gói kiện hàng trước khi gửi bưu điện. Trong kho hàng của bạn (Working Directory) có hàng trăm món đồ khác nhau. Bạn không ném bừa tất cả vào một chiếc thùng lớn. Thay vào đó, bạn lấy ra một chiếc hộp các-tông (Staging Area), cẩn thận chọn ra đúng chiếc áo và chiếc quần mà khách hàng đặt mua, xếp ngay ngắn vào hộp rồi dán băng dính niêm phong lại trước khi đóng dấu giao hàng (commit).\n\n---\n\n## 🖼 Sơ đồ\n```text\nQuy trình đóng gói có chọn lọc:\n[Working Directory]                [Staging Area]                 [Commit History]\n├── auth.js (đã sửa) ──git add──►  auth.js (staged)  ──git commit──► Commit #1: feat: auth\n├── api.js  (đã sửa) ───────────►  (chưa add)\n└── temp.txt (nháp)  ───────────►  (chưa add)\n```\n\n---\n\n## 🌎 Ví dụ thực tế\nMột lập trình viên đang tiến hành sửa lỗi bảo mật khẩn cấp tại tệp user-controller.js. Trong lúc đọc code, lập trình viên thấy một đoạn code khác bị sai định dạng thụt đầu dòng nên tiện tay format lại tệp style.css và tệp helper.js. Khi chuẩn bị commit, nhờ có Staging Area, lập trình viên chỉ gõ lệnh git add user-controller.js để commit riêng một bản vá lỗi bảo mật sạch sẽ gửi lên cho trưởng nhóm duyệt, tránh làm loãng lịch sử bởi những thay đổi định dạng không liên quan. Điều này giúp đồng nghiệp khi thực hiện code review có thể tập trung 100% vào logic bảo mật mà không bị phân tâm bởi hàng chục dòng thay đổi khoảng trắng vô nghĩa.\n\n---\n\n## 💻 Command\n```bash\ngit status\ngit add <file>\ngit restore --staged <file>\n```\n\n---\n\n## 🔍 Giải thích command\n- `git status`: Kiểm tra danh sách các tệp đã nằm trong Staging Area (màu xanh) và tệp chưa được staged (màu đỏ).\n- `git add <file>`: Đưa nội dung hiện tại của tệp tin từ Working Directory vào Staging Area.\n- `git restore --staged <file>`: Rút tệp tin ra khỏi Staging Area trở lại Working Directory mà không làm mất nội dung code.\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Nghĩ Staging Area lưu một bản copy vật lý đầy đủ**:  Git Index chỉ lưu siêu dữ liệu và trỏ tới các blob đối tượng trong cơ sở dữ liệu Git.\n2. **Sửa tiếp file sau khi đã git add rồi vội vã commit**:  Git chỉ commit phiên bản của tệp tại thời điểm bạn chạy lệnh git add, phần sửa sau đó sẽ bị bỏ lại.\n3. **Commit một đống thay đổi hỗn độn**:  Bỏ qua lợi ích chọn lọc của Staging Area và luôn commit toàn bộ mọi thứ bừa bãi.\n\n---\n\n## 🧪 Lab\n1. Tạo tệp `app.js` và thêm vào nội dung `console.log(\"Staging lab\");`.\n2. Chạy lệnh `git add app.js` để đưa tệp vào Staging Area.\n3. Chạy `git status` và quan sát tệp `app.js` nằm dưới tiêu đề Changes to be committed màu xanh lá.\n\n---\n\n## 💡 Hint\n> Chỉ những thay đổi nằm trong Staging Area mới được ghi vào commit tiếp theo.\n\n---\n\n## ✅ Validation\n- Kiểm tra `git status` hiển thị tệp tin trong Changes to be committed.\n\n---\n\n## ❓ Quiz\nLàm bài trắc nghiệm dưới đây để đánh giá sự am hiểu về Staging Area.\n\n---\n\n## 🔥 Challenge\nGiải thích điều gì xảy ra nếu bạn sửa tiếp tệp app.js sau khi đã chạy lệnh git add app.js.\n\n---\n\n## 📚 Tổng kết\n- Staging Area (Index) là vùng đệm lưu trữ ảnh chụp chuẩn bị cho commit kế tiếp.\n- Cho phép chọn lọc chính xác từng tệp tin cần ghi nhận vào lịch sử phiên bản.\n- Tệp tin trong Staging Area được hiển thị trong mục Changes to be committed khi gõ git status.\n",
+  "content": "# Staging Area (Vùng chuẩn bị)\n\n---\n\n## 🎯 Mục tiêu\n- Giải thích Staging Area là nơi chọn thay đổi cho commit kế tiếp.\n- Dùng `git add` để chọn một tệp.\n- Dùng `git status` để xác nhận lựa chọn.\n\n---\n\n## 🧩 Từ khóa hôm nay\n\n### Staging Area — vùng chuẩn bị\n- **Nói dễ hiểu:** Chỗ bạn chọn phiên bản thay đổi sẽ đi vào commit kế tiếp.\n- **Ví dụ:** Thêm `README.md` vào vùng này trước khi lưu mốc.\n- **Đừng nhầm:** Thay đổi đang ở đây chưa phải commit.\n\n### Index — tên Git dùng cho vùng chuẩn bị\n- **Nói dễ hiểu:** Git gọi dữ liệu chuẩn bị cho commit là index.\n- **Ví dụ:** `git status` liệt kê tệp ở “Changes to be committed”.\n- **Đừng nhầm:** Trong bài cơ bản, index và Staging Area chỉ cùng một khái niệm.\n\n### Staged — đã được chọn cho commit\n- **Nói dễ hiểu:** Phiên bản hiện tại của tệp đã được đưa vào vùng chuẩn bị.\n- **Ví dụ:** Chạy `git add README.md`, rồi xem lại bằng `git status`.\n- **Đừng nhầm:** Nếu sửa tệp lần nữa, sửa đổi mới chưa tự được staged.\n\n---\n\n## 📖 Định nghĩa\nStaging Area là vùng bạn chọn các thay đổi sẽ đi vào commit kế tiếp. Git lưu thông tin vùng này trong tệp nội bộ `.git/index`, vì vậy tài liệu kỹ thuật cũng gọi nó là index. Dùng `git status` để xem thay đổi nào đã được chọn.\n\n---\n\n## 🤔 Tại sao cần?\nNếu sửa nhiều tệp, Staging Area cho phép chọn tệp đã sẵn sàng và để phần việc còn dở cho lần sau.\n\n---\n\n## 🧠 Mental Model (Mô hình tư duy)\nHãy nghĩ Staging Area như danh sách thay đổi bạn đã chọn cho commit tiếp theo.\n\n---\n\n## 🖼 Sơ đồ\n```text\nQuy trình đóng gói có chọn lọc:\n[Working Directory]                [Staging Area]                 [Commit History]\n├── auth.js (đã sửa) ──git add──►  auth.js (staged)  ──git commit──► Commit #1: feat: auth\n├── api.js  (đã sửa) ───────────►  (chưa add)\n└── temp.txt (nháp)  ───────────►  (chưa add)\n```\n\n---\n\n## 🌎 Ví dụ thực tế\nBạn sửa `auth.js` và `style.css`, nhưng chỉ hoàn tất `auth.js`. Chạy `git add auth.js`; tệp kia chưa được chọn cho commit.\n\n---\n\n## 💻 Command\n```bash\ngit status\ngit add <file>\ngit restore --staged <file>\n```\n\n---\n\n## 🔍 Giải thích command\n- `git status`: Kiểm tra tệp đã staged và thay đổi chưa staged.\n- `git add <file>`: Đưa nội dung hiện tại của tệp tin từ Working Directory vào Staging Area.\n- `git restore --staged <file>`: Rút tệp tin ra khỏi Staging Area trở lại Working Directory mà không làm mất nội dung code.\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Nghĩ `git add` đã tạo commit**:  Lệnh này chỉ chọn thay đổi; cần `git commit` để lưu mốc.\n2. **Sửa tệp sau khi đã add mà không kiểm tra lại**:  Phần sửa mới chưa được staged cho tới khi bạn add lại.\n3. **Không xem lại những gì đã chọn**:  Chạy `git status` trước khi commit.\n\n---\n\n## 🧪 Lab\n1. Tạo tệp `app.js` và thêm vào nội dung `console.log(\"Staging lab\");`.\n2. Chạy lệnh `git add app.js` để đưa tệp vào Staging Area.\n3. Chạy `git status` và quan sát tệp `app.js` nằm dưới tiêu đề Changes to be committed.\n\n---\n\n## 💡 Hint\n> Chỉ những thay đổi nằm trong Staging Area mới được ghi vào commit tiếp theo.\n\n---\n\n## ✅ Validation\n- Kiểm tra `git status` hiển thị tệp tin trong Changes to be committed.\n\n---\n\n## ❓ Quiz\nLàm bài trắc nghiệm dưới đây để đánh giá sự am hiểu về Staging Area.\n\n---\n\n## 🔥 Challenge\nGiải thích điều gì xảy ra nếu bạn sửa tiếp tệp app.js sau khi đã chạy lệnh git add app.js.\n\n---\n\n## 📚 Tổng kết\n- Staging Area là nơi chọn thay đổi cho commit kế tiếp.\n- `git add <file>` chọn tệp; sửa tiếp thì cần add lại.\n- `git status` cho biết những gì đang chờ commit.\n",
   "quiz": {
     "id": "quiz-02-02-staging-area",
     "title": "Trắc nghiệm: Staging Area trong Git",
@@ -50,7 +49,7 @@ export const lesson: CourseLesson = {
         "type": "single",
         "options": [
           {
-            "text": "Là vùng đệm trung gian cho phép chọn lọc các thay đổi trước khi ghi vào commit",
+            "text": "Là nơi chọn thay đổi sẽ được đưa vào commit kế tiếp",
             "correct": true
           },
           {
@@ -139,6 +138,30 @@ export const lesson: CourseLesson = {
           }
         ],
         "explanation": "`git restore --staged <file>` unstage tệp mà không làm mất nội dung code. `git rm -f` xóa hẳn file khỏi ổ đĩa."
+      },
+      {
+        "id": "q5",
+        "question": "Thay đổi đã được stage có xuất hiện trong lịch sử commit ngay lập tức không?",
+        "type": "single",
+        "options": [
+          {
+            "text": "Không; cần chạy `git commit` để tạo một mốc lịch sử",
+            "correct": true
+          },
+          {
+            "text": "Có; `git add` tự tạo commit",
+            "correct": false
+          },
+          {
+            "text": "Có; `git status` tự lưu commit",
+            "correct": false
+          },
+          {
+            "text": "Không; phải chạy `git push` trước khi commit",
+            "correct": false
+          }
+        ],
+        "explanation": "`git add` chỉ chọn nội dung vào Staging Area. `git commit` mới tạo mốc lịch sử cục bộ."
       }
     ]
   }

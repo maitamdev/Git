@@ -3,24 +3,53 @@
 ---
 
 ## 🎯 Mục tiêu
-- Sử dụng thành thạo câu lệnh `git log` để tra cứu lịch sử commit của kho lưu trữ.
-- Tùy biến hiển thị lịch sử với các cờ mạnh mẽ: `--oneline`, `--graph`, `-n <số-lượng>`, `--author`.
-- Đọc hiểu mã băm commit, tác giả, ngày giờ và mối liên kết phân nhánh trực quan.
+- Dùng `git log` để xem các commit trong lịch sử của nhánh hiện tại.
+- Rút gọn hoặc vẽ lịch sử bằng `--oneline` và `--graph`.
+- Giới hạn số commit hiển thị bằng `-n`.
+
+---
+
+## 🧩 Từ khóa hôm nay
+
+### `git log` — xem lịch sử commit
+- **Nói dễ hiểu:** Liệt kê các commit đã lưu trong nhánh hiện tại.
+- **Ví dụ:** Chạy `git log` sau khi đã tạo vài commit.
+- **Đừng nhầm:** Lệnh không hiển thị sửa đổi chưa commit như một mốc mới.
+
+### Commit hash — mã nhận diện commit
+- **Nói dễ hiểu:** Chuỗi ký tự Git dùng để phân biệt một commit.
+- **Ví dụ:** Mã ngắn xuất hiện cạnh message trong `git log --oneline`.
+- **Đừng nhầm:** Đây không phải số thứ tự do người dùng đặt.
+
+### `--oneline` — dạng lịch sử gọn
+- **Nói dễ hiểu:** Tùy chọn hiện mỗi commit trên một dòng ngắn.
+- **Ví dụ:** `git log --oneline`.
+- **Đừng nhầm:** Dạng gọn ẩn bớt chi tiết; có thể chạy `git log` để xem đầy đủ.
+
+### `--graph` — vẽ nhánh lịch sử
+- **Nói dễ hiểu:** Thêm ký hiệu giúp nhìn các đường nhánh và commit nối nhau.
+- **Ví dụ:** `git log --oneline --graph`.
+- **Đừng nhầm:** Ký hiệu chỉ trình bày lịch sử, không thay đổi repository.
+
+### `-n` — giới hạn số commit
+- **Nói dễ hiểu:** Chỉ hiện một số lượng commit gần đây do bạn chọn.
+- **Ví dụ:** `git log -n 3` hiện tối đa ba commit.
+- **Đừng nhầm:** Tùy chọn này chỉ rút gọn kết quả, không xóa lịch sử.
 
 ---
 
 ## 📖 Định nghĩa
-> `git log` là công cụ tra cứu lịch sử cốt lõi của Git, cho phép bạn duyệt lại toàn bộ các commit snapshot đã được ghi nhận trong kho lưu trữ từ quá khứ cho tới hiện tại. Mỗi mục nhật ký commit hiển thị đầy đủ mã băm SHA-1 (hoặc SHA-256) gồm 40 ký tự định danh duy nhất, tên tác giả, địa chỉ email, mốc thời gian commit và toàn bộ thông điệp mô tả thay đổi. Git cung cấp hàng chục tùy chọn bộ lọc và định dạng để bạn tìm kiếm chính xác những gì mình cần.
+`git log` liệt kê các commit có thể đi tới từ nhánh hiện tại, bắt đầu từ commit mới nhất. Mỗi mục cho biết commit và lời nhắn; dạng đầy đủ có thêm thông tin khác. Mã commit là mã nhận diện, không phải số thứ tự.
 
 ---
 
 ## 🤔 Tại sao cần?
-Khả năng tra cứu lịch sử một cách nhanh chóng và chính xác là một trong những sức mạnh lớn nhất của hệ thống quản lý phiên bản. Khi một lỗi nghiêm trọng phát sinh trên môi trường production, bạn cần biết chính xác commit nào đã đưa đoạn code lỗi đó vào hệ thống, ai là người tạo commit và lý do thực hiện thay đổi là gì. Sử dụng thành thạo các bộ lọc của `git log` giúp bạn làm chủ thời gian và giải quyết sự cố thần tốc.
+Khi quên mình đã lưu những mốc nào, `git log` giúp bạn xem lại lịch sử. Dạng gọn giúp lướt nhanh; `-n` giới hạn kết quả để terminal dễ đọc.
 
 ---
 
 ## 🧠 Mental Model (Mô hình tư duy)
-Hãy hình dung `git log` giống như cuốn nhật ký hành trình của một con tàu thám hiểm đại dương. Mỗi khi con tàu đi qua một hòn đảo hoặc gặp một cơn bão lớn, thuyền trưởng sẽ mở nhật ký hàng hải ra ghi lại tọa độ kinh độ vĩ độ (mã hash commit), thời gian gió bão (timestamp) và ghi chú nhật ký hành trình (commit message). Khi hậu thế muốn nghiên cứu lại hải trình của chuyến đi, họ chỉ cần lật từng trang nhật ký đó ra để đối chiếu.
+`git log` giống như danh sách các mốc đã lưu: mốc mới nhất hiện trước, mỗi mốc có mã nhận diện và message.
 
 ---
 
@@ -36,7 +65,7 @@ Tùy biến hiển thị git log --graph --oneline:
 ---
 
 ## 🌎 Ví dụ thực tế
-Một kỹ sư bảo mật cần điều tra một lỗ hổng an ninh vừa được cảnh báo trên thư viện mã nguồn của hệ thống thương mại điện tử. Kỹ sư chạy lệnh `git log --author="Alice" --since="2 weeks ago" --oneline` để lọc ra toàn bộ các commit do lập trình viên Alice thực hiện trong vòng hai tuần vừa qua. Nhờ kết quả hiển thị cô đọng trên từng dòng với mã hash ngắn và thông điệp súc tích, kỹ sư nhanh chóng khoanh vùng được commit cụ thể đã chỉnh sửa tệp cấu hình bảo mật. Kỹ sư mở tiếp chi tiết commit đó bằng lệnh `git show` để đọc từng dòng code sửa đổi và tiến hành phát hành bản vá khẩn cấp ngay trong buổi sáng cùng ngày.
+Bạn muốn biết mình vừa lưu những mốc nào. Chạy `git log --oneline -n 3` để xem tối đa ba commit gần nhất, mỗi commit trên một dòng.
 
 ---
 
@@ -44,42 +73,42 @@ Một kỹ sư bảo mật cần điều tra một lỗ hổng an ninh vừa đ�
 ```bash
 git log
 git log --oneline
-git log --graph --oneline --all
+git log --graph --oneline
 git log -n 5
 ```
 
 ---
 
 ## 🔍 Giải thích command
-- `git log`: Hiển thị lịch sử commit đầy đủ chi tiết theo thứ tự thời gian đảo ngược.
-- `git log --oneline`: Rút gọn mỗi commit thành một dòng duy nhất gồm mã hash ngắn 7 ký tự và thông điệp commit.
-- `git log --graph --oneline --all`: Vẽ đồ thị nhánh ASCII trực quan biểu diễn tất cả các nhánh và mốc rẽ nhánh.
-- `git log -n 5`: Giới hạn kết quả chỉ hiển thị 5 commit gần đây nhất.
+- `git log`: Hiển thị lịch sử commit mà nhánh hiện tại có thể đi tới.
+- `git log --oneline`: Hiện mỗi commit trên một dòng ngắn; độ dài mã nhận diện có thể thay đổi.
+- `git log --graph --oneline`: Thêm ký hiệu để xem đường đi giữa các commit.
+- `git log -n 5`: Hiển thị tối đa 5 commit có thể đi tới từ nhánh hiện tại.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Bị kẹt trong giao diện phân trang pager (Less)**:  Khi danh sách log dài, terminal mở công cụ less và người dùng không biết bấm phím `q` để thoát ra.
+1. **Không biết thoát kết quả phân trang**: Nếu Git mở trang xem log, nhấn `q` để quay lại terminal.
 2. **Chỉ dùng git log mặc định dài dòng**:  Không biết sử dụng `--oneline` khiến màn hình bị tràn ngập thông tin khó theo dõi.
-3. **Không biết cách lọc theo thời gian hoặc tác giả**:  Phải cuộn chuột thủ công qua hàng ngàn commit thay vì dùng cờ `--author` hoặc `--since`.
+3. **Nghĩ `-n 5` sẽ luôn hiện đúng năm mốc**: Nếu lịch sử ngắn hơn, Git hiện ít hơn.
 
 ---
 
 ## 🧪 Lab
-1. Chạy lệnh `git log` trong dự án để xem định dạng hiển thị đầy đủ mặc định.
-2. Nhấn phím `q` trên bàn phím để thoát khỏi màn hình xem log nếu danh sách dài.
-3. Chạy lệnh `git log --oneline` để quan sát định dạng tóm tắt thanh lịch.
-4. Thử nghiệm lệnh `git log -n 2` để chỉ hiển thị đúng 2 commit gần nhất.
+1. Chạy `git log` trong dự án để xem lịch sử.
+2. Nếu Git mở kết quả dạng phân trang, nhấn `q` để thoát.
+3. Chạy `git log --oneline` để xem mỗi commit trên một dòng.
+4. Thử `git log -n 2` để xem tối đa hai commit gần nhất.
 
 ---
 
 ## 💡 Hint
-> Nhấn phím `q` bất cứ khi nào bạn muốn thoát khỏi giao diện xem git log.
+> Nếu kết quả được mở dạng phân trang, nhấn `q` để quay lại terminal.
 
 ---
 
 ## ✅ Validation
-- Thực thi thành công `git log --oneline` và đọc được các mã băm commit.
+- Đọc được ít nhất một lời nhắn commit từ `git log --oneline`.
 
 ---
 
@@ -89,11 +118,11 @@ Làm bài trắc nghiệm dưới đây về các kỹ năng tra cứu lịch s�
 ---
 
 ## 🔥 Challenge
-Tìm hiểu cách sử dụng lệnh `git log -S "tên_hàm"` để truy vết commit đã thêm hoặc xóa một đoạn code cụ thể.
+Dùng `git log --oneline -n 3`, rồi giải thích mã nhận diện và message ở một dòng.
 
 ---
 
 ## 📚 Tổng kết
-- `git log` hiển thị toàn bộ lịch sử commit theo thứ tự từ mới nhất đến cũ nhất.
+- `git log` hiển thị các commit có thể đi tới từ nhánh hiện tại, mới nhất trước.
 - Cờ `--oneline` giúp rút gọn mỗi commit thành một dòng trực quan dễ theo dõi.
 - Nhấn phím `q` trên bàn phím để thoát khỏi chế độ xem phân trang của git log.

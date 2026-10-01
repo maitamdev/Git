@@ -3,39 +3,58 @@
 ---
 
 ## 🎯 Mục tiêu
-- Phân biệt rõ ràng sự khác biệt giữa mô hình lưu trữ Delta (sự khác biệt) và Snapshot (ảnh chụp tức thời).
-- Hiểu khái niệm Directed Acyclic Graph (DAG) và cách Git liên kết các commit bằng mã băm SHA.
-- Nắm bắt sơ bộ cấu trúc các đối tượng cốt lõi trong Git: Blob, Tree, Commit.
+- Giải thích được Git lưu các mốc dự án theo cách nào ở mức khái niệm.
+- Phân biệt “một mốc đã lưu” với “danh sách khác biệt giữa hai mốc”.
+- Nhận ra tên như Blob, Tree và Commit sẽ được học sâu hơn sau này.
+
+---
+
+## 🧩 Từ khóa hôm nay
+
+### Snapshot — ảnh chụp trạng thái
+- **Nói dễ hiểu:** Cách hình dung một mốc lưu như trạng thái của dự án tại thời điểm bạn tạo commit.
+- **Ví dụ:** Sau khi trang giới thiệu chạy đúng, bạn lưu một mốc để có thể xem lại phiên bản đó.
+- **Đừng nhầm:** Đây là cách hiểu khái niệm; Git không tạo một bản sao nguyên vẹn riêng cho mọi tệp không đổi.
+
+### Diff — phần khác nhau
+- **Nói dễ hiểu:** Bản so sánh cho biết những dòng hoặc tệp đã đổi giữa hai trạng thái.
+- **Ví dụ:** Diff có thể chỉ ra nút “Gửi” được đổi thành “Đăng ký”.
+- **Đừng nhầm:** Diff là thứ Git trình bày để bạn xem thay đổi; nó không phải cách duy nhất để hiểu Git lưu lịch sử.
+
+### Commit — mốc đã lưu
+- **Nói dễ hiểu:** Bản ghi trong lịch sử Git đại diện cho trạng thái dự án mà bạn chọn lưu.
+- **Ví dụ:** “Thêm trang giới thiệu” là lời nhắn của một commit.
+- **Đừng nhầm:** Sửa tệp chưa tự tạo commit; bạn cần thực hiện thao tác lưu mốc.
 
 ---
 
 ## 📖 Định nghĩa
-> Về mặt kiến trúc, Git không lưu trữ dữ liệu dưới dạng danh sách các thay đổi dòng code (Delta-based) như các hệ thống VCS truyền thống, mà lưu trữ dữ liệu dưới dạng một chuỗi các ảnh chụp tức thời hoàn chỉnh (Snapshots) của toàn bộ hệ thống tệp tin theo thời gian. Nếu một tệp không có sự thay đổi giữa các phiên bản, Git sẽ thông minh không nhân bản dữ liệu mà chỉ tạo một con trỏ liên kết trỏ lại tệp cũ đã lưu. Lịch sử của Git được tổ chức dưới dạng một đồ thị có hướng không chu trình (Directed Acyclic Graph - DAG).
+Ở mức dễ hình dung, mỗi commit cho biết dự án ở trạng thái nào tại một mốc. Khi cần, Git cũng cho xem phần khác nhau giữa hai mốc. Các chi tiết về cách những mốc này nối với nhau và Git lưu dữ liệu bên trong sẽ được học ở Level 8.
 
 ---
 
 ## 🤔 Tại sao cần?
-Nắm bắt được kiến trúc Snapshot và mô hình đồ thị DAG giúp bạn hiểu được gốc rễ mọi hành vi của Git. Khi bạn hiểu rằng nhánh (branch) thực chất chỉ là một con trỏ nhẹ có thể di chuyển trỏ đến một đỉnh trong đồ thị DAG, bạn sẽ không còn cảm thấy hoang mang khi chuyển nhánh, gộp nhánh hay giải quyết xung đột mã nguồn. Điều này biến việc học Git từ học vẹt thành tư duy trực quan sắc bén.
+Khi sửa một tệp, bạn thường muốn biết chính xác điều gì đã đổi. Git giúp lưu các mốc dự án và so sánh chúng. Hôm nay chỉ cần nắm hai ý: Snapshot là trạng thái đã lưu; Diff cho thấy phần khác nhau.
 
 ---
 
 ## 🧠 Mental Model (Mô hình tư duy)
-Hãy tưởng tượng kiến trúc của Git giống như một cuốn sổ chụp ảnh gia đình qua nhiều thế hệ. Thay vì ghi chép lại rằng "năm nay bố mọc thêm một sợi râu bạc, con cao thêm hai xăng-ti-mét", người thợ ảnh chụp lại toàn bộ cả gia đình đứng trong phòng khách. Tuy nhiên, nếu chiếc bàn trà hay bộ ghế sofa không hề thay đổi sau mười năm, người thợ ảnh chỉ cần dán một mảnh giấy ghi chú mượn lại hình ảnh chiếc bàn từ album cũ, giúp cuốn sổ vừa trực quan vừa nhẹ nhàng.
+Hãy tưởng tượng bạn chụp lại bàn học ở hai thời điểm: trước và sau khi sắp xếp. Mỗi ảnh là một Snapshot. Đặt hai ảnh cạnh nhau để tìm điểm khác nhau chính là Diff.
 
 ---
 
 ## 🖼 Sơ đồ
 ```text
-Hệ thống cũ (Delta):                Git (Snapshots):
-File A: [V1] ──> [Δ1] ──> [Δ2]      Snapshot 1: [File A v1] [File B v1]
-File B: [V1] ───────────> [Δ1]      Snapshot 2: [File A v2] [File B (trỏ v1)]
-(Phải tính toán lại từ đầu)         Snapshot 3: [File A v3] [File B v2]
+Tệp trước khi sửa:   "Xin chào"
+Tệp sau khi sửa:    "Xin chào Git"
+Diff:               thêm chữ "Git"
+Snapshot:           trạng thái dự án được ghi thành một mốc
 ```
 
 ---
 
 ## 🌎 Ví dụ thực tế
-Khi bạn chỉnh sửa một dòng comment trong tệp `index.html` của dự án chứa hơn 500 hình ảnh và 100 tệp CSS, Git sẽ không lưu lại 500 hình ảnh đó một lần nữa. Git tạo ra một snapshot mới, trong đó tệp `index.html` được ghi nhận nội dung mới, còn 600 tệp tin còn lại chỉ được lưu dưới dạng tham chiếu trỏ về đối tượng cũ trong thư mục `.git/objects`. Nhờ vậy, kích thước kho lưu trữ của bạn cực kỳ nhỏ gọn dù trải qua hàng ngàn lần commit, đồng thời tốc độ tạo commit hay chuyển đổi giữa các nhánh diễn ra gần như tức thì mà không phải tính toán cộng dồn sự khác biệt phức tạp.
+Bạn sửa một dòng trong `README.md`. Khi tạo commit, Git ghi lại trạng thái dự án ở mốc đó. Nếu muốn biết dòng nào vừa sửa, bạn xem Diff giữa bản đang làm và mốc đã lưu. Git tối ưu cách giữ dữ liệu bên trong; người mới chưa cần học chi tiết đó.
 
 ---
 
@@ -48,32 +67,32 @@ git log --oneline
 ---
 
 ## 🔍 Giải thích command
-- `git status`: Hiển thị trạng thái hiện tại của Working Tree và Staging Area so với snapshot gần nhất, giúp bạn nhìn thấy rõ các tệp tin mới tạo hoặc bị sửa đổi trước khi ghi lại phiên bản.
-- `git log --oneline`: Hiển thị danh sách các commit trong lịch sử rút gọn trên một dòng với mã băm ngắn và thông điệp, tương ứng trực quan với các nút trên đồ thị DAG.
+- `git status`: Cho biết tệp nào mới hoặc đã sửa trong thư mục dự án.
+- `git log --oneline`: Liệt kê các mốc commit đã lưu, mỗi mốc gói gọn trên một dòng.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Nghĩ rằng Git lưu từng dòng code khác biệt**:  Git thực chất lưu trọn vẹn snapshot nội dung tệp tin và trỏ tái sử dụng tệp không đổi.
-2. **Sợ rằng dự án lớn sẽ làm Git bị phình to dung lượng**:  Nhờ cơ chế lưu trữ snapshot thông minh và nén packfile, Git quản lý dung lượng vô cùng tối ưu.
-3. **Nghĩ commit là một bản vá độc lập**:  Commit trong Git luôn chứa liên kết tham chiếu đến commit cha của nó trong đồ thị DAG.
+1. **Nhầm Snapshot với Diff**: Snapshot là trạng thái đã lưu; Diff là phần dùng để so sánh.
+2. **Tưởng sửa tệp là đã tạo commit**: Bạn cần chủ động tạo commit ở bước học sau.
+3. **Cố học cấu trúc bên trong ngay bây giờ**: Blob, Tree và cách Git nối lịch sử sẽ được học ở Level 8.
 
 ---
 
 ## 🧪 Lab
-1. Thực hiện kiểm tra trạng thái ban đầu của kho lưu trữ bằng lệnh `git status`.
-2. Quan sát cách Git theo dõi sự khác biệt giữa thư mục làm việc và snapshot gần nhất.
-3. Sử dụng `git log --oneline` để hình dung các đỉnh của đồ thị lịch sử.
+1. Chạy `git status` và ghi lại tên tệp đang được báo là đã sửa.
+2. Chạy `git log --oneline` để xem các mốc đã lưu.
+3. Nói thành một câu sự khác nhau giữa Snapshot và Diff.
 
 ---
 
 ## 💡 Hint
-> Mỗi commit đại diện cho một ảnh chụp Snapshot toàn diện của dự án tại một thời điểm.
+> Snapshot là trạng thái đã lưu; Diff là phần khác nhau giữa hai trạng thái.
 
 ---
 
 ## ✅ Validation
-- Phân biệt chính xác giữa mô hình Delta và Snapshot trong Git.
+- Giải thích được Snapshot và Diff bằng ví dụ về một tệp đã sửa.
 
 ---
 
@@ -83,11 +102,11 @@ Hoàn thành các câu hỏi dưới đây để kiểm tra kiến thức về k
 ---
 
 ## 🔥 Challenge
-Vẽ sơ đồ biểu diễn 3 commit liên tiếp trong Git và giải thích cách các commit cha-con liên kết với nhau.
+Sửa một câu trong README, sau đó mô tả đâu là nội dung mới và mốc nào vẫn chưa được lưu.
 
 ---
 
 ## 📚 Tổng kết
-- Git lưu trữ lịch sử dưới dạng chuỗi các ảnh chụp tức thời (Snapshots) thay vì sự khác biệt tệp (Deltas).
-- Nếu một tệp không thay đổi, Git chỉ trỏ lại blob dữ liệu cũ mà không hề sao chép lãng phí dung lượng.
-- Lịch sử commit trong Git tạo thành một đồ thị có hướng không chu trình (Directed Acyclic Graph - DAG).
+- Commit ghi lại trạng thái dự án ở một mốc.
+- Diff giúp xem phần khác nhau giữa hai trạng thái.
+- Cấu trúc bên trong của Git sẽ học ở Level 8.

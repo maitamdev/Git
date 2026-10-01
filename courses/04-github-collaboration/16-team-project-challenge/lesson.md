@@ -10,22 +10,41 @@
 
 ---
 
+## 🧩 Từ khóa hôm nay
+
+### team simulation
+- **Nói dễ hiểu**: Kịch bản mô phỏng toàn diện môi trường làm việc nhóm thực tế với đầy đủ các vai trò kỹ sư và reviewer.
+- **Ví dụ**: Nhận Issue được giao, tách nhánh tính năng, đẩy code và mở PR chờ đồng nghiệp duyệt.
+- **Đừng nhầm**: Không chỉ là gõ lệnh một mình; đây là bài tập rèn luyện kỹ năng phối hợp và tuân thủ quy trình nhóm.
+
+### reviewer checklist
+- **Nói dễ hiểu**: Danh sách các tiêu chí kiểm tra mà người đánh giá dùng để soi xét chất lượng PR trước khi duyệt.
+- **Ví dụ**: Kiểm tra xem code có chạy qua bài test không, có bị lộ mật khẩu không và có viết tài liệu đầy đủ không.
+- **Đừng nhầm**: Không nhằm mục đích gây khó dễ; checklist bảo vệ cả nhóm khỏi các lỗi nghiêm trọng lọt vào production.
+
+### release integration
+- **Nói dễ hiểu**: Thao tác hòa nhập tính năng đã được kiểm duyệt và gộp vào nhánh chính để sẵn sàng phát hành.
+- **Ví dụ**: Squash-merge nhánh `feat/coupon` vào nhánh `main` và kích hoạt luồng đóng gói phiên bản mới.
+- **Đừng nhầm**: Không dừng lại ở việc gộp code; bạn còn cần xóa nhánh cũ và kéo cập nhật mới về máy cá nhân.
+
+---
+
 ## 📖 Định nghĩa
-> Thử thách dự án nhóm Team Project Challenge là bài thi sát hạch toàn diện của Level 4: GitHub Collaboration. Bạn sẽ được hòa mình vào một môi trường mô phỏng dự án nhóm thực tế với đầy đủ các vai trò: Quản trị viên (Maintainer), Lập trình viên (Developer) và Người đánh giá (Reviewer). Bạn sẽ phải giải quyết một bài toán nghiệp vụ trọn vẹn từ khâu tiếp nhận Issue trên bảng điều khiển, thực thi chuỗi lệnh Git chuẩn mực và hoàn tất đóng gói sản phẩm.
+Thử thách dự án nhóm Team Project Challenge là bài sát hạch toàn diện của Level 4: GitHub Collaboration, đặt bạn vào môi trường mô phỏng dự án nhóm thực tế với đầy đủ các vai trò: Quản trị viên, Lập trình viên và Người đánh giá để giải quyết một bài toán nghiệp vụ trọn vẹn từ khâu nhận việc đến xuất bản.
 
 ---
 
-## 🤔 Tại sao cần?
-Lập trình trong thế giới hiện đại là môn thể thao đồng đội. Dù bạn có kỹ năng viết thuật toán siêu hạng nhưng nếu bạn không biết cách phối hợp nhịp nhàng trên GitHub, bạn sẽ không thể hòa nhập vào bất kỳ công ty công nghệ chuyên nghiệp nào. Vượt qua thử thách này là minh chứng đanh thép khẳng định bạn đã hoàn toàn sẵn sàng làm việc trong các đội ngũ kỹ thuật đẳng cấp quốc tế.
+## 💡 Tại sao cần
+Lập trình trong môi trường hiện đại là môn thể thao đồng đội. Dù bạn có kỹ năng viết code tốt nhưng nếu thiếu khả năng phối hợp trên GitHub, bạn không thể làm việc trong các công ty chuyên nghiệp. Hoàn thành thử thách này khẳng định bạn đã sẵn sàng tham gia vào các đội ngũ kỹ thuật thực tế.
 
 ---
 
-## 🧠 Mental Model (Mô hình tư duy)
-Hãy hình dung thử thách này giống như một trận thi đấu bóng đá tập dượt nội bộ trước thềm giải vô địch quốc gia. Bạn không còn tập sút bóng một mình vào khung thành trống nữa. Bạn phải phối hợp chuyền bóng ăn ý với tiền vệ (pull code), nhận đường chuyền thuận lợi (nhánh tính năng), vượt qua hàng phòng ngự đối phương (giải quyết xung đột), phối hợp với thủ môn (code review) và sút tung lưới đối phương ghi bàn thắng quyết định (Merge PR).
+## 🧠 Mental Model
+Hãy hình dung thử thách này như một trận thi đấu bóng đá nội bộ trước thềm giải vô địch. Bạn không còn tập sút một mình vào lưới trống. Bạn phải phối hợp chuyền bóng ăn ý với đồng đội (pull code), nhận bóng thuận lợi (tách nhánh), vượt qua hậu vệ (giải quyết xung đột) và ghi bàn thắng quyết định (Merge PR).
 
 ---
 
-## 🖼 Sơ đồ
+## 📊 Sơ đồ minh họa
 ```text
 Kịch bản mô phỏng thử thách Team Project:
 [Issue: Thêm tính năng Coupon giảm giá]
@@ -42,12 +61,12 @@ Kịch bản mô phỏng thử thách Team Project:
 
 ---
 
-## 🌎 Ví dụ thực tế
-Trong kịch bản thử thách thực chiến, học viên tiếp nhận Issue #201 yêu cầu xây dựng tính năng mã giảm giá cho ứng dụng mua sắm trực tuyến. Học viên chủ động kéo mã nguồn mới nhất từ main, tạo nhánh làm việc độc lập mang tên `feat/coupon-system`, hoàn thành chức năng và tạo commit theo đúng quy ước Conventional Commits. Học viên mở PR, nhận được phản hồi yêu cầu kiểm tra trường hợp mã giảm giá hết hạn từ hệ thống giả lập Reviewer. Học viên khéo léo bổ sung commit xử lý ngoại lệ, vượt qua toàn bộ các bài kiểm tra tự động, được Approve và hòa nhập thành công vào nhánh main trong sự hoan nghênh của toàn đội.
+## 🏢 Ví dụ thực tế
+Học viên tiếp nhận Issue #201 yêu cầu xây dựng tính năng mã giảm giá cho ứng dụng mua sắm. Học viên kéo code mới nhất từ main, tạo nhánh `feat/coupon-system`, hoàn thành tính năng và commit theo chuẩn. Khi mở PR, bạn nhận góp ý từ Reviewer yêu cầu xử lý trường hợp mã hết hạn. Học viên bổ sung commit, vượt qua kiểm thử tự động, được Approve và merge thành công vào main.
 
 ---
 
-## 💻 Command
+## 💻 Command & Cú pháp
 ```bash
 git switch main
 git pull origin main
@@ -67,42 +86,44 @@ git branch -d feat/coupon-system
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Tự ý merge PR khi chưa được Reviewer phê duyệt (bỏ qua quy trình kiểm duyệt chất lượng).**: Tự ý merge PR khi chưa được Reviewer phê duyệt (bỏ qua quy trình kiểm duyệt chất lượng).
-2. **Không đọc kỹ các yêu cầu nghiệp vụ trong Issue dẫn đến việc viết sai tính năng cần giao nộp.**: Không đọc kỹ các yêu cầu nghiệp vụ trong Issue dẫn đến việc viết sai tính năng cần giao nộp.
-3. **Quên cập nhật lại nhánh main cục bộ sau khi PR đã merge thành công trên hệ thống.**: Quên cập nhật lại nhánh main cục bộ sau khi PR đã merge thành công trên hệ thống.
+1. **Tự ý merge PR khi chưa được phê duyệt**: Bỏ qua quy trình kiểm soát chất lượng và làm tăng nguy cơ lỗi cho toàn đội.
+2. **Không đọc kỹ yêu cầu trong Issue**: Dẫn đến việc lập trình sai nghiệp vụ và phải viết lại tính năng từ đầu.
+3. **Quên kéo cập nhật main về máy sau khi merge**: Khiến các nhánh tính năng tiếp theo bị xuất phát từ mốc lịch sử cũ lỗi thời.
 
 ---
 
-## 🧪 Lab
-1. Khởi động kịch bản mô phỏng `team-project-simulation` trong giao diện bài tập.
-2. Xem xét yêu cầu trong Issue được giao và tạo nhánh tính năng tương ứng.
-3. Viết code giải quyết bài toán và tạo commit chuẩn quy ước.
+## 🧪 Lab thực hành
+Bài học này là bài tự kiểm tra: bạn vận hành chu trình phối hợp nhóm hoàn chỉnh từ tiếp nhận Issue đến đóng PR.
+1. Khởi động kịch bản mô phỏng dự án nhóm trong môi trường làm việc.
+2. Đọc kỹ yêu cầu trong Issue được giao và tạo nhánh tính năng tương ứng.
+3. Viết code giải quyết bài toán và tạo commit chuẩn quy ước Conventional Commits.
 4. Mở Pull Request, đọc nhận xét của Reviewer và thực hiện chỉnh sửa bổ sung.
 5. Hoàn tất merge PR và xác nhận Issue được đóng tự động.
 
 ---
 
-## 💡 Hint
-> Bình tĩnh đọc kỹ phản hồi của Reviewer để hoàn thiện mã nguồn theo đúng tiêu chuẩn dự án.
+## 💡 Hint & mẹo
+> Luôn giữ thái độ cầu thị, đọc kỹ phản hồi của Reviewer để hoàn thiện mã nguồn theo đúng tiêu chuẩn dự án.
 
 ---
 
-## ✅ Validation
-- Hoàn thành 100% các tiêu chí kiểm thử của kịch bản mô phỏng dự án nhóm.
+## ✅ Validation & Kết quả mong đợi
+- Toàn bộ chu trình từ Issue đến PR Merged được hoàn thành trơn tru.
+- Nhánh tính năng được dọn dẹp sạch sẽ và nhánh main cục bộ đồng bộ hoàn toàn với remote.
 
 ---
 
-## ❓ Quiz
+## ❓ Quiz nhanh
 Làm bài trắc nghiệm tổng kết để hoàn tất toàn bộ Level 4: GitHub Collaboration.
 
 ---
 
-## 🔥 Challenge
-Mô phỏng lại toàn bộ quy trình này với một người bạn học cùng bằng cách tạo repository thật trên GitHub.
+## 🚀 Thử thách nâng cao
+Mô phỏng lại toàn bộ quy trình này với một người bạn học cùng bằng cách tạo repository thật trên GitHub và phân vai review chéo cho nhau.
 
 ---
 
-## 📚 Tổng kết
+## 📝 Tổng kết
 - Làm chủ toàn diện kỹ năng cộng tác: Clone, Fetch, Pull, Push, Fork, PR và Code Review.
 - Feature Branch Workflow là kim chỉ nam cho mọi hoạt động phát triển phần mềm nhóm.
 - Giao tiếp văn minh, viết mô tả rõ ràng và tôn trọng quy trình là chìa khóa của sự thành công.

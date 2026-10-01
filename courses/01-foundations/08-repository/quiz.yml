@@ -2,11 +2,10 @@ id: quiz-08-repository
 title: "Trắc nghiệm: Repository và cấu trúc .git"
 questions:
   - id: q1
-    question: Thành phần nào là trái tim lưu trữ toàn bộ lịch sử và đối tượng của
-      một Git Repository?
+    question: Thư mục nào do Git tạo để giữ dữ liệu quản lý repository?
     type: single
     options:
-      - text: Thư mục ẩn mang tên `.git` nằm ở gốc dự án
+      - text: Thư mục ẩn `.git`
         correct: true
       - text: Tệp tin `node_modules` chứa các thư viện JavaScript
         correct: false
@@ -14,14 +13,12 @@ questions:
         correct: false
       - text: Tệp tin `package.json` nằm ở ngoài cùng
         correct: false
-    explanation: Thư mục ẩn `.git` chứa toàn bộ cơ sở dữ liệu đối tượng, cấu hình,
-      refs và lịch sử của Git.
+    explanation: Git tạo `.git` để giữ dữ liệu nội bộ, chẳng hạn cấu hình và lịch sử.
   - id: q2
-    question: Điều gì sẽ xảy ra nếu bạn xóa bỏ hoàn toàn thư mục `.git` trong một dự án?
+    question: Nếu xóa `.git`, điều gì thường còn lại trong thư mục dự án?
     type: single
     options:
-      - text: Dự án trở thành thư mục tệp tin bình thường, toàn bộ lịch sử commit cục bộ
-          bị mất vĩnh viễn
+      - text: Các tệp hiện tại còn lại, nhưng repository và lịch sử Git cục bộ không còn
         correct: true
       - text: Toàn bộ code trong dự án sẽ tự động bị biên dịch sang ngôn ngữ C++
         correct: false
@@ -29,29 +26,25 @@ questions:
         correct: false
       - text: Máy tính sẽ bị khóa màn hình và yêu cầu khởi động lại
         correct: false
-    explanation: Xóa `.git` làm mất hoàn toàn lịch sử phiên bản cục bộ, chỉ giữ lại
-      các tệp hiện tại trong Working Tree.
+    explanation: "`.git` chứa dữ liệu Git cục bộ; xóa nó không tự xóa các tệp dự án khác."
   - id: q3
-    question: Thư mục con `objects/` bên trong `.git` dùng để làm gì?
+    question: "`Working Tree` là tên gọi của phần nào?"
     type: single
     options:
-      - text: Lưu trữ cơ sở dữ liệu toàn bộ các đối tượng Blob (tệp tin), Tree (thư mục)
-          và Commit
+      - text: Các tệp dự án mà bạn đang xem và sửa
         correct: true
-      - text: Lưu ảnh đại diện của các thành viên trong nhóm dự án
+      - text: Nơi GitHub lưu ảnh đại diện
         correct: false
-      - text: Lưu trữ tài liệu thiết kế Figma của lập trình viên giao diện
+      - text: Thư mục lưu bản cài Git
         correct: false
-      - text: Chứa các tệp tạm thời tự động xóa sau 5 phút
+      - text: Tên khác của lịch sử commit
         correct: false
-    explanation: "`.git/objects/` là kho lưu trữ cơ sở dữ liệu bất biến (Object
-      Database) theo mã hash SHA của Git."
+    explanation: Working Tree là các tệp của dự án mà bạn mở và sửa trực tiếp.
   - id: q4
-    question: Tệp `HEAD` bên trong thư mục `.git` đóng vai trò gì?
+    question: "Tệp `HEAD` bên trong thư mục `.git` đóng vai trò gì?"
     type: single
     options:
-      - text: Chỉ định con trỏ trỏ tới nhánh hoặc commit mà bạn đang làm việc trực tiếp
-          tại thời điểm hiện tại
+      - text: Giúp Git biết nhánh hoặc commit hiện tại bạn đang làm việc
         correct: true
       - text: Lưu tiêu đề trang web HTML của dự án
         correct: false
@@ -59,5 +52,4 @@ questions:
         correct: false
       - text: Lưu mật khẩu mã hóa của kho chứa
         correct: false
-    explanation: "Tệp `HEAD` là một con trỏ tham chiếu (symref) trỏ đến nhánh hiện
-      tại (ví dụ `ref: refs/heads/main`)."
+    explanation: "`HEAD` cho Git biết vị trí hiện tại, thường là nhánh đang được chọn."

@@ -37,7 +37,7 @@ export const lesson: CourseLesson = {
       "git checkout -- <tên-tệp>"
     ]
   },
-  "content": "# Lệnh git checkout và lịch sử\n\n---\n\n## 🎯 Mục tiêu\n- Hiểu bối cảnh lịch sử và tính đa năng của lệnh truyền thống `git checkout`.\n- Phân biệt rõ ràng các trường hợp sử dụng của `git checkout`: chuyển nhánh, xem commit cũ, và hoàn tác tệp.\n- Nắm bắt lý do chuyển dịch sang bộ đôi lệnh hiện đại `git switch` và `git restore`.\n\n---\n\n## 📖 Định nghĩa\n> `git checkout` là một trong những câu lệnh lâu đời, nổi tiếng và đa năng bậc nhất trong lịch sử phát triển của Git. Trước phiên bản 2.23, `git checkout` đảm nhận đồng thời hai nhiệm vụ hoàn toàn khác nhau: thao tác trên nhánh/commit (chuyển nhánh, tạo nhánh mới, vào Detached HEAD) và thao tác trên tệp tin (hoàn tác tệp đã sửa, phục hồi tệp từ một commit cụ thể). Dù hiện nay các lệnh chuyên trách đã ra đời, `git checkout` vẫn xuất hiện rất nhiều trong các tài liệu và dự án cũ.\n\n---\n\n## 🤔 Tại sao cần?\nKhi tham gia vào các dự án phần mềm thực tế hoặc tìm kiếm câu trả lời trên Stack Overflow, bạn sẽ bắt gặp hàng ngàn ví dụ và hướng dẫn sử dụng lệnh `git checkout`. Hiểu rõ cú pháp và hành vi của lệnh này giúp bạn dễ dàng đọc hiểu các tài liệu kỹ thuật cũ, cấu hình các script CI/CD tự động hóa có sẵn, đồng thời trân trọng hơn sự ra đời của các lệnh hiện đại như `git switch` và `git restore`.\n\n---\n\n## 🧠 Mental Model (Mô hình tư duy)\nHãy hình dung `git checkout` giống như một chiếc dao đa năng Thụy Sĩ cổ điển tích hợp hàng chục lưỡi dao, tua-vít và kéo cắt trên cùng một thân dao nhỏ. Chiếc dao này làm được mọi việc nhưng khi bạn muốn cắt một mẩu giấy nhỏ, bạn rất dễ vô ý mở nhầm lưỡi cưa sắc nhọn và làm đứt tay. Bộ đôi lệnh mới `git switch` và `git restore` giống như hai dụng cụ chuyên dụng riêng biệt: một chiếc kéo cắt giấy chuyên nghiệp và một chiếc tua-vít chuẩn mực.\n\n---\n\n## 🖼 Sơ đồ\n```text\nSự phân tách nhiệm vụ của git checkout:\n                  ┌──► Thao tác trên Branch/Commit ──► [git switch]\n[git checkout] ──┤\n                  └──► Thao tác trên Tệp tin (File) ──► [git restore]\n```\n\n---\n\n## 🌎 Ví dụ thực tế\nMột kỹ sư mới vào công ty đọc tài liệu hướng dẫn triển khai hệ thống viết từ năm 2018. Trong tài liệu có dòng lệnh: `git checkout -b release-v1.0`. Kỹ sư lập tức nhận ra đây chính là thao tác tạo và chuyển sang nhánh mới, hoàn toàn tương đương với lệnh hiện đại `git switch -c release-v1.0` mà mình đã được học trong các khóa đào tạo chuẩn hóa. Nhờ hiểu sâu sắc cả hai thế hệ câu lệnh, kỹ sư tự tin thực thi hướng dẫn mà không gặp bất kỳ trở ngại nào. Kỹ sư còn giải thích lại cho các bạn thực tập sinh khác trong nhóm hiểu lý do tại sao tài liệu cũ lại dùng checkout và khi nào thì nên chuyển đổi sang các lệnh chuyên biệt.\n\n---\n\n## 💻 Command\n```bash\ngit checkout <tên-nhánh>\ngit checkout -b <tên-nhánh-mới>\ngit checkout <commit-hash>\ngit checkout -- <tên-tệp>\n```\n\n---\n\n## 🔍 Giải thích command\n- `git checkout <tên-nhánh>`: Chuyển sang một nhánh khác (tương đương `git switch <tên-nhánh>`).\n- `git checkout -b <tên-nhánh-mới>`: Vừa tạo vừa chuyển sang nhánh mới (tương đương `git switch -c <tên-nhánh-mới>`).\n- `git checkout <commit-hash>`: Đưa con trỏ HEAD về commit trong quá khứ ở trạng thái Detached HEAD.\n- `git checkout -- <tên-tệp>`: Hủy bỏ các thay đổi dở dang trên tệp trong Working Tree (tương đương `git restore <tên-tệp>`).\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Quên dấu hai gạch ngang `--` khi checkout file**:  Nếu có một nhánh trùng tên với tên tệp tin, Git sẽ ưu tiên chuyển nhánh thay vì phục hồi tệp.\n2. **Sử dụng lệnh checkout cho người mới học**:  Dễ gây hoang mang và nhầm lẫn khái niệm giữa thao tác nhánh và thao tác tệp.\n3. **Nhầm lẫn giữa việc hủy bỏ thay đổi tệp và chuyển nhánh**:  Có thể vô tình làm mất dữ liệu tệp tin khi gõ thiếu tham số.\n\n---\n\n## 🧪 Lab\n1. Chạy lệnh `git checkout -b legacy-demo` để tạo và chuyển nhánh theo cách truyền thống.\n2. Chạy `git checkout main` để quay trở về nhánh chính.\n3. Xóa nhánh thử nghiệm bằng `git branch -d legacy-demo`.\n\n---\n\n## 💡 Hint\n> Trong các dự án mới, hãy ưu tiên dùng `git switch` và `git restore`.\n\n---\n\n## ✅ Validation\n- Nắm vững sự tương đồng giữa các cú pháp cũ và mới.\n\n---\n\n## ❓ Quiz\nHãy làm bài trắc nghiệm dưới đây về lệnh truyền thống git checkout.\n\n---\n\n## 🔥 Challenge\nGiải thích vì sao cú pháp `git checkout -- <file>` bắt buộc phải có dấu `--` khi tên tệp trùng với tên một nhánh.\n\n---\n\n## 📚 Tổng kết\n- `git checkout` là lệnh truyền thống đa năng cho cả nhánh và tệp tin.\n- `git checkout -b` tương đương với lệnh hiện đại `git switch -c`.\n- Hiện nay khuyến nghị sử dụng `git switch` và `git restore` để tăng tính rõ nghĩa và an toàn.\n",
+  "content": "# Lệnh git checkout và lịch sử\n\n---\n\n## 🎯 Mục tiêu\n- Hiểu bối cảnh lịch sử và tính đa năng của lệnh truyền thống `git checkout`.\n- Phân biệt các trường hợp dùng `git checkout` để đọc hiểu các tài liệu và dự án cũ.\n- Đối chiếu các cú pháp cũ của checkout với bộ đôi lệnh hiện đại `git switch` và `git restore`.\n\n---\n\n## 🧩 Từ khóa hôm nay\n\n### git checkout — lệnh truyền thống đa năng\n- **Nói dễ hiểu:** Câu lệnh cũ trong Git từng đảm nhận cả việc đổi nhánh lẫn khôi phục nội dung tệp.\n- **Ví dụ:** Gặp `git checkout main` trong các bài viết blog hoặc hướng dẫn viết từ nhiều năm trước.\n- **Đừng nhầm:** Lệnh vẫn hoạt động bình thường, nhưng ngày nay Git khuyến khích dùng các lệnh chuyên biệt.\n\n### git checkout -b — tiền thân của git switch -c\n- **Nói dễ hiểu:** Cú pháp quen thuộc trong tài liệu cũ dùng để vừa tạo nhánh mới vừa chuyển sang nhánh đó.\n- **Ví dụ:** Lệnh `git checkout -b feature-cart` tương đương hoàn toàn với `git switch -c feature-cart`.\n- **Đừng nhầm:** Hai lệnh này cho ra kết quả giống nhau; lệnh `switch -c` ra đời sau để cú pháp rõ nghĩa hơn.\n\n### git checkout -- file — tiền thân của git restore\n- **Nói dễ hiểu:** Cú pháp cũ dùng để hủy bỏ các thay đổi dở dang trên một tệp trong thư mục làm việc.\n- **Ví dụ:** Lệnh `git checkout -- index.html` tương đương với `git restore index.html`.\n- **Đừng nhầm:** Dấu `--` là cần thiết để Git không nhầm đường dẫn tệp với tên một nhánh có thể trùng.\n\n---\n\n## 📖 Định nghĩa\n`git checkout` là câu lệnh truyền thống nổi tiếng của Git. Trước phiên bản 2.23, lệnh này vừa dùng cho thao tác nhánh (chuyển nhánh, tạo nhánh mới) vừa dùng cho thao tác tệp (hủy sửa đổi trên tệp). Ngày nay, hai nhiệm vụ này đã được chia cho `git switch` và `git restore`.\n\n---\n\n## 🤔 Tại sao cần?\nKhi tìm kiếm lời giải trên mạng hoặc đọc mã nguồn của các dự án lâu năm, bạn sẽ thấy `git checkout` xuất hiện ở khắp mọi nơi. Hiểu rõ lệnh này giúp bạn tự tin đọc hiểu tài liệu cũ, vận hành các tập lệnh tự động hóa và biết cách quy đổi sang các lệnh hiện đại.\n\n---\n\n## 🧠 Mental Model (Mô hình tư duy)\nHãy hình dung `git checkout` giống như chiếc dao đa năng Thụy Sĩ tích hợp cả kéo, dao và tua-vít. Chiếc dao này làm được nhiều việc nhưng dễ bật nhầm lưỡi dao khi chỉ muốn dùng kéo. Bộ đôi mới `git switch` và `git restore` giống như việc tách ra thành một chiếc kéo và một chiếc tua-vít riêng biệt để thao tác chính xác và an toàn.\n\n---\n\n## 🖼 Sơ đồ\n```text\nSự phân tách nhiệm vụ của git checkout:\n                  ┌───> Thao tác trên Nhánh ────> git switch\n[git checkout] ──┤\n                  └───> Thao tác trên Tệp ──────> git restore\n```\n\n---\n\n## 🌎 Ví dụ thực tế\nBạn tham gia vào một dự án mở và đọc tệp hướng dẫn có dòng: `git checkout -b dev-setup`. Bạn nhận ra ngay đây là lệnh tạo và chuyển sang nhánh `dev-setup`. Bạn có thể gõ nguyên lệnh đó hoặc dùng lệnh mới `git switch -c dev-setup` với kết quả hoàn toàn giống nhau.\n\n---\n\n## 💻 Command\n```bash\ngit checkout <tên-nhánh>\ngit checkout -b <tên-nhánh-mới>\ngit checkout -- <tên-tệp>\n```\n\n---\n\n## 🔍 Giải thích command\n- `git checkout <tên-nhánh>`: Chuyển sang nhánh chỉ định (tương đương `git switch <tên-nhánh>`).\n- `git checkout -b <tên-nhánh-mới>`: Vừa tạo vừa chuyển sang nhánh mới (tương đương `git switch -c <tên-nhánh-mới>`).\n- `git checkout -- <tên-tệp>`: Hủy bỏ sửa đổi chưa lưu trên tệp (tương đương `git restore <tên-tệp>`).\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Quên dấu `--` khi khôi phục tệp:** Nếu tên tệp trùng với tên một nhánh trong dự án, Git sẽ chuyển nhánh thay vì khôi phục tệp.\n2. **Bối rối khi thấy tài liệu dùng checkout:** Không cần lo lắng vì đây chỉ là cú pháp quen thuộc trước đây của `git switch`.\n3. **Dùng checkout cho người mới học:** Dễ gây nhầm lẫn giữa việc đổi nhánh và việc xóa sửa đổi của tệp.\n\n---\n\n## 🧪 Lab\nBài học này là bài tự kiểm tra cú pháp trên máy của bạn:\n1. Chạy lệnh `git checkout -b legacy-demo` để tạo và chuyển nhánh theo phong cách truyền thống.\n2. Chạy `git status` để xác nhận bạn đang ở trên nhánh `legacy-demo`.\n3. Chạy `git checkout main` để quay trở về nhánh chính.\n4. Xóa nhánh vừa thử nghiệm bằng lệnh `git branch -d legacy-demo`.\n\n---\n\n## 💡 Hint\nTrong các dự án mới của bản thân, hãy ưu tiên dùng `git switch` cho nhánh và `git restore` cho tệp.\n\n---\n\n## ✅ Validation\n- Nhánh `legacy-demo` được tạo và sau đó xóa sạch sẽ.\n- Bạn giải thích được sự tương đương giữa `checkout -b` và `switch -c`.\n\n---\n\n## ❓ Quiz\nTrả lời các câu hỏi sau để nắm vững sự chuyển dịch từ `git checkout` sang các lệnh hiện đại.\n\n---\n\n## 🔥 Challenge\nGiải thích cho một bạn cùng nhóm vì sao tách lệnh thành `git switch` và `git restore` lại giúp giảm rủi ro mất code hơn so với việc dùng chung một lệnh `git checkout`.\n\n---\n\n## 📚 Tổng kết\n- `git checkout` là lệnh truyền thống làm được cả thao tác nhánh và thao tác tệp.\n- Cú pháp `git checkout -b` tương đương hoàn toàn với `git switch -c`.\n- Dùng `git switch` và `git restore` là chuẩn mực hiện đại giúp câu lệnh rõ nghĩa và an toàn.\n",
   "quiz": {
     "id": "quiz-03-05-git-checkout",
     "title": "Trắc nghiệm: Lệnh truyền thống git checkout",
@@ -64,7 +64,7 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "Lệnh truyền thống `git checkout -b <name>` thực hiện chính xác hành động vừa tạo nhánh mới vừa chuyển nhánh tương đương hoàn toàn với `git switch -c <name>` hiện đại."
+        "explanation": "Lệnh truyền thống `git checkout -b <name>` thực hiện việc vừa tạo nhánh mới vừa chuyển sang nhánh đó, tương đương `git switch -c <name>`."
       },
       {
         "id": "q2",
@@ -96,7 +96,7 @@ export const lesson: CourseLesson = {
         "type": "single",
         "options": [
           {
-            "text": "Phân tách rõ ràng giữa danh sách tùy chọn/nhánh và danh sách đường dẫn tệp tin để tránh trùng lặp tên",
+            "text": "Phân tách rõ ràng giữa tên nhánh và tên tệp tin để tránh trường hợp trùng tên",
             "correct": true
           },
           {
@@ -112,15 +112,15 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "Dấu `--` báo cho Git biết mọi đối số phía sau chắc chắn là đường dẫn tệp tin, không phải tên nhánh."
+        "explanation": "Dấu `--` báo cho Git biết mọi đối số phía sau là đường dẫn tệp tin, không phải tên nhánh."
       },
       {
         "id": "q4",
-        "question": "Lời khuyên tốt nhất dành cho các kỹ sư phần mềm khi viết mã nguồn và dự án mới hiện nay là gì?",
+        "question": "Lời khuyên tốt nhất dành cho các lập trình viên khi làm dự án Git hiện nay là gì?",
         "type": "single",
         "options": [
           {
-            "text": "Sử dụng git switch cho nhánh và git restore cho tệp tin để mã lệnh an toàn và rõ nghĩa",
+            "text": "Sử dụng git switch cho nhánh và git restore cho tệp tin để câu lệnh an toàn và rõ nghĩa",
             "correct": true
           },
           {
@@ -136,7 +136,31 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "Các lệnh mới chuyên biệt giúp quy trình rõ ràng và loại bỏ hoàn toàn các lỗi thao tác nhầm lẫn."
+        "explanation": "Các lệnh chuyên biệt `git switch` và `git restore` giúp quy trình rõ ràng và giảm thiểu nhầm lẫn."
+      },
+      {
+        "id": "q5",
+        "question": "Khi bạn gặp câu lệnh `git checkout main` trong một tài liệu cũ, lệnh này tương đương trực tiếp với lệnh nào hiện nay?",
+        "type": "single",
+        "options": [
+          {
+            "text": "git switch main",
+            "correct": true
+          },
+          {
+            "text": "git restore main",
+            "correct": false
+          },
+          {
+            "text": "git branch -d main",
+            "correct": false
+          },
+          {
+            "text": "git merge main",
+            "correct": false
+          }
+        ],
+        "explanation": "`git checkout <nhánh>` dùng để chuyển sang nhánh chỉ định, ngày nay được khuyến nghị thay thế bằng `git switch <nhánh>`."
       }
     ]
   }

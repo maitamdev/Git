@@ -2,8 +2,7 @@ id: quiz-07-github-actions-06-jobs-configuration
 title: "Trắc nghiệm: Cấu hình Jobs: runs-on, phân tách độc lập và môi trường"
 questions:
   - id: q1
-    question: Thuộc tính nào là bắt buộc phải có trong mỗi định nghĩa Job của GitHub
-      Actions?
+    question: Thuộc tính nào là bắt buộc phải có trong mỗi định nghĩa Job của GitHub Actions?
     type: single
     options:
       - text: runs-on
@@ -14,11 +13,9 @@ questions:
         correct: false
       - text: os-system
         correct: false
-    explanation: GitHub Actions bắt buộc phải biết máy ảo loại nào được dùng để thực
-      thi Job thông qua từ khóa `runs-on`.
+    explanation: GitHub Actions bắt buộc phải biết máy ảo loại nào được dùng để thực thi Job thông qua từ khóa `runs-on`.
   - id: q2
-    question: Giá trị nào sau đây thường được sử dụng phổ biến và tiết kiệm nhất cho
-      thuộc tính runs-on?
+    question: Giá trị nào sau đây thường được sử dụng phổ biến và tiết kiệm nhất cho thuộc tính runs-on?
     type: single
     options:
       - text: ubuntu-latest
@@ -29,11 +26,9 @@ questions:
         correct: false
       - text: solaris-latest
         correct: false
-    explanation: "`ubuntu-latest` là môi trường Linux phổ biến nhất, tốc độ khởi
-      động cực nhanh và có chi phí tài nguyên thấp nhất."
+    explanation: "`ubuntu-latest` là môi trường Linux phổ biến nhất, tốc độ khởi động cực nhanh và có chi phí tài nguyên thấp nhất."
   - id: q3
-    question: Điều gì xảy ra với hệ thống tệp tin sau khi một Job kết thúc phiên
-      chạy của mình?
+    question: Điều gì xảy ra với hệ thống tệp tin sau khi một Job kết thúc phiên chạy của mình?
     type: single
     options:
       - text: Máy ảo Runner bị hủy hoàn toàn cùng toàn bộ dữ liệu tạm thời trên ổ đĩa
@@ -44,14 +39,12 @@ questions:
         correct: false
       - text: Dữ liệu tự động chuyển sang máy tính cá nhân của lập trình viên
         correct: false
-    explanation: Các Runner do GitHub lưu trữ (GitHub-hosted) hoạt động theo mô hình
-      phi trạng thái (ephemeral), máy ảo bị xóa sạch ngay sau khi Job kết thúc.
+    explanation: Các Runner do GitHub lưu trữ (GitHub-hosted) hoạt động theo mô hình phi trạng thái (ephemeral), máy ảo bị xóa sạch ngay sau khi Job kết thúc.
   - id: q4
     question: Mục đích của việc đặt trường `name:` bên trong cấu hình Job là gì?
     type: single
     options:
-      - text: Hiển thị tên mô tả thân thiện, dễ đọc trên giao diện web của GitHub
-          Actions
+      - text: Hiển thị tên mô tả thân thiện, dễ đọc trên giao diện web của GitHub Actions
         correct: true
       - text: Đặt tên tài khoản đăng nhập vào máy ảo
         correct: false
@@ -59,5 +52,17 @@ questions:
         correct: false
       - text: Quy định tên của thư mục chứa mã nguồn
         correct: false
-    explanation: Trường `name:` giúp người quản trị dễ dàng nhận diện tác vụ trên
-      giao diện trực quan thay vì chỉ nhìn thấy mã định danh `job_id`.
+    explanation: Trường `name:` giúp người quản trị dễ dàng nhận diện tác vụ trên giao diện trực quan thay vì chỉ nhìn thấy mã định danh `job_id`.
+  - id: q5
+    question: Thuộc tính `timeout-minutes` trong cấu hình của một Job có ý nghĩa bảo vệ gì?
+    type: single
+    options:
+      - text: Tự động hủy Job nếu thời gian chạy vượt quá số phút quy định để tránh lãng phí tài nguyên khi bị treo vô hạn
+        correct: true
+      - text: Bắt buộc máy ảo phải chờ đủ số phút đó rồi mới bắt đầu chạy
+        correct: false
+      - text: Đếm ngược thời gian bảo hành phần cứng máy chủ của GitHub
+        correct: false
+      - text: Tạm dừng kết nối Internet của kho lưu trữ trong một khoảng thời gian
+        correct: false
+    explanation: Cài đặt timeout-minutes giúp bảo vệ tài khoản khỏi các lỗi treo vô tận, tránh làm cạn kiệt hạn mức phút miễn phí của GitHub Actions.

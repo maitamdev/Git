@@ -62,3 +62,19 @@ questions:
         correct: false
     explanation: "`git stash clear` dọn sạch 100% tất cả các mẩu stash đang có trong
       kho lưu trữ cục bộ."
+  - id: q5
+    question: Cú pháp chuẩn hiện đại nào giúp bạn lưu stash kèm theo thông điệp mô
+      tả rõ ràng để dễ nhận diện trong `git stash list`?
+    type: single
+    options:
+      - text: git stash push -m "thông điệp mô tả công việc"
+        correct: true
+      - text: git stash commit -m "thông điệp mô tả"
+        correct: false
+      - text: git stash tag "tên nhãn"
+        correct: false
+      - text: git stash label "tên nhãn"
+        correct: false
+    explanation: Cú pháp `git stash push -m '<message>'` gắn nhãn ghi chú cho mẩu stash,
+      giúp phân biệt dễ dàng giữa nhiều mẩu lưu tạm.
+

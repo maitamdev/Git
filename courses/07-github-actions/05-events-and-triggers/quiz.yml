@@ -1,10 +1,8 @@
 id: quiz-07-github-actions-05-events-and-triggers
-title: "Trắc nghiệm: Sự kiện kích hoạt (Events & Triggers: push, pull_request,
-  workflow_dispatch)"
+title: "Trắc nghiệm: Sự kiện kích hoạt (Events & Triggers: push, pull_request, workflow_dispatch)"
 questions:
   - id: q1
-    question: Khóa nào trong tệp YAML được sử dụng để định nghĩa sự kiện kích hoạt
-      workflow?
+    question: Khóa nào trong tệp YAML được sử dụng để định nghĩa sự kiện kích hoạt workflow?
     type: single
     options:
       - text: on
@@ -15,11 +13,9 @@ questions:
         correct: false
       - text: event
         correct: false
-    explanation: Trong cú pháp của GitHub Actions, từ khóa `on` là bắt buộc để định
-      nghĩa các sự kiện kích hoạt.
+    explanation: Trong cú pháp của GitHub Actions, từ khóa `on` là bắt buộc để định nghĩa các sự kiện kích hoạt.
   - id: q2
-    question: Sự kiện nào sau đây cho phép lập trình viên bấm nút chạy workflow thủ
-      công trên giao diện web GitHub?
+    question: Sự kiện nào sau đây cho phép lập trình viên bấm nút chạy workflow thủ công trên giao diện web GitHub?
     type: single
     options:
       - text: workflow_dispatch
@@ -30,11 +26,9 @@ questions:
         correct: false
       - text: user_trigger
         correct: false
-    explanation: "`workflow_dispatch` là sự kiện đặc biệt kích hoạt thủ công qua
-      giao diện GitHub web hoặc GitHub CLI/API."
+    explanation: "`workflow_dispatch` là sự kiện đặc biệt kích hoạt thủ công qua giao diện GitHub web hoặc GitHub CLI/API."
   - id: q3
-    question: Để workflow không bị kích hoạt khi người dùng chỉ chỉnh sửa tệp
-      README.md, ta sử dụng thuộc tính nào?
+    question: Để workflow không bị kích hoạt khi người dùng chỉ chỉnh sửa tệp README.md, ta sử dụng thuộc tính nào?
     type: single
     options:
       - text: "paths-ignore: ['README.md']"
@@ -45,11 +39,9 @@ questions:
         correct: false
       - text: "no-check: ['README.md']"
         correct: false
-    explanation: "`paths-ignore` liệt kê danh sách các mẫu đường dẫn tệp tin mà khi
-      thay đổi chỉ nằm trong đó, workflow sẽ bỏ qua không chạy."
+    explanation: "`paths-ignore` liệt kê danh sách các mẫu đường dẫn tệp tin mà khi thay đổi chỉ nằm trong đó, workflow sẽ bỏ qua không chạy."
   - id: q4
-    question: Lịch chạy định kỳ `schedule` trong GitHub Actions sử dụng cú pháp biểu
-      thức nào?
+    question: Lịch chạy định kỳ `schedule` trong GitHub Actions sử dụng cú pháp biểu thức nào?
     type: single
     options:
       - text: Biểu thức Cron chuẩn 5 trường (POSIX cron syntax)
@@ -60,5 +52,17 @@ questions:
         correct: false
       - text: Biểu thức chính quy Regex
         correct: false
-    explanation: "GitHub Actions sử dụng cú pháp POSIX cron tiêu chuẩn gồm 5 trường:
-      phút, giờ, ngày trong tháng, tháng, ngày trong tuần."
+    explanation: "GitHub Actions sử dụng cú pháp POSIX cron tiêu chuẩn gồm 5 trường: phút, giờ, ngày trong tháng, tháng, ngày trong tuần."
+  - id: q5
+    question: "Thuộc tính `types` bên dưới sự kiện `pull_request` (ví dụ `types: [opened, synchronize]`) có vai trò gì?"
+    type: single
+    options:
+      - text: Lọc các hành vi cụ thể của PR như khi mở mới (opened) hoặc khi đẩy thêm commit mới (synchronize) để kích hoạt
+        correct: true
+      - text: Giới hạn kiểu tệp tin mà lập trình viên được phép chỉnh sửa
+        correct: false
+      - text: Lựa chọn loại hệ điều hành Linux hoặc Windows cho máy ảo Runner
+        correct: false
+      - text: Đổi ngôn ngữ hiển thị trên giao diện của GitHub
+        correct: false
+    explanation: Thuộc tính `types` cho phép lọc chi tiết các trạng thái biến động của sự kiện, bảo đảm workflow chỉ kích hoạt khi thực sự cần thiết.

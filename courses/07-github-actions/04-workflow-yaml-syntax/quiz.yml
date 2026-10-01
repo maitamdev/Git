@@ -2,8 +2,7 @@ id: quiz-07-github-actions-04-workflow-yaml-syntax
 title: "Trắc nghiệm: .github/workflows và cú pháp YAML chuẩn"
 questions:
   - id: q1
-    question: Tệp workflow của GitHub Actions bắt buộc phải được đặt ở đường dẫn nào
-      trong kho lưu trữ?
+    question: Tệp workflow của GitHub Actions bắt buộc phải được đặt ở đường dẫn nào trong kho lưu trữ?
     type: single
     options:
       - text: .github/workflows/
@@ -14,13 +13,12 @@ questions:
         correct: false
       - text: .ci/workflows/
         correct: false
-    explanation: GitHub Actions chỉ quét và kích hoạt các workflow nằm chính xác
-      trong thư mục `.github/workflows/` ở nhánh mặc định hoặc nhánh đang xét.
+    explanation: GitHub Actions chỉ quét và kích hoạt các workflow nằm chính xác trong thư mục `.github/workflows/` ở nhánh mặc định hoặc nhánh đang xét.
   - id: q2
     question: Ký tự nào sau đây bị cấm dùng để thụt lề trong tệp cấu hình YAML chuẩn?
     type: single
     options:
-      - text: Ký tự Tab (	)
+      - text: Ký tự Tab
         correct: true
       - text: Dấu cách Space
         correct: false
@@ -28,11 +26,9 @@ questions:
         correct: false
       - text: Dấu gạch ngang (-)
         correct: false
-    explanation: Quy chuẩn YAML cấm tuyệt đối việc sử dụng phím Tab để thụt dòng vì
-      độ rộng của Tab có thể khác nhau giữa các hệ điều hành.
+    explanation: Quy chuẩn YAML cấm tuyệt đối việc sử dụng phím Tab để thụt dòng vì độ rộng của Tab có thể khác nhau giữa các hệ điều hành.
   - id: q3
-    question: Quy ước số lượng dấu cách (Spaces) tiêu chuẩn cho mỗi cấp độ thụt lề
-      trong YAML là bao nhiêu?
+    question: Quy ước số lượng dấu cách (Spaces) tiêu chuẩn cho mỗi cấp độ thụt lề trong YAML là bao nhiêu?
     type: single
     options:
       - text: 2 dấu cách (2 spaces)
@@ -43,8 +39,7 @@ questions:
         correct: false
       - text: 8 dấu cách
         correct: false
-    explanation: Quy ước chuẩn của GitHub Actions và cộng đồng phát triển phần mềm
-      là sử dụng đúng 2 dấu cách cho mỗi tầng thụt lề.
+    explanation: Quy ước chuẩn của GitHub Actions và cộng đồng phát triển phần mềm là sử dụng đúng 2 dấu cách cho mỗi tầng thụt lề.
   - id: q4
     question: Phần mở rộng nào sau đây là hợp lệ cho một tệp workflow GitHub Actions?
     type: single
@@ -57,5 +52,17 @@ questions:
         correct: false
       - text: .sh hoặc .bash
         correct: false
-    explanation: GitHub Actions chấp nhận cả hai định dạng phần mở rộng là `.yml` và
-      `.yaml`.
+    explanation: GitHub Actions chấp nhận cả hai định dạng phần mở rộng là `.yml` và `.yaml`.
+  - id: q5
+    question: Ký hiệu dấu gạch ngang theo sau bởi khoảng trắng (`- `) trong tệp YAML biểu thị cấu trúc dữ liệu nào?
+    type: single
+    options:
+      - text: Một phần tử trong danh sách hoặc mảng (Array / List item)
+        correct: true
+      - text: Một phép trừ toán học giữa hai giá trị số
+        correct: false
+      - text: Một dòng chú thích ghi chú cần được trình phân tích bỏ qua
+        correct: false
+      - text: Một giá trị boolean mang nghĩa phủ định false
+        correct: false
+    explanation: Trong YAML, ký hiệu gạch ngang kèm khoảng trắng định nghĩa một phần tử thuộc danh sách mảng, ví dụ như danh sách các bước steps trong Job.

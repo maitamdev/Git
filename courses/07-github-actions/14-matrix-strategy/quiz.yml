@@ -2,8 +2,7 @@ id: quiz-07-github-actions-14-matrix-strategy
 title: "Trắc nghiệm: Chiến lược ma trận kiểm thử đa môi trường (Matrix Strategy)"
 questions:
   - id: q1
-    question: "Nếu ma trận khai báo `os: [ubuntu, windows]` và `node: [18, 20, 22]`,
-      có tổng cộng bao nhiêu Job con sẽ được sinh ra?"
+    question: "Nếu ma trận khai báo `os: [ubuntu, windows]` và `node: [18, 20, 22]`, có tổng cộng bao nhiêu Job con sẽ được sinh ra?"
     type: single
     options:
       - text: 6 Jobs (2 x 3 = 6)
@@ -14,15 +13,12 @@ questions:
         correct: false
       - text: 3 Jobs
         correct: false
-    explanation: "Số lượng Job con được tính bằng tích Đề-các giữa số phần tử của
-      các chiều trong ma trận: 2 nhân 3 bằng 6."
+    explanation: "Số lượng Job con được tính bằng tích Đề-các giữa số phần tử của các chiều trong ma trận: 2 nhân 3 bằng 6."
   - id: q2
-    question: "Thuộc tính `fail-fast: true` (mặc định) trong strategy có hành vi như
-      thế nào?"
+    question: "Thuộc tính `fail-fast: true` (mặc định) trong strategy có hành vi như thế nào?"
     type: single
     options:
-      - text: Ngay khi một Job con trong ma trận bị lỗi, GitHub Actions lập tức hủy bỏ
-          tất cả các Job con còn lại đang chạy
+      - text: Ngay khi một Job con trong ma trận bị lỗi, GitHub Actions lập tức hủy bỏ tất cả các Job con còn lại đang chạy
         correct: true
       - text: Tự động sửa lỗi cho các bài kiểm thử
         correct: false
@@ -30,11 +26,9 @@ questions:
         correct: false
       - text: Bỏ qua hoàn toàn bài test bị lỗi mà không thông báo
         correct: false
-    explanation: "`fail-fast: true` giúp tiết kiệm chi phí bằng cách dừng ngay toàn
-      bộ ma trận khi đã phát hiện có ít nhất một môi trường bị lỗi."
+    explanation: "`fail-fast: true` giúp tiết kiệm chi phí bằng cách dừng ngay toàn bộ ma trận khi đã phát hiện có ít nhất một môi trường bị lỗi."
   - id: q3
-    question: Cú pháp nào sau đây dùng để truy cập giá trị của biến `version` đang
-      xét trong Step của ma trận?
+    question: Cú pháp nào sau đây dùng để truy cập giá trị của biến `version` đang xét trong Step của ma trận?
     type: single
     options:
       - text: ${{ matrix.version }}
@@ -45,11 +39,9 @@ questions:
         correct: false
       - text: $MATRIX_VERSION
         correct: false
-    explanation: Ngữ cảnh `matrix` chứa giá trị hiện tại của các biến ma trận được
-      gán riêng cho từng Job con cụ thể.
+    explanation: Ngữ cảnh `matrix` chứa giá trị hiện tại của các biến ma trận được gán riêng cho từng Job con cụ thể.
   - id: q4
-    question: Thuộc tính nào cho phép bạn loại bỏ một tổ hợp cụ thể không mong muốn
-      khỏi ma trận?
+    question: Thuộc tính nào cho phép bạn loại bỏ một tổ hợp cụ thể không mong muốn khỏi ma trận?
     type: single
     options:
       - text: exclude
@@ -60,5 +52,17 @@ questions:
         correct: false
       - text: skip
         correct: false
-    explanation: Từ khóa `exclude:` trong cấu hình ma trận dùng để định nghĩa các
-      cặp giá trị cần loại trừ khỏi danh sách thực thi.
+    explanation: Từ khóa `exclude:` trong cấu hình ma trận dùng để định nghĩa các cặp giá trị cần loại trừ khỏi danh sách thực thi.
+  - id: q5
+    question: Thuộc tính `include` trong cấu hình ma trận `strategy.matrix` mang lại khả năng gì?
+    type: single
+    options:
+      - text: Cho phép bổ sung thêm một tổ hợp cấu hình tùy chỉnh hoặc thêm biến phụ trợ vào các tổ hợp có sẵn
+        correct: true
+      - text: Bắt buộc tất cả các tệp tin trong repository phải được biên dịch
+        correct: false
+      - text: Nhúng thêm mã HTML vào giao diện hiển thị của GitHub
+        correct: false
+      - text: Đưa thêm các bài kiểm tra từ một repository khác vào chạy chung
+        correct: false
+    explanation: "Thuộc tính `include:` cho phép mở rộng ma trận bằng cách thêm các tổ hợp cấu hình mới hoặc bổ sung thuộc tính đặc thù cho một tổ hợp cụ thể."

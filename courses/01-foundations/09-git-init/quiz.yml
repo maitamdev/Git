@@ -13,7 +13,7 @@ questions:
         correct: false
       - text: git new
         correct: false
-    explanation: "`git init` là câu lệnh chuẩn của Git để khởi tạo kho lưu trữ mới."
+    explanation: "`git init` bắt đầu quản lý thư mục hiện tại bằng một repository Git."
   - id: q2
     question: Sau khi chạy lệnh `git init` thành công, thư mục ẩn nào sẽ xuất hiện
       trong dự án?
@@ -27,15 +27,13 @@ questions:
         correct: false
       - text: .repository
         correct: false
-    explanation: Lệnh `git init` tạo ra thư mục ẩn `.git` chứa toàn bộ cơ sở dữ liệu
-      của kho lưu trữ.
+    explanation: "Git tạo `.git` để bắt đầu giữ dữ liệu nội bộ cho repository mới."
   - id: q3
     question: Điều gì sẽ xảy ra nếu bạn chạy `git init` trong một thư mục đã có sẵn
       các tệp mã nguồn HTML và CSS?
     type: single
     options:
-      - text: Git an toàn tạo thư mục `.git` và giữ nguyên toàn bộ các tệp HTML/CSS hiện
-          có
+      - text: Các tệp hiện có vẫn còn; Git tạo dữ liệu repository trong `.git`
         correct: true
       - text: Toàn bộ các tệp HTML/CSS sẽ bị xóa sạch để làm mới
         correct: false
@@ -43,8 +41,7 @@ questions:
         correct: false
       - text: Lệnh sẽ báo lỗi và từ chối chạy trên thư mục không rỗng
         correct: false
-    explanation: "`git init` hoàn toàn an toàn, chỉ khởi tạo hạ tầng quản lý phiên
-      bản mà không xâm phạm tệp tin sẵn có."
+    explanation: Trong thư mục có tệp, `git init` tạo dữ liệu Git mà không xóa các tệp.
   - id: q4
     question: Cờ tùy chọn nào cho phép bạn chỉ định tên nhánh khởi tạo ban đầu (ví
       dụ `main`) khi chạy `git init`?
@@ -58,5 +55,4 @@ questions:
         correct: false
       - text: -m <tên-nhánh>
         correct: false
-    explanation: Cú pháp `git init -b main` hoặc `git init --initial-branch=main`
-      thiết lập tên nhánh mặc định ngay khi khởi tạo.
+    explanation: "`-b main` đặt tên nhánh ban đầu là main khi tạo repository."

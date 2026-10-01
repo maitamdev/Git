@@ -64,3 +64,20 @@ questions:
         correct: false
     explanation: Các bước tái hiện rõ ràng là yếu tố tiên quyết để kỹ sư khác có thể
       kiểm tra và sửa lỗi triệt để.
+  - id: q5
+    question: Tính năng Milestones trong GitHub Issues mang lại giá trị quản trị nào
+      cho đội ngũ phát triển?
+    type: single
+    options:
+      - text: Gom nhóm các Issue và PR liên quan theo một đợt phát hành phiên bản hoặc
+          hạn chót sprint cụ thể để theo dõi tiến độ chung
+        correct: true
+      - text: Tự động khóa kho chứa lại khi đến ngày hạn chót mà chưa xong việc
+        correct: false
+      - text: Giới hạn số lượng commit tối đa mà mỗi thành viên được phép đẩy lên
+        correct: false
+      - text: Tự động sa thải người được giao việc nếu Issue bị trễ hạn
+        correct: false
+    explanation: Milestones giúp nhóm theo dõi tỷ lệ phần trăm hoàn thành của một nhóm
+      các task hướng tới một cột mốc bàn giao sản phẩm.
+

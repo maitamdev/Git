@@ -13,15 +13,13 @@ questions:
         correct: false
       - text: Tự động biên dịch mã nguồn thành file chạy
         correct: false
-    explanation: HEAD luôn là con trỏ trỏ tới vị trí làm việc hiện tại của Working
-      Tree trong đồ thị lịch sử commit.
+    explanation: HEAD cho biết nhánh hoặc commit hiện được chọn làm vị trí làm việc.
   - id: q2
     question: Khi bạn tạo một commit mới trong trạng thái bình thường, điều gì sẽ
       xảy ra với HEAD?
     type: single
     options:
-      - text: Nhánh hiện tại và HEAD sẽ tự động di chuyển tiến lên chỉ vào commit mới
-          vừa tạo
+      - text: Nhánh hiện tại trỏ tới commit mới; HEAD theo nhánh đang chọn
         correct: true
       - text: HEAD sẽ bị xóa bỏ và bạn phải khởi động lại máy tính
         correct: false
@@ -29,14 +27,12 @@ questions:
         correct: false
       - text: HEAD sẽ nhảy sang kho lưu trữ của người khác
         correct: false
-    explanation: Khi commit mới sinh ra, nhánh hiện tại nhận commit đó làm đỉnh mới
-      và HEAD tự động di chuyển theo.
+    explanation: Commit mới trở thành đầu nhánh hiện tại; HEAD tiếp tục chỉ vị trí làm việc đó.
   - id: q3
     question: Snapshot trong Repository của Git có đặc tính cốt lõi nào dưới đây?
     type: single
     options:
-      - text: Tính bất biến (Immutable), không thể bị thay đổi âm thầm nhờ mã băm bảo
-          mật SHA
+      - text: Commit đã tạo không bị sửa tại chỗ; thay đổi sau đó tạo commit mới
         correct: true
       - text: Tự động biến mất sau 30 ngày nếu không có kết nối mạng
         correct: false
@@ -44,8 +40,7 @@ questions:
         correct: false
       - text: Chỉ lưu lại các tệp tin có dung lượng dưới 1 kilobyte
         correct: false
-    explanation: Cơ sở dữ liệu commit của Git là bất biến; bất kỳ thay đổi nào cũng
-      sẽ sinh ra một mã hash hoàn toàn mới.
+    explanation: Git giữ commit đã tạo; khi lưu thay đổi tiếp theo, Git tạo một commit khác.
   - id: q4
     question: Lệnh nào cho phép bạn xem nội dung chi tiết của commit mà HEAD đang
       trỏ vào?
@@ -61,3 +56,16 @@ questions:
         correct: false
     explanation: "`git show HEAD` in ra toàn bộ siêu dữ liệu và diff chi tiết của
       commit hiện tại."
+  - id: q5
+    question: Khi ở một nhánh thông thường, HEAD giúp bạn biết điều gì?
+    type: single
+    options:
+      - text: Vị trí commit hoặc nhánh đang được chọn để làm việc
+        correct: true
+      - text: Danh sách mọi tệp untracked
+        correct: false
+      - text: Máy chủ GitHub đang hoạt động hay không
+        correct: false
+      - text: Lệnh tiếp theo Git sẽ tự chạy
+        correct: false
+    explanation: HEAD đánh dấu vị trí làm việc hiện tại; khi đứng trên nhánh, nó theo nhánh đó.

@@ -2,8 +2,7 @@ id: quiz-07-github-actions-12-job-dependencies-needs
 title: "Trắc nghiệm: Quan hệ phụ thuộc giữa các Job với thuộc tính needs"
 questions:
   - id: q1
-    question: Thuộc tính nào được sử dụng để bắt buộc một Job phải chờ một Job khác
-      hoàn thành trước?
+    question: Thuộc tính nào được sử dụng để bắt buộc một Job phải chờ một Job khác hoàn thành trước?
     type: single
     options:
       - text: needs
@@ -14,11 +13,9 @@ questions:
         correct: false
       - text: wait_for
         correct: false
-    explanation: Trong GitHub Actions, từ khóa `needs:` là thuộc tính tiêu chuẩn để
-      khai báo mối quan hệ phụ thuộc giữa các Job.
+    explanation: Trong GitHub Actions, từ khóa `needs:` là thuộc tính tiêu chuẩn để khai báo mối quan hệ phụ thuộc giữa các Job.
   - id: q2
-    question: "Điều gì xảy ra nếu Job A bị thất bại (failed) và Job B có khai báo
-      `needs: A`?"
+    question: "Điều gì xảy ra nếu Job A bị thất bại (failed) và Job B có khai báo `needs: A`?"
     type: single
     options:
       - text: Job B sẽ tự động bị bỏ qua (skipped) và không được thực thi
@@ -29,11 +26,9 @@ questions:
         correct: false
       - text: Toàn bộ workflow bị xóa khỏi kho lưu trữ
         correct: false
-    explanation: Mặc định, nếu bất kỳ Job tiên quyết nào trong danh sách `needs` bị
-      thất bại, các Job phụ thuộc phía sau sẽ bị hủy bỏ.
+    explanation: Mặc định, nếu bất kỳ Job tiên quyết nào trong danh sách `needs` bị thất bại, các Job phụ thuộc phía sau sẽ bị hủy bỏ.
   - id: q3
-    question: Hiện tượng Circular Dependency (Vòng lặp phụ thuộc) ví dụ A cần B và B
-      cần A sẽ dẫn đến kết quả gì?
+    question: Hiện tượng Circular Dependency (Vòng lặp phụ thuộc) ví dụ A cần B và B cần A sẽ dẫn đến kết quả gì?
     type: single
     options:
       - text: Workflow bị lỗi xác thực cú pháp và hoàn toàn không thể khởi chạy
@@ -44,11 +39,9 @@ questions:
         correct: false
       - text: Không có vấn đề gì, hệ thống tự động xử lý được
         correct: false
-    explanation: GitHub Actions yêu cầu đồ thị DAG không được có chu trình
-      (Acyclic). Nếu phát hiện vòng lặp, workflow sẽ bị từ chối ngay lập tức.
+    explanation: GitHub Actions yêu cầu đồ thị DAG không được có chu trình (Acyclic). Nếu phát hiện vòng lặp, workflow sẽ bị từ chối ngay lập tức.
   - id: q4
-    question: Để kiểm tra kết quả thực thi của Job tiên quyết có tên là `build`, ta
-      dùng cú pháp ngữ cảnh nào?
+    question: Để kiểm tra kết quả thực thi của Job tiên quyết có tên là `build`, ta dùng cú pháp ngữ cảnh nào?
     type: single
     options:
       - text: needs.build.result
@@ -59,5 +52,17 @@ questions:
         correct: false
       - text: env.BUILD_RESULT
         correct: false
-    explanation: "Ngữ cảnh `needs.<job_id>.result` trả về trạng thái hoàn thành của
-      Job đó (ví dụ: `success`, `failure`, `cancelled`, hoặc `skipped`)."
+    explanation: "Ngữ cảnh `needs.<job_id>.result` trả về trạng thái hoàn thành của Job đó (ví dụ: `success`, `failure`, `cancelled`, hoặc `skipped`)."
+  - id: q5
+    question: Khi một Job cần phụ thuộc vào nhiều Job tiên quyết cùng lúc (ví dụ vừa cần lint, vừa cần test), cú pháp khai báo nào sau đây là chuẩn mực?
+    type: single
+    options:
+      - text: "Sử dụng mảng danh sách trong YAML: needs: [lint, test]"
+        correct: true
+      - text: "Nối các Job bằng dấu cộng: needs: lint + test"
+        correct: false
+      - text: "Dùng từ khóa kết nối tiếng Anh: needs: lint and test"
+        correct: false
+      - text: GitHub Actions không cho phép một Job phụ thuộc vào nhiều hơn một Job khác
+        correct: false
+    explanation: Thuộc tính `needs` hỗ trợ truyền một danh sách các job_id, yêu cầu tất cả các Job trong danh sách phải thành công thì Job tiếp theo mới được khởi động.

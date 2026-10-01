@@ -5,7 +5,7 @@ questions:
     question: Mục đích cốt lõi nhất của một hệ thống quản lý phiên bản (VCS) là gì?
     type: single
     options:
-      - text: Theo dõi, ghi nhận và quản lý mọi sự thay đổi của mã nguồn theo thời gian
+      - text: Lưu, theo dõi và xem lại những phiên bản bạn chủ động ghi nhận
         correct: true
       - text: Biên dịch mã nguồn JavaScript sang mã máy để tăng tốc độ chạy ứng dụng
         correct: false
@@ -13,24 +13,23 @@ questions:
         correct: false
       - text: Chạy quét virus và tường lửa ngăn chặn hacker tấn công máy tính
         correct: false
-    explanation: VCS được thiết kế chuyên biệt để theo dõi lịch sử thay đổi của tệp
-      tin. Việc biên dịch hay bảo mật mạng thuộc về trình biên dịch và phần mềm
-      an ninh.
+    explanation: VCS giúp lưu các mốc thay đổi để so sánh hoặc xem lại sau này. Git
+      không tự lưu mọi lần gõ phím; người dùng cần chủ động tạo mốc.
   - id: q2
-    question: Điều gì xảy ra khi bạn gặp lỗi nghiêm trọng trong dự án có áp dụng
-      Version Control đúng cách?
+    question: Bạn đã lưu một commit khi dự án còn chạy tốt, sau đó một thay đổi làm
+      phát sinh lỗi. VCS giúp gì trong tình huống này?
     type: single
     options:
       - text: Bạn phải xóa bỏ toàn bộ dự án và viết lại mã nguồn từ đầu
         correct: false
-      - text: Bạn có thể khôi phục lại mã nguồn về điểm checkpoint ổn định gần nhất
+      - text: Bạn có thể xem lại hoặc khôi phục từ mốc đã lưu trước khi lỗi xảy ra
         correct: true
       - text: Máy tính sẽ tự động định dạng lại ổ cứng để xóa sạch các lỗi phát sinh
         correct: false
       - text: Bạn phải liên hệ với quản trị viên mạng để mở khóa tệp tin
         correct: false
-    explanation: Ưu điểm lớn nhất của VCS là khả năng khôi phục (rollback) lại trạng
-      thái snapshot ổn định trước đó trong lịch sử dự án.
+    explanation: VCS cho phép xem lại những mốc bạn đã lưu. Thay đổi chưa được lưu
+      thành commit không tự xuất hiện trong lịch sử và vẫn cần được bảo vệ riêng.
   - id: q3
     question: Vì sao việc đặt tên thư mục kiểu "project_v1", "project_final" lại bị
       coi là sai lầm trong kỹ nghệ phần mềm?

@@ -63,3 +63,19 @@ questions:
         correct: false
     explanation: Chỉ có `--hard` là ghi đè lên Working Directory, hai chế độ
       `--soft` và `--mixed` hoàn toàn bảo tồn Working Tree.
+  - id: q5
+    question: Nếu lỡ chạy `git reset --hard HEAD~1` và mất một commit vừa tạo, công cụ
+      nào của Git có thể cứu bạn tìm lại commit đó?
+    type: single
+    options:
+      - text: git reflog (nhật ký tham chiếu lưu lại lịch sử di chuyển của HEAD)
+        correct: true
+      - text: Thùng rác Recycle Bin của hệ điều hành
+        correct: false
+      - text: Lệnh git restore --all
+        correct: false
+      - text: Không thể cứu được vì reset hard xóa vĩnh viễn khỏi ổ cứng
+        correct: false
+    explanation: Đối với commit đã từng được lưu, `git reflog` vẫn lưu vết SHA hash
+      trong ít nhất 30-90 ngày, giúp bạn khôi phục lại dễ dàng.
+

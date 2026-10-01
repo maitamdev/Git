@@ -1,101 +1,105 @@
 # Quan hệ phụ thuộc giữa các Job với thuộc tính needs
 
----
+## 🎯 Mục tiêu
+- Làm chủ thuộc tính `needs` để thiết lập mối quan hệ phụ thuộc có thứ tự giữa các Job.
+- Hiểu cách GitHub Actions xây dựng Đồ thị có hướng không chu trình (DAG) từ các khai báo `needs`.
+- Biết cách truyền và sử dụng kết quả (`needs.<job_id>.result`) hoặc dữ liệu đầu ra giữa các Job.
 
-## 🎯 Mục tiêu bài học
-- Làm chủ thuộc tính needs để thiết lập mối quan hệ phụ thuộc có thứ tự giữa các Job.
-- Hiểu cách GitHub Actions xây dựng Đồ thị có hướng không chu trình (DAG) từ các khai báo needs.
-- Biết cách truyền và sử dụng kết quả (needs.<job_id>.result) hoặc dữ liệu đầu ra (outputs) giữa các Job.
+## 🧩 Từ khóa hôm nay
+### needs Property
+- **Nói dễ hiểu**: Thuộc tính yêu cầu Job này phải đợi một hoặc nhiều Job khác chạy thành công xong mới được bắt đầu.
+- **Ví dụ**: Khai báo `needs: [test, lint]` trong Job `deploy` để bảo đảm code sạch và pass test rồi mới deploy.
+- **Đừng nhầm**: Mặc định các Job không đợi nhau mà chạy song song; bạn bắt buộc phải chỉ định `needs` nếu muốn chạy tuần tự.
 
----
+### Directed Acyclic Graph
+- **Nói dễ hiểu**: Đồ thị có hướng không chu trình (DAG), mô hình luồng công việc đi một chiều từ gốc tới ngọn không bị lặp vòng.
+- **Ví dụ**: Sơ đồ Lint và Test cùng trỏ mũi tên vào Build, và Build trỏ mũi tên vào Deploy.
+- **Đừng nhầm**: Đây là cấu trúc đồ thị toán học; không được phép có mũi tên quay ngược tạo thành vòng lặp luẩn quẩn.
+
+### Circular Dependency
+- **Nói dễ hiểu**: Lỗi vòng lặp luẩn quẩn khi Job A đợi Job B và Job B lại khai báo đợi Job A.
+- **Ví dụ**: Hệ thống bị bế tắc và GitHub Actions sẽ từ chối biên dịch tệp workflow ngay lập tức.
+- **Đừng nhầm**: Không có Job nào được chạy trong trường hợp này; toàn bộ workflow sẽ bị báo lỗi xác thực cú pháp.
 
 ## 📖 Định nghĩa
-> Mặc định, các Job độc lập trong cùng một workflow của GitHub Actions sẽ chạy hoàn toàn song song nhằm tiết kiệm thời gian tổng thể. Tuy nhiên, thuộc tính needs cho phép bạn định nghĩa các mối quan hệ phụ thuộc có hướng giữa các Job, biến các tác vụ rời rạc thành một chuỗi đường ống (Pipeline) có trật tự và kiểm soát chặt chẽ. Một Job có khai báo needs: [job_a, job_b] sẽ chỉ được phép bắt đầu thực thi sau khi cả hai Job A và Job B đã hoàn thành thành công rực rỡ mà không gặp sự cố gián đoạn nào.
+Mặc định, các Job độc lập trong cùng một workflow sẽ chạy hoàn toàn song song nhằm tiết kiệm thời gian. Tuy nhiên, thuộc tính `needs` cho phép bạn định nghĩa các mối quan hệ phụ thuộc có hướng giữa các Job, biến các tác vụ rời rạc thành một chuỗi đường ống (Pipeline) có trật tự chặt chẽ. Một Job có khai báo `needs: [job_a, job_b]` sẽ chỉ bắt đầu khi cả hai Job A và B đều đã hoàn thành thành công.
 
----
+## 💡 Tại sao cần
+Trong quy trình phát hành chuyên nghiệp, bạn không bao giờ muốn triển khai lên máy chủ sản xuất (`deploy`) khi bài kiểm tra chất lượng mã nguồn (`lint`) hoặc kiểm thử chức năng (`test`) vẫn chưa chạy hoặc đã bị thất bại. Thuộc tính `needs` tạo ra chốt chặn an toàn đa tầng: chỉ khi nền móng kiểm thử vững chắc thì tầng đóng gói và phát hành mới được kích hoạt.
 
-## 🤔 Tại sao cần?
-Trong môi trường phát triển phần mềm chuyên nghiệp, bạn không bao giờ muốn triển khai phiên bản mới lên máy chủ sản xuất (Deploy Job) khi mà các bài kiểm tra chất lượng mã nguồn (Lint Job) hoặc bài kiểm tra chức năng (Test Job) vẫn chưa chạy hoặc đã bị thất bại. Sử dụng thuộc tính needs giúp bạn xây dựng cổng kiểm soát đa tầng an toàn: chỉ khi nền móng kiểm thử tầng dưới vững chắc thì tầng đóng gói và phát hành phía trên mới được phép kích hoạt, giúp giảm thiểu tối đa rủi ro gián đoạn dịch vụ người dùng.
+## 🧠 Mental Model
+Hãy tưởng tượng quá trình xây nhà nhiều tầng. Job 1 là đổ móng; Job 2 là dựng cột; Job 3 là lợp mái; Job 4 là sơn tường. Bạn không thể lợp mái khi chưa dựng cột (`lợp mái needs dựng cột`), và không thể dựng cột khi chưa đổ móng (`dựng cột needs đổ móng`). Sự phụ thuộc này tạo nên chuỗi tiến độ vững vàng theo đúng quy luật xây dựng.
 
----
-
-## 🧠 Mental Model & Mô hình tư duy
-Hãy tưởng tượng quá trình xây dựng một ngôi nhà nhiều tầng. Job 1 là đổ móng nhà; Job 2 là dựng cột bê tông; Job 3 là lợp mái; Job 4 là sơn tường. Bạn không thể lợp mái khi chưa dựng cột (lợp mái needs dựng cột), và không thể dựng cột khi chưa đổ móng (dựng cột needs đổ móng). Sự phụ thuộc này tạo nên một chuỗi tiến độ vững chắc theo quy luật trọng lực.
-
----
-
-## 🖼️ Sơ đồ minh họa
-```text
-Mô hình đồ thị phụ thuộc (DAG Workflow):
-       [Job: Lint] ─────────┐
-                            ├──► [Job: Build] ──► [Job: Deploy Production]
-       [Job: Unit Test] ────┘
-
-Khai báo YAML:
-jobs:
-  lint: npm run lint
-  test: npm test
-  build:
-    needs: [lint, test]       <── Chờ cả Lint và Test xong
-  deploy:
-    needs: [build]            <── Chờ Build xong
+## 📊 Sơ đồ minh họa
+```mermaid
+flowchart TD
+    Lint[Job: lint] --> Build[Job: build]
+    Test[Job: test] --> Build
+    Build --> Deploy[Job: deploy-production]
 ```
 
----
+## 🏢 Ví dụ thực tế
+Một công ty tài chính thiết lập pipeline phát hành cổng thanh toán gồm 4 Jobs: `security-scan` (quét lỗ hổng), `unit-test` (kiểm tra hàm tính lãi), `build-image` (đóng gói Docker) và `deploy-cloud` (triển khai máy chủ). Job `build-image` có khai báo `needs: [security-scan, unit-test]`. Nếu quá trình quét mã nguồn phát hiện lỗ hổng bảo mật, bước quét báo đỏ, hệ thống lập tức hủy bỏ Job đóng gói và Job triển khai, ngăn chặn triệt để mã nguồn lỗi tiếp cận máy chủ người dùng.
 
-## 🌎 Ví dụ thực tế
-Một công ty tài chính công nghệ cao thiết lập pipeline phát hành cổng thanh toán gồm 4 Jobs độc lập: security-scan (quét lỗ hổng bảo mật mã nguồn), unit-test (kiểm tra hàm tính lãi suất giao dịch), build-container (đóng gói ảnh Docker ứng dụng), và deploy-cloud (triển khai lên cụm máy chủ). Job build-container được cấu hình chặt chẽ với needs: [security-scan, unit-test]. Nếu quá trình quét mã nguồn phát hiện một thư viện phụ thuộc có nguy cơ rò rỉ dữ liệu nghiêm trọng dẫn đến security-scan bị thất bại, hệ thống lập tức hủy bỏ Job đóng gói và Job triển khai. Nhờ cơ chế kiểm soát này, mã nguồn lỗi không bao giờ có cơ hội tiếp cận máy chủ thực tế.
-
----
-
-## 💻 Command & Lệnh thao tác
+## 💻 Command & Cú pháp
 ```bash
+# Xem đồ thị phụ thuộc giữa các job trong terminal
 gh run view --graph
+
+# Kiểm tra cú pháp pipeline phụ thuộc trong file workflow
 cat .github/workflows/pipeline.yml
 ```
 
----
+## 🔍 Giải thích command
+- `gh run view --graph`: Hiển thị đồ thị DAG các Job kèm mũi tên phụ thuộc và trạng thái thành công hay thất bại trên giao diện terminal.
+- `cat .github/workflows/pipeline.yml`: Đọc nội dung tệp để kiểm tra các danh sách mảng `needs` có khớp đúng tên `job_id` hay không.
 
-## 🔍 Giải thích chi tiết lệnh
-Lệnh gh run view --graph hiển thị đồ thị phụ thuộc DAG trực quan của phiên chạy ngay trong dòng lệnh terminal, giúp bạn thấy rõ nhánh nào đã hoàn thành và nhánh nào đang xếp hàng chờ.
+## ⚠️ Sai lầm phổ biến
+- Tạo ra vòng lặp phụ thuộc (Circular Dependency) ví dụ A cần B và B cần A khiến workflow bị khóa và báo lỗi xác thực.
+- Khai báo sai tên định danh `job_id` trong mảng `needs` (gõ sai chữ hoa, chữ thường hoặc nhầm với thuộc tính `name`).
+- Kỳ vọng Job phụ thuộc vẫn chạy khi Job trước bị lỗi mà không sử dụng hàm trạng thái `always()` hoặc `if: failure()`.
 
----
+## 🧪 Lab thực hành
+Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
 
-## ⚠️ Sai lầm phổ biến & Cách phòng tránh
-1. **Tạo ra vòng lặp phụ thuộc (Circular Dependency)**:  Ví dụ Job A needs Job B và Job B lại needs Job A khiến workflow bị khóa vĩnh viễn và báo lỗi xác thực.
-2. **Khai báo sai tên định danh `job_id` trong mảng `needs` khiến hệ thống không tìm thấy Job tiên quyết.**: 
-3. **Kỳ vọng Job phụ thuộc vẫn chạy khi Job trước bị lỗi mà không sử dụng hàm trạng thái `always()`.**: 
+1. Tạo tệp `.github/workflows/pipeline.yml` gồm 3 Job liên kết tuần tự:
+   ```yaml
+   name: Pipeline DAG Demo
+   on: [workflow_dispatch]
+   jobs:
+     setup:
+       runs-on: ubuntu-latest
+       steps:
+         - run: echo "Setup completed!"
+     test:
+       needs: setup
+       runs-on: ubuntu-latest
+       steps:
+         - run: echo "Tests passed!"
+     deploy:
+       needs: [setup, test]
+       runs-on: ubuntu-latest
+       steps:
+         - run: echo "Deploy succeeded!"
+   ```
+2. Đẩy file lên GitHub và kích hoạt thủ công qua nút Run workflow.
+3. Truy cập tab Actions và chiêm ngưỡng đồ thị các đường nối mũi tên trực quan giữa `setup` -> `test` -> `deploy`.
 
----
+## 💡 Hint & mẹo
+- Nếu một Job phụ thuộc vào nhiều Job tiên quyết cùng lúc, hãy truyền danh sách mảng: `needs: [job1, job2]`.
+- Bạn có thể đọc kết quả của Job trước thông qua biểu thức `needs.<job_id>.result` để xử lý logic rẽ nhánh.
 
-## 🧪 Bài thực hành Lab (Hands-on)
-1. Tạo 3 Job: `setup`, `test`, và `deploy`.
-2. Cấu hình để `test` phụ thuộc vào `setup` bằng từ khóa `needs: setup`.
-3. Cấu hình để `deploy` phụ thuộc vào `test` bằng từ khóa `needs: test`.
+## ✅ Validation & Kết quả mong đợi
+- Trên giao diện đồ thị web của GitHub Actions, các Job được nối với nhau bằng các mũi tên có hướng rõ ràng.
+- Job `deploy` chỉ bắt đầu chạy khi cả hai Job `setup` và `test` đã báo dấu tích xanh thành công.
 
----
+## ❓ Quiz nhanh
+Hãy hoàn thành bài trắc nghiệm bên dưới để kiểm tra khả năng thiết kế quan hệ phụ thuộc giữa các Job bằng thuộc tính `needs`.
 
-## 💡 Gợi ý thực hiện (Hint)
-> Nếu một Job phụ thuộc vào nhiều Job khác, hãy truyền một danh sách mảng: `needs: [job1, job2]`.
+## 🚀 Thử thách nâng cao
+Thiết kế một Job dọn dẹp tài nguyên (cleanup) có khai báo `needs: [test, build]` nhưng vẫn luôn luôn chạy ở cuối cùng kể cả khi bài test bị lỗi bằng cách dùng biểu thức `if: always()`.
 
----
-
-## ✅ Kiểm tra kết quả (Validation)
-Trên giao diện đồ thị, các Job được nối với nhau bằng các đường mũi tên chỉ hướng chính xác.
-
----
-
-## ❓ Câu hỏi ôn tập (Quiz)
-Hãy kiểm tra khả năng thiết kế luồng phụ thuộc Job của bạn qua các câu hỏi sau.
-
----
-
-## 🔥 Thử thách nâng cao (Challenge)
-Làm thế nào để cấu hình một Job dọn dẹp tài nguyên (cleanup) luôn luôn chạy ở cuối cùng, bất kể các Job tiên quyết trước đó thành công hay thất bại?
-
----
-
-## 📚 Tổng kết kiến thức
+## 📝 Tổng kết
 - Thuộc tính `needs` dùng để xác định các Job tiên quyết phải chạy xong trước khi Job hiện tại bắt đầu.
-- Có thể truyền một Job đơn lẻ hoặc một mảng nhiều Jobs: `needs: [job_a, job_b]`.
-- GitHub Actions tự động chuyển các khai báo `needs` thành một đồ thị có hướng không chu trình (DAG).
+- Có thể truyền một Job đơn lẻ (`needs: setup`) hoặc một mảng nhiều Jobs (`needs: [lint, test]`).
+- Kết hợp `needs` giúp xây dựng các pipeline kiểm thử và phát hành chuyên nghiệp, giảm thiểu rủi ro lỗi sản phẩm.

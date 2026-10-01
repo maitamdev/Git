@@ -7,17 +7,30 @@ import { requireAuth, requireRole } from '../middleware/auth-middleware.js';
 import { matchRoute, parseBody, sendJson } from '../utils/http.js';
 import { db, type LessonProgressRecord } from '../db/store.js';
 
-const syncSchema = z.object({
-  localProgress: z.object({
-    userId: z.string().optional(),
-    totalXp: z.number().default(0),
-    level: z.number().default(1),
-    streakDays: z.number().default(1),
-    lastActiveDate: z.string().default(() => new Date().toISOString().split('T')[0]),
-    lessons: z.record(z.string(), z.any()).default({}),
-    achievements: z.array(z.string()).default([]),
+const syncSchema = z.union([
+  z.object({
+    localProgress: z.object({
+      userId: z.string().optional(),
+      totalXp: z.number().default(0),
+      level: z.number().default(1),
+      streakDays: z.number().default(1),
+      lastActiveDate: z.string().default(() => new Date().toISOString().split('T')[0]),
+      lessons: z.record(z.string(), z.any()).default({}),
+      achievements: z.array(z.string()).default([]),
+    }),
   }),
-});
+  z.object({
+    progress: z.object({
+      userId: z.string().optional(),
+      totalXp: z.number().default(0),
+      level: z.number().default(1),
+      streakDays: z.number().default(1),
+      lastActiveDate: z.string().default(() => new Date().toISOString().split('T')[0]),
+      lessons: z.record(z.string(), z.any()).default({}),
+      achievements: z.array(z.string()).default([]),
+    }),
+  }),
+]);
 
 const lessonCompleteSchema = z.object({
   lessonId: z.string(),
@@ -28,8 +41,8 @@ const lessonCompleteSchema = z.object({
 });
 
 export async function handleProgressRoutes(req: AuthenticatedRequest, res: ServerResponse, pathname: string): Promise<boolean> {
-  // GET /api/progress/my - Get student's overall progress
-  if (req.method === 'GET' && pathname === '/api/progress/my') {
+  // GET /api/progress/my or /api/progress - Get student's overall progress
+  if (req.method === 'GET' && (pathname === '/api/progress/my' || pathname === '/api/progress')) {
     const user = requireAuth(req, res);
     if (!user) return true;
 
@@ -81,7 +94,7 @@ export async function handleProgressRoutes(req: AuthenticatedRequest, res: Serve
         return true;
       }
 
-      const localData = parsed.data.localProgress;
+      const localData = 'localProgress' in parsed.data ? parsed.data.localProgress : parsed.data.progress;
       const local: CourseProgress = {
         userId: user.id,
         totalXp: localData.totalXp,
@@ -153,6 +166,88 @@ export async function handleProgressRoutes(req: AuthenticatedRequest, res: Serve
         mergedProgress: merged,
         message: 'Đồng bộ tiến độ thành công',
       });
+      return true;
+    } catch (err: any) {
+      sendJson(res, 400, { error: 'Bad Request', message: err.message });
+      return true;
+    }
+  }
+
+  // POST /api/progress/lesson - Support for ServerProgressRepository direct save
+  if (req.method === 'POST' && pathname === '/api/progress/lesson') {
+    const user = requireAuth(req, res);
+    if (!user) return true;
+
+    try {
+      const raw = await parseBody(req);
+      if (raw?.userId && raw.userId !== user.id) {
+        sendJson(res, 403, { error: 'Forbidden', message: 'Không thể ghi tiến độ cho tài khoản khác' });
+        return true;
+      }
+      const p = raw?.progress;
+      if (p && p.lessonId) {
+        const key = `${user.id}:${p.lessonId}:2.0.0`;
+        const existing = db.lessonProgress.get(key);
+        const record: LessonProgressRecord = {
+          id: existing?.id || `prog-${user.id}-${p.lessonId}`,
+          studentId: user.id,
+          courseId: 'git-foundations',
+          lessonId: p.lessonId,
+          courseVersion: '2.0.0',
+          status: p.completed ? 'completed' : 'in_progress',
+          score: p.quizScore > 0 ? p.quizScore : existing?.score,
+          attempts: Math.max(p.quizAttempts || 1, existing?.attempts || 1),
+          timeSpentSeconds: existing?.timeSpentSeconds || 300,
+          xpAwarded: existing ? existing.xpAwarded : (p.xp || 50),
+          completedAt: p.completed ? (existing?.completedAt || new Date().toISOString()) : undefined,
+          updatedAt: new Date().toISOString(),
+        };
+        db.lessonProgress.set(key, record);
+        sendJson(res, 200, { success: true, record });
+        return true;
+      }
+      sendJson(res, 400, { error: 'Bad Request', message: 'Missing lesson progress payload' });
+      return true;
+    } catch (err: any) {
+      sendJson(res, 400, { error: 'Bad Request', message: err.message });
+      return true;
+    }
+  }
+
+  // POST /api/progress/sync-batch - Support for ServerProgressRepository queue flush
+  if (req.method === 'POST' && pathname === '/api/progress/sync-batch') {
+    const user = requireAuth(req, res);
+    if (!user) return true;
+
+    try {
+      const raw = await parseBody(req);
+      if (raw?.userId && raw.userId !== user.id) {
+        sendJson(res, 403, { error: 'Forbidden', message: 'Không thể ghi tiến độ cho tài khoản khác' });
+        return true;
+      }
+      const lessons = Array.isArray(raw?.lessons) ? raw.lessons : [];
+      for (const p of lessons) {
+        if (p && p.lessonId) {
+          const key = `${user.id}:${p.lessonId}:2.0.0`;
+          const existing = db.lessonProgress.get(key);
+          const record: LessonProgressRecord = {
+            id: existing?.id || `prog-${user.id}-${p.lessonId}`,
+            studentId: user.id,
+            courseId: 'git-foundations',
+            lessonId: p.lessonId,
+            courseVersion: '2.0.0',
+            status: p.completed ? 'completed' : 'in_progress',
+            score: p.quizScore > 0 ? p.quizScore : existing?.score,
+            attempts: Math.max(p.quizAttempts || 1, existing?.attempts || 1),
+            timeSpentSeconds: existing?.timeSpentSeconds || 300,
+            xpAwarded: existing ? existing.xpAwarded : (p.xp || 50),
+            completedAt: p.completed ? (existing?.completedAt || new Date().toISOString()) : undefined,
+            updatedAt: new Date().toISOString(),
+          };
+          db.lessonProgress.set(key, record);
+        }
+      }
+      sendJson(res, 200, { success: true, count: lessons.length });
       return true;
     } catch (err: any) {
       sendJson(res, 400, { error: 'Bad Request', message: err.message });

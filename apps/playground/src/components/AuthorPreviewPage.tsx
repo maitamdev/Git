@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { COURSE_MANIFEST, loadLessonContent } from '@git-academy/exercise-engine';
 import { CourseLesson } from '@git-academy/shared';
+import { calculateLessonContentMetrics } from '../learning/content-quality';
 
 export const AuthorPreviewPage: React.FC = () => {
   const activeModules = useMemo(
@@ -32,60 +33,7 @@ export const AuthorPreviewPage: React.FC = () => {
     };
   }, [selectedModuleId, selectedLessonId]);
 
-  // Quality metrics calculation
-  const metrics = useMemo(() => {
-    if (!lesson) return null;
-    const text = lesson.content || '';
-
-    const countWords = (str: string) => {
-      if (!str) return 0;
-      return str.trim().split(/\s+/).filter(Boolean).length;
-    };
-
-    // Extract sections
-    const getSection = (titleRegex: RegExp) => {
-      const match = text.match(titleRegex);
-      return match && match[1] ? match[1].trim() : '';
-    };
-
-    const def = getSection(/##\s*📖\s*Định nghĩa[\s\S]*?>\s*(.*?)(?:\n\n|\n---|\n##)/i);
-    const why = getSection(/##\s*🤔\s*Tại sao cần\?([\s\S]*?)(?:\n\n---|\n##)/i);
-    const mm = getSection(/##\s*🧠\s*Mental Model[^\n]*\n([\s\S]*?)(?:\n\n---|\n##)/i);
-    const ex = getSection(/##\s*🌎\s*Ví dụ thực tế\n([\s\S]*?)(?:\n\n---|\n##)/i);
-
-    const placeholders = ['TODO', 'TBD', 'Coming soon', 'Lorem ipsum', '...'];
-    const foundPlaceholders = placeholders.filter((p) => text.includes(p));
-
-    const defWords = countWords(def);
-    const whyWords = countWords(why);
-    const mmWords = countWords(mm);
-    const exWords = countWords(ex);
-    const qCount = lesson.quiz?.questions?.length || 0;
-
-    const isCore = ['commit', 'branch', 'merge', 'conflict', 'remote', 'fetch', 'pull', 'push', 'pull-request', 'pr'].some(
-      (t) => lesson.id.includes(t)
-    );
-    const minQ = isCore ? 6 : 4;
-
-    const passes =
-      defWords >= 80 &&
-      whyWords >= 80 &&
-      mmWords >= 80 &&
-      exWords >= 100 &&
-      foundPlaceholders.length === 0 &&
-      qCount >= minQ;
-
-    return {
-      defWords,
-      whyWords,
-      mmWords,
-      exWords,
-      foundPlaceholders,
-      qCount,
-      minQ,
-      passes,
-    };
-  }, [lesson]);
+  const metrics = useMemo(() => calculateLessonContentMetrics(lesson), [lesson]);
 
   return (
     <div style={{ minHeight: '100vh', background: '#0a0f1d', color: '#f3f4f6', fontFamily: 'Inter, system-ui, sans-serif' }}>
@@ -99,9 +47,6 @@ export const AuthorPreviewPage: React.FC = () => {
           <h1 style={{ margin: 0, fontSize: '18px', fontWeight: 700, color: '#f9fafb' }}>
             🛠️ Author Studio & Curriculum Previewer
           </h1>
-          <span style={{ background: '#065f46', color: '#34d399', padding: '2px 8px', borderRadius: '4px', fontSize: '12px', fontWeight: 600 }}>
-            Gate: PASS (88/88)
-          </span>
         </div>
         <div style={{ display: 'flex', gap: '12px' }}>
           <a
@@ -330,7 +275,7 @@ export const AuthorPreviewPage: React.FC = () => {
         {/* Right Sidebar: Quality Gate Metrics Inspector */}
         <aside style={{ borderLeft: '1px solid #1f293d', padding: '20px', background: '#0d1527', overflowY: 'auto' }}>
           <h3 style={{ margin: '0 0 16px 0', fontSize: '15px', color: '#f3f4f6', fontWeight: 700 }}>
-            🛡️ Content Quality Gate
+            🧩 Kiểm tra cấu trúc dạy học
           </h3>
 
           {metrics && (
@@ -347,35 +292,30 @@ export const AuthorPreviewPage: React.FC = () => {
                   fontSize: '14px',
                 }}
               >
-                {metrics.passes ? '✅ 100% QUALITY GATE PASSED' : '❌ CHƯA ĐẠT CHUẨN'}
+                {metrics.passes ? '✅ ĐỦ CẤU TRÚC CƠ BẢN' : '📝 CẦN BIÊN TẬP THÊM'}
               </div>
 
               <div style={{ background: '#111b2e', padding: '12px', borderRadius: '6px', border: '1px solid #1f293d' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', marginBottom: '6px' }}>
-                  <span style={{ color: '#9ca3af' }}>Định nghĩa (&gt;=80 từ):</span>
-                  <span style={{ fontWeight: 600, color: metrics.defWords >= 80 ? '#34d399' : '#f87171' }}>
-                    {metrics.defWords} từ {metrics.defWords >= 80 ? '✓' : '✗'}
+                  <span style={{ color: '#9ca3af' }}>Thẻ thuật ngữ:</span>
+                  <span style={{ fontWeight: 600, color: metrics.termCards.complete ? '#34d399' : '#f87171' }}>
+                    {metrics.termCards.completeCount}/{metrics.termCards.count} đủ nội dung {metrics.termCards.complete ? '✓' : '✗'}
                   </span>
+                </div>
+                {metrics.termCards.names.length > 0 && <div style={{ color: '#93c5fd', fontSize: '12px', lineHeight: 1.5, marginBottom: '9px' }}>{metrics.termCards.names.join(' · ')}</div>}
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', marginBottom: '6px' }}>
+                  <span style={{ color: '#9ca3af' }}>Độ dài phần định nghĩa:</span><span>{metrics.defWords} từ</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', marginBottom: '6px' }}>
-                  <span style={{ color: '#9ca3af' }}>Tại sao cần (&gt;=80 từ):</span>
-                  <span style={{ fontWeight: 600, color: metrics.whyWords >= 80 ? '#34d399' : '#f87171' }}>
-                    {metrics.whyWords} từ {metrics.whyWords >= 80 ? '✓' : '✗'}
-                  </span>
+                  <span style={{ color: '#9ca3af' }}>Tình huống cần học:</span><span>{metrics.whyWords} từ</span>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', marginBottom: '6px' }}>
-                  <span style={{ color: '#9ca3af' }}>Mental Model (&gt;=80 từ):</span>
-                  <span style={{ fontWeight: 600, color: metrics.mmWords >= 80 ? '#34d399' : '#f87171' }}>
-                    {metrics.mmWords} từ {metrics.mmWords >= 80 ? '✓' : '✗'}
-                  </span>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}>
-                  <span style={{ color: '#9ca3af' }}>Ví dụ thực tế (&gt;=100 từ):</span>
-                  <span style={{ fontWeight: 600, color: metrics.exWords >= 100 ? '#34d399' : '#f87171' }}>
-                    {metrics.exWords} từ {metrics.exWords >= 100 ? '✓' : '✗'}
-                  </span>
-                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', marginBottom: '6px' }}><span style={{ color: '#9ca3af' }}>Mô hình tư duy:</span><span>{metrics.mmWords} từ</span></div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}><span style={{ color: '#9ca3af' }}>Ví dụ:</span><span>{metrics.exWords} từ</span></div>
               </div>
+
+              <p style={{ margin: 0, color: '#9ca3af', fontSize: '12px', lineHeight: 1.45 }}>
+                Đây là kiểm tra cấu trúc và độ bao phủ thuật ngữ; nó chưa xác nhận mọi câu giải thích đúng hoặc dễ hiểu.
+              </p>
 
               <div style={{ background: '#111b2e', padding: '12px', borderRadius: '6px', border: '1px solid #1f293d' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', marginBottom: '6px' }}>

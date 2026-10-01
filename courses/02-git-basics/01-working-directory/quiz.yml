@@ -26,11 +26,11 @@ questions:
         correct: true
       - text: Staged (Đã nằm trong vùng chuẩn bị)
         correct: false
-      - text: Committed (Đã lưu vào lịch sử vĩnh viễn)
+      - text: Tracked (Git đã bắt đầu theo dõi tệp)
         correct: false
       - text: Ignored (Bị bỏ qua tự động)
         correct: false
-    explanation: Tệp mới tạo chưa từng được git add sẽ luôn ở trạng thái Untracked.
+    explanation: Tệp mới thường là Untracked cho tới khi bạn chọn theo dõi bằng `git add`.
       Đáp án B sai vì cần chạy git add; C sai vì cần commit; D sai vì chỉ
       ignored nếu có trong .gitignore.
   - id: q3
@@ -50,11 +50,10 @@ questions:
       trạng thái tệp thành Modified. Các đáp án khác sai vì Git không tự động
       commit hay push ngầm.
   - id: q4
-    question: Khu vực nào tiếp nhận dữ liệu ngay sau khi tệp tin rời khỏi Working
-      Directory qua lệnh git add?
+    question: Sau khi chạy `git add`, chuyện gì xảy ra với tệp đang ở Working Directory?
     type: single
     options:
-      - text: Staging Area (Vùng chuẩn bị)
+      - text: Tệp vẫn ở đó; trạng thái hiện tại được chọn vào Staging Area
         correct: true
       - text: Remote Repository trên GitHub
         correct: false
@@ -62,5 +61,17 @@ questions:
         correct: false
       - text: Thư mục cấu hình toàn cục Global Config
         correct: false
-    explanation: Lệnh `git add` chuyển tệp từ Working Directory sang Staging Area
-      (Index). Đáp án B sai vì cần git push; C và D hoàn toàn sai lệch bản chất.
+    explanation: "`git add` không di chuyển tệp khỏi thư mục; nó chọn phiên bản để chuẩn bị commit."
+  - id: q5
+    question: Bạn sửa một tệp đã được Git theo dõi rồi lưu lại. Thay đổi mới đang ở trạng thái nào?
+    type: single
+    options:
+      - text: Modified trong Working Directory, chưa tự staged
+        correct: true
+      - text: Một commit mới đã tự được tạo
+        correct: false
+      - text: Tệp đã bị xóa khỏi dự án
+        correct: false
+      - text: Thay đổi đã được gửi lên GitHub
+        correct: false
+    explanation: Lưu tệp chỉ cập nhật Working Directory. Bạn cần dùng `git add` để stage và `git commit` để tạo mốc lịch sử.

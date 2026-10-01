@@ -2,64 +2,67 @@ id: quiz-08-git-internals-11-git-cat-file
 title: "Trắc nghiệm: Giải mã và kiểm tra chi tiết đối tượng với git cat-file"
 questions:
   - id: q1
-    question: Tùy chọn `-p` trong lệnh `git cat-file` có ý nghĩa là gì?
+    question: "Tùy chọn -p trong lệnh git cat-file có ý nghĩa là gì?"
     type: single
     options:
-      - text: Pretty-print (tự động phát hiện loại và hiển thị nội dung định dạng thân
-          thiện với con người)
+      - text: "Pretty-print (tự động phát hiện loại và hiển thị nội dung định dạng thân thiện với con người)"
         correct: true
-      - text: Password (yêu cầu mật khẩu giải mã)
+      - text: "Password (yêu cầu mật khẩu giải mã)"
         correct: false
-      - text: Parent (in ra commit cha)
+      - text: "Parent (in ra commit cha)"
         correct: false
-      - text: Push (đẩy đối tượng lên server)
+      - text: "Push (đẩy đối tượng lên server)"
         correct: false
-    explanation: Cờ `-p` (pretty-print) sẽ tự động kiểm tra loại đối tượng và định
-      dạng nội dung tương ứng (tree thành danh sách, commit thành header, blob
-      thành text).
+    explanation: "Cờ -p (pretty-print) sẽ tự động kiểm tra loại đối tượng và định dạng nội dung tương ứng để con người dễ đọc."
   - id: q2
-    question: Tùy chọn nào của `git cat-file` được sử dụng để kiểm tra kích thước
-      tính theo byte của đối tượng?
+    question: "Tùy chọn nào của git cat-file được sử dụng để kiểm tra kích thước tính theo byte của đối tượng?"
     type: single
     options:
-      - text: -s (size)
+      - text: "-s (size)"
         correct: true
-      - text: -b (bytes)
+      - text: "-b (bytes)"
         correct: false
-      - text: -k (kilobytes)
+      - text: "-k (kilobytes)"
         correct: false
-      - text: -l (length)
+      - text: "-l (length)"
         correct: false
-    explanation: Cờ `-s` viết tắt của size, trả về kích thước chính xác của payload
-      nội dung đối tượng trước khi nén.
+    explanation: "Cờ -s viết tắt của size, trả về kích thước chính xác của payload nội dung đối tượng trước khi nén."
   - id: q3
-    question: Nếu bạn chạy `git cat-file -p` trỏ tới một đối tượng Blob chứa ảnh
-      PNG, điều gì sẽ xảy ra?
+    question: "Nếu bạn chạy git cat-file -p trỏ tới một đối tượng Blob chứa ảnh PNG, điều gì sẽ xảy ra?"
     type: single
     options:
-      - text: Nội dung dữ liệu nhị phân thô của tệp ảnh sẽ được in trực tiếp ra terminal
+      - text: "Nội dung dữ liệu nhị phân thô của tệp ảnh sẽ được in trực tiếp ra terminal"
         correct: true
-      - text: Một cửa sổ xem ảnh tự động bật lên
+      - text: "Một cửa sổ xem ảnh tự động bật lên"
         correct: false
-      - text: Git tự động chuyển ảnh thành một bức vẽ ASCII Art
+      - text: "Git tự động chuyển ảnh thành một bức vẽ ASCII Art"
         correct: false
-      - text: Lệnh bị báo lỗi từ chối hiển thị
+      - text: "Lệnh bị báo lỗi từ chối hiển thị"
         correct: false
-    explanation: Vì Blob chỉ lưu dữ liệu thô, git cat-file sẽ giải nén và in thẳng
-      dữ liệu nhị phân của ảnh ra dòng lệnh.
+    explanation: "Vì Blob chỉ lưu dữ liệu thô, git cat-file sẽ giải nén và in thẳng dữ liệu nhị phân của ảnh ra dòng lệnh."
   - id: q4
-    question: Bạn có thể cung cấp bao nhiêu ký tự tối thiểu của mã băm cho lệnh `git
-      cat-file`?
+    question: "Bạn có thể cung cấp bao nhiêu ký tự tối thiểu của mã băm cho lệnh git cat-file?"
     type: single
     options:
-      - text: Tối thiểu từ 4 ký tự trở lên, miễn là chuỗi đó không bị trùng lặp với đối
-          tượng khác
+      - text: "Tối thiểu từ 4 ký tự trở lên, miễn là chuỗi đó không bị trùng lặp với đối tượng khác"
         correct: true
-      - text: Bắt buộc phải đủ 40 ký tự
+      - text: "Bắt buộc phải đủ 40 ký tự"
         correct: false
-      - text: Chỉ cần đúng 1 ký tự đầu tiên
+      - text: "Chỉ cần đúng 1 ký tự đầu tiên"
         correct: false
-      - text: Chính xác 8 ký tự, không được thừa hay thiếu
+      - text: "Chính xác 8 ký tự, không được thừa hay thiếu"
         correct: false
-    explanation: "Git hỗ trợ cơ chế Short Hash: bạn chỉ cần cung cấp đủ số ký tự đầu
-      để phân biệt duy nhất đối tượng trong kho lưu trữ."
+    explanation: "Git hỗ trợ cơ chế Short Hash: bạn chỉ cần cung cấp đủ số ký tự đầu để phân biệt duy nhất đối tượng trong kho lưu trữ."
+  - id: q5
+    question: "Tùy chọn --batch trong lệnh git cat-file thường được sử dụng trong trường hợp nào?"
+    type: single
+    options:
+      - text: "Cho phép các script và công cụ bên ngoài truy vấn hàng loạt thông tin của nhiều đối tượng qua stdin"
+        correct: true
+      - text: "Tự động xóa hàng loạt đối tượng trong cơ sở dữ liệu"
+        correct: false
+      - text: "Đổi tên hàng loạt commit trong lịch sử"
+        correct: false
+      - text: "Tạo hàng loạt nhánh mới cùng một lúc"
+        correct: false
+    explanation: "Chế độ --batch của git cat-file là một tính năng hiệu năng cao cho phép đọc luồng liên tục các mã hash và trả về nội dung đối tượng tức thì cho các ứng dụng tích hợp."

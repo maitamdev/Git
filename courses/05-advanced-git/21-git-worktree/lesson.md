@@ -10,22 +10,41 @@
 
 ---
 
+## 🧩 Từ khóa hôm nay
+
+### Git Worktree
+- **Nói dễ hiểu**: Tính năng mở đồng thời nhiều thư mục làm việc trên đĩa cứng gắn với các nhánh khác nhau mà dùng chung một kho `.git`.
+- **Ví dụ**: Dùng `git worktree add ../hotfix-folder hotfix-branch` để mở nhanh một nhánh hotfix ở thư mục riêng mà không cần stash code dở.
+- **Đừng nhầm**: Không phải là tạo clone mới tốn dung lượng; các worktree chia sẻ chung toàn bộ commit history và object trong `.git`.
+
+### Worktree List (git worktree list)
+- **Nói dễ hiểu**: Lệnh xem danh sách toàn bộ các thư mục worktree đang hoạt động kèm tên nhánh tương ứng trên máy tính.
+- **Ví dụ**: Chạy `git worktree list` để kiểm tra đường dẫn các thư mục phụ trợ trước khi dọn dẹp.
+- **Đừng nhầm**: Không được mở hai worktree cùng trỏ vào một nhánh duy nhất tại cùng một thời điểm.
+
+### Worktree Remove (git worktree remove)
+- **Nói dễ hiểu**: Lệnh chuẩn mực để xóa một thư mục worktree và dọn sạch siêu dữ liệu quản lý liên kết trong Git.
+- **Ví dụ**: Gõ `git worktree remove ../hotfix-folder` sau khi đã hoàn thành và merge nhánh hotfix.
+- **Đừng nhầm**: Tránh dùng lệnh xóa file thủ công của hệ điều hành vì sẽ để lại siêu dữ liệu rác đòi hỏi phải chạy `git worktree prune`.
+
+---
+
 ## 📖 Định nghĩa
-> `git worktree` là tính năng quản lý đa thư mục làm việc mạnh mẽ trong Git, cho phép một kho lưu trữ duy nhất (cùng chia sẻ chung một thư mục `.git`) có thể liên kết và mở đồng thời nhiều thư mục làm việc (Working Trees) độc lập tại các đường dẫn khác nhau trên ổ đĩa. Mỗi thư mục worktree được gắn với một nhánh riêng biệt, cho phép bạn mở nhiều cửa sổ lập trình song song mà không cần clone lại dự án.
+`git worktree` là tính năng cho phép một kho lưu trữ Git duy nhất mở đồng thời nhiều thư mục làm việc độc lập trên ổ đĩa, mỗi thư mục gắn với một nhánh riêng mà không cần clone lại toàn bộ dự án.
 
 ---
 
-## 🤔 Tại sao cần?
-Quy trình làm việc truyền thống rất bất tiện: bạn đang chạy dev server trên nhánh A với hàng trăm file đang sửa dở, có việc gấp cần sang nhánh B bạn phải tắt server, gõ `git stash`, chuyển nhánh, cài lại dependencies. Với `git worktree`, bạn chỉ cần mở thêm một thư mục bên cạnh: nhánh B chạy độc lập ở thư mục B, nhánh A vẫn chạy ở thư mục A với dev server đang chạy mượt mà. Không cần stash, không sợ mất code, tăng năng suất làm việc lên gấp bội.
+## 💡 Tại sao cần
+Khi đang chạy dev server với nhiều file sửa dở mà cần xử lý gấp một nhánh khác, quy trình cũ bắt bạn phải tắt server, stash và chuyển nhánh. Với `git worktree`, bạn mở thêm một thư mục bên cạnh để làm song song mà không gián đoạn công việc hiện tại.
 
 ---
 
-## 🧠 Mental Model (Mô hình tư duy)
-Hãy hình dung bạn là một kiến trúc sư đang thiết kế một tòa nhà. Thay vì chỉ có một chiếc bàn vẽ duy nhất mà mỗi lần đổi bản vẽ bạn phải cuộn bản vẽ cũ cất đi rồi trải bản vẽ mới ra bàn, bạn sở hữu một căn phòng rộng thênh thang với nhiều chiếc bàn vẽ đặt cạnh nhau (`git worktree`). Bàn số 1 bạn đang vẽ mặt tiền tòa nhà (nhánh feature), bàn số 2 bạn đang mở bản vẽ hệ thống cấp thoát nước (nhánh hotfix). Bạn có thể bước qua bước lại giữa hai chiếc bàn bất cứ lúc nào.
+## 🧠 Mental Model
+Hãy hình dung bạn là kiến trúc sư trong căn phòng lớn có nhiều chiếc bàn vẽ cạnh nhau. Bàn số 1 bạn đang vẽ mặt tiền tòa nhà (nhánh feature), bàn số 2 bạn mở bản vẽ ống nước (nhánh hotfix). Bạn có thể bước qua lại giữa hai bàn bất cứ lúc nào mà không cần thu dọn bản vẽ.
 
 ---
 
-## 🖼 Sơ đồ
+## 📊 Sơ đồ minh họa
 ```text
 Kiến trúc chia sẻ một kho chứa .git của Worktree:
                    ┌──► Thư mục chính: /project (nhánh: main)
@@ -37,12 +56,12 @@ Kho chứa gốc:     │
 
 ---
 
-## 🌎 Ví dụ thực tế
-Lập trình viên Cường đang lập trình tính năng thanh toán trên nhánh `feat/checkout` ở thư mục `my-app`. Ứng dụng đang biên dịch dở dang thì đồng nghiệp nhờ Cường review gấp nhánh `review-pr-45`. Thay vì stash làm gián đoạn tiến trình biên dịch, Cường gõ câu lệnh: `git worktree add ../my-app-pr review-pr-45`. Ngay lập tức, thư mục `my-app-pr` xuất hiện bên cạnh với đầy đủ mã nguồn của nhánh đó. Cường mở cửa sổ VS Code thứ hai tại thư mục mới, chạy thử và review xong cho bạn, rồi xóa thư mục đó bằng `git worktree remove ../my-app-pr`. Không gian làm việc chính của Cường hoàn toàn không bị ảnh hưởng.
+## 🏢 Ví dụ thực tế
+Kỹ sư Cường đang chạy thử tính năng thanh toán ở thư mục `my-app` thì được nhờ review gấp nhánh `review-pr-45`. Cường gõ `git worktree add ../pr-test review-pr-45`. Một thư mục mới xuất hiện ngay cạnh. Cường mở cửa sổ editor thứ hai để test, review xong thì xóa thư mục phụ mà không ảnh hưởng tới tiến trình đang chạy.
 
 ---
 
-## 💻 Command
+## 💻 Command & Cú pháp
 ```bash
 git worktree add <đường-dẫn-thư-mục> <tên-nhánh>
 git worktree add -b <nhánh-mới> <đường-dẫn>
@@ -63,41 +82,43 @@ git worktree prune
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Cố gắng mở hai worktree trên cùng một nhánh**:  Git sẽ chặn lại ngay lập tức để ngăn ngừa xung đột dữ liệu.
-2. **Tự ý dùng lệnh xóa thư mục của hệ điều hành (rmdir / rm -rf) thay vì dùng `git worktree remove`**:  Dẫn đến dữ liệu quản trị trong `.git/worktrees` bị thừa thãi (cần chạy `git worktree prune` để dọn).
-3. **Nhầm lẫn giữa worktree và clone mới**:  Worktree dùng chung cơ sở dữ liệu `.git`, tiết kiệm dung lượng ổ cứng gấp nhiều lần.
+1. **Mở hai worktree trên cùng một nhánh**: Git sẽ ngăn chặn ngay lập tức để tránh làm hỏng lịch sử commit của nhánh đó.
+2. **Xóa thư mục bằng lệnh hệ điều hành**: Tự ý xóa thư mục bằng lệnh xóa file ngoài shell sẽ để lại tệp rác trong `.git/worktrees`, cần chạy `git worktree prune` để dọn.
+3. **Nhầm lẫn với clone mới**: Worktree dùng chung cơ sở dữ liệu `.git`, tiết kiệm dung lượng ổ cứng gấp nhiều lần so với việc clone lại cả dự án.
 
 ---
 
-## 🧪 Lab
+## 🧪 Lab thực hành
+Bài học này là bài tự kiểm tra: bạn thao tác trực tiếp trên terminal của máy tính để làm quen với công cụ.
 1. Liệt kê danh sách worktree hiện tại bằng `git worktree list`.
 2. Tạo một worktree mới cho nhánh `demo-worktree` bằng lệnh `git worktree add ../temp-worktree -b demo-worktree`.
-3. Chạy `git worktree list` và quan sát hai đường dẫn thư mục cùng tồn tại.
-4. Dọn dẹp bằng lệnh `git worktree remove ../temp-worktree`.
+3. Chạy `git worktree list` và quan sát hai đường dẫn thư mục cùng tồn tại trên máy.
+4. Dọn dẹp không gian thử nghiệm bằng lệnh `git worktree remove ../temp-worktree`.
 
 ---
 
-## 💡 Hint
-> Mỗi nhánh chỉ được phép gắn với duy nhất một thư mục worktree tại một thời điểm.
+## 💡 Hint & mẹo
+> Mỗi nhánh chỉ được phép gắn với duy nhất một thư mục worktree tại một thời điểm để bảo đảm an toàn dữ liệu.
 
 ---
 
-## ✅ Validation
-- Tạo, quản lý và dọn dẹp thành công các không gian làm việc song song bằng git worktree.
+## ✅ Validation & Kết quả mong đợi
+- Tạo, quản lý và dọn dẹp thành công các không gian làm việc song song bằng `git worktree`.
+- Hiểu rõ lợi thế về hiệu năng và dung lượng đĩa của worktree so với việc clone nhiều lần.
 
 ---
 
-## ❓ Quiz
+## ❓ Quiz nhanh
 Hãy làm bài kiểm tra trắc nghiệm dưới đây về tính năng đa thư mục git worktree.
 
 ---
 
-## 🔥 Challenge
+## 🚀 Thử thách nâng cao
 So sánh chi tiết về dung lượng ổ đĩa và tốc độ tạo lập giữa việc dùng `git worktree add` và `git clone` lại dự án sang thư mục mới.
 
 ---
 
-## 📚 Tổng kết
-- `git worktree` cho phép mở nhiều thư mục làm việc đồng thời trên nhiều nhánh khác nhau.
-- Dùng chung một cơ sở dữ liệu `.git`, cực kỳ nhẹ và không tốn dung lượng ổ đĩa.
-- Giải quyết dứt điểm nhu cầu chuyển nhánh khẩn cấp mà không cần stash hay ngắt dev server.
+## 📝 Tổng kết
+- `git worktree` cho phép đa nhiệm mở nhiều nhánh cùng lúc ở các thư mục khác nhau.
+- Chia sẻ chung kho `.git`, tiết kiệm thời gian clone và dung lượng đĩa cứng.
+- Dọn dẹp an toàn bằng `git worktree remove <path>`.

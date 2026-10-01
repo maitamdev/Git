@@ -62,3 +62,19 @@ questions:
         correct: false
     explanation: "`git restore --staged <tệp>` bỏ đánh dấu chuẩn bị commit, giữ
       nguyên trạng thái tệp trong Working Tree."
+  - id: q5
+    question: Điểm khác biệt căn bản nhất về mặt lịch sử giữa `git reset` và `git revert` là gì?
+    type: single
+    options:
+      - text: git reset di chuyển con trỏ nhánh lùi lại quá khứ (viết lại lịch sử), còn git
+          revert tạo commit mới đảo ngược thay đổi (bảo tồn lịch sử)
+        correct: true
+      - text: git reset chỉ dùng cho file văn bản, còn git revert chỉ dùng cho file ảnh
+        correct: false
+      - text: git revert bắt buộc phải kết nối Internet tới máy chủ GitHub
+        correct: false
+      - text: git reset tự động xóa tài khoản người dùng trên máy tính
+        correct: false
+    explanation: Reset di chuyển con trỏ nhánh lùi về quá khứ và có thể làm mất commit,
+      trong khi revert tạo thêm commit mới tiến về phía trước để đảo ngược tác động.
+

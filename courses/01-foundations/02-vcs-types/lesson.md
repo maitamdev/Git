@@ -1,95 +1,124 @@
-# Local / Centralized / Distributed VCS
+# Local, Centralized và Distributed VCS
 
 ---
 
 ## 🎯 Mục tiêu
-- Phân biệt rõ 3 thế hệ kiến trúc VCS: Cục bộ (Local), Tập trung (Centralized), và Phân tán (Distributed).
-- Đánh giá được ưu nhược điểm cốt lõi của SVN so với Git.
-- Hiểu vì sao mô hình phân tán (DVCS) trở thành tiêu chuẩn thống trị ngành công nghiệp phần mềm hiện đại.
+- Phân biệt nơi lưu lịch sử trong ba kiểu VCS: Local, Centralized và Distributed.
+- Nói được Git và SVN thường thuộc kiểu nào.
+- Biết thao tác nào vẫn làm được khi mất kết nối với máy chủ chia sẻ.
 
 ---
 
-## 📖 Định nghĩa
-> Hệ thống quản lý phiên bản trải qua ba thế hệ tiến hóa kiến trúc then chốt: Local VCS (quản lý lịch sử cục bộ trên cùng một máy đơn lẻ), Centralized VCS - CVCS (lưu trữ toàn bộ lịch sử trên một máy chủ trung tâm duy nhất, ví dụ SVN, CVS), và Distributed VCS - DVCS (mọi máy tính thành viên đều sao chép toàn bộ cơ sở dữ liệu lịch sử dự án về máy cục bộ, ví dụ Git, Mercurial). Trong DVCS, mỗi lập trình viên đều sở hữu một bản sao hoàn chỉnh của kho lưu trữ, cho phép làm việc độc lập hoàn toàn mà không phụ thuộc vào kết nối mạng liên tục.
+## 🧩 Từ khóa hôm nay
+
+### Local VCS — VCS cục bộ
+- **Nói dễ hiểu:** Lịch sử thay đổi được quản lý trên một máy tính.
+- **Ví dụ:** Bạn tự lưu các mốc bài tập trên laptop bằng một công cụ VCS cài ở đó.
+- **Đừng nhầm:** “Cục bộ” mô tả nơi có lịch sử chính; tự nó không giúp nhóm chia sẻ lịch sử.
+
+### CVCS (Centralized VCS) — VCS tập trung
+- **Nói dễ hiểu:** Máy chủ trung tâm giữ lịch sử dùng chung; mỗi người làm việc với một bản làm việc trên máy mình.
+- **Ví dụ:** SVN là một công cụ thuộc mô hình này.
+- **Đừng nhầm:** Khi máy chủ hoặc mạng gặp sự cố, máy bạn vẫn có thể còn tệp đang sửa, nhưng các thao tác cần máy chủ như gửi thay đổi mới sẽ bị ảnh hưởng.
+
+### DVCS (Distributed VCS) — VCS phân tán
+- **Nói dễ hiểu:** Với một bản clone đầy đủ thông thường, mỗi người có kho Git cục bộ kèm lịch sử để làm việc riêng.
+- **Ví dụ:** Git là DVCS; bạn có thể tạo commit mới trên máy rồi chia sẻ sau khi có mạng.
+- **Đừng nhầm:** “Phân tán” không có nghĩa là máy tự đồng bộ mọi thay đổi. Để chia sẻ, vẫn cần thao tác như push và pull.
+
+### Clone — tạo bản sao kho lưu trữ
+- **Nói dễ hiểu:** Tải một kho từ nơi chia sẻ về máy để bắt đầu làm việc.
+- **Ví dụ:** Clone một dự án GitHub về laptop để xem mã nguồn và lịch sử.
+- **Đừng nhầm:** Clone khác tải một tệp ZIP: một bản clone Git thông thường còn dùng được các lệnh và lịch sử Git.
 
 ---
 
 ## 🤔 Tại sao cần?
-Hiểu rõ sự khác biệt giữa Centralized VCS và Distributed VCS giúp bạn nắm được lý do tại sao Git lại có tốc độ xử lý vượt trội và độ an toàn dữ liệu cao đến vậy. Với CVCS truyền thống, nếu máy chủ trung tâm bị mất mạng hoặc hỏng ổ cứng, toàn bộ đội ngũ lập trình viên sẽ bị ngưng trệ công việc, không thể commit hay xem lại lịch sử. Ngược lại, DVCS loại bỏ hoàn toàn điểm nghẽn đơn độc (Single Point of Failure), bảo đảm an toàn dữ liệu tuyệt đối.
+Giả sử cả nhóm cần tiếp tục làm bài khi máy chủ chia sẻ tạm thời không truy cập được. Với VCS tập trung, việc ghi thay đổi lên lịch sử dùng chung phải chờ máy chủ hoạt động. Với bản clone Git đầy đủ thông thường, mỗi người vẫn có thể xem lịch sử và lưu commit trên máy mình; việc chia sẻ những commit mới sẽ chờ đến khi kết nối lại.
+
+Điều đó không làm Git thành hệ thống sao lưu hoàn hảo: nhóm vẫn cần đẩy dữ liệu lên nơi chia sẻ và có kế hoạch sao lưu phù hợp.
+
+---
+
+## 📖 Định nghĩa
+Ba kiểu VCS khác nhau chủ yếu ở nơi lưu lịch sử. Local VCS giữ lịch sử trên một máy. Centralized VCS giữ lịch sử dùng chung trên máy chủ trung tâm. Distributed VCS như Git cho mỗi bản clone đầy đủ thông thường một kho cục bộ có thể làm việc độc lập.
 
 ---
 
 ## 🧠 Mental Model (Mô hình tư duy)
-Hãy so sánh CVCS giống như một cuốn sổ cái duy nhất đặt tại thư viện thành phố, ai muốn ghi chép hay tra cứu đều phải đến tận nơi xếp hàng. Nếu tòa nhà thư viện bị cháy hoặc mất điện đóng cửa, không ai có thể làm việc được nữa. Trong khi đó, DVCS giống như việc mỗi thành viên trong hội nghiên cứu đều sở hữu một máy in 3D công nghệ cao, tự động đồng bộ và in ra một cuốn sổ cái hoàn chỉnh ngay tại phòng làm việc riêng của mình.
+- **Local:** Một người giữ cuốn sổ lịch sử trên máy của mình.
+- **Centralized:** Nhóm cùng ghi vào một cuốn sổ ở máy chủ; các bản làm việc của thành viên ở máy riêng.
+- **Distributed:** Mỗi người có một cuốn sổ lịch sử riêng; khi có mạng, họ trao đổi các mốc cần chia sẻ.
 
 ---
 
 ## 🖼 Sơ đồ
 ```text
-Mô hình CVCS (SVN):                 Mô hình DVCS (Git):
-   [Máy chủ trung tâm]                  [Server chia sẻ]
-       ▲        ▲                           ▲        ▲
-       │        │                           ▼        ▼
-[Máy Client A] [Máy Client B]       [Repo Client A] [Repo Client B]
-(Chỉ có Working Copy)               (Có đủ 100% lịch sử và commit)
+CVCS (ví dụ: SVN)                 DVCS (ví dụ: Git)
+[Máy chủ giữ lịch sử]             [Nơi chia sẻ]
+     ▲       ▲                      ▲       ▲
+     │       │                      │       │
+  [Máy A] [Máy B]                [Repo A] [Repo B]
+  bản làm việc                    mỗi clone có lịch sử cục bộ
 ```
 
 ---
 
 ## 🌎 Ví dụ thực tế
-Một công ty phần mềm đa quốc gia với các chi nhánh tại Hà Nội, Tokyo và San Francisco cùng phát triển một nền tảng thương mại điện tử. Nếu sử dụng hệ thống SVN kiểu cũ, mỗi khi kỹ sư tại Hà Nội muốn tạo commit hoặc xem lịch sử code, lệnh phải gửi qua đường truyền Internet xuyên đại dương đến máy chủ đặt tại Mỹ, gây ra độ trễ hàng chục giây. Khi chuyển đổi sang Git, toàn bộ thao tác commit, tạo nhánh hay xem lịch sử diễn ra ngay tức thì trên ổ cứng máy tính tại Hà Nội, chỉ mất vài mili-giây mà không hề cần kết nối Internet.
+Nhóm bạn clone dự án Git trước khi đi học ở nơi Wi-Fi chập chờn. Bạn có thể xem lịch sử và lưu commit ở máy. Khi mạng ổn định, bạn push commit lên nơi chia sẻ để các bạn khác lấy về. Git không tự đẩy dữ liệu và cũng không bảo đảm các bạn sửa cùng một dòng sẽ tự hòa hợp.
 
 ---
 
 ## 💻 Command
 ```bash
-git log
 git status
 ```
 
 ---
 
 ## 🔍 Giải thích command
-- `git log`: Hiển thị danh sách lịch sử toàn bộ các commit đã được ghi nhận trong kho lưu trữ cục bộ của bạn, bao gồm mã băm SHA tác giả ngày giờ và thông điệp mô tả thay đổi chi tiết.
-- `git status`: Lệnh kiểm tra tình trạng hiện tại của các tệp tin trong thư mục làm việc so với kho chứa, giúp phát hiện tệp nào đang sửa hoặc chưa đưa vào diện theo dõi.
+`git status` cho biết tình trạng tệp trong kho Git hiện tại, ví dụ tệp nào đang được sửa hoặc chưa được Git theo dõi. Đây là thao tác đọc thông tin cục bộ; nó không gửi thay đổi lên máy chủ.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Nghĩ rằng Git cần kết nối Internet để commit**:  Nhiều bạn lầm tưởng không có Wi-Fi thì không dùng được Git, thực chất Git hoạt động hoàn toàn offline trên máy tính của bạn.
-2. **Nhầm lẫn giữa Git và SVN**:  Áp đặt tư duy khóa tệp (file locking) của SVN vào mô hình phân tán của Git.
-3. **Không sao lưu kho chứa lên máy chủ từ xa**:  Ỷ lại vào máy cá nhân mà không đẩy dữ liệu lên GitHub để dự phòng rủi ro phần cứng hỏng hóc.
+1. **Nghĩ Git cần Internet cho mọi việc:** Nhiều thao tác trên kho cục bộ vẫn làm được khi offline; trao đổi với remote thì cần kết nối phù hợp.
+2. **Nghĩ distributed nghĩa là tự đồng bộ:** Bạn vẫn cần chủ động lấy hoặc gửi thay đổi.
+3. **Coi một kho cục bộ là bản sao lưu đủ an toàn:** Máy bị hỏng có thể làm mất bản đó; hãy chia sẻ và sao lưu theo quy trình của nhóm.
 
 ---
 
 ## 🧪 Lab
-1. Kiểm tra khả năng hoạt động offline của Git bằng cách ngắt kết nối mạng hoặc thử chạy lệnh trong terminal cục bộ.
-2. Sử dụng lệnh `git status` để xem phản hồi trạng thái từ cơ sở dữ liệu nội bộ.
-3. Nhận biết rằng Git đọc dữ liệu trực tiếp từ ổ đĩa cục bộ chứ không gửi truy vấn HTTP nào ra ngoài.
+Tưởng tượng Wi-Fi vừa mất sau khi bạn clone dự án. Phân loại từng việc thành **làm được ngay trên Git cục bộ** hoặc **phải chờ kết nối**:
+- Xem lịch sử đã có trong clone.
+- Tạo một commit mới trên máy.
+- Gửi commit lên GitHub.
+- Nhận thay đổi mới từ GitHub.
 
 ---
 
 ## 💡 Hint
-> Mọi thao tác commit và tạo nhánh trong Git đều diễn ra tức thì trên máy của bạn.
+Hãy hỏi: “Lệnh này chỉ đọc/ghi kho đang ở trên máy mình, hay cần trao đổi với máy chủ?”
 
 ---
 
 ## ✅ Validation
-- Hiểu bản chất phân tán của Git và phân biệt được với hệ thống tập trung.
+- Phân biệt đúng Local VCS, CVCS và DVCS theo nơi có lịch sử.
+- Nêu được Git có thể lưu commit cục bộ khi offline nhưng không thể push/pull khi mất kết nối.
 
 ---
 
 ## ❓ Quiz
-Kiểm tra kiến thức về các mô hình kiến trúc quản lý phiên bản qua các câu hỏi sau.
+Trả lời các câu hỏi sau và đọc lời giải thích sau mỗi câu.
 
 ---
 
 ## 🔥 Challenge
-Phân tích tình huống rủi ro khi máy chủ lưu trữ chính bị hỏng trong mô hình SVN so với mô hình Git.
+Vẽ ba hình nhỏ chỉ ra lịch sử được giữ ở đâu trong Local VCS, CVCS và một bản clone Git đầy đủ thông thường.
 
 ---
 
 ## 📚 Tổng kết
-- Local VCS chỉ lưu trên một máy đơn lẻ; CVCS lưu tập trung trên một server trung tâm.
-- Distributed VCS (Git) lưu đầy đủ toàn bộ cơ sở dữ liệu lịch sử trên mọi máy tính thành viên.
-- Mô hình phân tán mang lại tốc độ cực nhanh, khả năng làm việc offline hoàn hảo và độ an toàn dữ liệu cao nhất.
+- Local VCS giữ lịch sử trên máy cục bộ; CVCS dựa vào lịch sử ở máy chủ trung tâm.
+- DVCS như Git cho một bản clone đầy đủ thông thường lịch sử cục bộ để làm việc offline.
+- Offline vẫn có giới hạn: gửi và nhận thay đổi từ nơi chia sẻ phải chờ kết nối.

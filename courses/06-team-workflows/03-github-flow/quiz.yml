@@ -5,8 +5,7 @@ questions:
     question: Nguyên tắc bất di bất dịch cốt lõi của mô hình GitHub Flow là gì?
     type: single
     options:
-      - text: Mã nguồn trên nhánh main luôn luôn ở trạng thái sẵn sàng triển khai lên
-          Production
+      - text: Mã nguồn trên nhánh main luôn luôn ở trạng thái sẵn sàng triển khai lên Production
         correct: true
       - text: Bắt buộc phải có ít nhất 5 nhánh phụ trước khi merge vào main
         correct: false
@@ -14,14 +13,12 @@ questions:
         correct: false
       - text: Không được phép sử dụng lệnh git push lên máy chủ
         correct: false
-    explanation: Nguyên lý trung tâm của GitHub Flow là tính sẵn sàng triển khai
-      liên tục của nhánh main ở bất kỳ thời điểm nào trong ngày.
+    explanation: Nguyên lý trung tâm của GitHub Flow là tính sẵn sàng triển khai liên tục của nhánh main ở bất kỳ thời điểm nào trong ngày.
   - id: q2
     question: Mô hình GitHub Flow phù hợp lý tưởng nhất với loại hình dự án phần mềm nào?
     type: single
     options:
-      - text: Ứng dụng web, kiến trúc microservices và phần mềm dạng dịch vụ SaaS có chu
-          kỳ phát hành nhanh
+      - text: Ứng dụng web, kiến trúc microservices và phần mềm dạng dịch vụ SaaS có chu kỳ phát hành nhanh
         correct: true
       - text: Hệ điều hành nhúng trên vệ tinh không gian chỉ cập nhật 5 năm một lần
         correct: false
@@ -29,15 +26,12 @@ questions:
         correct: false
       - text: Các bài tập cá nhân không có nhu cầu chia sẻ mã nguồn
         correct: false
-    explanation: GitHub Flow sinh ra để phục vụ việc phát hành phần mềm liên tục và
-      tức thì trên nền tảng đám mây và web hiện đại.
+    explanation: GitHub Flow sinh ra để phục vụ việc phát hành phần mềm liên tục và tức thì trên nền tảng đám mây và web hiện đại.
   - id: q3
-    question: Trong GitHub Flow, bước nào sau đây diễn ra TRƯỚC KHI nhánh tính năng
-      được hợp nhất vào nhánh main?
+    question: Trong GitHub Flow, bước nào sau đây diễn ra TRƯỚC KHI nhánh tính năng được hợp nhất vào nhánh main?
     type: single
     options:
-      - text: Mở Pull Request, thảo luận, kiểm duyệt code và thử nghiệm tính năng trên
-          môi trường kiểm thử
+      - text: Mở Pull Request, thảo luận, kiểm duyệt code và thử nghiệm tính năng trên môi trường kiểm thử
         correct: true
       - text: Xóa toàn bộ kho lưu trữ trên máy chủ GitHub
         correct: false
@@ -45,16 +39,12 @@ questions:
         correct: false
       - text: Chạy lệnh git reset --hard trên nhánh main
         correct: false
-    explanation: Thảo luận, review và xác nhận hoạt động ổn định trên môi trường thử
-      nghiệm là điều kiện bắt buộc trước khi merge code vào main trong GitHub
-      Flow.
+    explanation: Thảo luận, review và xác nhận hoạt động ổn định trên môi trường thử nghiệm là điều kiện bắt buộc trước khi merge code vào main trong GitHub Flow.
   - id: q4
-    question: So với Git Flow cổ điển, GitHub Flow đã lược bỏ những loại nhánh nào
-      để trở nên tinh gọn?
+    question: So với Git Flow cổ điển, GitHub Flow đã lược bỏ những loại nhánh nào để trở nên tinh gọn?
     type: single
     options:
-      - text: Lược bỏ nhánh develop dài hạn và các nhánh trung gian cồng kềnh như
-          release branches
+      - text: Lược bỏ nhánh develop dài hạn và các nhánh trung gian cồng kềnh như release branches
         correct: true
       - text: Lược bỏ hoàn toàn nhánh main
         correct: false
@@ -62,5 +52,17 @@ questions:
         correct: false
       - text: Loại bỏ hoàn toàn hệ thống kiểm tra Pull Request
         correct: false
-    explanation: GitHub Flow đơn giản hóa cấu trúc bằng cách chỉ giữ lại một nhánh
-      dài hạn duy nhất là main, bỏ qua nhánh develop và release.
+    explanation: GitHub Flow đơn giản hóa cấu trúc bằng cách chỉ giữ lại một nhánh dài hạn duy nhất là main, bỏ qua nhánh develop và release.
+  - id: q5
+    question: Khi nào việc triển khai (deploy) sản phẩm thường diễn ra trong quy trình chuẩn của GitHub Flow?
+    type: single
+    options:
+      - text: Triển khai ngay lập tức sau khi nhánh tính năng được merge vào main nhờ tích hợp Continuous Deployment
+        correct: true
+      - text: Chờ đợi đến cuối quý sau 3 tháng tích lũy mã nguồn
+        correct: false
+      - text: Chỉ triển khai khi toàn thể ban giám đốc họp phê duyệt
+        correct: false
+      - text: Không bao giờ triển khai mã nguồn từ nhánh main
+        correct: false
+    explanation: Trong GitHub Flow, mỗi lần merge vào main là một lần mã nguồn mới sẵn sàng được tự động triển khai tức thì lên môi trường thực tế.

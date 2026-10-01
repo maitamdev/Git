@@ -14,49 +14,43 @@ questions:
         correct: false
       - text: git test-connection
         correct: false
-    explanation: "`git --version` kiểm tra sự tồn tại của file thực thi git trong
-      PATH và in ra số hiệu phiên bản."
+    explanation: Lệnh này in ra phiên bản Git đang được cài trên máy tính của bạn.
   - id: q2
-    question: Git Bash trên hệ điều hành Windows cung cấp môi trường gì cho người dùng?
+    question: Bạn đang dùng Windows. Có bắt buộc mở Git Bash mới chạy được Git không?
     type: single
     options:
-      - text: Môi trường giả lập shell Unix cho phép chạy các lệnh bash tiêu chuẩn
+      - text: Không, PowerShell cũng chạy được Git khi cài đặt đúng
         correct: true
-      - text: Trình chỉnh sửa ảnh đồ họa chuyên nghiệp cho tệp tin README
+      - text: Có, Git chỉ chạy trong Git Bash
         correct: false
-      - text: Trình biên dịch mã nguồn Java sang mã máy
+      - text: Có, Git Bash là tài khoản trực tuyến bắt buộc
         correct: false
-      - text: Phần mềm phát video trực tuyến từ YouTube
+      - text: Không, vì Windows không thể chạy lệnh Git
         correct: false
-    explanation: Git Bash mang toàn bộ các tiện ích dòng lệnh quen thuộc của Unix
-      (ls, rm, cat, echo) lên Windows.
+    explanation: Git for Windows có thể chạy trong PowerShell; Git Bash chỉ là một lựa chọn.
   - id: q3
-    question: 'Lỗi "git: command not found" thường xuất phát từ nguyên nhân nào?'
+    question: Terminal báo không nhận diện được lệnh `git`. Bạn nên kiểm tra gì trước?
     type: single
     options:
-      - text: Git chưa được cài đặt hoặc đường dẫn chưa được thêm vào biến môi trường
-          PATH
+      - text: Git đã được cài chưa và terminal có tìm thấy Git không
         correct: true
-      - text: Máy tính của bạn chưa cắm dây mạng Internet
+      - text: Tài khoản GitHub đã có ảnh đại diện chưa
         correct: false
-      - text: Màn hình máy tính bị thiếu độ phân giải cao
+      - text: README có đủ tiêu đề chưa
         correct: false
-      - text: Bạn chưa tạo tài khoản người dùng trên GitHub
+      - text: Đã tạo nhánh `main` chưa
         correct: false
-    explanation: Lỗi `command not found` xuất hiện khi shell không tìm thấy tệp thực
-      thi git trong các thư mục của biến PATH.
+    explanation: Có thể Git chưa được cài hoặc hệ điều hành chưa tìm thấy chương trình Git.
   - id: q4
-    question: Ký tự kết thúc dòng (Line Ending) mặc định trên Windows và Linux lần
-      lượt là gì?
+    question: Lệnh đơn giản nào giúp bạn kiểm tra Git đã chạy được trong terminal chưa?
     type: single
     options:
-      - text: Windows dùng CRLF, Linux dùng LF
+      - text: "`git --version`"
         correct: true
-      - text: Windows dùng LF, Linux dùng CRLF
+      - text: "`git install --check`"
         correct: false
-      - text: Cả hai hệ điều hành đều dùng chung một chuẩn không phân biệt
+      - text: "`git account`"
         correct: false
-      - text: Windows dùng XML, Linux dùng JSON
+      - text: "`git internet`"
         correct: false
-    explanation: "Windows sử dụng cặp ký tự Carriage Return + Line Feed (CRLF:
-      \\r\\n), trong khi Unix/Linux/macOS dùng Line Feed (LF: \\n)."
+    explanation: "`git --version` xác nhận terminal nhận lệnh Git và hiển thị phiên bản."

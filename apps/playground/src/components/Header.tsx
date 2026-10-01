@@ -23,7 +23,6 @@ interface HeaderProps {
   onNavigateRoute?: (route: AppRoute) => void;
   currentUser?: User | null;
   onSwitchUserRole?: (role: 'student' | 'teacher' | 'admin') => void;
-  onOpenLogin?: () => void;
   onLogout?: () => void;
 }
 
@@ -44,7 +43,6 @@ export const Header: React.FC<HeaderProps> = ({
   onNavigateRoute,
   currentUser,
   onSwitchUserRole,
-  onOpenLogin,
   onLogout,
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -481,29 +479,6 @@ export const Header: React.FC<HeaderProps> = ({
               </button>
             )}
           </div>
-        )}
-
-        {/* Login Button when not logged in */}
-        {!currentUser && (
-          <button
-            onClick={onOpenLogin}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              background: 'linear-gradient(135deg, #0284c7, #0ea5e9)',
-              border: 'none',
-              borderRadius: '8px',
-              padding: '6px 14px',
-              color: '#ffffff',
-              fontWeight: 600,
-              fontSize: '0.85rem',
-              cursor: 'pointer',
-              boxShadow: '0 2px 8px rgba(14, 165, 233, 0.3)',
-            }}
-          >
-            <span>🔑</span> Đăng Nhập
-          </button>
         )}
 
         {/* User Role Switcher Dropdown (DEV ONLY - STRICTLY STRIPPED / HIDDEN IN PRODUCTION) */}

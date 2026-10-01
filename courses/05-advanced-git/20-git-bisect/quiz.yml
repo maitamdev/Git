@@ -2,8 +2,7 @@ id: quiz-05-20-git-bisect
 title: "Trắc nghiệm: git bisect"
 questions:
   - id: q1
-    question: Thuật toán tìm kiếm mà câu lệnh `git bisect` áp dụng để truy tìm
-      commit gây lỗi là thuật toán nào?
+    question: Thuật toán tìm kiếm mà câu lệnh `git bisect` áp dụng để truy tìm commit gây lỗi là thuật toán nào?
     type: single
     options:
       - text: Tìm kiếm nhị phân (Binary Search) chia đôi phạm vi sau mỗi bước kiểm tra
@@ -14,11 +13,9 @@ questions:
         correct: false
       - text: Tìm kiếm theo độ dài của thông điệp commit
         correct: false
-    explanation: "`git bisect` chia đôi lịch sử theo thuật toán Binary Search, mang
-      lại hiệu quả cực cao với độ phức tạp O(log N)."
+    explanation: "`git bisect` chia đôi lịch sử theo thuật toán Binary Search, mang lại hiệu quả cực cao với độ phức tạp O(log N)."
   - id: q2
-    question: Giả sử khoảng cách giữa commit tốt (good) và commit lỗi (bad) là 1.000
-      commit, bạn cần tối đa khoảng bao nhiêu lần kiểm tra để tìm ra thủ phạm?
+    question: Giả sử khoảng cách giữa commit tốt (good) và commit lỗi (bad) là 1.000 commit, bạn cần tối đa khoảng bao nhiêu lần kiểm tra để tìm ra thủ phạm?
     type: single
     options:
       - text: Khoảng 10 lần kiểm tra (vì 2^10 = 1024)
@@ -29,11 +26,9 @@ questions:
         correct: false
       - text: Chỉ cần đúng 1 lần duy nhất
         correct: false
-    explanation: Nhờ tính chất lũy thừa cơ số 2 của thuật toán nhị phân, 1.000
-      commit chỉ cần tối đa khoảng 10 bước kiểm thử.
+    explanation: Nhờ tính chất lũy thừa cơ số 2 của thuật toán nhị phân, 1.000 commit chỉ cần tối đa khoảng 10 bước kiểm thử.
   - id: q3
-    question: Sau khi đã tìm ra chính xác commit gây lỗi bằng `git bisect`, câu lệnh
-      BẮT BUỘC bạn phải chạy để quay về nhánh làm việc ban đầu là gì?
+    question: Sau khi đã tìm ra chính xác commit gây lỗi bằng `git bisect`, câu lệnh BẮT BUỘC bạn phải chạy để quay về nhánh làm việc ban đầu là gì?
     type: single
     options:
       - text: git bisect reset
@@ -44,15 +39,12 @@ questions:
         correct: false
       - text: git checkout main --force
         correct: false
-    explanation: "`git bisect reset` dọn dẹp các con trỏ bisect tạm thời và đưa HEAD
-      quay trở về nhánh ban đầu của bạn."
+    explanation: "`git bisect reset` dọn dẹp các con trỏ bisect tạm thời và đưa HEAD quay trở về nhánh ban đầu của bạn."
   - id: q4
-    question: Tính năng tự động hóa tối thượng `git bisect run <script>` xác định
-      commit là Good hay Bad dựa trên tiêu chí nào của script?
+    question: Tính năng tự động hóa tối thượng `git bisect run <script>` xác định commit là Good hay Bad dựa trên tiêu chí nào của script?
     type: single
     options:
-      - text: "Mã thoát (Exit code) của script: mã 0 là Good, mã khác 0 (từ 1 đến 127)
-          là Bad"
+      - text: "Mã thoát (Exit code) của script: mã 0 là Good, mã khác 0 (từ 1 đến 127) là Bad"
         correct: true
       - text: Dung lượng của tệp script tính bằng kilobyte
         correct: false
@@ -60,5 +52,17 @@ questions:
         correct: false
       - text: Màu sắc hiển thị trên màn hình terminal
         correct: false
-    explanation: Theo chuẩn POSIX, exit code 0 biểu thị thành công (Good), các mã
-      lỗi khác 0 biểu thị thất bại (Bad).
+    explanation: Theo chuẩn POSIX, exit code 0 biểu thị thành công (Good), các mã lỗi khác 0 biểu thị thất bại (Bad).
+  - id: q5
+    question: Câu lệnh nào sau đây dùng để đánh dấu commit hiện tại là commit chứa lỗi trong phiên làm việc với git bisect?
+    type: single
+    options:
+      - text: git bisect bad
+        correct: true
+      - text: git bisect broken
+        correct: false
+      - text: git bisect fail
+        correct: false
+      - text: git bisect error
+        correct: false
+    explanation: 'Trong quy trình chuẩn của `git bisect`, bạn dùng `git bisect bad` để đánh dấu commit lỗi và `git bisect good` cho commit còn tốt.'

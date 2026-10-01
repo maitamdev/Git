@@ -5,8 +5,7 @@ questions:
     question: Staging Area trong Git đóng vai trò kỹ thuật gì?
     type: single
     options:
-      - text: Là vùng đệm trung gian cho phép chọn lọc các thay đổi trước khi ghi vào
-          commit
+      - text: Là nơi chọn thay đổi sẽ được đưa vào commit kế tiếp
         correct: true
       - text: Là nơi sao lưu dự phòng toàn bộ ổ cứng máy tính
         correct: false
@@ -60,3 +59,16 @@ questions:
         correct: false
     explanation: "`git restore --staged <file>` unstage tệp mà không làm mất nội
       dung code. `git rm -f` xóa hẳn file khỏi ổ đĩa."
+  - id: q5
+    question: Thay đổi đã được stage có xuất hiện trong lịch sử commit ngay lập tức không?
+    type: single
+    options:
+      - text: Không; cần chạy `git commit` để tạo một mốc lịch sử
+        correct: true
+      - text: Có; `git add` tự tạo commit
+        correct: false
+      - text: Có; `git status` tự lưu commit
+        correct: false
+      - text: Không; phải chạy `git push` trước khi commit
+        correct: false
+    explanation: "`git add` chỉ chọn nội dung vào Staging Area. `git commit` mới tạo mốc lịch sử cục bộ."

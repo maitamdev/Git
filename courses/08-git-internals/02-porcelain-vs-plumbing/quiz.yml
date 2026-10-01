@@ -2,62 +2,67 @@ id: quiz-08-git-internals-02-porcelain-vs-plumbing
 title: "Trắc nghiệm: Phân biệt Porcelain Commands vs Plumbing Commands"
 questions:
   - id: q1
-    question: Lệnh nào sau đây thuộc nhóm Plumbing commands (lệnh bậc thấp) trong Git?
+    question: "Lệnh nào sau đây thuộc nhóm Plumbing commands (lệnh bậc thấp) trong Git?"
     type: single
     options:
-      - text: git cat-file
+      - text: "git cat-file"
         correct: true
-      - text: git commit
+      - text: "git commit"
         correct: false
-      - text: git branch
+      - text: "git branch"
         correct: false
-      - text: git clone
+      - text: "git clone"
         correct: false
-    explanation: "`git cat-file` là lệnh plumbing chuyên dụng để kiểm tra loại, kích
-      thước và nội dung thô của một đối tượng Git."
+    explanation: "Lệnh git cat-file là lệnh plumbing chuyên dụng để kiểm tra loại, kích thước và nội dung thô của một đối tượng Git."
   - id: q2
-    question: Thuật ngữ Porcelain (đồ sứ tráng men) trong Git được dùng để ẩn dụ cho
-      điều gì?
+    question: "Thuật ngữ Porcelain (đồ sứ tráng men) trong Git được dùng để ẩn dụ cho điều gì?"
     type: single
     options:
-      - text: Giao diện dòng lệnh bậc cao bóng bẩy, tiện lợi và thân thiện với người
-          dùng
+      - text: "Giao diện dòng lệnh bậc cao bóng bẩy, tiện lợi và thân thiện với người dùng"
         correct: true
-      - text: Phần cứng máy tính dễ vỡ nếu va đập
+      - text: "Phần cứng máy tính dễ vỡ nếu va đập"
         correct: false
-      - text: Các tệp tin mã nguồn có màu trắng
+      - text: "Các tệp tin mã nguồn có màu trắng"
         correct: false
-      - text: Một giao thức mạng truyền tải dữ liệu
+      - text: "Một giao thức mạng truyền tải dữ liệu"
         correct: false
-    explanation: Linus Torvalds ví von các lệnh giao diện người dùng như thiết bị vệ
-      sinh bằng sứ sạch sẽ, che giấu đường ống nước bẩn bên dưới.
+    explanation: "Linus Torvalds ví von các lệnh giao diện người dùng như thiết bị vệ sinh bằng sứ sạch sẽ, che giấu đường ống nước bẩn bên dưới."
   - id: q3
-    question: Lệnh Plumbing nào chịu trách nhiệm chuyển đổi nội dung của Staging
-      Area thành một đối tượng Tree trên đĩa?
+    question: "Lệnh Plumbing nào chịu trách nhiệm chuyển đổi nội dung của Staging Area thành một đối tượng Tree trên đĩa?"
     type: single
     options:
-      - text: git write-tree
+      - text: "git write-tree"
         correct: true
-      - text: git make-tree
+      - text: "git make-tree"
         correct: false
-      - text: git save-index
+      - text: "git save-index"
         correct: false
-      - text: git export-tree
+      - text: "git export-tree"
         correct: false
-    explanation: "`git write-tree` đọc tệp `.git/index` và ghi ra cấu trúc cây thư
-      mục nhị phân vào `.git/objects`."
+    explanation: "Lệnh git write-tree đọc tệp .git/index và ghi ra cấu trúc cây thư mục nhị phân vào .git/objects."
   - id: q4
-    question: Khi thực hiện lệnh Porcelain `git commit -m "init"`, Git âm thầm gọi
-      những lệnh Plumbing nào bên dưới?
+    question: "Khi thực hiện lệnh Porcelain git commit -m 'init', Git âm thầm gọi những lệnh Plumbing nào bên dưới?"
     type: single
     options:
-      - text: git write-tree, git commit-tree, và git update-ref
+      - text: "git write-tree, git commit-tree, và git update-ref"
         correct: true
-      - text: git push, git pull, và git fetch
+      - text: "git push, git pull, và git fetch"
         correct: false
-      - text: git clean, git reset, và git rm
+      - text: "git clean, git reset, và git rm"
         correct: false
-      - text: git format, git lint, và git compile
+      - text: "git format, git lint, và git compile"
         correct: false
-    explanation: Quy trình tạo commit đòi hỏi đóng gói tree, tạo đối tượng commit
-      chứa thông điệp và cập nhật con trỏ tham chiếu nhánh.
+    explanation: "Quy trình tạo commit đòi hỏi đóng gói tree, tạo đối tượng commit chứa thông điệp và cập nhật con trỏ tham chiếu nhánh."
+  - id: q5
+    question: "Tại sao các script tự động hóa thường ưu tiên sử dụng Plumbing commands thay vì Porcelain commands?"
+    type: single
+    options:
+      - text: "Vì output của Plumbing commands có định dạng ổn định lâu dài (machine-readable) và không bị đổi theo phiên bản Git hay ngôn ngữ"
+        correct: true
+      - text: "Vì Plumbing commands chạy nhanh hơn 100 lần"
+        correct: false
+      - text: "Vì Porcelain commands chỉ chạy được trên macOS"
+        correct: false
+      - text: "Vì Plumbing commands không yêu cầu quyền administrator"
+        correct: false
+    explanation: "Porcelain commands được thiết kế cho con người đọc và có thể đổi định dạng hiển thị, trong khi Plumbing commands cam kết tính tương thích ngược và định dạng phân tích cú pháp ổn định cho script."

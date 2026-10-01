@@ -11,11 +11,9 @@ keywords:
 prerequisites:
   - 06-git-commit
 objectives:
-  - Nắm vững cấu trúc chuẩn của quy ước Conventional Commits quốc tế.
-  - "Sử dụng thành thạo các tiền tố tiêu chuẩn: feat, fix, docs, style,
-    refactor, test, chore."
-  - Hiểu tầm quan trọng của việc viết thông điệp commit rõ ràng phục vụ việc
-    sinh tự động Changelog.
+  - "Nhận biết dạng type(scope): description; scope có thể bỏ."
+  - Chọn feat, fix hoặc docs cho ví dụ đơn giản.
+  - Viết message đủ rõ để người khác hiểu commit nói về gì.
 commands:
   - 'git commit -m "feat(scope): short description"'
   - 'git commit -m "fix: resolve memory leak in worker"'

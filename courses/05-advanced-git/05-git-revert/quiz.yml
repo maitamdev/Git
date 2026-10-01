@@ -64,3 +64,20 @@ questions:
         correct: false
     explanation: "`--no-commit` cho phép bạn đảo ngược nhiều commit liên tiếp vào
       Staging rồi mới tự tay gom thành một commit hoàn chỉnh."
+  - id: q5
+    question: Khi cần revert một Merge Commit (commit có 2 cha), bạn bắt buộc phải truyền
+      thêm tham số nào?
+    type: single
+    options:
+      - text: Cờ `-m` (hoặc `--mainline`) kèm số thứ tự nhánh cha (ví dụ `-m 1`) để chỉ
+          định nhánh giữ lại
+        correct: true
+      - text: Cờ `--force-merge` để ép Git chọn nhánh đầu tiên
+        correct: false
+      - text: Cờ `--two-parents` để xóa bỏ cả hai nhánh cha cùng lúc
+        correct: false
+      - text: Không cần cờ nào, Git tự động xóa cả hai nhánh cha
+        correct: false
+    explanation: Vì merge commit có từ hai nhánh cha trở lên, cờ `-m <parent-number>`
+      bắt buộc phải có để báo cho Git biết bên nào là dòng chính cần được giữ lại.
+

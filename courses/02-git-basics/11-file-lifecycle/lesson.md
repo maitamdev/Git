@@ -3,49 +3,66 @@
 ---
 
 ## 🎯 Mục tiêu
-- Nắm vững toàn diện 4 trạng thái vòng đời của một tệp tin trong Git: Untracked, Unmodified, Modified, Staged.
-- Vẽ và phân tích được cỗ máy trạng thái (State Machine) chuyển dịch giữa các khu vực.
-- Dự đoán chính xác trạng thái của tệp tin sau mỗi câu lệnh Git thực thi.
+- Nhận ra bốn trạng thái cơ bản: Untracked, Unmodified, Modified và Staged.
+- Dự đoán trạng thái sau `git add` và `git commit`.
+- Hiểu vì sao sửa tệp sau khi add có thể tạo trạng thái `MM`.
+
+---
+
+## 🧩 Từ khóa hôm nay
+
+### Untracked — chưa được theo dõi
+- **Nói dễ hiểu:** Tệp mới mà Git chưa được yêu cầu quản lý.
+- **Ví dụ:** Tạo `draft.txt` rồi xem `git status`.
+- **Đừng nhầm:** Untracked không có nghĩa tệp bị xóa.
+
+### Unmodified — chưa có thay đổi mới
+- **Nói dễ hiểu:** Tệp tracked đang giống phiên bản đã lưu gần nhất.
+- **Ví dụ:** Sau commit, một tệp không sửa thường ở trạng thái này.
+- **Đừng nhầm:** Điều đó không có nghĩa tệp chưa từng bị sửa trong quá khứ.
+
+### Modified — đã sửa nhưng chưa staged
+- **Nói dễ hiểu:** Tệp tracked khác bản đã lưu, nhưng sửa đổi mới chưa được chọn.
+- **Ví dụ:** Sửa một dòng trong README sau commit.
+- **Đừng nhầm:** Lưu trong trình soạn thảo chưa tạo commit.
+
+### Staged — đã chuẩn bị cho commit
+- **Nói dễ hiểu:** Phiên bản tệp hiện tại đã được chọn cho commit kế tiếp.
+- **Ví dụ:** Chạy `git add README.md`.
+- **Đừng nhầm:** Sửa tệp thêm lần nữa sẽ tạo phần unstaged mới.
 
 ---
 
 ## 📖 Định nghĩa
-> Vòng đời của tệp tin trong Git là mô hình trạng thái mô tả hành trình biến đổi của một tệp mã nguồn xuyên suốt quá trình phát triển dự án. Tất cả các tệp trong thư mục làm việc của bạn đều thuộc một trong hai nhóm chính: Tracked (được theo dõi trong lịch sử) hoặc Untracked (chưa từng được theo dõi). Một tệp Tracked sẽ luân chuyển liên tục qua ba trạng thái con: Unmodified (nguyên vẹn trùng khớp với commit), Modified (đã bị chỉnh sửa nội dung nhưng chưa stage), và Staged (đã được đánh dấu chuẩn bị đưa vào commit kế tiếp).
+Tệp mới chưa được Git theo dõi là Untracked. Tệp đã tracked có thể đang khớp mốc lưu (Unmodified), đã sửa trong thư mục làm việc (Modified) hoặc đã chọn cho commit (Staged). Nếu sửa thêm sau khi `git add`, tệp có thể vừa có phần Staged vừa có phần Modified.
 
 ---
 
 ## 🤔 Tại sao cần?
-Hiểu rõ cỗ máy trạng thái vòng đời tệp tin giúp bạn giải mã được mọi thông điệp đầu ra của Git một cách dễ dàng. Bạn sẽ không bao giờ còn thắc mắc tại sao một tệp lại vừa xuất hiện ở mục màu xanh vừa xuất hiện ở mục màu đỏ trong `git status`, hoặc tại sao lệnh chuyển nhánh lại từ chối thực thi vì tệp đang ở trạng thái Modified dở dang. Làm chủ vòng đời trạng thái là bước nhảy vọt từ một người học việc thành một lập trình viên làm chủ công cụ.
+Hiểu các trạng thái giúp bạn biết `git add` đã chọn phiên bản nào và vì sao một tệp có thể hiện cả thay đổi staged lẫn unstaged trong `git status`.
 
 ---
 
 ## 🧠 Mental Model (Mô hình tư duy)
-Hãy hình dung vòng đời của tệp tin giống như vòng đời của một vị khách bước vào một sân bay quốc tế. Ban đầu, hành khách đứng ở sảnh chờ ngoài đường (Untracked). Khi bước vào cửa an ninh xuất trình vé (git add), hành khách được ghi danh vào hệ thống máy tính và bước vào phòng chờ lên máy bay (Staged). Khi máy bay cất cánh (git commit), hành khách đã chính thức nằm trong chuyến bay lịch sử (Unmodified). Nếu trong chuyến bay hành khách đổi ghế ngồi, trạng thái sẽ thành Modified.
+Theo dõi hai bản: tệp đang sửa và phiên bản đã chọn bằng `git add`. Nếu sửa tệp sau khi add, Git giữ phần đã staged và báo thêm phần sửa mới chưa staged.
 
 ---
 
 ## 🖼 Sơ đồ
 ```text
-Cỗ máy trạng thái vòng đời tệp tin trong Git:
-          ┌──────────────────────────────────────────────────────────┐
-          │                                                          │
-          ▼                                                          │
-┌──────────────────┐   git add    ┌──────────────────┐  git commit   │
-│    Untracked     │ ───────────► │      Staged      │ ──────────────┘
-│ (Chưa theo dõi)  │              │ (Vùng chuẩn bị)  │ (Trở thành Unmodified)
-└──────────────────┘              └──────────────────┘
-                                           ▲
-                                           │ git add
-                                  ┌──────────────────┐
-                                  │     Modified     │ ◄── Chỉnh sửa file
-                                  │ (Đã bị sửa đổi)  │
-                                  └──────────────────┘
+Untracked ──git add──► Staged ──git commit──► Unmodified
+                           ▲                       │
+                           │ git add               │ sửa tệp
+                           │                       ▼
+                           └────────────────── Modified
+
+Sửa tệp thêm sau git add: vẫn còn phần Staged + có thêm phần Modified.
 ```
 
 ---
 
 ## 🌎 Ví dụ thực tế
-Kỹ sư tạo một tệp mã nguồn mới mang tên user.js trong thư mục dự án, lúc này tệp đang ở trạng thái Untracked hoàn toàn xa lạ với Git. Ngay sau khi kỹ sư chạy lệnh git add user.js, tệp lập tức chuyển dịch trạng thái sang Staged sẵn sàng trong vùng chuẩn bị. Kế tiếp, kỹ sư chạy lệnh git commit với thông điệp chuẩn mực, tệp được ghi vào lịch sử và trở về trạng thái Unmodified ổn định tuyệt đối. Đến buổi chiều, khi kỹ sư mở lại tệp user.js để bổ sung logic mã hóa mật khẩu người dùng, tệp chuyển sang trạng thái Modified, sẵn sàng cho một vòng tuần hoàn đóng gói commit tiếp theo.
+Tạo `user.js`: tệp là Untracked. Chạy `git add user.js`: tệp là Staged. Commit xong, nếu không sửa thêm, tệp trở thành Unmodified. Sửa tiếp thì trạng thái là Modified.
 
 ---
 
@@ -53,7 +70,7 @@ Kỹ sư tạo một tệp mã nguồn mới mang tên user.js trong thư mục 
 ```bash
 git status -s
 git add <file>
-git commit
+git commit -m "test: add status example"
 ```
 
 ---
@@ -61,12 +78,12 @@ git commit
 ## 🔍 Giải thích command
 - `git status -s`: Hiển thị mã trạng thái hai cột phản ánh chính xác vị trí của tệp trong cỗ máy trạng thái.
 - `git add <file>`: Kích hoạt sự chuyển dịch trạng thái từ Untracked hoặc Modified sang Staged.
-- `git commit`: Đưa tất cả các tệp Staged trở về trạng thái Unmodified trong snapshot mới.
+- `git commit -m "<message>"`: Ghi phần staged vào commit mới; nếu không sửa thêm, tệp trở thành Unmodified.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Không hiểu tại sao một tệp có thể vừa Staged vừa Modified**:  Khi bạn add tệp rồi lại sửa tiếp mà chưa add lần hai, tệp sẽ tồn tại đồng thời ở cả hai trạng thái.
+1. **Tưởng tệp chỉ có một trạng thái**: Sửa thêm sau khi add sẽ để lại phần Staged và tạo phần Modified mới.
 2. **Tưởng tệp Untracked sẽ được commit tự động**:  Git không bao giờ tự ý commit tệp chưa được add vào hệ thống theo dõi.
 3. **Nhầm lẫn giữa tệp bị xóa (Deleted) và tệp Untracked**:  Tệp đã từng commit khi bị xóa sẽ ở trạng thái Tracked/Deleted chứ không phải Untracked.
 
@@ -74,8 +91,8 @@ git commit
 
 ## 🧪 Lab
 1. Tạo tệp mới `status-test.txt` và kiểm tra trạng thái Untracked bằng `git status -s`.
-2. Chạy `git add status-test.txt` và quan sát ký tự `A ` (Added/Staged) màu xanh.
-3. Commit tệp và chạy `git status -s` để thấy kết quả rỗng (tất cả đều Unmodified).
+2. Chạy `git add status-test.txt` và quan sát ký tự `A ` ở cột staged.
+3. Commit tệp bằng `git commit -m "test: add status example"`; chạy `git status -s` để thấy không còn thay đổi chờ lưu.
 4. Mở tệp sửa một dòng để quan sát ký tự ` M` (Modified) xuất hiện ở cột thứ hai.
 
 ---
@@ -102,5 +119,5 @@ Mô tả tình huống làm xuất hiện ký tự `MM` trong kết quả của 
 
 ## 📚 Tổng kết
 - Tệp tin trong Git gồm hai nhóm lớn: Tracked (được theo dõi) và Untracked (chưa theo dõi).
-- Tệp Tracked luân chuyển qua 3 trạng thái con: Unmodified -> Modified -> Staged.
-- Hiểu rõ vòng đời giúp bạn làm chủ hoàn toàn các câu lệnh Git và phản hồi từ git status.
+- Tệp Tracked thường đi từ Unmodified sang Modified, rồi Staged và về Unmodified sau commit.
+- Nếu sửa lại sau khi stage, sẽ có cả thay đổi Staged và Modified.

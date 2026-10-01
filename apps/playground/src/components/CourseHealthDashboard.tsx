@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { COURSE_MANIFEST, COURSE_SEARCH_INDEX } from '@git-academy/exercise-engine';
+import { BUILTIN_LESSONS, COURSE_MANIFEST, COURSE_SEARCH_INDEX } from '@git-academy/exercise-engine';
+import { inspectTermCards } from '../learning/lesson-flow';
 
 export const CourseHealthDashboard: React.FC = () => {
   const [selectedModuleId, setSelectedModuleId] = useState<string | null>(null);
@@ -10,6 +11,9 @@ export const CourseHealthDashboard: React.FC = () => {
   const totalLessons = activeModules.reduce((acc, m) => acc + m.lessons.length, 0);
   const totalDuration = activeModules.reduce((acc, m) => acc + m.lessons.reduce((lacc, l) => lacc + l.duration, 0), 0);
   const totalXP = activeModules.reduce((acc, m) => acc + m.lessons.reduce((lacc, l) => lacc + l.xp, 0), 0);
+  const hasTermCards = (lessonId: string) => inspectTermCards(BUILTIN_LESSONS[lessonId]?.content || '').complete;
+  const termReadyLessons = activeModules.flatMap((module) => module.lessons).filter((lesson) => hasTermCards(lesson.id)).length;
+  const termReadyInModule = (moduleId: string) => activeModules.find((module) => module.id === moduleId)?.lessons.filter((lesson) => hasTermCards(lesson.id)).length || 0;
 
   return (
     <div style={{ minHeight: '100vh', background: '#0a0f1d', color: '#f3f4f6', fontFamily: 'Inter, system-ui, sans-serif', padding: '32px 48px' }}>
@@ -29,14 +33,14 @@ export const CourseHealthDashboard: React.FC = () => {
             📊 Course Health & Curriculum Architecture Dashboard
           </h1>
           <p style={{ margin: '6px 0 0 0', color: '#9ca3af', fontSize: '14px' }}>
-            Theo dõi sức khỏe toàn diện của 8 modules, 88 bài học, kiểm tra chất lượng tự động và bao phủ thực hành.
+            Kiểm kê {activeModules.length} level và {totalLessons} bài. Thẻ thuật ngữ cho người mới được theo dõi riêng; đây chưa phải đánh giá độ đúng của toàn bộ nội dung.
           </p>
         </div>
 
         <div style={{ display: 'flex', gap: '12px' }}>
-          <div style={{ background: '#064e3b', border: '1px solid #10b981', padding: '10px 18px', borderRadius: '8px', textAlign: 'center' }}>
-            <div style={{ fontSize: '11px', color: '#a7f3d0', fontWeight: 600, textTransform: 'uppercase' }}>Content Quality Gate</div>
-            <div style={{ fontSize: '18px', fontWeight: 800, color: '#34d399' }}>100% PASS (88/88)</div>
+          <div style={{ background: '#3b2a16', border: '1px solid #b7791f', padding: '10px 18px', borderRadius: '8px', textAlign: 'center' }}>
+            <div style={{ fontSize: '11px', color: '#fbd38d', fontWeight: 600, textTransform: 'uppercase' }}>Bài có thẻ từ khóa</div>
+            <div style={{ fontSize: '18px', fontWeight: 800, color: '#fbd38d' }}>{termReadyLessons}/{totalLessons}</div>
           </div>
         </div>
       </div>
@@ -46,7 +50,7 @@ export const CourseHealthDashboard: React.FC = () => {
         <div style={{ background: '#0d1527', border: '1px solid #1f293d', borderRadius: '12px', padding: '20px' }}>
           <div style={{ color: '#9ca3af', fontSize: '13px', fontWeight: 500 }}>Active Authored Lessons</div>
           <div style={{ fontSize: '32px', fontWeight: 800, color: '#60a5fa', margin: '8px 0' }}>{totalLessons}</div>
-          <div style={{ color: '#10b981', fontSize: '12px', fontWeight: 600 }}>✓ 100% bài học sẵn sàng</div>
+          <div style={{ color: '#f6ad55', fontSize: '12px', fontWeight: 600 }}>{termReadyLessons}/{totalLessons} bài có bộ thẻ thuật ngữ hoàn chỉnh</div>
         </div>
 
         <div style={{ background: '#0d1527', border: '1px solid #1f293d', borderRadius: '12px', padding: '20px' }}>
@@ -54,7 +58,7 @@ export const CourseHealthDashboard: React.FC = () => {
           <div style={{ fontSize: '32px', fontWeight: 800, color: '#f59e0b', margin: '8px 0' }}>
             {Math.floor(totalDuration / 60)}h {totalDuration % 60}m
           </div>
-          <div style={{ color: '#9ca3af', fontSize: '12px' }}>Trung bình ~28 phút / bài</div>
+          <div style={{ color: '#9ca3af', fontSize: '12px' }}>Trung bình {Math.round(totalDuration / Math.max(totalLessons, 1))} phút / bài</div>
         </div>
 
         <div style={{ background: '#0d1527', border: '1px solid #1f293d', borderRadius: '12px', padding: '20px' }}>
@@ -76,7 +80,7 @@ export const CourseHealthDashboard: React.FC = () => {
           <h2 style={{ margin: 0, fontSize: '18px', fontWeight: 700, color: '#f3f4f6' }}>
             📚 Bảng kiểm kê Module & Độ bao phủ (Curriculum Inventory)
           </h2>
-          <span style={{ fontSize: '13px', color: '#9ca3af' }}>6 Active • 2 Roadmap Coming Soon</span>
+          <span style={{ fontSize: '13px', color: '#9ca3af' }}>{activeModules.length} Level active • {comingSoonModules.length} roadmap</span>
         </div>
 
         <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '14px' }}>
@@ -87,7 +91,7 @@ export const CourseHealthDashboard: React.FC = () => {
               <th style={{ padding: '14px 16px' }}>Số bài học</th>
               <th style={{ padding: '14px 16px' }}>Thời lượng</th>
               <th style={{ padding: '14px 16px' }}>Tổng XP</th>
-              <th style={{ padding: '14px 16px' }}>Quality Gate</th>
+              <th style={{ padding: '14px 16px' }}>Bài có thẻ từ khóa</th>
               <th style={{ padding: '14px 24px' }}>Hành động</th>
             </tr>
           </thead>
@@ -110,7 +114,7 @@ export const CourseHealthDashboard: React.FC = () => {
                   <td style={{ padding: '16px 16px', color: '#d1d5db' }}>{mDuration}m</td>
                   <td style={{ padding: '16px 16px', color: '#f472b6', fontWeight: 600 }}>{mXP} XP</td>
                   <td style={{ padding: '16px 16px' }}>
-                    <span style={{ color: '#10b981', fontWeight: 600 }}>✅ 100% PASS</span>
+                    <span style={{ color: termReadyInModule(m.id) === m.lessons.length ? '#10b981' : '#f6ad55', fontWeight: 600 }}>{termReadyInModule(m.id)}/{m.lessons.length} bài</span>
                   </td>
                   <td style={{ padding: '16px 24px' }}>
                     <button
@@ -183,8 +187,8 @@ export const CourseHealthDashboard: React.FC = () => {
                         ID: {l.id} • {l.duration}m • {l.xp} XP
                       </div>
                     </div>
-                    <span style={{ background: '#064e3b', color: '#34d399', fontSize: '11px', padding: '2px 8px', borderRadius: '4px', fontWeight: 600 }}>
-                      PASS
+                    <span style={{ background: hasTermCards(l.id) ? '#064e3b' : '#3b2a16', color: hasTermCards(l.id) ? '#34d399' : '#f6ad55', fontSize: '11px', padding: '2px 8px', borderRadius: '4px', fontWeight: 600 }}>
+                      {hasTermCards(l.id) ? 'CÓ THẺ TỪ' : 'CẦN BIÊN TẬP'}
                     </span>
                   </div>
                 ))}

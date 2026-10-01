@@ -10,22 +10,41 @@
 
 ---
 
+## 🧩 Từ khóa hôm nay
+
+### git remote
+- **Nói dễ hiểu**: Lệnh quản lý danh bạ các kho lưu trữ từ xa mà máy bạn được kết nối tới.
+- **Ví dụ**: Gõ `git remote -v` để xem danh sách máy chủ kèm URL tải về và đẩy lên.
+- **Đừng nhầm**: Không tải code về máy ngay lập tức; lệnh này chỉ xem hoặc chỉnh sửa danh bạ liên kết.
+
+### git remote add
+- **Nói dễ hiểu**: Thêm một địa chỉ kho từ xa mới vào danh bạ và gán cho nó một bí danh ngắn gọn.
+- **Ví dụ**: `git remote add origin https://github.com/alice/project.git`.
+- **Đừng nhầm**: Không đẩy commit lên mạng ngay; lệnh chỉ ghi thông tin địa chỉ vào cấu hình `.git/config`.
+
+### git remote set-url
+- **Nói dễ hiểu**: Cập nhật lại đường link URL cho một bí danh remote đã có sẵn trong danh bạ.
+- **Ví dụ**: `git remote set-url origin https://github.com/new-org/project.git` khi công ty đổi tổ chức.
+- **Đừng nhầm**: Không xóa lịch sử commit hay tạo remote mới; lệnh chỉ thay thế địa chỉ URL đích.
+
+---
+
 ## 📖 Định nghĩa
-> `git remote` là câu lệnh quản trị chuyên trách dùng để xem, thiết lập, chỉnh sửa và quản lý các kết nối tham chiếu giữa kho lưu trữ cục bộ trên máy tính của bạn với các kho lưu trữ từ xa trên mạng. Thay vì phải gõ toàn bộ chuỗi URL mạng dài dòng và phức tạp (như `https://github.com/company/project.git`) mỗi khi gửi nhận code, Git cho phép bạn đặt một tên định danh ngắn gọn tiện lợi (bí danh - alias) cho URL đó, tiêu biểu nhất là tên quy ước `origin`.
+`git remote` là công cụ quản lý các kết nối tham chiếu giữa kho lưu trữ cục bộ với các máy chủ từ xa. Lệnh giúp bạn gắn bí danh ngắn gọn như `origin` cho chuỗi URL dài, hỗ trợ kiểm tra và cập nhật địa chỉ liên kết nhanh chóng.
 
 ---
 
-## 🤔 Tại sao cần?
-Khi bạn khởi tạo một dự án mới hoàn toàn trên máy tính cá nhân bằng `git init`, kho chứa của bạn hoàn toàn cô lập và chưa hề biết máy chủ GitHub nằm ở đâu. Lệnh `git remote` chính là nhịp cầu đầu tiên giúp bạn khai báo địa chỉ của GitHub cho Git hiểu. Nắm vững lệnh này cũng giúp bạn dễ dàng chuyển đổi giữa các giao thức HTTPS và SSH, hoặc liên kết cùng lúc với nhiều remote khác nhau (như upstream của cộng đồng mã nguồn mở).
+## 💡 Tại sao cần
+Khi tạo kho bằng `git init`, máy tính hoàn toàn cô lập và chưa biết máy chủ từ xa ở đâu. Lệnh `git remote` thiết lập cầu nối liên lạc, cho phép chuyển đổi giữa HTTPS và SSH hoặc kết nối cùng lúc với nhiều remote như origin và upstream.
 
 ---
 
-## 🧠 Mental Model (Mô hình tư duy)
-Hãy hình dung `git remote` giống như ứng dụng Danh bạ điện thoại trên chiếc smartphone của bạn. Bạn không thể nhớ nổi dãy số điện thoại quốc tế dài dằng dặc của từng người bạn (chuỗi URL repo). Vì vậy, bạn lưu số đó lại và đặt một cái tên danh bạ ngắn gọn, dễ nhớ như "origin" hay "upstream". Mỗi khi bạn muốn gọi điện hay gửi tin nhắn (push/pull), bạn chỉ cần chọn tên "origin" là điện thoại tự động kết nối chính xác tới địa chỉ đích.
+## 🧠 Mental Model
+Hãy hình dung `git remote` như ứng dụng danh bạ điện thoại trên máy bạn. Thay vì phải nhớ chuỗi URL máy chủ dài dòng mỗi khi gửi hay nhận code, bạn lưu địa chỉ vào danh bạ với tên gọi ngắn gọn như `origin` để gọi nhanh mỗi ngày.
 
 ---
 
-## 🖼 Sơ đồ
+## 📊 Sơ đồ minh họa
 ```text
 Cơ chế đặt bí danh của git remote:
 Bí danh (Alias):         URL thực tế trên máy chủ:
@@ -35,12 +54,12 @@ upstream     ──► https://github.com/original-author/my-app.git
 
 ---
 
-## 🌎 Ví dụ thực tế
-Lập trình viên Thành vừa khởi tạo một dự án mới trên máy tính và muốn tải mã nguồn lên kho chứa mới tạo trên GitHub. Thành mở terminal và thực hiện lệnh: `git remote add origin https://github.com/thanh-dev/ecommerce-api.git`. Sau đó, Thành gõ `git remote -v` để kiểm tra lại cấu hình mạng. Màn hình console in ra hai dòng xác nhận origin đã trỏ tới URL GitHub cho cả hai chiều fetch và push. Từ thời điểm này, Thành có thể thoải mái đẩy code lên mạng bằng câu lệnh ngắn gọn `git push -u origin main` mà không cần phải gõ lại chuỗi URL phức tạp mỗi ngày. Việc này giúp Thành tiết kiệm thời gian và hoàn toàn tránh khỏi nguy cơ gõ sai đường dẫn dự án.
+## 🏢 Ví dụ thực tế
+Lập trình viên Thành tạo xong dự án API trên máy cá nhân và tạo một repository mới trên GitHub. Thành chạy `git remote add origin https://github.com/thanh-dev/ecommerce-api.git`, sau đó gõ `git remote -v` để kiểm tra. Terminal hiển thị rõ hai dòng fetch và push trỏ về GitHub, giúp Thành tự tin đẩy mã nguồn mà không lo gõ sai URL.
 
 ---
 
-## 💻 Command
+## 💻 Command & Cú pháp
 ```bash
 git remote
 git remote -v
@@ -53,51 +72,53 @@ git remote remove <tên-bí-danh>
 ---
 
 ## 🔍 Giải thích command
-- `git remote`: Liệt kê các tên bí danh của remote hiện có (ví dụ: origin).
-- `git remote -v`: Hiển thị tên bí danh kèm theo địa chỉ URL chi tiết cho hai thao tác fetch và push.
-- `git remote add <tên> <url>`: Tạo một liên kết remote mới trỏ tới địa chỉ kho trên server.
-- `git remote rename <cũ> <mới>`: Đổi tên định danh remote trong cấu hình dự án.
-- `git remote set-url <tên> <url-mới>`: Cập nhật địa chỉ URL mới khi dự án thay đổi đường dẫn hoặc đổi từ HTTPS sang SSH.
-- `git remote remove <tên>`: Xóa bỏ liên kết remote khỏi kho lưu trữ cục bộ.
+- `git remote`: Liệt kê các tên bí danh của remote hiện có trong kho.
+- `git remote -v`: Hiển thị chi tiết từng bí danh kèm địa chỉ URL cho hai chiều fetch và push.
+- `git remote add <tên> <url>`: Khai báo thêm một liên kết máy chủ từ xa mới.
+- `git remote rename <cũ> <mới>`: Đổi tên bí danh trong file cấu hình cục bộ.
+- `git remote set-url <tên> <url-mới>`: Cập nhật URL mới khi dự án đổi địa chỉ hoặc chuyển giao thức.
+- `git remote remove <tên>`: Gỡ bỏ cấu hình liên kết remote khỏi máy tính cá nhân.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Gõ sai chính tả URL kho chứa**:  Khiến lệnh push hoặc fetch sau đó bị lỗi 404 Not Found hoặc Authentication Failed.
-2. **Thêm remote trùng tên origin hai lần**:  Git sẽ báo lỗi `fatal
-3. **Nghĩ rằng git remote remove sẽ xóa kho chứa trên GitHub**:  Lệnh này chỉ xóa liên kết cấu hình trên máy tính cá nhân của bạn.
+1. **Gõ sai chính tả URL kho chứa**: Khiến các thao tác push hoặc fetch sau đó bị lỗi 404 Not Found hoặc thất bại xác thực.
+2. **Thêm trùng tên origin đã tồn tại**: Git sẽ báo lỗi `fatal: remote origin already exists`, cần dùng `set-url` để sửa thay vì `add`.
+3. **Hiểu nhầm git remote remove xóa kho trên GitHub**: Lệnh chỉ xóa dòng cấu hình trong file `.git/config` tại máy cá nhân, máy chủ vẫn an toàn.
 
 ---
 
-## 🧪 Lab
-1. Xem danh sách remote hiện hữu bằng `git remote -v`.
-2. Thêm một liên kết remote thử nghiệm có tên `backup` bằng `git remote add backup https://github.com/user/backup.git`.
-3. Kiểm tra lại bằng `git remote -v` để thấy cả hai liên kết.
-4. Xóa liên kết thử nghiệm vừa tạo bằng `git remote remove backup`.
+## 🧪 Lab thực hành
+Bài học này là bài tự kiểm tra: bạn thực hành quản lý remote trên terminal và đối chiếu kết quả.
+1. Kiểm tra danh sách remote hiện tại bằng `git remote -v`.
+2. Thêm một liên kết remote thử nghiệm tên `backup` bằng `git remote add backup https://github.com/user/backup.git`.
+3. Chạy lại `git remote -v` để xác nhận cả origin và backup đều xuất hiện.
+4. Gỡ bỏ remote thử nghiệm bằng `git remote remove backup`.
 
 ---
 
-## 💡 Hint
-> Nếu muốn đổi địa chỉ URL của origin, hãy dùng `git remote set-url origin <url-mới>`.
+## 💡 Hint & mẹo
+> Khi cần chuyển đổi từ giao thức HTTPS sang SSH để không phải nhập mật khẩu, chỉ cần dùng `git remote set-url origin git@github.com:user/repo.git`.
 
 ---
 
-## ✅ Validation
-- Cấu hình và kiểm tra thành công danh sách remote với `git remote -v`.
+## ✅ Validation & Kết quả mong đợi
+- Lệnh `git remote -v` in ra đúng địa chỉ URL cho cả fetch và push.
+- Không gặp lỗi trùng tên khi thiết lập liên kết remote.
 
 ---
 
-## ❓ Quiz
-Hãy làm bài kiểm tra trắc nghiệm dưới đây về câu lệnh quản lý git remote.
+## ❓ Quiz nhanh
+Hãy hoàn thành các câu hỏi trắc nghiệm dưới đây để củng cố kiến thức về quản lý remote trong Git.
 
 ---
 
-## 🔥 Challenge
-Giải thích sự khác biệt giữa URL giao thức HTTPS và URL giao thức SSH khi cấu hình git remote.
+## 🚀 Thử thách nâng cao
+Tìm hiểu file cấu hình `.git/config` bằng lệnh `cat .git/config` để xem cách Git lưu trữ các mục `[remote "origin"]` bên dưới hệ thống.
 
 ---
 
-## 📚 Tổng kết
-- `git remote` quản lý các bí danh liên kết tới kho lưu trữ từ xa trên mạng.
-- Sử dụng `git remote add origin <url>` để kết nối kho cá nhân với GitHub.
-- Dùng `set-url` để sửa địa chỉ và `remove` để gỡ bỏ liên kết an toàn.
+## 📝 Tổng kết
+- `git remote` quản lý danh bạ các đường dẫn tới máy chủ từ xa của dự án.
+- Sử dụng `git remote add origin <url>` để kết nối kho cá nhân với máy chủ từ xa.
+- Dùng `git remote set-url` để đổi URL và `git remote remove` để xóa liên kết an toàn.

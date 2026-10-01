@@ -64,3 +64,19 @@ questions:
         correct: false
     explanation: Git clone tạo ra một thư mục con; bạn phải dùng lệnh `cd` đi vào
       bên trong thư mục đó mới dùng được các lệnh Git.
+  - id: q5
+    question: Nếu muốn clone và checkout ngay vào một nhánh cụ thể (ví dụ nhánh `develop`),
+      bạn sử dụng cú pháp lệnh nào?
+    type: single
+    options:
+      - text: git clone -b develop <url>
+        correct: true
+      - text: git clone --only develop <url>
+        correct: false
+      - text: git clone --checkout-branch develop <url>
+        correct: false
+      - text: git clone <url> > develop
+        correct: false
+    explanation: Tùy chọn `-b <tên-nhánh>` (hoặc `--branch <tên-nhánh>`) cho phép
+      Git clone về và tự động trỏ HEAD tới nhánh được chỉ định.
+

@@ -13,14 +13,12 @@ questions:
         correct: false
       - text: Các tệp hình ảnh nhị phân được mã hóa đặc biệt
         correct: false
-    explanation: GitHub Actions tuân thủ nguyên lý Configuration as Code, lưu trữ
-      các kịch bản tự động dưới dạng tệp văn bản YAML cùng với mã nguồn.
+    explanation: GitHub Actions tuân thủ nguyên lý Configuration as Code, lưu trữ các kịch bản tự động dưới dạng tệp văn bản YAML cùng với mã nguồn.
   - id: q2
     question: GitHub Actions có thể được kích hoạt bởi những sự kiện nào?
     type: single
     options:
-      - text: "Rất đa dạng: từ push, pull_request, tạo issue, gắn nhãn cho đến lịch định
-          kỳ cron"
+      - text: "Rất đa dạng: từ push, pull_request, tạo issue, gắn nhãn cho đến lịch định kỳ cron"
         correct: true
       - text: Chỉ duy nhất khi người quản trị bấm nút bằng tay
         correct: false
@@ -28,15 +26,12 @@ questions:
         correct: false
       - text: Chỉ vào đúng lúc 0 giờ đêm mỗi ngày
         correct: false
-    explanation: GitHub Actions hỗ trợ hơn ba mươi loại sự kiện Webhook khác nhau
-      trong vòng đời của một kho lưu trữ GitHub.
+    explanation: GitHub Actions hỗ trợ hơn ba mươi loại sự kiện Webhook khác nhau trong vòng đời của một kho lưu trữ GitHub.
   - id: q3
-    question: Kho ứng dụng GitHub Marketplace mang lại lợi ích gì cho việc xây dựng
-      workflow?
+    question: Kho ứng dụng GitHub Marketplace mang lại lợi ích gì cho việc xây dựng workflow?
     type: single
     options:
-      - text: Cho phép tái sử dụng hàng nghìn action được đóng gói sẵn từ các nhà phát
-          triển uy tín
+      - text: Cho phép tái sử dụng hàng nghìn action được đóng gói sẵn từ các nhà phát triển uy tín
         correct: true
       - text: Nơi mua bán các đoạn mã nguồn bí mật của công ty
         correct: false
@@ -44,15 +39,12 @@ questions:
         correct: false
       - text: Nơi đăng ký mua tên miền website cá nhân
         correct: false
-    explanation: Marketplace giúp bạn không phải tự viết lại mọi logic từ đầu, ví dụ
-      như setup-node, checkout, upload-artifact đều đã có sẵn.
+    explanation: Marketplace giúp bạn không phải tự viết lại mọi logic từ đầu, ví dụ như setup-node, checkout, upload-artifact đều đã có sẵn.
   - id: q4
-    question: So với máy chủ CI tự quản lý như Jenkins, ưu điểm nổi bật của GitHub
-      Actions là gì?
+    question: So với máy chủ CI tự quản lý như Jenkins, ưu điểm nổi bật của GitHub Actions là gì?
     type: single
     options:
-      - text: Không tốn công bảo trì hạ tầng, tích hợp sẵn với tài khoản GitHub và bảo
-          mật mặc định
+      - text: Không tốn công bảo trì hạ tầng, tích hợp sẵn với tài khoản GitHub và bảo mật mặc định
         correct: true
       - text: Hoàn toàn không cần viết bất kỳ dòng mã nào
         correct: false
@@ -60,5 +52,17 @@ questions:
         correct: false
       - text: Không giới hạn dung lượng lưu trữ tệp video dung lượng terabyte
         correct: false
-    explanation: GitHub Actions là dịch vụ SaaS do chính GitHub vận hành và cấp phát
-      máy ảo tự động, giúp kỹ sư tập trung hoàn toàn vào logic nghiệp vụ.
+    explanation: GitHub Actions là dịch vụ SaaS do chính GitHub vận hành và cấp phát máy ảo tự động, giúp kỹ sư tập trung hoàn toàn vào logic nghiệp vụ.
+  - id: q5
+    question: Thuật ngữ "Configuration as Code" trong GitHub Actions ám chỉ nguyên lý nào?
+    type: single
+    options:
+      - text: Toàn bộ quy trình tự động hóa được định nghĩa bằng tệp văn bản YAML và được quản lý phiên bản cùng với mã nguồn
+        correct: true
+      - text: Bắt buộc phải viết kịch bản bằng mã máy nhị phân 0 và 1
+        correct: false
+      - text: Chỉ được phép cấu hình qua giao diện kéo thả trực quan trên web mà không có tệp tin
+        correct: false
+      - text: Cấu hình quy trình phải được in ra giấy để người quản lý đóng dấu xác nhận
+        correct: false
+    explanation: Quản lý cấu hình dưới dạng mã nguồn (Configuration as Code) cho phép theo dõi lịch sử, review qua Pull Request và phục hồi trạng thái một cách tin cậy.

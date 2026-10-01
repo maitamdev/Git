@@ -10,22 +10,41 @@
 
 ---
 
+## 🧩 Từ khóa hôm nay
+
+### merge commit
+- **Nói dễ hiểu**: Chiến lược gộp giữ nguyên toàn bộ commit con của nhánh tính năng và tạo một commit gộp đặc biệt có 2 cha.
+- **Ví dụ**: Giữ lại toàn bộ lịch sử 10 commit của tính năng kèm commit kết nối đưa vào `main`.
+- **Đừng nhầm**: Giữ lại nhiều chi tiết nhưng có thể làm rối đồ thị nếu nhánh chứa nhiều commit rác.
+
+### squash and merge
+- **Nói dễ hiểu**: Gom toàn bộ các commit nhỏ trong nhánh tính năng lại thành đúng một commit duy nhất đưa vào main.
+- **Ví dụ**: Nén 6 commit nháp sửa lỗi CSS và chính tả thành một commit sạch duy nhất `feat(auth): add login form`.
+- **Đừng nhầm**: Không làm mất code; toàn bộ thay đổi vẫn giữ nguyên nhưng lịch sử nhánh chính gọn gàng hơn nhiều.
+
+### rebase and merge
+- **Nói dễ hiểu**: Áp dụng lần lượt từng commit của nhánh tính năng lên đỉnh của nhánh chính mà không tạo merge commit.
+- **Ví dụ**: Đưa 3 commit tính năng nối tiếp vào sau commit mới nhất của `main` thành một đường thẳng.
+- **Đừng nhầm**: SHA hash của các commit sẽ bị thay đổi vì chúng được tính toán lại trên đỉnh nhánh mới.
+
+---
+
 ## 📖 Định nghĩa
-> Merge Pull Request là thao tác kết thúc vòng đời của một tính năng thành công trên GitHub, chính thức kết nạp các commit từ nhánh tính năng vào nhánh chính (thường là `main`). GitHub cung cấp cho bạn 3 tùy chọn chiến lược hợp nhất: (1) `Create a merge commit` (giữ nguyên tất cả commit và tạo merge commit 2 cha), (2) `Squash and merge` (nén toàn bộ các commit nhỏ thành một commit duy nhất), và (3) `Rebase and merge` (áp dụng từng commit lên đỉnh nhánh chính thành một đường thẳng).
+Merge Pull Request là thao tác hoàn tất của một tính năng trên GitHub, chính thức đưa các commit từ nhánh tính năng vào nhánh chính (thường là `main`). GitHub hỗ trợ 3 chiến lược: Create a merge commit (giữ vết nhánh), Squash and merge (nén thành một commit), và Rebase and merge (xếp thẳng hàng).
 
 ---
 
-## 🤔 Tại sao cần?
-Lựa chọn chiến lược merge đúng đắn quyết định diện mạo và chất lượng của lịch sử kho chứa trong suốt nhiều năm vận hành. Nếu chọn sai, lịch sử dự án của bạn có thể biến thành một "rừng cây" chằng chịt các commit rác như "fix typo", "fix bug again", "commit test". Hiểu rõ 3 chiến lược này giúp bạn và đội ngũ giữ cho nhật ký commit luôn sạch đẹp, dễ tra cứu và hỗ trợ tối đa việc truy vết lỗi hoặc rollback khi cần.
+## 💡 Tại sao cần
+Chiến lược merge quyết định chất lượng lịch sử dự án trong nhiều năm vận hành. Nếu chọn sai, lịch sử nhánh chính sẽ ngập tràn các commit nháp vô nghĩa như "fix typo", "test again". Hiểu rõ các chiến lược giúp giữ nhật ký commit sạch đẹp, dễ tra cứu và thuận tiện truy vết lỗi hoặc rollback.
 
 ---
 
-## 🧠 Mental Model (Mô hình tư duy)
-Hãy hình dung bạn đi siêu thị mua sắm nhiều món đồ lặt vặt: chai nước mắm, gói mì tôm, cây bút bi (các commit nhỏ). Khi thanh toán tại quầy: Chiến lược Merge thông thường giống như thu ngân đưa cho bạn từng tờ hóa đơn rời cho mỗi món đồ kèm một tờ kẹp tổng hợp. Chiến lược Squash giống như thu ngân gom tất cả các món đồ đó lại và in ra đúng một tờ hóa đơn thanh toán duy nhất sạch sẽ mang tên "Chi phí sinh hoạt tuần 1". Chiến lược Rebase giống như dán nối tiếp từng tờ hóa đơn nhỏ vào đuôi cuốn sổ kế toán.
+## 🧠 Mental Model
+Hãy hình dung bạn đi chợ mua nhiều món lặt vặt. Chiến lược Merge Commit giống như thu ngân đưa từng biên lai lẻ kẹp vào bìa hồ sơ. Chiến lược Squash giống như thu ngân gom tất cả lại và in đúng một hóa đơn tổng duy nhất mang tên "Mua sắm tuần 1". Chiến lược Rebase giống như dán nối tiếp từng cuống vé vào cuối sổ chi tiêu.
 
 ---
 
-## 🖼 Sơ đồ
+## 📊 Sơ đồ minh họa
 ```text
 3 phương thức Merge Pull Request trên GitHub:
 1. Create a merge commit:
@@ -42,12 +61,12 @@ Hãy hình dung bạn đi siêu thị mua sắm nhiều món đồ lặt vặt: 
 
 ---
 
-## 🌎 Ví dụ thực tế
-Trong quá trình phát triển tính năng giỏ hàng, lập trình viên tạo ra 8 commit nhỏ với các thông điệp nháp như "wip", "fix css", "testing". Sau khi Pull Request vượt qua toàn bộ các bài kiểm tra tự động và được 2 kỹ sư senior phê duyệt, trưởng nhóm quyết định bấm chọn tùy chọn: "Squash and merge". Toàn bộ 8 commit nháp được nén gọn thành một commit chất lượng cao duy nhất: "feat(cart): implement shopping cart and checkout flow (#42)". Sau khi merge, trưởng nhóm nhấn nút màu tím "Delete branch" để dọn dẹp sạch sẽ nhánh tính năng.
+## 🏢 Ví dụ thực tế
+Lập trình viên tạo 8 commit nhỏ nháp trong quá trình làm tính năng giỏ hàng. Sau khi PR được 2 senior duyệt và qua bài kiểm thử tự động, trưởng nhóm chọn "Squash and merge". Cả 8 commit nháp được nén gọn thành một commit chất lượng: `feat(cart): implement checkout flow (#42)`. Trưởng nhóm bấm tiếp nút tím "Delete branch" để dọn sạch nhánh cũ trên remote.
 
 ---
 
-## 💻 Command
+## 💻 Command & Cú pháp
 ```bash
 git switch main
 git pull origin main
@@ -58,19 +77,20 @@ git branch -d feat/my-feature
 
 ## 🔍 Giải thích command
 - `git switch main`: Chuyển về nhánh main trên máy tính cá nhân sau khi PR đã được merge trên web.
-- `git pull origin main`: Kéo commit vừa được merge trên GitHub về cập nhật máy cá nhân.
-- `git branch -d <nhánh>`: Xóa an toàn nhánh tính năng cục bộ sau khi nó đã nằm trọn vẹn trong main.
+- `git pull origin main`: Kéo commit vừa được merge trên GitHub về cập nhật không gian làm việc cục bộ.
+- `git branch -d <nhánh>`: Xóa an toàn nhánh tính năng cục bộ sau khi mã nguồn đã nằm trọn vẹn trong main.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Quên xóa nhánh tính năng sau khi đã merge**:  Khiến danh sách nhánh trên GitHub bị tồn đọng hàng trăm nhánh cũ rác rưởi.
-2. **Dùng Create a merge commit cho các PR chứa nhiều commit nháp vô nghĩa**:  Khiến lịch sử nhánh main bị ô nhiễm bởi các commit rác.
-3. **Tiếp tục code thêm trên nhánh tính năng đã bị squash and merge**:  Sẽ gặp khó khăn khi đồng bộ vì lịch sử commit đã bị viết lại.
+1. **Quên xóa nhánh tính năng sau khi merge**: Khiến kho lưu trữ trên GitHub tồn đọng hàng trăm nhánh cũ rác rưởi.
+2. **Dùng merge commit cho PR chứa nhiều commit nháp vô nghĩa**: Làm ô nhiễm lịch sử nhánh chính bởi các commit nửa vời.
+3. **Tiếp tục viết code trên nhánh đã bị squash and merge**: Gặp xung đột khó hiểu khi đồng bộ vì lịch sử commit cũ đã bị nén lại.
 
 ---
 
-## 🧪 Lab
+## 🧪 Lab thực hành
+Bài học này là bài tự kiểm tra: bạn thao tác hợp nhất PR trên giao diện GitHub và đồng bộ về máy cá nhân.
 1. Quan sát nút xanh `Merge pull request` xuất hiện khi PR đã được Approve và pass CI.
 2. Nhấn vào mũi tên cạnh nút để so sánh 3 tùy chọn: Merge, Squash, và Rebase.
 3. Chọn `Squash and merge` và chỉnh sửa lại tiêu đề commit cho thật chuẩn mực.
@@ -78,27 +98,28 @@ git branch -d feat/my-feature
 
 ---
 
-## 💡 Hint
-> Squash and merge là lựa chọn phổ biến hàng đầu trong các dự án web hiện đại để giữ lịch sử main tinh gọn.
+## 💡 Hint & mẹo
+> Squash and merge là lựa chọn phổ biến hàng đầu trong các dự án hiện đại để giữ lịch sử nhánh main luôn tinh gọn.
 
 ---
 
-## ✅ Validation
-- Merge thành công Pull Request vào nhánh chính và dọn dẹp nhánh tính năng sạch sẽ.
+## ✅ Validation & Kết quả mong đợi
+- Pull Request chuyển sang trạng thái màu tím `Merged`.
+- Nhánh main cục bộ cập nhật đầy đủ mã nguồn tính năng mới sau khi kéo bằng `git pull`.
 
 ---
 
-## ❓ Quiz
-Hãy làm bài kiểm tra trắc nghiệm dưới đây về các chiến lược Merge Pull Request.
+## ❓ Quiz nhanh
+Hãy hoàn thành các câu hỏi trắc nghiệm dưới đây để kiểm tra hiểu biết về các chiến lược Merge Pull Request.
 
 ---
 
-## 🔥 Challenge
-Nêu trường hợp nào nên ưu tiên chọn "Create a merge commit" thay vì "Squash and merge".
+## 🚀 Thử thách nâng cao
+Thiết lập tùy chọn repository trên GitHub để chỉ cho phép "Squash merging" và tự động xóa các nhánh đã merge thành công (Automatically delete head branches).
 
 ---
 
-## 📚 Tổng kết
+## 📝 Tổng kết
 - Merge PR chính thức kết nạp mã nguồn tính năng vào nhánh chính của sản phẩm.
 - 3 chiến lược: Merge commit (giữ vết), Squash (nén thành 1), Rebase (làm phẳng).
 - Luôn xóa nhánh tính năng sau khi merge để giữ kho lưu trữ luôn sạch đẹp.

@@ -11,11 +11,9 @@ keywords:
 prerequisites:
   - 04-git-status
 objectives:
-  - "Sử dụng thành thạo câu lệnh `git add` với các cú pháp: tệp chỉ định, thư
-    mục, và `git add .`."
-  - Hiểu rõ sự khác biệt và rủi ro tiềm ẩn giữa `git add <file>` có chọn lọc và
-    `git add .`.
-  - Làm quen với kỹ thuật stage từng khối dòng code bằng cờ `-p` (patch mode).
+  - Chọn một tệp bằng git add <file> và xác nhận lựa chọn bằng git status.
+  - Giải thích git add . chọn thay đổi dưới thư mục hiện tại.
+  - Biết git add -p dùng để chọn từng nhóm thay đổi.
 commands:
   - git add <file>
   - git add .

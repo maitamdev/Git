@@ -38,86 +38,86 @@ export const lesson: CourseLesson = {
       "git switch -c <nhánh-mới>"
     ]
   },
-  "content": "# Con trỏ HEAD & Detached HEAD\n\n---\n\n## 🎯 Mục tiêu\n- Hiểu rõ cơ chế hoạt động của Symbolic Reference HEAD trong việc định vị không gian làm việc.\n- Giải thích hiện tượng Detached HEAD state và nguyên nhân kích hoạt trạng thái này.\n- Biết cách thoát khỏi Detached HEAD an toàn mà không làm thất lạc các commit thử nghiệm.\n- Sử dụng lệnh git checkout hoặc git switch để điều hướng con trỏ HEAD chính xác.\n\n---\n\n## 📖 Định nghĩa\n> HEAD trong Git là một con trỏ đặc biệt (symbolic reference) chỉ định vị trí làm việc hiện tại của Working Tree trong đồ thị lịch sử. Trong điều kiện bình thường, HEAD không trỏ trực tiếp vào commit mà trỏ gián tiếp thông qua một con trỏ nhánh (ví dụ: `HEAD -> refs/heads/main`). Tuy nhiên, khi bạn checkout trực tiếp tới một mã băm commit cụ thể thay vì một nhánh, Git sẽ rơi vào trạng thái Detached HEAD: lúc này HEAD trỏ thẳng vào commit đó mà không có bất kỳ con trỏ nhánh nào đi kèm.\n\n---\n\n## 🤔 Tại sao cần?\nTrạng thái Detached HEAD là một trong những khái niệm khiến người mới học bối rối và hoảng loạn nhất khi terminal cảnh báo dữ liệu có thể bị mất. Hiểu rõ bản chất của HEAD giúp bạn tự tin quay ngược thời gian để kiểm tra lại một phiên bản cũ của ứng dụng, chạy thử nghiệm các đoạn code lịch sử, hoặc gỡ lỗi sự cố mà không sợ làm hỏng nhánh chính. Bạn cũng sẽ biết cách tạo nhánh mới để giữ lại các commit quý giá sinh ra trong trạng thái này.\n\n---\n\n## 🧠 Mental Model (Mô hình tư duy)\nHãy hình dung con trỏ HEAD giống như chiếc kim đọc đĩa trên một đầu phát đĩa than cổ điển, hoặc mắt đọc laser của đầu đĩa DVD. Đĩa than chứa nhiều rãnh nhạc khác nhau (các nhánh). Chiếc kim đọc đĩa (HEAD) đặt vào rãnh nhạc nào thì loa sẽ phát ra giai điệu của bài hát đó (Working Tree hiển thị code của nhánh đó). Khi bạn nhấc chiếc kim đọc đĩa ra và đặt tự do vào chính giữa đĩa ở một bài hát cũ (Detached HEAD), bạn vẫn nghe được nhạc, nhưng nếu bạn muốn ghi âm bài mới thì bạn cần cắm một chiếc cờ đánh dấu rãnh mới.\n\n---\n\n## 🖼 Sơ đồ\n```text\nHEAD bình thường vs Detached HEAD:\nTrạng thái bình thường:        Trạng thái Detached HEAD:\nHEAD ──► main ──► Commit C3    HEAD ──────────► Commit C2\n                               main ──────────► Commit C3\n```\n\n---\n\n## 🌎 Ví dụ thực tế\nMột kỹ sư phần mềm muốn kiểm tra xem lỗi mất kết nối cơ sở dữ liệu đã từng xuất hiện ở bản phát hành v1.2 cách đây ba tháng hay chưa. Kỹ sư gõ lệnh `git checkout a4f91b2` để đưa HEAD về đúng commit của bản phát hành đó. Terminal hiển thị cảnh báo You are in detached HEAD state. Kỹ sư chạy thử ứng dụng và phát hiện lỗi chưa có ở thời điểm này. Sau khi xác minh xong, kỹ sư chỉ việc gõ `git switch main` để đưa HEAD quay trở lại đỉnh nhánh chính một cách an toàn và nhẹ nhàng.\n\n---\n\n## 💻 Command\n```bash\ngit status\ngit checkout <commit-hash>\ngit switch <tên-nhánh>\ngit switch -c <nhánh-mới>\n```\n\n---\n\n## 🔍 Giải thích command\n- `git status`: Hiển thị rõ ràng HEAD đang gắn với nhánh nào hoặc đang ở trạng thái Detached HEAD tại commit nào.\n- `git checkout <commit-hash>`: Di chuyển trực tiếp con trỏ HEAD tới một commit trong quá khứ, kích hoạt trạng thái Detached HEAD.\n- `git switch <tên-nhánh>`: Đưa con trỏ HEAD gắn trở lại vào một nhánh an toàn, thoát khỏi Detached HEAD.\n- `git switch -c <nhánh-mới>`: Tạo nhánh mới ngay tại vị trí commit hiện tại để giữ lại các commit thử nghiệm.\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Hoảng sợ khi thấy thông báo Detached HEAD**:  Đây là tính năng xem lại quá khứ hoàn toàn bình thường của Git chứ không phải lỗi hỏng kho chứa.\n2. **Commit nhiều việc trên Detached HEAD rồi chuyển nhánh mà không tạo branch**:  Các commit đó sẽ trở thành commit mồ côi (dangling commits) và có thể bị dọn rác sau này.\n3. **Dùng git checkout nhầm lẫn giữa tệp và nhánh**:  Nên dùng `git switch` để chuyển nhánh và `git restore` để phục hồi tệp.\n\n---\n\n## 🧪 Lab\n1. Xem mã hash của commit trước đó bằng `git log --oneline`.\n2. Thực hiện checkout về commit cũ đó để trải nghiệm trạng thái Detached HEAD.\n3. Chạy `git status` để quan sát thông điệp cảnh báo hữu ích của Git.\n4. Chạy lệnh `git switch main` để quay trở lại nhánh chính an toàn.\n\n---\n\n## 💡 Hint\n> Nhớ nguyên tắc: Nếu tạo commit trong Detached HEAD, hãy dùng `git switch -c <tên>` để giữ lại.\n\n---\n\n## ✅ Validation\n- Đưa HEAD quay trở lại an toàn trên nhánh chính và kiểm tra `git status`.\n\n---\n\n## ❓ Quiz\nLàm bài trắc nghiệm dưới đây về con trỏ HEAD và trạng thái Detached HEAD.\n\n---\n\n## 🔥 Challenge\nMở tệp `.git/HEAD` bằng lệnh `cat` trong hai trường hợp: bình thường và detached HEAD để so sánh nội dung.\n\n---\n\n## 📚 Tổng kết\n- HEAD là con trỏ chỉ vị trí làm việc hiện tại của Working Tree trong đồ thị Git.\n- Detached HEAD xảy ra khi HEAD trỏ trực tiếp vào commit thay vì qua một nhánh.\n- Thoát khỏi Detached HEAD bằng lệnh `git switch <nhánh>` hoặc tạo nhánh mới với `git switch -c`.\n",
+  "content": "# Con trỏ HEAD & Detached HEAD\n\n---\n\n## 🎯 Mục tiêu\n- Hiểu được con trỏ HEAD dùng để định vị nhánh và commit bạn đang làm việc.\n- Nhận biết trạng thái Detached HEAD khi quay lại xem một commit cũ trong lịch sử.\n- Biết cách dùng `git switch` để quay lại nhánh an toàn mà không làm mất commit thử nghiệm.\n\n---\n\n## 🧩 Từ khóa hôm nay\n\n### HEAD — con trỏ vị trí hiện tại\n- **Nói dễ hiểu:** Mắt đọc cho biết bạn đang đứng ở nhánh hoặc commit nào trong kho lưu trữ.\n- **Ví dụ:** Khi chạy `git status`, dòng đầu tiên báo `On branch main` vì HEAD đang gắn vào nhánh `main`.\n- **Đừng nhầm:** HEAD không phải là một commit độc lập; nó là nhãn chỉ vào nhánh hoặc commit bạn đang mở.\n\n### Detached HEAD — trạng thái rời nhánh\n- **Nói dễ hiểu:** Tình trạng HEAD trỏ thẳng vào một commit cụ thể thay vì trỏ thông qua một tên nhánh.\n- **Ví dụ:** Chạy `git checkout a1b2c3d` để xem lại mã nguồn của tuần trước sẽ đưa bạn vào Detached HEAD.\n- **Đừng nhầm:** Detached HEAD không phải lỗi hỏng kho lưu trữ; đây là chế độ xem lại lịch sử hoàn toàn bình thường.\n\n### git switch — lệnh chuyển nhánh an toàn\n- **Nói dễ hiểu:** Câu lệnh chuyên trách để chuyển đổi giữa các nhánh hoặc thoát khỏi Detached HEAD.\n- **Ví dụ:** Chạy `git switch main` để đưa không gian làm việc quay trở về đỉnh nhánh chính.\n- **Đừng nhầm:** `git switch` chỉ chuyển nhánh; để khôi phục tệp bị sửa đổi bạn dùng `git restore`.\n\n---\n\n## 📖 Định nghĩa\nHEAD là con trỏ đặc biệt trong Git cho biết vị trí làm việc hiện tại của bạn. Bình thường, HEAD trỏ vào một nhánh (như `main`). Khi bạn chuyển thẳng tới một commit cũ bằng mã hash, HEAD sẽ rời khỏi nhánh và rơi vào trạng thái Detached HEAD.\n\n---\n\n## 🤔 Tại sao cần?\nKhi dự án gặp lỗi mà không rõ nguyên nhân, bạn thường cần quay lại các phiên bản cũ trong quá khứ để chạy thử và kiểm tra. Hiểu cách HEAD hoạt động giúp bạn tự tin xem lại lịch sử mà không sợ làm mất dữ liệu hay làm xáo trộn nhánh chính.\n\n---\n\n## 🧠 Mental Model (Mô hình tư duy)\nHãy hình dung HEAD giống như chiếc kim đọc đĩa than. Khi kim đặt vào rãnh `main`, loa phát bài hát của nhánh `main`. Khi bạn nhấc kim đặt tự do vào một đoạn cũ giữa đĩa than (Detached HEAD), bạn vẫn nghe được đoạn nhạc cũ đó. Khi muốn nghe lại bài hát chính, bạn chỉ cần gạt kim về lại rãnh `main`.\n\n---\n\n## 🖼 Sơ đồ\n```text\nTrạng thái bình thường:\nHEAD ───> main ───> Commit C3\n\nTrạng thái Detached HEAD:\nHEAD ─────────────> Commit C1 (đang xem lại bản cũ)\nmain ─────────────> Commit C3 (vẫn ở đỉnh)\n```\n\n---\n\n## 🌎 Ví dụ thực tế\nBạn đang làm web bán hàng và khách báo rằng chức năng thanh toán vừa bị lỗi sáng nay. Bạn xem mã commit của ngày hôm qua là `e8a1b2c`. Bạn checkout về commit đó để kiểm tra thử. Sau khi xác nhận hôm qua vẫn thanh toán tốt, bạn dùng lệnh `git switch main` để quay về code mới nhất mà không ảnh hưởng gì đến dự án.\n\n---\n\n## 💻 Command\n```bash\ngit status\ngit checkout <commit-hash>\ngit switch main\ngit switch -c <tên-nhánh-mới>\n```\n\n---\n\n## 🔍 Giải thích command\n- `git status`: Hiển thị bạn đang đứng ở nhánh nào hoặc đang ở trạng thái Detached HEAD tại commit nào.\n- `git checkout <commit-hash>`: Đưa HEAD về một commit cụ thể trong quá khứ.\n- `git switch main`: Chuyển HEAD quay trở lại gắn vào nhánh `main`.\n- `git switch -c <tên-nhánh-mới>`: Tạo nhánh mới ngay tại vị trí commit hiện tại để giữ lại các thử nghiệm.\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Hoảng loạn khi thấy chữ Detached HEAD:** Đây là thông báo trạng thái bình thường của Git khi bạn xem lại commit cũ.\n2. **Commit thử nghiệm khi rời nhánh rồi chuyển đi mà không tạo nhánh:** Các commit này sẽ bị mồ côi vì không có tên nhánh nào trỏ vào.\n3. **Dùng nhầm `git checkout` với tệp:** Nên dùng `git switch` cho nhánh và `git restore` cho tệp để tránh nhầm lẫn.\n\n---\n\n## 🧪 Lab\nBài học này là bài tự kiểm tra hiểu biết trên terminal của bạn:\n1. Chạy `git log --oneline` để lấy mã hash của một commit trước đó.\n2. Chạy `git checkout <mã-hash>` để quan sát thông báo Detached HEAD từ Git.\n3. Chạy `git status` để đọc lời nhắc của Git về vị trí con trỏ hiện tại.\n4. Chạy `git switch main` để đưa HEAD trở lại nhánh `main`.\n\n---\n\n## 💡 Hint\nKhi ở Detached HEAD, nếu bạn tạo commit muốn giữ lại, hãy gõ `git switch -c <nhánh-mới>` trước khi chuyển đi nơi khác.\n\n---\n\n## ✅ Validation\n- Sau khi chạy `git switch main`, lệnh `git status` báo rõ `On branch main`.\n- Thư mục làm việc trở về trạng thái của commit mới nhất trên nhánh chính.\n\n---\n\n## ❓ Quiz\nTrả lời các câu hỏi sau để kiểm tra kiến thức về con trỏ HEAD và trạng thái Detached HEAD.\n\n---\n\n## 🔥 Challenge\nMở tệp `.git/HEAD` bằng trình đọc tệp khi đang ở nhánh `main` và khi đang ở Detached HEAD để so sánh nội dung bên trong.\n\n---\n\n## 📚 Tổng kết\n- HEAD chỉ định vị trí commit mà thư mục làm việc của bạn đang hiển thị.\n- Detached HEAD xuất hiện khi bạn đưa HEAD trỏ thẳng vào commit thay vì qua tên nhánh.\n- Dùng `git switch main` để quay về an toàn, hoặc `git switch -c` nếu muốn giữ lại commit thử nghiệm.\n",
   "quiz": {
     "id": "quiz-03-02-head-pointer",
     "title": "Trắc nghiệm: Con trỏ HEAD và Detached HEAD",
     "questions": [
       {
         "id": "q1",
-        "question": "Trong trạng thái làm việc bình thường, tệp tin `.git/HEAD` chứa thông tin gì?",
+        "question": "Trong trạng thái làm việc bình thường, con trỏ HEAD trong Git có vai trò gì?",
         "type": "single",
         "options": [
           {
-            "text": "Đường dẫn tham chiếu tượng trưng tới nhánh hiện tại (ví dụ: ref: refs/heads/main)",
+            "text": "Chỉ định nhánh và commit hiện tại mà thư mục làm việc đang hiển thị",
             "correct": true
           },
           {
-            "text": "Mật khẩu mã hóa của toàn bộ kho lưu trữ Git",
+            "text": "Mật khẩu bảo mật dùng để đăng nhập vào máy chủ GitHub",
             "correct": false
           },
           {
-            "text": "Danh sách các lập trình viên bị cấm truy cập dự án",
+            "text": "Danh sách các thành viên được cấp quyền ghi vào dự án",
             "correct": false
           },
           {
-            "text": "Toàn bộ mã nguồn của trang chủ website",
+            "text": "Bản sao lưu dự phòng của toàn bộ mã nguồn trên đám mây",
             "correct": false
           }
         ],
-        "explanation": "Tệp .git/HEAD chứa dòng `ref: refs/heads/<nhánh>` chỉ định nhánh hiện tại đang được kích hoạt."
+        "explanation": "HEAD là con trỏ đại diện cho vị trí hiện tại bạn đang đứng trong kho lưu trữ Git."
       },
       {
         "id": "q2",
-        "question": "Hiện tượng \"Detached HEAD\" xảy ra khi nào?",
+        "question": "Trạng thái Detached HEAD xảy ra khi nào?",
         "type": "single",
         "options": [
           {
-            "text": "Khi con trỏ HEAD trỏ trực tiếp vào một mã băm commit cụ thể thay vì trỏ vào một nhánh",
+            "text": "Khi con trỏ HEAD trỏ trực tiếp vào một commit cụ thể thay vì trỏ qua tên nhánh",
             "correct": true
           },
           {
-            "text": "Khi máy tính bị mất kết nối mạng cáp quang quốc tế",
+            "text": "Khi máy tính bị ngắt kết nối mạng Internet hoặc cáp quang",
             "correct": false
           },
           {
-            "text": "Khi ổ cứng máy tính bị đầy dung lượng không thể ghi thêm",
+            "text": "Khi ổ đĩa của bạn bị đầy dung lượng và không thể lưu tệp",
             "correct": false
           },
           {
-            "text": "Khi bạn gõ sai mật khẩu đăng nhập vào máy tính",
+            "text": "Khi bạn đặt sai thông tin người dùng trong cấu hình Git",
             "correct": false
           }
         ],
-        "explanation": "Detached HEAD xuất hiện khi bạn checkout trực tiếp tới một commit hoặc tag thay vì một branch."
+        "explanation": "Detached HEAD xuất hiện khi bạn checkout trực tiếp tới một mã hash commit thay vì một tên nhánh."
       },
       {
         "id": "q3",
-        "question": "Nếu bạn lỡ tạo một số commit quan trọng trong trạng thái Detached HEAD, làm thế nào để lưu giữ chúng an toàn?",
+        "question": "Nếu bạn đã tạo một số commit thử nghiệm trong trạng thái Detached HEAD, làm sao để giữ lại an toàn?",
         "type": "single",
         "options": [
           {
-            "text": "Chạy lệnh `git switch -c <tên-nhánh-mới>` để tạo ngay một nhánh mới giữ lấy commit đó",
+            "text": "Dùng lệnh `git switch -c <tên-nhánh-mới>` để gắn nhánh mới vào commit hiện tại",
             "correct": true
           },
           {
-            "text": "Tắt máy tính và khởi động lại ngay lập tức",
+            "text": "Tắt máy tính và khởi động lại để Git tự khôi phục dữ liệu",
             "correct": false
           },
           {
-            "text": "Xóa toàn bộ thư mục dự án và tải lại từ đầu",
+            "text": "Xóa thư mục dự án và tải lại từ đầu từ máy chủ",
             "correct": false
           },
           {
-            "text": "Bấm tổ hợp phím Ctrl + Z trên bàn phím mười lần",
+            "text": "Nhấn tổ hợp phím Ctrl + Z nhiều lần trong trình soạn thảo",
             "correct": false
           }
         ],
-        "explanation": "`git switch -c <name>` gắn một con trỏ nhánh mới vào commit hiện tại, cứu commit không bị mồ côi."
+        "explanation": "Lệnh `git switch -c <tên>` tạo một nhánh mới ngay tại commit hiện tại, giữ commit không bị mồ côi."
       },
       {
         "id": "q4",
-        "question": "Lệnh nào là cách hiện đại và an toàn nhất để đưa HEAD thoát khỏi Detached HEAD quay về nhánh main?",
+        "question": "Lệnh nào là cách an toàn và rõ ràng nhất để đưa HEAD thoát khỏi Detached HEAD quay về nhánh main?",
         "type": "single",
         "options": [
           {
@@ -137,7 +137,31 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "`git switch main` là câu lệnh hiện đại (từ Git 2.23) chuyên trách chuyển về nhánh chỉ định."
+        "explanation": "Lệnh `git switch main` chuyển vùng làm việc và gắn con trỏ HEAD trở lại nhánh `main`."
+      },
+      {
+        "id": "q5",
+        "question": "Khi bạn đang ở trên nhánh main và thực hiện một commit mới, điều gì xảy ra với HEAD?",
+        "type": "single",
+        "options": [
+          {
+            "text": "HEAD cùng với con trỏ main tiếp tục trỏ tới commit mới nhất vừa tạo",
+            "correct": true
+          },
+          {
+            "text": "HEAD đứng yên ở commit cũ và tự động rơi vào trạng thái Detached HEAD",
+            "correct": false
+          },
+          {
+            "text": "HEAD bị xóa khỏi kho lưu trữ và phải gõ lệnh tạo lại thủ công",
+            "correct": false
+          },
+          {
+            "text": "HEAD tự động chuyển sang nhánh khác ngẫu nhiên trong dự án",
+            "correct": false
+          }
+        ],
+        "explanation": "Ở trạng thái bình thường, HEAD trỏ vào nhánh `main`. Khi `main` tiến lên commit mới, vị trí hiện tại của HEAD cũng tiến theo."
       }
     ]
   }

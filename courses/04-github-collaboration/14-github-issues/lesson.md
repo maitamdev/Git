@@ -10,22 +10,41 @@
 
 ---
 
+## 🧩 Từ khóa hôm nay
+
+### issue
+- **Nói dễ hiểu**: Một tấm thẻ theo dõi một lỗi cần sửa, một tính năng cần làm hoặc một câu hỏi kỹ thuật trong dự án.
+- **Ví dụ**: Tạo Issue `#15: Lỗi không nhấn được nút thanh toán trên mobile`.
+- **Đừng nhầm**: Không chỉ để báo lỗi hỏng; issue còn dùng để lập kế hoạch công việc và thảo luận tính năng mới.
+
+### labels & assignees
+- **Nói dễ hiểu**: Nhãn phân loại màu sắc và người chịu trách nhiệm chính được giao giải quyết issue.
+- **Ví dụ**: Gắn nhãn `bug`, `high-priority` và chỉ định bạn Nam vào mục `Assignees`.
+- **Đừng nhầm**: Nhãn không tự động sửa lỗi; đây là công cụ hỗ trợ lọc, tìm kiếm và phân công công việc khoa học.
+
+### closing keywords
+- **Nói dễ hiểu**: Các từ khóa đặc biệt viết trong commit hoặc PR giúp GitHub tự động chuyển Issue sang trạng thái Closed khi merge.
+- **Ví dụ**: Ghi `Fixes #15` trong mô tả PR để tự động đóng Issue #15 khi được merge vào main.
+- **Đừng nhầm**: Chỉ đóng tự động khi PR được merge vào nhánh mặc định; nếu PR bị đóng (close) mà không merge thì Issue vẫn mở.
+
+---
+
 ## 📖 Định nghĩa
-> GitHub Issues là hệ thống quản lý công việc và theo dõi lỗi (Issue Tracking System) tích hợp sẵn ngay bên trong mỗi kho lưu trữ GitHub. Issues hoạt động như một danh sách việc cần làm (To-Do List) mạnh mẽ, nơi người dùng và các kỹ sư có thể báo cáo sự cố (Bug Reports), đề xuất tính năng mới (Feature Requests), thảo luận về các vấn đề kỹ thuật và phân công trách nhiệm cho từng thành viên trong nhóm.
+GitHub Issues là hệ thống theo dõi lỗi và quản lý công việc tích hợp sẵn bên trong mỗi kho lưu trữ GitHub, nơi người dùng và lập trình viên có thể báo cáo sự cố (Bug Reports), đề xuất tính năng mới (Feature Requests), thảo luận kỹ thuật và phân công nhiệm vụ cụ thể cho từng thành viên.
 
 ---
 
-## 🤔 Tại sao cần?
-Một dự án phần mềm không thể thành công nếu chỉ có mã nguồn mà không có sự quản lý công việc bài bản. Nếu không có hệ thống theo dõi lỗi, các yêu cầu của khách hàng sẽ bị trôi mất trong tin nhắn chat, các lỗi nghiêm trọng sẽ bị bỏ quên và đội ngũ sẽ rơi vào tình trạng hỗn loạn không biết ai đang làm gì. Sử dụng thành thạo GitHub Issues giúp dự án vận hành khoa học, minh bạch và chuyên nghiệp.
+## 💡 Tại sao cần
+Một dự án phần mềm không thể thành công nếu chỉ có mã nguồn mà thiếu quản trị công việc bài bản. Nếu không có hệ thống theo dõi lỗi, yêu cầu của khách hàng sẽ bị trôi mất trong tin nhắn chat, lỗi nghiêm trọng bị bỏ quên và nhóm sẽ rơi vào tình trạng hỗn loạn không rõ ai đang làm phần việc nào.
 
 ---
 
-## 🧠 Mental Model (Mô hình tư duy)
-Hãy hình dung GitHub Issues giống như một chiếc bảng Kanban điện tử thông minh được đặt trang trọng ngay giữa phòng làm việc của nhóm kỹ thuật, nơi dán các tấm thẻ ghi chú nhiệm vụ với nhiều màu sắc phân loại khác nhau. Mỗi tấm thẻ (Issue) ghi rõ nội dung sự cố: "Nút Đăng nhập trên điện thoại bị lệch giao diện" (Lỗi), do ai chịu trách nhiệm sửa (Assignee), độ ưu tiên cao hay thấp (Label: bug, priority:high), và cần phải hoàn thành trước ngày nào (Milestone: Sprint 4). Nhờ chiếc bảng này, toàn đội luôn nắm bắt tiến độ công việc minh bạch.
+## 🧠 Mental Model
+Hãy hình dung GitHub Issues như một chiếc bảng Kanban thông minh đặt giữa phòng làm việc của đội ngũ. Mỗi tấm thẻ ghi chú (Issue) có màu sắc riêng (Labels), ghi rõ ai phụ trách (Assignees), làm trước ngày nào (Milestones) và mô tả chi tiết lỗi cần sửa để cả nhóm cùng theo dõi minh bạch.
 
 ---
 
-## 🖼 Sơ đồ
+## 📊 Sơ đồ minh họa
 ```text
 Quy trình liên kết tự động Issue và Pull Request:
 [Issue #42: Bug giỏ hàng] ◄────────────────────────────────┐
@@ -35,12 +54,12 @@ Quy trình liên kết tự động Issue và Pull Request:
 
 ---
 
-## 🌎 Ví dụ thực tế
-Một khách hàng liên hệ báo cáo lỗi không thể thanh toán đơn hàng bằng thẻ tín dụng quốc tế. Kỹ sư Linh nhanh chóng tạo một Issue trên GitHub với tiêu đề chuẩn mực: "[Bug] Payment gateway timeout on checkout". Linh dán mã lỗi chi tiết từ hệ thống ghi log, đính kèm ảnh chụp màn hình và gắn nhãn `bug`, `critical`. Kỹ sư Huy nhận phân công phụ trách xử lý issue này. Sau khi sửa xong trên nhánh tính năng, Huy mở Pull Request với phần mô tả ghi rõ: "Fixes #104 - increase payment gateway timeout to 30s". Khi PR được duyệt và merge vào main, GitHub tự động chuyển trạng thái của Issue #104 sang Closed một cách hoàn toàn tự động.
+## 🏢 Ví dụ thực tế
+Khách hàng báo lỗi không thể thanh toán bằng thẻ tín dụng. Kỹ sư Linh tạo Issue trên GitHub: "[Bug] Payment gateway timeout on checkout", đính kèm log chi tiết và gắn nhãn `bug`, `critical`. Kỹ sư Huy nhận xử lý issue này. Khi hoàn thành, Huy mở PR ghi rõ: "Fixes #104". Khi PR được duyệt và merge vào main, GitHub tự động đóng Issue #104 ngay lập tức.
 
 ---
 
-## 💻 Command
+## 💻 Command & Cú pháp
 ```bash
 gh issue list
 gh issue create
@@ -51,47 +70,49 @@ gh issue view <issue-number>
 
 ## 🔍 Giải thích command
 - `gh issue list`: Liệt kê danh sách các issue đang mở của dự án trực tiếp trong terminal bằng GitHub CLI.
-- `gh issue create`: Tạo một issue mới nhanh chóng ngay từ dòng lệnh.
-- `gh issue view <number>`: Xem chi tiết nội dung và các bình luận của một issue chỉ định.
+- `gh issue create`: Tạo một issue mới nhanh chóng ngay từ dòng lệnh mà không cần mở trình duyệt web.
+- `gh issue view <number>`: Xem chi tiết nội dung và các bình luận trao đổi của một issue chỉ định.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Báo cáo lỗi quá mơ hồ như "Trang web bị lỗi không chạy"**:  Không có bước tái hiện, không có ảnh chụp màn hình khiến người khác không thể sửa được.
-2. **Quên sử dụng từ khóa đóng issue trong PR**:  Khiến PR đã merge nhưng issue vẫn mở, làm sai lệch báo cáo tiến độ dự án.
-3. **Sử dụng Issue để trò chuyện tán gẫu không liên quan đến kỹ thuật.**: Sử dụng Issue để trò chuyện tán gẫu không liên quan đến kỹ thuật.
+1. **Báo cáo lỗi quá mơ hồ không có bước tái hiện**: Viết mỗi câu "Web bị lỗi" khiến đồng nghiệp không thể tái hiện và sửa chữa.
+2. **Quên dùng từ khóa đóng issue trong PR**: Khiến PR đã merge xong nhưng Issue vẫn bị treo ở trạng thái mở làm sai lệch báo cáo tiến độ.
+3. **Dùng Issues để tán gẫu việc riêng ngoài lề**: Làm loãng không gian thảo luận kỹ thuật và gây khó khăn cho việc tra cứu tài liệu sau này.
 
 ---
 
-## 🧪 Lab
+## 🧪 Lab thực hành
+Bài học này là bài tự kiểm tra: bạn thao tác tạo một Issue thử nghiệm và liên kết từ khóa đóng tự động.
 1. Truy cập tab `Issues` trên kho lưu trữ GitHub và bấm nút `New issue`.
-2. Điền tiêu đề rõ ràng và nội dung mô tả lỗi theo mẫu hướng dẫn.
+2. Điền tiêu đề rõ ràng và nội dung mô tả lỗi theo mẫu các bước tái hiện.
 3. Gán nhãn `bug` và chỉ định bản thân vào mục `Assignees`.
-4. Tạo một commit có thông điệp `Fixes #1` để trải nghiệm tính năng tự động liên kết đóng issue.
+4. Tạo một commit có thông điệp `Fixes #1` để kiểm tra tính năng tự động liên kết đóng issue.
 
 ---
 
-## 💡 Hint
-> Sử dụng các từ khóa `Fixes #ID`, `Closes #ID`, hoặc `Resolves #ID` trong PR để tự động đóng Issue.
+## 💡 Hint & mẹo
+> Sử dụng các từ khóa `Fixes #ID`, `Closes #ID`, hoặc `Resolves #ID` trong PR để tự động đóng Issue khi code được tích hợp.
 
 ---
 
-## ✅ Validation
-- Tạo thành công Issue trên GitHub và liên kết tự động đóng thông qua Pull Request.
+## ✅ Validation & Kết quả mong đợi
+- Issue mới hiển thị đầy đủ nhãn phân loại và người phụ trách trong danh sách tab Issues.
+- Issue tự động chuyển sang màu tím `Closed` sau khi PR liên kết được merge vào main.
 
 ---
 
-## ❓ Quiz
-Hãy làm bài kiểm tra trắc nghiệm dưới đây về quản lý công việc với GitHub Issues.
+## ❓ Quiz nhanh
+Hãy hoàn thành các câu hỏi trắc nghiệm dưới đây để củng cố kiến thức về quản lý công việc với GitHub Issues.
 
 ---
 
-## 🔥 Challenge
-Nêu danh sách toàn bộ các từ khóa liên kết tự động đóng issue (Closing keywords) được GitHub hỗ trợ.
+## 🚀 Thử thách nâng cao
+Thiết lập mẫu Issue (Issue Templates) trong thư mục `.github/ISSUE_TEMPLATE/` để người báo cáo lỗi tự động điền theo biểu mẫu chuẩn chuyên nghiệp.
 
 ---
 
-## 📚 Tổng kết
+## 📝 Tổng kết
 - GitHub Issues là công cụ theo dõi lỗi và quản lý đầu việc tích hợp sẵn trong repo.
 - Sử dụng Labels, Milestones và Assignees để tổ chức công việc khoa học.
 - Từ khóa `Fixes #ID` trong PR giúp tự động đóng Issue khi code được merge vào main.

@@ -60,5 +60,17 @@ questions:
         correct: false
       - text: Thay thế hoàn toàn sự cần thiết của việc viết kiểm thử
         correct: false
-    explanation: Kiểm tra trạng thái liên tục giúp bạn kiểm soát tuyệt đối mã nguồn
-      trước khi ghi lại vào lịch sử.
+    explanation: Kiểm tra trạng thái cho biết những gì đang chờ commit để bạn rà lại trước khi lưu.
+  - id: q5
+    question: Trong `git status -s`, hai cột trạng thái lần lượt nói về khu vực nào?
+    type: single
+    options:
+      - text: Cột trái là Staging Area; cột phải là Working Tree
+        correct: true
+      - text: Cột trái là GitHub; cột phải là máy tính cá nhân
+        correct: false
+      - text: Cột trái là tên nhánh; cột phải là tên người commit
+        correct: false
+      - text: Cả hai cột đều là màu hiển thị, không mang ý nghĩa
+        correct: false
+    explanation: Ký tự bên trái biểu thị trạng thái trong Index; ký tự bên phải biểu thị thay đổi trong Working Tree.

@@ -61,3 +61,21 @@ questions:
         correct: false
     explanation: Quy ước chung giúp tiết kiệm thời gian giải thích và tránh lỗi cấu
       hình trong các quy trình tự động.
+  - id: q5
+    question: Khi bạn thực hiện câu lệnh `git push origin feature-login`, Git hiểu mục
+      tiêu của lệnh này là gì?
+    type: single
+    options:
+      - text: Đẩy các commit từ nhánh feature-login cục bộ lên nhánh feature-login trên
+          máy chủ được gán bí danh origin
+        correct: true
+      - text: Tự động xóa nhánh feature-login trên máy tính để dọn dẹp bộ nhớ
+        correct: false
+      - text: Gộp thẳng nhánh feature-login vào nhánh main trên GitHub mà không cần kiểm
+          tra
+        correct: false
+      - text: Kéo toàn bộ mã nguồn từ origin về đè lên Working Directory hiện tại
+        correct: false
+    explanation: Lệnh push kèm theo remote và branch sẽ gửi chính xác lịch sử commit
+      của nhánh cục bộ lên remote tương ứng.
+

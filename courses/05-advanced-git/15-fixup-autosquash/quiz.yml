@@ -2,8 +2,7 @@ id: quiz-05-15-fixup-autosquash
 title: "Trắc nghiệm: Fixup & Autosquash"
 questions:
   - id: q1
-    question: Thông điệp mặc định của một commit được tạo ra bằng lệnh `git commit
-      --fixup <commit-hash>` có định dạng như thế nào?
+    question: Thông điệp mặc định của một commit được tạo ra bằng lệnh `git commit --fixup <commit-hash>` có định dạng như thế nào?
     type: single
     options:
       - text: fixup! <tiêu đề của commit mục tiêu>
@@ -14,15 +13,12 @@ questions:
         correct: false
       - text: Một chuỗi ngẫu nhiên không có quy luật
         correct: false
-    explanation: Tiền tố `fixup! ` giúp cờ `--autosquash` nhận biết chính xác commit
-      này cần được gộp vào đâu.
+    explanation: Tiền tố `fixup! ` giúp cờ `--autosquash` nhận biết chính xác commit này cần được gộp vào đâu.
   - id: q2
-    question: Khi bạn chạy `git rebase -i --autosquash`, Git sẽ tự động làm thao tác
-      nào trong Todo List?
+    question: Khi bạn chạy `git rebase -i --autosquash`, Git sẽ tự động làm thao tác nào trong Todo List?
     type: single
     options:
-      - text: Tự động di chuyển commit fixup lên ngay dưới commit mục tiêu và đổi chỉ
-          thị thành fixup
+      - text: Tự động di chuyển commit fixup lên ngay dưới commit mục tiêu và đổi chỉ thị thành fixup
         correct: true
       - text: Tự động xóa sạch toàn bộ các commit trong danh sách
         correct: false
@@ -30,11 +26,9 @@ questions:
         correct: false
       - text: Tự động đẩy code lên máy chủ GitHub
         correct: false
-    explanation: Autosquash tự động quét các tiền tố `fixup!` và `squash!` để tái
-      cấu trúc Todo list thông minh.
+    explanation: Autosquash tự động quét các tiền tố `fixup!` và `squash!` để tái cấu trúc Todo list thông minh.
   - id: q3
-    question: Lệnh cấu hình nào giúp bạn luôn luôn kích hoạt tính năng autosquash mà
-      không cần phải gõ cờ `--autosquash` mỗi lần rebase?
+    question: Lệnh cấu hình nào giúp bạn luôn luôn kích hoạt tính năng autosquash mà không cần phải gõ cờ `--autosquash` mỗi lần rebase?
     type: single
     options:
       - text: git config --global rebase.autoSquash true
@@ -45,15 +39,12 @@ questions:
         correct: false
       - text: git enable auto-rebase
         correct: false
-    explanation: Cấu hình `rebase.autoSquash true` trong config toàn cục biến hành
-      vi autosquash thành mặc định.
+    explanation: Cấu hình `rebase.autoSquash true` trong config toàn cục biến hành vi autosquash thành mặc định.
   - id: q4
-    question: Trường hợp sử dụng lý tưởng nhất của `git commit --fixup` trong thực
-      tế là gì?
+    question: Trường hợp sử dụng lý tưởng nhất của `git commit --fixup` trong thực tế là gì?
     type: single
     options:
-      - text: Khi phát hiện một lỗi nhỏ trong một commit cũ sâu trong lịch sử mà muốn
-          sửa ngay mà không làm xáo trộn công việc
+      - text: Khi phát hiện một lỗi nhỏ trong một commit cũ sâu trong lịch sử mà muốn sửa ngay mà không làm xáo trộn công việc
         correct: true
       - text: Khi muốn xóa toàn bộ lịch sử của dự án
         correct: false
@@ -61,5 +52,17 @@ questions:
         correct: false
       - text: Khi chuẩn bị tắt máy tính đi về nhà
         correct: false
-    explanation: Fixup + Autosquash là cặp đôi sửa lỗi hồi tố (retroactive fix)
-      nhanh nhất trong lịch sử Git.
+    explanation: Fixup + Autosquash là cặp đôi sửa lỗi hồi tố nhanh nhất và an toàn nhất trong Git.
+  - id: q5
+    question: Điểm khác biệt quan trọng giữa commit `--fixup` và commit `--squash` khi tự động gộp bằng autosquash là gì?
+    type: single
+    options:
+      - text: Fixup tự động vứt bỏ commit message vá lỗi, còn squash giữ lại message để bạn biên tập lại
+        correct: true
+      - text: Fixup chỉ sửa đổi một dòng code, còn squash sửa toàn bộ file
+        correct: false
+      - text: Fixup chạy được trên remote, còn squash chỉ chạy được ở local
+        correct: false
+      - text: Không có bất kỳ sự khác biệt nào giữa hai cờ này
+        correct: false
+    explanation: Fixup được thiết kế cho các bản vá nhanh không cần ghi chú thêm, còn squash cho phép kết hợp các mô tả lại.

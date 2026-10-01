@@ -1,10 +1,8 @@
 id: quiz-07-github-actions-10-env-variables
-title: "Trắc nghiệm: Biến môi trường (Environment Variables) cấp workflow, job
-  và step"
+title: "Trắc nghiệm: Biến môi trường (Environment Variables) cấp workflow, job và step"
 questions:
   - id: q1
-    question: Biến môi trường được khai báo ngay dưới khóa `jobs:<job_id>:env` sẽ có
-      phạm vi hiệu lực ở đâu?
+    question: Biến môi trường được khai báo ngay dưới khóa `jobs:<job_id>:env` sẽ có phạm vi hiệu lực ở đâu?
     type: single
     options:
       - text: Chỉ có hiệu lực đối với tất cả các Step bên trong Job đó
@@ -15,12 +13,9 @@ questions:
         correct: false
       - text: Chỉ có hiệu lực trong đúng 1 giây đầu tiên
         correct: false
-    explanation: Biến môi trường khai báo ở cấp Job sẽ được kế thừa bởi tất cả các
-      Step thuộc Job đó, nhưng không lan sang các Job khác.
+    explanation: Biến môi trường khai báo ở cấp Job sẽ được kế thừa bởi tất cả các Step thuộc Job đó, nhưng không lan sang các Job khác.
   - id: q2
-    question: Nếu cùng một biến tên là `PORT` được khai báo ở cả cấp Workflow (giá
-      trị 3000) và cấp Step (giá trị 8080), thì bên trong Step đó PORT có giá
-      trị bao nhiêu?
+    question: Nếu cùng một biến tên là `PORT` được khai báo ở cả cấp Workflow (giá trị 3000) và cấp Step (giá trị 8080), thì bên trong Step đó PORT có giá trị bao nhiêu?
     type: single
     options:
       - text: 8080 (cấp con ghi đè cấp cha)
@@ -31,11 +26,9 @@ questions:
         correct: false
       - text: Báo lỗi xung đột biến
         correct: false
-    explanation: "Quy tắc phạm vi biến tuân thủ nguyên lý ghi đè cục bộ: khai báo ở
-      phạm vi hẹp hơn (Step) sẽ ghi đè phạm vi rộng hơn (Workflow)."
+    explanation: "Quy tắc phạm vi biến tuân thủ nguyên lý ghi đè cục bộ: khai báo ở phạm vi hẹp hơn (Step) sẽ ghi đè phạm vi rộng hơn (Workflow)."
   - id: q3
-    question: Biến môi trường mặc định nào sau đây chứa mã băm commit SHA đầy đủ đã
-      kích hoạt workflow?
+    question: Biến môi trường mặc định nào sau đây chứa mã băm commit SHA đầy đủ đã kích hoạt workflow?
     type: single
     options:
       - text: GITHUB_SHA
@@ -46,11 +39,9 @@ questions:
         correct: false
       - text: ACTION_SHA
         correct: false
-    explanation: "`GITHUB_SHA` là biến môi trường tiêu chuẩn do GitHub tự động tiêm
-      vào mọi Runner, chứa mã commit 40 ký tự."
+    explanation: "`GITHUB_SHA` là biến môi trường tiêu chuẩn do GitHub tự động tiêm vào mọi Runner, chứa mã commit 40 ký tự."
   - id: q4
-    question: Để lưu một biến môi trường động cho các Step sau sử dụng, lệnh shell
-      nào sau đây là chuẩn mực?
+    question: Để lưu một biến môi trường động cho các Step sau sử dụng, lệnh shell nào sau đây là chuẩn mực?
     type: single
     options:
       - text: echo "MY_VAR=value" >> $GITHUB_ENV
@@ -61,5 +52,17 @@ questions:
         correct: false
       - text: save MY_VAR=value
         correct: false
-    explanation: Lệnh `export` chỉ có tác dụng trong phiên shell hiện tại. Để truyền
-      sang các step sau, bạn phải ghi vào tệp `$GITHUB_ENV`.
+    explanation: Lệnh `export` chỉ có tác dụng trong phiên shell hiện tại. Để truyền sang các step sau, bạn phải ghi vào tệp `$GITHUB_ENV`.
+  - id: q5
+    question: Các biến môi trường mặc định như `GITHUB_REPOSITORY`, `GITHUB_REF` và `GITHUB_WORKSPACE` được cấp phát như thế nào?
+    type: single
+    options:
+      - text: Do GitHub Actions tự động tiêm sẵn vào môi trường của mọi Runner ngay khi Job bắt đầu
+        correct: true
+      - text: Bắt buộc lập trình viên phải tự định nghĩa thủ công trong tệp YAML
+        correct: false
+      - text: Chỉ xuất hiện sau khi toàn bộ các bài kiểm thử đã chạy xong
+        correct: false
+      - text: Chỉ dành riêng cho các tài khoản GitHub trả phí doanh nghiệp
+        correct: false
+    explanation: GitHub tự động tiêm sẵn hàng loạt biến môi trường mặc định chứa thông tin chi tiết về commit, nhánh, sự kiện và không gian làm việc.

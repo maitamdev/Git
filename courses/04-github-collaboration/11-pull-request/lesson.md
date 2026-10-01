@@ -10,22 +10,41 @@
 
 ---
 
+## 🧩 Từ khóa hôm nay
+
+### pull request (PR)
+- **Nói dễ hiểu**: Lời đề nghị chính thức gửi tới nhóm đề nghị xem xét và kéo (pull) code từ nhánh của bạn vào nhánh chính.
+- **Ví dụ**: Mở PR đề xuất gộp nhánh `feat/cart` vào nhánh `main` của dự án.
+- **Đừng nhầm**: Không phải lệnh của Git trên máy tính; đây là cơ chế tương tác và quản lý code trên GitHub hoặc GitLab.
+
+### reviewers
+- **Nói dễ hiểu**: Những đồng nghiệp được chỉ định vào PR để đọc, kiểm tra chất lượng code và phê duyệt trước khi gộp.
+- **Ví dụ**: Tag tên trưởng nhóm hoặc bạn cùng dự án vào mục Reviewers trên trang PR.
+- **Đừng nhầm**: Không chỉ để phê bình; reviewers giúp phát hiện lỗi sớm và đảm bảo tính nhất quán của kiến trúc.
+
+### base and compare branch
+- **Nói dễ hiểu**: Cặp nhánh xác định chiều gộp code: `base` là nhánh đích nhận code, `compare` là nhánh tính năng của bạn.
+- **Ví dụ**: `base: main` ◄── `compare: feat/login` thể hiện code sẽ đi từ feat/login vào main.
+- **Đừng nhầm**: Đừng chọn nhầm base branch sang một nhánh tính năng khác khi mục tiêu thực sự là đưa vào main.
+
+---
+
 ## 📖 Định nghĩa
-> Pull Request (thường viết tắt là PR, trong hệ sinh thái GitLab gọi là Merge Request) là một cơ chế cộng tác trung tâm trên GitHub, cho phép một lập trình viên chính thức gửi thông báo và yêu cầu đội ngũ bảo trì hoặc trưởng nhóm kiểm tra, thảo luận và gộp (pull & merge) các commit từ một nhánh tính năng vào nhánh chính của dự án. PR cung cấp không gian tương tác trực quan với giao diện so sánh diff từng dòng, khu vực bình luận và hệ thống kiểm thử tự động CI tích hợp.
+Pull Request (viết tắt là PR, trong GitLab gọi là Merge Request) là cơ chế cộng tác trên nền tảng Git lưu trữ, cho phép lập trình viên thông báo và yêu cầu đội ngũ bảo trì kiểm tra, thảo luận và gộp code từ một nhánh tính năng vào nhánh chính của dự án kèm giao diện so sánh diff trực quan.
 
 ---
 
-## 🤔 Tại sao cần?
-Thời kỳ các lập trình viên tùy tiện đẩy code trực tiếp lên nhánh chính mà không qua ai kiểm duyệt đã lùi vào dĩ vãng. Pull Request là trái tim của văn hóa kỹ thuật hiện đại: nó ngăn ngừa các lỗi tiềm ẩn xâm nhập vào sản phẩm, tạo cơ hội chia sẻ kiến thức chuyên môn giữa các thành viên, lưu lại tài liệu giải trình kỹ thuật cho từng quyết định kiến trúc và xây dựng tinh thần trách nhiệm tập thể đối với chất lượng mã nguồn.
+## 💡 Tại sao cần
+Đẩy code trực tiếp lên nhánh chính mà không qua ai kiểm duyệt rất dễ làm hỏng hệ thống production. Pull Request giúp ngăn ngừa lỗi tiềm ẩn, tạo không gian chia sẻ kiến thức giữa các thành viên, chạy kiểm thử tự động CI và lưu lại lý do kỹ thuật cho từng quyết định thay đổi.
 
 ---
 
-## 🧠 Mental Model (Mô hình tư duy)
-Hãy hình dung bạn là một kiến trúc sư nội thất được thuê trang trí phòng khách của một căn nhà sang trọng. Bạn không tự ý mở cửa nhà khách rồi tự tiện sơn tường hay đập phá vách ngăn khi chưa ai cho phép. Thay vào đó, bạn dựng một bản vẽ thiết kế 3D hoàn chỉnh kèm theo báo giá chi tiết, gửi hồ sơ đó tới gia chủ và lịch sự nói: "Tôi đã hoàn thành thiết kế mới cho phòng khách, xin mời anh chị xem xét và chấp thuận để tôi thi công" (Pull Request).
+## 🧠 Mental Model
+Hãy hình dung bạn là kiến trúc sư nội thất được thuê trang trí phòng khách. Bạn không tự ý mở cửa nhà khách rồi đập phá tường khi chưa ai đồng ý. Bạn vẽ bản thiết kế 3D hoàn chỉnh kèm dự toán chi phí, gửi cho gia chủ và lịch sự nói: "Tôi đã hoàn thành thiết kế phòng khách, xin mời anh chị xem xét và chấp thuận" (Pull Request).
 
 ---
 
-## 🖼 Sơ đồ
+## 📊 Sơ đồ minh họa
 ```text
 Vòng đời của một Pull Request:
 [Tạo nhánh feature] ──► [Commit & Push] ──► [Mở Pull Request trên GitHub]
@@ -36,12 +55,12 @@ Vòng đời của một Pull Request:
 
 ---
 
-## 🌎 Ví dụ thực tế
-Kỹ sư Phương vừa hoàn thành xong tính năng lọc sản phẩm theo mức giá trên nhánh `feat/price-filter` và đã đẩy toàn bộ mã nguồn lên GitHub. Phương truy cập trang web của dự án trên GitHub và bấm nút xanh "Compare & pull request". Phương đặt tiêu đề chuẩn Conventional Commits: "feat: add price range filter component", điền chi tiết bản mô tả về cách thức hoạt động của component, đính kèm ảnh chụp màn hình giao diện đã chạy thử nghiệm thành công trên trình duyệt, đồng thời chỉ định hai đồng nghiệp senior trong nhóm vào danh sách Reviewers để cùng tham gia thẩm định chất lượng mã nguồn trước khi xuất bản.
+## 🏢 Ví dụ thực tế
+Kỹ sư Phương hoàn thành bộ lọc giá sản phẩm trên nhánh `feat/price-filter` và đẩy lên GitHub. Phương vào trang dự án bấm "Compare & pull request", đặt tiêu đề chuẩn `feat: add price range filter component`, mô tả cơ chế hoạt động, đính kèm ảnh chụp màn hình kiểm thử và gắn hai đồng nghiệp senior vào mục Reviewers để cùng đánh giá mã nguồn.
 
 ---
 
-## 💻 Command
+## 💻 Command & Cú pháp
 ```bash
 git switch -c feat/my-feature
 git push -u origin feat/my-feature
@@ -50,47 +69,49 @@ git push -u origin feat/my-feature
 ---
 
 ## 🔍 Giải thích command
-- `git switch -c <tên-nhánh>`: Luôn luôn tạo một nhánh riêng biệt cô lập cho từng tính năng hoặc bản sửa lỗi trước khi bắt đầu viết mã nguồn.
-- `git push -u origin <nhánh>`: Đẩy nhánh tính năng lên GitHub và thiết lập tracking để sẵn sàng tạo Pull Request trên giao diện web.
+- `git switch -c <tên-nhánh>`: Tạo một nhánh riêng biệt cô lập cho tính năng mới trước khi viết code.
+- `git push -u origin <nhánh>`: Đẩy nhánh tính năng lên GitHub và thiết lập tracking để sẵn sàng tạo Pull Request trên web.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Tạo Pull Request trực tiếp từ nhánh main cá nhân**:  Dễ gây xung đột và khó quản lý nhiều PR cùng lúc; luôn luôn tạo feature branch.
-2. **Viết tiêu đề và mô tả PR cẩu thả hoặc để trống**:  Khiến đồng nghiệp không hiểu mục đích thay đổi và từ chối xem xét.
-3. **Gộp quá nhiều tính năng không liên quan vào cùng một PR khổng lồ (Mega PR)**:  Gây quá tải cho người review và rất khó phát hiện lỗi.
+1. **Tạo PR trực tiếp từ nhánh main cá nhân**: Gây khó khăn khi muốn sửa nhiều tính năng cùng lúc; luôn tạo nhánh feature riêng.
+2. **Tiêu đề và mô tả PR sơ sài**: Khiến người review không hiểu mục đích thay đổi và trì hoãn phê duyệt.
+3. **Mở một PR quá khổng lồ chứa nhiều tính năng không liên quan**: Làm quá tải người kiểm tra và dễ bỏ sót lỗi nghiêm trọng.
 
 ---
 
-## 🧪 Lab
+## 🧪 Lab thực hành
+Bài học này là bài tự kiểm tra: bạn thao tác tạo nhánh tính năng, đẩy lên remote và mở PR trên giao diện web.
 1. Tạo nhánh tính năng mới `feat-login-button` và commit một chỉnh sửa nhỏ.
 2. Đẩy nhánh tính năng lên GitHub bằng `git push -u origin feat-login-button`.
-3. Truy cập giao diện web của GitHub và nhấn nút `Compare & pull request`.
-4. Điền tiêu đề, mô tả giải thích lý do thay đổi và bấm `Create pull request`.
+3. Mở trang repository trên GitHub và nhấn nút `Compare & pull request`.
+4. Điền tiêu đề, tóm tắt lý do thay đổi và nhấn `Create pull request`.
 
 ---
 
-## 💡 Hint
-> Một Pull Request lý tưởng nên nhỏ gọn, tập trung giải quyết duy nhất một vấn đề cụ thể.
+## 💡 Hint & mẹo
+> Một Pull Request lý tưởng nên nhỏ gọn, tập trung giải quyết trọn vẹn một vấn đề duy nhất để đồng nghiệp review nhanh chóng.
 
 ---
 
-## ✅ Validation
-- Tạo thành công Pull Request trên GitHub với đầy đủ thông tin mô tả chi tiết.
+## ✅ Validation & Kết quả mong đợi
+- Pull Request được tạo thành công trên GitHub với đầy đủ tiêu đề và nội dung giải trình.
+- Giao diện "Files changed" hiển thị đúng các dòng code bạn đã thay đổi.
 
 ---
 
-## ❓ Quiz
-Hãy làm bài kiểm tra trắc nghiệm dưới đây về khái niệm và quy trình tạo Pull Request.
+## ❓ Quiz nhanh
+Hãy hoàn thành các câu hỏi trắc nghiệm dưới đây để kiểm tra hiểu biết về quy trình tạo Pull Request.
 
 ---
 
-## 🔥 Challenge
-Giải thích cơ chế hoạt động của tệp `.github/pull_request_template.md` trong việc chuẩn hóa nội dung PR.
+## 🚀 Thử thách nâng cao
+Tìm hiểu cách cấu hình file `.github/pull_request_template.md` để tự động hiển thị danh sách kiểm tra (checklist) cho mọi PR mới trong dự án.
 
 ---
 
-## 📚 Tổng kết
+## 📝 Tổng kết
 - Pull Request là yêu cầu chính thức đề nghị gộp code từ nhánh tính năng vào nhánh chính.
 - Cung cấp môi trường thảo luận, xem diff, bình luận code và chạy kiểm thử tự động CI.
 - Luôn tạo nhánh riêng biệt và viết mô tả rõ ràng cho từng Pull Request.

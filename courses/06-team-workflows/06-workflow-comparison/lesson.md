@@ -10,22 +10,41 @@
 
 ---
 
+## 🧩 Từ khóa hôm nay
+
+### Workflow Trade-offs (Đánh đổi quy trình)
+- **Nói dễ hiểu**: Việc cân nhắc giữa tốc độ phát hành nhanh chóng và mức độ an toàn kiểm soát chặt chẽ khi chọn quy trình.
+- **Ví dụ**: Startup chọn GitHub Flow để release nhanh mỗi ngày, chấp nhận bớt các tầng kiểm duyệt trung gian như Git Flow.
+- **Đừng nhầm**: Không có mô hình nào là hoàn hảo tuyệt đối cho mọi dự án; mô hình tốt nhất là mô hình giải quyết đúng nút thắt của nhóm.
+
+### CI/CD Maturity (Độ chín của CI/CD)
+- **Nói dễ hiểu**: Mức độ tự động hóa và độ tin cậy của hệ thống kiểm thử tự động, build và triển khai mã nguồn trong dự án.
+- **Ví dụ**: Dự án có 1.000 test case tự động chạy dưới 5 phút đạt độ chín CI/CD cao, đủ điều kiện áp dụng Trunk-Based Development.
+- **Đừng nhầm**: Nếu chưa có bài test tự động nào mà áp dụng Trunk-Based sẽ khiến nhánh chính liên tục bị hỏng.
+
+### Release Cadence (Chu kỳ phát hành)
+- **Nói dễ hiểu**: Nhịp độ và tần suất đưa phiên bản phần mềm mới đến tay người dùng (nhiều lần mỗi ngày, hàng tuần, hay định kỳ mỗi tháng).
+- **Ví dụ**: Web app SaaS có chu kỳ phát hành liên tục theo ngày, trong khi app mobile thường phát hành theo kỳ sprint 2-4 tuần.
+- **Đừng nhầm**: Chu kỳ phát hành do đặc thù phân phối sản phẩm quyết định, từ đó định hình chiến lược phân nhánh Git phù hợp.
+
+---
+
 ## 📖 Định nghĩa
-> Việc lựa chọn chiến lược phân nhánh mã nguồn không có câu trả lời "đúng tuyệt đối cho mọi dự án", mà là một bài toán cân nhắc sự đánh đổi (Trade-off Analysis) kỹ lưỡng. Ba mô hình phổ biến nhất hiện nay đại diện cho ba triết lý khác nhau: **Git Flow** ưu tiên sự kiểm soát tối đa và an toàn tuyệt đối cho các chu kỳ phát hành dài hạn; **GitHub Flow** ưu tiên sự đơn giản và tinh gọn cho các ứng dụng web triển khai liên tục; và **Trunk-Based Development** tối ưu hóa tốc độ tích hợp cao nhất cho các tổ chức sở hữu hạ tầng CI/CD tự động hóa vượt trội.
+Lựa chọn chiến lược phân nhánh là bài toán cân nhắc sự đánh đổi (Trade-off): Git Flow ưu tiên kiểm soát an toàn cho các chu kỳ phát hành định kỳ; GitHub Flow ưu tiên tinh gọn cho ứng dụng web; còn Trunk-Based Development tối đa hóa tốc độ tích hợp cho đội ngũ có hạ tầng CI/CD tự động hóa cao.
 
 ---
 
-## 🤔 Tại sao cần?
-Áp dụng sai workflow là nguyên nhân hàng đầu gây lãng phí năng suất kỹ thuật: bắt một startup web 3 người dùng mô hình Git Flow cồng kềnh với 5 loại nhánh sẽ khiến tiến độ bị đình trệ vì thủ tục hành chính; ngược lại, ép một nhóm phát triển firmware thiết bị y tế dùng Trunk-Based khi chưa có kiểm thử tự động sẽ tiềm ẩn nguy cơ thảm họa an toàn nghiêm trọng. Hiểu sâu bản chất giúp bạn chọn đúng công cụ cho đúng bài toán.
+## 💡 Tại sao cần
+Áp dụng sai workflow gây lãng phí năng suất nghiêm trọng: ép startup 3 người dùng Git Flow cồng kềnh sẽ làm chậm tiến độ vì thủ tục rườm rà; ngược lại, ép phần mềm thiết bị y tế dùng Trunk-Based khi chưa có test tự động sẽ tiềm ẩn rủi ro lỗi nguy hiểm.
 
 ---
 
-## 🧠 Mental Model (Mô hình tư duy)
-Hãy so sánh ba mô hình với các phương tiện giao thông. **Git Flow** giống như một đoàn tàu hỏa chở hàng siêu trường: chạy theo lịch trình biểu giờ cố định nghiêm ngặt, có nhiều toa kiểm soát an toàn, cực kỳ khó trật bánh nhưng không thể đổi hướng tức thì. **GitHub Flow** giống như một chiếc xe ô tô cá nhân: linh hoạt, gọn gàng, có thể xuất phát bất cứ lúc nào bạn muốn, chỉ cần tuân thủ làn đường chính. Còn **Trunk-Based Development** giống như một đoàn xe đua F1 tốc độ cao: cực nhanh, yêu cầu kỹ năng lái điêu luyện và đội ngũ kỹ thuật pit-stop (hệ thống CI) hỗ trợ tức thì từng giây.
+## 🧠 Mental Model
+Hãy so sánh 3 mô hình với phương tiện giao thông. Git Flow như đoàn tàu hỏa chở hàng: chạy theo lịch trình cố định, nhiều toa kiểm định, cực kỳ an toàn nhưng khó đổi hướng. GitHub Flow như chiếc ô tô cá nhân: linh hoạt, gọn gàng, xuất phát bất cứ lúc nào. Còn Trunk-Based Development như xe đua F1: cực nhanh, đòi hỏi tay lái điêu luyện và đội kỹ thuật CI hỗ trợ tức thì.
 
 ---
 
-## 🖼 Sơ đồ
+## 📊 Sơ đồ minh họa
 ```text
 Bảng ma trận so sánh 3 mô hình Workflow hàng đầu:
 ┌─────────────────┬──────────────┬──────────────┬────────────────────────┐
@@ -41,12 +60,12 @@ Bảng ma trận so sánh 3 mô hình Workflow hàng đầu:
 
 ---
 
-## 🌎 Ví dụ thực tế
-Một công ty phần mềm đa quốc gia quản lý hai dòng sản phẩm khác nhau. Với sản phẩm ứng dụng ngân hàng di động trên iOS/Android chịu sự kiểm duyệt khắt khe của kho ứng dụng và quy định tài chính, công ty áp dụng mô hình **Git Flow** để có giai đoạn release freeze kiểm thử an ninh toàn diện. Trong khi đó, với dịch vụ backend microservices chạy trên nền tảng đám mây AWS với hơn 1.000 ca kiểm thử tự động, đội ngũ kỹ sư áp dụng triệt để **Trunk-Based Development**, cho phép 50 lập trình viên đẩy hàng chục bản cập nhật lên production mỗi ngày mà không gặp bất kỳ sự cố nào.
+## 🏢 Ví dụ thực tế
+Công ty công nghệ áp dụng đồng thời hai mô hình: ứng dụng mobile chịu kiểm duyệt khắt khe từ App Store dùng Git Flow để đóng băng phiên bản cho QA kiểm thử an ninh. Trong khi đó, dịch vụ backend microservices có hơn 1.000 test tự động áp dụng Trunk-Based để 50 kỹ sư deploy liên tục mỗi ngày.
 
 ---
 
-## 💻 Command
+## 💻 Command & Cú pháp
 ```bash
 git log --oneline --graph --all
 git branch --list
@@ -61,39 +80,42 @@ git branch --list
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Áp dụng Git Flow máy móc cho các dự án web quy mô nhỏ cần phát triển nhanh chóng.**: Áp dụng Git Flow máy móc cho các dự án web quy mô nhỏ cần phát triển nhanh chóng.
-2. **Áp dụng Trunk-Based Development khi nhóm chưa hề có hạ tầng kiểm thử tự động (Unit Test / CI).**: Áp dụng Trunk-Based Development khi nhóm chưa hề có hạ tầng kiểm thử tự động (Unit Test / CI).
-3. **Thay đổi workflow liên tục khiến các thành viên trong nhóm bị hoang mang và mất phương hướng.**: Thay đổi workflow liên tục khiến các thành viên trong nhóm bị hoang mang và mất phương hướng.
+1. **Áp dụng máy móc**: Bắt startup nhỏ dùng Git Flow 5 nhánh cồng kềnh gây lãng phí thời gian và làm chậm tốc độ ra mắt sản phẩm.
+2. **Áp dụng Trunk-Based khi thiếu CI**: Hợp nhất liên tục vào main khi chưa có hệ thống test tự động sẽ khiến nhánh chính thường xuyên bị gãy.
+3. **Thay đổi quy trình liên tục**: Đổi workflow quá thường xuyên làm đảo lộn thói quen và gây bối rối cho toàn bộ kỹ sư trong nhóm.
 
 ---
 
-## 🧪 Lab
-1. Phân tích dự án hiện tại của bạn dựa trên 4 tiêu chí: loại sản phẩm, tốc độ release, độ chín của CI và quy mô nhóm.
-2. Lựa chọn mô hình workflow tối ưu nhất và viết bản giải trình ngắn gọn lý do lựa chọn.
+## 🧪 Lab thực hành
+Bài học này là bài tự kiểm tra: bạn thao tác trực tiếp trên terminal của máy tính để làm quen với công cụ.
+1. Dùng lệnh `git log --oneline --graph --all` để khảo sát cây lịch sử phân nhánh của một dự án mã nguồn mở.
+2. Phân tích dự án dựa trên 4 tiêu chí: loại sản phẩm, tốc độ release, độ chín của CI và quy mô nhóm.
+3. Lựa chọn mô hình workflow tối ưu nhất và viết bản giải trình ngắn gọn lý do lựa chọn.
 
 ---
 
-## 💡 Hint
-> Không có quy trình nào là hoàn hảo tuyệt đối; quy trình tốt nhất là quy trình giải quyết đúng nút thắt của đội ngũ.
+## 💡 Hint & mẹo
+> Không có quy trình nào là hoàn hảo tuyệt đối; quy trình tốt nhất là quy trình giải quyết đúng nút thắt và phù hợp với năng lực hạ tầng của đội ngũ.
 
 ---
 
-## ✅ Validation
-- Giải thích được các rủi ro cụ thể nếu chọn sai workflow cho một kịch bản dự án phần mềm.
+## ✅ Validation & Kết quả mong đợi
+- Phân tích rạch ròi ưu nhược điểm của cả 3 mô hình Git Flow, GitHub Flow và Trunk-Based Development.
+- Đưa ra quyết định lựa chọn workflow chính xác dựa trên các ràng buộc kỹ thuật thực tế.
 
 ---
 
-## ❓ Quiz
+## ❓ Quiz nhanh
 Hãy làm bài trắc nghiệm dưới đây để đối chiếu và so sánh các mô hình workflow.
 
 ---
 
-## 🔥 Challenge
+## 🚀 Thử thách nâng cao
 Đề xuất phương án chuyển dịch từng bước từ mô hình Git Flow sang Trunk-Based Development cho một dự án đang phát triển.
 
 ---
 
-## 📚 Tổng kết
+## 📝 Tổng kết
 - Git Flow phù hợp với các sản phẩm có lịch phát hành cố định và yêu cầu kiểm soát nhiều tầng.
 - GitHub Flow tối ưu cho các sản phẩm web triển khai liên tục và quy mô nhóm vừa phải.
 - Trunk-Based Development mang lại tốc độ cao nhất nhưng đòi hỏi hệ thống kiểm thử tự động cực kỳ hoàn hảo.

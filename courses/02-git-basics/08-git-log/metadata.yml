@@ -11,14 +11,11 @@ keywords:
 prerequisites:
   - 06-git-commit
 objectives:
-  - Sử dụng thành thạo câu lệnh `git log` để tra cứu lịch sử commit của kho lưu
-    trữ.
-  - "Tùy biến hiển thị lịch sử với các cờ mạnh mẽ: `--oneline`, `--graph`, `-n
-    <số-lượng>`, `--author`."
-  - Đọc hiểu mã băm commit, tác giả, ngày giờ và mối liên kết phân nhánh trực
-    quan.
+  - Dùng `git log` để xem các commit trong lịch sử nhánh hiện tại.
+  - Dùng `--oneline` và `--graph` để thay đổi cách hiển thị.
+  - Giới hạn số kết quả bằng `-n`.
 commands:
   - git log
   - git log --oneline
-  - git log --graph --oneline --all
+  - git log --graph --oneline
   - git log -n 5

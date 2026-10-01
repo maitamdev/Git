@@ -11,11 +11,8 @@ keywords:
 prerequisites:
   - 05-git-vs-github
 objectives:
-  - "Nắm bắt các phương thức cài đặt Git trên các hệ điều hành phổ biến:
-    Windows, macOS, Linux."
-  - Hiểu vai trò của Git Bash trên môi trường Windows.
-  - Làm quen với các tùy chọn cấu hình dòng kết thúc tệp tin (crlf vs lf) khi
-    cài đặt.
+  - Cài Git cho hệ điều hành của mình theo hướng dẫn của lớp.
+  - Mở terminal và kiểm tra cài đặt bằng `git --version`.
+  - Trên Windows, chọn dùng PowerShell hoặc Git Bash.
 commands:
   - git --version
-  - git config --system --list

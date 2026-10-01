@@ -10,22 +10,41 @@
 
 ---
 
+## 🧩 Từ khóa hôm nay
+
+### GitHub Flow
+- **Nói dễ hiểu**: Quy trình phân nhánh tinh gọn xoay quanh nhánh main luôn sẵn sàng deploy và các nhánh feature ngắn hạn mở PR.
+- **Ví dụ**: Tạo nhánh `feat/apple-pay` từ main, mở PR test xong merge vào main và deploy tự động ngay trong ngày.
+- **Đừng nhầm**: Khác với Git Flow, GitHub Flow không sử dụng nhánh develop hay release trung gian.
+
+### Always Deployable Main
+- **Nói dễ hiểu**: Nguyên tắc nhánh main luôn ở trạng thái hoàn hảo, không có lỗi và có thể triển khai lên production bất cứ thời điểm nào.
+- **Ví dụ**: Mọi code trước khi vào main đều phải vượt qua CI/CD và review; không bao giờ commit code dở dang lên main.
+- **Đừng nhầm**: Không có nghĩa là code nào viết xong cũng push thẳng vào main; phải qua Pull Request kiểm duyệt trước.
+
+### Continuous Delivery (Chuyển giao liên tục)
+- **Nói dễ hiểu**: Phương thức phát triển phần mềm trong đó mã nguồn mới được tự động đóng gói, kiểm thử và sẵn sàng phát hành liên tục.
+- **Ví dụ**: Khi PR được merge vào main, pipeline tự động chạy kiểm thử và cập nhật lên máy chủ chỉ trong vài phút.
+- **Đừng nhầm**: Khác với mô hình phát hành theo kỳ quý hàng tháng; Continuous Delivery phát hành nhiều lần mỗi ngày.
+
+---
+
 ## 📖 Định nghĩa
-> GitHub Flow là một quy trình làm việc phân nhánh cực kỳ tinh gọn và linh hoạt, được thiết kế bởi chính đội ngũ kỹ thuật của GitHub vào năm 2011 để phục vụ cho các ứng dụng web triển khai thường xuyên. Trọng tâm của GitHub Flow dựa trên một nguyên tắc cốt lõi: bất kỳ thứ gì nằm trên nhánh `main` đều có thể triển khai trực tiếp lên môi trường Production (Deployable). Không có các nhánh trung gian như develop hay release; toàn bộ quy trình chỉ xoay quanh nhánh `main` và các nhánh nhánh mô tả ngắn hạn được hợp nhất qua Pull Request.
+GitHub Flow là quy trình phân nhánh tinh gọn và linh hoạt được thiết kế cho các dự án web và đám mây hiện đại. Trọng tâm của quy trình là nhánh main luôn ở trạng thái sẵn sàng triển khai lên Production, kết hợp với các nhánh tính năng ngắn hạn được tích hợp liên tục qua Pull Request.
 
 ---
 
-## 🤔 Tại sao cần?
-Trong thời đại điện toán đám mây và phần mềm dạng dịch vụ (SaaS), các công ty công nghệ có thể phát hành phiên bản mới hàng chục lần mỗi ngày. Những mô hình quản lý nhánh cổ điển với nhiều nhánh trung gian cồng kềnh trở nên quá chậm chạp và quan liêu. GitHub Flow loại bỏ hoàn toàn các rào cản phức tạp, giúp các nhóm kỹ sư đẩy nhanh tốc độ đưa tính năng ra thị trường, kiểm thử thực tế tức thì và nhận phản hồi nhanh chóng từ người dùng cuối.
+## 💡 Tại sao cần
+Trong kỷ nguyên đám mây và SaaS, các công ty công nghệ cần phát hành bản cập nhật nhiều lần mỗi ngày. Các mô hình đa nhánh cổ điển quá chậm chạp; GitHub Flow loại bỏ rào cản trung gian giúp nhóm đưa tính năng ra thị trường với tốc độ cao nhất.
 
 ---
 
-## 🧠 Mental Model (Mô hình tư duy)
-Hãy hình dung một tòa soạn báo điện tử trực tuyến cập nhật tin tức 24/7. Trang chủ của tờ báo điện tử chính là nhánh `main`. Mỗi khi có một phóng viên viết bài điều tra mới, phóng viên tạo một bản thảo riêng (`feature branch`). Khi bài viết hoàn thành, biên tập viên sẽ đọc duyệt và bình luận sửa lỗi (`Pull Request`). Ngay khi bài viết được bấm duyệt, bài báo lập tức xuất hiện trên trang chủ cho hàng triệu độc giả đọc ngay tức khắc mà không cần chờ đến đợt in ấn định kỳ hàng tháng.
+## 🧠 Mental Model
+Hãy hình dung tòa soạn báo điện tử cập nhật tin 24/7. Trang chủ chính là nhánh main. Phóng viên viết bản thảo trên nhánh phụ. Biên tập viên đọc duyệt trên Pull Request. Vừa bấm duyệt là bài báo lập tức xuất hiện trên trang chủ cho độc giả đọc ngay mà không cần đợi in ấn định kỳ.
 
 ---
 
-## 🖼 Sơ đồ
+## 📊 Sơ đồ minh họa
 ```text
 Vòng tuần hoàn 6 bước chuẩn mực của GitHub Flow:
 1. Tạo nhánh từ main (Create branch)
@@ -48,12 +67,12 @@ Vòng tuần hoàn 6 bước chuẩn mực của GitHub Flow:
 
 ---
 
-## 🌎 Ví dụ thực tế
-Tại một công ty công nghệ phát triển nền tảng thương mại điện tử SaaS, toàn bộ nhóm 20 kỹ sư vận hành theo chuẩn GitHub Flow. Khi kỹ sư Nam cần nâng cấp giao diện nút thanh toán, Nam tạo nhánh `ui/apple-pay` từ `main`. Sau khi hoàn thiện mã nguồn, Nam mở Pull Request. Hệ thống CI/CD tự động dựng một môi trường xem trước (Preview Environment). Trưởng nhóm và chuyên viên sản phẩm cùng vào trải nghiệm thử trực tiếp trên môi trường này và bấm phê duyệt (Approve). Nam bấm nút Merge trên GitHub, hệ thống tự động gộp code vào `main` và kích hoạt triển khai tính năng mới lên máy chủ thực tế chỉ sau đúng 3 phút.
+## 🏢 Ví dụ thực tế
+Tại một công ty SaaS, kỹ sư Nam nâng cấp giao diện thanh toán bằng nhánh `ui/apple-pay` từ `main`. Khi mở PR, hệ thống tự động dựng môi trường xem trước. Sau khi review thử nghiệm thành công, Nam bấm Merge và hệ thống tự động triển khai phiên bản mới lên máy chủ thực tế chỉ sau 3 phút.
 
 ---
 
-## 💻 Command
+## 💻 Command & Cú pháp
 ```bash
 git switch -c ui/apple-pay
 git commit -m "feat(checkout): add Apple Pay button"
@@ -72,40 +91,43 @@ gh pr create --title "feat: add Apple Pay" --body "Tested on Safari"
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Để nhánh main ở trạng thái không thể chạy hoặc đang dở dang**:  Vi phạm nguyên tắc thiêng liêng "main is always deployable".
-2. **Duy trì các nhánh tính năng quá dài ngày (vài tuần đến vài tháng)**:  Gây khó khăn lớn cho việc merge và review.
-3. **Bỏ qua bước thảo luận và thử nghiệm trên môi trường staging trước khi bấm merge vào main.**: Bỏ qua bước thảo luận và thử nghiệm trên môi trường staging trước khi bấm merge vào main.
+1. **Để nhánh main ở trạng thái lỗi**: Vi phạm nguyên tắc thiêng liêng "main is always deployable", gây gián đoạn hệ thống.
+2. **Duy trì nhánh tính năng quá dài ngày**: Nhánh tồn tại vài tuần đến vài tháng sẽ tích lũy sai biệt lớn và gây xung đột nghiêm trọng.
+3. **Bỏ qua bước thử nghiệm trước khi merge**: Không xác nhận hoạt động trên môi trường staging trước khi bấm merge vào main.
 
 ---
 
-## 🧪 Lab
+## 🧪 Lab thực hành
+Bài học này là bài tự kiểm tra: bạn thao tác trực tiếp trên terminal của máy tính để làm quen với công cụ.
 1. Tạo một nhánh mới từ main mô tả một tính năng cụ thể.
-2. Mở Pull Request trên giao diện GitHub và thêm nhãn (label) mô tả trạng thái.
-3. Quan sát quy trình kiểm tra tự động trước khi bấm nút Merge vào nhánh chính.
+2. Thực hiện commit thay đổi và đẩy nhánh lên remote.
+3. Mở Pull Request trên giao diện GitHub và thêm nhãn mô tả trạng thái.
+4. Quan sát quy trình kiểm tra tự động trước khi xác nhận hợp nhất vào nhánh chính.
 
 ---
 
-## 💡 Hint
-> Chìa khóa thành công của GitHub Flow là các nhánh tính năng phải cực kỳ ngắn hạn và hệ thống CI/CD phải tự động hóa cao.
+## 💡 Hint & mẹo
+> Chìa khóa thành công của GitHub Flow là các nhánh tính năng phải cực kỳ ngắn hạn và hệ thống CI/CD phải được tự động hóa tối đa.
 
 ---
 
-## ✅ Validation
+## ✅ Validation & Kết quả mong đợi
 - Nhánh main có thể triển khai lên môi trường thực tế bất cứ lúc nào trong ngày mà không gặp sự cố.
+- Nắm vững 6 bước chuẩn mực trong chu trình vận hành của GitHub Flow.
 
 ---
 
-## ❓ Quiz
+## ❓ Quiz nhanh
 Hãy làm bài trắc nghiệm dưới đây về quy trình tinh gọn GitHub Flow.
 
 ---
 
-## 🔥 Challenge
-Giải thích tại sao một hệ thống kiểm thử tự động (CI/CD) mạnh mẽ là điều kiện tiên quyết bắt buộc để áp dụng thành công GitHub Flow.
+## 🚀 Thử thách nâng cao
+Thiết lập một GitHub Actions workflow đơn giản để tự động triển khai bản thử nghiệm mỗi khi có Pull Request được mở.
 
 ---
 
-## 📚 Tổng kết
-- GitHub Flow là mô hình tinh gọn tập trung xung quanh nhánh main luôn luôn sẵn sàng deploy.
-- Mọi thay đổi đều được đóng gói trong nhánh ngắn hạn và trao đổi qua Pull Request.
-- Cực kỳ tối ưu cho các sản phẩm web, microservices và các nhóm triển khai liên tục nhiều lần mỗi ngày.
+## 📝 Tổng kết
+- GitHub Flow chỉ duy trì một nhánh dài hạn duy nhất là `main`.
+- Nhánh main luôn luôn sẵn sàng triển khai (Always Deployable).
+- Mọi thay đổi đều được tích hợp qua Pull Request ngắn hạn và triển khai tự động.

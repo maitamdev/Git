@@ -11,9 +11,9 @@ export const lesson: CourseLesson = {
     "xp": 50,
     "prerequisites": [],
     "objectives": [
-      "Hiểu rõ bản chất và lý do ra đời của hệ thống quản lý phiên bản (Version Control System - VCS).",
-      "Phân tích được các rủi ro nghiêm trọng khi phát triển phần mềm mà không có công cụ theo dõi lịch sử.",
-      "Nắm bắt bức tranh tổng quan về cách các kỹ sư phần mềm chuyên nghiệp lưu vết mã nguồn."
+      "Giải thích được VCS giúp lưu và xem lại các mốc thay đổi.",
+      "Nhận ra rủi ro khi chỉ tạo nhiều bản sao thư mục thủ công.",
+      "Phân biệt mốc đã lưu với tệp đang sửa dở."
     ],
     "completion": {
       "theoryViewed": true,
@@ -29,11 +29,10 @@ export const lesson: CourseLesson = {
       "source code"
     ],
     "commands": [
-      "git --version",
-      "git help"
+      "git --version"
     ]
   },
-  "content": "# Version Control là gì?\n\n---\n\n## 🎯 Mục tiêu\n- Hiểu rõ bản chất và lý do ra đời của hệ thống quản lý phiên bản (Version Control System - VCS).\n- Phân tích được các rủi ro nghiêm trọng khi phát triển phần mềm mà không có công cụ theo dõi lịch sử.\n- Nắm bắt bức tranh tổng quan về cách các kỹ sư phần mềm chuyên nghiệp lưu vết mã nguồn.\n\n---\n\n## 📖 Định nghĩa\n> Hệ thống quản lý phiên bản (Version Control System - viết tắt là VCS) là một tập hợp các công cụ phần mềm chuyên dụng được thiết kế nhằm mục đích ghi nhận, theo dõi và quản lý mọi sự thay đổi trên các tệp tin mã nguồn theo dòng thời gian. Khi sử dụng VCS, lập trình viên có khả năng tra cứu lại toàn bộ lịch sử phát triển của dự án, xem ai đã chỉnh sửa những dòng code nào vào thời điểm nào, đối chiếu các bản sửa đổi với nhau và khôi phục lại trạng thái hoạt động ổn định trước đó bất cứ khi nào phát sinh lỗi bất ngờ.\n\n---\n\n## 🤔 Tại sao cần?\nTrong thực tế phát triển phần mềm, việc lập trình viên chỉnh sửa code dẫn đến lỗi ngoài ý muốn là điều diễn ra hàng ngày. Nếu không sử dụng Version Control, lập trình viên thường phải đối mặt với nguy cơ mất trắng dữ liệu hoặc phải duy trì hàng loạt thư mục đặt tên thủ công như project_final, project_final_v2, project_that_su_final. Cách làm này vừa tốn dung lượng ổ đĩa, vừa gây nhầm lẫn trầm trọng khi làm việc nhóm, không thể biết tệp tin nào chứa code mới nhất và hoàn toàn bất lực khi cần truy cứu trách nhiệm hoặc tái hiện lại lỗi.\n\n---\n\n## 🧠 Mental Model (Mô hình tư duy)\nHãy hình dung hệ thống Version Control giống như một cỗ máy thời gian kết hợp cùng chiếc camera an ninh ghi hình liên tục trong một xưởng chế tác nghệ thuật. Mỗi khi người nghệ nhân hoàn thành một công đoạn ưng ý, cỗ máy sẽ chụp lại một tấm ảnh lưu niệm với độ phân giải siêu nét và đánh dấu số thứ tự vào sổ nhật ký lưu trữ. Nếu công đoạn điêu khắc tiếp theo gặp sự cố làm nứt vỡ tác phẩm, người nghệ nhân chỉ cần bấm nút quay ngược thời gian để đưa khối gỗ trở về nguyên trạng thời điểm tấm ảnh đẹp nhất được ghi nhận.\n\n---\n\n## 🖼 Sơ đồ\n```text\nThời gian ─────────────────────────────────────────────────────────►\n[Bản thảo sơ khai] ──> [Bổ sung giao diện] ──> [Sửa lỗi đăng nhập]\n     (Ảnh chụp 1)           (Ảnh chụp 2)            (Ảnh chụp 3 - HEAD)\n          │                                              │\n          └─────────── Có thể du hành quay lại ──────────┘\n```\n\n---\n\n## 🌎 Ví dụ thực tế\nHãy tưởng tượng một công ty công nghệ tài chính FinTech gồm năm kỹ sư lập trình cùng phát triển một ứng dụng ngân hàng số trực tuyến. Một kỹ sư phụ trách module xác thực vân tay, một người khác xây dựng tính năng chuyển tiền nhanh qua mã QR. Nếu cả hai người cùng mở một tệp xử lý giao dịch chung và sửa đổi mà không có hệ thống quản lý phiên bản điều phối, mã nguồn của người này sẽ ghi đè lên công sức của người kia khi lưu tệp. Nhờ có Version Control, mọi thay đổi của từng kỹ sư đều được ghi nhận riêng biệt thành các mốc rõ ràng, cho phép tích hợp an toàn mà không làm gián đoạn hệ thống thanh toán cốt lõi của ngân hàng.\n\n---\n\n## 💻 Command\n```bash\ngit --version\ngit help\n```\n\n---\n\n## 🔍 Giải thích command\n- `git --version`: Lệnh dùng để kiểm tra phiên bản Git hiện đang được cài đặt trong hệ điều hành máy tính của bạn.\n- `git help`: Lệnh hiển thị tài liệu hướng dẫn tra cứu chi tiết danh mục các câu lệnh cơ bản của Git.\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Sao chép thư mục thủ công**:  Nhiều người mới bắt đầu học lập trình có thói quen copy-paste cả thư mục dự án ra Desktop rồi đổi tên theo ngày tháng, dẫn đến việc rối loạn phiên bản và làm đầy bộ nhớ máy tính.\n2. **Sợ hãi khi gặp lỗi**:  Không lưu vết thường xuyên vì sợ code chưa hoàn hảo, khiến cho đến cuối ngày khi phần mềm bị crash thì không còn bất kỳ điểm phục hồi nào để quay lui an toàn.\n3. **Chia sẻ mã nguồn qua tin nhắn**:  Gửi các tệp code rời rạc qua Zalo, Messenger hoặc Email thay vì đẩy lên kho lưu trữ tập trung, khiến các thành viên khác trong nhóm tích hợp sai lệch phiên bản.\n\n---\n\n## 🧪 Lab\n1. Mở terminal và gõ lệnh `git --version` để xác nhận Git đã sẵn sàng hoạt động trên hệ thống.\n2. Chạy lệnh `git help` để làm quen với danh sách các câu lệnh trợ giúp mặc định.\n3. Quan sát các thông điệp phản hồi từ giao diện dòng lệnh.\n\n---\n\n## 💡 Hint\n> Luôn kiểm tra kỹ câu lệnh trước khi bấm Enter để tránh gõ sai chính tả.\n\n---\n\n## ✅ Validation\n- Hệ thống hiển thị đúng thông tin phiên bản Git và thoát mã 0.\n\n---\n\n## ❓ Quiz\nHãy hoàn thành bài trắc nghiệm dưới đây để kiểm tra mức độ nắm bắt khái niệm Version Control.\n\n---\n\n## 🔥 Challenge\nGiải thích cho một người bạn chưa biết lập trình hiểu vì sao lập trình viên không nên lưu file theo kiểu copy-paste thủ công.\n\n---\n\n## 📚 Tổng kết\n- Version Control System (VCS) là nền tảng sống còn giúp ghi nhận toàn bộ lịch sử chỉnh sửa mã nguồn của dự án.\n- VCS loại bỏ hoàn toàn phương pháp quản lý file thủ công nguy hiểm như sao chép thư mục và gửi tệp qua chat.\n- Cung cấp khả năng du hành thời gian, giúp lập trình viên tự tin thử nghiệm các giải pháp kiến trúc mới mà không sợ phá hỏng code cũ.\n",
+  "content": "# Vì sao cần lưu phiên bản?\n\n---\n\n## 🎯 Mục tiêu\n- Nói được bằng lời của mình hệ thống quản lý phiên bản giúp giải quyết việc gì.\n- Nhận ra vì sao các bản `final`, `final-2`, `final-moi-nhat` dễ gây nhầm.\n- Phân biệt mốc đã lưu trong Git với tệp đang sửa dở.\n\n---\n\n## 🧩 Từ khóa hôm nay\n\n### Version Control — quản lý phiên bản\n- **Nói dễ hiểu:** Cách lưu lại các mốc thay đổi để sau này xem lại, so sánh hoặc quay về một mốc đã lưu.\n- **Ví dụ:** Trước khi sửa bài thuyết trình, bạn lưu một mốc “bản đã được giảng viên duyệt”. Nếu lần sửa sau làm hỏng bố cục, bạn có thể đối chiếu với mốc đó.\n- **Đừng nhầm:** Git không tự chụp mọi lần bạn gõ phím. Bạn phải chủ động yêu cầu Git lưu một mốc.\n\n### VCS (Version Control System) — hệ thống quản lý phiên bản\n- **Nói dễ hiểu:** Tên gọi chung cho phần mềm giúp lưu và xem lịch sử thay đổi của tệp. Git là một VCS.\n- **Ví dụ:** Git có thể theo dõi mã nguồn; một VCS khác cũng có thể theo dõi tài liệu hoặc hình ảnh.\n- **Đừng nhầm:** VCS không tự sửa lỗi chương trình và không thay thế bản sao lưu cho mọi tình huống.\n\n### History — lịch sử thay đổi\n- **Nói dễ hiểu:** Danh sách các mốc mà bạn đã yêu cầu Git lưu, thường kèm người lưu, thời điểm và lời nhắn.\n- **Ví dụ:** “Tạo trang giới thiệu” → “Sửa lỗi nút gửi” là hai mốc có thể đọc lại.\n- **Đừng nhầm:** Tệp bạn mới sửa nhưng chưa lưu thành mốc chưa xuất hiện như một commit trong lịch sử.\n\n---\n\n## 🤔 Tại sao cần?\nBạn và một bạn cùng làm bài tập web. Hôm qua trang chạy tốt. Hôm nay bạn sửa phần đăng nhập rồi trang lỗi. Nếu chỉ có một thư mục, bạn khó biết chính xác phần nào đã đổi và bản chạy tốt nằm ở đâu. Đặt thêm tên `final-v2` cũng không nói rõ bản nào là bản tốt.\n\nGit giúp bạn lưu các mốc có lời nhắn, xem khác biệt giữa hai mốc và chọn lại nội dung cũ khi cần. Bạn vẫn phải chủ động lưu mốc; Git không tự quyết định thay bạn.\n\n---\n\n## 📖 Định nghĩa\nVersion Control là cách ghi lại các phiên bản đã chọn của tệp theo thời gian. Phần mềm thực hiện việc đó được gọi là Version Control System (VCS). Git là một VCS thường dùng trong phát triển phần mềm.\n\n---\n\n## 🧠 Mental Model (Mô hình tư duy)\nHãy nghĩ về các mốc như những bản lưu riêng trong một cuốn sổ tiến độ. Mỗi khi hoàn thành một phần có ý nghĩa, bạn ghi lại một mốc và đặt tên cho nó. Nếu lần sau có lỗi, bạn có thể mở mốc cũ để so sánh hoặc khôi phục phần cần thiết.\n\nĐiểm cần nhớ: cuốn sổ chỉ có những mốc bạn đã chủ động ghi; nó không tự lưu từng thao tác gõ phím.\n\n---\n\n## 🖼 Sơ đồ\n```text\nBạn chủ động lưu:   [Bản chạy được] ──> [Thêm trang giới thiệu] ──> [Sửa nút gửi]\n                       mốc 1                 mốc 2                  mốc 3\n```\nMỗi mốc ghi lại một trạng thái bạn muốn giữ. Git không tự tạo mốc khi bạn chỉ sửa tệp.\n\n---\n\n## 🌎 Ví dụ thực tế\nMột nhóm sinh viên làm chung trang giới thiệu câu lạc bộ. Sau khi phần đầu trang chạy đúng, nhóm lưu mốc “Tạo phần đầu trang”. Hôm sau một thay đổi làm lệch giao diện, nhóm so sánh với mốc trước để tìm đoạn vừa đổi. Các bạn vẫn cần lưu mốc và viết lời nhắn rõ ràng; Git không tự biết thay đổi nào là tốt.\n\n---\n\n## 💻 Command\n```bash\ngit --version\n```\n\n---\n\n## 🔍 Giải thích command\n`git --version` chỉ kiểm tra Git đã được cài và in số phiên bản. Lệnh này chưa tạo kho lưu trữ và chưa lưu thay đổi nào.\n\n---\n\n## ⚠️ Sai lầm phổ biến\n1. **Tin rằng Git tự lưu mọi lần gõ:** Git chỉ đưa thay đổi vào lịch sử sau khi bạn thực hiện các bước lưu mốc.\n2. **Đặt tên thư mục `final`, `final2`, `final-mới`:** Tên không giải thích nội dung nào đã đổi hoặc bản nào còn đúng.\n3. **Coi Git như bản sao lưu duy nhất:** Nếu máy hỏng trước khi bạn đẩy dữ liệu lên nơi khác, bản trên máy vẫn có thể mất.\n\n---\n\n## 🧪 Lab\nChọn một tình huống làm bạn dễ mất công nhất: không biết bản nào chạy được, không biết ai sửa phần nào, hay lỡ tay ghi đè bài của bạn cùng nhóm. Sau đó giải thích bằng một câu mốc lưu nào của Version Control sẽ giúp bạn xử lý tình huống đó.\n\n---\n\n## 💡 Hint\nHãy kể theo thứ tự: “Trước khi lỗi xảy ra, tôi muốn lưu lại ___; khi lỗi xảy ra, tôi sẽ so sánh với ___.”\n\n---\n\n## ✅ Validation\n- Giải thích được VCS giúp lưu và xem lại các mốc thay đổi.\n- Nhắc được rằng Git không tự lưu mọi lần gõ phím.\n\n---\n\n## ❓ Quiz\nTrả lời các câu hỏi sau. Khi sai, đọc phần giải thích rồi thử lại.\n\n---\n\n## 🔥 Challenge\nNói cho một bạn chưa dùng Git hiểu vì sao đặt tên thư mục `bai-final-2` không đáng tin bằng việc lưu một mốc có lời nhắn.\n\n---\n\n## 📚 Tổng kết\n- **Version Control** là cách lưu và xem lại các phiên bản đã chọn.\n- **VCS** là phần mềm giúp quản lý lịch sử thay đổi; Git là một VCS.\n- Mốc chỉ xuất hiện khi bạn chủ động lưu; Git không tự lưu từng lần gõ.\r\n",
   "quiz": {
     "id": "quiz-01-version-control",
     "title": "Trắc nghiệm: Version Control là gì?",
@@ -44,7 +43,7 @@ export const lesson: CourseLesson = {
         "type": "single",
         "options": [
           {
-            "text": "Theo dõi, ghi nhận và quản lý mọi sự thay đổi của mã nguồn theo thời gian",
+            "text": "Lưu, theo dõi và xem lại những phiên bản bạn chủ động ghi nhận",
             "correct": true
           },
           {
@@ -60,11 +59,11 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "VCS được thiết kế chuyên biệt để theo dõi lịch sử thay đổi của tệp tin. Việc biên dịch hay bảo mật mạng thuộc về trình biên dịch và phần mềm an ninh."
+        "explanation": "VCS giúp lưu các mốc thay đổi để so sánh hoặc xem lại sau này. Git không tự lưu mọi lần gõ phím; người dùng cần chủ động tạo mốc."
       },
       {
         "id": "q2",
-        "question": "Điều gì xảy ra khi bạn gặp lỗi nghiêm trọng trong dự án có áp dụng Version Control đúng cách?",
+        "question": "Bạn đã lưu một commit khi dự án còn chạy tốt, sau đó một thay đổi làm phát sinh lỗi. VCS giúp gì trong tình huống này?",
         "type": "single",
         "options": [
           {
@@ -72,7 +71,7 @@ export const lesson: CourseLesson = {
             "correct": false
           },
           {
-            "text": "Bạn có thể khôi phục lại mã nguồn về điểm checkpoint ổn định gần nhất",
+            "text": "Bạn có thể xem lại hoặc khôi phục từ mốc đã lưu trước khi lỗi xảy ra",
             "correct": true
           },
           {
@@ -84,7 +83,7 @@ export const lesson: CourseLesson = {
             "correct": false
           }
         ],
-        "explanation": "Ưu điểm lớn nhất của VCS là khả năng khôi phục (rollback) lại trạng thái snapshot ổn định trước đó trong lịch sử dự án."
+        "explanation": "VCS cho phép xem lại những mốc bạn đã lưu. Thay đổi chưa được lưu thành commit không tự xuất hiện trong lịch sử và vẫn cần được bảo vệ riêng."
       },
       {
         "id": "q3",

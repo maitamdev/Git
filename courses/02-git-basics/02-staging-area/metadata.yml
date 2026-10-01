@@ -5,17 +5,14 @@ xp: 70
 keywords:
   - staging area
   - index
-  - cache
   - vung chuan bi
   - git add
 prerequisites:
   - 01-working-directory
 objectives:
-  - Nắm vững bản chất kỹ thuật của Staging Area (Index) như một vùng đệm chọn
-    lọc commit.
-  - Hiểu vì sao Git thiết kế Staging Area thay vì commit trực tiếp từ Working
-    Directory như SVN.
-  - Sử dụng git add để đưa các thay đổi mong muốn vào vùng chuẩn bị.
+  - Giải thích Staging Area là nơi chọn thay đổi cho commit kế tiếp.
+  - Dùng git add để chọn một tệp.
+  - Dùng git status để xác nhận lựa chọn.
 commands:
   - git status
   - git add <file>

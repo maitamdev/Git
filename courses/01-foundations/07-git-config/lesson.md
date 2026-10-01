@@ -3,47 +3,69 @@
 ---
 
 ## 🎯 Mục tiêu
-- Sử dụng thành thạo lệnh `git config` để thiết lập danh tính lập trình viên: user.name và user.email.
-- Phân biệt rõ 3 cấp độ cấu hình: --system, --global, và --local.
-- Hiểu tầm quan trọng của việc dùng đúng email đồng bộ với tài khoản GitHub để hiển thị đóng góp (contribution).
+- Đặt `user.name` và `user.email` để Git ghi thông tin vào commit mới.
+- Phân biệt cấu hình cho tài khoản của mình với cấu hình riêng của một repository.
+- Xem lại cấu hình Git đang áp dụng trên máy.
+
+---
+
+## 🧩 Từ khóa hôm nay
+
+### `git config` — lệnh xem và đặt cấu hình
+- **Nói dễ hiểu:** Lệnh quản lý các lựa chọn mà Git dùng khi hoạt động.
+- **Ví dụ:** `git config --global user.name "An Nguyen"` đặt tên dùng chung cho các repository của bạn.
+- **Đừng nhầm:** Cấu hình Git không phải mật khẩu đăng nhập GitHub.
+
+### `user.name` — tên ghi trong commit
+- **Nói dễ hiểu:** Tên Git gắn vào commit do bạn tạo.
+- **Ví dụ:** Commit có thể hiện tên “An Nguyen”.
+- **Đừng nhầm:** Đây là thông tin do người dùng cấu hình, không phải bằng chứng xác thực danh tính.
+
+### `user.email` — email ghi trong commit
+- **Nói dễ hiểu:** Địa chỉ email Git gắn vào commit do bạn tạo.
+- **Ví dụ:** Commit chứa tên và email cấu hình tại thời điểm tạo.
+- **Đừng nhầm:** Email này không tự đăng nhập hoặc cấp quyền trên GitHub.
+
+### `--global` — cấu hình cho tài khoản máy tính
+- **Nói dễ hiểu:** Áp dụng giá trị cho các repository bạn dùng dưới tài khoản máy tính này.
+- **Ví dụ:** Đặt tên một lần để dùng trong nhiều dự án cá nhân.
+- **Đừng nhầm:** Global không có nghĩa là chia sẻ cấu hình lên Internet.
+
+### `--local` và `--system` — phạm vi hẹp hơn hoặc rộng hơn
+- **Nói dễ hiểu:** `--local` chỉ áp dụng cho repository hiện tại; `--system` áp dụng cho mọi người dùng trên máy.
+- **Ví dụ:** Dùng `--local` nếu một dự án cần tên tác giả riêng.
+- **Đừng nhầm:** Giá trị ở repository thường ghi đè giá trị global; system là mức toàn máy.
 
 ---
 
 ## 📖 Định nghĩa
-> `git config` là câu lệnh thiết lập và truy vấn các biến cấu hình điều khiển giao diện và hành vi hoạt động của Git. Hai tham số quan trọng nhất bắt buộc phải cấu hình đầu tiên trên mọi máy tính mới là `user.name` (họ tên lập trình viên) và `user.email` (địa chỉ thư điện tử). Các thông tin này sẽ được gắn cố định vào mọi commit mà bạn tạo ra để xác định danh tính tác giả (author). Git hỗ trợ ba cấp độ cấu hình có độ ưu tiên tăng dần: system (toàn máy), global (toàn tài khoản người dùng), và local (riêng cho từng kho chứa cụ thể).
+`git config` xem hoặc thay đổi các giá trị Git sử dụng. Hai giá trị thường cần đặt trước khi tạo commit là `user.name` và `user.email`; Git ghi chúng vào thông tin tác giả của commit. Cấu hình có các phạm vi: system cho máy, global cho tài khoản máy tính và local cho repository hiện tại. Giá trị local thường ưu tiên hơn global.
 
 ---
 
 ## 🤔 Tại sao cần?
-Nếu không cấu hình `user.name` và `user.email`, Git sẽ từ chối không cho phép bạn tạo commit, hoặc sẽ tự động lấy tên tài khoản đăng nhập máy tính kèm địa chỉ hostname cục bộ kỳ quặc. Nghiêm trọng hơn, nếu bạn dùng email không khớp với tài khoản GitHub, toàn bộ commit bạn dày công đóng góp cho dự án sẽ không được ghi nhận biểu đồ đóng góp (xanh ô contribution graph) trên trang cá nhân GitHub của bạn.
+Khi tạo commit, Git ghi thông tin tác giả vào mốc đó. Cấu hình giúp bạn đặt trước tên và email sẽ dùng. Đây là nhãn trong lịch sử dự án, không phải tài khoản hay mật khẩu đăng nhập.
 
 ---
 
 ## 🧠 Mental Model (Mô hình tư duy)
-Hãy hình dung việc thiết lập `git config` giống như việc bạn khắc một con dấu mộc chữ ký cá nhân bằng đồng. Mỗi khi bạn ký kết một hợp đồng kinh tế (tạo một commit), bạn sẽ đóng con dấu mộc có tên và email của mình lên góc dưới văn bản. Mọi đối tác và thành viên trong dự án khi nhìn vào văn bản đó đều biết chính xác ai là người chịu trách nhiệm cho các điều khoản và thay đổi vừa thực hiện.
+Hãy nghĩ mỗi commit như một dòng trong nhật ký dự án. `user.name` và `user.email` là thông tin tác giả được ghi kèm dòng đó.
 
 ---
 
 ## 🖼 Sơ đồ
 ```text
-Các cấp độ cấu hình Git (Ưu tiên từ dưới lên trên):
-┌───────────────────────────────────────────────┐
-│ --system: Cấu hình cho mọi người dùng trên PC │
-└───────────────────────────────────────────────┘
-                       ▲
-┌───────────────────────────────────────────────┐
-│ --global: Cấu hình cho tài khoản người dùng   │
-└───────────────────────────────────────────────┘
-                       ▲
-┌───────────────────────────────────────────────┐
-│ --local: Cấu hình riêng cho 1 repository này  │ (Độ ưu tiên cao nhất)
-└───────────────────────────────────────────────┘
+Máy tính           → --system (mọi người dùng trên máy)
+Tài khoản máy bạn  → --global (mặc định cho bạn)
+Repository này     → --local (chỉ dự án hiện tại)
+
+Nếu cùng một mục được đặt nhiều lần, giá trị local thường được ưu tiên.
 ```
 
 ---
 
 ## 🌎 Ví dụ thực tế
-Kỹ sư Nguyễn Văn A sử dụng máy tính xách tay cá nhân để vừa làm việc cho công ty vừa tham gia dự án mã nguồn mở ngoài giờ. Ở cấp độ toàn cục (`--global`), kỹ sư thiết lập email cá nhân `anguyen@gmail.com`. Nhưng khi làm việc trong thư mục dự án của công ty, kỹ sư mở terminal tại kho chứa đó và cấu hình cục bộ (`--local`): `git config user.email "a.nguyen@company.vn"`. Khi đó, các commit trong dự án công ty sẽ mang danh tính email doanh nghiệp được xác thực, còn các dự án cá nhân khác trên cùng máy tính vẫn dùng email riêng tư mà không hề bị xung đột hay rò rỉ thông tin.
+Bạn dùng email cá nhân làm mặc định cho bài tập. Một dự án riêng có thể đặt email khác bằng `--local`; giá trị đó chỉ áp dụng trong repository ấy.
 
 ---
 
@@ -57,33 +79,33 @@ git config --list
 ---
 
 ## 🔍 Giải thích command
-- `git config --global user.name "Tên Tác Giả"`: Thiết lập họ tên hiển thị của bạn cho toàn bộ các repository trên máy tính cá nhân.
-- `git config --global user.email "email@domain.com"`: Thiết lập địa chỉ thư điện tử gắn chặt vào siêu dữ liệu của từng commit.
-- `git config --list`: Liệt kê toàn bộ danh sách các thông số cấu hình Git đang có hiệu lực trên hệ thống.
+- `git config --global user.name "Student Name"`: Đặt tên mặc định cho commit trong các repository của tài khoản máy tính này.
+- `git config --global user.email "student@example.com"`: Đặt email mặc định sẽ được ghi vào commit.
+- `git config --list`: Xem các giá trị cấu hình Git đang có.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Gõ sai địa chỉ email**:  Dùng email phụ hoặc sai chính tả khiến GitHub không nhận diện được tác giả và không tích điểm xanh trên trang cá nhân.
-2. **Nghĩ git config là mật khẩu đăng nhập**:  `user.name` và `user.email` chỉ là chữ ký nhãn thông tin, không phải thông tin bảo mật hay mật khẩu tài khoản.
-3. **Quên kiểm tra lại sau khi cấu hình**:  Không chạy `git config --list` để xác nhận lại thông tin đã lưu chính xác hay chưa.
+1. **Nhầm email tác giả với mật khẩu**: `user.email` không cấp quyền đăng nhập GitHub.
+2. **Dùng cấu hình local khi chưa ở trong repository**: Dùng `--global` để đặt mặc định cho mình.
+3. **Không xem lại giá trị đã đặt**: Chạy `git config --list` để kiểm tra.
 
 ---
 
 ## 🧪 Lab
-1. Chạy lệnh `git config user.name "Student Name"` để cấu hình danh tính của bạn.
-2. Chạy lệnh `git config user.email "student@git.academy"` để thiết lập địa chỉ thư điện tử.
-3. Sử dụng `git config --list` để kiểm tra danh sách cấu hình và xác nhận kết quả.
+1. Chạy lệnh đầu với tên của bạn thay cho `Nguyen Van A`.
+2. Chạy lệnh thứ hai với email bạn muốn ghi vào commit.
+3. Chạy `git config --list` và kiểm tra hai giá trị.
 
 ---
 
 ## 💡 Hint
-> Sử dụng cờ `--global` khi muốn áp dụng cấu hình cho mọi dự án trên máy.
+> Dùng `--global` để đặt giá trị mặc định cho các repository của tài khoản máy tính này.
 
 ---
 
 ## ✅ Validation
-- Kiểm tra `git config user.name` và `user.email` trả về đúng chuỗi đã thiết lập.
+- `git config --list` hiển thị đúng `user.name` và `user.email` bạn vừa đặt.
 
 ---
 
@@ -98,6 +120,6 @@ Nêu thứ tự ưu tiên ghi đè giữa 3 cấp độ: --system, --global và 
 ---
 
 ## 📚 Tổng kết
-- `git config` là câu lệnh thiết lập danh tính tác giả và hành vi của Git.
-- `user.name` và `user.email` được nhúng vĩnh viễn vào siêu dữ liệu của mỗi commit.
-- Thứ tự ưu tiên cấu hình tăng dần: System -> Global -> Local (Local ghi đè Global).
+- `user.name` và `user.email` là thông tin tác giả được ghi trong commit mới.
+- `--global` đặt giá trị mặc định cho tài khoản máy tính của bạn.
+- `git config --list` giúp kiểm tra các giá trị đang có.

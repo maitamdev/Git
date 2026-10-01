@@ -5,8 +5,7 @@ questions:
     question: Đặc điểm nào sau đây là của GitHub-hosted Runner?
     type: single
     options:
-      - text: Mỗi Job được chạy trên một máy ảo sạch và máy ảo bị hủy ngay sau khi Job
-          kết thúc
+      - text: Mỗi Job được chạy trên một máy ảo sạch và máy ảo bị hủy ngay sau khi Job kết thúc
         correct: true
       - text: Bạn phải tự mua phần cứng máy chủ và cắm dây mạng
         correct: false
@@ -14,15 +13,12 @@ questions:
         correct: false
       - text: Không hỗ trợ hệ điều hành Linux
         correct: false
-    explanation: GitHub-hosted Runners được sinh ra tức thời theo yêu cầu và bị hủy
-      ngay lập tức để đảm bảo tính an toàn và sạch sẽ.
+    explanation: GitHub-hosted Runners được sinh ra tức thời theo yêu cầu và bị hủy ngay lập tức để đảm bảo tính an toàn và sạch sẽ.
   - id: q2
-    question: Trường hợp nào sau đây là lý do chính đáng nhất để đầu tư Self-hosted
-      Runner?
+    question: Trường hợp nào sau đây là lý do chính đáng nhất để đầu tư Self-hosted Runner?
     type: single
     options:
-      - text: Cần phần cứng đặc biệt như card đồ họa GPU hoặc cần truy cập trực tiếp
-          mạng nội bộ công ty
+      - text: Cần phần cứng đặc biệt như card đồ họa GPU hoặc cần truy cập trực tiếp mạng nội bộ công ty
         correct: true
       - text: Chỉ để in ra dòng chữ "Hello World"
         correct: false
@@ -30,15 +26,12 @@ questions:
         correct: false
       - text: Để tránh việc phải kết nối Internet
         correct: false
-    explanation: Self-hosted Runners phù hợp khi cần tài nguyên phần cứng lớn, thời
-      lượng chạy dài hoặc cần kết nối cơ sở dữ liệu nội bộ.
+    explanation: Self-hosted Runners phù hợp khi cần tài nguyên phần cứng lớn, thời lượng chạy dài hoặc cần kết nối cơ sở dữ liệu nội bộ.
   - id: q3
-    question: Tại sao việc dùng Self-hosted Runner cho kho lưu trữ Public lại cực kỳ
-      nguy hiểm?
+    question: Tại sao việc dùng Self-hosted Runner cho kho lưu trữ Public lại cực kỳ nguy hiểm?
     type: single
     options:
-      - text: Bất kỳ ai trên Internet mở PR cũng có thể chạy lệnh tùy ý trên máy chủ của
-          bạn để đánh cắp dữ liệu hoặc đào tiền ảo
+      - text: Bất kỳ ai trên Internet mở PR cũng có thể chạy lệnh tùy ý trên máy chủ của bạn để đánh cắp dữ liệu hoặc đào tiền ảo
         correct: true
       - text: Làm máy chủ bị tiêu tốn quá nhiều giấy in
         correct: false
@@ -46,11 +39,9 @@ questions:
         correct: false
       - text: GitHub sẽ tự động xóa tài khoản cá nhân của bạn ngay lập tức
         correct: false
-    explanation: Mọi mã nguồn trong PR từ cộng đồng đều có thể thực thi với quyền
-      hạn của máy chủ nội bộ, tiềm ẩn nguy cơ bảo mật nghiêm trọng.
+    explanation: Mọi mã nguồn trong PR từ cộng đồng đều có thể thực thi với quyền hạn của máy chủ nội bộ, tiềm ẩn nguy cơ bảo mật nghiêm trọng.
   - id: q4
-    question: Để chỉ định Job chạy trên một Self-hosted Runner do bạn tự cấu hình,
-      cú pháp runs-on sẽ là gì?
+    question: Để chỉ định Job chạy trên một Self-hosted Runner do bạn tự cấu hình, cú pháp runs-on sẽ là gì?
     type: single
     options:
       - text: "runs-on: self-hosted"
@@ -61,5 +52,17 @@ questions:
         correct: false
       - text: "runs-on: local-machine"
         correct: false
-    explanation: Nhãn `self-hosted` là nhãn mặc định bắt buộc được gán cho mọi
-      Runner tự quản lý.
+    explanation: Nhãn `self-hosted` là nhãn mặc định bắt buộc được gán cho mọi Runner tự quản lý.
+  - id: q5
+    question: Các phần mềm và công cụ nào đã được cài đặt sẵn trên máy ảo GitHub-hosted Runner (Ubuntu)?
+    type: single
+    options:
+      - text: Rất nhiều công cụ phổ biến như Docker, Git, Node.js, Python, Java và các trình biên dịch tiêu chuẩn
+        correct: true
+      - text: Hoàn toàn là một hệ điều hành trắng trơn không có bất kỳ công cụ nào, kể cả Git
+        correct: false
+      - text: Chỉ có phần mềm giải trí và trò chơi điện tử
+        correct: false
+      - text: Chỉ cài duy nhất trình duyệt web nhưng không có bất kỳ môi trường dòng lệnh nào
+        correct: false
+    explanation: GitHub-hosted Runners được trang bị sẵn hàng chục công cụ và ngôn ngữ lập trình phổ biến, giúp các bước trong Job có thể thực thi ngay mà không cần cài đặt lại từ đầu.

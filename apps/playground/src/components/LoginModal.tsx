@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import type { User } from '@git-academy/shared';
+import { API_BASE_URL } from '../utils/api-client';
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -29,9 +30,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
     setError(null);
     setLoading(true);
 
-    const baseUrl = apiBaseUrl || (typeof import.meta !== 'undefined' && (import.meta as any).env?.VITE_API_URL
-      ? (import.meta as any).env.VITE_API_URL.replace(/\/+$/, '')
-      : '');
+    const baseUrl = apiBaseUrl || API_BASE_URL;
 
     try {
       const endpoint = isRegister ? `${baseUrl}/api/auth/register` : `${baseUrl}/api/auth/login`;

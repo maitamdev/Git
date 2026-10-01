@@ -3,24 +3,48 @@
 ---
 
 ## 🎯 Mục tiêu
-- Hiểu rõ bản chất kỹ thuật của Repository (Kho lưu trữ) trong Git.
-- Khám phá cấu trúc bên trong của thư mục ẩn `.git` (objects, refs, HEAD, config, index).
-- Nắm được nguyên tắc không chỉnh sửa thủ công các tệp tin bên trong thư mục `.git`.
+- Phân biệt các tệp dự án đang làm với dữ liệu Git quản lý bên trong `.git`.
+- Nhận ra `HEAD` giúp Git biết bạn đang ở nhánh hoặc commit nào.
+- Biết không nên tự sửa các tệp nội bộ của `.git`.
+
+---
+
+## 🧩 Từ khóa hôm nay
+
+### Repository (repo) — kho Git của dự án
+- **Nói dễ hiểu:** Thư mục dự án được Git quản lý, gồm tệp bạn làm và dữ liệu lịch sử của Git.
+- **Ví dụ:** Sau khi khởi tạo Git trong thư mục bài tập, thư mục đó trở thành repository.
+- **Đừng nhầm:** Repository không đồng nghĩa với máy chủ; nó có thể nằm trên máy của bạn.
+
+### Working Tree — cây làm việc
+- **Nói dễ hiểu:** Các tệp dự án bạn đang xem và sửa trực tiếp.
+- **Ví dụ:** `README.md` đang mở trong trình soạn thảo thuộc Working Tree.
+- **Đừng nhầm:** Sửa tệp ở đây chưa tự tạo commit.
+
+### `.git` — thư mục dữ liệu nội bộ
+- **Nói dễ hiểu:** Thư mục Git tạo ra để lưu cấu hình và thông tin cần cho lịch sử của repository.
+- **Ví dụ:** Khi chạy `git init`, Git thường tạo `.git` trong thư mục hiện tại.
+- **Đừng nhầm:** `.git` không phải chỗ để bạn viết nội dung README hay mã nguồn.
+
+### `HEAD` — dấu chỉ vị trí hiện tại
+- **Nói dễ hiểu:** Dấu để Git biết vị trí làm việc hiện tại, thường là nhánh đang được chọn.
+- **Ví dụ:** Nếu bạn đang ở nhánh `main`, `HEAD` thường trỏ tới nhánh đó.
+- **Đừng nhầm:** `HEAD` không phải tên của một tệp dự án hay một commit message.
 
 ---
 
 ## 📖 Định nghĩa
-> Repository (thường gọi tắt là Repo hoặc Kho lưu trữ) là một cấu trúc dữ liệu lưu trữ toàn bộ các tệp tin, thư mục cùng toàn bộ lịch sử thay đổi của dự án phần mềm. Trái tim của mọi Git repository chính là thư mục ẩn mang tên `.git` nằm ở gốc của dự án. Thư mục này chứa cơ sở dữ liệu đối tượng (`objects/`), các con trỏ nhánh và tag (`refs/`), con trỏ vị trí hiện tại (`HEAD`), tệp cấu hình riêng (`config`), và tệp chỉ mục vùng chuẩn bị (`index`). Toàn bộ điều kỳ diệu của Git đều diễn ra bên trong thư mục ẩn này.
+Repository là thư mục dự án Git đang quản lý. Bạn làm việc với các tệp trong Working Tree; Git giữ cấu hình và dữ liệu lịch sử trong `.git`. `HEAD` giúp Git xác định vị trí hiện tại. Người mới nên dùng lệnh Git để xem và thay đổi dữ liệu, không tự sửa tệp nội bộ.
 
 ---
 
 ## 🤔 Tại sao cần?
-Hiểu được vai trò của thư mục `.git` giúp bạn không còn cảm thấy Git là một "hộp đen" huyền bí. Bạn sẽ hiểu rằng việc xóa thư mục `.git` sẽ biến dự án của bạn trở lại thành một thư mục file thông thường không còn lịch sử, và ngược lại chỉ cần sao chép thư mục `.git` sang máy khác là bạn đã mang trọn vẹn 100% lịch sử dự án đi theo. Kiến thức này cũng giúp bạn tránh sai lầm chết người là can thiệp sửa file thủ công làm hỏng cấu trúc dữ liệu của Git.
+Biết tệp dự án nằm đâu và dữ liệu Git nằm đâu giúp bạn không xóa nhầm lịch sử. Bạn làm việc với các tệp thường; Git tự quản lý dữ liệu bên trong `.git`.
 
 ---
 
 ## 🧠 Mental Model (Mô hình tư duy)
-Hãy hình dung thư mục dự án của bạn giống như một văn phòng làm việc. Toàn bộ các bàn ghế, máy tính và tài liệu giấy tờ bạn nhìn thấy trước mắt chính là Working Tree. Còn thư mục ẩn `.git` giống như một căn phòng kho bảo mật được khóa kín ở góc văn phòng. Trong căn phòng kho đó có một chiếc máy photocopy công nghiệp siêu tốc, một kho lưu trữ hồ sơ bằng sắt chống cháy và một cuốn sổ cái ghi chép chi tiết từng ngày từng giờ ai đã mang tài liệu nào ra vào văn phòng.
+Thư mục dự án có hai phần dễ nhớ: tệp bạn mở và sửa là Working Tree; thư mục ẩn `.git` là nơi Git cất dữ liệu quản lý.
 
 ---
 
@@ -28,20 +52,16 @@ Hãy hình dung thư mục dự án của bạn giống như một văn phòng l
 ```text
 Thư mục dự án:
 my-project/
-├── .git/                      <── Trái tim của Repository!
-│   ├── HEAD                   (Con trỏ vị trí nhánh đang đứng)
-│   ├── config                 (Cấu hình riêng của repo này)
-│   ├── index                  (Vùng chuẩn bị Staging Area)
-│   ├── objects/               (Cơ sở dữ liệu Blob, Tree, Commit)
-│   └── refs/                  (Con trỏ nhánh: refs/heads/main)
-├── index.html                 (Working Tree - Tệp bạn đang sửa)
-└── app.js                     (Working Tree - Tệp bạn đang sửa)
+├── .git/       ← Git quản lý dữ liệu nội bộ
+│   └── HEAD    ← Git dùng để nhận biết vị trí hiện tại
+├── README.md   ← Working Tree: tệp bạn có thể sửa
+└── app.js      ← Working Tree: tệp bạn có thể sửa
 ```
 
 ---
 
 ## 🌎 Ví dụ thực tế
-Một sinh viên vô tình chọn hiển thị tệp ẩn trên Windows và thấy thư mục `.git` nặng vài chục megabyte trong dự án môn học. Sinh viên này nghĩ rằng đây là rác hệ thống nên bấm nút Shift+Delete xóa vĩnh viễn thư mục `.git`. Ngay lập tức, khi mở lại VS Code, toàn bộ lịch sử 50 commit suốt hai tháng làm việc biến mất hoàn toàn, VS Code không còn nhận diện đây là một Git repository nữa. May mắn thay, nếu bạn đã từng đẩy code lên GitHub trước đó, bạn chỉ cần clone lại là khôi phục được toàn bộ thư mục `.git`.
+Bạn thấy `.git` khi bật hiển thị tệp ẩn. Nếu xóa thư mục này, các tệp như `README.md` vẫn còn, nhưng Git không còn lịch sử cục bộ. Nếu có bản sao từ xa hoặc bản sao lưu, bạn có thể khôi phục từ đó.
 
 ---
 
@@ -54,32 +74,32 @@ git status
 ---
 
 ## 🔍 Giải thích command
-- `ls -la`: Liệt kê tất cả các tệp tin và thư mục bao gồm cả các thư mục ẩn bắt đầu bằng dấu chấm như `.git`.
-- `git status`: Kiểm tra sự tồn tại và tính toàn vẹn của kho chứa Git trong thư mục hiện tại.
+- `ls -la`: Liệt kê cả tệp ẩn trên macOS/Linux; trên Windows có thể dùng `dir /a`.
+- `git status`: Cho biết Git có nhận ra repository tại thư mục này và các tệp nào đang đổi.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Chỉnh sửa hoặc xóa thủ công tệp bên trong `.git`**:  Hành động này có thể phá hủy cơ sở dữ liệu đối tượng và làm hỏng toàn bộ repository.
-2. **Khởi tạo repository lồng nhau vô ý**:  Chạy `git init` bên trong một thư mục con của một repository khác mà không dùng submodule.
-3. **Commit nhầm thư mục `.git` của dự án khác**:  Gây ra lỗi submodule rỗng không thể tải trên GitHub.
+1. **Xóa `.git` vì tưởng là tệp thừa**: Việc này có thể làm mất lịch sử chỉ có trên máy.
+2. **Sửa nội dung trong `.git` bằng tay**: Hãy dùng lệnh Git để quản lý repository.
+3. **Nhầm tệp dự án với dữ liệu nội bộ**: Mã nguồn thường nằm cạnh `.git`, không nằm trong đó.
 
 ---
 
 ## 🧪 Lab
-1. Chạy lệnh `ls -la` hoặc `dir /a` để kiểm tra sự tồn tại của thư mục ẩn `.git`.
-2. Quan sát các thành phần con cốt lõi của `.git`: HEAD, config, objects, refs.
-3. Nhận biết rằng khi `.git` tồn tại, các câu lệnh Git mới có thể hoạt động.
+1. Chạy `dir /a` trên Windows hoặc `ls -la` trên macOS/Linux.
+2. Tìm `.git` nhưng không thay đổi hoặc xóa nội dung bên trong.
+3. Chạy `git status` và xác định một tệp đang thuộc Working Tree.
 
 ---
 
 ## 💡 Hint
-> Tuyệt đối không chỉnh sửa thủ công các tệp trong `.git` trừ khi bạn là chuyên gia.
+> Các tệp bạn sửa nằm trong dự án; hãy để Git quản lý `.git` bằng các lệnh.
 
 ---
 
 ## ✅ Validation
-- Hiểu cấu trúc và vai trò của thư mục `.git` trong một kho lưu trữ Git.
+- Phân biệt được tệp dự án với dữ liệu Git trong `.git`.
 
 ---
 
@@ -89,11 +109,11 @@ Hãy làm bài trắc nghiệm sau về bản chất của Repository và thư m
 ---
 
 ## 🔥 Challenge
-Nêu vai trò của 3 thành phần con bên trong thư mục .git: HEAD, objects/ và refs/.
+Giải thích bằng lời của bạn: nếu xóa `.git`, điều gì còn lại và điều gì có thể mất?
 
 ---
 
 ## 📚 Tổng kết
-- Repository là cơ sở dữ liệu lưu toàn bộ mã nguồn và lịch sử phiên bản của dự án.
-- Mọi dữ liệu lịch sử của Git được gói gọn hoàn toàn trong thư mục ẩn `.git`.
-- Xóa thư mục `.git` đồng nghĩa với việc xóa bỏ vĩnh viễn toàn bộ lịch sử commit cục bộ.
+- Repository gồm tệp dự án và dữ liệu Git mà `.git` quản lý.
+- Working Tree là phần tệp bạn mở và sửa.
+- Xóa `.git` có thể làm mất lịch sử Git chỉ có trên máy đó.

@@ -14,8 +14,7 @@ objectives:
   - Sử dụng lệnh hiện đại `git restore <file>` để hủy bỏ các sửa đổi dở dang
     trong Working Tree.
   - Sử dụng `git restore --staged <file>` để unstage tệp tin an toàn.
-  - Hiểu rõ sự nguy hiểm và tính không thể khôi phục khi hủy bỏ thay đổi chưa
-    commit.
+  - Biết thay đổi chưa staged có thể mất nếu hủy bỏ và chưa lưu bản khác.
 commands:
   - git restore <file>
   - git restore .
