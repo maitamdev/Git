@@ -114,6 +114,21 @@ export const MOCK_USERS: Record<'student' | 'teacher' | 'admin', User> = {
   },
 };
 
+const DEFAULT_PR_FILE_DIFFS: PRFileDiffItem[] = [
+  {
+    path: 'profile.ts',
+    status: 'added',
+    oldContent: null,
+    newContent: 'export interface UserProfile {\n  name: string;\n  role: string;\n  xp: number;\n}',
+  },
+  {
+    path: 'auth.ts',
+    status: 'modified',
+    oldContent: 'export function authenticate() { return false; }',
+    newContent: 'export function authenticate() {\n  // Token validation\n  return true;\n}',
+  },
+];
+
 export const App: React.FC = () => {
   // Top-level dev, author & LMS routes
   const [currentRoute, setCurrentRoute] = useState<AppRoute>(() => {
@@ -695,23 +710,6 @@ export const App: React.FC = () => {
 
   const completedLabIds = courseProgress.lessons[currentLesson.id]?.labsCompleted || [];
 
-  const prFileDiffs: PRFileDiffItem[] = useMemo(() => {
-    return [
-      {
-        path: 'profile.ts',
-        status: 'added',
-        oldContent: null,
-        newContent: 'export interface UserProfile {\n  name: string;\n  role: string;\n  xp: number;\n}',
-      },
-      {
-        path: 'auth.ts',
-        status: 'modified',
-        oldContent: 'export function authenticate() { return false; }',
-        newContent: 'export function authenticate() {\n  // Token validation\n  return true;\n}',
-      },
-    ];
-  }, []);
-
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', overflow: 'hidden' }}>
       <Header
@@ -940,7 +938,7 @@ export const App: React.FC = () => {
           >
             <PullRequestView
               pr={simPR}
-              fileDiffs={prFileDiffs}
+              fileDiffs={DEFAULT_PR_FILE_DIFFS}
               onMerge={handleMergePR}
               onAddReview={handleAddPRReview}
               onClose={() => setIsPROpen(false)}
