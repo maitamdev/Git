@@ -95,6 +95,9 @@ importers:
       '@git-academy/actions-simulator':
         specifier: workspace:*
         version: link:../../packages/actions-simulator
+      '@git-academy/api':
+        specifier: workspace:*
+        version: link:../api
       '@git-academy/auth':
         specifier: workspace:*
         version: link:../../packages/auth
@@ -122,6 +125,12 @@ importers:
       '@git-academy/shared':
         specifier: workspace:*
         version: link:../../packages/shared
+      bcryptjs:
+        specifier: ^3.0.3
+        version: 3.0.3
+      pg:
+        specifier: ^8.23.0
+        version: 8.23.0
       react:
         specifier: ^18.3.1
         version: 18.3.1

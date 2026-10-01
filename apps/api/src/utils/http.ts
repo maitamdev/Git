@@ -1,6 +1,19 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
 
 export async function parseBody<T = any>(req: IncomingMessage, maxBytes: number = 1048576): Promise<T> {
+  if ((req as any).body !== undefined && (req as any).body !== null) {
+    if (typeof (req as any).body === 'object') {
+      return (req as any).body as T;
+    }
+    if (typeof (req as any).body === 'string' && (req as any).body.length > 0) {
+      try {
+        return JSON.parse((req as any).body) as T;
+      } catch {
+        return (req as any).body as T;
+      }
+    }
+  }
+
   return new Promise((resolve, reject) => {
     let raw = '';
     let bytes = 0;

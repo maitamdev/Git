@@ -12,61 +12,65 @@ import { handleError } from './middleware/error-handler.js';
 import { sendJson } from './utils/http.js';
 import type { AuthenticatedRequest } from './middleware/auth-middleware.js';
 
+export async function handleApiRequest(req: IncomingMessage, res: ServerResponse): Promise<void> {
+  const authReq = req as AuthenticatedRequest;
+
+  // CORS & Security headers
+  const reqOrigin = req.headers.origin;
+  const allowedOriginsEnv = process.env.CORS_ORIGIN || process.env.APP_URL;
+  const allowedOrigins = allowedOriginsEnv
+    ? allowedOriginsEnv.split(',').map((o) => o.trim()).filter(Boolean)
+    : ['http://localhost:3000', 'http://127.0.0.1:3000'];
+
+  if (reqOrigin && (allowedOrigins.includes(reqOrigin) || allowedOrigins.includes('*') || process.env.NODE_ENV !== 'production')) {
+    res.setHeader('Access-Control-Allow-Origin', reqOrigin);
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+  } else if (!reqOrigin) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+  }
+
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+
+  if (req.method === 'OPTIONS') {
+    res.writeHead(204);
+    res.end();
+    return;
+  }
+
+  const url = req.url || '/';
+  const parsed = new URL(url, 'http://localhost');
+  const pathname = parsed.pathname;
+
+  try {
+    // Health check probes
+    if (handleHealthRoutes(req, res, url)) return;
+
+    // Domain routes
+    if (await handleAuthRoutes(authReq, res, pathname)) return;
+    if (await handleUserRoutes(authReq, res, pathname)) return;
+    if (await handleClassRoutes(authReq, res, pathname)) return;
+    if (await handleEnrollmentRoutes(authReq, res, pathname)) return;
+    if (await handleProgressRoutes(authReq, res, pathname)) return;
+    if (await handleGradeRoutes(authReq, res, pathname)) return;
+    if (await handleAssignmentRoutes(authReq, res, pathname)) return;
+    if (await handleAnalyticsRoutes(authReq, res, pathname)) return;
+
+    // 404 Route Not Found
+    sendJson(res, 404, {
+      error: 'Not Found',
+      message: `Endpoint ${req.method} ${pathname} không tồn tại trên hệ thống API`,
+    });
+  } catch (err) {
+    handleError(res, err);
+  }
+}
+
 export function createServer(): http.Server {
-  return http.createServer(async (req: IncomingMessage, res: ServerResponse) => {
-    const authReq = req as AuthenticatedRequest;
-
-    // CORS & Security headers
-    const reqOrigin = req.headers.origin;
-    const allowedOriginsEnv = process.env.CORS_ORIGIN || process.env.APP_URL;
-    const allowedOrigins = allowedOriginsEnv
-      ? allowedOriginsEnv.split(',').map((o) => o.trim()).filter(Boolean)
-      : ['http://localhost:3000', 'http://127.0.0.1:3000'];
-
-    if (reqOrigin && (allowedOrigins.includes(reqOrigin) || allowedOrigins.includes('*') || process.env.NODE_ENV !== 'production')) {
-      res.setHeader('Access-Control-Allow-Origin', reqOrigin);
-      res.setHeader('Access-Control-Allow-Credentials', 'true');
-    } else if (!reqOrigin) {
-      res.setHeader('Access-Control-Allow-Origin', '*');
-    }
-
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
-    res.setHeader('X-Content-Type-Options', 'nosniff');
-    res.setHeader('X-Frame-Options', 'DENY');
-
-    if (req.method === 'OPTIONS') {
-      res.writeHead(204);
-      res.end();
-      return;
-    }
-
-    const url = req.url || '/';
-    const parsed = new URL(url, 'http://localhost');
-    const pathname = parsed.pathname;
-
-    try {
-      // Health check probes
-      if (handleHealthRoutes(req, res, url)) return;
-
-      // Domain routes
-      if (await handleAuthRoutes(authReq, res, pathname)) return;
-      if (await handleUserRoutes(authReq, res, pathname)) return;
-      if (await handleClassRoutes(authReq, res, pathname)) return;
-      if (await handleEnrollmentRoutes(authReq, res, pathname)) return;
-      if (await handleProgressRoutes(authReq, res, pathname)) return;
-      if (await handleGradeRoutes(authReq, res, pathname)) return;
-      if (await handleAssignmentRoutes(authReq, res, pathname)) return;
-      if (await handleAnalyticsRoutes(authReq, res, pathname)) return;
-
-      // 404 Route Not Found
-      sendJson(res, 404, {
-        error: 'Not Found',
-        message: `Endpoint ${req.method} ${pathname} không tồn tại trên hệ thống API`,
-      });
-    } catch (err) {
-      handleError(res, err);
-    }
+  return http.createServer((req: IncomingMessage, res: ServerResponse) => {
+    handleApiRequest(req, res);
   });
 }
 

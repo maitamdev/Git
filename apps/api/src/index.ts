@@ -10,4 +10,4 @@ server.listen(PORT, HOST, () => {
   console.log(`[Git Academy API] Sẵn sàng phục vụ sinh viên và giảng viên`);
 });
 
-export { createServer };
+export { createServer, handleApiRequest } from './server.js';
