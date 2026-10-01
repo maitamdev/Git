@@ -70,9 +70,9 @@ ON CONFLICT (email) DO UPDATE SET password_hash = EXCLUDED.password_hash, update
 
 async function main() {
   const cliArgs = parseArgs(process.argv.slice(2));
-  const email = cliArgs.email || process.env.BOOTSTRAP_ADMIN_EMAIL || 'admin@gitacademy.vn';
-  const displayName = cliArgs.displayName || process.env.BOOTSTRAP_ADMIN_NAME || 'Quản trị viên Hệ thống';
-  const password = cliArgs.password || process.env.BOOTSTRAP_ADMIN_PASSWORD;
+  const email = cliArgs.email || process.env.ADMIN_EMAIL || process.env.BOOTSTRAP_ADMIN_EMAIL || 'admin@gitacademy.vn';
+  const displayName = cliArgs.displayName || process.env.ADMIN_NAME || process.env.BOOTSTRAP_ADMIN_NAME || 'Quản trị viên Hệ thống';
+  const password = cliArgs.password || process.env.ADMIN_PASSWORD || process.env.BOOTSTRAP_ADMIN_PASSWORD;
 
   if (!password) {
     console.error('❌ Lỗi: Cần cung cấp mật khẩu quản trị qua cờ --password <mật_khẩu> hoặc biến môi trường BOOTSTRAP_ADMIN_PASSWORD');
