@@ -21,8 +21,10 @@ interface HeaderProps {
   isThreeStageActive?: boolean;
   currentRoute?: AppRoute;
   onNavigateRoute?: (route: AppRoute) => void;
-  currentUser?: User;
+  currentUser?: User | null;
   onSwitchUserRole?: (role: 'student' | 'teacher' | 'admin') => void;
+  onOpenLogin?: () => void;
+  onLogout?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -42,6 +44,8 @@ export const Header: React.FC<HeaderProps> = ({
   onNavigateRoute,
   currentUser,
   onSwitchUserRole,
+  onOpenLogin,
+  onLogout,
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [showRoleDropdown, setShowRoleDropdown] = useState(false);
@@ -404,7 +408,7 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
         )}
 
-        {/* In production: Clean read-only user indicator without role switcher */}
+        {/* In production: Clean real user indicator with logout button */}
         {currentUser && !isDev && (
           <div
             className="user-profile-badge"
@@ -412,8 +416,8 @@ export const Header: React.FC<HeaderProps> = ({
               display: 'flex',
               alignItems: 'center',
               gap: '8px',
-              background: '#1e293b',
-              border: '1px solid #334155',
+              background: '#0f172a',
+              border: '1px solid #1e293b',
               borderRadius: '8px',
               padding: '4px 10px',
               color: '#f8fafc',
@@ -459,7 +463,47 @@ export const Header: React.FC<HeaderProps> = ({
                 ? 'Admin'
                 : 'Sinh viên'}
             </span>
+            {onLogout && (
+              <button
+                onClick={onLogout}
+                style={{
+                  background: 'transparent',
+                  border: 'none',
+                  color: '#94a3b8',
+                  fontSize: '0.75rem',
+                  cursor: 'pointer',
+                  marginLeft: '4px',
+                  padding: '2px 4px',
+                }}
+                title="Đăng xuất"
+              >
+                (Thoát)
+              </button>
+            )}
           </div>
+        )}
+
+        {/* Login Button when not logged in */}
+        {!currentUser && (
+          <button
+            onClick={onOpenLogin}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              background: 'linear-gradient(135deg, #0284c7, #0ea5e9)',
+              border: 'none',
+              borderRadius: '8px',
+              padding: '6px 14px',
+              color: '#ffffff',
+              fontWeight: 600,
+              fontSize: '0.85rem',
+              cursor: 'pointer',
+              boxShadow: '0 2px 8px rgba(14, 165, 233, 0.3)',
+            }}
+          >
+            <span>🔑</span> Đăng Nhập
+          </button>
         )}
 
         {/* User Role Switcher Dropdown (DEV ONLY - STRICTLY STRIPPED / HIDDEN IN PRODUCTION) */}

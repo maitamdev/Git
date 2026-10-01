@@ -53,6 +53,7 @@ import { SimulatorErrorBoundary } from './components/SimulatorErrorBoundary';
 import { WorkflowErrorBoundary } from './components/WorkflowErrorBoundary';
 import { safeLoadProgress, safeSaveProgress } from './utils/storage-recovery';
 import { downloadProgressFile, importProgressFromJson } from './utils/progress-io';
+import { LoginModal } from './components/LoginModal';
 import type { StudioViewMode, AppRoute } from './components/Header';
 import type { WorkflowDefinition, WorkflowExecutionResult } from '@git-academy/actions-simulator';
 import { WorkflowRunner } from '@git-academy/actions-simulator';
@@ -147,20 +148,77 @@ export const App: React.FC = () => {
     return 'learn';
   });
 
-  // Current LMS User Profile
-  const [currentUser, setCurrentUser] = useState<User>(MOCK_USERS.student);
+  const isProduction =
+    (typeof process !== 'undefined' && process.env?.NODE_ENV === 'production') ||
+    (typeof import.meta !== 'undefined' && (import.meta as any).env?.PROD === true);
+
+  // Current LMS User Profile (Null in production until authenticated)
+  const [currentUser, setCurrentUser] = useState<User | null>(() => {
+    if (isProduction) return null;
+    return MOCK_USERS.student;
+  });
+
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
 
   // Selected Classroom for Teacher deep-dive
-  const [selectedClass, setSelectedClass] = useState<Classroom | null>({
-    id: 'class-git-k48',
-    name: 'Git & GitHub — CNTT K48',
-    code: 'GIT-K48-A',
-    teacherId: 'teacher-lan-48',
-    courseId: 'git-foundations',
-    startDate: '2026-09-05T00:00:00Z',
-    endDate: '2026-12-30T00:00:00Z',
-    createdAt: '2026-09-01T08:00:00Z',
+  const [selectedClass, setSelectedClass] = useState<Classroom | null>(() => {
+    if (isProduction) return null;
+    return {
+      id: 'class-git-k48',
+      name: 'Git & GitHub — CNTT K48',
+      code: 'GIT-K48-A',
+      teacherId: 'teacher-lan-48',
+      courseId: 'git-foundations',
+      startDate: '2026-09-05T00:00:00Z',
+      endDate: '2026-12-30T00:00:00Z',
+      createdAt: '2026-09-01T08:00:00Z',
+    };
   });
+
+  // Restore authenticated session from API on mount
+  useEffect(() => {
+    const token = typeof localStorage !== 'undefined' ? localStorage.getItem('git_academy_token') : null;
+    if (token) {
+      const baseUrl = typeof import.meta !== 'undefined' && (import.meta as any).env?.VITE_API_URL
+        ? (import.meta as any).env.VITE_API_URL.replace(/\/+$/, '')
+        : '';
+      fetch(`${baseUrl}/api/auth/me`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        credentials: 'include',
+      })
+        .then((res) => (res.ok ? res.json() : null))
+        .then((data) => {
+          if (data?.user) {
+            setCurrentUser(data.user);
+          }
+        })
+        .catch(() => {});
+    }
+  }, []);
+
+  const handleLogout = useCallback(() => {
+    const token = typeof localStorage !== 'undefined' ? localStorage.getItem('git_academy_token') : null;
+    const baseUrl = typeof import.meta !== 'undefined' && (import.meta as any).env?.VITE_API_URL
+      ? (import.meta as any).env.VITE_API_URL.replace(/\/+$/, '')
+      : '';
+    if (token) {
+      fetch(`${baseUrl}/api/auth/logout`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        credentials: 'include',
+      }).catch(() => {});
+    }
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem('git_academy_token');
+    }
+    setCurrentUser(null);
+  }, []);
 
   const handleSwitchUserRole = (role: 'student' | 'teacher' | 'admin') => {
     setCurrentUser(MOCK_USERS[role]);
@@ -729,6 +787,8 @@ export const App: React.FC = () => {
         onNavigateRoute={(route) => setCurrentRoute(route)}
         currentUser={currentUser}
         onSwitchUserRole={handleSwitchUserRole}
+        onOpenLogin={() => setIsLoginOpen(true)}
+        onLogout={handleLogout}
       />
 
       {currentRoute === 'dashboard' ? (
@@ -905,6 +965,19 @@ export const App: React.FC = () => {
         isOpen={isCheatSheetOpen}
         onClose={() => setIsCheatSheetOpen(false)}
         onSelectCommand={handleExecuteCommand}
+      />
+
+      <LoginModal
+        isOpen={isLoginOpen}
+        onClose={() => setIsLoginOpen(false)}
+        onSuccess={(user) => {
+          setCurrentUser(user);
+          if (user.role === 'teacher') {
+            setCurrentRoute('teacher');
+          } else if (user.role === 'admin') {
+            setCurrentRoute('dashboard');
+          }
+        }}
       />
 
       {isPROpen && (
