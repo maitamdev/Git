@@ -3,64 +3,65 @@
 ---
 
 ## 🎯 Mục tiêu
-- Hiểu rõ sự khác biệt giữa kho lưu trữ trên máy cá nhân (Local) và kho lưu trữ từ xa (Remote).
-- Nắm bắt vai trò của máy chủ đám mây như GitHub trong việc làm việc nhóm và lưu trữ dự phòng.
-- Phân biệt các thao tác làm việc ngoại tuyến (commit) với các thao tác cần mạng (push, pull).
+- Phân biệt rõ rệt bản chất kiến trúc giữa Local Repository (kho cục bộ) và Remote Repository (kho từ xa).
+- Nắm vững vai trò trung tâm của máy chủ GitHub trong quy trình cộng tác nhóm và lưu trữ dự phòng.
+- Phân định rạch ròi giữa các thao tác ngoại tuyến độc lập (commit) với các thao tác mạng (push, pull).
 
 ---
 
 ## 🧩 Từ khóa hôm nay
 
 ### Local Repository — kho lưu trữ trên máy
-- **Nói dễ hiểu:** Kho Git nằm trên máy bạn. Nó lưu các commit và dữ liệu Git đã tải về; bản clone nông có thể chỉ chứa một phần lịch sử.
-- **Ví dụ:** Khi bạn mất kết nối mạng Internet, bạn vẫn có thể tạo commit an toàn vào Local Repository.
-- **Đừng nhầm:** Commit trên máy chưa tự bay lên mạng; dữ liệu lúc này chỉ mới nằm trên ổ cứng của bạn.
+- **Nói dễ hiểu:** Toàn bộ kho dữ liệu Git hoàn chỉnh nằm gọn trong thư mục ẩn `.git` trên ổ cứng máy tính cá nhân của bạn.
+- **Ví dụ:** Bạn có thể ngắt kết nối mạng hoàn toàn mà vẫn commit, tạo nhánh và xem lịch sử cục bộ bình thường.
+- **Đừng nhầm:** Commit trên máy chỉ mới nằm ở ổ cứng cá nhân; đồng đội sẽ không thể nhìn thấy nếu bạn chưa đẩy lên mạng.
 
 ### Remote Repository — kho lưu trữ từ xa
-- **Nói dễ hiểu:** Kho Git trên một máy chủ mà bạn kết nối qua mạng; GitHub là một dịch vụ lưu trữ phổ biến.
-- **Ví dụ:** Địa chỉ `https://github.com/nhom-hoc-tap/web-app.git` là một Remote Repository trên GitHub.
-- **Đừng nhầm:** Kho trên máy và kho từ xa hoàn toàn độc lập; chúng chỉ cập nhật cho nhau khi bạn ra lệnh.
+- **Nói dễ hiểu:** Kho lưu trữ Git được đặt trên một máy chủ đám mây trực tuyến được kết nối qua mạng Internet (như GitHub, GitLab).
+- **Ví dụ:** Đường dẫn `https://github.com/company/project.git` là một Remote Repository dùng chung cho cả công ty.
+- **Đừng nhầm:** Kho trên máy và kho trên đám mây hoạt động hoàn toàn độc lập; chúng không tự động đồng bộ theo thời gian thực như Google Drive.
 
 ### Push & Pull — đẩy lên và kéo về
-- **Nói dễ hiểu:** `push` gửi commit từ máy lên remote. `pull` tải thay đổi về rồi tích hợp chúng vào nhánh hiện tại.
-- **Ví dụ:** Sau khi làm xong bài tập, bạn `push` lên GitHub để bạn cùng nhóm `pull` về máy của bạn ấy.
-- **Đừng nhầm:** Không có mạng thì không thể `push` hay `pull`, nhưng mọi thao tác viết code và commit trên máy vẫn chạy bình thường.
+- **Nói dễ hiểu:** Cặp thao tác đồng bộ mạng cốt lõi: `push` đẩy commit từ máy lên máy chủ, còn `pull` tải commit từ máy chủ về máy mình.
+- **Ví dụ:** Bạn gõ `git push` để nộp code tính năng mới, đồng đội gõ `git pull` để lấy mã nguồn mới nhất về chạy thử.
+- **Đừng nhầm:** Hai lệnh này bắt buộc phải có kết nối Internet và quyền truy cập xác thực tài khoản thì mới thực thi được.
 
 ---
 
 ## 📖 Định nghĩa
-Git lưu kho cục bộ trên máy và có thể trao đổi commit với một hoặc nhiều kho từ xa qua mạng. Bạn có thể tạo commit ngoại tuyến. Remote có thể nằm trên GitHub hoặc một máy chủ Git khác. Sau khi `fetch`, máy bạn biết trạng thái remote ở lần tải gần nhất; Git không tự hỏi máy chủ mỗi khi bạn xem nhánh.
+Kiến trúc phân tán của Git phân định rạch ròi hai không gian lưu trữ: Local Repository (kho mã nguồn cục bộ hoàn chỉnh nằm trong thư mục `.git` trên ổ cứng máy bạn) và Remote Repository (kho lưu trữ máy chủ đặt trên đám mây như GitHub, GitLab). Hai kho này hoàn toàn độc lập, chỉ trao đổi dữ liệu thông qua các lệnh mạng có chủ đích.
 
 ---
 
 ## 🤔 Tại sao cần?
-Bạn có thể sửa file, tạo nhánh, xem lịch sử và commit mà không có mạng. Khi muốn chia sẻ commit hoặc nhận thay đổi từ người khác, bạn cần kết nối tới remote. Remote hữu ích cho cộng tác và lưu bản sao, nhưng không thay thế chiến lược sao lưu riêng của tổ chức.
+Nếu không có Remote Repository, bạn không thể cộng tác nhóm: dự án của bạn sẽ bị cô lập trên một chiếc máy tính cá nhân duy nhất, đối mặt với nguy cơ mất trắng toàn bộ dữ liệu nếu máy hỏng hoặc ổ cứng cháy. Remote Repository trên GitHub vừa là nơi tập hợp thành quả của cả đội ngũ, vừa đóng vai trò như một kho sao lưu dự phòng đám mây vĩnh viễn cho sản phẩm của bạn.
 
 ---
 
 ## 🧠 Mental Model (Mô hình tư duy)
-Hãy hình dung Local Repository như cuốn sổ nhật ký cá nhân để trong ngăn bàn. Bạn thoải mái viết nháp, sửa chữa mỗi ngày mà không ai nhìn thấy. Remote Repository trên GitHub giống như chiếc bảng tin ở lớp học. Khi đã viết xong bài phân tích sạch đẹp trong sổ, bạn photo một bản dán lên bảng tin để các bạn cùng đọc và nhận xét.
+Hãy hình dung Local Repository như cuốn sổ nhật ký cá nhân nằm trong ngăn kéo bàn làm việc của bạn: bạn có thể ghi chép, vẽ nháp, xé bỏ tùy thích mà không cần mạng Internet. Còn Remote Repository trên GitHub giống như bảng thông cáo chung ở sảnh tòa nhà: chỉ khi bạn chọn lọc những bài viết xuất sắc nhất đem ra dán lên bảng tin (`push`), đồng đội mới có thể đọc và sao chép về (`pull`).
 
 ---
 
 ## 🖼 Sơ đồ
 ```text
-Mô hình Local vs Remote Repository:
-Máy tính cá nhân (Local):       Máy chủ GitHub (Remote):
-┌─────────────────────────┐     ┌─────────────────────────┐
-│ Working Directory       │     │                         │
-│ Staging Area            │     │  Remote Repository      │
-│ Local Repo (.git)       │◄───►│  (origin/main)          │
-│ (commit offline)        │     │  (lưu trữ đám mây)      │
-└─────────────────────────┘     └─────────────────────────┘
-        ▲                                    ▲
-        └──────── push / fetch / pull ───────┘
+KIẾN TRÚC ĐỘC LẬP GIỮA LOCAL VÀ REMOTE REPOSITORY:
+
+Máy tính cá nhân của bạn (Local):           Máy chủ đám mây (GitHub Remote):
+┌─────────────────────────────────┐         ┌─────────────────────────────────┐
+│ Thư mục làm việc (Working Tree) │         │                                 │
+│ Vùng đệm (Staging Area)         │         │   Remote Repository (origin)    │
+│ Kho cục bộ (.git database)      │◄───────►│   (Lưu trữ tập trung đám mây)   │
+│ [Commit ngoại tuyến tự do]      │         │   [Nơi cả đội ngũ hội quân]     │
+└─────────────────────────────────┘         └─────────────────────────────────┘
+                ▲                                            ▲
+                └────────────── push / fetch / pull ─────────┘
 ```
 
 ---
 
 ## 🌎 Ví dụ thực tế
-Bạn có thể tạo ba commit trên máy khi ngoại tuyến. Khi có mạng, `git push` gửi chúng tới remote nếu bạn có quyền ghi và lịch sử cho phép cập nhật. Đồng nghiệp cần `git fetch` hoặc `git pull` để nhận các commit đó.
+Bạn ngồi trên chuyến bay 12 tiếng không có Wi-Fi vẫn có thể tạo 15 commit trên Local Repository để hoàn thiện tính năng giỏ hàng. Ngay khi máy bay hạ cánh và điện thoại kết nối mạng, bạn gõ một lệnh `git push` duy nhất: toàn bộ 15 mốc snapshot tức thì bay lên GitHub để các thành viên khác kéo về tiếp tục tích hợp.
 
 ---
 
@@ -74,50 +75,48 @@ git branch -a
 ---
 
 ## 🔍 Giải thích command
-- `git remote -v`: Xem danh sách và địa chỉ đường dẫn của các kho lưu trữ từ xa đang liên kết với máy bạn.
-- `git status`: Hiển thị thay đổi cục bộ. Thông tin ahead/behind chỉ hiện nếu nhánh có upstream và dựa trên lần fetch gần nhất.
-- `git branch -a`: Liệt kê nhánh cục bộ và các nhánh theo dõi từ xa đã biết sau những lần fetch trước.
+- `git remote -v`: Xem danh sách chi tiết các máy chủ từ xa đang kết nối kèm URL nạp (`fetch`) và đẩy (`push`).
+- `git status`: Hiển thị tình trạng so lệch giữa nhánh cục bộ và nhánh từ xa tương ứng (ahead hoặc behind).
+- `git branch -a`: Liệt kê tất cả các nhánh: nhánh cục bộ màu xanh và các nhánh trên remote màu đỏ (dạng `remotes/origin/<tên-nhánh>`).
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Nghĩ commit là tự động lên GitHub:** Commit chỉ lưu trên máy cá nhân; bạn phải chạy `git push` thì mã nguồn mới lên GitHub.
-2. **Sợ mất mạng thì không dùng được Git:** Git hoạt động hoàn toàn không cần mạng; bạn chỉ cần Internet khi gửi hoặc nhận dữ liệu.
-3. **Nhầm lẫn giữa Git và GitHub:** Git là công cụ quản lý phiên bản; GitHub là dịch vụ trang web lưu trữ kho Git trên mạng.
+1. **Lầm tưởng `git commit` là code đã lên GitHub**: Commit chỉ lưu vào kho máy tính cá nhân; bắt buộc phải chạy `git push` thì code mới xuất hiện trên web.
+2. **Lo sợ mất mạng thì không lập trình với Git được**: Git hoạt động ngoại tuyến 100%; bạn chỉ cần Internet khi muốn trao đổi mã nguồn với đồng đội.
+3. **Đánh đồng Git và GitHub là một**: Git là phần mềm mã nguồn mở quản lý phiên bản; GitHub là nền tảng dịch vụ web thương mại lưu trữ các kho Git.
 
 ---
 
 ## 🧪 Lab
-Bài học này là bài tự kiểm tra cấu hình liên kết từ xa trên máy tính của bạn:
-1. Chạy `git remote -v`. Nếu không có kết quả, kho này chưa khai báo remote; đó là trạng thái bình thường.
-2. Nếu có remote, chạy `git fetch <tên-remote>` (thường là `origin`) để cập nhật thông tin nhánh từ xa.
-3. Chạy `git branch -a` để xem nhánh cục bộ và nhánh từ xa đã biết. Nếu chưa fetch hoặc remote chưa có nhánh, danh sách có thể trống.
-4. Chạy `git status`. Chỉ đọc số ahead/behind nếu Git cho biết nhánh đang theo dõi một upstream.
+1. Chạy lệnh: `git remote -v` để thanh tra xem kho hiện tại đã có liên kết remote nào hay chưa.
+2. Chạy `git branch -a` để quan sát toàn bộ các nhánh cục bộ lẫn nhánh từ xa được Git ghi nhận.
+3. Chạy `git status` để kiểm tra trạng thái đồng bộ giữa nhánh cục bộ hiện tại và nhánh theo dõi từ xa.
 
 ---
 
 ## 💡 Hint
-Nhớ khẩu quyết: Commit là cục bộ trên máy, Push mới là đưa dữ liệu lên máy chủ từ xa.
+> Ghi nhớ quy tắc vàng: "Commit là của riêng bạn trên máy tính, Push mới là công khai cho toàn thế giới!"
 
 ---
 
 ## ✅ Validation
-- Nhận biết rõ ràng vị trí lưu trữ của Local Repository trên máy và Remote Repository trên GitHub.
-- Phân biệt được sự khác nhau giữa commit ngoại tuyến và lệnh đồng bộ qua mạng.
+- Nhận thức và phân biệt chính xác dữ liệu nằm ở Local Repository và Remote Repository.
+- Thực thi thành công lệnh `git remote -v` để đọc hiểu cấu hình máy chủ.
 
 ---
 
 ## ❓ Quiz
-Trả lời các câu hỏi sau để kiểm tra sự hiểu biết về mô hình Local và Remote Repository trong Git.
+Làm bài trắc nghiệm dưới đây để kiểm tra hiểu biết của bạn về mô hình phân tán Local vs Remote Repository trong Git.
 
 ---
 
 ## 🔥 Challenge
-Giải thích vì sao mô hình phân tán của Git vẫn an toàn ngay cả khi máy chủ GitHub gặp sự cố mất điện trong vài giờ.
+Hãy phân tích lý do tại sao kiến trúc phân tán của Git lại vượt trội hơn hoàn toàn so với mô hình tập trung cũ của SVN (Subversion) khi máy chủ trung tâm bị mất kết nối Internet trong 24 giờ liên tục?
 
 ---
 
 ## 📚 Tổng kết
-- Kho cục bộ cho phép bạn làm việc và commit ngoại tuyến; lịch sử có thể không đầy đủ nếu clone nông.
-- Remote là kho trên máy chủ, chẳng hạn GitHub, để chia sẻ và phối hợp.
-- `fetch` cập nhật thông tin remote; `pull` còn tích hợp thay đổi vào nhánh hiện tại; `push` gửi commit lên remote.
+- Local Repository lưu trữ trọn vẹn lịch sử trên máy tính cá nhân, hỗ trợ làm việc ngoại tuyến 100%.
+- Remote Repository trên GitHub là bến đỗ chung giúp kết nối cả đội ngũ lập trình viên.
+- Thao tác `push` đẩy dữ liệu lên mây, `fetch` và `pull` kéo dữ liệu mới về máy.

@@ -3,120 +3,120 @@
 ---
 
 ## 🎯 Mục tiêu
-- Hiểu rõ bản chất cơ chế Fork trên máy chủ GitHub như một bản sao phía server.
-- Phân biệt rõ ràng giữa thao tác Fork (trên GitHub) và thao tác Clone (về máy cá nhân).
-- Nắm bắt quy trình đóng góp mã nguồn mở kinh điển thông qua mô hình Fork & Pull Request.
-- Quản lý và đồng bộ kho fork cá nhân với kho gốc của dự án.
+- Thấu suốt bản chất cơ chế Fork trên máy chủ GitHub như một bản sao máy chủ độc lập (server-side clone).
+- Phân biệt rạch ròi giữa thao tác Fork (trên giao diện web máy chủ) và thao tác Clone (tải về máy tính cá nhân).
+- Nắm vững quy trình đóng góp mã nguồn mở kinh điển thông qua mô hình kết hợp Fork và Pull Request.
+- Nhận biết quyền hạn và các thiết lập bảo mật khi làm việc trên kho fork cá nhân.
 
 ---
 
 ## 🧩 Từ khóa hôm nay
 
-### fork
-- **Nói dễ hiểu**: Tạo một repository thuộc tài khoản hoặc tổ chức của bạn, dựa trên repository khác.
-- **Ví dụ**: Bấm nút "Fork" trên repo `facebook/react` để có một bản `your-username/react`.
-- **Đừng nhầm**: Fork không cấp quyền ghi vào kho gốc; chính sách tổ chức có thể giới hạn việc fork.
+### fork — tạo bản sao trên máy chủ
+- **Nói dễ hiểu:** Thao tác sao chép toàn bộ một kho lưu trữ của người khác sang tài khoản GitHub của chính bạn chỉ bằng một cú nhấp chuột.
+- **Ví dụ:** Bạn bấm nút "Fork" trên kho `facebook/react` để sở hữu một bản sao cá nhân mang tên `tai-khoan-cua-ban/react`.
+- **Đừng nhầm:** Thao tác này không cấp quyền ghi vào kho gốc; bạn chỉ có toàn quyền quản lý trên bản sao nằm dưới tài khoản của mình.
 
-### server-side clone
-- **Nói dễ hiểu**: Quá trình nhân bản diễn ra hoàn toàn giữa các máy chủ đám mây của GitHub mà không qua máy bạn.
-- **Ví dụ**: GitHub sao chép repo gốc sang tài khoản của bạn chỉ trong vài giây trên máy chủ.
-- **Đừng nhầm**: Khác với `git clone` vốn tải toàn bộ dữ liệu từ đám mây về ổ đĩa máy tính cá nhân.
+### server-side clone — nhân bản phía máy chủ
+- **Nói dễ hiểu:** Quá trình sao chép kho diễn ra hoàn toàn giữa các máy chủ đám mây của GitHub mà không tải bất kỳ tệp nào về máy tính bạn.
+- **Ví dụ:** GitHub hoàn tất việc fork một dự án khổng lồ chỉ trong 3 giây nhờ cơ chế nhân bản nội bộ trên hạ tầng máy chủ của họ.
+- **Đừng nhầm:** Khác với `git clone` vốn truyền toàn bộ mã nguồn qua mạng Internet về ổ cứng máy tính cá nhân của bạn.
 
-### open source contribution
-- **Nói dễ hiểu**: Quy trình đóng góp code cho các dự án cộng đồng bằng cách fork, sửa code và gửi Pull Request.
-- **Ví dụ**: Sửa một lỗi trong thư viện nguồn mở và gửi PR mời tác giả tích hợp vào dự án chính.
-- **Đừng nhầm**: Bạn không cần xin quyền truy cập ghi trực tiếp vào kho của tác giả để bắt đầu đóng góp.
+### open source contribution — đóng góp mã nguồn mở
+- **Nói dễ hiểu:** Quy trình tham gia cống hiến nâng cấp các dự án cộng đồng bằng cách fork mã nguồn, sửa lỗi và gửi đề xuất tích hợp.
+- **Ví dụ:** Bạn phát hiện lỗi trong thư viện UI phổ biến, fork về sửa lại rồi gửi Pull Request mời đội ngũ tác giả thẩm định gộp mã.
+- **Đừng nhầm:** Bạn không cần phải có mối quan hệ quen biết hay quyền cộng tác viên chính thức để bắt đầu tham gia đóng góp.
 
 ---
 
 ## 📖 Định nghĩa
-Fork tạo một repository thuộc tài khoản của bạn dựa trên repository gốc. Bạn có quyền làm việc trong fork theo quyền của tài khoản mình, nhưng quyền và cài đặt kho gốc vẫn do chủ sở hữu quản lý. Trên GitHub, các repository trong cùng fork network có thể chia sẻ dữ liệu Git; fork không đồng nghĩa với một bản độc lập hoàn toàn.
+Fork là cơ chế nhân bản một kho lưu trữ Git từ tài khoản của người khác sang tài khoản cá nhân của bạn ngay trên máy chủ của nền tảng như GitHub, trao cho bạn quyền quản lý và chỉnh sửa toàn diện trên bản sao của mình mà không làm ảnh hưởng đến mã nguồn của dự án gốc.
 
 ---
 
-## 💡 Tại sao cần
-Trong các dự án mã nguồn mở, bạn không có quyền push trực tiếp vào kho nguồn vì lý do an toàn. Cơ chế Fork giúp bất kỳ ai cũng có thể tham gia cải tiến mã nguồn, thử nghiệm ý tưởng mới và gửi thành quả lại cho tác giả ban đầu thông qua Pull Request.
+## 🤔 Tại sao cần?
+Trong thế giới mã nguồn mở rộng lớn, ban quản trị dự án không thể cấp quyền ghi trực tiếp cho hàng triệu lập trình viên vì rủi ro an ninh và chất lượng. Cơ chế Fork mở ra cánh cổng dân chủ cho bất kỳ ai: bạn tự do tải bản sao về nghiên cứu, khắc phục sự cố, thử nghiệm tính năng mới rồi gửi lại đóng góp cho cộng đồng thông qua Pull Request.
 
 ---
 
-## 🧠 Mental Model
-Hãy hình dung công thức phở gia truyền niêm yết trong tủ kính nhà hàng (dự án gốc). Bạn không thể mở tủ kính lấy bút viết thêm vào công thức. Nhà hàng cho phép bạn chụp lại toàn bộ công thức mang về bếp nhà mình (Fork). Tại bếp nhà, bạn tự do nêm nếm và nếu ngon có thể gửi thư mời bếp trưởng nếm thử (Pull Request).
+## 🧠 Mental Model (Mô hình tư duy)
+Hãy hình dung công thức phở gia truyền niêm yết trong tủ kính của một nhà hàng danh tiếng. Bạn không thể tự ý cầm bút viết đè vào công thức đó. Nhà hàng cho phép bạn chụp lại toàn bộ công thức đem về gian bếp nhà mình (Fork). Tại bếp riêng, bạn tự do nêm nếm thử nghiệm và nếu tìm ra hương vị tuyệt hảo, bạn có thể gửi thư mời bếp trưởng nếm thử.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
-Quy trình Fork trên GitHub:
-[Kho gốc: upstream] (facebook/react)
-        │
-        ▼ (Thao tác Fork trên GitHub web)
-[Kho cá nhân: origin] (your-account/react)
-        │
-        ▼ (git clone về máy cá nhân)
-[Máy tính của bạn: Local] (lập trình, commit & push lên your-account/react)
+CHU TRÌNH ĐÓNG GÓP QUA CƠ CHẾ FORK TRÊN GITHUB:
+
+[Kho gốc của tác giả: upstream] (facebook/react)
+             │
+             ▼ (Thao tác Fork trên giao diện web GitHub)
+[Kho fork cá nhân: origin] (tai-khoan-ban/react)
+             │
+             ▼ (git clone về ổ cứng máy tính)
+[Máy tính cá nhân: Local] ──► (Lập trình, commit & push lên fork cá nhân)
 ```
 
 ---
 
-## 🏢 Ví dụ thực tế
-Lập trình viên Bình phát hiện lỗi chính tả trong tài liệu của một thư viện nổi tiếng. Vì không có quyền commit trực tiếp, Bình bấm nút "Fork" trên GitHub để tạo bản sao `github.com/binh-dev/famous-lib`. Bình clone kho fork về máy, sửa lỗi, commit rồi push lên fork cá nhân và mở Pull Request gửi về cho ban quản trị dự án phê duyệt.
+## 🌎 Ví dụ thực tế
+Lập trình viên Bình phát hiện một lỗi logic trong thư viện phân tích cú pháp JSON phổ biến trên GitHub. Do không phải nhân sự nòng cốt của dự án, Bình nhấp nút "Fork" để tạo bản sao `github.com/binh-dev/json-parser`. Sau đó Bình clone bản sao cá nhân này về máy tính, sửa lỗi và đẩy lên fork của mình trước khi mở đề xuất tích hợp gửi về cho nhóm tác giả ban đầu.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
-git clone <url-kho-fork-cua-ban>
+git clone https://github.com/tai-khoan-ban/du-an-fork.git
 git remote -v
-git remote add upstream <url-kho-goc>
+git remote add upstream https://github.com/tac-gia/du-an-goc.git
 ```
 
 ---
 
 ## 🔍 Giải thích command
-- `git clone <url-kho-fork>`: Tải bản sao từ tài khoản cá nhân của bạn về máy tính để lập trình.
-- `git remote -v`: Kiểm tra liên kết remote origin trỏ về kho fork cá nhân.
-- `git remote add upstream <url-kho-goc>`: Thiết lập thêm liên kết tới kho gốc của tác giả để đồng bộ các cập nhật mới sau này.
+- `git clone <url-kho-fork>`: Tải mã nguồn từ kho fork thuộc tài khoản cá nhân của bạn về máy tính để lập trình.
+- `git remote -v`: Kiểm tra danh sách remote, bảo đảm `origin` đang trỏ đúng về kho fork cá nhân trên GitHub.
+- `git remote add upstream <url-kho-goc>`: Thiết lập thêm liên kết tới kho gốc của tác giả để nhận các cập nhật mới về sau.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Nghĩ rằng Fork là lệnh trong terminal**: Fork là tính năng trên giao diện nền tảng web như GitHub hoặc GitLab, không phải lệnh CLI.
-2. **Clone trực tiếp kho gốc rồi push**: Sẽ bị lỗi `Permission denied` vì bạn không có quyền ghi vào kho của người khác.
-3. **Để kho fork bị lỗi thời lâu ngày**: Quên đồng bộ với kho gốc khiến các Pull Request gửi đi sau này dễ bị xung đột phức tạp.
+1. **Lầm tưởng Fork là một câu lệnh trong Git CLI**: Fork là tính năng độc quyền do các nền tảng máy chủ như GitHub hay GitLab cung cấp trên giao diện web.
+2. **Clone trực tiếp kho gốc của người khác rồi cố tình gõ `git push`**: Máy chủ sẽ chặn đứng thao tác và báo lỗi từ chối quyền truy cập (Permission denied).
+3. **Bỏ quên kho fork cá nhân không đồng bộ trong thời gian dài**: Khiến mã nguồn của bạn bị phân kỳ quá xa so với dự án chính, gây xung đột nặng nề khi tạo PR.
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thực hành thao tác fork trên giao diện GitHub và clone về máy cá nhân.
-1. Dùng tài khoản GitHub của bạn để mở một repository công khai cho phép fork; nếu nút Fork không có, chính sách kho hoặc tổ chức có thể không cho phép.
-2. Tạo fork từ giao diện GitHub và kiểm tra chủ sở hữu/URL của fork.
-3. Clone URL của fork vào thư mục riêng trên máy thật; không clone trong terminal mô phỏng của khóa học.
-4. Chạy `git remote -v` để kiểm tra `origin` trỏ tới fork của bạn. Fork/clone cần tài khoản hoặc quyền phù hợp với repository.
+## 🧪 Lab
+1. Đăng nhập vào tài khoản GitHub cá nhân và tìm một dự án mã nguồn mở công khai (ví dụ kho tài liệu cộng đồng).
+2. Nhấp vào nút "Fork" ở góc trên bên phải màn hình để tạo bản sao dưới tài khoản của bạn.
+3. Sao chép đường dẫn URL của kho fork và mở terminal máy tính chạy lệnh: `git clone <url-kho-fork-cua-ban>`.
+4. Di chuyển vào thư mục dự án và kiểm tra bằng lệnh: `git remote -v`.
 
 ---
 
-## 💡 Hint & mẹo
-> Ghi nhớ quy trình 5 bước: Fork trên web -> Clone về máy -> Code & commit -> Push lên fork -> Mở Pull Request.
+## 💡 Hint
+> Hãy luôn ghi nhớ quy trình 5 bước chuẩn mực quốc tế khi đóng góp mã nguồn mở: 1. Fork trên web -> 2. Clone về máy -> 3. Tạo nhánh và commit -> 4. Push lên fork cá nhân -> 5. Tạo Pull Request gửi về kho gốc!
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
-- Repository fork xuất hiện dưới tài khoản của bạn nếu thao tác được phép.
-- Kho trên máy tính có remote origin trỏ về kho fork cá nhân.
+## ✅ Validation
+- Nhận thức chuẩn xác rằng Fork diễn ra ở phía máy chủ đám mây GitHub.
+- Nắm vững lý do tại sao các dự án mã nguồn mở toàn cầu bắt buộc phải vận hành thông qua cơ chế Fork.
 
 ---
 
-## ❓ Quiz nhanh
-Hãy hoàn thành các câu hỏi trắc nghiệm dưới đây để kiểm tra hiểu biết về cơ chế Fork trên GitHub.
+## ❓ Quiz
+Làm bài trắc nghiệm dưới đây để đánh giá độ thành thạo của bạn về quy trình và bản chất của thao tác Fork trên GitHub.
 
 ---
 
-## 🚀 Thử thách nâng cao
-Khám phá tính năng "Sync fork" ngay trên giao diện web của GitHub để cập nhật các commit mới từ kho gốc về fork cá nhân chỉ với một cú nhấp chuột.
+## 🔥 Challenge
+Hãy tìm hiểu mối quan hệ liên kết ngầm (Fork Network) trên GitHub. Khi một kho gốc bị tác giả xóa bỏ hoặc chuyển đổi từ công khai (Public) sang riêng tư (Private), số phận của các kho fork cá nhân của các lập trình viên khác sẽ bị ảnh hưởng như thế nào?
 
 ---
 
-## 📝 Tổng kết
-- Fork tạo repository mới dựa trên kho gốc trong fork network của GitHub.
-- Bạn làm việc trên fork theo quyền của mình; việc đó không tự cấp quyền sửa kho gốc.
-- Là nền tảng cốt lõi của quy trình đóng góp mã nguồn mở trên toàn cầu.
+## 📚 Tổng kết
+- Fork tạo một bản sao độc lập của kho gốc ngay trên máy chủ đám mây của bạn.
+- Trao quyền chỉnh sửa hoàn toàn trên kho cá nhân mà không gây ảnh hưởng đến dự án gốc.
+- Là nền tảng mở đầu không thể thiếu của mọi hoạt động đóng góp mã nguồn mở.

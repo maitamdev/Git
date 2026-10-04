@@ -3,50 +3,51 @@
 ---
 
 ## 🎯 Mục tiêu
-- Hiểu một quy trình cộng tác phổ biến: Feature Branch Workflow.
-- Thực hiện các bước từ nhận nhiệm vụ, tạo nhánh, commit, mở PR đến review và tích hợp.
-- Biết nhóm có thể quy định nhánh đích, review và cách tích hợp khác nhau.
-- Tự tin tham gia vào các dự án phần mềm chuyên nghiệp quy mô vừa và lớn.
+- Thấu suốt chu trình vận hành chuẩn mực của Feature Branch Workflow trong các doanh nghiệp công nghệ hàng đầu.
+- Nắm vững 7 bước từ nhận Issue, tách nhánh, lập trình, commit, mở PR đến review và merge vào nhánh chính.
+- Hiểu rõ vai trò của luật bảo vệ nhánh (Protected Branch Rules) trong việc ngăn chặn đẩy code trực tiếp lên `main`.
+- Rèn luyện kỹ năng tự bảo vệ bản thân và đội ngũ khỏi cạm bẫy ác mộng xung đột mã nguồn (Merge Hell).
 
 ---
 
 ## 🧩 Từ khóa hôm nay
 
-### feature branch workflow
-- **Nói dễ hiểu**: Cách làm trong đó mỗi nhiệm vụ được phát triển trên nhánh riêng rồi đưa ra review trước khi tích hợp.
-- **Ví dụ**: Tạo nhánh `feat/biometric-login` rồi mở PR vào nhánh đích do nhóm chọn.
-- **Đừng nhầm**: Đây là một quy trình phổ biến, không phải yêu cầu bắt buộc của Git hay phù hợp với mọi nhóm.
+### feature branch workflow — luồng nhánh tính năng
+- **Nói dễ hiểu:** Quy trình làm việc bắt buộc mọi tính năng hay bản sửa lỗi đều phải được viết trên một nhánh riêng rẽ.
+- **Ví dụ:** Tạo nhánh `feat/biometric-login` để làm tính năng vân tay, không bao giờ sửa thẳng trên nhánh `main`.
+- **Đừng nhầm:** Đây là quy trình tiêu chuẩn của ngành; nhánh `main` luôn được giữ ổn định và sẵn sàng triển khai lên Production bất cứ lúc nào.
 
-### protected default branch — nhánh mặc định được bảo vệ
-- **Nói dễ hiểu**: Nhánh đích có thể được cấu hình để yêu cầu review, kiểm tra hoặc giới hạn push.
-- **Ví dụ**: Nhóm cấu hình `main` phải có một lượt review trước khi merge PR.
-- **Đừng nhầm**: Git không tự bảo vệ `main`; repository phải được cấu hình. Một số nhóm dùng trunk-based development và tích hợp thay đổi nhỏ thường xuyên.
+### protected branch — nhánh được bảo vệ
+- **Nói dễ hiểu:** Nhánh chính (thường là `main`) được thiết lập luật bảo vệ trên GitHub để cấm tuyệt đối hành vi push trực tiếp.
+- **Ví dụ:** Lập trình viên cố tình gõ `git push origin main` sẽ bị GitHub từ chối và yêu cầu phải tạo Pull Request.
+- **Đừng nhầm:** Luật bảo vệ nhánh không có sẵn mặc định trong Git trên máy tính; bạn phải kích hoạt trong phần cài đặt của GitHub.
 
-### merge hell
-- **Nói dễ hiểu**: Cơn ác mộng xung đột khi giữ một nhánh tính năng quá lâu hàng tháng trời mà không đồng bộ với nhánh chính.
-- **Ví dụ**: Nhánh của bạn bị tụt lại 200 commit so với main, khi gộp sẽ phát sinh hàng chục file xung đột phức tạp.
-- **Đừng nhầm**: Có thể tránh hoàn toàn bằng cách chia nhỏ tính năng, mở PR sớm và định kỳ rebase/pull từ main về nhánh.
+### merge hell — ác mộng xung đột
+- **Nói dễ hiểu:** Tình cảnh tồi tệ khi một nhánh tính năng bị giữ quá lâu (vài tuần đến vài tháng) mà không đồng bộ với nhánh chính.
+- **Ví dụ:** Nhánh của bạn bị tụt lại 300 commit so với `main`, khi gộp lại sẽ phát sinh hàng trăm xung đột mã nguồn nan giải.
+- **Đừng nhầm:** Bạn có thể phòng tránh hoàn toàn bằng cách chia nhỏ tính năng, mở PR sớm và định kỳ kéo code mới nhất từ `main` về nhánh mình.
 
 ---
 
 ## 📖 Định nghĩa
-Feature Branch Workflow là một cách cộng tác: mỗi nhiệm vụ có nhánh riêng, sau đó mở PR để review và tích hợp. Đây là quy trình phổ biến, không phải quy định bắt buộc của Git; nhóm có thể dùng trunk-based development hoặc cách khác. Nhánh mặc định chỉ được bảo vệ nếu repository cấu hình như vậy.
+Feature Branch Workflow là quy trình cộng tác tiêu chuẩn hàng đầu trong ngành công nghiệp phần mềm, nơi mọi tính năng mới, bản sửa lỗi hay thử nghiệm kỹ thuật đều bắt buộc phải được phát triển độc lập trên một nhánh tính năng riêng biệt (feature branch) và chỉ được hợp nhất vào nhánh chính thông qua một Pull Request đã được kiểm duyệt nghiêm ngặt.
 
 ---
 
-## 💡 Tại sao cần
-Nhánh riêng giúp tách biệt thay đổi và tạo điểm review trước khi tích hợp. Một số nhóm dùng quy trình khác, chẳng hạn trunk-based development; hãy đọc hướng dẫn của repository trước khi chọn cách làm.
+## 🤔 Tại sao cần?
+Khi hàng chục kỹ sư cùng làm việc trên một sản phẩm, việc tách biệt các luồng thay đổi là điều kiện tiên quyết để tồn tại. Feature Branch Workflow cô lập hoàn toàn môi trường làm việc của từng thành viên: bạn thoải mái thử nghiệm mà không sợ làm hỏng nhánh chính, đồng thời tạo ra một điểm chặn tự nhiên cho kiểm thử tự động và phản biện mã nguồn trước khi tích hợp.
 
 ---
 
-## 🧠 Mental Model
-Hãy hình dung một dàn nhạc giao hưởng đang biểu diễn trên sân khấu (nhánh main). Không nhạc công nào được tự ý đem một đoạn nhạc vừa nghĩ ra chơi thử ngay trước mặt khán giả. Từng nghệ sĩ phải vào phòng tập cách âm riêng (Feature Branch), luyện tập nhuần nhuyễn rồi trình diễn cho nhạc trưởng duyệt (Review PR) trước khi hòa vào bản nhạc chính.
+## 🧠 Mental Model (Mô hình tư duy)
+Hãy hình dung một dàn nhạc giao hưởng lớn đang biểu diễn trực tiếp trên sân khấu nhà hát (nhánh main). Không một nhạc công nào được phép đem một giai điệu vừa ngẫu hứng nghĩ ra để chơi thử trước mặt khán giả. Từng nghệ sĩ phải vào phòng tập cách âm riêng (Feature Branch), luyện tập nhuần nhuyễn rồi biểu diễn cho nhạc trưởng duyệt (Review PR) trước khi hòa vào bản hòa tấu chính.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
-Chuỗi 7 bước chuẩn mực của Feature Branch Workflow:
+BẢY BƯỚC KHÉP KÍN CỦA FEATURE BRANCH WORKFLOW:
+
 [1. Nhận Issue] ──► [2. git pull main] ──► [3. git switch -c feat/xyz]
                                                          │
                                                          ▼
@@ -58,69 +59,68 @@ Chuỗi 7 bước chuẩn mực của Feature Branch Workflow:
 
 ---
 
-## 🏢 Ví dụ thực tế
-Đội ngũ phát triển ứng dụng ngân hàng vận hành theo Feature Branch Workflow. Mỗi sáng, lập trình viên nhận một Issue, cập nhật `git pull origin main`, tạo nhánh `feat/biometric-login`, viết code và kiểm thử tự động. Khi hoàn thành, bạn đẩy nhánh lên GitHub, mở PR kèm checklist an ninh. Hai senior kiểm tra và phê duyệt trước khi squash-merge vào main an toàn.
+## 🌎 Ví dụ thực tế
+Tại một công ty công nghệ tài chính, mỗi sáng kỹ sư nhận một đầu việc trên Jira hoặc GitHub Issues, cập nhật nhánh chính bằng `git pull origin main`, tạo nhánh mới `feat/biometric-auth`, viết mã và kiểm thử cẩn thận. Khi hoàn thành, kỹ sư đẩy nhánh lên mở PR. Sau khi hai chuyên gia bảo mật phê duyệt và pipeline CI kiểm thử thành công, tính năng mới được hòa vào nhánh chính một cách an toàn tuyệt đối.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 git switch main
 git pull origin main
-git switch -c feat/<tên-tính-năng>
-git push -u origin feat/<tên-tính-năng>
-git branch -d feat/<tên-tính-năng>
+git switch -c feat/user-profile
+git push -u origin feat/user-profile
+git branch -d feat/user-profile
 ```
 
 ---
 
 ## 🔍 Giải thích command
-- `git switch main && git pull origin main`: Luôn xuất phát từ mốc mới nhất và ổn định nhất của nhánh main.
-- `git switch -c feat/<tên>`: Tách nhánh làm việc hoàn toàn cách ly cho tính năng mới.
-- `git push -u origin feat/<tên>`: Đưa nhánh lên GitHub để kích hoạt môi trường làm việc nhóm và PR.
-- `git branch -d feat/<tên>`: Dọn dẹp vệ sinh kho chứa sau khi tính năng đã được tích hợp thành công.
+- `git switch main && git pull origin main`: Luôn xuất phát từ mốc mới nhất và ổn định nhất của nhánh main trước khi bắt tay làm việc mới.
+- `git switch -c feat/user-profile`: Tạo và chuyển ngay sang nhánh tính năng biệt lập để bảo vệ nhánh chính.
+- `git push -u origin feat/user-profile`: Xuất bản nhánh lên GitHub và thiết lập tracking để chuẩn bị tạo Pull Request.
+- `git branch -d feat/user-profile`: Dọn dẹp vệ sinh kho cục bộ sau khi tính năng đã được gộp thành công trên GitHub.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Tiện tay commit thẳng lên nhánh main**: Vi phạm nguyên tắc bảo vệ nhánh chính và dễ làm gián đoạn bản phát hành chung.
-2. **Tách nhánh từ một nhánh tính năng dở dang khác**: Làm dây chuyền các lỗi chưa kiểm chứng sang nhánh mới thay vì xuất phát từ main chuẩn.
-3. **Giữ nhánh tính năng quá lâu nhiều tuần không merge**: Gây ra tình trạng Merge Hell với hàng loạt xung đột mã nguồn nan giải.
+1. **Tiện tay commit và đẩy code thẳng lên nhánh `main`**: Vi phạm kỷ luật dự án và dễ làm gãy hệ thống đang chạy của khách hàng.
+2. **Tách nhánh mới từ một nhánh tính năng dở dang khác**: Làm lây lan các lỗi chưa qua kiểm duyệt sang tính năng mới.
+3. **Giữ nhánh tính năng sống quá lâu mà không đồng bộ**: Dẫn đến thảm họa Merge Hell với xung đột khổng lồ không thể kiểm soát.
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thực hành chu trình 7 bước từ tạo nhánh đến merge PR.
-1. Đọc hướng dẫn repository để xác định nhánh đích và cách cập nhật; đừng mặc định tên nhánh là `main`.
-2. Trong kho thử nghiệm có remote, chuyển sang nhánh đích và cập nhật theo hướng dẫn dự án.
-3. Tạo nhánh `feat/user-profile`, sửa một file nhỏ, rồi add và commit.
-4. Push nhánh lên remote bạn có quyền ghi. Mở PR thử nghiệm, kiểm tra base/compare, xem diff và viết mô tả.
-5. Nếu có reviewer, xử lý góp ý; chỉ merge PR thử nghiệm khi có quyền. Trong simulator, push chỉ cập nhật remote giả lập; có thể hoàn thành bằng cách viết mô tả PR và tự review diff.
+## 🧪 Lab
+1. Đảm bảo bạn đang đứng ở nhánh chính và đồng bộ: `git switch main` rồi `git pull origin main`.
+2. Tạo nhánh tính năng mới theo quy ước: `git switch -c feat/order-tracking`.
+3. Tạo một commit giả lập: `git commit --allow-empty -m "feat: add order tracking service"`.
+4. Đẩy nhánh lên GitHub: `git push -u origin feat/order-tracking`.
+5. Mở PR trên GitHub, mô tả tính năng, mời đồng nghiệp vào review và hoàn tất gộp mã nguồn.
 
 ---
 
-## 💡 Hint & mẹo
-> Đọc quy định của repository để biết nhánh mặc định có được bảo vệ và cần review trước khi tích hợp hay không.
+## 💡 Hint
+> Hãy chia nhỏ bài toán thành các PR gọn gàng (dưới 300 dòng code). PR càng nhỏ thì đồng đội review càng nhanh, lỗi càng ít và tốc độ đưa sản phẩm ra thị trường càng vượt trội!
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
-- Tạo được nhánh nhiệm vụ, commit có nội dung rõ và kiểm tra được diff.
-- Mô tả được quy trình PR theo cấu hình của repository mình đang dùng.
+## ✅ Validation
+- Thuộc nằm lòng chuỗi 7 bước của quy trình Feature Branch Workflow.
+- Giải thích được nguyên nhân sâu xa của Merge Hell và biện pháp phòng ngừa triệt để.
 
 ---
 
-## ❓ Quiz nhanh
-Hãy hoàn thành các câu hỏi trắc nghiệm dưới đây để kiểm tra hiểu biết về Feature Branch Workflow.
+## ❓ Quiz
+Làm bài trắc nghiệm dưới đây để đánh giá sự thấu hiểu về chu trình Feature Branch Workflow tiêu chuẩn.
 
 ---
 
-## 🚀 Thử thách nâng cao
-Tìm hiểu sự khác biệt giữa Feature Branch Workflow tinh gọn và mô hình Git Flow truyền thống có các nhánh dài hạn như `develop` và `release`.
+## 🔥 Challenge
+Hãy so sánh Feature Branch Workflow với Trunk-Based Development. Trong những điều kiện nào thì các công ty công nghệ lớn như Google hay Meta lại khuyến khích chuyển từ Feature Branch Workflow sang Trunk-Based Development?
 
 ---
 
-## 📝 Tổng kết
-- Feature Branch Workflow là một trong nhiều quy trình cộng tác.
-- Nhánh đích, review và quyền push do nhóm/repository quy định.
-- Luồng phổ biến: nhận việc -> thay đổi -> commit -> chia sẻ -> review -> tích hợp.
+## 📚 Tổng kết
+- Mọi thay đổi đều phải được thực hiện trên nhánh tính năng riêng biệt.
+- Nhánh chính `main` luôn được bảo vệ nghiêm ngặt bằng quy tắc Branch Protection.
+- Luôn cập nhật thường xuyên từ `main` để triệt tiêu hoàn toàn nguy cơ Merge Hell.

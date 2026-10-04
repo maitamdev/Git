@@ -3,50 +3,51 @@
 ---
 
 ## 🎯 Mục tiêu
-- Nắm vững khái niệm và ý nghĩa cốt lõi của Pull Request (PR) trong phát triển phần mềm hiện đại.
-- Hiểu rõ thuật ngữ: Vì sao lại gọi là "Pull Request" (yêu cầu người khác kéo code của mình về gộp).
-- Thực hiện quy trình tạo một Pull Request hoàn chỉnh trên giao diện web của GitHub.
-- Viết mô tả PR (PR Description) rõ ràng, súc tích tuân thủ theo biểu mẫu chuẩn (PR Template).
+- Nắm vững khái niệm cốt lõi và vai trò trung tâm của Pull Request (PR) trong quy trình phát triển phần mềm hiện đại.
+- Giải mã ý nghĩa tên gọi "Pull Request": lời đề nghị chính thức yêu cầu người quản trị kéo mã nguồn về gộp.
+- Thực hiện thuần thục các bước thiết lập một Pull Request hoàn chỉnh trên giao diện GitHub.
+- Viết mô tả PR (PR Description) mạch lạc, súc tích kết hợp danh sách kiểm tra (checklist) đạt chuẩn doanh nghiệp.
 
 ---
 
 ## 🧩 Từ khóa hôm nay
 
-### pull request (PR)
-- **Nói dễ hiểu**: Yêu cầu nền tảng xem xét các thay đổi từ nhánh nguồn và tích hợp chúng vào nhánh đích nếu nhóm chấp thuận.
-- **Ví dụ**: Mở PR đề xuất gộp nhánh `feat/cart` vào nhánh `main` của dự án.
-- **Đừng nhầm**: Không phải lệnh của Git trên máy tính; đây là cơ chế tương tác và quản lý code trên GitHub hoặc GitLab.
+### pull request (PR) — đề xuất hợp nhất
+- **Nói dễ hiểu:** Một bản đề xuất trang trọng trên GitHub yêu cầu đội ngũ dự án thẩm định và gộp code từ nhánh của bạn vào nhánh chính.
+- **Ví dụ:** Bạn mở một PR đề nghị gộp nhánh `feat/cart-drawer` vào nhánh `main` sau khi đã hoàn thiện chức năng giỏ hàng.
+- **Đừng nhầm:** PR không phải là lệnh của Git trong terminal; đây là tính năng cộng tác đặc trưng của nền tảng web như GitHub, GitLab.
 
-### reviewers
-- **Nói dễ hiểu**: Những đồng nghiệp được chỉ định vào PR để đọc, kiểm tra chất lượng code và phê duyệt trước khi gộp.
-- **Ví dụ**: Tag tên trưởng nhóm hoặc bạn cùng dự án vào mục Reviewers trên trang PR.
-- **Đừng nhầm**: Không chỉ để phê bình; reviewers giúp phát hiện lỗi sớm và đảm bảo tính nhất quán của kiến trúc.
+### reviewers — người thẩm định mã nguồn
+- **Nói dễ hiểu:** Những kỹ sư đồng nghiệp được chỉ định vào PR để trực tiếp đọc code, kiểm tra chất lượng và quyết định bấm duyệt.
+- **Ví dụ:** Bạn gán thẻ Tech Lead và bạn cặp đôi (pair-programming) vào mục Reviewers để họ nhận thông báo vào đánh giá.
+- **Đừng nhầm:** Reviewers không chỉ tìm lỗi mà còn đảm bảo mã nguồn tuân thủ đúng chuẩn kiến trúc và phong cách chung của tổ chức.
 
-### base and compare branch
-- **Nói dễ hiểu**: Cặp nhánh xác định chiều gộp code: `base` là nhánh đích nhận code, `compare` là nhánh tính năng của bạn.
-- **Ví dụ**: `base: main` ◄── `compare: feat/login` thể hiện code sẽ đi từ feat/login vào main.
-- **Đừng nhầm**: `base` là nhánh đích, không phải lúc nào cũng là `main`; kiểm tra đúng repository và hướng so sánh trước khi tạo PR.
+### base and compare branch — cặp nhánh đích và nhánh nguồn
+- **Nói dễ hiểu:** Hai nhánh xác định hướng chảy của mã nguồn: `base` là nhánh đích nhận code, `compare` là nhánh tính năng của bạn.
+- **Ví dụ:** Cấu hình `base: main` ◄── `compare: feat/login` biểu thị mã nguồn sẽ được chuyển từ feat/login vào main.
+- **Đừng nhầm:** `base` không nhất thiết luôn là `main`; trong các dự án lớn, `base` có thể là nhánh `develop`, `staging` hoặc nhánh release.
 
 ---
 
 ## 📖 Định nghĩa
-Pull Request (PR; GitLab thường gọi là Merge Request) là yêu cầu trên nền tảng cộng tác để xem xét các thay đổi từ nhánh nguồn vào nhánh đích. Nền tảng hiển thị diff và hỗ trợ thảo luận, kiểm tra tự động, review và tích hợp theo quyền/cấu hình của repository.
+Pull Request (viết tắt là PR) là một cơ chế cộng tác trung tâm trên các nền tảng máy chủ như GitHub, cho phép lập trình viên thông báo và gửi lời đề nghị chính thức tới nhóm dự án nhằm xem xét, thảo luận và gộp các thay đổi từ nhánh tính năng (compare branch) vào nhánh đích chính thức (base branch).
 
 ---
 
-## 💡 Tại sao cần
-PR tạo nơi để nhóm xem thay đổi, thảo luận và chạy kiểm tra trước khi tích hợp. Quy trình review hoặc yêu cầu CI phụ thuộc cài đặt dự án; PR tự nó không đảm bảo đã có người duyệt hay mọi kiểm tra đều chạy.
+## 🤔 Tại sao cần?
+Nếu ai cũng tự do đẩy code thẳng vào nhánh chính `main`, dự án sẽ nhanh chóng rơi vào hỗn loạn và đổ vỡ vì mã nguồn chứa lỗi chưa được kiểm soát. Pull Request thiết lập một trạm kiểm soát chất lượng không thể thiếu: tạo không gian thảo luận trực quan, kích hoạt kiểm thử tự động CI và đảm bảo mọi dòng mã đều được đồng nghiệp thẩm định kỹ lưỡng trước khi đưa vào sản phẩm.
 
 ---
 
-## 🧠 Mental Model
-Hãy hình dung bạn là kiến trúc sư nội thất được thuê trang trí phòng khách. Bạn không tự ý mở cửa nhà khách rồi đập phá tường khi chưa ai đồng ý. Bạn vẽ bản thiết kế 3D hoàn chỉnh kèm dự toán chi phí, gửi cho gia chủ và lịch sự nói: "Tôi đã hoàn thành thiết kế phòng khách, xin mời anh chị xem xét và chấp thuận" (Pull Request).
+## 🧠 Mental Model (Mô hình tư duy)
+Hãy hình dung bạn là kiến trúc sư nội thất được giao thiết kế phòng khách cho một ngôi nhà. Bạn không thể tự ý đập phá tường khi chưa có ai cho phép. Bạn vẽ bản vẽ 3D chi tiết, lập bảng dự toán chi phí rồi gửi tới gia chủ kèm lời nhắn lịch thiệp: "Tôi đã hoàn thành phương án thiết kế phòng khách, kính mời anh chị xem xét phê duyệt" (Pull Request).
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
-Vòng đời của một Pull Request:
+CHU TRÌNH VẬN HÀNH CỦA MỘT PULL REQUEST (PR):
+
 [Tạo nhánh feature] ──► [Commit & Push] ──► [Mở Pull Request trên GitHub]
                                                     │
                                                     ▼
@@ -55,12 +56,12 @@ Vòng đời của một Pull Request:
 
 ---
 
-## 🏢 Ví dụ thực tế
-Kỹ sư Phương hoàn thành bộ lọc giá sản phẩm trên nhánh `feat/price-filter` và đẩy lên GitHub. Phương vào trang dự án bấm "Compare & pull request", đặt tiêu đề chuẩn `feat: add price range filter component`, mô tả cơ chế hoạt động, đính kèm ảnh chụp màn hình kiểm thử và gắn hai đồng nghiệp senior vào mục Reviewers để cùng đánh giá mã nguồn.
+## 🌎 Ví dụ thực tế
+Sau khi hoàn thiện chức năng thanh toán qua ví điện tử trên nhánh `feat/momo-payment`, bạn đẩy nhánh lên GitHub và bấm nút mở PR. Bạn đặt tiêu đề chuẩn `feat: integrate MoMo payment gateway`, mô tả rõ các trường hợp kiểm thử, đính kèm video chạy thử và gắn thẻ Tech Lead vào mục Reviewers. Toàn đội nhận được thông báo để cùng vào đóng góp ý kiến.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 git switch -c feat/my-feature
 git push -u origin feat/my-feature
@@ -69,49 +70,48 @@ git push -u origin feat/my-feature
 ---
 
 ## 🔍 Giải thích command
-- `git switch -c <tên-nhánh>`: Tạo một nhánh riêng biệt cô lập cho tính năng mới trước khi viết code.
-- `git push -u origin <nhánh>`: Đẩy nhánh tính năng lên GitHub và thiết lập tracking để sẵn sàng tạo Pull Request trên web.
+- `git switch -c feat/my-feature`: Tạo và chuyển ngay sang một nhánh tính năng biệt lập trước khi viết dòng code đầu tiên.
+- `git push -u origin feat/my-feature`: Xuất bản nhánh tính năng lên GitHub kèm thiết lập upstream để giao diện web hiển thị nút tạo PR.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Tạo PR trực tiếp từ nhánh main cá nhân**: Gây khó khăn khi muốn sửa nhiều tính năng cùng lúc; luôn tạo nhánh feature riêng.
-2. **Tiêu đề và mô tả PR sơ sài**: Khiến người review không hiểu mục đích thay đổi và trì hoãn phê duyệt.
-3. **Mở một PR quá khổng lồ chứa nhiều tính năng không liên quan**: Làm quá tải người kiểm tra và dễ bỏ sót lỗi nghiêm trọng.
+1. **Mở Pull Request trực tiếp từ nhánh `main` cá nhân**: Gây khó khăn khi muốn sửa nhiều tính năng song song; luôn phải tạo nhánh feature riêng.
+2. **Mô tả PR sơ sài cẩu thả**: Chỉ ghi vài từ cụt lủn khiến người review mất thời gian mò mẫm không hiểu mục đích thay đổi.
+3. **Mở một PR quá đồ sộ gom góp nhiều tính năng**: PR vượt quá 500 dòng code khiến đồng nghiệp ngán ngẩm, review hời hợt và dễ lọt lỗi nghiêm trọng.
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác tạo nhánh tính năng, đẩy lên remote và mở PR trên giao diện web.
-1. Dùng một repository thử nghiệm trên GitHub mà bạn có quyền push, tạo nhánh `feat-login-button` và commit một chỉnh sửa nhỏ.
-2. Chạy `git push -u origin feat-login-button`. Nếu đang học trong simulator, bước này chỉ cập nhật remote giả lập; không thể tạo PR trên GitHub từ đó.
-3. Trên GitHub thật, mở repository, chọn tạo PR và kiểm tra đúng `base` (nhánh đích) cùng `compare` (nhánh nguồn).
-4. Viết tiêu đề và mô tả gồm mục tiêu, thay đổi chính, cách kiểm tra; tạo PR nếu có quyền.
+## 🧪 Lab
+1. Tạo một nhánh tính năng mới trên máy của bạn: `git switch -c feat-demo-pr`.
+2. Tạo một commit sửa đổi tài liệu: `git commit --allow-empty -m "docs: add api contract"`.
+3. Đẩy nhánh lên máy chủ GitHub: `git push -u origin feat-demo-pr`.
+4. Mở trang dự án trên GitHub, nhấp vào nút "Compare & pull request", điền tiêu đề và kiểm tra kỹ hai nhánh base và compare.
 
 ---
 
-## 💡 Hint & mẹo
-> Một Pull Request lý tưởng nên nhỏ gọn, tập trung giải quyết trọn vẹn một vấn đề duy nhất để đồng nghiệp review nhanh chóng.
+## 💡 Hint
+> Một PR chuyên nghiệp luôn gồm 3 yếu tố cốt lõi trong phần mô tả: 1. Vấn đề cần giải quyết là gì? (Why), 2. Giải pháp kỹ thuật đã chọn là gì? (What), 3. Cách thức kiểm thử như thế nào? (How to test kèm ảnh chụp hoặc video minh họa).
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
-- Pull Request được tạo thành công trên GitHub với đầy đủ tiêu đề và nội dung giải trình.
-- Giao diện "Files changed" hiển thị đúng các dòng code bạn đã thay đổi.
+## ✅ Validation
+- Hiểu rõ bản chất hướng đi của code giữa nhánh base và compare.
+- Nắm vững các tiêu chuẩn viết một bản mô tả PR chuyên nghiệp đạt chuẩn doanh nghiệp.
 
 ---
 
-## ❓ Quiz nhanh
-Hãy hoàn thành các câu hỏi trắc nghiệm dưới đây để kiểm tra hiểu biết về quy trình tạo Pull Request.
+## ❓ Quiz
+Làm bài trắc nghiệm dưới đây để kiểm tra mức độ am hiểu của bạn về quy trình tạo và quản trị Pull Request trên GitHub.
 
 ---
 
-## 🚀 Thử thách nâng cao
-Tìm hiểu cách cấu hình file `.github/pull_request_template.md` để tự động hiển thị danh sách kiểm tra (checklist) cho mọi PR mới trong dự án.
+## 🔥 Challenge
+Tìm hiểu cách thiết lập tệp mẫu `.github/pull_request_template.md`. Tại sao tất cả các công ty công nghệ lớn đều bắt buộc áp dụng PR Template cho mọi dự án phát triển phần mềm?
 
 ---
 
-## 📝 Tổng kết
-- Pull Request đề nghị tích hợp thay đổi từ nhánh nguồn vào nhánh đích trên nền tảng cộng tác.
-- Kiểm tra repository, hai nhánh, diff và các quy tắc của nhóm trước khi tạo.
-- PR hỗ trợ review và kiểm tra; quyền merge phụ thuộc vào quyền truy cập và cấu hình repository.
+## 📚 Tổng kết
+- Pull Request là đề xuất chính thức để gộp mã nguồn từ nhánh tính năng vào nhánh đích.
+- Tạo không gian minh bạch cho thảo luận, chạy kiểm thử tự động và rà soát lỗi.
+- Đảm bảo chất lượng và độ an toàn tuyệt đối cho nhánh chính của sản phẩm.

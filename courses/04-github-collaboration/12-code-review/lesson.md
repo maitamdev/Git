@@ -3,117 +3,117 @@
 ---
 
 ## 🎯 Mục tiêu
-- Hiểu rõ mục đích và tầm quan trọng sống còn của hoạt động Code Review đối với sự phát triển của đội ngũ.
-- Sử dụng thành thạo các công cụ review trên GitHub: bình luận từng dòng (line comments), tạo đề xuất sửa code (Suggested Changes), và phê duyệt (Approve).
-- Xây dựng văn hóa nhận xét mang tính xây dựng, tôn trọng và đồng cảm (Empathy in Code Review).
-- Phân biệt rõ ràng giữa 3 trạng thái phản hồi: Comment, Approve, và Request Changes.
+- Thấu hiểu mục đích tối thượng và giá trị vô giá của hoạt động Code Review đối với sự trưởng thành của đội ngũ.
+- Sử dụng thành thạo các công cụ review trên GitHub: bình luận từng dòng (line comments), tạo đề xuất sửa mã (Suggested Changes) và gửi phản hồi.
+- Xây dựng tư duy phản biện mang tính xây dựng, đồng cảm và tôn trọng (Empathy in Code Review).
+- Nắm vững ý nghĩa và hoàn cảnh áp dụng chuẩn xác của 3 trạng thái phản hồi: Comment, Approve và Request Changes.
 
 ---
 
 ## 🧩 Từ khóa hôm nay
 
-### code review
-- **Nói dễ hiểu**: Hoạt động đồng nghiệp đọc và phản biện code của nhau trước khi cho phép gộp vào nhánh chính.
-- **Ví dụ**: Đọc các file thay đổi trên tab "Files changed" của PR để tìm lỗi logic và bảo mật.
-- **Đừng nhầm**: Không phải công cụ soi xét chỉ trích cá nhân; đây là quy trình học hỏi và nâng cao chất lượng chung.
+### code review — phản biện mã nguồn
+- **Nói dễ hiểu:** Hoạt động đồng nghiệp đọc và kiểm tra chéo mã nguồn của nhau trước khi cho phép gộp vào nhánh chính của dự án.
+- **Ví dụ:** Mở tab "Files changed" trên GitHub để rà soát logic tính tiền, kiểm tra lỗ hổng bảo mật và tính tối ưu thuật toán.
+- **Đừng nhầm:** Đây tuyệt đối không phải công cụ để soi mói hay chỉ trích cá nhân; đây là diễn đàn học hỏi và cùng nâng cao chuẩn mực chung.
 
-### suggested changes
-- **Nói dễ hiểu**: Tính năng viết sẵn đoạn code sửa lỗi ngay trong bình luận để tác giả PR bấm áp dụng trực tiếp.
-- **Ví dụ**: Chèn khối code gợi ý thay thế hàm cũ bằng hàm mới an toàn hơn.
-- **Đừng nhầm**: Người review không tự động ghi đè code; tác giả PR vẫn là người bấm duyệt áp dụng commit.
+### suggested changes — gợi ý sửa đổi trực tiếp
+- **Nói dễ hiểu:** Tính năng ưu việt cho phép người review viết sẵn đoạn code đề xuất ngay trong bình luận để tác giả bấm nút áp dụng tức thì.
+- **Ví dụ:** Bạn chèn khối code gợi ý thay thế vòng lặp for thủ công bằng phương thức `.map()` ngắn gọn và an toàn hơn.
+- **Đừng nhầm:** Đoạn gợi ý không tự động đè lên code của tác giả; chính tác giả PR mới là người bấm nút phê duyệt để tạo commit mới.
 
-### request changes
-- **Nói dễ hiểu**: Trạng thái review cho biết người review yêu cầu tác giả xử lý một số vấn đề trước khi tích hợp.
-- **Ví dụ**: Phát hiện lỗ hổng SQL Injection hoặc lộ secret key và yêu cầu sửa trước khi đưa vào main.
-- **Đừng nhầm**: `Request changes` không phải lúc nào cũng tự chặn merge; tác dụng chặn phụ thuộc quy tắc bảo vệ nhánh và quyền trong repository.
+### request changes — yêu cầu chỉnh sửa
+- **Nói dễ hiểu:** Trạng thái đánh giá chính thức thể hiện người review phát hiện lỗi nghiêm trọng và yêu cầu tác giả phải sửa trước khi gộp.
+- **Ví dụ:** Bạn bấm "Request changes" khi phát hiện đoạn code có lỗ hổng SQL Injection hoặc làm lộ thông tin mật khẩu nhạy cảm.
+- **Đừng nhầm:** Trạng thái này có thể trực tiếp khóa nút Merge nếu kho lưu trữ đã được cấu hình luật bảo vệ nhánh nghiêm ngặt.
 
 ---
 
 ## 📖 Định nghĩa
-Code Review là hoạt động để người khác đọc các thay đổi, kiểm tra rủi ro và chia sẻ kiến thức. Nhiều nhóm yêu cầu review trước khi merge, nhưng quy định cụ thể tùy repository và nhóm.
+Code Review (phản biện mã nguồn) là quy trình kỹ thuật bắt buộc trong phát triển phần mềm chuyên nghiệp, nơi các thành viên trong đội ngũ trực tiếp đọc hiểu, kiểm tra chéo, phân tích rủi ro và đóng góp ý kiến cải tiến trên từng dòng mã nguồn của đồng nghiệp trước khi những thay đổi đó được chính thức phê duyệt và tích hợp vào nhánh chính.
 
 ---
 
-## 💡 Tại sao cần
-Không ai có thể viết code hoàn hảo mọi lúc mà không mắc lỗi. Code Review biến việc đảm bảo chất lượng từ gánh nặng cá nhân thành sức mạnh tập thể. Đây cũng là kênh đào tạo nội bộ tốt nhất giúp kỹ sư trẻ học hỏi tư duy thiết kế từ đồng nghiệp đi trước.
+## 🤔 Tại sao cần?
+Không một lập trình viên nào dù tài năng đến đâu có thể viết mã hoàn hảo 100% mọi lúc. Hoạt động Code Review chuyển hóa trách nhiệm bảo đảm chất lượng từ gánh nặng đơn độc của một cá nhân thành sức mạnh trí tuệ của cả tập thể. Quan trọng hơn, đây là kênh đào tạo nội bộ hiệu quả nhất: kỹ sư ít kinh nghiệm học được tư duy thiết kế hệ thống từ đàn anh, còn kỹ sư kỳ cựu liên tục củng cố sự chuẩn mực.
 
 ---
 
-## 🧠 Mental Model
-Hãy hình dung Code Review như quy trình biên tập viên đọc bản thảo của tác giả trước khi đem in sách. Người biên tập không nhằm chê bai mà cùng tác giả rà soát từng lỗi chính tả, câu chữ lủng củng và chi tiết vô lý để cuốn sách xuất bản đạt chất lượng hoàn hảo nhất.
+## 🧠 Mental Model (Mô hình tư duy)
+Hãy hình dung Code Review như quy trình biên tập viên kỳ cựu đọc duyệt bản thảo của nhà văn trước khi đưa vào nhà in xuất bản sách. Người biên tập không nhằm mục đích phán xét hay chỉ trích tác giả, mà cùng ngồi lại với tác giả để rà soát từng lỗi diễn đạt, chi tiết vô lý và gợi ý câu từ đắt giá hơn nhằm đem lại một tác phẩm hoàn hảo nhất tới tay độc giả.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
-3 mức độ phản hồi khi kết thúc Code Review trên GitHub:
+BA TRẠNG THÁI PHẢN HỒI KHI KẾT THÚC REVIEW TRÊN GITHUB:
+
 ┌────────────────────────────────────────────────────────┐
-│  [Comment]         ──► Chỉ để lại câu hỏi hoặc góp ý nhẹ│
-│  [Approve]         ──► Người review chấp thuận thay đổi  │
-│  [Request Changes] ──► Người review đề nghị sửa trước   │
+│  [Comment]         ──► Chỉ để lại thắc mắc hoặc góp ý  │
+│  [Approve]         ──► Đồng thuận hoàn toàn, cho phép  │
+│  [Request Changes] ──► Bắt buộc phải sửa mới được gộp  │
 └────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 🏢 Ví dụ thực tế
-Kỹ sư Senior Tuấn review PR đăng ký tài khoản của bạn thực tập sinh. Thấy mật khẩu lưu dạng văn bản chưa mã hóa, Tuấn bấm vào dòng code trên GitHub diff, giải thích rủi ro theo chuẩn OWASP và dùng tính năng Insert suggestion để gợi ý băm mật khẩu bằng bcrypt. Tác giả cảm ơn và bấm nút áp dụng gợi ý để cập nhật commit ngay.
+## 🌎 Ví dụ thực tế
+Khi xem xét PR của một đồng nghiệp mới, Tech Lead phát hiện một câu lệnh truy vấn cơ sở dữ liệu có nguy cơ gây lỗi N+1 làm tê liệt hệ thống khi lượng người dùng tăng cao. Thay vì bình luận chung chung, Tech Lead để lại bình luận chi tiết ngay tại dòng code đó, giải thích rõ nguyên nhân và dùng tính năng Suggested Changes để viết sẵn đoạn mã dùng eager loading. Lập trình viên chỉ cần bấm nút chấp thuận để áp dụng ngay.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
-gh pr checkout <pr-number>
-git log -p
+gh pr checkout 42
+git log -p -2
 ```
 
 ---
 
 ## 🔍 Giải thích command
-- `gh pr checkout <number>`: Lệnh của GitHub CLI cho phép tải nhánh của PR về máy tính cá nhân để chạy thử nghiệm thực tế.
-- `git log -p`: Xem chi tiết từng dòng thay đổi (diff) của các commit trong nhánh ngay tại terminal máy bạn.
+- `gh pr checkout 42`: Lệnh của GitHub CLI giúp tự động kéo toàn bộ nhánh của PR số 42 về máy tính cá nhân để chạy thử nghiệm thực tế.
+- `git log -p -2`: Soi chiếu chi tiết từng dòng thay đổi (diff) của 2 commit gần nhất ngay tại giao diện dòng lệnh.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Công kích cá nhân thay vì tập trung vào đoạn code**: Dùng lời lẽ gay gắt làm ảnh hưởng tiêu cực tới tinh thần đồng đội.
-2. **Duyệt hời hợt mà không đọc code**: Bấm approve bừa bãi khiến lỗi nghiêm trọng lọt vào môi trường chạy thật.
-3. **Tranh cãi gay gắt về sở thích cá nhân**: Tranh luận về dấu cách hay tab thay vì cấu hình công cụ tự động như Prettier và ESLint.
+1. **Phán xét gay gắt về con người thay vì đoạn code**: Dùng ngôn từ tiêu cực làm tổn thương đồng nghiệp và phá vỡ tinh thần đoàn kết của nhóm.
+2. **Bấm Approve hời hợt mà không thèm đọc code**: Dễ dãi ký duyệt khiến các lỗi bảo mật hoặc rò rỉ bộ nhớ nghiêm trọng lọt vào bản phát hành chính.
+3. **Tranh cãi bất tận về phong cách định dạng cá nhân**: Tranh cãi dấu cách hay dấu phẩy thay vì để các công cụ tự động hóa như Linter hay Prettier giải quyết.
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thực hành xem diff và thử để lại nhận xét trên giao diện GitHub PR.
-1. Mở một PR thử nghiệm mà bạn có quyền xem trên GitHub. Nếu chưa dùng GitHub, hãy review thay đổi mẫu sau: `- const finalPrice = price + discount;` / `+ const finalPrice = price - discount;`.
-2. Với PR thật, trong tab `Files changed`, chọn một dòng thay đổi và để lại một câu hỏi hoặc gợi ý cụ thể, giải thích lý do. Với ví dụ mẫu, viết nhận xét: công thức nào sai và ảnh hưởng tới giá cuối cùng là gì?
-3. Nếu phù hợp, tạo Suggested Change. Tác giả PR sẽ xem xét và quyết định có áp dụng hay không.
-4. Trên PR thật, chọn `Review changes` và đọc ý nghĩa của `Comment`, `Approve`, `Request changes`; chỉ gửi trạng thái thể hiện đúng đánh giá thật của bạn.
-5. Viết một nhận xét mẫu theo cấu trúc “Vấn đề quan sát được → ảnh hưởng → đề xuất kiểm tra/sửa”. Không cần gửi nhận xét lên repository thật để hoàn thành bài này.
+## 🧪 Lab
+1. Mở một PR đang mở trên GitHub của nhóm bạn hoặc kho dự án mã nguồn mở.
+2. Điều hướng sang tab "Files changed" để quan sát các vùng sai khác màu xanh và đỏ.
+3. Nhấp vào một dòng code cụ thể, nhấp biểu tượng dấu cộng để mở khung bình luận.
+4. Thử nghiệm tính năng "Add a suggestion" để tạo một khối mã thay thế mẫu.
+5. Xem lại bảng tổng kết đánh giá "Review changes" với 3 lựa chọn Comment, Approve và Request changes.
 
 ---
 
-## 💡 Hint & mẹo
-> Luôn bình luận về dòng mã nguồn và giải pháp kỹ thuật, tuyệt đối không bình luận về con người lập trình viên.
+## 💡 Hint
+> Kim chỉ nam của người review xuất sắc: "Luôn giải thích lý do (Tại sao nên làm thế này?) kèm theo giải pháp cụ thể (Làm thế nào?), và không bao giờ quên khen ngợi những đoạn code xử lý thông minh của đồng nghiệp!"
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
-- Nhận xét nêu cụ thể vị trí, tác động và hướng xử lý; không công kích người viết.
-- Biết `Request changes` có thể chặn merge theo quy tắc repository, không phải trong mọi cấu hình.
+## ✅ Validation
+- Nhận thức thấu đáo tinh thần và văn hóa cốt lõi của hoạt động Code Review.
+- Sử dụng thành thạo tính năng gợi ý mã nguồn Suggested Changes trên giao diện GitHub.
 
 ---
 
-## ❓ Quiz nhanh
-Hãy hoàn thành các câu hỏi trắc nghiệm dưới đây để kiểm tra hiểu biết về văn hóa và kỹ năng Code Review.
+## ❓ Quiz
+Làm bài trắc nghiệm dưới đây để củng cố nhận thức và kỹ năng thực hành văn hóa Code Review chuyên nghiệp.
 
 ---
 
-## 🚀 Thử thách nâng cao
-Tìm hiểu cách cấu hình quy tắc Branch Protection Rules trên GitHub để yêu cầu tối thiểu 1 hoặc 2 lượt Approve trước khi nút Merge được mở khóa.
+## 🔥 Challenge
+Tìm hiểu cách kết hợp cấu hình `CODEOWNERS` với Branch Protection Rules trên GitHub. Làm thế nào để GitHub tự động gắn thẻ trưởng nhóm kiến trúc vào mục Reviewers mỗi khi có ai đó sửa đổi các tệp nằm trong thư mục cốt lõi `/src/core/`?
 
 ---
 
-## 📝 Tổng kết
-- Code Review là hoạt động tập thể nhằm nâng cao chất lượng mã nguồn và chia sẻ kiến thức.
-- Sử dụng tính năng Suggested Changes để đồng nghiệp có thể áp dụng sửa đổi chỉ với một cú click.
-- Luôn giữ thái độ tôn trọng, tích cực và tập trung vào giải pháp kỹ thuật.
+## 📚 Tổng kết
+- Code Review là tấm lá chắn bảo vệ chất lượng phần mềm và văn hóa chia sẻ tri thức.
+- Tận dụng Suggested Changes để đưa ra đề xuất trực quan và tiết kiệm thời gian cho đồng đội.
+- Luôn giữ thái độ khách quan, tôn trọng và tập trung vào lợi ích lâu dài của dự án.
