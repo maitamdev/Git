@@ -1,68 +1,68 @@
-# Cài đặt Git và chọn terminal
+# Cài đặt Git và chọn terminal: Thiết lập vũ khí cho lập trình viên
 
 ---
 
 ## 🎯 Mục tiêu
-- Tìm hướng dẫn cài Git phù hợp với hệ điều hành của mình.
-- Mở terminal trên máy thật và kiểm tra Git bằng `git --version`.
-- Phân biệt terminal mô phỏng trong khóa học với Git cài trên máy cá nhân.
+- Tự tay thiết lập môi trường Git chuẩn chỉ trên các hệ điều hành phổ biến (Windows, macOS, Linux).
+- Hiểu rõ cơ chế biến môi trường PATH giúp terminal triệu hồi lệnh `git` từ bất kỳ đâu.
+- Sử dụng lệnh `git --version` để nghiệm thu quá trình cài đặt thành công trên máy thật.
 
 ---
 
 ## 🧩 Từ khóa hôm nay
 
-### Terminal — cửa sổ nhập lệnh
-- **Nói dễ hiểu:** Ứng dụng cho phép bạn gõ lệnh để yêu cầu máy tính làm việc.
-- **Ví dụ:** PowerShell trên Windows hoặc Terminal trên macOS/Linux.
-- **Đừng nhầm:** Terminal nhận lệnh; Git là chương trình được gọi từ terminal.
+### Terminal — Cửa sổ dòng lệnh
+- **Nói dễ hiểu:** Môi trường giao tiếp trực tiếp bằng văn bản với hệ điều hành, nơi bạn nhập các câu lệnh để ra lệnh cho máy tính.
+- **Ví dụ:** Ứng dụng PowerShell trên Windows hoặc Terminal trên máy Mac.
+- **Đừng nhầm:** Terminal chỉ là cái vỏ giao diện nhận lệnh; Git là chương trình thực thi được gọi từ bên trong cái vỏ đó.
 
-### CLI (Command-Line Interface) — giao diện dòng lệnh
-- **Nói dễ hiểu:** Cách điều khiển chương trình bằng cách nhập câu lệnh thay vì chỉ bấm nút.
-- **Ví dụ:** Gõ `git --version` trong terminal để yêu cầu Git in phiên bản.
-- **Đừng nhầm:** CLI là cách tương tác; nó không phải một terminal riêng hay một tài khoản.
+### CLI (Command-Line Interface) — Giao diện dòng lệnh
+- **Nói dễ hiểu:** Phương thức làm việc của lập trình viên chuyên nghiệp bằng cách gõ lệnh chuẩn xác thay vì dùng chuột bấm trên giao diện đồ họa.
+- **Ví dụ:** Bạn gõ `git --version` để kiểm tra phiên bản thay vì tìm một biểu tượng ứng dụng để nhấn chuột.
+- **Đừng nhầm:** CLI đòi hỏi bạn phải nhớ cú pháp và hiểu bản chất, nhưng mang lại quyền năng tự động hóa và tốc độ vượt trội.
 
-### Git Bash — terminal đi kèm Git for Windows
-- **Nói dễ hiểu:** Ứng dụng trên Windows cung cấp giao diện dòng lệnh quen thuộc cho Git.
-- **Ví dụ:** Mở Git Bash rồi gõ một lệnh Git.
-- **Đừng nhầm:** Bạn không bắt buộc dùng Git Bash; PowerShell cũng chạy Git khi cài đặt đã cấu hình đúng.
+### Git Bash — Cửa sổ lệnh Unix cho Windows
+- **Nói dễ hiểu:** Trình giả lập môi trường dòng lệnh Linux kèm theo bộ cài Git for Windows, giúp bạn gõ các lệnh Unix quen thuộc trên Windows.
+- **Ví dụ:** Bạn mở Git Bash để vừa gõ lệnh Git vừa dùng được các tiện ích dòng lệnh như liệt kê tệp hay tìm kiếm văn bản.
+- **Đừng nhầm:** Bạn không bắt buộc phải dùng Git Bash; PowerShell hay Command Prompt đều chạy được Git nếu cấu hình PATH chuẩn.
 
-### PATH — nơi hệ điều hành tìm chương trình
-- **Nói dễ hiểu:** Thiết lập giúp terminal tìm được chương trình khi bạn gõ tên lệnh.
-- **Ví dụ:** Nếu terminal không nhận `git`, Git có thể chưa cài hoặc chưa được tìm thấy qua PATH.
-- **Đừng nhầm:** PATH không phải thư mục dự án và không chứa lịch sử Git.
+### PATH — Biến môi trường định vị chương trình
+- **Nói dễ hiểu:** Cuốn danh bạ ghi các đường dẫn thư mục mà hệ điều hành sẽ tự động lục tìm mỗi khi bạn gõ tên một câu lệnh.
+- **Ví dụ:** Khi bạn gõ `git`, máy tính tra trong biến PATH để biết file thực thi `git.exe` đang nằm ở thư mục nào.
+- **Đừng nhầm:** PATH là thiết lập của hệ điều hành máy tính, hoàn toàn tách biệt với các tệp mã nguồn trong dự án của bạn.
 
 ---
 
 ## 🤔 Tại sao cần?
-Trước khi dùng Git trên máy của mình, bạn cần cài chương trình và mở được nó từ terminal. Nếu `git --version` in ra phiên bản, terminal đã gọi được Git. Nếu lệnh báo không nhận diện, bạn biết cần kiểm tra cài đặt hoặc PATH trước khi học các lệnh khác.
+Cài đặt công cụ là bài kiểm tra nhập môn đầu tiên của mọi kỹ sư. Nhiều bạn tải bộ cài về, bấm Next liên tục trong vô thức rồi hoang mang không hiểu tại sao terminal báo lỗi không nhận lệnh. Khi nắm vững kiến thức cài đặt và biến môi trường PATH, bạn không chỉ tự tin cấu hình Git trên chiếc laptop cá nhân mà còn sẵn sàng thiết lập môi trường làm việc trên các máy chủ đám mây từ xa chạy Linux mà không hề bỡ ngỡ.
 
 ---
 
 ## 📖 Định nghĩa
-Cài Git nghĩa là đưa chương trình Git vào máy để terminal có thể chạy lệnh `git`. Hướng dẫn chính thức nằm tại [git-scm.com/install](https://git-scm.com/install); chọn Windows, macOS hoặc Linux rồi làm theo bước dành cho hệ điều hành của bạn. Sau khi cài, mở một terminal mới và chạy `git --version` để kiểm tra.
+Cài đặt Git là quá trình đưa tệp thực thi của Git vào hệ điều hành và bổ sung đường dẫn vào biến môi trường PATH. Nhờ đó, bất kỳ cửa sổ dòng lệnh nào cũng có thể nhận diện và thực thi câu lệnh `git`. Bạn có thể tải bộ cài chuẩn tại trang chủ git-scm.com.
 
 ---
 
 ## 🧠 Mental Model (Mô hình tư duy)
-Git là chương trình; terminal là nơi bạn yêu cầu chương trình chạy. PATH giống danh sách địa chỉ giúp hệ điều hành tìm chương trình Git khi bạn gõ lệnh.
+Hãy coi Git là một cuốn từ điển bách khoa toàn thư vừa được bạn mua về nhà. Biến môi trường PATH giống như việc bạn dán một tờ giấy hướng dẫn ở phòng khách ghi rõ: "Từ điển để ở giá sách tầng hai". Bất kỳ ai trong nhà (PowerShell hay Git Bash) chỉ cần nhìn vào tờ giấy đó là tìm thấy từ điển ngay!
 
 ---
 
 ## 🖼 Sơ đồ
 ```text
-Bạn nhập lệnh trong terminal
-          │
-          ▼
-Hệ điều hành tìm chương trình Git qua PATH
-          │
-          ▼
-Git chạy và in kết quả về terminal
+Bạn gõ "git --version" vào Terminal
+               │
+               ▼
+Hệ điều hành tra cứu biến PATH: C:\Program Files\Git\cmd
+               │
+               ▼
+Khởi chạy git.exe và trả về kết quả: git version 2.44.0
 ```
 
 ---
 
 ## 🌎 Ví dụ thực tế
-Trên Windows, cài Git for Windows rồi mở PowerShell mới. Trên macOS hoặc Linux, làm theo lựa chọn cài đặt của hệ điều hành trên trang chính thức. Chạy `git --version`: nếu có dòng phiên bản, Git đã chạy được trong terminal bạn vừa dùng.
+Một bạn sinh viên vừa cài xong Git for Windows trên máy tính, quay lại cửa sổ PowerShell đang mở sẵn gõ `git --version` thì nhận ngay thông báo lỗi đỏ rực. Bạn tưởng cài hỏng nên tính xóa đi cài lại. Thực ra, cửa sổ terminal cũ chưa kịp nhận biến PATH mới; chỉ cần tắt đi mở lại một cửa sổ PowerShell mới tinh là lệnh chạy mượt mà ngay lập tức.
 
 ---
 
@@ -74,47 +74,49 @@ git --version
 ---
 
 ## 🔍 Giải thích command
-`git --version` in phiên bản của Git đang chạy. Trong terminal máy thật, kết quả kiểm tra Git đã cài trên máy đó; trong terminal mô phỏng của Git Academy, kết quả chỉ nói về môi trường mô phỏng và không cài Git vào máy cá nhân.
+`git --version` là câu lệnh đầu tiên mà mọi kỹ sư chạy để chào sân môi trường mới. Lệnh này yêu cầu Git in ra mã số phiên bản hiện tại đang được cài đặt trên hệ điều hành. Nếu màn hình in ra kết quả dạng phiên bản cụ thể, cỗ máy Git đã sẵn sàng phục vụ bạn trong mọi dự án.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Cài Git nhưng tiếp tục dùng terminal cũ:** Mở terminal mới rồi chạy lại lệnh kiểm tra.
-2. **Tưởng bắt buộc phải dùng Git Bash:** PowerShell cũng dùng được nếu Git for Windows đã được thêm vào PATH.
-3. **Nghĩ terminal mô phỏng đã cài Git lên máy thật:** Mô phỏng chỉ giúp luyện lệnh; cài đặt thật cần làm trên hệ điều hành của bạn.
+1. **Quên khởi động lại terminal sau khi cài đặt:** Cửa sổ terminal mở từ trước sẽ không thể nhận diện được các biến môi trường PATH mới thêm vào.
+2. **Ảo tưởng rằng học trên web thì không cần cài Git vào máy thật:** Trình giả lập web chỉ để luyện tập nhanh; khi đi làm dự án thực tế, bạn bắt buộc phải có Git thật trên máy.
+3. **Nhắm mắt bấm Next mà không chú ý tùy chọn cài đặt:** Trên Windows, việc chọn cấu hình dòng lệnh và ký tự xuống dòng phù hợp sẽ giúp tránh lỗi hiển thị khi làm việc nhóm đa nền tảng.
 
 ---
 
 ## 🧪 Lab
-1. Xác định máy bạn đang dùng Windows, macOS hay Linux.
-2. Mở [hướng dẫn cài Git chính thức](https://git-scm.com/install), chọn hệ điều hành và làm theo các bước cài đặt.
-3. Mở terminal mới trên máy thật, chạy `git --version` và ghi lại kết quả.
-4. Nếu báo không nhận diện lệnh, kiểm tra Git đã cài xong chưa, rồi mở terminal mới trước khi đổi PATH.
+1. Tải bộ cài Git chuẩn từ trang chủ git-scm.com phù hợp với hệ điều hành của bạn.
+2. Tiến hành cài đặt và đặc biệt chú ý bước cho phép Git chạy từ command line của bên thứ ba.
+3. Mở một cửa sổ dòng lệnh mới tinh (PowerShell hoặc Terminal trên macOS) và gõ `git --version`.
+4. Ghi lại chính xác phiên bản Git vừa được cài đặt thành công trên máy của bạn.
 
 ---
 
 ## 💡 Hint
-Nếu lệnh không chạy sau khi cài, hãy mở terminal mới trước. Trong terminal mô phỏng, kết quả chỉ xác nhận môi trường học đang mô phỏng Git.
+Nếu gặp lỗi không nhận diện lệnh sau khi cài, hãy bình tĩnh làm theo hai bước: tắt hẳn cửa sổ dòng lệnh cũ rồi mở lại cái mới; nếu vẫn chưa được, hãy kiểm tra lại biến môi trường PATH trong cài đặt hệ thống.
 
 ---
 
 ## ✅ Validation
-- Trên máy thật, terminal bạn chọn in ra phiên bản Git mà không báo lỗi.
-- Nói đúng rằng Git Bash là một lựa chọn trên Windows, không phải lựa chọn duy nhất.
+- Cửa sổ terminal trên máy tính thật in ra đúng định dạng phiên bản Git mà không phát sinh lỗi.
+- Phân biệt rõ sự khác nhau giữa Terminal (cửa sổ nhập lệnh), Shell (trình thông dịch) và Git (phần mềm ứng dụng).
+- Giải thích được nguyên lý vận hành của biến môi trường PATH.
 
 ---
 
 ## ❓ Quiz
-Trả lời các câu hỏi sau. Khi sai, đọc lời giải thích rồi thử lại.
+Làm bài trắc nghiệm dưới đây để kiểm tra hiểu biết về cài đặt môi trường và terminal. Đọc kỹ phần giải thích của giảng viên sau mỗi lựa chọn.
 
 ---
 
 ## 🔥 Challenge
-Nếu dùng Windows, mở PowerShell và Git Bash rồi chạy `git --version` ở cả hai. Nêu terminal nào bạn muốn dùng cho các bài sau.
+Nếu dùng Windows, hãy thử mở song song hai cửa sổ: một bên là PowerShell và một bên là Git Bash; chạy lệnh `git --version` ở cả hai và so sánh trải nghiệm hiển thị của hai môi trường này.
 
 ---
 
 ## 📚 Tổng kết
-- Cài Git trên máy thật rồi mở terminal mới.
-- `git --version` kiểm tra chương trình Git mà terminal đang gọi.
-- Git Bash là một lựa chọn; PowerShell cũng chạy được Git khi PATH đã đúng.
+- Luôn tải bản cài đặt Git chính thức từ trang chủ git-scm.com để đảm bảo an toàn và cập nhật tính năng mới nhất.
+- Biến môi trường PATH là cầu nối giúp hệ điều hành tìm thấy và thực thi chương trình Git từ mọi thư mục.
+- Lệnh `git --version` là thước đo tiêu chuẩn để xác nhận môi trường phát triển đã sẵn sàng tác chiến.
+

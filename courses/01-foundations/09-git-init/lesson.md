@@ -1,67 +1,67 @@
-# Khởi tạo kho chứa với git init
+# Khởi tạo kho chứa với git init: Khai sinh dự án chuẩn mực
 
 ---
 
 ## 🎯 Mục tiêu
-- Dùng `git init` để bắt đầu quản lý một thư mục bằng Git.
-- Kiểm tra Git đã tạo repository nhưng chưa lưu commit đầu tiên.
-- Nhận ra tên nhánh ban đầu có thể phụ thuộc cấu hình.
+- Tự tay kích hoạt cỗ máy quản lý phiên bản Git cho bất kỳ thư mục dự án nào bằng `git init`.
+- Hiểu rõ cơ chế khởi tạo nhánh ban đầu (`main`) và thiết lập cấu hình chuẩn mực của ngành.
+- Nhận diện trạng thái Untracked và tránh dứt điểm lỗi khởi tạo lồng kho chứa (nested repo) kinh hoàng.
 
 ---
 
 ## 🧩 Từ khóa hôm nay
 
-### `git init` — bắt đầu repository
-- **Nói dễ hiểu:** Lệnh tạo dữ liệu nội bộ để Git bắt đầu quản lý thư mục hiện tại.
-- **Ví dụ:** Chạy `git init` trong thư mục bài tập trước khi lưu các mốc thay đổi.
-- **Đừng nhầm:** Lệnh này chưa thêm tệp và chưa tạo commit.
+### `git init` — Lệnh khởi tạo kho chứa
+- **Nói dễ hiểu:** Phép thuật biến một thư mục bình thường trên ổ cứng thành một Git Repository hoàn chỉnh.
+- **Ví dụ:** Bạn tạo thư mục `du-an-moi`, đứng tại đó và gõ `git init` để Git bắt đầu theo dõi.
+- **Đừng nhầm:** `git init` chỉ dựng khung quản lý và tạo `.git`; nó chưa hề tự động đóng gói hay lưu code của bạn vào commit.
 
-### Initial branch — nhánh ban đầu
-- **Nói dễ hiểu:** Tên Git chuẩn bị dùng làm điểm bắt đầu cho dòng lịch sử mới.
-- **Ví dụ:** Tên thường gặp là `main`, nhưng có thể đặt tên khác theo cấu hình.
-- **Đừng nhầm:** `git init` không phải lúc nào cũng đặt tên `main`; tên mặc định phụ thuộc cấu hình.
+### Initial Branch — Nhánh khởi đầu
+- **Nói dễ hiểu:** Nhánh làm việc gốc đầu tiên mà Git chuẩn bị sẵn để đón nhận mốc commit đầu đời của bạn.
+- **Ví dụ:** Nhánh khởi đầu ngày nay theo chuẩn công nghiệp quốc tế thường được đặt tên là `main`.
+- **Đừng nhầm:** Tên nhánh mặc định có thể là `master` trên các phiên bản Git cũ; bạn có thể chỉ định `main` ngay bằng cờ `-b main`.
 
-### Untracked — chưa được Git theo dõi
-- **Nói dễ hiểu:** Tệp nằm trong thư mục dự án nhưng Git chưa được yêu cầu theo dõi nó.
-- **Ví dụ:** README mới tạo có thể hiện là untracked khi chạy `git status`.
-- **Đừng nhầm:** Untracked không có nghĩa tệp bị xóa; tệp vẫn nằm trong thư mục và có thể được chọn sau.
+### Untracked — Tệp tin chưa được theo dõi
+- **Nói dễ hiểu:** Tệp tin đã nằm trong thư mục dự án nhưng Git chưa được bạn cho phép đưa vào tầm ngắm bảo vệ.
+- **Ví dụ:** Sau khi `git init`, file `server.js` hiện màu đỏ kèm nhãn untracked khi bạn gõ `git status`.
+- **Đừng nhầm:** Untracked không có nghĩa là file bị lỗi hay hỏng; file vẫn nằm đó chờ bạn ra lệnh đóng gói ở bài sau.
 
-### First commit — mốc đầu tiên
-- **Nói dễ hiểu:** Commit đầu tiên bạn chủ động tạo sau khi khởi tạo repository.
-- **Ví dụ:** Sau khi chọn những tệp cần lưu, bạn có thể tạo mốc “Tạo README”.
-- **Đừng nhầm:** `git init` chỉ chuẩn bị repository; chọn tệp và tạo commit sẽ học ở các bài sau.
-
----
-
-## 📖 Định nghĩa
-`git init` bắt đầu quản lý thư mục hiện tại bằng Git và tạo dữ liệu nội bộ trong `.git`. Các tệp có sẵn vẫn ở đó, nhưng chưa tự được lưu vào lịch sử. Git chuẩn bị một nhánh ban đầu; tên của nhánh phụ thuộc cấu hình. Bạn cần chọn tệp và tạo commit riêng để lưu mốc đầu tiên.
+### First Commit — Mốc khai sinh dự án
+- **Nói dễ hiểu:** Commit lịch sử đầu tiên được tạo ra, chính thức đặt nền móng cho cuốn biên niên sử của dự án.
+- **Ví dụ:** Commit với thông điệp "Khởi tạo cấu trúc dự án ban đầu" sau khi hoàn tất các bước chuẩn bị.
+- **Đừng nhầm:** Lệnh `git init` không tự tạo first commit; chỉ khi bạn gõ lệnh commit thì mốc khai sinh mới xuất hiện.
 
 ---
 
 ## 🤔 Tại sao cần?
-Thư mục mới chưa có lịch sử Git. `git init` chuẩn bị thư mục để Git có thể theo dõi thay đổi; sau đó bạn sẽ chọn tệp và tạo commit ở bài tiếp theo.
+Mọi hành trình vĩ đại của các phần mềm triệu đô đều bắt đầu từ một dấu mốc: câu lệnh `git init`. Trước khi có thể dùng cỗ máy thời gian, bạn phải lắp đặt nó vào dự án. Lệnh này khai sinh ra thư mục `.git`, thiết lập cơ sở dữ liệu ngầm và sẵn sàng ghi chép từng bước đi của bạn. Nắm vững lệnh này cùng thói quen kiểm tra thư mục hiện hành sẽ cứu bạn khỏi cạm bẫy khởi tạo nhầm Git ra màn hình Desktop vô cùng tai hại.
+
+---
+
+## 📖 Định nghĩa
+`git init` là câu lệnh khởi tạo một Git repository mới hoặc tái thiết lập một repository hiện có ngay tại thư mục hiện hành. Lệnh này tạo ra thư mục ẩn `.git` chứa toàn bộ khung xương dữ liệu và cấu hình cần thiết để Git bắt đầu theo dõi dự án.
 
 ---
 
 ## 🧠 Mental Model (Mô hình tư duy)
-`git init` giống như mở một cuốn sổ lịch sử mới cho thư mục. Lệnh tạo phần dữ liệu Git; nó chưa tự ghi các tệp vào commit.
+Hãy tưởng tượng bạn vừa mua một căn phòng trống để làm việc. Gõ `git init` giống như việc bạn mời người thư ký ghi chép (Git) vào phòng, đặt một cuốn sổ cái mới tinh lên bàn và mở sẵn trang đầu tiên. Thư ký đã sẵn sàng, nhưng bạn chưa hề xếp đồ đạc nào vào tủ cả!
 
 ---
 
 ## 🖼 Sơ đồ
 ```text
-Trước khi chạy git init:                Sau khi chạy git init:
-my-project/                              my-project/
-├── app.js                               ├── .git/  <── (Vừa được tạo ra!)
-└── style.css                            ├── app.js
-(Thư mục thường)                         (Git sẵn sàng theo dõi)
-                                         Chưa có commit nào
+Trước khi gõ "git init":              Sau khi gõ "git init":
+my-project/                           my-project/
+├── app.js                            ├── .git/  ◄── (Khởi tạo cỗ máy ngầm!)
+└── style.css                         ├── app.js (Trạng thái: Untracked)
+(Thư mục thường không có lịch sử)      └── style.css (Trạng thái: Untracked)
+                                      Sẵn sàng đón nhận Commit đầu tiên!
 ```
 
 ---
 
 ## 🌎 Ví dụ thực tế
-Bạn có thư mục `bai-tap`. Mở terminal tại đó và chạy `git init`, rồi chạy `git status`. Git đã khởi tạo repository, nhưng chưa có commit; tệp mới có thể được báo là untracked.
+Một bạn sinh viên nhận đề tài đồ án tốt nghiệp. Bạn tạo thư mục `do-an-tot-nghiep`, mở terminal ngay tại thư mục đó và gõ `git init -b main`. Ngay lập tức, Git thiết lập kho chứa chuẩn mực với nhánh chính là `main`. Từ giây phút đó, mọi dòng code, mọi tài liệu nghiên cứu mà bạn viết ra đều có thể được theo dõi và bảo vệ từng ngày.
 
 ---
 
@@ -75,47 +75,50 @@ git status
 ---
 
 ## 🔍 Giải thích command
-- `git init`: Khởi tạo repository trong thư mục hiện tại; lệnh không tự thêm tệp vào commit.
-- `git init -b main`: Trên phiên bản Git hỗ trợ tùy chọn này, đặt tên nhánh ban đầu là `main` cho repository mới.
-- `git status`: Kiểm tra Git đã nhận repository và xem trạng thái tệp.
+- `git init`: Khởi tạo kho chứa Git rỗng trong thư mục hiện tại của bạn.
+- `git init -b main`: Khởi tạo kho chứa và chỉ định trực tiếp tên nhánh ban đầu là `main` theo tiêu chuẩn hiện đại của GitHub.
+- `git status`: Kiểm tra xác nhận Git đã nhận diện repository thành công và báo cáo danh sách các tệp tin đang ở trạng thái Untracked.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Chạy lệnh ở sai thư mục**: Kiểm tra terminal đang mở tại thư mục dự án trước khi khởi tạo.
-2. **Tưởng init đã lưu tệp vào lịch sử**: Bạn còn phải thêm tệp và tạo commit ở bài sau.
-3. **Tạo repository lồng nhau không chủ ý**: Tránh chạy `git init` sâu bên trong repository khác.
+1. **Khởi tạo nhầm ở thư mục mẹ như Desktop hay User:** Đây là thảm họa kinh điển của người mới, khiến Git biến toàn bộ màn hình máy tính hay cả ổ đĩa thành một repository khổng lồ.
+2. **Ảo tưởng rằng `git init` đã tự lưu mã nguồn vào lịch sử:** Lệnh này mới chỉ dựng kho rỗng; bạn phải thực hiện chu trình đóng gói và commit ở bài sau thì code mới được lưu.
+3. **Chạy `git init` lồng bên trong một repository đã có:** Việc lồng kho chứa không đúng cách sẽ gây xung đột theo dõi tệp tin và làm rối loạn lịch sử quản lý.
 
 ---
 
 ## 🧪 Lab
-1. Trong terminal mô phỏng, chạy `git init` tại thư mục dự án đang dùng. Nếu hiện thông báo repository đã được khởi tạo trước đó, đó là kết quả bình thường.
-2. Chạy `git status`; xác nhận Git nhận repository và xem tệp nào còn untracked.
-3. Khi tạo repository mới trên máy thật và muốn chọn `main` ngay từ đầu, dùng `git init -b main` thay cho `git init` nếu phiên bản Git hỗ trợ.
+1. Mở cửa sổ terminal và đảm bảo bạn đang đứng đúng trong thư mục thực hành dự án.
+2. Thực thi lệnh `git init` (hoặc `git init -b main`) để khởi tạo kho chứa.
+3. Chạy lệnh `git status` để tận mắt kiểm tra thông điệp báo cáo trạng thái chưa có commit nào.
 
 ---
 
 ## 💡 Hint
-> Trước khi chạy init, kiểm tra terminal đang ở đúng thư mục dự án.
+Trước khi gõ lệnh `git init`, hãy luôn tự nhủ thần chú: "Mình đang đứng ở thư mục nào?" Hãy quan sát đường dẫn trên dấu nhắc lệnh để đảm bảo bạn không khởi tạo nhầm ra ngoài Desktop.
 
 ---
 
 ## ✅ Validation
-- `git status` chạy được trong thư mục vừa khởi tạo và báo chưa có commit.
+- Lệnh `git status` thực thi thành công và hiển thị rõ thông báo chưa có commit nào trên nhánh hiện tại.
+- Thư mục ẩn `.git` đã được sinh ra an toàn bên trong thư mục dự án.
+- Trình bày được vì sao các file mã nguồn ban đầu lại mang trạng thái Untracked.
 
 ---
 
 ## ❓ Quiz
-Làm bài trắc nghiệm dưới đây để kiểm tra hiểu biết về lệnh git init.
+Làm bài trắc nghiệm dưới đây để đánh giá sự thấu hiểu về bản chất của lệnh khởi tạo `git init`. Đọc kỹ phản hồi sư phạm sau mỗi câu hỏi.
 
 ---
 
 ## 🔥 Challenge
-Khởi tạo repository trong một thư mục thực hành và giải thích vì sao `git status` chưa thể hiện commit nào.
+Hãy thử giải thích sự khác biệt giữa hai tình huống: Tạo một dự án mới hoàn toàn từ đầu bằng `git init` so với việc tải một dự án đã có sẵn về máy bằng `git clone`.
 
 ---
 
 ## 📚 Tổng kết
-- `git init` tạo dữ liệu Git để bắt đầu quản lý thư mục; chạy lại trong repository thường không xóa tệp.
-- Tệp có sẵn không tự được thêm vào lịch sử.
-- Dùng `git status` để kiểm tra repository sau khi khởi tạo.
+- `git init` là bước khởi đầu bắt buộc để trao quyền năng quản lý phiên bản cho một thư mục dự án thông thường.
+- Sau khi khởi tạo, Git chuẩn bị sẵn nhánh làm việc nhưng toàn bộ tệp tin hiện hữu vẫn ở trạng thái Untracked cho đến khi bạn ra lệnh theo dõi.
+- Luôn kiểm tra kỹ đường dẫn thư mục làm việc trước khi chạy `git init` để tránh thảm họa biến cả máy tính thành một repo lộn xộn.
+
