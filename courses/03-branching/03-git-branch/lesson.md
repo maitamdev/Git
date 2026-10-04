@@ -3,62 +3,63 @@
 ---
 
 ## 🎯 Mục tiêu
-- Dùng `git branch` để xem nhánh cục bộ.
-- Dùng `git branch <tên>` để tạo nhánh mới.
-- Đọc dấu `*` để nhận biết nhánh đang chọn.
+- Sử dụng thành thạo `git branch` để kiểm tra danh mục toàn bộ các nhánh cục bộ.
+- Khởi tạo nhánh tính năng mới một cách chuẩn mực bằng `git branch <tên-nhánh>`.
+- Đọc vị chính xác ý nghĩa của dấu hoa thị `*` biểu thị nhánh đang được kích hoạt.
 
 ---
 
 ## 🧩 Từ khóa hôm nay
 
 ### Danh sách nhánh
-- **Nói dễ hiểu:** Các tên nhánh đang có trong repository trên máy bạn.
-- **Ví dụ:** `git branch` có thể hiện `main` và `feature-cart`.
-- **Đừng nhầm:** Đây là nhánh cục bộ, không tự liệt kê mọi nhánh remote.
+- **Nói dễ hiểu:** Bản thống kê tất cả các luồng làm việc độc lập đang tồn tại trong kho mã nguồn trên máy của bạn.
+- **Ví dụ:** Chạy `git branch` hiển thị danh sách gồm `main`, `develop` và `feature-cart`.
+- **Đừng nhầm:** Lệnh mặc định này chỉ liệt kê các nhánh nội bộ trên máy cá nhân, không tự động tải hay hiển thị các nhánh mới của đồng đội trên GitHub.
 
 ### Dấu `*` — nhánh hiện tại
-- **Nói dễ hiểu:** Dấu sao đứng trước tên nhánh đang được chọn.
-- **Ví dụ:** `* main` nghĩa là hiện bạn đang ở `main`.
-- **Đừng nhầm:** Tạo nhánh mới không tự chuyển dấu sao sang nhánh đó.
+- **Nói dễ hiểu:** Dấu chỉ điểm trực quan (thường có màu xanh lá) gắn trước tên nhánh mà con trỏ HEAD đang bám vào.
+- **Ví dụ:** Nhìn thấy `* main` nghĩa là mọi commit mới bạn tạo ra sẽ thuộc về nhánh `main`.
+- **Đừng nhầm:** Tạo nhánh mới sẽ không làm dịch chuyển dấu `*`; bạn vẫn đứng nguyên tại chỗ cho tới khi dùng lệnh chuyển nhánh.
 
 ### `git branch <tên>` — tạo nhánh
-- **Nói dễ hiểu:** Thêm một tên nhánh trỏ tới commit hiện tại.
-- **Ví dụ:** `git branch feature-cart` tạo nhánh cho phần giỏ hàng.
-- **Đừng nhầm:** Lệnh này không chuyển thư mục làm việc sang nhánh mới.
+- **Nói dễ hiểu:** Thao tác cắm thêm một chiếc cờ định danh mới trỏ vào mốc snapshot hiện tại của bạn.
+- **Ví dụ:** `git branch feature-payment` tạo nhánh riêng biệt cho tính năng thanh toán.
+- **Đừng nhầm:** Lệnh chỉ làm nhiệm vụ khai sinh nhánh mới, hoàn toàn chưa chuyển thư mục làm việc hay HEAD sang nhánh đó.
 
 ---
 
 ## 📖 Định nghĩa
-Chạy `git branch` không kèm tên để xem các nhánh cục bộ. Thêm tên phía sau để tạo nhánh tại commit hiện tại. Lệnh tạo nhánh không thay đổi nhánh bạn đang làm việc; dấu `*` cho biết vị trí hiện tại. Bài này chỉ học xem và tạo; đổi tên hoặc xóa nhánh sẽ học ở bài riêng.
+`git branch` là trung tâm điều phối và quản lý toàn bộ các nhánh trong kho mã nguồn cục bộ của bạn. Khi chạy không kèm tham số, lệnh sẽ xuất ra bản danh sách đầy đủ các luồng phát triển hiện hữu. Khi truyền thêm một tên nhánh phía sau, Git sẽ tạo ra một con trỏ nhánh mới trỏ thẳng vào commit hiện tại của bạn mà không hề làm suy chuyển vị trí làm việc.
 
 ---
 
 ## 🤔 Tại sao cần?
-Trước khi bắt đầu việc mới, bạn cần biết nhánh nào đã tồn tại và nhánh nào đang chọn. Tạo nhánh riêng giúp tách công việc mới. Xác nhận dấu `*` sau khi tạo để tránh tiếp tục sửa trên nhánh khác với dự định.
+Trước khi bắt tay vào code bất kỳ dòng nào, câu hỏi đầu tiên của một kỹ sư chuyên nghiệp luôn là: 'Tôi đang đứng ở đâu và nhánh này có an toàn để làm việc không?'. Lệnh `git branch` giúp bạn định vị chính xác nhánh hiện tại thông qua dấu hoa thị `*`, rà soát các nhánh rác cần dọn dẹp và chủ động khởi tạo các nhánh tính năng mới theo quy chuẩn phát triển phần mềm.
 
 ---
 
 ## 🧠 Mental Model (Mô hình tư duy)
-Hãy nghĩ `git branch` như xem danh sách nhãn đặt trên các commit. Lệnh tạo nhánh chỉ thêm một nhãn mới tại commit đang chọn; nó chưa chuyển chỗ làm việc của bạn.
+Hãy xem `git branch` như danh bạ các kênh đàm thoại nội bộ trong một tòa nhà. Khi bạn mở danh bạ (chạy lệnh), đèn tín hiệu xanh (dấu `*`) sẽ sáng lên ở kênh bạn đang kết nối đàm thoại. Khi bạn thêm một tên kênh mới vào danh bạ, kênh mới sẵn sàng hoạt động nhưng bạn vẫn đang tiếp tục nghe nói ở kênh cũ cho đến khi bạn bấm nút chuyển kênh.
 
 ---
 
 ## 🖼 Sơ đồ
 ```text
-Trước:  * main ──► Commit C2
+QUY TRÌNH TẠO NHÁNH BẰNG GIT BRANCH:
 
-Lệnh:   git branch feature-cart
+Bước 1: Ban đầu đang ở nhánh main
+  * main ────────► [Commit C2]
 
-Sau:      main ─────────┐
-         * feature-cart ─┴──► Commit C2
-
-Cả hai tên có thể trỏ cùng một commit; dấu * vẫn ở main.
+Bước 2: Chạy lệnh `git branch feature-cart`
+  * main ────────┐
+    feature-cart ┴──► [Commit C2]
+  (Cả 2 nhánh cùng trỏ vào C2, nhưng dấu * vẫn ở main!)
 ```
 
 ---
 
 ## 🌎 Ví dụ thực tế
-Bạn đang ở `main` và được giao làm giao diện giỏ hàng. Chạy `git branch feature-cart` để tạo nhánh cho phần việc. Sau lệnh này, chạy `git branch`: thấy cả hai tên nhưng dấu `*` vẫn ở `main`. Chuyển sang `feature-cart` là thao tác riêng ở bài tiếp theo.
+Sáng nay bạn được phân công làm giao diện giỏ hàng mới. Bạn gõ `git branch` để kiểm tra thấy mình đang ở `* main`. Bạn gõ `git branch feature/shopping-cart` để đăng ký luồng việc mới. Kiểm tra lại bằng `git branch`, nhánh mới đã nằm sẵn sàng trong danh bạ nhưng bạn vẫn an tọa tại `* main`, hoàn toàn chủ động trước khi quyết định chuyển sang.
 
 ---
 
@@ -66,55 +67,57 @@ Bạn đang ở `main` và được giao làm giao diện giỏ hàng. Chạy `g
 ```bash
 git branch
 git branch feature-cart
-git branch
+git branch -v
+git branch -a
 ```
 
 ---
 
 ## 🔍 Giải thích command
-- Lệnh đầu liệt kê nhánh hiện có.
-- Lệnh thứ hai tạo nhánh `feature-cart` tại commit hiện tại.
-- Lệnh cuối xác nhận tên nhánh mới và vị trí dấu `*`.
+- `git branch`: Hiển thị danh sách các nhánh nội bộ; nhánh hiện tại có tiền tố `*` và màu nổi bật.
+- `git branch <tên-nhánh>`: Tạo nhánh mới tại commit hiện tại mà HEAD đang trỏ vào.
+- `git branch -v`: Liệt kê chi tiết kèm theo mã commit hash rút gọn và commit message gần nhất của từng nhánh.
+- `git branch -a`: Hiển thị toàn bộ cả nhánh cục bộ (local) lẫn các nhánh theo dõi từ xa (remote-tracking).
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Tưởng `git branch tên` tự chuyển nhánh:** Kiểm tra dấu `*`; nó vẫn ở nhánh cũ.
-2. **Tưởng mỗi branch là một bản sao tệp:** Lệnh chỉ tạo một tên tham chiếu tới commit.
-3. **Tưởng `git branch` hiện tất cả nhánh trên GitHub:** Bài này chỉ xem danh sách nhánh cục bộ.
+1. **Lầm tưởng đã nhảy sang nhánh mới sau khi tạo**: Gõ `git branch feature-x` xong tưởng đã ở nhánh đó và hăng say gõ code, đến khi commit mới tá hỏa phát hiện đã commit nhầm vào `main`!
+2. **Đặt tên nhánh vô tội vạ**: Đặt tên nhánh kiểu `test`, `abc`, `fix` gây hỗn loạn dự án; hãy tuân thủ tiền tố như `feature/`, `bugfix/`, `hotfix/`.
+3. **Nghĩ rằng `git branch` hiển thị ngay nhánh mới trên GitHub**: Bạn cần chạy `git fetch` trước thì Git mới cập nhật các nhánh từ xa về máy.
 
 ---
 
 ## 🧪 Lab
-1. Chạy `git branch`; ghi lại nhánh có dấu `*`.
-2. Chạy `git branch experiment`.
-3. Chạy lại `git branch`.
-4. Xác nhận `experiment` xuất hiện và dấu `*` vẫn ở nhánh ban đầu.
+1. Chạy `git branch` để kiểm tra danh sách hiện tại và xác định xem nhánh nào đang có dấu `*`.
+2. Tạo nhánh thử nghiệm mới bằng lệnh `git branch experiment`.
+3. Chạy lại `git branch` để quan sát sự thay đổi của danh sách.
+4. Xác minh rằng nhánh `experiment` đã xuất hiện nhưng dấu `*` vẫn nằm nguyên ở nhánh ban đầu.
 
 ---
 
 ## 💡 Hint
-> Chỉ tạo nhánh ở bài này; chưa cần chuyển, đổi tên hay xóa nhánh.
+> Luôn nhìn kỹ dấu `*` trước tên nhánh trong kết quả của `git branch` để chắc chắn bạn không commit nhầm nhánh!
 
 ---
 
 ## ✅ Validation
-- Danh sách có nhánh `experiment`.
-- Dấu `*` đứng trước nhánh đang làm việc ban đầu.
+- Nhánh `experiment` có mặt trong danh sách trả về của `git branch`.
+- Dấu hoa thị `*` vẫn đứng trước nhánh làm việc ban đầu.
 
 ---
 
 ## ❓ Quiz
-Trả lời các câu hỏi để kiểm tra cách xem và tạo nhánh cục bộ.
+Làm bài trắc nghiệm dưới đây để kiểm tra kiến thức về các tùy chọn xem và tạo nhánh với lệnh git branch.
 
 ---
 
 ## 🔥 Challenge
-Tạo nhánh `feature-profile`. Chạy `git branch` và giải thích vì sao dấu `*` chưa chuyển tới nhánh mới.
+Chạy lệnh `git branch -v` và giải thích chi tiết: 3 cột thông tin hiển thị trên mỗi dòng biểu thị điều gì và nó giúp ích thế nào khi bạn cần rà soát nhanh tiến độ của từng nhánh?
 
 ---
 
 ## 📚 Tổng kết
-- `git branch` liệt kê nhánh cục bộ.
-- `git branch <tên>` tạo nhánh tại commit hiện tại.
-- Dấu `*` đánh dấu nhánh đang chọn; tạo nhánh không đồng nghĩa chuyển nhánh.
+- `git branch` cung cấp bức tranh toàn cảnh về các luồng phát triển trong repository.
+- Dấu `*` là chỉ dấu định vị sống còn cho biết bạn đang thực sự đứng ở nhánh nào.
+- `git branch <tên>` chỉ tạo nhánh, bạn cần lệnh chuyên dụng để bước sang nhánh đó.

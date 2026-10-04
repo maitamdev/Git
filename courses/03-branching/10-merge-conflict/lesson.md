@@ -3,61 +3,64 @@
 ---
 
 ## 🎯 Mục tiêu
-- Giải thích vì sao Git dừng khi không thể kết hợp hai thay đổi an toàn.
-- Đọc các dấu mốc trong tệp conflict và xác định nội dung của mỗi nhánh.
-- Dùng `git status` để tìm tệp cần xử lý.
+- Hiểu thấu bản chất của Merge Conflict là cơ chế bảo vệ dữ liệu văn minh của Git, không phải lỗi hỏng kho mã nguồn.
+- Đọc vị và giải mã chuẩn xác cấu trúc của các dấu mốc xung đột (Conflict Markers).
+- Sử dụng thành thạo `git status` để định vị toàn bộ các tệp tin chưa được giải quyết (Unmerged Paths).
 
 ---
 
 ## 🧩 Từ khóa hôm nay
 
 ### Merge conflict — xung đột khi hợp nhất
-- **Nói dễ hiểu:** Hai nhánh thay đổi cùng một vùng theo cách Git không thể tự kết hợp.
-- **Ví dụ:** Một nhánh đổi dòng `màu = xanh`, nhánh kia đổi chính dòng đó thành `màu = đỏ`.
-- **Đừng nhầm:** Cùng sửa một tệp chưa chắc gây conflict; thay đổi ở các phần độc lập thường được Git kết hợp tự động.
+- **Nói dễ hiểu:** Sự bất đồng xảy ra khi hai nhánh cùng can thiệp vào cùng một vị trí trong tệp tin mà Git không thể tự phán đoán.
+- **Ví dụ:** Nhánh `main` đổi dòng 10 thành `const color = 'red'`, còn nhánh `feature` đổi thành `const color = 'blue'`.
+- **Đừng nhầm:** Cùng sửa một tệp không đồng nghĩa với xung đột; nếu hai người sửa ở các hàm hoặc các dòng khác nhau, Git sẽ tự động gộp êm đẹp.
 
 ### Conflict markers — dấu đánh dấu vùng xung đột
-- **Nói dễ hiểu:** Các dòng Git chèn vào để đặt hai phiên bản cạnh nhau cho người dùng xem.
-- **Ví dụ:** `<<<<<<< HEAD` bắt đầu phần hiện tại; `=======` ngăn hai phần; `>>>>>>> feature-conflict` kết thúc phần nhánh nguồn.
-- **Đừng nhầm:** Dấu này không phải cú pháp của chương trình. Cần sửa nội dung và xóa dấu trước khi đánh dấu conflict đã giải quyết.
+- **Nói dễ hiểu:** Các dòng ký tự đặc biệt do Git tự động chèn vào tệp tin để bao bọc và đối chiếu hai phiên bản code bất đồng.
+- **Ví dụ:** Cụm ký hiệu kinh điển gồm `<<<<<<< HEAD` (nhánh hiện tại), `=======` (vách ngăn) và `>>>>>>> branch-name` (nhánh nguồn).
+- **Đừng nhầm:** Đây là các ký hiệu chú thích tạm thời của Git, tuyệt đối không phải là mã nguồn hợp lệ của chương trình.
 
 ### Unmerged path — tệp chưa giải quyết
-- **Nói dễ hiểu:** Tệp mà hai phiên bản chưa được kết hợp xong.
-- **Ví dụ:** `git status` báo `both modified: conflict.txt`.
-- **Đừng nhầm:** Chỉ lưu tệp trong editor chưa báo cho Git biết conflict đã được giải quyết.
+- **Nói dễ hiểu:** Danh sách các tệp tin đang bị kẹt ở trạng thái xung đột dở dang chưa được lập trình viên xử lý xong.
+- **Ví dụ:** Trong `git status`, tệp xuất hiện dưới mục cảnh báo đỏ rực: `both modified: config.json`.
+- **Đừng nhầm:** Chỉ chỉnh sửa và lưu file bằng phím tắt trong trình soạn thảo là chưa đủ; bạn phải chạy `git add` thì Git mới công nhận tệp đã hết xung đột.
 
 ---
 
 ## 📖 Định nghĩa
-Merge conflict xảy ra khi Git không thể tự ghép một hay nhiều thay đổi từ hai nhánh. Một trường hợp phổ biến là cả hai nhánh cùng sửa một vùng của cùng tệp. Git tạm dừng merge, cho biết tệp cần xem xét và thường đặt hai phiên bản vào tệp với conflict markers.
+Merge Conflict (xung đột khi hợp nhất) là tình huống Git chủ động dừng tiến trình gộp nhánh khi phát hiện hai nhánh cùng chỉnh sửa một dòng code hoặc cùng một khối nội dung theo những cách trái ngược nhau. Khi không thể suy đoán được ý định chủ quan của con người, Git từ chối tự động ghép mã nguồn nhằm bảo vệ an toàn dữ liệu và yêu cầu lập trình viên trực tiếp can thiệp.
 
 ---
 
 ## 🤔 Tại sao cần?
-Git không thể biết ý định của người viết. Khi nội dung mâu thuẫn, nó dừng để bạn chọn hoặc kết hợp đúng theo yêu cầu của chương trình, thay vì âm thầm bỏ một thay đổi.
+Nhiều bạn mới học coi xung đột là tai họa hoặc lỗi phần mềm, nhưng đối với kỹ sư thực chiến, xung đột là cơ chế bảo vệ tối thượng của Git. Nếu Git tự ý chọn bừa một bên hoặc xóa bên kia, hệ thống của bạn sẽ sụp đổ âm thầm mà không ai hay biết. Git dừng lại, cắm các biển báo xung đột rõ ràng để bạn và đồng đội cùng ngồi lại thống nhất giải pháp tối ưu nhất cho sản phẩm.
 
 ---
 
 ## 🧠 Mental Model (Mô hình tư duy)
-Hai người sửa cùng một câu trong tài liệu theo hai cách khác nhau. Git đặt cả hai phiên bản cạnh nhau và hỏi bạn nên viết câu nào trong bản cuối.
+Hãy hình dung bạn và đồng đội cùng chỉnh sửa một bức tranh phong cảnh. Đến góc dưới bên phải, bạn vẽ một ngọn hải đăng, còn đồng đội vẽ một cối xay gió. Git nhìn thấy hai nét vẽ đè lên nhau tại cùng một tọa độ canvas. Thay vì tự ý xóa hải đăng hay cối xay gió, Git đặt cọ vẽ xuống, khoanh vùng màu đỏ và hỏi hai họa sĩ: 'Bây giờ chỗ này vẽ gì?'.
 
 ---
 
 ## 🖼 Sơ đồ
 ```text
-|<<<<<<< HEAD
-Phiên bản của nhánh hiện tại
-=======
-Phiên bản của nhánh được merge vào
-|>>>>>>> feature-conflict
-```
+CẤU TRÚC GIẢI PHẪU DẤU MỐC XUNG ĐỘT (CONFLICT MARKERS):
 
-Hai dấu `|` ở đầu chỉ là vạch phân cách trong sơ đồ; nội dung marker thật bắt đầu từ `<<<<<<<` và `>>>>>>>`.
+<<<<<<< HEAD
+const apiUrl = "https://api.v1.prod.com";  <── Bản của bạn (nhánh hiện tại)
+=======
+const apiUrl = "https://api.v2.beta.com";  <── Bản của đồng đội (nhánh nguồn)
+>>>>>>> feature-conflict
+
+- Vùng từ `<<<<<<< HEAD` đến `=======`: Code của nhánh bạn đang đứng.
+- Vùng từ `=======` đến `>>>>>>>`: Code của nhánh đang được gộp vào.
+```
 
 ---
 
 ## 🌎 Ví dụ thực tế
-Một nhánh cập nhật địa chỉ API, nhánh khác cũng đổi địa chỉ đó. Khi hợp nhất, nhóm cần xác nhận địa chỉ nào đúng hoặc kết hợp thay đổi theo cấu hình thực tế; không nên chọn một bên chỉ vì tên nhánh nghe mới hơn.
+Trong tệp cấu hình `env.js`, nhánh `main` vừa nâng cấp cổng máy chủ lên `PORT = 8080`, trong khi nhánh `feature-api` của bạn lại đổi thành `PORT = 9000`. Khi gộp nhánh, Git không thể biết cổng nào là đúng. Git dừng lại, đánh dấu tệp ở trạng thái conflict và chèn các ký hiệu `<<<<<<<`, `=======`, `>>>>>>>` để bạn quyết định cổng chính thức.
 
 ---
 
@@ -65,56 +68,57 @@ Một nhánh cập nhật địa chỉ API, nhánh khác cũng đổi địa ch�
 ```bash
 git status
 git merge feature-conflict
+git diff
 ```
 
 ---
 
 ## 🔍 Giải thích command
-- `git status`: Báo tên tệp chưa giải quyết dưới mục `Unmerged paths`.
-- `git merge feature-conflict`: Thử đưa nhánh `feature-conflict` vào nhánh hiện tại. Bài lab bên dưới cố ý tạo thay đổi mâu thuẫn để lệnh này dừng ở conflict.
+- `git merge <tên-nhánh>`: Khởi động quá trình hợp nhất; nếu có xung đột, terminal sẽ in thông báo đỏ: `Automatic merge failed; fix conflicts and then commit the result`.
+- `git status`: Hiển thị rõ ràng danh sách các tệp bị xung đột dưới tiêu đề `Unmerged paths: both modified`.
+- `git diff`: Soi nhanh các vùng xung đột ngay trên màn hình terminal mà chưa cần mở file code.
 
 ---
 
 ## ⚠️ Sai lầm phổ biến
-1. **Cho rằng mọi conflict là lỗi Git:** Git đang bảo vệ nội dung vì chưa biết lựa chọn nào đúng.
-2. **Chọn “Current” hoặc “Incoming” mà không đọc code:** Cả hai lựa chọn đều có thể bỏ nghiệp vụ cần thiết.
-3. **Commit khi chưa gỡ dấu conflict:** Marker còn lại có thể làm hỏng cú pháp hoặc lộ văn bản conflict vào sản phẩm.
+1. **Hoảng loạn xóa kho mã nguồn khi thấy conflict**: Tưởng Git bị hỏng; thực chất đây là bước làm việc hoàn toàn bình thường hàng ngày của mọi Senior Developer.
+2. **Bấm chọn bừa "Accept Current" hoặc "Accept Incoming"**: Không thèm đọc code mà chọn đại một bên, dẫn tới việc xóa mất tính năng quan trọng của đồng đội.
+3. **Để quên ký hiệu `<<<<<<<` hoặc `=======` rồi commit**: Khiến mã nguồn bị lỗi cú pháp nghiêm trọng (syntax error) ngay khi đưa lên môi trường chạy thử.
 
 ---
 
 ## 🧪 Lab
-Yêu cầu: repository đã có ít nhất một commit, nhánh `main` tồn tại và working tree sạch. Dùng editor của lab để sửa đúng một dòng trong `conflict.txt`:
-1. Đứng trên `main`. Tạo `conflict.txt` với nội dung `Màu nền: trắng`, rồi chạy `git add conflict.txt` và `git commit -m "docs: add conflict example"`.
-2. Chạy `git switch -c feature-conflict`. Đổi dòng trong tệp thành `Màu nền: xanh`, rồi add và commit với thông điệp `feat: use blue background`.
-3. Chạy `git switch main`. Đổi cùng dòng thành `Màu nền: đỏ`, rồi add và commit với thông điệp `feat: use red background`.
-4. Chạy `git merge feature-conflict`. Merge sẽ dừng vì hai nhánh đổi cùng một dòng.
-5. Chạy `git status`, mở `conflict.txt` và chỉ ra phần hiện tại, dấu phân cách và phần từ nhánh nguồn. Bài sau sẽ hướng dẫn giải quyết.
+1. Đang ở `main`, tạo file `conflict.txt` với dòng chữ: `Màu nền: trắng`, rồi add và commit.
+2. Chạy `git switch -c feature-conflict`, sửa dòng đó thành: `Màu nền: xanh`, rồi add và commit.
+3. Chạy `git switch main`, sửa cùng dòng đó thành: `Màu nền: đỏ`, rồi add và commit.
+4. Chạy lệnh: `git merge feature-conflict`. Git lập tức dừng lại và thông báo xung đột.
+5. Chạy `git status` và mở file `conflict.txt` ra để quan sát trọn vẹn 3 vạch đánh dấu `<<<<<<<`, `=======`, `>>>>>>>`. (Giữ nguyên tệp để làm tiếp bài sau).
 
 ---
 
 ## 💡 Hint
-Phần sau `<<<<<<< HEAD` thuộc nhánh đang đứng; phần sau `=======` thuộc nhánh nguồn được merge vào.
+> Đoạn code nằm giữa `<<<<<<< HEAD` và `=======` là của bạn; đoạn code nằm giữa `=======` và `>>>>>>>` là của nhánh được gộp vào!
 
 ---
 
 ## ✅ Validation
-- `git status` nêu `conflict.txt` trong `Unmerged paths`.
-- Tệp có đủ ba dấu `<<<<<<<`, `=======`, `>>>>>>>` và có nội dung từ cả hai nhánh.
-- Chưa chạy `git add` hay `git commit`; giữ nguyên conflict để làm bài tiếp theo.
+- Terminal báo cáo trạng thái `Automatic merge failed; fix conflicts and then commit the result`.
+- Lệnh `git status` liệt kê `conflict.txt` trong danh sách `Unmerged paths`.
+- Tệp tin chứa đầy đủ các dấu mốc xung đột sẵn sàng cho bước gỡ lỗi.
 
 ---
 
 ## ❓ Quiz
-Trả lời câu hỏi để kiểm tra cách nhận biết một conflict và đọc nội dung hai phía.
+Làm bài trắc nghiệm dưới đây để rèn luyện kỹ năng nhận diện và phân tích giải phẫu vùng xung đột trong Git.
 
 ---
 
 ## 🔥 Challenge
-Giải thích vì sao sửa hai tệp khác nhau thường không conflict, còn hai thay đổi cùng vùng có thể khiến Git phải dừng.
+Hãy giải thích tại sao hai người cùng sửa vào hai hàm khác nhau trong cùng một tệp dài 500 dòng code thì Git lại có thể tự động gộp mượt mà mà không hề sinh ra xung đột? Git dựa vào cơ chế chia nhỏ nào để làm được điều đó?
 
 ---
 
 ## 📚 Tổng kết
-- Conflict có nghĩa Git cần bạn quyết định cách kết hợp; không phải repository bị hỏng.
-- Đọc cả hai phía và hiểu logic trước khi chọn hoặc viết nội dung kết quả.
-- Dùng `git status` tìm tệp chưa giải quyết; chưa vội add hoặc commit.
+- Merge Conflict là tính năng bảo vệ an toàn dữ liệu, không phải là lỗi hỏng Git.
+- Cấu trúc conflict gồm 3 vạch: `<<<<<<< HEAD`, vách ngăn `=======` và `>>>>>>> branch`.
+- Luôn giữ bình tĩnh, mở tệp kiểm tra kỹ lưỡng trước khi đưa ra quyết định hợp nhất.
