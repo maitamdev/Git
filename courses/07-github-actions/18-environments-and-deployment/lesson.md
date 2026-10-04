@@ -34,17 +34,17 @@ Deployment Environments mô tả mục tiêu triển khai như `production`, `st
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Deploy lên production có thể ảnh hưởng dữ liệu và người dùng. Environment rules tạo điểm kiểm tra trước khi Job chạy; việc phê duyệt không thay thế quyền tối thiểu, review mã, backup, giám sát hay rollback. Job dùng self-hosted runner vẫn chạy trong hạ tầng do tổ chức quản lý, không được môi trường biến thành sandbox.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy hình dung một lô hàng đã qua kiểm tra chất lượng nhưng cần nhân viên được phân quyền xác nhận trước khi xuất kho. Environment rule là bước xác nhận; ai duyệt và có cho phép bỏ qua hay không phụ thuộc vào thiết lập của tổ chức.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Quy trình dừng chờ phê duyệt môi trường (Environment Gate):
 [Job: Build & Test] ──► [Thành công]
@@ -68,12 +68,12 @@ Quy trình dừng chờ phê duyệt môi trường (Environment Gate):
 
 ---
 
-## 🏢 Ví dụ thực tế
-Ví dụ giả định: repo đã cấu hình môi trường `production`, branch/tag policy và reviewer. Job tham chiếu môi trường chờ tới khi các protection rule đạt; khi được duyệt, runner mới được cấp cho Job và secrets của môi trường mới khả dụng. Người duyệt vẫn cần kiểm tra thay đổi và mục tiêu deploy.
+## 🌎 Ví dụ thực tế
+Trong môi trường phát triển dự án thực tế: repo đã cấu hình môi trường `production`, branch/tag policy và reviewer. Job tham chiếu môi trường chờ tới khi các protection rule đạt; khi được duyệt, runner mới được cấp cho Job và secrets của môi trường mới khả dụng. Người duyệt vẫn cần kiểm tra thay đổi và mục tiêu deploy.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```yaml
 # Cấu hình Job gắn với Environment và URL triển khai
 name: Production Release Pipeline
@@ -115,8 +115,8 @@ jobs:
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
+## 🧪 Lab
+Hãy mở terminal và cùng tôi thực hành từng bước dưới đây để làm chủ kỹ năng:
 
 1. **Bước 1**: Trên GitHub, vào mục **Settings** -> **Environments**, bấm **New environment** và tạo môi trường tên `production`.
 2. **Bước 2**: Trong môi trường `production`, bật tính năng **Required reviewers** và thêm tài khoản của bạn vào danh sách kiểm duyệt.
@@ -125,29 +125,29 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Quyền dùng Required Reviewers và Environment Secrets tùy gói/repo: tài liệu hiện tại giới hạn một số rule với repo private trên Free/Pro/Team; kiểm tra cài đặt GitHub của repo trước khi làm lab.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Workflow hiển thị trạng thái màu vàng "Waiting for review" khi đến Job deploy.
 - Các protection rules phải đạt trước khi Job được gửi tới runner; Environment Secrets chỉ khả dụng sau đó.
 - Trang chủ repo hiển thị thẻ Deployments với trạng thái Active và nút "View deployment" dẫn về URL đã cấu hình.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy kiểm tra mức độ hiểu biết của bạn về Môi trường và Cổng phê duyệt trong CD qua các câu hỏi trong phần trắc nghiệm bên dưới.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Làm thế nào để kết hợp tính năng Wait Timer (thời gian chờ hoãn) với Required Reviewers để cho phép người vận hành có thời gian chuẩn bị hạ tầng trước khi pipeline chính thức kích hoạt?
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - `environment` mô hình hóa mục tiêu triển khai và liên kết Job với các rule đã cấu hình.
 - Required reviewers là một rule tùy chọn; quyền duyệt và quyền bypass phụ thuộc cài đặt.
 - Environment Secrets chỉ được cấp cho Job tham chiếu môi trường sau khi protection rules đạt.

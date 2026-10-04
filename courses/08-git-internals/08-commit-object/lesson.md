@@ -34,17 +34,17 @@ Commit object chứa con trỏ tới root tree, thông tin author và committer 
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Nếu không có đối tượng Commit, bạn chỉ có các ảnh chụp thư mục (Tree) rời rạc trong không gian mà không có khái niệm về thời gian, mối liên hệ nhân quả và lịch sử tiến hóa của dự án. Đối tượng Commit đóng vai trò như một bức ảnh chụp kỷ niệm kèm dòng nhật ký lịch sử: nó cho bạn biết ai là người viết mã, ai là người gộp vào kho lưu trữ, diễn ra vào ngày giờ nào, vì lý do gì, và bức ảnh trước đó trong album lịch sử là bức ảnh nào.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy tưởng tượng mỗi commit là một trang nhật ký chỉ tới snapshot của dự án (`tree`) và ghi lại trang trước đó qua `parent`. Trang đầu không có trang trước; khi hai dòng lịch sử được hợp nhất, trang mới có thể tham chiếu nhiều trang cha. Nhờ vậy, lịch sử là đồ thị chứ không chỉ là một chuỗi.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Giải phẫu cấu trúc tệp nội dung đối tượng Commit:
 ┌────────────────────────────────────────────────────────┐
@@ -61,12 +61,12 @@ Giải phẫu cấu trúc tệp nội dung đối tượng Commit:
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Chạy `git cat-file -p HEAD` để xem commit hiện tại. Header bắt đầu bằng `tree`; nếu HEAD là root commit thì không có dòng `parent`, còn merge commit có thể có nhiều dòng `parent`. Các trường author/committer ghi timestamp dạng Unix và độ lệch múi giờ; một dòng trống phân cách header với thông điệp.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 # Xem nội dung cấu trúc của commit hiện tại
 git cat-file -p HEAD
@@ -94,8 +94,8 @@ git log -1 --pretty=raw
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
+## 🧪 Lab
+Hãy mở terminal và cùng tôi thực hành từng bước dưới đây để làm chủ kỹ năng:
 
 1. **Bước 1**: Sử dụng lệnh `git cat-file -p HEAD` để xem nội dung thô của commit hiện tại trong kho làm việc.
 2. **Bước 2**: Xác định mã băm của đối tượng `tree` ở dòng 1 và mã băm của `parent` ở dòng 2.
@@ -104,28 +104,28 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Một Merge Commit phát sinh từ thao tác gộp nhánh 3-way sẽ có từ 2 dòng `parent` trở lên (ví dụ: `parent <hash_1>` và `parent <hash_2>`), đại diện cho hai nhánh lịch sử hợp nhất lại với nhau.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Lệnh `git cat-file -p HEAD` hiển thị `tree`, author/committer, thông điệp và 0/1/nhiều parent tùy loại commit.
 - Truy vấn ngược theo mã `parent` dẫn về đúng lịch sử commit trước đó được hiển thị trong `git log`.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy kiểm tra kiến thức về cấu trúc và vai trò của đối tượng Commit qua các câu hỏi trong phần trắc nghiệm bên dưới.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Tại sao khi hai lập trình viên khác nhau cùng commit một đoạn mã có nội dung y hệt nhau vào cùng một giây, mã băm commit của họ vẫn hoàn toàn khác biệt? Các yếu tố nào trong metadata quyết định tính duy nhất của mã băm commit?
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - Đối tượng Commit là trung tâm của lịch sử Git, liên kết snapshot thư mục với trục thời gian.
 - Cấu trúc gồm `tree`, metadata `author`/`committer`, message và các parent tùy lịch sử (root không có parent).
 - Các con trỏ parent móc nối với nhau tạo thành Đồ thị có hướng không chu trình (DAG).

@@ -34,17 +34,17 @@
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Nhánh tính năng của bạn liên tục bị tụt lại so với nhánh chính trong quá trình code. Nếu liên tục merge main vào nhánh tính năng, lịch sử sẽ bị ô nhiễm bởi các commit gộp rác. `git rebase` giúp cập nhật toàn bộ thay đổi mới từ main vào nhánh làm việc thanh lịch, giải quyết xung đột sớm và tạo PR sạch đẹp.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy hình dung bạn đang xếp hàng thanh toán tại siêu thị với giỏ 3 món hàng (3 commit). Thu ngân mở thêm một quầy ưu tiên mới thông thoáng hơn (nhánh main vừa cập nhật). Bạn nhấc giỏ hàng sang đứng tiếp nối vào cuối dòng người của quầy mới (`git rebase`). Quá trình thanh toán diễn ra trơn tru mà không cản trở ai.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Quy trình 3 bước của git rebase main:
 Bước 1: Tìm tổ tiên chung C và lưu tạm F1, F2 ra bộ đệm.
@@ -57,12 +57,12 @@ C ──► M1 ──► M2 (main)
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Lập trình viên Thành đang phát triển nhánh `feat/dark-mode`. Nhánh `main` trên kho chứa đã có thêm 4 commit mới từ đồng nghiệp. Thành muốn cập nhật code mới trước khi mở PR nên mở terminal gõ: `git fetch origin`, sau đó chạy: `git rebase origin/main`. Git tự động tua nhánh của Thành đến commit mới nhất của main rồi cấy lần lượt các commit giao diện tối lên đỉnh.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 git fetch origin
 git rebase origin/main
@@ -87,8 +87,8 @@ git rebase --abort
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thực hành rebase nhánh tính năng lên main trên terminal.
+## 🧪 Lab
+Hãy cùng tôi thực hành chu trình rebase nhánh tính năng lên nhánh main để sở hữu một cây lịch sử sạch đẹp:
 1. Tạo nhánh `feat-rebase-demo` từ main và tạo 2 commit.
 2. Chuyển về `main`, tạo 1 commit mới để làm phân kỳ lịch sử.
 3. Chuyển lại sang nhánh `feat-rebase-demo`.
@@ -96,28 +96,28 @@ Bài học này là bài tự kiểm tra: bạn thực hành rebase nhánh tính
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Hãy rebase các commit riêng của bạn theo chính sách nhóm. Trước khi cập nhật nhánh đã push, kiểm tra remote và báo người cùng làm; không dùng force push tùy tiện.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Toàn bộ commit của nhánh tính năng được chuyển lên sau commit đỉnh của nhánh main.
 - Cây lịch sử hiển thị thành một đường thẳng tuyến tính đẹp mắt.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy làm bài kiểm tra trắc nghiệm dưới đây về câu lệnh git rebase và quy tắc vàng.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Tìm hiểu quy tắc bảo vệ nhánh của kho dự án và ghi lại ai có quyền cập nhật `main`, cùng quy trình xử lý khi cần sửa lịch sử.
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - `git rebase` đưa các commit của nhánh tính năng lên đỉnh mới nhất của nhánh cơ sở.
 - Trước khi rebase commit đã push, phối hợp với nhóm vì commit mới sẽ có hash khác và có thể cần cập nhật remote theo quy ước của repo.
 - Luôn ưu tiên sử dụng `git push --force-with-lease` sau khi rebase nhánh cá nhân lên remote.

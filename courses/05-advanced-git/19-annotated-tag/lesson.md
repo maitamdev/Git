@@ -34,17 +34,17 @@ Annotated Tag (thẻ có chú giải) là object riêng chứa tagger, ngày gi�
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Khi phát hành, nhóm có thể dùng annotated tag để lưu người tạo thẻ, thời điểm và ghi chú phiên bản. Tag hỗ trợ truy xuất nguồn gốc; muốn xác minh danh tính bằng mật mã thì cần tag có chữ ký và kiểm tra chữ ký theo chính sách của nhóm.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Lightweight tag giống một dấu trang trỏ tới commit. Annotated tag giống một thẻ ghi chú riêng: nó trỏ tới đối tượng Git và kèm người tạo, ngày cùng thông điệp. Chỉ tag được ký mới có chữ ký số để xác minh.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Cấu trúc đối tượng của Annotated Tag trong Git:
 ┌────────────────────────────────────────────────────────┐
@@ -59,12 +59,12 @@ Cấu trúc đối tượng của Annotated Tag trong Git:
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Trước khi phát hành cổng thanh toán, kỹ sư trưởng An tạo tag chú giải bằng `git tag -a v2.0.0 -m "Release v2.0.0: Full payment integration"`. Khi nhóm kiểm tra bằng `git show v2.0.0`, người tạo tag, ngày và thông điệp hiển thị cùng thông tin commit được gắn. Metadata mô tả người tạo nhưng không tự xác minh danh tính.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 git tag -a <tên-thẻ> -m "<thông-điệp-phát-hành>"
 git show <tên-thẻ>
@@ -88,8 +88,8 @@ git show <tên-thẻ>
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác trực tiếp trên terminal của máy tính để làm quen với công cụ.
+## 🧪 Lab
+Hãy cùng tôi mở terminal và thực hiện các bước thực hành trực quan sau:
 1. Trong kho thử nghiệm đã có ít nhất một commit, tạo tag `demo-v0.1` bằng `git tag -a demo-v0.1 -m "Ban thu nghiem"`.
 2. Chạy `git show demo-v0.1`; xác định dòng tagger, ngày và thông điệp.
 3. Tạo tag nhẹ `demo-light` bằng `git tag demo-light`, rồi so sánh `git show demo-light` với annotated tag.
@@ -97,28 +97,28 @@ Bài học này là bài tự kiểm tra: bạn thao tác trực tiếp trên te
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Kiểm tra quy ước phát hành của repo. Nhiều dự án dùng annotated tag cho release; nếu cần xác minh danh tính bằng mật mã, hãy tìm hiểu quy trình tag ký số của nhóm.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Tạo thành công Annotated tag có đầy đủ metadata và kiểm tra chi tiết bằng `git show`.
 - Phân biệt tag nhẹ trỏ thẳng tới đối tượng với annotated tag có object chứa metadata.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy làm bài kiểm tra trắc nghiệm dưới đây về thẻ chú giải Annotated Tag.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Nêu sự khác biệt sâu bên trong thư mục `.git/refs/tags/` và `.git/objects/` giữa một Lightweight tag và một Annotated tag.
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - Annotated Tag là một đối tượng Git thực thụ chứa đầy đủ metadata và thông điệp.
 - Giúp truy vết kiểm toán rõ ràng ai là người tạo thẻ và vào thời điểm nào.
 - Dùng `git show <tag>` để xem toàn bộ thông tin chi tiết của thẻ chú giải.

@@ -34,17 +34,17 @@
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Trong kho mã nguồn có hàng ngàn commit, kiểm tra tuần tự từng commit mất nhiều ngày. Với `git bisect`, 1.000 commit chỉ cần tối đa khoảng 10 lần chạy thử ($2^{10} = 1024$), giúp bạn tiết kiệm đến 99% thời gian điều tra lỗi phát sinh.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy hình dung trò đoán số từ 1 đến 100. Thay vì đoán từng số 1, 2, 3, bạn đoán ngay số 50. Người quản trò nói lỗi ở sau 50, bạn lập tức bỏ 50 số đầu và đoán tiếp 75. Chỉ sau vài bước chia đôi, bạn tìm ra chính xác số bí mật.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Quy trình tìm kiếm nhị phân của git bisect:
 Mốc Good: C1 (Chạy tốt)                  Mốc Bad: C8 (Bị lỗi!)
@@ -62,12 +62,12 @@ KẾT LUẬN: C5 chính là commit đầu tiên gây ra lỗi!
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Hệ thống xuất hóa đơn bị lỗi trên production. Kỹ sư Bách biết tag `v1.2.0` vẫn tốt còn `HEAD` bị lỗi. Bách dùng `git bisect start`, đánh dấu hai mốc, rồi kiểm tra từng commit Git chọn. Với khoảng 500 commit, trong trường hợp lý tưởng cần khoảng 9 lượt kiểm tra; sau cùng Bách xác nhận hash và diff của commit đầu tiên bị lỗi.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 git bisect start
 git bisect bad
@@ -94,7 +94,7 @@ git bisect run <file-chay-kiem-thu>
 
 ---
 
-## 🧪 Lab thực hành
+## 🧪 Lab
 Làm trong kho thử nghiệm riêng có ít nhất một commit nền và sáu commit sau đó. Trong ví dụ này lỗi bắt đầu ở commit thứ ba sau nền.
 1. Tạo commit nền có `probe.txt` chứa `GOOD`.
 2. Tạo commit 1 và 2 bằng cách thêm `note1.txt`, `note2.txt`; commit 3 đổi `probe.txt` thành `BAD`; tạo commit 4, 5, 6 bằng cách thêm `note3.txt`, `note4.txt`, `note5.txt`.
@@ -105,28 +105,28 @@ Làm trong kho thử nghiệm riêng có ít nhất một commit nền và sáu 
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Khi kết thúc điều tra, chạy `git bisect reset` để rời commit đang kiểm tra và trở về vị trí trước phiên bisect.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Tìm được commit đầu tiên có nội dung `BAD` trong ví dụ và xác nhận bằng thông điệp commit.
 - Kết thúc phiên bằng `git bisect reset`; chỉ thử `git bisect run` trong Git thật với script trả kết quả tin cậy.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy làm bài kiểm tra trắc nghiệm dưới đây về công cụ thám tử git bisect.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Viết một đoạn script bash ngắn kiểm tra mã thoát (exit code) để chạy tự động với `git bisect run ./test.sh`.
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - `git bisect` dùng tìm kiếm nhị phân, cần khoảng $O(\log N)$ lần kiểm tra trong trường hợp đơn giản và có mốc good/bad đáng tin.
 - Quy trình: `git bisect start` -> `bad` / `good` -> kiểm tra lặp lại -> `git bisect reset`.
 - Git thật có thể chạy kiểm thử tự động bằng `git bisect run <script>`; script phải trả đúng mã thoát.

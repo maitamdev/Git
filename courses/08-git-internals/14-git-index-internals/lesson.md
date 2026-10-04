@@ -34,17 +34,17 @@ Git index (còn gọi là Staging Area hoặc dircache) là bản ghi nhị phâ
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 `git status` cần so sánh index với working tree và commit hiện tại. Metadata như thời gian sửa, kích thước và inode giúp Git bỏ qua nhiều lần đọc tệp không cần thiết. Nếu metadata báo có thay đổi, hoặc Git không thể tin chắc dữ liệu cache (ví dụ có thể gặp tình huống racy timestamp), Git có thể kiểm tra nội dung để xác định trạng thái. Vì vậy stat cache giúp tăng tốc nhưng không bảo đảm rằng chỉ nhìn thời gian là luôn đủ.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy tưởng tượng tệp `.git/index` như danh sách kiểm kê hàng hóa xuất kho của một nhân viên bưu điện. Trong danh sách có ghi rõ: Tên gói hàng (`path`), Trọng lượng và giờ niêm phong (`stat cache`), Mã vạch nhận diện kiện hàng (`blob hash`), và Cột đánh dấu kiểm định (`stage`). Nhân viên bưu điện chỉ cần nhìn lướt qua danh sách đối chiếu với các gói hàng trên bàn để biết gói nào đã bị bóc tem sửa đổi mà không cần mở từng hộp ra kiểm tra.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Cấu trúc nhị phân của tệp .git/index:
 ┌────────────────────────────────────────────────────────┐
@@ -64,12 +64,12 @@ Cấu trúc nhị phân của tệp .git/index:
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Sau khi chạy `git add`, người học dùng `git ls-files --stage` để xem các mục trong index. Mỗi dòng thường có dạng `100644 <object-id> 0 README.md`: mode, object ID, stage và đường dẫn. Stage `0` là mục bình thường. Trong một số xung đột, cùng đường dẫn có thể có các mục stage `1` (base), `2` (ours) và `3` (theirs). Độ dài object ID tùy định dạng hash của repository.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 # Xem danh sách toàn bộ các mục trong Index kèm Stage Number
 git ls-files --stage
@@ -101,8 +101,8 @@ git rev-parse --git-path index
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
+## 🧪 Lab
+Hãy mở terminal và cùng tôi thực hành từng bước dưới đây để làm chủ kỹ năng:
 
 1. **Bước 1**: Tạo một tệp mới `hello.txt` và thêm vào Staging Area bằng lệnh `git add hello.txt`.
 2. **Bước 2**: Sử dụng lệnh plumbing `git ls-files --stage` để kiểm tra bảng dữ liệu nội bộ của Index.
@@ -111,28 +111,28 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Số `0` trong đầu ra của `git ls-files --stage` biểu thị tệp tin không có xung đột; trong khi các số 1, 2, 3 xuất hiện khi đang giải quyết merge conflict.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - `git ls-files --stage` hiển thị tệp với stage `0`.
 - `git cat-file -p <object-id>` in nội dung đã stage; không cần tìm tệp vật lý trong `.git/objects/` vì object có thể đã được pack.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Cùng làm bài trắc nghiệm về kiến trúc nhị phân và hoạt động của tệp .git/index trong phần bên dưới.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Làm thế nào mà thông số stat cache bên trong tệp `.git/index` giúp Git tối ưu hóa tốc độ của lệnh `git status` khi làm việc với các kho mã nguồn khổng lồ như Linux Kernel?
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - Git index là bản ghi nhị phân đại diện cho Staging Area; `.git/index` là vị trí phổ biến nhưng không phải giả định an toàn cho mọi repository.
 - Các mục chứa stat cache, mode, object ID, stage và đường dẫn; metadata giúp tăng tốc nhưng không thay thế mọi lần kiểm tra nội dung.
 - Sử dụng `git ls-files --stage` để xem chi tiết các mục đang nằm trong Index.

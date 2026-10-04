@@ -24,13 +24,13 @@
 ## 📖 Định nghĩa
 Một Job là tập hợp các bước được thực thi trên runner được chọn. Với Job chạy steps, `runs-on` chọn runner theo nhãn, ví dụ `ubuntu-latest` hoặc `self-hosted`; có thể chạy một số Job trong container. Job có mã định danh duy nhất (`job_id`). Không nên dựa vào việc Job khác có cùng máy hay workspace; dùng cách truyền dữ liệu rõ ràng.
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Phân tách quy trình thành các Job riêng biệt giúp tận dụng tối đa khả năng xử lý song song, rút ngắn thời gian phản hồi của pipeline từ hàng chục phút xuống còn vài phút. Ngoài ra, việc này cho phép bạn chỉ định môi trường phù hợp cho từng loại tác vụ: chạy linter trên Linux tiết kiệm chi phí, trong khi build ứng dụng iOS chạy trên macOS.
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy hình dung bạn điều phối một cuộc thi nấu ăn. Bạn có 3 phòng bếp riêng: một phòng làm bánh (`Job 1` trên Ubuntu), một phòng làm món nướng (`Job 2` trên Windows), và một phòng pha chế (`Job 3` trên macOS). Mỗi người có một căn phòng sạch sẽ với đầy đủ dụng cụ riêng, làm việc đồng thời mà không sợ người này làm đổ bột mì sang chảo dầu của người kia.
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```mermaid
 flowchart TD
     Workflow[Workflow Execution] --> Job1[Job: lint trên ubuntu-latest]
@@ -41,10 +41,10 @@ flowchart TD
     Job3 -. Máy ảo độc lập 3 .-> Clean3[Clean VM 3]
 ```
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Một công ty phần mềm tài chính cấu hình workflow gồm 3 Jobs: Job 1 chạy linter (`ubuntu-latest`, mất 30 giây); Job 2 chạy unit tests (`ubuntu-latest`, mất 3 phút); Job 3 kiểm tra giao diện Safari (`macos-latest`, mất 5 phút). Vì ba Job chạy đồng thời trên 3 máy ảo riêng, toàn bộ pipeline hoàn thành chỉ trong 5 phút thay vì phải chờ 8 phút 30 giây nếu chạy tuần tự.
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 # Xem cấu hình các Job trong tệp workflow
 cat .github/workflows/multi-job.yml
@@ -62,8 +62,8 @@ gh run view
 - Chọn hệ điều hành không cần thiết cho tác vụ; mức phí và hạn mức thay đổi theo nền tảng, loại runner và gói dịch vụ.
 - Dùng khoảng trắng hoặc ký tự ngoài chữ/số/gạch nối/gạch dưới cho `job_id`; hãy dùng ID dễ đọc gồm chữ, số, `-` hoặc `_`.
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
+## 🧪 Lab
+Hãy mở terminal và cùng tôi thực hành từng bước dưới đây để làm chủ kỹ năng:
 
 1. Mở tệp `.github/workflows/multi-job.yml` và khai báo hai Job độc lập:
    ```yaml
@@ -84,21 +84,21 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
 2. Đẩy file lên GitHub và theo dõi tiến trình chạy trong tab Actions.
 3. Quan sát hai Job độc lập; chúng có thể được xếp hàng và bắt đầu gần nhau nhưng không được đảm bảo khởi chạy cùng một lúc.
 
-## 💡 Hint & mẹo
+## 💡 Hint
 - Luôn ưu tiên chọn `ubuntu-latest` trừ khi dự án của bạn bắt buộc phải có môi trường Windows hoặc macOS chuyên biệt.
 - Dùng `timeout-minutes` để giới hạn thời gian Job chạy; mức tiêu thụ và tính phí phụ thuộc chính sách hiện hành của runner/repo.
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Cả hai Job hiển thị tên tiếng Việt thân thiện trên bảng điều khiển giao diện web của GitHub Actions.
 - Hai Job bắt đầu chạy cùng thời điểm và có biểu tượng dấu tích xanh độc lập khi hoàn tất.
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy hoàn thành bài trắc nghiệm bên dưới để kiểm tra mức độ nắm vững cấu hình Job và thuộc tính `runs-on`.
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Tra cứu bảng phí/hạn mức GitHub Actions hiện hành và so sánh các loại runner; ghi rõ gói repo và loại runner vì đơn giá thay đổi theo thời gian.
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - Mỗi Job chạy trên runner đã chọn; trạng thái giữa các lần chạy phụ thuộc loại runner.
 - `runs-on` chọn runner cho Job chạy steps; có thể dùng nhãn hệ điều hành, nhóm hoặc nhãn self-hosted.
 - Các Job không có phụ thuộc có thể chạy song song, nhưng thời điểm bắt đầu còn tùy tài nguyên và giới hạn concurrency.

@@ -34,17 +34,17 @@ Ref là tên logic ánh xạ tới object. Nhánh local thuộc `refs/heads/`; r
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Một nhánh Git là một tên ref trỏ tới commit, không phải bản sao riêng của toàn bộ working tree. Vì thế việc tạo nhánh thường nhẹ và nhanh; tốc độ cụ thể phụ thuộc repository và hệ thống, còn ref có thể không được lưu thành file riêng.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy tưởng tượng bạn đang đọc một cuốn sách dày 1000 trang (lịch sử commit). Bạn không thể nhớ cuốn sách đang mở đến trang thứ 872 (mã SHA-1). Bạn lấy một chiếc kẹp sách bằng nhựa nhỏ có dán nhãn chữ "main" kẹp vào trang 872 (Refs). Khi bạn đọc thêm một trang mới 873 (commit mới), bạn chỉ việc rút chiếc kẹp sách "main" ra và kẹp nó vào trang 873. Chiếc kẹp sách siêu nhẹ và việc di chuyển nó hoàn toàn không tốn chút sức lực nào.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Bản chất cấu trúc của References trong .git/refs/:
 .git/refs/
@@ -60,12 +60,12 @@ Bản chất cấu trúc của References trong .git/refs/:
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Để quan sát một ref mà không phụ thuộc cách lưu vật lý, người học chạy `git show-ref --verify refs/heads/main` và `git rev-parse refs/heads/main`. Trong một repository thử nghiệm có commit, có thể tạo rồi xóa ref riêng bằng `git update-ref refs/heads/ref-lab HEAD` và `git update-ref -d refs/heads/ref-lab`. Không tự tạo hoặc sửa tệp bên trong `.git/refs/`: refs có thể đã được pack hoặc lưu bằng backend khác.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 # Xác minh nhánh local và xem commit mà nhánh trỏ tới
 git show-ref --verify refs/heads/main
@@ -98,8 +98,8 @@ git update-ref -d refs/heads/hotfix-123
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
+## 🧪 Lab
+Hãy mở terminal và cùng tôi thực hành từng bước dưới đây để làm chủ kỹ năng:
 
 1. Trong repository thực hành có commit, chạy `git show-ref --verify refs/heads/main` hoặc thay `main` bằng tên nhánh hiện tại.
 2. Tạo ref thử bằng `git update-ref refs/heads/manual-branch HEAD`.
@@ -108,28 +108,28 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Lệnh `git update-ref` cập nhật refs an toàn và hỗ trợ kiểm tra giá trị cũ để tránh ghi đè thay đổi ngoài ý muốn. Dùng cẩn thận: xóa hoặc di chuyển ref có thể làm commit không còn được tham chiếu.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - `git show-ref --verify refs/heads/manual-branch` thấy ref thử trỏ tới cùng commit với HEAD.
 - Sau lệnh xóa, `git show-ref --verify refs/heads/manual-branch` không còn tìm thấy ref.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy kiểm tra kiến thức về cơ chế con trỏ References trong Git qua các câu hỏi trong phần trắc nghiệm bên dưới.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Làm thế nào mà tệp `.git/packed-refs` giúp tối ưu hóa hiệu năng khi kho lưu trữ có tới hàng chục nghìn nhánh và thẻ tag? Hãy giải thích cơ chế nén tham chiếu của lệnh `git gc`.
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - Nhánh local là ref thuộc `refs/heads/` trỏ tới commit; cách lưu vật lý có thể loose, packed hoặc dùng backend khác.
 - Các namespace chính gồm `refs/heads/`, `refs/tags/` và `refs/remotes/`.
 - Nhánh là ref nhỏ so với các object lịch sử; thao tác với ref thường nhẹ nhưng vẫn chịu tác động của repository và hệ thống.

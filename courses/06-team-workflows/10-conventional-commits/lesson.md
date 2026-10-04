@@ -25,13 +25,13 @@
 ## 📖 Định nghĩa
 Conventional Commits là đặc tả cho thông điệp commit: `<type>[scope tùy chọn][!]: <mô tả>`, có thể kèm body và footer. Đặc tả định nghĩa ý nghĩa SemVer cho `fix` (PATCH), `feat` (MINOR) và thay đổi phá vỡ tương thích (MAJOR); các type khác do nhóm tự quy ước. Việc tính phiên bản hay tạo changelog chỉ xảy ra khi dự án cấu hình công cụ tương ứng.
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Thông điệp có cấu trúc giúp người đọc lọc và hiểu lịch sử thay đổi dễ hơn. Nếu dự án cấu hình parser và quy trình phát hành tương thích, các commit cũng có thể làm đầu vào cho changelog hoặc gợi ý mức tăng phiên bản; định dạng commit một mình không tự chạy release.
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy hình dung hệ thống phân loại bưu kiện tự động. Mỗi kiện hàng được dán nhãn chuẩn hóa: Thư hỏa tốc (`feat`), Bảo hành (`fix`), Bảo trì định kỳ (`chore`), kèm địa chỉ cụ thể `(checkout)`. Máy quét mã vạch đọc nhãn và tự động phân luồng bưu kiện chính xác vào từng toa tàu mà không cần bóc gói hàng.
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```mermaid
 flowchart TD
     Commit["Cú pháp: type(scope)!: description"] --> Type["Type: feat, fix hoặc loại do nhóm chọn"]
@@ -40,10 +40,10 @@ flowchart TD
     Commit --> Desc["Mô tả: súc tích, chữ thường, không chấm cuối"]
 ```
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Một kỹ sư ghi `feat(payment): add PayPal button` cho tính năng mới và `fix(cart): correct currency rounding` cho một lỗi. Nếu repository cấu hình công cụ phát hành để hiểu Conventional Commits, công cụ có thể dùng các thông điệp này khi tạo changelog hoặc tính mức phiên bản.
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 # Thêm tính năng mới cho module xác thực
 git commit -m "feat(auth): add endpoint for user registration"
@@ -65,8 +65,8 @@ git commit -m "feat(core)!: drop support for Node 16"
 - Quên mô tả breaking change bằng `!` hoặc footer `BREAKING CHANGE:`.
 - Cho rằng `chore`, `docs` hay `refactor` tự động làm tăng một mức SemVer; đặc tả không quy định mức tăng cho các type đó.
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác tạo các commit tuân thủ quy chuẩn trên máy và đối chiếu theo hướng dẫn bên dưới.
+## 🧪 Lab
+Hãy mở terminal và cùng tôi rèn luyện thói quen viết Conventional Commits chuẩn mực:
 
 1. Khởi tạo kho thử nghiệm và tạo tệp `home.html`.
 2. Commit với chuẩn tính năng mới: `git commit -m "feat(home): add hero banner section"`.
@@ -74,22 +74,22 @@ Bài học này là bài tự kiểm tra: bạn thao tác tạo các commit tuâ
 4. Viết tài liệu và commit: `git commit -m "docs: add getting started guide in readme"`.
 5. Dùng `git log --oneline` để kiểm tra danh sách commit xem có ngay ngắn và dễ đọc hay không.
 
-## 💡 Hint & mẹo
+## 💡 Hint
 - Đặc tả không bắt buộc độ dài 72 ký tự, thể mệnh lệnh hay dấu câu; hãy theo giới hạn và cách viết mà repository/team đã chọn.
 - Nếu có nội dung giải thích dài hơn, hãy để một dòng trống sau dòng tiêu đề rồi mới viết phần Body chi tiết.
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Lịch sử Git hiển thị rõ ràng từng loại công việc qua tiền tố `feat`, `fix`, `docs`.
 - Giải thích được cấu trúc type/scope/description và nhận diện breaking change.
 - Biết kiểm tra cấu hình dự án trước khi kỳ vọng commit tự tạo changelog hay đổi phiên bản.
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy hoàn thành bài trắc nghiệm bên dưới để kiểm tra mức độ hiểu biết của bạn về đặc tả Conventional Commits.
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Tìm hiểu cách cài đặt công cụ commitlint kết hợp với Husky để tự động từ chối bất kỳ commit nào không tuân thủ chuẩn Conventional Commits ngay từ máy lập trình viên.
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - Conventional Commits chuẩn hóa thông điệp commit; scope tùy chọn.
 - `feat`, `fix` và breaking change có ý nghĩa SemVer xác định; các type khác là quy ước của dự án.
 - Changelog và phát hành tự động cần công cụ cùng cấu hình phù hợp.

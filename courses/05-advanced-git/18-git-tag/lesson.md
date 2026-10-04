@@ -34,17 +34,17 @@
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Khách hàng và người dùng không thể nhớ các chuỗi commit hash phức tạp. `git tag` tạo ra những tên phiên bản rõ ràng, giúp đội ngũ dễ dàng kiểm tra lại chính xác trạng thái code của bản phát hành để tái hiện lỗi hoặc triển khai cập nhật.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy hình dung cuốn album ảnh gia đình. Các trang ảnh cứ dài thêm theo thời gian. `git tag` như chiếc kẹp sách bằng đồng bạn kẹp vào đúng trang ảnh "Lễ tốt nghiệp". Dù sau này có thêm hàng trăm bức ảnh mới, bạn chỉ cần mở đúng kẹp sách là tìm thấy ngay.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Sự khác biệt giữa Branch và Tag:
 Nhánh main: Di chuyển liên tục mỗi khi có commit mới!
@@ -55,12 +55,12 @@ C1 ──► C2 ──► C3 ──► C4 (HEAD -> main)
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Sau khi hoàn thành đợt kiểm thử cuối cùng, trưởng nhóm gõ `git tag v1.0.0` để gắn nhãn commit hiện tại. Trong Git thật, nhóm có thể đẩy tag bằng `git push origin v1.0.0`. Tạo GitHub Release là bước riêng, có thể làm thủ công hoặc qua automation của dự án.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 git tag
 git tag <tên-thẻ>
@@ -89,8 +89,8 @@ Trong Git thật, có thể đẩy tag cụ thể bằng `git push origin <tên-
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác trực tiếp trên terminal của máy tính để làm quen với công cụ.
+## 🧪 Lab
+Hãy cùng tôi mở terminal và thực hiện các bước thực hành trực quan sau:
 1. Liệt kê các tag hiện có trong kho chứa bài tập bằng `git tag`.
 2. Tạo thẻ thử nghiệm `demo-v0.1` tại commit hiện tại bằng `git tag demo-v0.1`.
 3. Kiểm tra lại danh sách tag để thấy `demo-v0.1` xuất hiện.
@@ -98,28 +98,28 @@ Bài học này là bài tự kiểm tra: bạn thao tác trực tiếp trên te
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Push tag tường minh bằng `git push origin <tên-tag>`; tạo GitHub Release là thao tác riêng.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Tạo, kiểm tra và quản lý thành công các thẻ phiên bản bằng `git tag`.
 - Hiểu branch tiến theo commit mới; tag vẫn trỏ tới mục tiêu ban đầu cho đến khi ai đó thay đổi tag.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy làm bài kiểm tra trắc nghiệm dưới đây về câu lệnh đánh dấu mốc git tag.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Tại sao việc gõ `git checkout v1.0.0` lại đưa con trỏ của bạn vào trạng thái "Detached HEAD"?
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - `git tag` tạo mốc tham chiếu không tự di chuyển theo commit mới trên branch.
 - Thẻ nhẹ (Lightweight tag) là con trỏ trực tiếp đến commit.
 - Phải dùng lệnh push tường minh hoặc `--tags` để đưa thẻ lên GitHub.

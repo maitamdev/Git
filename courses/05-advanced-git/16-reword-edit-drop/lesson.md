@@ -34,17 +34,17 @@
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Trong thực tế, bạn thường cần sửa mã vé Jira ghi sai, loại bỏ commit chứa tệp rác thừa, hoặc tách một commit quá lớn thành hai. Bộ ba chỉ thị này trao cho bạn khả năng kiểm soát phẫu thuật chính xác đến từng điểm trong lịch sử Git.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy hình dung bạn có cỗ máy thời gian quay về từng cảnh quay trong phim. Lệnh `reword` giống như lồng tiếng lại lời bình. Lệnh `edit` giống như dừng trường quay lại để bạn đưa thêm đạo cụ vào tay diễn viên rồi mới bấm máy tiếp. Còn lệnh `drop` là cắt bỏ phân cảnh đó vứt vào sọt rác.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 3 hành động phẫu thuật commit trong Interactive Rebase:
 [pick C1]   ──► Giữ nguyên không đổi
@@ -56,12 +56,12 @@ Hãy hình dung bạn có cỗ máy thời gian quay về từng cảnh quay tro
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Kỹ sư Đức cần sửa ba commit chưa chia sẻ: đổi thông điệp commit đầu, bỏ một commit debug không cần nữa, và thêm test vào commit thứ ba. Đức dùng `rebase -i` trên nhánh thử nghiệm, rồi kiểm tra cả nội dung lẫn lịch sử mới. Nếu commit có credential đã lỡ chia sẻ, Đức thu hồi credential trước; `drop` không vô hiệu hóa secret.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 r <commit-hash> (hoặc reword)
 e <commit-hash> (hoặc edit)
@@ -87,7 +87,7 @@ git commit --amend (khi đang tạm dừng ở trạng thái edit)
 
 ---
 
-## 🧪 Lab thực hành
+## 🧪 Lab
 Luyện bằng Git thật trong kho thử nghiệm riêng; simulator hiện chưa nhận chỉnh sửa todo list qua editor.
 1. Tạo commit nền, rồi ba commit riêng: `add heading`, `add debug log`, `add test`.
 2. Chạy `git rebase -i HEAD~3`. Đổi dòng `add heading` thành `reword`, dòng `add debug log` thành `drop`, và dòng `add test` thành `edit`.
@@ -97,28 +97,28 @@ Luyện bằng Git thật trong kho thử nghiệm riêng; simulator hiện chư
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Khi Git dừng ở `edit`, sửa file, stage phần muốn giữ, rồi `git commit --amend` và `git rebase --continue`. Nếu commit có secret đã lỡ chia sẻ, hãy thu hồi hoặc đổi secret trước; chỉ drop commit không làm credential mất hiệu lực và không xóa bản sao đã có.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Thực hiện được `reword`, `edit` và `drop` trong kho thử nghiệm, rồi kiểm tra lịch sử mới.
 - Biết `drop` không phải cách xử lý bảo mật cho secret đã bị lộ.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy làm bài kiểm tra trắc nghiệm dưới đây về các chỉ thị reword, edit và drop.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Mô tả quy trình từng bước sử dụng chỉ thị `edit` để chia một commit lớn thành 2 commit nhỏ riêng biệt.
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - `reword` giúp chuẩn hóa thông điệp mà không đụng chạm đến mã nguồn.
 - `edit` trao quyền can thiệp vào mã nguồn của commit trong quá khứ.
 - `drop` (hoặc xóa dòng) loại bỏ commit thừa một cách dứt khoát.

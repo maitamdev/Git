@@ -25,13 +25,13 @@
 ## 📖 Định nghĩa
 Trong Git Flow, Hotfix Branch là nhánh sửa một vấn đề khẩn cấp trên bản phát hành production, thường được tách từ `main`. Nếu production đang chạy commit được đánh dấu bằng tag hoặc nhánh khác, nhóm cần bắt đầu từ commit đó. Sau khi kiểm tra và phát hành bản sửa, nhóm đưa thay đổi về `develop` hoặc nhánh phát triển tương ứng. Đây là quy trình nhóm lựa chọn, không phải tính năng tự động của Git.
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Khi lỗi đang ảnh hưởng người dùng, nhóm có thể cần một đường phát hành riêng để sửa đúng phiên bản đang chạy mà không đưa theo thay đổi chưa phát hành. Hotfix cần review và kiểm thử tương xứng với mức rủi ro; gắn nhãn khẩn cấp không làm bản sửa an toàn hơn.
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy hình dung con tàu ngầm đang tuần tra dưới đáy biển (`main`). Đột nhiên một đường ống áp lực bị rò rỉ. Thuyền trưởng không thể kéo tàu về xưởng sửa chữa trên đất liền (`develop`) để chờ lịch bảo trì tháng sau. Một đội thợ lặn cấp cứu (`hotfix branch`) mang dụng cụ vá ngay vết nứt tại chỗ để tàu tiếp tục hoạt động, rồi gửi biên bản về xưởng đóng tàu để các tàu sau không mắc lỗi.
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```mermaid
 gitGraph
     commit id: "v1.0.0"
@@ -49,10 +49,10 @@ gitGraph
     merge hotfix/v1.0.1 id: "Sync patch to develop"
 ```
 
-## 🏢 Ví dụ thực tế
-Ví dụ giả định theo Git Flow: nhóm xác nhận production đang chạy commit của `main`, tạo `hotfix/v1.0.1` từ đó, sửa lỗi, chạy kiểm tra và mở PR khẩn cấp. Sau khi merge vào `main`, nhóm gắn tag nếu chính sách SemVer phù hợp và phát hành theo pipeline/quy trình đã cấu hình; bản sửa sau đó được tích hợp vào `develop`.
+## 🌎 Ví dụ thực tế
+Trong quy trình Git Flow thực tế tại doanh nghiệp: nhóm xác nhận production đang chạy commit của `main`, tạo `hotfix/v1.0.1` từ đó, sửa lỗi, chạy kiểm tra và mở PR khẩn cấp. Sau khi merge vào `main`, nhóm gắn tag nếu chính sách SemVer phù hợp và phát hành theo pipeline/quy trình đã cấu hình; bản sửa sau đó được tích hợp vào `develop`.
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 # Trong Git Flow, giả sử main trỏ tới phiên bản production cần sửa
 git switch -c hotfix/v1.0.1 main
@@ -81,8 +81,8 @@ git branch -d hotfix/v1.0.1
 - Tiện tay thêm các tính năng không liên quan vào nhánh hotfix làm tăng nguy cơ phát sinh lỗi phụ.
 - Quên tích hợp bản sửa về nhánh phát triển còn được duy trì; chọn merge/cherry-pick theo lịch sử và chính sách nhóm.
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác mô phỏng quy trình Hotfix trên máy và đối chiếu theo hướng dẫn bên dưới.
+## 🧪 Lab
+Cùng tôi thực hiện chu trình xử lý sự cố khẩn cấp (Hotfix Workflow) trực tiếp trên nhánh Production:
 
 Điều kiện đầu vào: repo thử nghiệm có commit trên `main` và `develop`; trong bài này giả định `main` là mã nguồn production.
 1. Tạo nhánh: `git switch -c hotfix/v1.0.1 main`.
@@ -91,21 +91,21 @@ Bài học này là bài tự kiểm tra: bạn thao tác mô phỏng quy trình
 4. Gắn tag vào commit phát hành đã kiểm tra: `git tag -a v1.0.1 -m "Hotfix v1.0.1"`.
 5. Nếu repo duy trì `develop`, tích hợp thay đổi về đó rồi kiểm tra lịch sử bằng `git log --oneline --graph --all`.
 
-## 💡 Hint & mẹo
+## 💡 Hint
 - Giữ phạm vi bản vá hẹp, nhưng vẫn kiểm tra nguyên nhân và tác động liên quan trước khi phát hành.
 - Sau sự cố, ghi nhận nguyên nhân, cách phát hiện và hành động phòng ngừa theo quy trình của nhóm.
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Nhánh `main` sở hữu bản vá và thẻ tag phiên bản mới phản ánh đúng trạng thái deploy lên máy chủ.
 - Nhánh `develop` được đồng bộ bản sửa lỗi mà không làm mất các commit tính năng đang phát triển.
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy làm bài trắc nghiệm bên dưới để kiểm tra mức độ nắm vững quy trình xử lý lỗi khẩn cấp với Hotfix Workflow.
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Thiết kế kịch bản xử lý khi nhánh hotfix khi merge ngược vào `develop` phát sinh xung đột do nhánh `develop` đã tái cấu trúc hoàn toàn file mã nguồn đó.
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - Hotfix Workflow là quy trình cứu hộ khẩn cấp cho các sự cố nghiêm trọng trên môi trường sản xuất.
 - Luôn tách nhánh trực tiếp từ phiên bản đang chạy lỗi trên nhánh `main`.
 - Bắt buộc thực hiện hợp nhất kép vào cả `main` và `develop` để tránh tái phát lỗi trong tương lai.

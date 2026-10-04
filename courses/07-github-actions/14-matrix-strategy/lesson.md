@@ -24,13 +24,13 @@
 ## 📖 Định nghĩa
 Chiến lược ma trận (Matrix Strategy) là cơ chế cao cấp trong GitHub Actions cho phép bạn sử dụng các biến cấu hình để tự động tạo ra một tập hợp nhiều Job con chạy song song từ một định nghĩa Job duy nhất. Bằng cách khai báo khối `strategy: matrix:`, GitHub Actions sẽ tự động tính toán tích Đề-các của tất cả các mảng giá trị đầu vào để sinh ra toàn bộ các tổ hợp môi trường cần kiểm thử.
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Khi phát triển phần mềm hoặc thư viện đa nền tảng, việc chỉ kiểm thử trên một phiên bản duy nhất là rất rủi ro. Có những tính năng chạy tốt trên Linux nhưng lại bị lỗi trên Windows do khác biệt dấu gạch chéo đường dẫn. Matrix Strategy giúp bạn kiểm tra toàn diện mọi môi trường mà không cần sao chép tệp YAML ra hàng chục Job giống hệt nhau.
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy hình dung xưởng may áo sơ mi thử nghiệm một mẫu thiết kế mới. Thay vì may thủ công từng chiếc, người quản lý lập bảng ma trận gồm 3 Kích cỡ (S, M, L) và 3 Màu sắc (Đỏ, Xanh, Trắng). Bằng một chỉ thị duy nhất, hệ thống tự động sinh ra 9 tổ hợp sản phẩm (3 x 3 = 9) và giao cho 9 thợ may thực hiện cùng một lúc để kiểm tra độ vừa vặn của từng màu trên từng kích cỡ.
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```mermaid
 flowchart TD
 Config["strategy.matrix: os [ubuntu, windows] & node [22, 24]"] --> M1["Job 1: ubuntu + node 22"]
@@ -39,10 +39,10 @@ Config --> M3["Job 3: windows + node 22"]
 Config --> M4["Job 4: windows + node 24"]
 ```
 
-## 🏢 Ví dụ thực tế
-Ví dụ giả định: một công cụ dòng lệnh kiểm tra trên ba hệ điều hành và hai bản Node được hỗ trợ, tạo ra sáu tổ hợp. Các Job có thể bị giới hạn đồng thời hoặc xếp hàng; lỗi trên Windows gợi ý cần kiểm tra cách xử lý đường dẫn nhưng không tự chứng minh đó là nguyên nhân.
+## 🌎 Ví dụ thực tế
+Trong môi trường phát triển dự án thực tế: một công cụ dòng lệnh kiểm tra trên ba hệ điều hành và hai bản Node được hỗ trợ, tạo ra sáu tổ hợp. Các Job có thể bị giới hạn đồng thời hoặc xếp hàng; lỗi trên Windows gợi ý cần kiểm tra cách xử lý đường dẫn nhưng không tự chứng minh đó là nguyên nhân.
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 # Kiểm tra phiên bản node được cài đặt trong job con hiện tại
 node -v
@@ -60,8 +60,8 @@ npm test
 - Không đặt `fail-fast: false` khi muốn xem kết quả kiểm thử trên toàn bộ các môi trường còn lại.
 - Dùng sai cú pháp của `include` hoặc `exclude` khiến các tổ hợp không được lọc theo đúng mong muốn.
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
+## 🧪 Lab
+Hãy mở terminal và cùng tôi thực hành từng bước dưới đây để làm chủ kỹ năng:
 
 1. Khởi tạo một tệp workflow sử dụng Matrix Strategy:
    ```yaml
@@ -88,21 +88,21 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
 2. Đẩy commit lên GitHub và kích hoạt bằng nút Run workflow.
 3. Quan sát tab Actions hiển thị 4 tổ hợp Job; thời điểm chúng chạy còn tùy concurrency và runner sẵn có.
 
-## 💡 Hint & mẹo
+## 💡 Hint
 - Đặt `fail-fast: false` bên trong `strategy:` nếu bạn muốn các phiên bản khác vẫn tiếp tục chạy khi có một phiên bản bị lỗi sớm.
 - Bạn có thể dùng `max-parallel: 2` để giới hạn số lượng Job con chạy đồng thời nếu lo ngại quá tải tài nguyên mạng.
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Bảng điều khiển GitHub Actions mở rộng hiển thị đầy đủ danh sách 4 Job con độc lập.
 - Mỗi Job con hiển thị đúng cặp giá trị hệ điều hành và phiên bản Node trong tiêu đề thực thi.
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy hoàn thành bài trắc nghiệm bên dưới để kiểm tra khả năng tư duy và thiết lập ma trận kiểm thử trong GitHub Actions.
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Sử dụng `exclude` trong ma trận ba hệ điều hành và hai phiên bản Node để loại tổ hợp không được dự án hỗ trợ; chọn tổ hợp dựa trên yêu cầu thực tế.
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - `strategy: matrix:` tự động tạo ra nhiều Job con bằng tích Đề-các của các danh sách giá trị.
 - Giúp kiểm thử tương thích đa môi trường (hệ điều hành, phiên bản runtime, cơ sở dữ liệu) chỉ với một định nghĩa duy nhất.
 - Kiểm soát tiến trình ma trận linh hoạt thông qua các thuộc tính `fail-fast`, `include`, và `exclude`.

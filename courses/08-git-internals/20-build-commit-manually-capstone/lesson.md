@@ -33,17 +33,17 @@ Capstone này dùng một repository mới chỉ để thực hành. Bạn tạo
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Làm capstone giúp bạn nối các khái niệm đã học: nội dung tệp trở thành blob, index chọn blob và đường dẫn, tree ghi cấu trúc thư mục, commit ghi tree cùng thông tin lịch sử, ref giữ commit để Git có thể tìm tới. Bạn không cần dùng plumbing trong công việc hằng ngày để hiểu luồng đó.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy tưởng tượng bạn là một nghệ nhân chế tác đồng hồ Thụy Sĩ cổ điển. Người bình thường chỉ mua chiếc đồng hồ đã đóng vỏ hoàn chỉnh về đeo lên tay và xem giờ (Porcelain). Nhưng bạn tự tay gắp từng chiếc bánh răng bánh lắc siêu nhỏ (Blob), tra dầu vào trục quay (Index), lắp ráp thành bộ máy cơ khí tinh vi (Tree), đóng vào khung vỏ thép không gỉ khắc số seri (Commit), và gắn kim đồng hồ chỉ đúng giờ hiện tại (Branch Ref).
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Quy trình 5 bước tạo Commit hoàn chỉnh bằng Plumbing Commands:
 ┌────────────────────────────────────────────────────────────────────────┐
@@ -67,12 +67,12 @@ Quy trình 5 bước tạo Commit hoàn chỉnh bằng Plumbing Commands:
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Trong repo capstone mới, người học ghi một blob, đưa object ID của nó vào index, lấy tree ID bằng `git write-tree`, rồi tạo root commit bằng `git commit-tree <tree-id> -m "manual plumbing"`. Cuối cùng họ tạo ref `refs/heads/capstone` cho commit và kiểm tra bằng `git log -1`. Vì đây là repo tạm, không có nhánh dự án nào bị ghi đè.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 # Tạo một repository mới dành riêng cho bài capstone
 mkdir git-capstone-lab
@@ -119,7 +119,7 @@ git log -1 --oneline
 
 ---
 
-## 🧪 Lab thực hành
+## 🧪 Lab
 Làm toàn bộ lab trong repository mới, không phải repository chứa khóa học hoặc dự án cá nhân. Khối lệnh phía trên tạo một root commit trên ref `capstone`.
 
 1. **Bước 1**: Chạy các lệnh tạo thư mục, `git init`, cấu hình danh tính local và trỏ HEAD tới `refs/heads/capstone` như khối lệnh trên.
@@ -131,28 +131,28 @@ Làm toàn bộ lab trong repository mới, không phải repository chứa khó
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Luồng ở bài này là Blob -> Index -> Tree -> Commit -> Ref. HEAD là symbolic ref trỏ tới nhánh đang chọn; nó không phải bước tạo object.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - `git log -1` hiển thị root commit mới trên nhánh `capstone`.
 - `git cat-file -p HEAD` cho thấy commit trỏ tới tree; `git status --short` không báo nội dung `manual.txt` là chưa stage.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy hoàn thành bài kiểm tra danh dự tổng kết đỉnh cao của Level 8 Git Internals trong phần trắc nghiệm bên dưới.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Repo lab hiện chỉ có một root commit. Tạo commit thứ hai trên cùng tree hoặc tree mới bằng `git commit-tree <tree-id> -p <parent-id>`, rồi cập nhật ref bằng old-value guard để bảo đảm ref chưa bị người khác di chuyển: `git update-ref refs/heads/capstone <new-id> <old-id>`. Quan sát parent mới bằng `git cat-file -p <new-id>`.
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - Có thể giải thích Blob, Index, Tree, Commit và Ref trong quy trình tạo commit.
 - Có thể kiểm tra object bằng `git cat-file` và xác nhận ref bằng `git log`.
 - Bài lab dùng root commit trong repo tạm; tạo commit nối lịch sử cần khai báo parent.

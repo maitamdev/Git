@@ -34,17 +34,17 @@ Khôi phục commit bằng reflog là cách tìm một commit từng được th
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Reflog hữu ích khi cần tìm lại commit sau thao tác nhầm. Trước tiên dừng các lệnh ghi, kiểm tra trạng thái repo, tìm hash phù hợp, rồi tạo nhánh cứu hộ để giữ commit đó.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy hình dung nhánh là nhãn chỉ tới commit. Khi nhãn bị di chuyển hoặc xóa, reflog có thể còn ghi hash trước đó. Tạo nhánh cứu hộ (`git branch rescue <hash>`) sẽ thêm một nhãn mới trỏ tới commit đó.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Quy trình hồi sinh commit mồ côi:
 Trạng thái mồ côi:
@@ -59,12 +59,12 @@ C1 ──► C2 (main)
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Kỹ sư Mai xóa nhánh `feat-ai-chat` chưa push. Mai kiểm tra `git reflog`, tìm hash của commit cuối nhánh và xác minh đó đúng là commit cần giữ. Nếu hash và object còn tồn tại, Mai tạo lại nhánh bằng `git branch feat-ai-chat <hash>`. Reflog không khôi phục được thay đổi chưa commit.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 git reflog
 git branch <tên-nhánh-cứu-hộ> <commit-hash>
@@ -87,7 +87,7 @@ Trong Git thật có thể reset tới một entry reflog hoặc tạo nhánh tr
 
 ---
 
-## 🧪 Lab thực hành
+## 🧪 Lab
 Bài này thao tác reset trên kho thử nghiệm riêng; không dùng file chứa mật khẩu hoặc dữ liệu thật.
 1. Tạo commit nền có `README.md`, sau đó tạo commit `demo-note` thêm `demo-note.txt`.
 2. Ghi lại mã commit `demo-note` bằng `git log --oneline -2`.
@@ -97,28 +97,28 @@ Bài này thao tác reset trên kho thử nghiệm riêng; không dùng file ch�
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Khi đã xác minh hash, tạo nhánh cứu hộ thường ít rủi ro hơn việc di chuyển nhánh hiện tại bằng `reset --hard`.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Nhánh `rescue` trỏ đúng commit `demo-note` và file đã commit xuất hiện trên nhánh đó.
 - Không suy ra từ kết quả này rằng reflog có thể cứu file chưa commit hoặc mọi commit vô thời hạn.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy làm bài kiểm tra trắc nghiệm dưới đây về kỹ năng cứu hộ dữ liệu với reflog.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Khám phá lệnh `git fsck --lost-found` để quét toàn bộ cơ sở dữ liệu và tìm ra tất cả các blob và commit mồ côi (dangling objects) trong kho lưu trữ.
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - Commit bị mất trong Git thực chất chỉ bị ngắt kết nối con trỏ chứ chưa bị xóa vật lý.
 - Sử dụng `git reflog` để định vị chính xác mã hash của commit trước thời điểm tai nạn.
 - Tạo nhánh trỏ tới commit tìm được bằng `git branch <tên-nhánh> <commit-hash>`; xác minh hash trước khi chạy.

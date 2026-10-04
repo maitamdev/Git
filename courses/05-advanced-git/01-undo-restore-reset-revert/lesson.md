@@ -34,17 +34,17 @@ Trong Git, việc hoàn tác có thể nhắm vào file hoặc commit. `git rest
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Ba lệnh giải quyết ba việc khác nhau: `restore` đưa nội dung file về trạng thái đã lưu, `reset` di chuyển ref và có thể bỏ thay đổi, còn `revert` tạo commit mới để đảo một thay đổi. Với commit đã chia sẻ, nhóm thường chọn `revert` để tránh viết lại lịch sử mà đồng nghiệp đã lấy về.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy hình dung bạn đang soạn thảo một bức thư tay. `git restore` như dùng cục tẩy xóa một từ vừa viết sai trên giấy nháp. `git reset` như vò bức thư vừa viết ném vào sọt rác để lùi lại lúc chưa đặt bút. Còn `git revert` như bạn đã trót gửi thư qua bưu điện, bạn viết thêm bức thư đính chính thứ hai gửi tiếp để hủy bỏ hiệu lực thư trước.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Bản đồ 3 cơ chế Undo trong Git:
 Working Tree / Staging:  git restore <file> (Hủy sửa đổi tệp tin)
@@ -54,12 +54,12 @@ Public / Shared Branch:  git revert (Tạo commit mới phủ định commit cũ
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Kỹ sư Nam trong một buổi chiều gặp 3 tình huống hoàn tác: Đầu tiên, Nam sửa hỏng file cấu hình chưa add, chạy `git restore config.json` để lấy lại bản cũ. Tiếp đó, Nam tạo 2 commit thử nghiệm riêng không ưng ý, chạy `git reset --hard HEAD~2` để xóa sạch. Cuối cùng, một commit đã push lên main gây lỗi, Nam lập tức chạy `git revert HEAD` để sinh commit đảo ngược an toàn cho cả nhóm.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 git restore <tên-tệp>
 git restore --staged <tên-tệp>
@@ -84,8 +84,8 @@ git revert <commit-hash>
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thực hành phân biệt 3 thao tác restore, reset và revert trên terminal.
+## 🧪 Lab
+Hãy cùng tôi bắt tay vào thực hành từng bước dưới đây để thấy rõ sự khác biệt giữa 3 câu lệnh hoàn tác:
 1. Làm trong kho thử nghiệm riêng. Tạo `test.txt` với nội dung `v1`, rồi chạy `git add test.txt` và `git commit -m "base"`.
 2. Đổi nội dung thành `v2`, chạy `git restore test.txt`, rồi mở file để xác nhận nội dung trở lại `v1`.
 3. Đổi nội dung thành `v2` lần nữa, chạy `git add test.txt`, rồi `git restore --staged test.txt`. Chạy `git status`: file còn sửa nhưng đã bỏ stage.
@@ -94,28 +94,28 @@ Bài học này là bài tự kiểm tra: bạn thực hành phân biệt 3 thao
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Trước khi hoàn tác, xác định thay đổi đang ở file, Staging hay trong commit. Với commit đã chia sẻ, hãy kiểm tra quy trình của nhóm; `revert` thường giữ lịch sử dễ phối hợp hơn.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Mô tả được `restore` tác động lên file, `reset` có thể di chuyển nhánh ở dạng commit, và `revert` tạo commit mới.
 - Nhận ra file sửa chưa commit có thể bị mất khi dùng `restore` hoặc `reset --hard`.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy làm bài kiểm tra trắc nghiệm dưới đây về các cơ chế hoàn tác trong Git.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Tìm hiểu vì sao trước phiên bản Git 2.23 lệnh `git checkout` phải đảm nhiệm cả việc chuyển nhánh và khôi phục file, dẫn đến việc tách ra thành `git switch` và `git restore`.
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - `git restore` chuyên dùng để khôi phục trạng thái tệp tin trong Working Directory hoặc Staging Area.
 - `git reset` dịch chuyển con trỏ nhánh lùi về quá khứ, phù hợp cho việc viết lại lịch sử cục bộ.
 - `git revert` tạo commit mới áp dụng thay đổi ngược; hãy kiểm tra kết quả, nhất là khi các commit sau đó sửa cùng file.

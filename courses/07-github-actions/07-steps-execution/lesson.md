@@ -24,13 +24,13 @@
 ## 📖 Định nghĩa
 Steps (Các bước) là danh sách tác vụ trong một Job. Mỗi Step dùng `run` để chạy lệnh shell hoặc `uses` để gọi Action. Steps được xét theo thứ tự khai báo và dùng chung workspace; sau lỗi, các step sau mặc định bị bỏ qua trừ khi điều kiện hoặc `continue-on-error` thay đổi hành vi.
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Hiểu cơ chế Step giúp bạn kiểm soát chu trình xử lý mã nguồn. Mặc định, bước sau không chạy sau lỗi; điều kiện riêng vẫn có thể cho bước khác chạy, nên hãy đặt phụ thuộc phát hành rõ ràng.
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy tưởng tượng các Step như công thức làm bánh ngọt từng bước: Bước 1: Đập trứng; Bước 2: Đánh tan trứng; Bước 3: Cho đường và sữa; Bước 4: Nướng bánh trong lò. Bạn không thể nướng bánh trước khi đập trứng. Và nếu ở Bước 1 quả trứng bị hỏng (`Step 1 Failed`), bạn phải dừng lại ngay lập tức chứ không được tiếp tục đổ sữa và nướng.
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```mermaid
 flowchart TD
     S1[Step 1: actions/checkout@v7 - Thành công] --> S2[Step 2: npm install - Thành công]
@@ -40,10 +40,10 @@ flowchart TD
     S3 -- Thất bại, if riêng --> Rescue[Step có if: failure() vẫn có thể chạy]
 ```
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Một kỹ sư cấu hình Job chạy kiểm thử cho ứng dụng Python: Step 1 tải mã nguồn về; Step 2 cài đặt thư viện pytest; Step 3 chạy lệnh `pytest tests/` với định danh `id: test_run`; Step 4 gửi thông báo thành công. Trong một lần chạy, Step 3 phát hiện lỗi chia cho số 0 và trả về mã lỗi 1. Toàn bộ Job lập tức chuyển sang màu đỏ và Step 4 hoàn toàn không được gọi, giúp tiết kiệm thời gian chạy vô ích.
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 # In ra một thông báo kiểm tra trong thuộc tính run của step
 echo "Hello Step"
@@ -61,8 +61,8 @@ gh run view --log
 - Thiếu thuộc tính `name` khiến giao diện hiển thị các câu lệnh shell dài dòng rất khó đọc và khó tra cứu lỗi.
 - Quên đặt thuộc tính `id` khi muốn trích xuất dữ liệu đầu ra (`outputs`) của Step đó cho các bước tiếp theo sử dụng.
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
+## 🧪 Lab
+Hãy mở terminal và cùng tôi thực hành từng bước dưới đây để làm chủ kỹ năng:
 
 1. Khai báo danh sách `steps` gồm ít nhất 3 bước với tên mô tả `name` rõ ràng:
    ```yaml
@@ -83,21 +83,21 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
 2. Đẩy file lên GitHub và theo dõi tab Actions để xem các bước chạy tuần tự lần lượt.
 3. Thử cố tình chèn lệnh `exit 1` vào bước 2 để quan sát bước 3 tự động bị chuyển sang trạng thái Skipped.
 
-## 💡 Hint & mẹo
+## 💡 Hint
 - Luôn đặt tên `name` mô tả rõ hành động (ví dụ: "Cài đặt dependencies", "Chạy unit test") thay vì để trống.
 - Với bước dọn dẹp ngắn sau thành công hoặc lỗi, cân nhắc `if: ${{ !cancelled() }}`; chỉ dùng `always()` khi cần thử chạy cả sau khi bị hủy và bước đó kết thúc nhanh.
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Các Step thực thi đúng theo thứ tự khai báo từ trên xuống dưới trên cùng một Runner.
 - Sau lỗi, step sau mặc định bị bỏ qua; điều kiện riêng và `continue-on-error` có thể làm thay đổi luồng chạy.
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy làm bài trắc nghiệm bên dưới để kiểm tra mức độ hiểu biết của bạn về cơ chế thực thi của các Step trong Job.
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Tìm hiểu cách sử dụng hàm điều kiện `if: failure()` để chỉ kích hoạt một bước gửi thông báo cảnh báo lỗi tới Discord hoặc Slack khi có bước trước đó bị thất bại.
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - Các Step trong Job luôn thực thi tuần tự từ trên xuống dưới trên cùng một Runner.
 - Nếu một Step lỗi, các Step tiếp theo mặc định bị bỏ qua; có thể chạy bước xử lý lỗi bằng `if: failure()`.
 - Đặt `id` cho Step cho phép chia sẻ dữ liệu đầu ra giữa các bước một cách mạch lạc.

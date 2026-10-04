@@ -34,17 +34,17 @@ Protected Branch là nhánh trên máy chủ được áp dụng một hoặc nh
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Quy tắc bảo vệ giúp nhóm giảm rủi ro cập nhật nhầm nhánh hoặc bỏ qua bước review đã thống nhất. Nó không thay thế backup, kiểm thử hay phân quyền phù hợp; cấu hình quá rộng hoặc quyền bypass vẫn có thể cho phép thay đổi không mong muốn.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy hình dung một cổng có nhiều chốt: nhóm chọn chốt nào cần dùng, chẳng hạn yêu cầu phiếu duyệt hoặc chặn ghi đè lịch sử. Một số chốt có mặc định riêng, nhưng quyền quản trị và cấu hình ngoại lệ vẫn ảnh hưởng kết quả.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Ví dụ khi cấu hình yêu cầu Pull Request và không cấp ngoại lệ:
 Dev gõ: git push origin main
@@ -62,12 +62,12 @@ Dev gõ: git push origin main
 
 ---
 
-## 🏢 Ví dụ thực tế
-Ví dụ giả định: repository bật quy tắc yêu cầu Pull Request và chặn force push, đồng thời tài khoản của kỹ sư không nằm trong danh sách bypass. Khi kỹ sư thử cập nhật trực tiếp `main`, máy chủ từ chối; thông báo cụ thể phụ thuộc nền tảng và cấu hình.
+## 🌎 Ví dụ thực tế
+Trong môi trường phát triển dự án thực tế: repository bật quy tắc yêu cầu Pull Request và chặn force push, đồng thời tài khoản của kỹ sư không nằm trong danh sách bypass. Khi kỹ sư thử cập nhật trực tiếp `main`, máy chủ từ chối; thông báo cụ thể phụ thuộc nền tảng và cấu hình.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 git push origin main
 # Hai lệnh sau có thể bị từ chối bởi quy tắc tương ứng; không chạy trên repo thật
@@ -91,8 +91,8 @@ git push --force origin main
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác trực tiếp trên terminal của máy tính để làm quen với công cụ.
+## 🧪 Lab
+Hãy cùng tôi mở terminal và thực hiện các bước thực hành trực quan sau:
 1. Dùng repository thử nghiệm mà bạn quản lý; không thử lệnh xóa hoặc force push trên dự án thật.
 2. Mở **Settings → Branches**, tạo quy tắc cho `main` và bật **Require a pull request before merging**.
 3. Nếu có tài khoản cộng tác viên thử nghiệm, thử push một commit lên `main`; nếu không, chỉ xem cấu hình và mô phỏng kết quả.
@@ -100,28 +100,28 @@ Bài học này là bài tự kiểm tra: bạn thao tác trực tiếp trên te
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Trước khi bật quy tắc cho repo đang dùng, kiểm tra xem ai có quyền bypass và các điều kiện bắt buộc có phù hợp với quy trình của nhóm không.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Chỉ ra được từng quy tắc đang bật và ai có thể bypass.
 - Với cấu hình yêu cầu PR, giải thích được vì sao push trực tiếp bị từ chối và điều kiện nào mở khóa việc merge.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy làm bài trắc nghiệm dưới đây về tính năng Protected Branch.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Phân tích các nguy cơ tiềm ẩn nếu một dự án cho phép các tài khoản Administrator tự do bypass các quy tắc bảo vệ nhánh.
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - Protected Branch là tên gọi cho nhánh có một hoặc nhiều quy tắc bảo vệ.
 - Push trực tiếp, force push, xóa nhánh, review và status check được điều khiển bởi các quy tắc riêng.
 - Quyền bypass và cấu hình repository ảnh hưởng đến kết quả thực tế.

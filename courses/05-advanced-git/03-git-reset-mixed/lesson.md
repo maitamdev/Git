@@ -34,17 +34,17 @@
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Khi gõ `git add .` theo thói quen, bạn dễ đưa nhiều file không liên quan vào Staging Area, hoặc bạn commit một loạt thay đổi lớn nhưng sau đó muốn chia nhỏ. Lệnh `git reset --mixed` tháo dỡ các thay đổi ra khỏi Staging về lại Working Tree dưới dạng unstaged để bạn tự do chọn lọc commit từng phần.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy hình dung bạn đóng gói đồ đạc vào thùng và dán băng dính niêm phong (Staging Area). Khi nhận ra đã bỏ nhầm tài liệu cơ quan vào thùng, bạn rạch băng dính và dỡ toàn bộ đồ vật trong thùng ra đặt lại trên bàn làm việc (`--mixed`). Đồ vật vẫn còn nguyên trên bàn, bạn thong thả lựa chọn món nào cần gửi và món nào giữ lại.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Cơ chế hoạt động của git reset --mixed HEAD~1:
 Trước khi reset:
@@ -60,12 +60,12 @@ Working Tree:     Chứa toàn bộ thay đổi của C3 (Chưa staged - màu đ
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Kỹ sư Lan sửa 5 file khác nhau rồi commit chung với thông điệp: "update various files". Thấy commit quá cồng kềnh, Lan chạy `git reset HEAD~1` (chế độ mixed mặc định). Nhánh lùi lại 1 commit, cả 5 file xuất hiện màu đỏ unstaged trong `git status`. Lan lần lượt `git add` và commit riêng từng file theo từng logic rõ ràng, giúp lịch sử dự án trở nên cực kỳ chuyên nghiệp.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 git reset HEAD~1
 git reset --mixed HEAD~1
@@ -90,8 +90,8 @@ git status
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác reset --mixed và bóc tách commit trên terminal.
+## 🧪 Lab
+Hãy cùng tôi thực hành tháo dỡ commit với cờ --mixed mặc định để phân loại lại các tệp tin:
 1. Trong kho thử nghiệm riêng, tạo và commit `notes.txt` với nội dung `ban dau` để có commit nền.
 2. Sửa `notes.txt`, tạo thêm `a.txt` và `b.txt`, rồi stage cả ba file và commit bằng thông điệp `thu nghiem`.
 3. Chạy `git reset --mixed HEAD~1`, rồi `git status`. `notes.txt` hiện modified; `a.txt` và `b.txt` hiện untracked vì commit nền chưa từng chứa chúng.
@@ -99,28 +99,28 @@ Bài học này là bài tự kiểm tra: bạn thao tác reset --mixed và bóc
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Với cú pháp reset nhắm vào commit, nếu không chọn `--soft` hay `--hard`, Git dùng `--mixed`. Dùng dấu `--` trước tên file để chỉ nhắm vào file và không di chuyển nhánh.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Phần thay đổi so với commit mục tiêu không còn staged; file có thể hiện modified hoặc untracked tùy file đó đã có trong commit mục tiêu chưa.
 - Nội dung đang có trong Working Tree vẫn còn sau thao tác mixed reset.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy làm bài kiểm tra trắc nghiệm dưới đây về câu lệnh git reset --mixed.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Sử dụng `git reset <tên-file>` để chỉ rút duy nhất một file nhạy cảm ra khỏi Staging Area mà vẫn giữ lại các file khác đang chuẩn bị commit.
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - `git reset --mixed` là chế độ mặc định, dịch chuyển HEAD và reset Staging Area.
 - Bảo tồn toàn vẹn Working Directory, đưa các thay đổi về trạng thái unstaged.
 - Rất hữu hiệu để bóc tách một commit lớn thành nhiều commit nhỏ có ý nghĩa.

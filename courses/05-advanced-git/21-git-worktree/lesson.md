@@ -34,17 +34,17 @@
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Khi đang chạy dev server với nhiều file sửa dở mà cần xử lý gấp một nhánh khác, quy trình cũ bắt bạn phải tắt server, stash và chuyển nhánh. Với `git worktree`, bạn mở thêm một thư mục bên cạnh để làm song song mà không gián đoạn công việc hiện tại.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy hình dung bạn là kiến trúc sư trong căn phòng lớn có nhiều chiếc bàn vẽ cạnh nhau. Bàn số 1 bạn đang vẽ mặt tiền tòa nhà (nhánh feature), bàn số 2 bạn mở bản vẽ ống nước (nhánh hotfix). Bạn có thể bước qua lại giữa hai bàn bất cứ lúc nào mà không cần thu dọn bản vẽ.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Kiến trúc chia sẻ một kho chứa .git của Worktree:
                    ┌──► Thư mục chính: /project (nhánh: main)
@@ -56,12 +56,12 @@ Kho chứa gốc:     │
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Kỹ sư Cường đang chạy thử tính năng thanh toán ở thư mục `my-app` thì được nhờ review gấp nhánh `review-pr-45`. Trong Git thật, nếu repo đã có commit và nhánh tồn tại, Cường chạy `git worktree add ../pr-test review-pr-45`. Git tạo thư mục làm việc riêng để review; trước khi remove, Cường kiểm tra đã lưu hoặc bỏ các thay đổi cần giữ.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 git worktree add <đường-dẫn-thư-mục> <nhánh-đã-có>
 git worktree add -b <nhánh-mới> <đường-dẫn-thư-mục>
@@ -89,7 +89,7 @@ Trong Git thật, dùng `git worktree prune` để dọn metadata của thư m�
 
 ---
 
-## 🧪 Lab thực hành
+## 🧪 Lab
 Trước hết chạy lab trong simulator; lab này kiểm tra danh sách metadata, không mở thư mục thật.
 1. Chạy `git worktree list` để xem worktree hiện tại.
 2. Chạy `git worktree add -b demo-worktree ../temp-worktree`.
@@ -99,28 +99,28 @@ Trước hết chạy lab trong simulator; lab này kiểm tra danh sách metada
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Mặc định mỗi nhánh chỉ được checkout ở một worktree tại một thời điểm; worktree detached là một trường hợp khác.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Simulator liệt kê và xóa đúng metadata worktree thử nghiệm.
 - Trong Git thật, mỗi worktree có thư mục file riêng nhưng chia sẻ object database của repository; nó không phải clone độc lập.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy làm bài kiểm tra trắc nghiệm dưới đây về tính năng đa thư mục git worktree.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 So sánh chi tiết về dung lượng ổ đĩa và tốc độ tạo lập giữa việc dùng `git worktree add` và `git clone` lại dự án sang thư mục mới.
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - `git worktree` cho phép đa nhiệm mở nhiều nhánh cùng lúc ở các thư mục khác nhau.
 - Chia sẻ chung kho `.git`, tiết kiệm thời gian clone và dung lượng đĩa cứng.
 - Dọn dẹp an toàn bằng `git worktree remove <path>`.

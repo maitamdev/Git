@@ -25,13 +25,13 @@
 ## 📖 Định nghĩa
 Trong Git Flow, Release Branch thường được tạo từ `develop` khi nhóm bắt đầu ổn định một phiên bản. Nhóm giới hạn thay đổi trên nhánh, kiểm thử, sửa lỗi release và chuẩn bị ghi chú. Khi phát hành, nhánh được tích hợp vào `main` và thường gắn tag; các sửa đổi cần cho công việc sau được đồng bộ về `develop`. Đây là quy trình của mô hình Git Flow, không phải yêu cầu của Git.
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Nhánh release tách phiên bản đang được kiểm tra khỏi thay đổi mới trên `develop`. Nó giúp nhóm kiểm thử phiên bản cụ thể, nhưng cần đồng bộ sửa lỗi và tránh để nhánh này sống lâu hơn mức cần thiết.
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy hình dung quy trình in sách giáo khoa. Nhánh `develop` là phòng sáng tác của các tác giả. Khi xong bản thảo, họ gửi bản in thử sang phòng Hiệu đính (`Release Branch`). Tại đây, biên tập viên chỉ sửa lỗi chính tả, căn chỉnh lề in chứ không được viết thêm chương mới. Trong lúc đó, các tác giả vẫn thoải mái viết sách tập hai ở phòng sáng tác.
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```mermaid
 gitGraph
     commit id: "Init"
@@ -49,10 +49,10 @@ gitGraph
     merge release/v1.0 id: "Merge back develop"
 ```
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Trước đợt ra mắt bản 3.0 của ứng dụng học tập, đội trưởng kỹ thuật tạo nhánh `release/v3.0.0` từ `develop`. Trong 4 ngày sau đó, cả đội tuân thủ nghiêm ngặt Feature Freeze. Khi QA phát hiện lỗi video không tự động chạy trên Firefox, kỹ sư sửa trực tiếp trên nhánh release. Khi mọi bài kiểm tra đều đạt, nhánh được merge vào `main`, gắn thẻ tag `v3.0.0` để triển khai lên máy chủ và merge ngược lại về `develop`.
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 # Tách nhánh release từ develop để chuẩn bị phát hành
 git switch -c release/v1.2.0 develop
@@ -80,8 +80,8 @@ git branch -d release/v1.2.0
 - Quên hợp nhất ngược nhánh release về `develop` khiến các lỗi vừa sửa bị tái phát ở phiên bản tiếp theo.
 - Xóa nhánh release trước khi bảo đảm toàn bộ mã nguồn đã được đưa trọn vẹn vào cả `main` và `develop`.
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác tách nhánh phát hành trên kho mô phỏng và đối chiếu theo hướng dẫn bên dưới.
+## 🧪 Lab
+Hãy cùng tôi thực hành quy trình trích xuất nhánh phát hành (Release Branch) và gắn thẻ phiên bản:
 
 Điều kiện đầu vào: repo thử nghiệm đã có commit, `main` và `develop` cùng trỏ tới lịch sử có thể merge; các lệnh chỉ thao tác local.
 1. Tạo nhánh release từ `develop`: `git switch -c release/v1.0.0 develop`.
@@ -90,21 +90,21 @@ Bài học này là bài tự kiểm tra: bạn thao tác tách nhánh phát hà
 4. Gắn tag vào commit phát hành dự định: `git tag -a v1.0.0 -m "Release v1.0.0"`.
 5. Tích hợp commit release về `develop`, xác minh bằng `git log --oneline --graph --all`; xóa nhánh local sau khi chắc chắn đã tích hợp.
 
-## 💡 Hint & mẹo
+## 💡 Hint
 - Dùng `--no-ff` nếu nhóm muốn thấy ranh giới nhánh release trong lịch sử; không phải quy tắc bắt buộc của Git Flow.
 - Thống nhất trước loại thay đổi được nhận trong giai đoạn ổn định; thường ưu tiên sửa lỗi và tài liệu.
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Cả hai nhánh `main` và `develop` đều chứa trọn vẹn commit sửa lỗi từ nhánh release.
 - Thẻ tag `v1.0.0` trỏ chính xác vào commit hợp nhất trên nhánh `main`.
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy làm bài trắc nghiệm bên dưới để kiểm tra mức độ nắm vững quy trình vận hành của nhánh phát hành Release Branch.
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Thiết kế kịch bản xử lý khi phát sinh xung đột mã nguồn trong bước hợp nhất ngược nhánh release về nhánh `develop` do có tính năng mới vừa được đưa vào `develop`.
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - Release Branch tạo ra môi trường tĩnh lặng cho QA kiểm thử hồi quy và ổn định hóa phần mềm.
 - Quy tắc Feature Freeze bảo vệ sản phẩm khỏi các lỗi mới phát sinh sát giờ phát hành.
 - Quy trình hợp nhất kép (Dual-merge) bảo đảm mọi bản vá lỗi đều được bảo toàn cho các chu kỳ phát triển tiếp theo.

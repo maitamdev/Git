@@ -34,17 +34,17 @@
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Trên nhánh đã chia sẻ, reset một commit đã push có thể làm lịch sử của đồng đội lệch nhau. `git revert` thường hợp hơn vì giữ commit cũ và thêm commit đảo thay đổi. Hãy làm theo chính sách của nhóm, xem diff sau khi revert và xử lý conflict nếu Git báo.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy hình dung sổ cái kế toán ngân hàng. Khi phát hiện lỡ ghi nhầm một khoản chuyển tiền hôm qua, kế toán viên không được dùng bút xóa hay xé trang sổ đi (reset). Kế toán viên phải ghi thêm một dòng mới vào hôm nay: "Thu hồi khoản chi nhầm hôm qua" (revert). Số dư chuẩn xác và sổ sách vẫn hoàn toàn minh bạch.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Cơ chế hoàn tác tiến lên của git revert:
 Lịch sử ban đầu:
@@ -57,12 +57,12 @@ C1 ──► C2 ──► C3 ──► C4 [Revert "C2"] (HEAD -> main)
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Hệ thống thương mại điện tử phát hiện commit `e7f8a9b` làm lỗi mã giảm giá. Sau khi xác nhận phạm vi thay đổi, kỹ sư chạy `git revert e7f8a9b`, xem diff đảo ngược, xử lý conflict nếu có, rồi chạy kiểm thử. Nếu nhóm dùng CI/CD, pipeline sẽ chạy theo cấu hình sau khi thay đổi được push.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 git revert <commit-hash>
 git revert HEAD
@@ -85,7 +85,7 @@ git revert HEAD
 
 ---
 
-## 🧪 Lab thực hành
+## 🧪 Lab
 Bài này cần có commit cha, vì không thể dùng lệnh revert thông thường để đảo ngược commit gốc duy nhất.
 1. Trong kho thử nghiệm riêng, tạo `base.txt`, stage và commit bằng thông điệp `base`.
 2. Tạo `feature.txt`, stage và commit bằng thông điệp `add feature`.
@@ -94,28 +94,28 @@ Bài này cần có commit cha, vì không thể dùng lệnh revert thông thư
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Với commit đã chia sẻ, thường ưu tiên cách hoàn tác giữ lịch sử như `git revert`; làm theo quy ước của nhóm và kiểm tra diff trước khi push.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Commit mới mang thông điệp `Revert "<tên-commit>"` xuất hiện trên đỉnh nhật ký `git log`.
 - Trong ví dụ không có thay đổi về sau, `feature.txt` không còn trong snapshot mới; với file đã đổi tiếp, hãy review diff và xử lý conflict nếu Git yêu cầu.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy làm bài kiểm tra trắc nghiệm dưới đây về câu lệnh an toàn git revert.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Tìm hiểu cách sử dụng cờ `-m 1` khi revert một Merge Commit (`git revert -m 1 <merge-commit-hash>`) để chỉ định nhánh chính được giữ lại.
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - `git revert` tạo ra một commit mới để đảo ngược lại các thay đổi của commit cũ.
 - Thường phù hợp để hoàn tác commit đã chia sẻ vì không xóa commit cũ khỏi lịch sử.
 - Kết quả vẫn cần được review và kiểm thử; Git có thể báo conflict.

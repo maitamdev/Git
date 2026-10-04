@@ -24,13 +24,13 @@
 ## 📖 Định nghĩa
 Event có thể kích hoạt một Workflow. Workflow khai báo một hay nhiều Job; mỗi Job chọn Runner bằng `runs-on` và chứa các Step. Step có thể gọi Action bằng `uses` hoặc chạy lệnh shell bằng `run`. Các Job không phụ thuộc có thể chạy song song; `needs` tạo thứ tự phụ thuộc. Các Step trong Job chạy theo thứ tự khai báo và dùng chung workspace của Job đó.
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Hiểu ranh giới giữa Job và Step giúp bạn biết file nào có thể dùng lại. Workspace được chia sẻ giữa các Step trong Job; Job khác thường có runner riêng, nên cần Artifact, cache hoặc truyền dữ liệu qua outputs phù hợp.
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy tưởng tượng một nhà hàng tiệc cưới. Event là tiếng chuông báo khách đã vào sảnh. Workflow là toàn bộ thực đơn tiệc. Các Job là các quầy bếp riêng: Quầy khai vị, Quầy món chính và Quầy tráng miệng hoạt động song song ở các góc bếp riêng (`Runners`). Bên trong mỗi quầy, đầu bếp làm từng thao tác tuần tự (`Steps`): rửa rau, thái thịt, nấu sốt.
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```mermaid
 flowchart TD
     Event[Event: push code] --> Workflow[Workflow: CI Pipeline]
@@ -41,10 +41,10 @@ flowchart TD
     Step2 --> Step3[Step 3: npm test]
 ```
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Trong dự án ứng dụng di động Flutter, khi có Pull Request, Workflow có thể kích hoạt hai Job: một Job chạy linter trên Linux, Job kia biên dịch iOS trên macOS. Mỗi Job chọn một Runner riêng theo cấu hình. Runner GitHub-hosted thường là môi trường mới cho mỗi Job; self-hosted có thể giữ trạng thái từ lần chạy trước.
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 # Kiểm tra cấu trúc thư mục chứa các workflow
 ls -la .github/workflows/
@@ -62,29 +62,29 @@ cat .github/workflows/ci.yml
 - Tạo quá nhiều Job nhỏ chỉ chứa một dòng lệnh đơn giản gây lãng phí thời gian khởi động máy ảo Runner.
 - Nhầm lẫn thứ tự thực thi của các Step bên trong một Job (các Step luôn chạy tuần tự từ trên xuống).
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
+## 🧪 Lab
+Hãy mở terminal và cùng tôi thực hành từng bước dưới đây để làm chủ kỹ năng:
 
 1. Xem xét sơ đồ phân cấp giữa Event, Job, Step và Runner để nắm chắc quy luật chia sẻ dữ liệu.
 2. Xác định xem hai tác vụ Lint và Unit Test nên đặt trong cùng một Job hay chia làm hai Job chạy song song.
 3. Tạo thư mục quy chuẩn `.github/workflows` trong dự án thực hành nếu chưa có.
 4. Mở tệp `.github/workflows/ci.yml` và phân biệt rõ các cấp bậc thụt đầu dòng giữa `jobs` và `steps`.
 
-## 💡 Hint & mẹo
+## 💡 Hint
 - Ghi nhớ quy tắc vàng: Các Step trong một Job dùng chung hệ thống tệp tin, các Job khác nhau hoàn toàn cách ly về bộ nhớ và ổ đĩa.
 - Hãy dùng `needs` khi bạn muốn một Job phải chờ một Job khác hoàn thành trước khi bắt đầu.
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Phân biệt chính xác phạm vi chia sẻ dữ liệu giữa cấp độ Job và cấp độ Step.
 - Cấu trúc thư mục `.github/workflows/` được đặt chính xác ở thư mục gốc của repository.
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy hoàn thành bài trắc nghiệm bên dưới để kiểm tra khả năng phân tích kiến trúc phân tầng trong GitHub Actions.
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Nếu bạn có 100 bài kiểm thử mất 20 phút để chạy trên một máy ảo, bạn sẽ tái cấu trúc các Job như thế nào để giảm thời gian hoàn thành xuống còn 5 phút?
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - Workflow được kích hoạt bởi Event và chứa một tập hợp các Jobs.
 - Các Job không phụ thuộc có thể chạy song song; `needs` tạo thứ tự phụ thuộc.
 - Các Step trong một Job chạy theo thứ tự và dùng chung workspace của Job đó.

@@ -34,17 +34,17 @@ Interactive Rebase (`git rebase -i`) mở danh sách các commit để bạn ch�
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Khi lập trình, chúng ta thường tạo nhiều commit vụn vặt và tạm bợ. Interactive Rebase giúp bạn dọn dẹp, sắp xếp lại chuỗi lịch sử cục bộ cho mạch lạc, sạch sẽ và chuyên nghiệp trước khi gửi Pull Request cho đồng nghiệp review.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy tưởng tượng bạn là đạo diễn phim đang ngồi trong phòng dựng phim. Bạn có các đoạn quay nháp, quay hỏng hay trùng lặp. Interactive Rebase chính là chiếc bàn dựng phim giúp bạn cắt bỏ cảnh hỏng, ghép các cảnh rời rạc thành một bộ phim liền mạch hoàn chỉnh.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Quy trình Interactive Rebase (git rebase -i HEAD~3):
 Git mở Todo List trong editor:
@@ -60,12 +60,12 @@ pick 7c8d9e0 test: add unit tests for cart (Đổi tên message cho chuẩn)
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Kỹ sư Tuấn làm tính năng giỏ hàng và có 3 commit vụn: "tạo nút", "sửa css nút", "fix typo". Trước khi mở PR, Tuấn chạy `git rebase -i HEAD~3`, đổi 2 commit sau thành fixup để gộp vào commit đầu. Kết quả là nhánh chỉ còn 1 commit duy nhất chuẩn chỉ và rõ ràng.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 git rebase -i HEAD~<số-lượng-commit>
 git rebase -i <commit-hash-gốc>
@@ -90,7 +90,7 @@ git rebase --abort
 
 ---
 
-## 🧪 Lab thực hành
+## 🧪 Lab
 Interactive Rebase cần editor tương tác. Dùng Git thật trong kho thử nghiệm riêng; simulator hiện chỉ in todo list và chưa cho sửa hành động từ terminal.
 1. Tạo commit nền, rồi thêm ba commit có nội dung nhỏ và thông điệp phân biệt được.
 2. Chạy `git rebase -i HEAD~3`. Todo list liệt kê ba commit theo thứ tự cũ đến mới.
@@ -100,28 +100,28 @@ Interactive Rebase cần editor tương tác. Dùng Git thật trong kho thử n
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Nếu chưa chắc lựa chọn trong todo list, thoát editor mà không lưu hoặc hủy tiến trình; đừng xóa dòng tùy tiện. Giữ bản sao kho thử nghiệm trước khi luyện sửa lịch sử.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Mô tả đúng thứ tự commit trong todo list và thực hiện được một thao tác `reword` trên kho thử nghiệm.
 - Biết khi nào cần tiếp tục hoặc hủy tiến trình rebase theo thông báo Git.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy làm bài kiểm tra trắc nghiệm dưới đây về công cụ Interactive Rebase.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Nêu sự khác biệt trong thứ tự hiển thị commit giữa `git log` (từ mới nhất đến cũ nhất) và Todo List của `git rebase -i` (từ cũ nhất đến mới nhất theo thứ tự áp dụng).
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - `git rebase -i` mở ra Todo List cho phép toàn quyền biên tập chuỗi commit cục bộ.
 - Cung cấp các lệnh quyền năng: pick, reword, edit, squash, fixup, drop.
 - Là bước chuẩn bị quan trọng bậc nhất để xây dựng văn hóa commit chuyên nghiệp trước khi mở PR.

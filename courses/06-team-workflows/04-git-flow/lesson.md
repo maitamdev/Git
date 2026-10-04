@@ -34,17 +34,17 @@ Git Flow là mô hình phân nhánh nhiều tầng gồm hai nhánh dài hạn `
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Mô hình này tạo các nhánh riêng cho phát triển, ổn định release và sửa lỗi khẩn cấp. Đổi lại, nhóm phải quản lý thêm nhánh và nhớ đồng bộ các bản vá giữa chúng.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy hình dung xưởng đóng tàu quân sự. Nhánh main là hạm đội tàu chiến đang hoạt động trên biển. Nhánh develop là xưởng ngầm lắp ráp linh kiện mới. Khi hoàn thiện phần thô, tàu được đưa ra ụ thử nghiệm riêng (release) để sơn và chống thấm. Khi tàu ngoài biển thủng vỏ, đội cứu hộ (hotfix) xuất phát từ main để xử lý khẩn cấp.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Cấu trúc 5 loại nhánh trong mô hình Git Flow kinh điển:
 main:        v1.0 ────────────────────────────────────────── v1.1 (Production)
@@ -58,12 +58,12 @@ develop:     ──┴─► C1 ──► C2 ──► C3 ─┴─────�
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Ví dụ: nhóm có lịch phát hành định kỳ tạo `release/v2.5.0` từ `develop`, chỉ nhận bản sửa phục vụ ổn định release, rồi hợp nhất vào `main` và gắn tag. Nếu vẫn duy trì `develop`, nhóm tích hợp lại các bản sửa phù hợp vào đó.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 git switch -c release/v1.2.0 develop
 git switch main
@@ -93,8 +93,8 @@ git branch -d release/v1.2.0
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác trực tiếp trên terminal của máy tính để làm quen với công cụ.
+## 🧪 Lab
+Hãy cùng tôi mở terminal và thực hiện các bước thực hành trực quan sau:
 1. Khởi tạo hai nhánh dài hạn `main` và `develop` trong kho lưu trữ thử nghiệm.
 2. Tạo nhánh tính năng `feature/demo` từ `develop` và gộp lại vào `develop`.
 3. Mô phỏng quy trình tạo một nhánh `release/v1.0.0` từ `develop`, sửa một lỗi nhỏ và gộp vào cả `main` lẫn `develop`.
@@ -102,28 +102,28 @@ Bài học này là bài tự kiểm tra: bạn thao tác trực tiếp trên te
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Trong Git Flow, kiểm tra sau mỗi release/hotfix rằng các thay đổi cần giữ đã có trên cả nhánh phát hành và nhánh phát triển.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Mô tả được mục đích của việc đưa release/hotfix vào `main` và tích hợp lại thay đổi cần thiết vào `develop`.
 - Phân biệt rõ ràng mục đích sử dụng giữa 2 nhánh dài hạn và 3 nhánh ngắn hạn.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy làm bài trắc nghiệm dưới đây về mô hình đa nhánh Git Flow.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Mô tả chi tiết quy trình xử lý một sự cố khẩn cấp (Hotfix) trong Git Flow từ lúc nhận báo cáo lỗi đến khi deploy xong.
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - Git Flow là mô hình phân nhánh chặt chẽ lý tưởng cho các sản phẩm có chu kỳ phát hành cố định.
 - Duy trì 2 nhánh vĩnh cửu: `main` (Production) và `develop` (Integration).
 - Với Git Flow, tích hợp các bản sửa release/hotfix cần thiết về nhánh phát triển.

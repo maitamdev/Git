@@ -34,17 +34,17 @@ Git có thể lưu object dưới dạng loose object hoặc gộp chúng vào p
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Packfile giảm chi phí lưu trữ nhiều object và giúp Git truyền dữ liệu theo lô. Mức tiết kiệm tùy nội dung và lịch sử; có repository tạo nhiều pack, và dữ liệu không nhất thiết vừa một pack duy nhất. Object ID vẫn xác định nội dung logic sau khi giải nén.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy tưởng tượng mỗi object là một bản tài liệu. Packfile gom nhiều object vào một gói; một số object có thể lưu đầy đủ, còn một số được ghi như chỉ dẫn tái tạo dựa trên object khác. Cách chọn base và mức tiết kiệm tùy dữ liệu, nên không có bảo đảm rằng bản mới nhất luôn là base hay mọi object đều được delta.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Chuyển đổi từ Loose Objects sang Packfile với Delta Compression:
 Trước khi đóng gói (Loose Objects):
@@ -62,12 +62,12 @@ Sau khi đóng gói (Packfile + Delta Compression):
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Trong một repository thử nghiệm, người học tìm cặp `.pack` / `.idx` dưới đường dẫn objects/pack, rồi chạy `git verify-pack -v <path-to-pack.idx>`. Lệnh nhận file `.idx`; kết quả verbose liệt kê object trong pack, kích thước và thông tin delta nếu có. Nếu chưa có pack, không có gì để verify — đừng tạo dữ liệu nhân tạo trong repository dự án.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 # Thống kê số lượng loose objects và packed objects
 git count-objects -v
@@ -95,7 +95,7 @@ git gc
 
 ---
 
-## 🧪 Lab thực hành
+## 🧪 Lab
 Chạy trong Bash/Git Bash và tạo repository tạm. `git gc` có thể dọn object unreachable và reflog hết hạn; không chạy phần này trong repo dự án.
 
 ```bash
@@ -126,28 +126,28 @@ git verify-pack -v "$(git rev-parse --git-path objects/pack)"/pack-*.idx
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > `git gc` là bảo trì repository, không phải lệnh xem thử vô hại. Học trên repo tạm và so sánh kết quả `git count-objects -v` trước/sau.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - `git count-objects -v` cho biết số object loose và pack; số lượng thay đổi tùy repository và phiên bản Git.
 - `git verify-pack -v <path-to-pack.idx>` xác nhận pack/index hợp lệ nếu repository có pack.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy kiểm tra kiến thức về cơ chế Packfile và nén sai biệt Delta qua bài trắc nghiệm trong phần bên dưới.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Trong output của `git verify-pack -v`, hãy tìm một object được lưu bằng delta. Object đó phụ thuộc base nào? Tại sao không nên kết luận Git luôn chọn phiên bản mới nhất làm base chỉ từ một ví dụ?
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - Loose objects lưu từng object riêng; repository có thể có một hoặc nhiều packfile chứa nhiều object.
 - Một pack entry có thể là object đầy đủ hoặc delta; Git chọn cách lưu để cân bằng dung lượng và tốc độ.
 - Tệp `.idx` đóng vai trò là bảng mục lục tra cứu nhanh vị trí byte của từng đối tượng trong tệp `.pack`.

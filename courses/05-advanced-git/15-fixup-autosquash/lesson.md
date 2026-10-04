@@ -34,17 +34,17 @@
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Khi phát hiện lỗi trong commit cũ, `git commit --fixup <hash>` tạo commit có thông điệp liên kết tới commit mục tiêu. Khi chạy `git rebase -i --autosquash <base>`, Git sắp xếp lại todo list; bạn vẫn cần xem lại danh sách trước khi lưu và hoàn tất rebase.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy hình dung người thư ký dán một mảnh giấy ghi chú màu vàng "Kèm hồ sơ số 3" lên tờ biên lai mới. Khi bấm nút sắp xếp tự động, cánh tay robot tự động tìm ngăn số 3, nhét tờ biên lai vào và kẹp kín lại ngăn nắp mà không cần xới tung cả tủ hồ sơ.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Quy trình tự động hóa với Autosquash:
 1. Sửa code lỗi của commit C2 (hash 7a8b9c)
@@ -60,12 +60,12 @@ Quy trình tự động hóa với Autosquash:
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Kỹ sư Linh tìm thấy lỗi trong commit `d3e4f5a`. Linh tạo commit vá bằng `git commit --fixup d3e4f5a`, rồi chạy `git rebase -i --autosquash d3e4f5a~1`. Git đặt commit vá cạnh commit đích và đánh dấu `fixup`; Linh kiểm tra todo list rồi mới lưu để chạy rebase.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 git commit --fixup <commit-hash>
 git rebase -i --autosquash <base-hash>
@@ -88,7 +88,7 @@ git config rebase.autoSquash true
 
 ---
 
-## 🧪 Lab thực hành
+## 🧪 Lab
 Bài thực hành này cần Git thật vì simulator chưa hỗ trợ interactive rebase/autosquash. Dùng repo thử nghiệm riêng và không dùng nhánh đã chia sẻ.
 1. Tạo commit A, commit B, commit C liên tiếp trên kho chứa thử nghiệm.
 2. Sửa đổi nội dung tệp tin liên quan đến commit A.
@@ -98,28 +98,28 @@ Bài thực hành này cần Git thật vì simulator chưa hỗ trợ interacti
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Muốn đặt mặc định, chạy `git config rebase.autoSquash true` trong kho thử nghiệm. Kiểm tra todo list trước khi lưu vì autosquash vẫn cần rebase chạy.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Tạo commit vá bằng `git commit --fixup` và nhận biết vị trí/action do `--autosquash` gợi ý.
 - Kiểm tra todo list trước khi lưu; xử lý conflict nếu Git dừng trong lúc phát lại commit.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy làm bài kiểm tra trắc nghiệm dưới đây về tính năng Fixup và Autosquash.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Nêu sự khác biệt giữa `git commit --fixup` và `git commit --squash` trong cơ chế autosquash.
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - `fixup` gộp thay đổi vào commit trước và tự động loại bỏ thông điệp dư thừa.
 - `git commit --fixup` gắn nhãn đích đến để `--autosquash` tự động xử lý.
 - Bật `rebase.autoSquash true` giúp tăng tốc tối đa quy trình dọn dẹp lịch sử Git cá nhân.

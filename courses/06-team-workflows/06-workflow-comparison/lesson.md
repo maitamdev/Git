@@ -34,17 +34,17 @@ Ba workflow khác nhau chủ yếu ở cách tổ chức nhánh và nhịp tích
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Chọn workflow quá nặng có thể thêm bước nhóm không cần; chọn workflow nhẹ nhưng thiếu review, kiểm thử hoặc kế hoạch phục hồi có thể bỏ sót rủi ro. So sánh chi phí thực tế thay vì gán một mô hình cho một loại công ty.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy hình dung ba cách tổ chức lịch làm việc: Git Flow tách giai đoạn phát triển và ổn định phiên bản; GitHub Flow đưa thay đổi qua PR; Trunk-Based Development ghép thay đổi nhỏ thường xuyên. Review, CI và release controls có thể được thêm vào từng mô hình.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Bảng ma trận so sánh 3 mô hình Workflow hàng đầu:
 ┌─────────────────┬──────────────────────┬──────────────────────┬──────────────────────┐
@@ -63,12 +63,12 @@ Bảng ma trận so sánh 3 mô hình Workflow hàng đầu:
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Ví dụ: cùng một công ty có thể giữ nhánh release cho app cần kiểm tra trước lịch phát hành và dùng PR nhỏ, tích hợp thường xuyên cho một dịch vụ backend. Đây là quyết định theo nhu cầu vận hành, không do loại sản phẩm bắt buộc.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 git log --oneline --graph --all
 git branch --list
@@ -89,36 +89,36 @@ git branch --list
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác trực tiếp trên terminal của máy tính để làm quen với công cụ.
+## 🧪 Lab
+Hãy cùng tôi mở terminal và thực hiện các bước thực hành trực quan sau:
 1. Dùng `git log --oneline --graph --all` trong repo thử nghiệm để quan sát các nhánh còn thấy được.
 2. So sánh ba workflow theo nhánh dài hạn, cách review, nhịp tích hợp, kiểm thử và lịch phát hành.
 3. Chọn một workflow cho tình huống giả định, nêu một lợi ích, một chi phí và điều kiện khiến bạn đổi lựa chọn.
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Hãy chọn theo cách nhóm tích hợp, kiểm thử và phát hành; đừng suy ra workflow chỉ từ tên sản phẩm.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Phân tích rạch ròi ưu nhược điểm của cả 3 mô hình Git Flow, GitHub Flow và Trunk-Based Development.
 - Giải thích lựa chọn dựa trên ràng buộc thực tế và nêu được ít nhất một đánh đổi.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy làm bài trắc nghiệm dưới đây để đối chiếu và so sánh các mô hình workflow.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Đề xuất phương án chuyển dịch từng bước từ mô hình Git Flow sang Trunk-Based Development cho một dự án đang phát triển.
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - Workflow mô tả cách tổ chức nhánh và tích hợp; không tự ấn định tốc độ release.
 - CI, review, bảo vệ nhánh và lịch triển khai có thể cấu hình riêng cho từng workflow.
 - Chọn mô hình dựa trên yêu cầu phát hành, khả năng kiểm thử và chi phí phối hợp của nhóm.

@@ -34,17 +34,17 @@ Git directory chứa metadata của repository như HEAD, refs, index và object
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Hiểu các thành phần nội bộ giúp bạn đọc trạng thái repo và chẩn đoán vấn đề. Dùng lệnh như `git remote -v`, `git symbolic-ref HEAD` và `git ls-files --stage` thay vì sửa tay config, HEAD hoặc index. Cách bố trí thay đổi theo bare repo, submodule và linked worktree nên hãy hỏi Git đường dẫn thực tế.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy hình dung thư mục dự án của bạn như một văn phòng làm việc. Toàn bộ các bàn ghế, máy tính và tài liệu trên bàn là Working Directory (nơi bạn làm việc hàng ngày). Còn thư mục `.git/` chính là căn phòng lưu trữ hồ sơ tài liệu mật nằm ở góc phòng: có tủ đựng hồ sơ lịch sử (`objects/`), bảng danh bạ nhân viên (`config`), chiếc bảng ghim vị trí công việc hiện tại (`HEAD`), và ngăn kéo chứa các bản thảo chờ đóng dấu (`index`).
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Cấu trúc giải phẫu thư mục .git/:
 .git/
@@ -64,12 +64,12 @@ Cấu trúc giải phẫu thư mục .git/:
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Một clone có thư mục mã nguồn nhỏ nhưng Git directory lớn. `git count-objects -v` cho thấy dữ liệu đã nằm trong packfile; một file lớn từng được commit vẫn chiếm chỗ nếu commit còn trong lịch sử, dù file đã bị xóa ở commit mới hơn. Giảm dung lượng thường cần viết lại lịch sử bằng công cụ chuyên dụng, phối hợp với nhóm và dọn object sau đó; không có mức giảm cố định và việc viết lại làm đổi commit ID.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 # Xem Git directory thực tế
 git rev-parse --git-dir
@@ -104,8 +104,8 @@ git ls-files --stage
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
+## 🧪 Lab
+Hãy mở terminal và cùng tôi thực hành từng bước dưới đây để làm chủ kỹ năng:
 
 1. Chạy `git rev-parse --git-dir` và ghi lại Git directory.
 2. Chạy `git symbolic-ref -q HEAD`; nếu lệnh không in kết quả, chạy `git rev-parse HEAD` để nhận diện detached HEAD.
@@ -114,28 +114,28 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > `.git/HEAD` thường là symbolic ref dạng văn bản khi đang trên branch, nhưng linked worktree có Git directory riêng. Dùng `git symbolic-ref` và `git rev-parse` để tránh phụ thuộc vào vị trí file.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - `git symbolic-ref -q HEAD` trả tên ref khi HEAD đang gắn với branch; `git rev-parse HEAD` trả object ID của commit hiện tại.
 - `git show-ref --verify refs/heads/feature-test` xác minh nhánh thử tồn tại; không cần dựa vào file ref riêng vì refs có thể được pack.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy kiểm tra mức độ nắm bắt của bạn về giải phẫu thư mục .git qua bài trắc nghiệm trong phần bên dưới.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Vì sao không nên sao chép thủ công riêng `.git/` để làm bản sao lưu? Nêu một lựa chọn an toàn hơn và giải thích khác biệt giữa Git directory với worktree.
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - Thư mục `.git/` chứa toàn bộ lịch sử, đối tượng và siêu dữ liệu của kho lưu trữ.
 - Các tệp quan trọng gồm: `HEAD` (con trỏ hiện tại), `config` (cấu hình), `index` (staging area).
 - Các thư mục quan trọng gồm: `objects/` (database), `refs/` (nhánh và tag), `hooks/` (kịch bản tự động).

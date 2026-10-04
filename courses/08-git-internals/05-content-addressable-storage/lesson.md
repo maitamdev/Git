@@ -34,17 +34,17 @@ Content-Addressable Storage (CAS) định danh dữ liệu theo nội dung. Tron
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 CAS cho phép Git tái sử dụng cùng một blob khi byte dữ liệu đã lưu giống nhau, nhờ vậy tránh lưu nhiều bản giống hệt ở dạng loose objects. Git còn kiểm tra object ID để phát hiện thay đổi ngoài ý muốn. SHA-1 có va chạm thực tế đã biết; Git có bảo vệ bổ sung, nhưng hash không thay thế chữ ký, kiểm soát truy cập hay sao lưu.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy tưởng tượng hai bản sao của cùng một ghi chú. Nếu Git lưu nội dung theo tên đường dẫn, hai tên khác nhau sẽ tạo hai bản dữ liệu riêng. Với content-addressable storage, Git tính ID từ loại object và byte nội dung; hai blob giống nhau trong cùng định dạng hash thường có thể dùng chung object, còn tree vẫn giữ tên và đường dẫn riêng.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Cơ chế tạo mã băm trong Content-Addressable Storage:
 Nội dung văn bản: "hello\n" (chiều dài: 6 bytes)
@@ -61,12 +61,12 @@ Chuỗi dữ liệu chuẩn hóa đưa vào hàm băm:
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Nếu nhiều đường dẫn được stage với cùng byte nội dung và cùng bộ lọc, chúng có thể dùng chung một blob. Git vẫn cần tree entry riêng cho từng tên/đường dẫn; dung lượng thật thay đổi theo nén, packfile, và dữ liệu đã có trong repository.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 # Tính mã băm của chuỗi mà không ghi xuống đĩa
 echo "hello world" | git hash-object --stdin
@@ -94,8 +94,8 @@ printf "blob 12\0hello world\n" | sha1sum
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
+## 🧪 Lab
+Hãy mở terminal và cùng tôi thực hành từng bước dưới đây để làm chủ kỹ năng:
 
 1. Chạy `printf 'hello git\n' > doc1.txt`, rồi `mkdir -p sub` và `cp doc1.txt sub/doc2.txt` để hai đường dẫn có cùng byte nội dung.
 2. Chạy `git hash-object doc1.txt` và `git hash-object sub/doc2.txt`; hai ID phải khớp nếu file không qua clean filter khác nhau.
@@ -104,28 +104,28 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > So sánh hash của object đã lưu, không phải lúc nào cũng so raw file trước filter. Trong bài lab này, dùng file text đơn giản không có clean filter để thấy rõ quy tắc.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Hai đầu vào cùng byte cho cùng object ID; độ dài ID tùy SHA-1/SHA-256.
 - `git hash-object` không kèm `-w` chỉ tính ID, không ghi object thử vào database.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Cùng kiểm tra mức độ thấu hiểu nguyên lý Content-Addressable Storage qua các câu hỏi trong phần trắc nghiệm bên dưới.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Nếu bạn có một dự án mã nguồn gồm 10.000 tệp tin nhưng tất cả các tệp đều hoàn toàn trống rỗng (0 bytes), cơ sở dữ liệu đối tượng của Git sẽ tạo ra bao nhiêu đối tượng Blob? Mã băm của tệp rỗng trong Git là gì?
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - Content-Addressable Storage định danh object từ header và byte nội dung của nó.
 - Công thức tính băm chuẩn của Git luôn bao gồm tiêu đề: `<type> <size>\0<content>`.
 - Giúp tái sử dụng object giống nhau và phát hiện nhiều thay đổi; hash không phải bảo đảm an ninh tuyệt đối.

@@ -24,13 +24,13 @@
 ## 📖 Định nghĩa
 Contexts (Ngữ cảnh) là tập hợp các đối tượng dữ liệu chứa thông tin chi tiết về lần chạy workflow hiện tại, môi trường runner, các biến bí mật và sự kiện kích hoạt. Bạn có thể truy xuất các thông tin này ở bất kỳ đâu trong tệp YAML bằng cách đặt chúng bên trong biểu thức (Expressions) có cú pháp dấu ngoặc kép `${{ <expression> }}`.
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Tệp YAML thông thường chỉ là văn bản tĩnh. Cú pháp Expressions và Contexts biến tệp cấu hình thành kịch bản động thông minh: bạn có thể kiểm tra xem commit hiện tại có phải nhánh phát hành chính thức không, gắn nhãn tên lập trình viên đã tạo PR, hoặc kiểm tra kết quả bài kiểm thử trước đó để quyết định có chạy tiếp hay không.
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy hình dung tệp YAML như bức thư hợp đồng mẫu in sẵn có các ô trống cần điền thông tin. Biểu thức `${{ expression }}` chính là những chiếc thẻ giữ chỗ thông minh: khi đưa hợp đồng vào máy in, hệ thống tự động tra cứu cơ sở dữ liệu ngữ cảnh (Context) để điền tên khách hàng, ngày ký và số tiền thanh toán vào đúng vị trí hoàn toàn tự động.
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```mermaid
 flowchart LR
     Contexts[Contexts: github, runner, env, secrets] --> Engine[Bộ xử lý biểu thức ${{ expr }}]
@@ -38,10 +38,10 @@ flowchart LR
     Engine --> Condition[Đánh giá điều kiện: if: github.ref == 'refs/heads/main']
 ```
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Một nhóm phát triển quản lý kho lưu trữ đa ngôn ngữ thiết lập bước gửi thông báo tự động. Họ dùng biểu thức nội suy: `run: echo "Kỹ sư ${{ github.actor }} vừa kích hoạt sự kiện ${{ github.event_name }} trên nhánh ${{ github.ref_name }}"`. Khi lập trình viên Tuấn đẩy code, hệ thống tự động thay thế biểu thức và in ra log rõ ràng. Đồng thời, bước deploy chỉ chạy nếu điều kiện `if: ${{ startsWith(github.ref, 'refs/tags/v') }}` được thỏa mãn.
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 # In ra tên kho lưu trữ hiện tại thông qua ngữ cảnh github
 echo "${{ github.repository }}"
@@ -63,8 +63,8 @@ echo "${{ github.event_name }}"
 - So sánh phân biệt hoa thường sai lệch trong các chuỗi định danh nhánh Git.
 - Cố gắng viết các đoạn mã hàm JavaScript phức tạp không được hệ thống hỗ trợ bên trong biểu thức YAML.
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
+## 🧪 Lab
+Hãy mở terminal và cùng tôi thực hành từng bước dưới đây để làm chủ kỹ năng:
 
 1. Tạo tệp workflow thử nghiệm ngữ cảnh và biểu thức:
    ```yaml
@@ -87,21 +87,21 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
 2. Đẩy file lên GitHub và bấm Run workflow.
 3. Quan sát các giá trị ngữ cảnh được in ra chi tiết trong log console.
 
-## 💡 Hint & mẹo
+## 💡 Hint
 - Trong thuộc tính `if:`, bạn có thể viết ngắn gọn `if: github.ref == 'refs/heads/main'` mà không cần bọc `${{ }}`.
 - Kết hợp hàm `success()` hoặc `failure()` trong điều kiện để bắt trọn trạng thái của các bước trước đó.
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Log console in ra chính xác thông tin repository, tên tài khoản và hệ điều hành Runner tương ứng.
 - Bước có điều kiện `if:` chỉ chạy khi điều kiện so sánh trả về giá trị `true`.
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy hoàn thành bài trắc nghiệm bên dưới để kiểm tra mức độ nắm vững cú pháp ngữ cảnh và biểu thức trong GitHub Actions.
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Tìm hiểu cách kết hợp hàm `format()` và ngữ cảnh `github.run_number` để tạo ra một mã định danh phiên bản độc nhất cho mỗi lần thực thi workflow.
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - Contexts cung cấp thông tin toàn diện về phiên chạy (`github`, `runner`, `env`, `secrets`).
 - Cú pháp `${{ <expression> }}` dùng để tính toán và nội suy giá trị động vào tệp cấu hình YAML.
 - Hỗ trợ các hàm chuỗi hữu ích như `contains()`, `startsWith()`, `endsWith()` và hàm trạng thái `success()`.

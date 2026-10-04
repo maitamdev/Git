@@ -34,17 +34,17 @@ GitHub Secrets là giá trị nhạy cảm được quản lý ở cấp reposit
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Lộ khóa bí mật có thể cho phép truy cập trái phép. Lưu giá trị trong Secrets thay vì commit vào YAML giúp tách dữ liệu nhạy cảm khỏi source, nhưng không tự bảo vệ khỏi workflow độc hại, quyền quá rộng hoặc log. Cấp tối thiểu quyền cần thiết và xoay vòng secret nếu bị lộ.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy tưởng tượng chiếc két sắt bảo mật kiên cố của ngân hàng. Bạn đặt những thỏi vàng và mật mã két sắt vào bên trong (GitHub Secrets). Khi nhân viên giao dịch (Runner) cần thực hiện một lệnh thanh toán, họ được hệ thống cấp quyền sử dụng chìa khóa trong phòng kín không có cửa sổ. Mọi camera giám sát công cộng (hệ thống Logs) đều tự động làm mờ khuôn mặt và bàn tay bấm mật mã thành dải màu đen để không ai đứng ngoài có thể nhìn trộm được.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Cơ chế bảo vệ và hiển thị của GitHub Secrets:
 Repository Settings (Mã hóa an toàn với Libsodium)
@@ -62,12 +62,12 @@ Deploy step completed   <── không in token
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Ví dụ: một kỹ sư lưu bot token trong Actions Secrets rồi truyền nó vào biến môi trường của đúng Step gửi thông báo. Lệnh gửi dùng token để xác thực nhưng không in token, URL có chứa token hay phản hồi nhạy cảm vào log. Nếu nghi ngờ lộ, kỹ sư thu hồi và tạo lại token.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```yaml
 # Ví dụ workflow sử dụng Secret và Variable an toàn
 name: Secure Deployment Pipeline
@@ -105,8 +105,8 @@ jobs:
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
+## 🧪 Lab
+Hãy mở terminal và cùng tôi thực hành từng bước dưới đây để làm chủ kỹ năng:
 
 1. **Bước 1**: Truy cập repository trên GitHub, chọn **Settings** -> **Secrets and variables** -> **Actions**.
 2. **Bước 2**: Tại tab **Variables**, bấm **New repository variable** và thêm biến `APP_ENV` với giá trị `production`.
@@ -115,28 +115,28 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Để quản lý secrets hiệu quả từ terminal mà không cần mở trình duyệt, bạn có thể cài đặt GitHub CLI (`gh`) và chạy lệnh `gh secret set MY_SECRET` cực kỳ nhanh chóng và an toàn.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Giá trị của biến `APP_ENV` hiển thị rõ ràng văn bản `production` trong log.
 - Log xác nhận secret được cấp cho Step mà không hiển thị giá trị; không dựa vào masking để bảo vệ secret.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Kiểm tra nhận thức về an toàn thông tin và quản lý Secrets qua các câu hỏi trong phần trắc nghiệm bên dưới.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Tại sao GitHub Actions mặc định không chia sẻ Secrets cho các sự kiện `pull_request` bắt nguồn từ các kho lưu trữ Fork của người bên ngoài? Cơ chế `pull_request_target` giải quyết bài toán này như thế nào kèm theo rủi ro bảo mật nào?
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - GitHub Secrets được mã hóa an toàn bằng thuật toán Libsodium trước khi lưu trữ.
 - Biến cấu hình mở dùng ngữ cảnh `vars`, còn thông tin nhạy cảm dùng ngữ cảnh `secrets`.
 - Secret Masking là biện pháp bổ sung; không bảo đảm che mọi cách biểu diễn secret.

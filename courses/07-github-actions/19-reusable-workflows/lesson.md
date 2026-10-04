@@ -34,17 +34,17 @@ Reusable Workflows (Luồng công việc tái sử dụng) là tính năng mạn
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Trong tổ chức có nhiều repository, reusable workflows giảm việc sao chép cấu hình. Caller vẫn cần tham chiếu một phiên bản/ref của workflow dùng chung; thay đổi chỉ ảnh hưởng caller khi ref trỏ tới nội dung mới và quyền truy cập cho phép.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy so sánh việc lập trình không có cấu trúc hàm con (phải sao chép cùng một đoạn mã dài lặp đi lặp lại khắp nơi trong dự án) với việc định nghĩa một Hàm dùng chung (Function/Method) mẫu mực. Reusable Workflow chính là một Hàm tiêu chuẩn ở cấp độ hạ tầng DevOps: nó có tên định danh hàm (đường dẫn tệp YAML), các tham số đầu vào (inputs), các dữ liệu trả về (outputs), và có thể được triệu gọi từ bất kỳ đâu chỉ bằng một dòng lệnh uses đơn giản.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Mô hình gọi Reusable Workflow:
 [Caller Workflow: main-app/.github/workflows/ci.yml]
@@ -75,12 +75,12 @@ jobs:
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Một ngân hàng số duy trì hơn 50 dự án vi dịch vụ viết bằng ngôn ngữ Java Spring Boot. Đội ngũ kỹ sư nền tảng (Platform Team) tạo một kho lưu trữ trung tâm chứa tệp reusable workflow `.github/workflows/maven-enterprise-build.yml` đã được cấu hình sẵn các bước quét bảo mật SonarQube, kiểm tra bản quyền mã nguồn và đóng gói JAR chuẩn chỉ. Tất cả 50 nhóm phát triển ứng dụng chỉ cần viết một tệp caller workflow ngắn gọn gồm 6 dòng gọi đến tệp mẫu dùng chung. Khi ngân hàng ban hành chính sách bảo mật mới, Platform Team chỉ cần chỉnh sửa một dòng trong tệp reusable duy nhất, toàn bộ 50 dự án lập tức áp dụng tiêu chuẩn mới mà không cần chạm vào mã nguồn của từng nhóm.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```yaml
 # 1. Định nghĩa tệp Called Workflow: .github/workflows/reusable-test.yml
 name: Reusable Test Suite
@@ -132,8 +132,8 @@ jobs:
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
+## 🧪 Lab
+Hãy mở terminal và cùng tôi thực hành từng bước dưới đây để làm chủ kỹ năng:
 
 1. **Bước 1**: Tạo file `.github/workflows/reusable-lint.yml` khai báo `on: workflow_call` với một input mang tên `linter-name`.
 2. **Bước 2**: Đưa input vào biến môi trường `LINTER_NAME` rồi in biến đó bằng `echo "$LINTER_NAME"`; tránh nội suy input trực tiếp vào shell.
@@ -142,28 +142,28 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Khi gọi reusable workflow từ repo khác, hãy kiểm tra quyền truy cập và ref. Full commit SHA ghim chính xác revision; tag/branch dễ đọc hơn nhưng có thể di chuyển.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Khi chạy trên GitHub, caller hiển thị Job gọi reusable workflow và các Jobs được định nghĩa trong workflow đó.
 - Đầu vào `linter-name` được truyền chính xác và hiển thị đúng giá trị `eslint` trong console log.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Kiểm tra kiến thức về thiết kế và sử dụng Reusable Workflows qua bài trắc nghiệm trong phần bên dưới.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Phân tích sự khác biệt cơ bản về phạm vi và năng lực giữa một Custom Composite Action (tái sử dụng các Step trong 1 Job) và một Reusable Workflow (tái sử dụng toàn bộ các Job và Matrix)?
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - `workflow_call` biến một workflow thành mô-đun có thể tái sử dụng từ các workflow khác.
 - Tuân thủ triệt để nguyên lý DRY, giúp chuẩn hóa và bảo trì quy trình CI/CD tập trung cho nhiều dự án.
 - Hỗ trợ định nghĩa rõ ràng các tham số đầu vào `inputs`, đầu ra `outputs` và chia sẻ `secrets`.

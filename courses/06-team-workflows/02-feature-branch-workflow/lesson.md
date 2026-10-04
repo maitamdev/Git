@@ -34,17 +34,17 @@ Feature Branch Workflow là cách phát triển thay đổi trên nhánh riêng 
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Nhánh riêng giúp lịch sử commit của một thay đổi không trộn ngay vào nhánh đích. Nó không ngăn mọi xung đột: thay đổi vẫn cần được tích hợp và có thể chạm cùng dòng code với nhánh khác.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy hình dung nhà máy lắp ráp ô tô. Dây chuyền chính liên tục cho ra đời những chiếc xe hoàn chỉnh. Khi cần thử nghiệm hệ thống phanh mới, các kỹ sư mở một xưởng nghiên cứu phụ bên cạnh. Họ thỏa sức tháo lắp mà không làm gián đoạn dây chuyền lớn, chỉ đưa vào khi đã kiểm định an toàn.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Quy trình Feature Branch Workflow khép kín:
 main:        C1 ────────────────────────────── C4 (Merge Commit / Fast-Forward)
@@ -56,12 +56,12 @@ feat/auth:              C2 ───────► C3 ────────�
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Kỹ sư Trang làm chức năng đăng nhập Google. Trang cập nhật `main` mới nhất rồi tạo nhánh `feat/google-auth`. Sau khi hoàn thiện và đẩy lên GitHub, Trang tạo Pull Request. Đồng nghiệp review code, hệ thống kiểm tra tự động báo xanh và nhánh được gộp an toàn vào nhánh `main`.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 git switch -c feat/<ten-tinh-nang>
 git push -u origin feat/<ten-tinh-nang>
@@ -91,7 +91,7 @@ Các lệnh fetch/pull/push cần remote `origin` và quyền truy cập phù h�
 
 ---
 
-## 🧪 Lab thực hành
+## 🧪 Lab
 Làm trong repo thử nghiệm có remote mà bạn được phép push. Nếu chỉ dùng simulator không kết nối GitHub, làm các bước 1–2 rồi xem bước push/PR như phần đọc thêm.
 1. Chạy `git status` để bảo đảm không có thay đổi cần giữ, sau đó chuyển sang nhánh đích và cập nhật nó theo hướng dẫn của repo.
 2. Tạo một nhánh tính năng mới theo quy ước chuẩn: `git switch -c feat/user-profile`.
@@ -100,28 +100,28 @@ Làm trong repo thử nghiệm có remote mà bạn được phép push. Nếu c
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Chia PR đủ nhỏ để review được; tích hợp thường xuyên giúp giảm độ lớn của chênh lệch với nhánh đích.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Tạo được nhánh cho một thay đổi và biết cách kiểm tra trạng thái của nó.
 - Nêu được bước nào phụ thuộc remote, quyền truy cập hoặc chính sách PR của dự án.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy làm bài trắc nghiệm dưới đây về mô hình Feature Branch Workflow tiêu chuẩn.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Trình bày cách xử lý nếu nhánh tính năng của bạn bị tụt hậu nhiều commit so với main trong thời gian bạn phát triển.
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - Feature Branch Workflow cô lập toàn bộ công việc mới trên các nhánh rẽ riêng biệt.
 - Nhánh tính năng tách commit khỏi nhánh đích cho tới khi tích hợp.
 - Pull Request là cầu nối trung tâm để thảo luận, duyệt code và tích hợp nhánh tính năng vào main.

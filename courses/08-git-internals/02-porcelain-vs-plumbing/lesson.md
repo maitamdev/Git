@@ -34,17 +34,17 @@ Trong thuật ngữ Git, Porcelain là nhóm lệnh hướng tới trải nghi�
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Lệnh cấp thấp hữu ích khi bạn cần đọc object, tạo tree hoặc thao tác refs trong script. Tuy vậy, với script dùng lệnh quen thuộc như `git status`, hãy yêu cầu định dạng ổn định dành cho máy bằng `--porcelain`; đừng phân tích output mặc định được thiết kế để người dùng đọc.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy tưởng tượng hệ thống cấp thoát nước trong một căn biệt thự sang trọng. Các thiết bị vệ sinh bằng sứ trắng muốt cao cấp như bồn rửa tay, vòi hoa sen tự động và bồn tắm massage chính là Porcelain: người sử dụng chỉ cần nhấn nút nhẹ nhàng để xả nước. Nhưng bên dưới sàn nhà là mạng lưới chằng chịt các đường ống dẫn nước bằng đồng, van áp suất và bơm thủy lực (Plumbing): chỉ có những người thợ sửa ống nước lành nghề mới can thiệp vào đây khi cần khắc phục rò rỉ.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Hai tầng câu lệnh trong Git:
 ┌────────────────────────────────────────────────────────┐
@@ -65,12 +65,12 @@ Hai tầng câu lệnh trong Git:
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Một cách học mô hình commit là quan sát các việc cần xảy ra: index được chuyển thành tree, commit mới trỏ tới tree và commit cha, rồi branch ref được cập nhật. Các lệnh plumbing như `git write-tree`, `git commit-tree` và `git update-ref` cho thấy những thành phần này, nhưng không nên khẳng định `git commit` luôn chạy đúng chuỗi tiến trình đó ở mọi phiên bản Git.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 # Lệnh Porcelain thông thường
 git commit -m "feat: login"
@@ -100,8 +100,8 @@ Không chạy `git update-ref` trên nhánh đang làm việc chỉ để thử 
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
+## 🧪 Lab
+Hãy mở terminal và cùng tôi thực hành từng bước dưới đây để làm chủ kỹ năng:
 
 1. **Bước 1**: Mở terminal và chạy lệnh `git help -a` để xem danh sách toàn bộ câu lệnh của Git.
 2. **Bước 2**: Cuộn xuống phần "Low-level Commands / Plumbing" để nhận diện các nhóm lệnh: Manipulators, Interrogators, Synching.
@@ -110,28 +110,28 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Plumbing cung cấp các lệnh cấp thấp có ích cho script và chẩn đoán. Công cụ giao diện có thể dùng Git CLI, thư viện Git hoặc giao thức khác; không nên giả định mọi thao tác Porcelain có thể thay thế y hệt bằng một chuỗi lệnh plumbing.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Lệnh `git hash-object` in ra object ID; repo SHA-1 thường có 40 ký tự hexa, repo SHA-256 có 64.
 - Lệnh `git cat-file -p` in ra chính xác nội dung văn bản nguyên thủy của tệp tin.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Cùng làm bài kiểm tra về sự khác biệt giữa hai tầng câu lệnh Porcelain và Plumbing trong phần trắc nghiệm bên dưới.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Hãy nêu một tác vụ phù hợp với Porcelain và một tác vụ phù hợp với Plumbing. Với script cần đọc trạng thái thay đổi, giải thích vì sao `git status --porcelain` an toàn hơn việc phân tích output mặc định.
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - Porcelain là tầng lệnh bậc cao phục vụ trải nghiệm người dùng (`git add`, `git commit`, `git checkout`).
 - Plumbing là tầng lệnh bậc thấp thao tác nguyên tử với dữ liệu (`git hash-object`, `git write-tree`, `git cat-file`).
 - Porcelain và Plumbing là các lớp giao diện khác nhau; không phải mọi porcelain đều chỉ là chuỗi plumbing có thể thay thế chính xác.

@@ -34,17 +34,17 @@
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Nếu chỉ có blob, Git sẽ biết nội dung nhưng không biết tên, đường dẫn hay mode của tệp. Tree ghi các thông tin đó theo cấu trúc thư mục. Commit ghi lại tree được tạo từ index tại thời điểm commit, nên tree không nhất thiết phản ánh mọi thay đổi đang có trong working tree.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy tưởng tượng đối tượng Tree như một cuốn sổ mục lục danh bạ thư mục. Mỗi trang sổ đại diện cho một ngăn tủ (Tree). Mở trang sổ ra, bạn thấy từng dòng ghi chú rõ ràng: "Ngăn nhỏ số 1 (040000 tree abc12): thư mục src", "Tài liệu số 2 (100644 blob def34): tệp README.md". Khi bạn muốn tìm tệp `src/app.ts`, bạn lần theo mục lục từ trang sổ gốc (Root Tree) đi vào trang sổ con (Sub-tree src) rồi mới chạm tới bức thư tay (Blob app.ts).
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Cấu trúc cây Merkle Tree phân tầng:
 [Root Tree: a1b2c3d4]
@@ -58,12 +58,12 @@ Cấu trúc cây Merkle Tree phân tầng:
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Một kỹ sư muốn khám phá cây thư mục của commit mới nhất trong dự án. Kỹ sư chạy lệnh `git cat-file -p HEAD` để lấy mã băm của đối tượng Tree gốc từ thông tin commit. Sau đó, kỹ sư chạy lệnh `git ls-tree <tree-hash>` và thấy hai dòng bản ghi: dòng thứ nhất hiển thị `100644 blob e69de29b package.json`, dòng thứ hai hiển thị `040000 tree a8b7c6df src`. Kỹ sư tiếp tục chạy `git ls-tree a8b7c6df` để xem nội dung thư mục con `src` và thấy danh sách các tệp mã nguồn bên trong gồm `app.ts` và `utils.ts`. Cấu trúc lồng nhau dạng Merkle Tree này chứng minh Git có thể quản lý cả cây thư mục sâu hàng chục tầng một cách ngăn nắp, tốc độ cao và cực kỳ nhẹ nhàng.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 # Xem danh sách cấu trúc cây thư mục của commit hiện tại
 git ls-tree HEAD
@@ -95,8 +95,8 @@ git write-tree
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
+## 🧪 Lab
+Hãy mở terminal và cùng tôi thực hành từng bước dưới đây để làm chủ kỹ năng:
 
 1. Trong repository thực hành riêng, tạo `src/index.js` và `README.md` ở thư mục gốc.
 2. Stage đúng hai đường dẫn bằng `git add README.md src/index.js` để không đưa các thay đổi khác vào index.
@@ -105,28 +105,28 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Mã quyền `100755` biểu thị tệp tin có cờ thực thi (executable script), trong khi `100644` là tệp văn bản hoặc nhị phân thông thường. Khi bạn chạy `git update-index --chmod=+x script.sh`, Git sẽ cập nhật mode trong Tree mà không cần sửa nội dung tệp.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Lệnh `git ls-tree` hiển thị bảng danh mục chuẩn với 4 cột: Mode, Type, Hash, Path.
 - Thư mục con `src` hiển thị loại object là `tree` và object ID riêng theo hash format của repo.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy kiểm tra khả năng phân tích đối tượng Tree qua bài trắc nghiệm trong phần bên dưới.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Tại sao Git từ chối theo dõi một thư mục hoàn toàn trống rỗng nếu không có tệp tin nào bên trong? Về mặt cấu trúc đối tượng, điều gì ngăn cản việc lưu trữ một thư mục không có con?
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - Đối tượng Tree đại diện cho một thư mục, liên kết các tên tệp với các đối tượng Blob và Tree con.
 - Mỗi bản ghi trong Tree gồm: mode, loại object, object ID và tên tệp/thư mục.
 - Mô hình cây Merkle Tree giúp Git phát hiện sự thay đổi ở bất kỳ nhánh con nào một cách tức thì.

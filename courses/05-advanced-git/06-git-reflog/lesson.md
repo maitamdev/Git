@@ -34,17 +34,17 @@
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Nếu lỡ tay reset hoặc xóa nhánh, reflog có thể giúp tìm commit đã từng được tham chiếu. Khả năng khôi phục phụ thuộc vào việc entry còn tồn tại và commit object chưa bị dọn. Reflog không lưu các thay đổi chưa commit.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy hình dung `git log` như danh sách commit có thể đi tới từ nhánh hiện tại. Reflog giống sổ ghi những lần các tham chiếu cục bộ được cập nhật. Đây là nhật ký giới hạn thời gian, không ghi mọi lệnh và không bảo đảm mọi commit vẫn còn.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Sự khác biệt giữa git log và git reflog:
 git log:    Chỉ nhìn thấy các commit còn kết nối trong nhánh hiện tại.
@@ -58,12 +58,12 @@ git reflog: Ví dụ các entry cập nhật HEAD:
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Kỹ sư Huy lỡ tay chạy `git reset --hard HEAD~5`, khiến các commit gần đây không còn trên nhánh hiện tại. Huy dừng lại, kiểm tra `git status` và `git reflog`, rồi chép hash của commit cần giữ. Sau khi xác minh hash, Huy tạo nhánh cứu hộ bằng `git branch rescue-payment <hash>`. Cách này giữ commit mà không di chuyển nhánh hiện tại; thay đổi chưa commit đã bị reset thì reflog không khôi phục được.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 git reflog
 ```
@@ -84,8 +84,8 @@ Git thật còn hỗ trợ `git reflog show <nhánh>` và `git reflog --date=rel
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác tra cứu nhật ký reflog trên terminal.
+## 🧪 Lab
+Hãy cùng tôi mở cuốn "hộp đen" git reflog và thực hành truy vết từng chuyển động của con trỏ HEAD:
 1. Tạo 2 commit mới liên tiếp trong kho chứa bài tập.
 2. Chạy lệnh `git reflog` và quan sát các dòng ghi nhận sự kiện commit kèm thông điệp.
 3. Thử chuyển sang một nhánh khác rồi quay lại, sau đó chạy lại `git reflog`.
@@ -93,28 +93,28 @@ Bài học này là bài tự kiểm tra: bạn thao tác tra cứu nhật ký r
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Khi nghi mất commit, trước tiên dừng các thao tác ghi, kiểm tra trạng thái repo, rồi đọc `git reflog` để tìm hash cần giữ.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Lệnh `git reflog` hiển thị các lần cập nhật ref gần đây cùng mã commit.
 - Xác định được commit cũ khi entry còn trong reflog và object vẫn còn trong kho.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy làm bài kiểm tra trắc nghiệm dưới đây về công cụ cứu hộ git reflog.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Tìm hiểu cơ chế dọn rác tự động của Git thông qua lệnh `git gc` và cách Git quản lý thời gian hết hạn của các bản ghi reflog.
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - `git reflog` ghi lại một số lần cập nhật ref cục bộ như `HEAD` và nhánh; nó không ghi mọi lệnh.
 - Dữ liệu reflog mang tính cục bộ riêng tư trên máy cá nhân, không chia sẻ qua remote.
 - Là nền tảng cốt lõi để khôi phục các commit bị mất do reset, checkout hoặc xóa nhánh.

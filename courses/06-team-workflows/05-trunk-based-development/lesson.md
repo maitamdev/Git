@@ -34,17 +34,17 @@ Trunk-Based Development là cách làm trong đó nhóm tích hợp thay đổi 
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Tích hợp thay đổi nhỏ thường xuyên giúp giảm thời gian sống riêng của code và khiến vấn đề tích hợp được phát hiện sớm hơn. Mô hình này không loại bỏ conflict hoặc lỗi; nhóm cần có cách test, review và sửa nhanh khi nhánh chính gặp sự cố.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy hình dung nhánh chính như dòng công việc chung. Thay vì giữ một mảng code riêng lâu ngày, nhóm chia thay đổi thành phần nhỏ và ghép vào dòng chung thường xuyên. Dòng chung vẫn có thể lỗi nên cần theo dõi và sửa nhanh.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Mô hình Trunk-Based Development:
 Trunk (main): ──●────●────●────●────●────●────●────●────● (tích hợp thường xuyên)
@@ -55,12 +55,12 @@ Trunk (main): ──●────●────●────●────
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Kỹ sư Dũng làm thuật toán xếp hạng dự kiến mất vài tuần. Nhóm chia công việc thành các phần có thể tích hợp sớm, dùng Feature Flag để giới hạn người dùng được bật tính năng nếu cần. Họ vẫn chạy test và theo dõi ứng dụng sau khi triển khai.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 git switch main
 git pull --rebase origin main
@@ -86,8 +86,8 @@ git push origin short-feat/add-rating-model
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác trực tiếp trên terminal của máy tính để làm quen với công cụ.
+## 🧪 Lab
+Hãy cùng tôi mở terminal và thực hiện các bước thực hành trực quan sau:
 1. Chia nhỏ một bài toán lớn thành 3 đầu việc nhỏ có thể hoàn thành trong 1 ngày làm việc.
 2. Chia một thay đổi giả định thành hai commit nhỏ và ghi rõ thứ tự tích hợp.
 3. Viết vài dòng pseudocode cho Feature Flag và nêu cách kiểm tra cả trạng thái bật lẫn tắt.
@@ -95,28 +95,28 @@ Bài học này là bài tự kiểm tra: bạn thao tác trực tiếp trên te
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Kiểm tra tự động nhanh và review theo quy mô thay đổi giúp nhóm tích hợp thường xuyên mà phát hiện lỗi sớm.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Hiểu rõ sự khác biệt giữa thời điểm đưa mã nguồn lên máy chủ (Deployment) và thời điểm mở tính năng cho người dùng (Release).
 - Nêu được cách chia nhỏ một thay đổi và một kiểm tra cần có trước/sau khi tích hợp.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy làm bài trắc nghiệm dưới đây về mô hình Trunk-Based Development.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Phân tích cơ chế hoạt động của Feature Flags trong việc giảm thiểu rủi ro khi triển khai code liên tục vào Trunk.
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - Trunk-Based Development tập trung hợp nhất các thay đổi nhỏ vào một nhánh chính duy nhất thường xuyên.
 - Thay đổi nhỏ và tích hợp thường xuyên là mục tiêu; không có giới hạn thời gian cứng cho nhánh.
 - Feature Flags có thể tách thời điểm triển khai code khỏi thời điểm bật tính năng cho người dùng.

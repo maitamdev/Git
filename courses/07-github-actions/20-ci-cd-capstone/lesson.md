@@ -33,17 +33,17 @@ Bài này ghép các phần Level 7 thành một ví dụ workflow cho ứng d�
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Biết từng khái niệm riêng lẻ chưa đủ để đọc một pipeline. Capstone giúp thấy trigger quyết định lúc chạy, `needs` quyết định thứ tự, artifact chuyển file, còn environment và branch rules được cấu hình ở repo. Pipeline giảm thao tác lặp nhưng không đảm bảo ứng dụng không lỗi.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy hình dung một bưu cục: PR đưa kiện hàng qua các khâu kiểm tra song song; khi đạt, một bản build được niêm phong thành artifact. Push lên `main` có thể chuyển artifact sang staging. Production chỉ nhận kiện hàng khi rule môi trường được cấu hình và người có quyền duyệt.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 PR hoặc push main
        ├── lint ───────────┐
@@ -60,12 +60,12 @@ PR hoặc push main
 
 ---
 
-## 🏢 Ví dụ thực tế
-Ví dụ giả định: PR chạy lint, dependency audit và test matrix; nếu repo đặt check làm required, merge phải chờ điều kiện đó. Push vào `main` tiếp tục build và lưu artifact, rồi gọi lệnh deploy của dự án cho staging. Job production tham chiếu environment; nếu reviewer rule đã cấu hình và gói repo hỗ trợ, Job chờ duyệt trước khi chạy. Kết quả vẫn cần smoke test, monitoring và rollback plan.
+## 🌎 Ví dụ thực tế
+Trong môi trường phát triển dự án thực tế: PR chạy lint, dependency audit và test matrix; nếu repo đặt check làm required, merge phải chờ điều kiện đó. Push vào `main` tiếp tục build và lưu artifact, rồi gọi lệnh deploy của dự án cho staging. Job production tham chiếu environment; nếu reviewer rule đã cấu hình và gói repo hỗ trợ, Job chờ duyệt trước khi chạy. Kết quả vẫn cần smoke test, monitoring và rollback plan.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```yaml
 # Ví dụ khung; cần có package-lock.json, npm scripts và scripts/deploy-*.sh của dự án
 name: Capstone CI and Deployment
@@ -185,8 +185,8 @@ Trong ví dụ, `./scripts/deploy-staging.sh` và `./scripts/deploy-production.s
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
+## 🧪 Lab
+Hãy mở terminal và cùng tôi thực hành từng bước dưới đây để làm chủ kỹ năng:
 
 1. **Bước 1**: Trước khi chạy ví dụ, xác nhận dự án có `package-lock.json` và scripts `lint`, `test`, `build`; nếu chưa có, dùng YAML để vẽ/đánh dấu luồng job mà chưa chạy thật.
 2. **Bước 2**: Đọc ma trận Node `22`/`24`; dự án thật nên chọn các phiên bản Node còn được hỗ trợ và phù hợp với người dùng.
@@ -195,12 +195,12 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Bạn nên vẽ sơ đồ khối quan hệ phụ thuộc giữa các Job lên giấy hoặc bảng trắng trước khi bắt tay viết các dòng YAML để không bị nhầm lẫn thứ tự `needs`.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Vẽ đúng DAG: lint, dependency audit, test matrix chạy độc lập; build đợi cả ba; staging chỉ chạy trên push `main`.
 - Biết required check phải được bật riêng trong branch protection/ruleset mới chặn merge.
 - Biết Job production chỉ chờ phê duyệt nếu environment rule đã cấu hình và repo/gói hỗ trợ.
@@ -208,17 +208,17 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy hoàn thành bài kiểm tra tổng hợp kiến thức toàn diện của Level 7 CI/CD Capstone trong phần trắc nghiệm bên dưới.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Thiết kế giải pháp tự động hoàn tác (Rollback Pipeline) khi bước kiểm tra sức khỏe ứng dụng (Smoke Test) phát hiện endpoint dịch vụ trả về mã lỗi 500 sau khi triển khai?
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - Pipeline là đồ thị job; `needs` điều khiển phụ thuộc, matrix tạo nhiều tổ hợp, artifact chuyển file.
 - Trigger/`if` giới hạn lúc deploy; repo settings mới cấu hình required checks và environment approvals.
 - Secrets cần quyền tối thiểu; không in ra log; lệnh deploy phải khớp hạ tầng thật.

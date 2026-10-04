@@ -34,17 +34,17 @@
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Khi thử nghiệm một thuật toán hay kiến trúc mới thất bại thảm hại, mã nguồn bị sửa đổi tan hoang và bạn muốn vứt bỏ toàn bộ để quay về trạng thái sạch sẽ trước đó. `git reset --hard` chính là chiếc nút khởi động lại từ đầu, giúp bạn dọn sạch mọi rác rưởi thử nghiệm chỉ trong tích tắc.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy hình dung bạn thử nghiệm chế tạo cỗ máy trong phòng thí nghiệm. Thử nghiệm thất bại, dầu mỡ và mảnh vỡ văng tung tóe khắp sàn. Bạn nhấn nút xả nước tự động (`--hard`). Luồng nước áp lực cao quét sạch mọi vết bẩn trên sàn (Working Tree), dọn sạch bàn đóng gói (Staging) và đưa phòng trở về trạng thái tinh tươm như bức ảnh chụp lúc đầu.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Cơ chế hủy diệt của git reset --hard HEAD~1:
 Trước khi reset:
@@ -59,12 +59,12 @@ Working Tree:     Các file được theo dõi trở về snapshot C2; chỉnh s
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Kỹ sư Hùng dành cả buổi sáng thử nghiệm đổi cơ sở dữ liệu sang MongoDB trên nhánh `feat/db-migration`. Sau 3 commit và nhiều sửa đổi dở dang, Hùng thấy giải pháp không khả thi và muốn bỏ hết để quay lại mốc ban đầu có hash `a1b2c3d`. Hùng gõ `git reset --hard a1b2c3d`. Toàn bộ mã nguồn trên máy quay về sạch sẽ như chưa từng có cuộc thử nghiệm nào diễn ra.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 git reset --hard HEAD
 git reset --hard HEAD~1
@@ -89,7 +89,7 @@ git status
 
 ---
 
-## 🧪 Lab thực hành
+## 🧪 Lab
 Bài này xóa thay đổi trên file tracked; hãy dùng kho thử nghiệm riêng, không dùng kho dự án đang học.
 1. Tạo `tracked.txt` với nội dung `ban dau`, rồi chạy `git add tracked.txt` và `git commit -m "base"`.
 2. Sửa `tracked.txt` thành `ban sua chua commit`; tạo thêm `scratch.txt` nhưng không chạy `git add`.
@@ -99,28 +99,28 @@ Bài này xóa thay đổi trên file tracked; hãy dùng kho thử nghiệm ri�
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Nếu chưa chắc chắn muốn vứt bỏ code, hãy chạy `git stash` để cất giữ một bản sao dự phòng trước khi gõ `git reset --hard`.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - File tracked khớp với commit mục tiêu và các thay đổi staged của chúng bị bỏ.
 - File untracked không liên quan còn nguyên; do đó `git status` vẫn liệt kê `scratch.txt`.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy làm bài kiểm tra trắc nghiệm dưới đây về câu lệnh git reset --hard.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Tìm hiểu cách sử dụng `git reflog` kết hợp với `git reset --hard <hash>` để phục hồi lại một commit vừa bị lùi nhầm.
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - `git reset --hard` đồng bộ hóa cả 3 cây HEAD, Staging và Working Tree về commit đích.
 - Bỏ thay đổi staged và unstaged trên các file được theo dõi; file untracked không liên quan thường còn nguyên.
 - Cực kỳ hữu ích để dọn dẹp các thử nghiệm thất bại nhưng đòi hỏi sự cẩn trọng cao độ.

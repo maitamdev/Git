@@ -34,17 +34,17 @@
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Khi đang sửa một tính năng thì cần chuyển sang nhánh khác, bạn có thể commit tạm, dùng worktree, hoặc cất thay đổi bằng `git stash`. Stash tiện khi chưa muốn tạo commit; lưu ý file untracked cần `-u`, và khi áp dụng lại có thể phát sinh conflict.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy hình dung mặt bàn làm việc của bạn đang bày bừa cọ vẽ và bức tranh đang vẽ dở (Working Tree). Khách quý bất ngờ bước vào phòng cần ký hợp đồng gấp. Bạn nhẹ nhàng bê toàn bộ tranh và cọ cất vào chiếc ngăn kéo có khóa dưới bàn (`git stash push -u -m "hoàng hôn"`). Bàn sạch bóng, bạn tiếp khách xong xuôi rồi mở ngăn kéo mang tranh ra vẽ tiếp (`git stash pop`).
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Cơ cấu hoạt động của ngăn xếp Stash (LIFO - Last In, First Out):
 stash@{0}: "WIP: refactor auth module" (Mới nhất)
@@ -57,12 +57,12 @@ Thao tác apply: Lấy stash@{0} ra áp dụng nhưng VẪN GIỮ lại trong da
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Kỹ sư Trang đang thêm 3 file mới và sửa 2 file tính năng QR code thì nhận cuộc gọi sửa gấp lỗi đăng nhập. Trang chạy: `git stash push -u -m "WIP: QR payment integration"`. Cờ `-u` giúp cất gọn cả 3 file mới tạo. Trang chuyển nhánh hotfix sửa xong, quay lại nhánh cũ gõ `git stash pop`. Toàn bộ không gian làm việc sống động trở lại nguyên vẹn không thiếu một dòng code.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 git stash push -u -m "<ghi-chú-mô-tả>"
 git stash list
@@ -91,7 +91,7 @@ git stash drop stash@{n}
 
 ---
 
-## 🧪 Lab thực hành
+## 🧪 Lab
 1. Tạo commit nền có `tracked.txt` với nội dung `base`: chạy `echo "base" > tracked.txt`, `git add tracked.txt`, `git commit -m "base"`.
 2. Đổi `tracked.txt` thành `work`, tạo `new-feature.txt`, rồi chạy `git stash push -u -m "demo stash untracked"`.
 3. Chạy `git status`: thay đổi tracked đã được cất, file mới cũng được dọn khỏi Working Tree.
@@ -101,28 +101,28 @@ git stash drop stash@{n}
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Luôn thêm cờ `-u` khi stash để không bỏ sót các tệp tin mới tạo chưa được Git theo dõi.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Danh sách `git stash list` hiển thị rõ thông điệp mô tả nội dung công việc.
 - `-u` đã cất cả file mới; `apply` khôi phục mà vẫn giữ entry, còn `pop` khôi phục rồi gỡ entry khi áp dụng thành công.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy làm bài kiểm tra trắc nghiệm dưới đây về công cụ git stash nâng cao.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Sử dụng `git stash branch test-branch` để bung một mẩu stash cũ vào một nhánh độc lập mà không lo xung đột với các commit mới trên nhánh hiện tại.
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - `git stash push -u -m` giúp lưu trữ cả tệp untracked kèm thông điệp mô tả rõ ràng.
 - Phân biệt `pop` (áp dụng và xóa) với `apply` (áp dụng và giữ lại dự phòng).
 - `git stash branch` giải quyết xung đột bằng cách tạo nhánh mới an toàn từ mốc stash ban đầu.

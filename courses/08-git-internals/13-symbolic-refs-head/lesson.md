@@ -34,17 +34,17 @@ HEAD xác định commit hiện được checkout. Thông thường, HEAD là sy
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Detached HEAD là trạng thái hợp lệ để xem hoặc thử nghiệm một commit cũ. Nếu tạo commit mới khi detached rồi checkout sang nơi khác, commit đó có thể không còn được giữ bởi branch; hãy tạo branch cứu hộ nếu muốn giữ nó. Object ID có độ dài phụ thuộc hash format.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy tưởng tượng con trỏ HEAD như chiếc biển tên "BẠN ĐANG Ở ĐÂY" (You are here) trên bản đồ trung tâm thương mại. Bình thường, chiếc biển tên này được móc vào một chiếc xe buýt đang di chuyển (nhánh main): xe buýt chạy đến đâu (commit mới), biển tên tự động đi theo đến đó. Nhưng khi bạn nhảy xuống xe buýt và đứng một mình giữa ngã tư đường (Detached HEAD), bạn vẫn đứng vững tại tọa độ đó, chỉ có điều chiếc xe buýt đã chạy đi mất và không ai tự động chở bạn đi tiếp.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Hai trạng thái của con trỏ HEAD (tên hiển thị là logic, đường dẫn vật lý có thể khác):
 1. Trạng thái bình thường (Symbolic Reference):
@@ -58,12 +58,12 @@ Hai trạng thái của con trỏ HEAD (tên hiển thị là logic, đường d
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Một kỹ sư muốn kiểm tra phiên bản cũ chạy `git switch --detach <commit>` rồi `git symbolic-ref -q HEAD` (lệnh không in branch ở trạng thái detached) và `git rev-parse HEAD` để xem object ID hiện tại. Chuyển lại bằng `git switch main` nếu `main` là branch cần dùng. Nếu đã tạo commit mới ở detached state và cần giữ nó, trước khi chuyển đi hãy chạy `git branch rescue-detached-work`.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 # Xem Git directory đang dùng cho HEAD (hữu ích với linked worktree)
 git rev-parse --git-path HEAD
@@ -99,8 +99,8 @@ git switch main
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
+## 🧪 Lab
+Hãy mở terminal và cùng tôi thực hành từng bước dưới đây để làm chủ kỹ năng:
 
 1. Ghi lại branch hiện tại bằng `git branch --show-current`.
 2. Chạy `git switch --detach HEAD` để vào detached state.
@@ -109,28 +109,28 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > `git symbolic-ref -q HEAD` trả exit code khác 0 nếu HEAD detached. Kết hợp với `git rev-parse HEAD` để xem commit hiện tại.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - `git symbolic-ref -q HEAD` in tên branch khi đang gắn branch và không in tên khi detached.
 - `git rev-parse HEAD` in object ID ở cả hai trạng thái; độ dài ID tùy hash format.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Cùng kiểm tra sự thấu hiểu của bạn về con trỏ HEAD và Symbolic References trong phần trắc nghiệm bên dưới.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Làm thế nào để tạo một con trỏ nhánh mới cứu hộ các commit vừa tạo trong trạng thái Detached HEAD trước khi bạn chuyển về nhánh main? (Gợi ý: `git branch <ten-nhanh-cuu-ho>`).
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - HEAD là con trỏ chỉ định vị trí không gian làm việc hiện tại của bạn trong Git.
 - Trạng thái bình thường: HEAD là Symbolic Ref trỏ tới một nhánh (`ref: refs/heads/main`).
 - Trạng thái Detached HEAD: HEAD trỏ trực tiếp tới object ID của một commit.

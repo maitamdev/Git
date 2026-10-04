@@ -34,17 +34,17 @@
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Khi vừa commit xong, bạn thường sực nhớ ra quên lưu một file cấu hình hoặc thấy commit message bị sai chính tả. Nếu tạo thêm một commit chỉ để sửa lỗi chính tả hay thêm một dòng code, cây lịch sử sẽ bị vụn vặt và thiếu chuyên nghiệp. `git commit --amend` giúp lịch sử dự án luôn sạch sẽ và chỉn chu.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy hình dung bạn vừa in một tấm ảnh kỷ yếu tập thể (commit). Khi nhìn kỹ, bạn phát hiện một người bị lệch vạt áo. Thay vì chụp thêm bức ảnh nhỏ xíu riêng vạt áo dán đè lên album, bạn mời người đó chỉnh lại áo rồi chụp một tấm ảnh hoàn hảo mới thay thế tấm cũ vào đúng trang album đó (`--amend`). Người xem chỉ thấy một bức ảnh hoàn mỹ.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Bản chất của git commit --amend:
 Trước khi amend:
@@ -57,12 +57,12 @@ C1 ──► C3 (Commit mới hoàn hảo, thay thế hoàn toàn C2) [HEAD]
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Lập trình viên Trung vừa commit tính năng đăng nhập với thông điệp sai chính tả: "feat: logn system" và quên chưa thêm file `favicon.ico`. Trung không tạo commit vá vụn vặt mà đưa icon vào staging bằng `git add favicon.ico`, rồi gõ `git commit --amend -m "feat: login system"`. Git gom file icon vào chung và cập nhật tiêu đề chuẩn xác, giữ cho cây lịch sử nhánh luôn tinh gọn.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 git commit --amend
 git commit --amend -m "<thông-điệp-mới>"
@@ -85,8 +85,8 @@ git commit --amend --no-edit
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thực hành sửa commit gần nhất bằng --amend trên terminal.
+## 🧪 Lab
+Cùng tôi thực hành kỹ thuật sửa sai nhanh cho commit gần nhất bằng cờ --amend mà không làm rác lịch sử:
 1. Tạo một commit với thông điệp sai chính tả `initail commit`.
 2. Chạy lệnh `git commit --amend -m "initial commit"` để sửa lỗi chính tả.
 3. Tạo một tệp mới `extra.txt`, chạy `git add extra.txt`.
@@ -95,28 +95,28 @@ Bài học này là bài tự kiểm tra: bạn thực hành sửa commit gần 
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Dùng cờ `--no-edit` khi bạn chỉ muốn bổ sung tệp vào commit gần nhất mà không muốn đổi thông điệp.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Mã SHA hash của commit gần nhất được làm mới.
 - Thông điệp commit được cập nhật chuẩn xác và tệp bổ sung nằm trọn vẹn trong commit đó.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy làm bài kiểm tra trắc nghiệm dưới đây về câu lệnh tiện ích git commit --amend.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Tìm hiểu cách sử dụng cờ `--reset-author` trong lệnh amend khi bạn muốn cập nhật thông tin tác giả và thời gian commit sang mốc hiện tại.
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - `git commit --amend` cập nhật commit gần nhất bằng cách gộp các tệp đã staged hoặc sửa message.
 - Cờ `--no-edit` giúp bổ sung tệp mà không làm thay đổi thông điệp commit sẵn có.
 - Chỉ nên sử dụng amend cho các commit cục bộ cá nhân chưa từng push lên nhánh dùng chung.

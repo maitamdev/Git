@@ -34,17 +34,17 @@ Cú pháp revision giúp gọi tên commit bằng các biểu thức như `HEAD~
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Hiểu các toán tử này giúp bạn so sánh đúng hai nhánh của merge và đọc lịch sử. Trước khi dùng revision với lệnh thay đổi như `reset`, hãy kiểm tra nó bằng `git rev-parse`; lỗi chọn revision có thể đưa lệnh tới commit khác với dự định.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy xem merge commit như một nút có hai cạnh đi ngược về hai commit cha. `M^1` chọn cạnh cha thứ nhất; `M^2` chọn cạnh cha thứ hai. `M~2` đi hai bước liên tiếp theo cạnh cha thứ nhất. Các cạnh là quan hệ trong commit, không phải tên nhánh.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Sự khác biệt trực quan giữa ~ và ^ trên đồ thị Merge:
           (Commit C1) ◄── (Commit C2) ◄──┐
@@ -61,12 +61,12 @@ Từ vị trí HEAD (Commit M):
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Muốn so sánh merge commit với cha thứ hai, dùng `git diff HEAD^2 HEAD`. Lệnh một revision như `git diff HEAD^2` so sánh cây của cha thứ hai với working tree, nên không biểu đạt cùng phép so sánh. Trước tiên có thể xem cha thứ hai bằng `git rev-parse HEAD^2`.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 # Phân giải commit trước đó một thế hệ
 git rev-parse HEAD~1
@@ -98,7 +98,7 @@ git diff HEAD^2 HEAD
 
 ---
 
-## 🧪 Lab thực hành
+## 🧪 Lab
 Tạo merge commit trong repository tạm để so sánh parent. Chạy trong Bash/Git Bash:
 
 ```bash
@@ -128,28 +128,28 @@ git merge --no-ff feature -m "merge feature"
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Ghi nhớ: `~n` lặp theo cha thứ nhất; `^n` chọn cha thứ n của commit hiện tại.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Lệnh `git rev-parse HEAD~1` trả về đúng commit cha trên nhánh chính.
 - Lệnh `git rev-parse HEAD^2` trả về đúng commit cuối cùng của nhánh tính năng đã được gộp.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy kiểm tra khả năng định vị đồ thị commit qua bài trắc nghiệm về cú pháp revision trong phần bên dưới.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Biểu thức revision `HEAD~3^2~1` có nghĩa là gì trên sơ đồ cây commit của Git? Hãy vẽ sơ đồ minh họa từng bước nhảy con trỏ.
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - Toán tử `~n` đi lùi n thế hệ theo cha thứ nhất, không nhất thiết là nhánh `main`.
 - Toán tử `^n` chọn cha thứ n của commit; cha thứ hai thường xuất hiện ở merge commit.
 - `git rev-parse` phân giải revision thành object ID theo định dạng của repository.

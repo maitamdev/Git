@@ -34,17 +34,17 @@
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Trong các dự án lớn với nhiều lập trình viên, nếu ai cũng dùng `git merge` thông thường thì lịch sử sẽ biến thành "bát mì spaghetti" chằng chịt các nút giao cắt và hàng trăm commit merge rác. Rebase giúp giữ lịch sử thẳng tắp, dễ đọc hiểu trình tự thời gian và thuận tiện truy vết lỗi bằng `git bisect`.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy hình dung bạn đang xếp chồng các khối gỗ đỏ lên một chiếc bàn cũ (nhánh main cũ). Đồng nghiệp mang đến chiếc bàn mới tinh đặt các khối gỗ xanh lên đó (main mới cập nhật). Thay vì dùng dây buộc nối chiếc bàn cũ vào bàn mới (Merge Commit), bạn nhẹ nhàng nhấc toàn bộ chồng khối gỗ đỏ sang đặt tiếp nối lên đỉnh các khối gỗ xanh trên bàn mới (`git rebase`).
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 So sánh trực quan giữa Merge và Rebase:
 Lịch sử phân kỳ ban đầu:
@@ -61,12 +61,12 @@ Base ──► M1 ──► M2 (main) ──► F1' ──► F2' (feature)
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Nhóm quy định nhánh tính năng cần cập nhật trước khi mở PR. Hoàng đang làm trên `feat/biometric` và `main` có commit mới. Theo quy trình nhóm, Hoàng có thể rebase nhánh tính năng lên `origin/main` để phát lại commit riêng của mình; nếu nhóm muốn giữ lại điểm hợp nhất, có thể chọn merge.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 git switch <nhánh-tính-năng>
 git fetch origin
@@ -91,8 +91,8 @@ git log --oneline --graph
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn tạo phân kỳ và thao tác rebase trên terminal.
+## 🧪 Lab
+Cùng tôi tạo một phân kỳ lịch sử nhỏ và trải nghiệm cảm giác duỗi thẳng commit bằng git rebase:
 1. Tạo một nhánh mới `demo-rebase` từ main và tạo 2 commit.
 2. Chuyển về `main` và tạo 1 commit độc lập để tạo ra sự phân kỳ chữ Y.
 3. Chuyển lại sang `demo-rebase` và quan sát sơ đồ bằng `git log --graph --oneline --all`.
@@ -100,28 +100,28 @@ Bài học này là bài tự kiểm tra: bạn tạo phân kỳ và thao tác r
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Rebase phát lại commit trên một base mới. Trước khi làm, xác định ai đang dùng nhánh đó và liệu nhóm muốn rebase hay merge.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Trong bài lab không có conflict, commit tính năng có cha mới là tip `main`.
 - Hash commit tính năng thay đổi sau khi rebase; so sánh bằng `git log --graph --oneline`.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy làm bài kiểm tra trắc nghiệm dưới đây về khái niệm và triết lý của Git Rebase.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 So sánh ưu nhược điểm giữa hai trường phái bảo thủ (True History qua Merge) và trường phái thẩm mỹ (Linear History qua Rebase) trong văn hóa phát triển phần mềm.
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - Rebase thay đổi điểm tựa gốc (Base Commit) của nhánh hiện tại lên đỉnh nhánh đích.
 - Loại bỏ hoàn toàn các commit merge không cần thiết, tạo lịch sử tuyến tính thẳng tắp.
 - Giúp dự án dễ đọc, dễ bảo trì và thuận tiện cho việc truy vết lỗi tự động.

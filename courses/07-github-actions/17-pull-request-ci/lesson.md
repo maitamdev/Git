@@ -34,17 +34,17 @@ Pull Request CI là cách kiểm tra thay đổi trước khi merge. Khi workflo
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Nếu chỉ kiểm tra sau khi merge, lỗi có thể ảnh hưởng tới nhánh chính trước khi phát hiện. PR CI đưa kết quả kiểm tra tới reviewer sớm hơn; muốn kết quả chặn merge thì quản trị viên phải cấu hình required checks, và vẫn cần quyền bypass được kiểm soát.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy hình dung trạm kiểm dịch hải quan tại sân bay quốc tế. Hành khách (các commit trong PR) muốn nhập cảnh vào quốc gia (nhánh main) bắt buộc phải đi qua máy quét an ninh và cổng soi chiếu sinh học (CI Pipeline). Nếu hành lý chứa chất cấm hoặc có triệu chứng nhiễm virus nguy hiểm (bài test bị lỗi hoặc linter phát hiện sai chuẩn), cánh cửa hải quan sẽ khóa chặt và hành khách bị chặn lại để xử lý trước khi có thể đặt chân vào nội địa.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Tích hợp bảo vệ nhánh với PR CI Status Checks:
 Developer tạo PR ──► [Kích hoạt CI Workflow]
@@ -65,12 +65,12 @@ Status Check: Xanh (Success)   Status Check: Đỏ (Failure)
 
 ---
 
-## 🏢 Ví dụ thực tế
-Ví dụ giả định: repo đã đặt `ci/test` là required check. Khi test thất bại, merge bị chặn theo rule; sau khi sửa và CI xanh, các yêu cầu review còn lại vẫn phải được đáp ứng. Quyền bypass nếu có cũng phụ thuộc cấu hình.
+## 🌎 Ví dụ thực tế
+Trong môi trường phát triển dự án thực tế: repo đã đặt `ci/test` là required check. Khi test thất bại, merge bị chặn theo rule; sau khi sửa và CI xanh, các yêu cầu review còn lại vẫn phải được đáp ứng. Quyền bypass nếu có cũng phụ thuộc cấu hình.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```yaml
 # Workflow kiểm tra chất lượng Pull Request
 name: Pull Request CI
@@ -114,8 +114,8 @@ jobs:
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
+## 🧪 Lab
+Hãy mở terminal và cùng tôi thực hành từng bước dưới đây để làm chủ kỹ năng:
 
 1. **Bước 1**: Đọc tệp mẫu `.github/workflows/pr-ci.yml` và xác định event, nhánh đích, Job và lệnh kiểm tra. Chạy thật trên GitHub là phần tùy chọn, cần repo có Actions/quyền truy cập.
 2. **Bước 2**: Định nghĩa job `lint-and-test` thực hiện chạy linter và unit test của dự án.
@@ -124,28 +124,28 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Bạn có thể sử dụng GitHub CLI với lệnh `gh pr checks` để xem ngay trạng thái CI của PR hiện tại từ terminal mà không cần chuyển qua cửa sổ trình duyệt.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Xác định được workflow sẽ báo kết quả ở mục Checks trên PR.
 - Chỉ khi check được cấu hình required thì failure/pending mới chặn merge; các review/rule khác vẫn có hiệu lực.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy kiểm tra kiến thức về thiết lập đường ống CI cho Pull Request qua các câu hỏi trong phần trắc nghiệm bên dưới.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Làm thế nào để sử dụng đường ống CI gửi tin nhắn tóm tắt kết quả kiểm thử trực tiếp vào phần bình luận của Pull Request bằng action `actions/github-script`?
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - PR CI tự động kiểm tra chất lượng mã nguồn mỗi khi có yêu cầu hợp nhất mới hoặc có commit đẩy thêm.
 - Kết hợp với required status checks để chặn merge theo chính sách repo.
 - CI giảm rủi ro nhưng không bảo đảm phát hiện mọi lỗi hoặc ngăn mọi cách bypass.

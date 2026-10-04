@@ -34,17 +34,17 @@ GitHub Flow là workflow nhẹ dùng nhánh ngắn hạn và PR để thảo lu�
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Luồng PR ngắn giúp nhóm thảo luận thay đổi tại một nơi và giảm nhu cầu duy trì nhiều nhánh dài hạn. Tốc độ phát hành vẫn phụ thuộc kiểm thử, phê duyệt, vận hành và chính sách của sản phẩm.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy hình dung tòa soạn: phóng viên viết bản thảo, biên tập viên trao đổi trên PR, rồi nhóm chọn thời điểm đăng. Việc duyệt PR không tự đăng bài; tương tự, merge không tự deploy nếu repository chưa cấu hình quy trình phát hành.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Một vòng làm việc thường gặp (review, test và deploy tùy cấu hình):
 1. Tạo nhánh từ main (Create branch)
@@ -67,12 +67,12 @@ Một vòng làm việc thường gặp (review, test và deploy tùy cấu hìn
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Ví dụ: kỹ sư Nam tạo nhánh `ui/apple-pay` từ `main`, mở PR để nhóm review và chạy CI. Nếu dự án có môi trường preview hoặc deploy sau merge, Nam kiểm tra kết quả theo quy trình đó trước khi phát hành.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 git switch main
 git status
@@ -102,8 +102,8 @@ gh pr create --title "feat: add Apple Pay" --body "Tested on Safari"
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác trực tiếp trên terminal của máy tính để làm quen với công cụ.
+## 🧪 Lab
+Hãy cùng tôi mở terminal và thực hiện các bước thực hành trực quan sau:
 1. Trong repo thử nghiệm, chuyển sang nhánh chính và tạo một nhánh mô tả thay đổi.
 2. Tạo commit, xem lại bằng `git status` và `git log --oneline`.
 3. Nếu có repo GitHub với quyền push, đẩy nhánh và mở PR; nếu không, mô tả các bước PR/review bằng giấy.
@@ -111,28 +111,28 @@ Bài học này là bài tự kiểm tra: bạn thao tác trực tiếp trên te
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Giữ thay đổi đủ nhỏ để review và tích hợp được; chọn CI, môi trường preview và deploy theo khả năng vận hành của nhóm.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Mô tả được nhánh, commit và PR trong luồng GitHub Flow.
 - Phân biệt được bước Git hỗ trợ với CI, review và deployment do nhóm cấu hình.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy làm bài trắc nghiệm dưới đây về quy trình tinh gọn GitHub Flow.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Thiết lập một GitHub Actions workflow đơn giản để tự động triển khai bản thử nghiệm mỗi khi có Pull Request được mở.
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - Mô hình cơ bản xoay quanh `main` và nhánh làm việc ngắn hạn; dự án có thể thêm nhánh nếu cần.
 - Nhóm dùng nhánh ngắn hạn và PR để review rồi tích hợp thay đổi.
 - Bảo vệ nhánh, CI và triển khai tự động là cấu hình riêng, không tự xuất hiện khi chọn workflow này.

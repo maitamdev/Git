@@ -34,17 +34,17 @@ Squash Commit (Gộp commit) là kỹ thuật nén và hợp nhất hai hoặc n
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Khi lập trình, chúng ta thường sinh ra nhiều commit vụn vặt như sửa lỗi chính tả hay căn chỉnh giao diện. Kỹ thuật Squash Commit giúp bạn nén chuỗi commit vụn đó thành một khối thay đổi hoàn chỉnh, giữ cho lịch sử nhánh chính luôn sáng sủa và dễ tra cứu.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy hình dung bạn nhào bột nặn bánh mì. Bạn thêm một chút bột, rắc chút men nở, rồi thêm nhúm muối. Khi nướng bánh, bạn không để từng nhúm nguyên liệu riêng rẽ mà nhào nặn tất cả thành một khối bột dẻo dai duy nhất. Chiếc bánh ra lò là một sản phẩm hoàn chỉnh và thơm ngon.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Cơ chế gộp commit bằng squash:
 Trước khi squash (3 commit vụn):
@@ -61,12 +61,12 @@ C1 ──► C_new ("feat: complete shopping cart module") (Một commit duy nh�
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Kỹ sư Nam tạo 3 commit: tạo form đăng ký, kiểm tra email hợp lệ, và sửa màu nút submit. Trước khi mở PR, Nam dùng `git rebase -i HEAD~3`, đổi 2 commit sau thành `squash`. Nam biên tập lại thành một thông điệp chuẩn mực duy nhất: "feat: add user registration form with validation and styling".
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 git rebase -i HEAD~<n>
 s <commit-hash> <message>
@@ -91,8 +91,8 @@ git log --oneline -n 5
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác trực tiếp trên terminal của máy tính để làm quen với công cụ.
+## 🧪 Lab
+Hãy cùng tôi mở terminal và thực hiện các bước thực hành trực quan sau:
 1. Tạo liên tiếp 3 commit nhỏ bổ sung từng dòng chữ vào tệp `notes.txt`.
 2. Chạy lệnh `git rebase -i HEAD~3` trên terminal.
 3. Giữ dòng 1 là `pick`, đổi dòng 2 và 3 thành `s` hoặc `squash`.
@@ -101,28 +101,28 @@ Bài học này là bài tự kiểm tra: bạn thao tác trực tiếp trên te
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > `squash` và `fixup` cần commit trước đó làm đích gộp. Luyện trên nhánh chưa chia sẻ và kiểm tra kết quả bằng `git log`.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Gộp thành công nhiều commit thành một commit duy nhất và biên tập lại thông điệp chuẩn xác.
 - Nắm vững cách phân biệt giữa `squash` (giữ lại message để sửa) và `fixup` (bỏ message gộp).
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy làm bài kiểm tra trắc nghiệm dưới đây về kỹ thuật Squash Commit.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Nêu sự khác biệt giữa việc tự tay squash bằng `git rebase -i` ở local và việc bấm nút "Squash and merge" trên giao diện GitHub.
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - `squash` (hoặc `s`) cho phép gộp commit hiện tại vào commit ngay phía trước.
 - Trình soạn thảo tổng hợp giúp bạn viết lại thông điệp commit chung một cách chuyên nghiệp.
 - Không bao giờ đặt `squash` ở dòng đầu tiên của file Todo List.

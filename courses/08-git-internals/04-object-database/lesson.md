@@ -34,17 +34,17 @@ Object database là kho các object được Git tra cứu bằng object ID. Rep
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Hiểu object database giúp bạn đọc lịch sử và chẩn đoán dữ liệu. Object ID cho phép Git phát hiện thay đổi ngoài ý muốn; SHA-1 có điểm yếu va chạm đã biết và Git có cơ chế bảo vệ bổ sung. Không nên mô tả hash là bảo đảm mật mã tuyệt đối hoặc cho rằng object bất khả xóa.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy hình dung một thư viện sắp object theo ID thay vì tên tệp. Trong repository SHA-1, ID có 40 ký tự hexa; nếu object còn loose, Git dùng hai ký tự đầu làm thư mục và phần còn lại làm tên tệp. Ví dụ, blob rỗng có ID `e69de29bb2d1d6434b8b29ae775ad8c2e48c5391` nằm loose tại `.git/objects/e6/9de29bb2d1d6434b8b29ae775ad8c2e48c5391`. Repo SHA-256 và object đã pack có cách nhìn khác.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Mô hình lưu trữ Loose Objects trong .git/objects/:
 SHA-1 Hash: e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
@@ -59,12 +59,12 @@ Nội dung bên trong tệp nén:
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Một kỹ sư tạo `hello.txt` chứa đúng 6 byte `hello` và ký tự xuống dòng rồi chạy `git hash-object -w hello.txt`. Trong repo SHA-1, Git in `ce013625030ba8dba906f756967f9e9ca394464a`; nếu object còn ở dạng loose, nó nằm tại `.git/objects/ce/013625030ba8dba906f756967f9e9ca394464a`. Dùng `git cat-file -p <object-id>` để xem nội dung đã giải nén. Nếu object đã được pack, bạn sẽ không thấy file loose tương ứng.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 # Thống kê số lượng loose objects và packfiles
 git count-objects -v
@@ -94,8 +94,8 @@ git cat-file -p <object-id>
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
+## 🧪 Lab
+Hãy mở terminal và cùng tôi thực hành từng bước dưới đây để làm chủ kỹ năng:
 
 1. Chạy `git hash-object --stdin` rồi nhập một dòng nội dung duy nhất; lưu object ID được in ra.
 2. Chạy `git cat-file -t <object-id>` để xác nhận loại là `blob` và `git cat-file -p <object-id>` để đọc nội dung.
@@ -104,28 +104,28 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Cấu trúc 2 ký tự đầu là cách Git tổ chức loose objects; không cần suy ra một ngưỡng hiệu năng cụ thể của hệ điều hành. Packfile có bố cục khác.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Lệnh `git cat-file -t` trả về chuỗi `blob`.
 - Lệnh `git cat-file -p` in ra chính xác dòng chữ "Git Internals Demo".
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy kiểm tra mức độ thấu hiểu của bạn về cơ sở dữ liệu đối tượng Git qua các câu hỏi trong phần trắc nghiệm bên dưới.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Tại sao các đối tượng trong Git Object Database lại được gọi là Bất biến (Immutable)? Nếu bạn sửa một dấu phẩy trong tệp tin, chuyện gì sẽ xảy ra với đối tượng cũ?
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - Git Object Database là một kho lưu trữ Key-Value dạng Content-Addressable nén bằng zlib.
 - Bốn loại đối tượng cốt lõi gồm: `blob`, `tree`, `commit`, và `tag`.
 - Trong repo SHA-1, đường dẫn loose object dùng 2 ký tự đầu làm thư mục và phần còn lại làm tên file; packfile không theo cấu trúc đó.

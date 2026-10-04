@@ -34,17 +34,17 @@ Artifacts (Tạo phẩm) là các tệp tin hoặc tập hợp tệp tin đượ
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Job khác không nên dựa vào workspace của Job trước. Artifact là cách GitHub Actions tích hợp sẵn để lưu và truyền file qua các Job hoặc tải xuống; cache phù hợp hơn cho dữ liệu có thể tái tạo như dependencies, còn hệ thống lưu trữ ngoài cũng có thể dùng khi cần.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy tưởng tượng hai bưu cục bưu điện độc lập ở hai thành phố hoàn toàn khác nhau (tượng trưng cho hai Job chạy trên hai máy ảo cách ly). Bưu cục A tiến hành đóng gói một kiện hàng quý giá, niêm phong cẩn thận và gửi vào kho hàng lưu ký đám mây trung tâm của tổng công ty vận chuyển (sự kiện upload-artifact). Sau đó, Bưu cục B nhận được mã vận đơn, đến kho hàng trung tâm lấy đúng kiện hàng nguyên vẹn đó về để giao tận tay người nhận (sự kiện download-artifact) mà không bị mất mát.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Quy trình truyền dữ liệu giữa các Job qua Artifacts Storage:
 ┌──────────────────────┐                ┌────────────────────────┐
@@ -62,12 +62,12 @@ Quy trình truyền dữ liệu giữa các Job qua Artifacts Storage:
 
 ---
 
-## 🏢 Ví dụ thực tế
-Ví dụ giả định: Job `build-app` tạo thư mục `build/` rồi tải lên Artifact `webapp-bundle`. Job `deploy-prod` khai báo `needs: build-app`, tải Artifact xuống và triển khai nội dung đó. Cách tải đích, lệnh deploy, quyền cloud và cấu trúc thư mục phải khớp với dự án thật; Artifact tự nó không triển khai ứng dụng.
+## 🌎 Ví dụ thực tế
+Trong môi trường phát triển dự án thực tế: Job `build-app` tạo thư mục `build/` rồi tải lên Artifact `webapp-bundle`. Job `deploy-prod` khai báo `needs: build-app`, tải Artifact xuống và triển khai nội dung đó. Cách tải đích, lệnh deploy, quyền cloud và cấu trúc thư mục phải khớp với dự án thật; Artifact tự nó không triển khai ứng dụng.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```yaml
 # Ví dụ workflow upload và download artifact giữa 2 jobs
 name: Build and Share Artifact
@@ -120,8 +120,8 @@ jobs:
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
+## 🧪 Lab
+Hãy mở terminal và cùng tôi thực hành từng bước dưới đây để làm chủ kỹ năng:
 
 1. **Bước 1**: Tạo file `.github/workflows/artifact-demo.yml` với Job 1 thực hiện tạo thư mục `output` chứa tệp `result.txt`.
 2. **Bước 2**: Thêm bước sử dụng `actions/upload-artifact@v7` để lưu trữ thư mục `output` với tên artifact `test-results`.
@@ -130,28 +130,28 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > GitHub đặt mặc định lưu artifact 90 ngày, nhưng repo hoặc tổ chức có thể cấu hình thời hạn khác. Chọn thời gian theo nhu cầu lưu vết; phiên bản Action và tính năng như upload không nén có thể có yêu cầu tương thích riêng.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Job 2 đọc thành công nội dung của tệp tin được sinh ra từ Job 1 thông qua Artifact mà không cần chạy lại bước build.
 - Trang tóm tắt workflow run hiển thị mục **Artifacts** với tên gói `test-results` và dung lượng tệp tin.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy kiểm tra kiến thức về cơ chế chia sẻ tệp tin Artifacts qua các câu hỏi trong phần trắc nghiệm bên dưới.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Làm thế nào để sử dụng Artifacts nhằm lưu trữ các ảnh chụp màn hình bị lỗi từ các bài kiểm thử Cypress hoặc Playwright chỉ khi job bị thất bại? (Gợi ý: kết hợp thuộc tính `if: failure()` với `upload-artifact`).
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - Artifacts là cơ chế chính thống để lưu trữ và truyền tải tệp tin giữa các Job độc lập.
 - Dùng `actions/upload-artifact` để lưu tệp và `actions/download-artifact` để tải xuống từ run phù hợp.
 - Thiết lập `retention-days` để chủ động quản lý vòng đời và dung lượng lưu trữ của kho tạo phẩm.

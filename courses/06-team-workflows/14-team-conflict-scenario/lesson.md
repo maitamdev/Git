@@ -25,13 +25,13 @@
 ## 📖 Định nghĩa
 Conflict có thể xuất hiện khi merge hoặc rebase hai lịch sử có thay đổi Git không thể tự kết hợp. Git đánh dấu các xung đột mà nó phát hiện, nhưng không phát hiện hết xung đột về ý nghĩa chương trình. Bài này dùng một ví dụ sửa cùng dòng để luyện quy trình fetch, rebase, giải quyết và kiểm tra.
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Conflict có thể xảy ra khi tích hợp nhánh. Đọc cả hai thay đổi, tìm hiểu mục đích và trao đổi với người liên quan khi cần; sau khi sửa, chạy các kiểm tra phù hợp. Rebase hữu ích với nhánh cá nhân chưa chia sẻ rộng, còn merge là lựa chọn khi không muốn viết lại lịch sử đã chia sẻ.
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy hình dung hai kiến trúc sư cùng thiết kế một phòng khách. Người A đề xuất đặt đàn piano ở góc phòng và đã được duyệt bản vẽ trước (`merged into main`). Người B vừa nộp bản vẽ đặt giá sách lớn đúng vào góc đó (`PR conflict`). Người B không thể tự ý ném cây đàn đi, mà phải mang bản vẽ mới về bàn, trao đổi với người A để thống nhất dời giá sách hoặc kết hợp cả hai.
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```mermaid
 flowchart TD
     PR[Pull Request cần cập nhật từ nhánh đích] --> Fetch[Chạy git fetch origin trên máy]
@@ -45,10 +45,10 @@ flowchart TD
     Push --> Green[Kiểm tra lại PR và các điều kiện merge]
 ```
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Kỹ sư Tuấn đang làm nhánh `feat/cart-discount` thì thấy Pull Request báo xung đột. Tuấn kiểm tra thấy đồng nghiệp vừa merge nhánh sửa đổi cách tính thuế trong tệp `pricing.ts`. Thay vì sửa vội trên web GitHub, Tuấn chạy `git fetch origin` và `git rebase origin/main` trên máy. Terminal dừng lại ở hàm tính tiền. Tuấn trao đổi nhanh 2 phút với đồng nghiệp để thống nhất thứ tự trừ giảm giá trước hay tính thuế trước. Sau đó Tuấn lưu code, chạy test thành công và push lên an toàn.
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 # Tải các commit mới nhất từ máy chủ về máy
 git fetch origin
@@ -77,8 +77,8 @@ git push --force-with-lease origin feat/cart-discount
 - Sửa các xung đột logic nghiệp vụ phức tạp trực tiếp trên trình soạn thảo web của GitHub mà không chạy test.
 - Sử dụng `git push --force` mù quáng thay vì dùng `--force-with-lease`, có nguy cơ làm mất code của đồng nghiệp.
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác mô phỏng kịch bản xung đột trên máy và đối chiếu theo hướng dẫn bên dưới.
+## 🧪 Lab
+Cùng tôi dàn dựng và xử lý kịch bản xung đột mã nguồn thực tế theo các bước chuẩn mực dưới đây:
 
 1. Trong repo thử nghiệm, tạo `main` và hai nhánh từ cùng một commit; sửa cùng một dòng trong `calculator.ts` trên mỗi nhánh rồi commit.
 2. Merge nhánh thứ nhất vào `main`.
@@ -86,21 +86,21 @@ Bài học này là bài tự kiểm tra: bạn thao tác mô phỏng kịch b�
 4. Mở file, đọc cả hai phiên bản, chọn kết quả đúng và xóa các dấu conflict. Chạy test hoặc kiểm tra kết quả.
 5. Chạy `git add calculator.ts`, rồi `git rebase --continue`; nếu muốn hủy, chạy `git rebase --abort`.
 
-## 💡 Hint & mẹo
+## 💡 Hint
 - Trao đổi với người hiểu ngữ cảnh nghiệp vụ khi không rõ mục đích của một thay đổi.
 - Bạn có thể gõ `git rebase --abort` bất cứ lúc nào nếu muốn dừng lại và quay về trạng thái ban đầu an toàn.
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Rebase hoàn tất, `git status` không còn báo conflict và bài kiểm tra phù hợp chạy đạt.
 - Nếu bài tập dùng GitHub, kiểm tra lại PR; nếu chỉ dùng local thì xem lịch sử bằng `git log --oneline --graph --all`.
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy hoàn thành bài trắc nghiệm bên dưới để kiểm tra kỹ năng phân tích và xử lý xung đột nhóm trong Git.
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 So sánh sự khác biệt về lịch sử commit giữa việc giải quyết xung đột bằng `git merge main` so với `git rebase origin/main` trong môi trường nhóm đông thành viên.
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - Git sẽ báo những xung đột mà nó không thể tự kết hợp; xung đột logic có thể không hiện thành marker.
 - Chọn merge hoặc rebase theo việc nhánh đã được chia sẻ hay chưa, rồi kiểm tra kết quả.
 - Trao đổi khi cần làm rõ yêu cầu và chạy test phù hợp trước khi tích hợp.

@@ -24,13 +24,13 @@
 ## 📖 Định nghĩa
 GitHub Actions là nền tảng tự động hóa quy trình làm việc và CI/CD tích hợp với GitHub. Bạn định nghĩa workflow dưới dạng YAML để phản hồi các sự kiện repo như push, Pull Request hoặc issue; khả năng chạy và chi phí phụ thuộc cấu hình, loại runner, gói dịch vụ và chính sách repo.
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 GitHub Actions giảm phần việc tự vận hành máy chủ CI khi dùng runner do GitHub quản lý và giữ cấu hình cùng mã nguồn. Nó không loại bỏ mọi công việc hạ tầng: nhóm vẫn cần quản lý quyền, workflow, bí mật, chi phí và có thể chọn runner tự quản lý. Jenkins cũng có thể được dùng qua dịch vụ quản lý hoặc hạ tầng riêng.
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy tưởng tượng GitHub như một tòa nhà văn phòng thông minh. GitHub Actions chính là hệ thống cảm biến tự động: khi có người quẹt thẻ vào sảnh (sự kiện `push`), hệ thống tự động bật đèn, kích hoạt điều hòa nhiệt độ và in lịch họp trong ngày (`workflow`) mà không cần bạn phải thuê nhân sự vận hành riêng.
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```mermaid
 flowchart LR
     Event[Sự kiện: Push / PR / Issue] --> Engine[GitHub Actions Engine]
@@ -38,10 +38,10 @@ flowchart LR
     Runners --> Jobs[Chạy Tests, Linter, Build & Deploy]
 ```
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Nhóm phát triển thư viện giao diện mã nguồn mở nhận hàng chục Pull Request mỗi ngày. Nhờ GitHub Actions, mỗi khi có người gửi PR, hệ thống tự động khởi tạo máy ảo Ubuntu sạch, kéo mã nguồn về kiểm tra chuẩn cú pháp, chạy bài test và dựng bản xem trước giao diện. Nhờ đó người quản trị duyệt code rất nhanh mà không tốn công kiểm tra thủ công.
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 # Xem danh sách các workflow đã đăng ký trong kho
 gh workflow list
@@ -64,28 +64,28 @@ gh auth status
 - Dùng các Action của bên thứ ba từ Marketplace mà không kiểm tra độ tin cậy và nguồn gốc tác giả.
 - Lưu trữ trực tiếp mật khẩu hoặc API token trong tệp kịch bản YAML thay vì dùng GitHub Secrets.
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
+## 🧪 Lab
+Hãy mở terminal và cùng tôi thực hành từng bước dưới đây để làm chủ kỹ năng:
 
 1. Nếu máy đã có `gh`, chạy `gh --version`; nếu chưa có, có thể đọc tệp `.github/workflows/*.yml` thay cho việc cài thêm công cụ.
 2. Chỉ khi dùng repo GitHub mà bạn có quyền truy cập, chạy `gh auth status` rồi `gh workflow list`.
 3. Nếu repo chưa có workflow hoặc bạn chưa đăng nhập, mở tệp YAML mẫu và nhận diện `on`, `jobs`, `steps`; có thể xem tab Actions khi có quyền truy cập.
 
-## 💡 Hint & mẹo
+## 💡 Hint
 - GitHub Actions được cấu hình hoàn toàn bằng các tệp YAML đặt trong thư mục `.github/workflows/`.
 - Hãy ưu tiên sử dụng các action chính thức do tổ chức `@actions` của GitHub phát hành trên Marketplace.
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Nhận diện được nơi khai báo workflow và vai trò của `on`, `jobs`, `steps`.
 - Khi có GitHub CLI và quyền repo, biết dùng `gh workflow list`/`gh run list`; nếu không, có thể hoàn thành phần học bằng cách đọc YAML mẫu.
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy làm bài trắc nghiệm bên dưới để kiểm tra mức độ hiểu biết của bạn về nền tảng tự động hóa GitHub Actions.
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Tra cứu chính sách sử dụng Actions hiện hành của một repo mẫu: loại runner nào được dùng, giới hạn nào áp dụng và nơi xem mức tiêu thụ. Hạn mức và chi phí có thể thay đổi theo gói dịch vụ.
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - GitHub Actions là nền tảng CI/CD và tự động hóa native được tích hợp sẵn bên trong GitHub.
 - Phản hồi đa dạng các sự kiện diễn ra trên kho lưu trữ chứ không chỉ riêng hành động push mã nguồn.
 - Hệ sinh thái Actions Marketplace cung cấp hàng ngàn khối xây dựng sẵn giúp tiết kiệm thời gian phát triển.

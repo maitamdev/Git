@@ -34,17 +34,17 @@ Reflog là nhật ký local về các lần cập nhật ref. `git log` đi theo
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Nếu lỡ di chuyển một nhánh, reflog có thể giúp tìm commit trước đó dù commit ấy không còn xuất hiện trong `git log --all`. Cách an toàn là đọc `git reflog`, kiểm tra commit bằng `git show <object-id>`, rồi tạo nhánh cứu hộ. Mặc định Git dùng thời hạn 90 ngày cho entry thông thường và 30 ngày cho entry unreachable, nhưng cấu hình có thể khác và object có thể được garbage collection thu hồi. Reflog không bảo vệ thay đổi chưa commit và không thay thế backup.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy tưởng tượng hộp đen ghi lại hành trình bay chuyên dụng của một chiếc máy bay trực thăng hiện đại. Chiếc trực thăng (HEAD) bay qua ngọn đồi A, đáp xuống đỉnh núi B rồi quay về trạm sân bay C. Dù bạn có xóa sạch lộ trình trên tấm bản đồ du lịch thông thường (`git log`), thì chiếc hộp đen (`.git/logs/HEAD`) vẫn ghi lại chính xác từng giây từng phút chiếc trực thăng đã ở tọa độ nào, xuất phát từ đâu và vì lý do cụ thể gì.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Giản lược một dòng reflog:
 [old object ID] [new object ID] [committer identity + timestamp + timezone] TAB [action / message]
@@ -57,12 +57,12 @@ Ví dụ một dòng thực tế bên trong tệp .git/logs/HEAD:
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Một người học lỡ chuyển nhánh khỏi commit cần giữ. Họ chạy `git reflog`, tìm entry có message chuyển nhánh phù hợp, rồi kiểm tra ID bằng `git show <object-id>`. Khi đã xác nhận đúng nội dung, họ dùng `git branch rescued-feature <object-id>` để giữ commit. Cách này tạo một ref mới mà không ghi đè nhánh hiện tại.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 # Xem nhật ký gần đây của HEAD
 git reflog
@@ -94,8 +94,8 @@ git rev-parse --git-path logs/HEAD
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
+## 🧪 Lab
+Hãy mở terminal và cùng tôi thực hành từng bước dưới đây để làm chủ kỹ năng:
 
 1. **Bước 1**: Tạo repository thử nghiệm riêng và hai commit như lệnh dưới đây; đừng chạy reset trong repo dự án.
    ```bash
@@ -118,28 +118,28 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Khi reflog được bật, từng ref có thể có log riêng. `git reflog show <ref>` là cách xem thuận tiện; đường dẫn vật lý có thể khác giữa loại repository và worktree.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - `git reflog` hiển thị những entry còn tồn tại của HEAD; danh sách phụ thuộc reflog có được bật và chưa hết hạn hay không.
 - Đã kiểm tra commit mục tiêu bằng `git show` trước khi neo bằng nhánh cứu hộ.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy kiểm tra kiến thức về cấu trúc và sức mạnh cứu hộ của Reflog qua các câu hỏi trong phần trắc nghiệm bên dưới.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Làm thế nào để cấu hình thời gian sống của các mục Reflog lâu hơn mặc định thông qua thuộc tính `gc.reflogExpire` và `gc.reflogExpireUnreachable` trong tệp `.git/config`?
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - Reflog là nhật ký local của các lần cập nhật ref; `git reflog` giúp xem lịch sử HEAD.
 - Entry thô ghi old/new object ID cùng danh tính, thời gian và message; object ID không cố định độ dài.
 - Có thể dùng reflog để tìm commit cũ, nhưng thời hạn phụ thuộc config và reflog không phải backup.

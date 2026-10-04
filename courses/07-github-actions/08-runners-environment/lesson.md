@@ -24,13 +24,13 @@
 ## 📖 Định nghĩa
 Runner là ứng dụng thực thi Job. GitHub-hosted runners do GitHub vận hành; self-hosted runners chạy trên máy hoặc môi trường do tổ chức quản lý. Runner hosted tiêu chuẩn thường được cấp môi trường sạch cho mỗi Job; self-hosted có thể giữ trạng thái và cần quy trình cập nhật, làm sạch, giới hạn quyền truy cập.
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Lựa chọn runner ảnh hưởng đến quyền truy cập, bảo trì, tài nguyên và chi phí. GitHub-hosted giảm việc tự quản trị máy; self-hosted có thể cần GPU hoặc mạng nội bộ nhưng tăng trách nhiệm vận hành và rủi ro bảo mật.
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy so sánh việc đi xe taxi công nghệ (`GitHub-hosted`) với việc sở hữu xe tải riêng (`Self-hosted`). Với taxi, bạn chỉ cần mở ứng dụng bấm gọi xe; xe luôn sạch sẽ, đi xong bạn bước xuống xe và không cần bận tâm thay dầu hay rửa xe. Còn xe tải riêng đòi hỏi bạn tự đổ xăng, bảo dưỡng, nhưng bạn có thể độ thùng xe siêu trường siêu trọng để chở hàng quá khổ mà không hãng taxi nào đáp ứng được.
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```mermaid
 flowchart TD
     Workflow[Workflow Job] --> Choice{Chọn loại Runner}
@@ -38,10 +38,10 @@ flowchart TD
     Choice -- runs-on: self-hosted --> SH[Self-hosted: Máy chủ riêng, hỗ trợ GPU, truy cập mạng nội bộ]
 ```
 
-## 🏢 Ví dụ thực tế
-Ví dụ giả định: một nhóm cần chạy workload GPU hoặc truy cập mạng nội bộ có thể cân nhắc self-hosted runner. Trước khi chọn, nhóm đo tài nguyên, thời gian chạy và tổng chi phí; con số benchmark phải được đo trên hạ tầng thực tế.
+## 🌎 Ví dụ thực tế
+Trong môi trường phát triển dự án thực tế: một nhóm cần chạy workload GPU hoặc truy cập mạng nội bộ có thể cân nhắc self-hosted runner. Trước khi chọn, nhóm đo tài nguyên, thời gian chạy và tổng chi phí; con số benchmark phải được đo trên hạ tầng thực tế.
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 # Kiểm tra thông tin kiến trúc hạt nhân của máy ảo Runner
 uname -a
@@ -63,8 +63,8 @@ free -m
 - Không dọn dẹp các tệp tin tạm thời trên Self-hosted Runner khiến ổ cứng bị đầy sau một thời gian vận hành.
 - Kỳ vọng GitHub-hosted Runner lưu lại tệp tin đã tải về giữa hai lần kích hoạt workflow khác nhau.
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
+## 🧪 Lab
+Hãy mở terminal và cùng tôi thực hành từng bước dưới đây để làm chủ kỹ năng:
 
 1. Tạo một workflow kiểm tra thông số máy chủ GitHub-hosted:
    ```yaml
@@ -82,21 +82,21 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
 2. Đẩy file lên GitHub và kích hoạt thủ công qua nút Run workflow.
 3. Mở log của các bước để xem dung lượng RAM, dung lượng ổ đĩa và cấu hình CPU được cấp phát.
 
-## 💡 Hint & mẹo
+## 💡 Hint
 - Trên GitHub-hosted Linux, bạn có toàn quyền thực thi lệnh với quyền quản trị viên `sudo` mà không cần nhập mật khẩu.
 - Với repo công khai, ưu tiên GitHub-hosted runner; nếu có ngoại lệ self-hosted, cần đánh giá cách ly mã không tin cậy và bảo vệ hạ tầng.
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Log hiển thị thông tin hệ điều hành của runner; con số phần cứng có thể thay đổi theo image/loại runner.
 - Phân biệt runner hosted tiêu chuẩn với self-hosted; self-hosted có thể được cấu hình ephemeral nhưng cần tự vận hành việc làm sạch.
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy hoàn thành bài trắc nghiệm bên dưới để kiểm tra mức độ phân biệt giữa GitHub-hosted và Self-hosted Runners.
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Tìm hiểu cơ chế Ephemeral Self-hosted Runners kết hợp với Docker hoặc Kubernetes để tự động tạo mới và xóa bỏ pod Runner sau mỗi Job giống hệt như GitHub-hosted.
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - GitHub-hosted runners do GitHub quản lý; runner tiêu chuẩn thường cấp môi trường sạch cho từng Job.
 - Self-hosted Runners do bạn tự vận hành, phù hợp cho phần cứng chuyên biệt (GPU) và truy cập mạng nội bộ.
 - Tránh self-hosted runners trên repo công khai vì PR không tin cậy có thể thực thi mã; xem hướng dẫn bảo mật trước khi có ngoại lệ.

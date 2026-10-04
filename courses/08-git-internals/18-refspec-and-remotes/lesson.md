@@ -34,17 +34,17 @@ Refspec có dạng tổng quát `[+]<source>:<destination>`. Source là ref Git 
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Refspec giải thích vì sao `fetch` có thể lưu nhánh remote vào namespace `refs/remotes/`, hoặc vì sao một lệnh push có thể gửi `HEAD` dưới tên nhánh khác. Cấu hình của remote thường lưu fetch refspec; push còn chịu ảnh hưởng bởi lệnh cụ thể và cấu hình push. Đọc refspec giúp dự đoán ref nào sẽ đổi trước khi thực hiện thao tác.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy xem refspec như địa chỉ chuyển tiếp: phần trước dấu `:` là ref nguồn, phần sau là ref đích. Khi fetch, nhãn chỉ đường từ server về local; khi push, chiều truyền đổi lại. Trước khi chạy lệnh, hãy xác định rõ repository nào là nguồn và ref nào có thể bị cập nhật.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Giải phẫu cấu trúc Refspec trong .git/config:
 +refs/heads/* : refs/remotes/origin/*
@@ -61,12 +61,12 @@ Server: refs/heads/feature ──► Ánh xạ thành ──► Cục bộ: refs
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Trong một bản clone thông thường, fetch refspec thường ánh xạ `refs/heads/*` trên remote sang `refs/remotes/origin/*` ở local. Repo dùng `--single-branch`, mirror hoặc cấu hình riêng có thể khác. Người học có thể xem cấu hình của mình bằng `git config --get remote.origin.fetch`; không nên sửa `.git/config` chỉ để thử khi chưa hiểu ref đích sẽ đổi.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 # Kiểm tra quy tắc refspec mặc định của remote origin
 git config --get remote.origin.fetch
@@ -98,7 +98,7 @@ git push origin :refs/heads/old-feature-branch
 
 ---
 
-## 🧪 Lab thực hành
+## 🧪 Lab
 Không cần GitHub hay đăng nhập: dùng một bare repository local làm remote giả lập. Chạy lệnh theo thứ tự trong Bash hoặc Git Bash; chúng tạo và xóa ref chỉ trong thư mục thử nghiệm này.
 
 ```bash
@@ -134,28 +134,28 @@ Chỉ làm lệnh xóa với remote local vừa tạo trong bài này.
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Dấu `:` không có source là cú pháp xóa ref khi push. Kiểm tra tên remote và ref đích trước khi chạy.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - `git show-ref refs/remotes/origin/main` hiển thị remote-tracking ref sau fetch.
 - `git ls-remote` cho thấy ref test xuất hiện sau push và biến mất sau khi xóa trên remote local.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy kiểm tra mức độ am hiểu về cơ chế Refspec qua các câu hỏi trong phần trắc nghiệm bên dưới.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Làm thế nào để cấu hình Refspec trong `.git/config` nhằm tự động tải về toàn bộ các Pull Request từ GitHub về máy cục bộ để kiểm tra (ví dụ: `refs/pull/*/head:refs/remotes/origin/pr/*`)?
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - Refspec quy định quy tắc ánh xạ tham chiếu giữa kho lưu trữ cục bộ và kho lưu trữ từ xa.
 - Cú pháp chuẩn: `[+]<source-ref>:<destination-ref>`.
 - Được lưu trữ trong `.git/config` dưới mục `[remote "origin"]` và điều khiển hành vi của `fetch` và `push`.

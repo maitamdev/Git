@@ -34,17 +34,17 @@ Team Workflow là tập hợp các quy tắc và thỏa thuận có cấu trúc 
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Khi nhiều người cùng sửa một codebase, quy ước rõ ràng giúp biết thay đổi đang ở đâu, ai cần review và cách đưa chúng vào nhánh phát hành. Thiếu phối hợp làm tăng nguy cơ conflict, ghi đè thay đổi hoặc phát hành lỗi; workflow phù hợp giúp kiểm soát các rủi ro đó.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy hình dung một nhóm cùng sửa tài liệu: họ thống nhất nơi ghi đề xuất, cách kiểm tra và cách chấp nhận thay đổi. Git workflow là thỏa thuận tương tự cho code. Nó giúp mọi người phối hợp nhưng không thể ngăn mọi lỗi hoặc xung đột.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Ví dụ về một workflow nhóm có thể chọn:
 Dev A ──► [feat/login] ──► PR ──► [review/checks nếu đã cấu hình] ──► [main]
@@ -53,12 +53,12 @@ Dev B ──► [feat/cart]  ──► PR ──► [review/checks nếu đã c�
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Tình huống giả định: một nhóm nhận ra push thẳng vào `main` không giúp họ biết ai đã review thay đổi. Họ thống nhất dùng nhánh ngắn hạn và PR cho những thay đổi rủi ro cao; nhóm khác có thể chọn quy trình đơn giản hơn.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 git status
 git branch -a
@@ -81,36 +81,36 @@ git log --oneline --graph
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác trực tiếp trên terminal của máy tính để làm quen với công cụ.
+## 🧪 Lab
+Hãy cùng tôi mở terminal và thực hiện các bước thực hành trực quan sau:
 1. Nêu 3 rủi ro có thể tăng khi nhiều người cập nhật cùng nhánh mà thiếu quy ước chung; phân biệt khả năng xảy ra với điều chắc chắn.
 2. Dùng `git branch -a` và `git log --oneline --graph --all` để xem các nhánh/lịch sử trong repo.
 3. Nếu có repo GitHub và quyền xem Settings, kiểm tra rule của nhánh chính; nếu không, ghi rõ đây là thông tin cần quản trị viên xác nhận.
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Chọn số bước review, kiểm thử và phát hành theo mức rủi ro, quy mô nhóm và cách sản phẩm được triển khai.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Giải thích được workflow giúp nhóm phối hợp, review và phát hành như thế nào.
 - Nêu được một lợi ích và một chi phí của quy trình PR trong bối cảnh cụ thể.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy làm bài trắc nghiệm dưới đây để kiểm tra hiểu biết của bạn về tầm quan trọng của Git Workflow.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Phân tích các tổn thất về chi phí tài chính và uy tín khi một đoạn mã lỗi bị đưa nhầm lên production do thiếu quy trình review.
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - Team workflow là thỏa thuận về cách nhóm đề xuất, kiểm tra và tích hợp thay đổi.
 - Nhánh, review và CI có thể giảm một số rủi ro; chúng không bảo đảm code không lỗi.
 - Mở đường cho các mô hình phân nhánh chuẩn mực tiếp theo: Feature Branch, GitHub Flow, Git Flow.

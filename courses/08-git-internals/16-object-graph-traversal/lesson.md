@@ -34,17 +34,17 @@ Lịch sử commit của Git là đồ thị có hướng không chu trình (DAG
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Reachability giải thích vì sao một commit không xuất hiện trong `git log --all` vẫn có thể còn trong repository. Git xác định điểm bắt đầu từ refs và index, và mặc định cũng xét reflog khi chạy `git fsck`. Vì vậy một commit vừa bị reset có thể chưa được báo unreachable. Object unreachable vẫn có thể được giữ lại một thời gian, nhưng không nên xem đó là bản sao lưu: garbage collection và cấu hình repository có thể làm object hết hạn.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy tưởng tượng một cây cổ thụ sum suê xanh tốt trong một khu rừng kỳ bí. Các cành lớn và cành nhỏ đâm chồi từ thân cây vững chắc chính là các References và Commits (chúng được kết nối kiên cố). Nếu một người cầm cưa cắt đứt một cành cây nhỏ (hành động xóa nhánh), chiếc cành cây bị rơi xuống thảm cỏ bên dưới gốc cây. Chiếc cành đó vẫn còn nguyên lá tươi xanh (Dangling Object) trong vài tuần tiếp theo, bất kỳ ai đi ngang qua nhặt lên vẫn có thể cắm nó trở lại thân cây trước khi người gác rừng tiến hành dọn dẹp quét lá rụng đi đốt.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Mô hình Đồ thị DAG và Đối tượng mồ côi (Dangling):
 [Branch: main] ──► (Commit C3) ──► (Commit C2) ──► (Commit C1)  <── REACHABLE
@@ -58,12 +58,12 @@ Mô hình Đồ thị DAG và Đối tượng mồ côi (Dangling):
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Trong repository thử nghiệm, người học di chuyển đầu nhánh khỏi một commit rồi dùng `git fsck --no-reflogs --unreachable` để xem object không còn được reflog giữ lại. Họ kiểm tra một commit bằng `git show <object-id>` và chỉ khi xác nhận đúng mới neo nó bằng `git branch rescue-feature <object-id>`. Trong repository thật, bắt đầu bằng `git reflog` và tạo nhánh cứu hộ trước khi chạy lệnh dọn dẹp; việc khôi phục không được bảo đảm nếu object đã bị xóa.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 # Đếm số lượng commit có thể tiếp cận trong toàn bộ đồ thị
 git rev-list --all --count
@@ -95,8 +95,8 @@ git rev-list HEAD
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
+## 🧪 Lab
+Hãy mở terminal và cùng tôi thực hành từng bước dưới đây để làm chủ kỹ năng:
 
 Chỉ làm các bước reset trong repository thử nghiệm mới, không làm trong repository dự án của bạn. Lệnh dưới đây dùng Bash/Git Bash:
 
@@ -128,28 +128,28 @@ git log rescue -1
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Nếu lỡ di chuyển nhánh, hãy xem `git reflog` và neo commit đúng bằng một nhánh cứu hộ càng sớm càng tốt. Reflog và object chưa được bảo đảm tồn tại mãi.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Trong repo thử nghiệm, `git fsck --no-reflogs --unreachable` liệt kê commit vừa bỏ khỏi nhánh.
 - `git show` xác nhận nội dung; `git branch rescue <object-id>` làm commit reachable qua nhánh cứu hộ.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy kiểm tra khả năng tư duy đồ thị DAG của bạn qua bài trắc nghiệm trong phần bên dưới.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Tại sao việc thiết kế con trỏ trỏ ngược về quá khứ (Commit trỏ về Parent) lại an toàn hơn rất nhiều so với việc con trỏ trỏ xuôi về tương lai trong hệ thống phân tán?
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - Lịch sử Git là một Đồ thị có hướng không chu trình (Directed Acyclic Graph - DAG).
 - Các con trỏ parent luôn trỏ ngược chiều từ commit mới về commit tổ tiên.
 - Unreachable object còn trong object database nhưng không reachable từ các điểm bắt đầu; dangling là một trường hợp cụ thể.

@@ -34,17 +34,17 @@ Git Internals là các cấu trúc dữ liệu và quy tắc lưu trữ đứng 
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Khi hiểu quan hệ giữa commit, tree, blob, refs và index, bạn sẽ biết nên kiểm tra phần nào khi nhánh di chuyển sai hoặc commit không còn trên nhánh. Object không còn được tham chiếu có thể vẫn còn một thời gian và có thể tìm qua reflog hoặc `git fsck`, nhưng Git có thể dọn chúng sau này; vì vậy đây không phải bản sao lưu và không nên hứa rằng dữ liệu luôn còn.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy hình dung việc lái một chiếc xe đua Công thức 1. Một tài xế bình thường chỉ biết đạp ga, phanh và xoay vô lăng. Nhưng một tay đua vô địch thế giới và đội ngũ kỹ thuật am hiểu từng vòng tua máy, hệ thống phun xăng điện tử và vi sai cầu sau dưới nắp ca-pô. Khi xe gặp sự cố trơn trượt trên đường mưa, người hiểu động cơ sẽ biết chính xác nguyên nhân và cách xử lý an toàn thay vì hoảng loạn đạp phanh.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Kiến trúc 4 trụ cột của Git Internals:
 ┌──────────────────────────────────────────────────────────┐
@@ -62,12 +62,12 @@ Kiến trúc 4 trụ cột của Git Internals:
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Ví dụ: sau khi một nhánh bị reset, kỹ sư kiểm tra `git reflog` để tìm commit cũ còn được ghi nhận, rồi xác minh commit bằng `git show <sha>`. Nếu không thấy trong reflog, có thể tìm object chưa được thu gom bằng `git fsck --unreachable`; kết quả không được đảm bảo nếu object đã bị dọn. Trước mọi thao tác phục hồi, nên tạo ref hoặc bản sao an toàn để giữ commit tìm được.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 # Kiểm tra đường dẫn Git thực sự dùng làm thư mục quản trị (có thể khác vị trí worktree)
 git rev-parse --git-dir
@@ -95,8 +95,8 @@ git count-objects -v
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
+## 🧪 Lab
+Hãy mở terminal và cùng tôi thực hành từng bước dưới đây để làm chủ kỹ năng:
 
 1. Chạy `git rev-parse --git-dir` và `git rev-parse --git-path objects` để xem Git đang lưu metadata và objects ở đâu.
 2. Chạy `git symbolic-ref -q HEAD` để xem tên nhánh nếu HEAD đang gắn với nhánh. Lệnh không in tên nhánh khi HEAD detached; khi đó dùng `git rev-parse HEAD` để xem commit hiện tại.
@@ -104,28 +104,28 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Đừng giả định `.git` luôn là thư mục hoặc chứa mọi thứ độc lập: linked worktree, bare repo, submodule và cấu hình object ngoài có cách bố trí khác. Hãy dùng lệnh Git để tra đường dẫn và dùng bản sao lưu repo đã kiểm tra được thay vì chép tay metadata.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - `git symbolic-ref -q HEAD` in tên ref nếu HEAD đang ở trên một nhánh; `git rev-parse HEAD` in object ID của commit hiện tại.
 - `git count-objects -v` cho biết số loose objects và thông tin pack, nhưng số đếm không nhất thiết tăng sau mỗi commit.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy kiểm tra nhận thức tổng quan của bạn về kiến trúc nội tại Git qua các câu hỏi trong phần trắc nghiệm bên dưới.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Hãy giải thích cách blob, tree, commit và ref phối hợp để biểu diễn một phiên bản dự án. Trong câu trả lời, phân biệt snapshot logic với cách Git nén object trên đĩa.
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - Git Internals nghiên cứu cấu trúc dữ liệu, thuật toán băm và cơ chế lưu trữ thực tế bên dưới của Git.
 - Hiểu Git Internals giúp bạn chọn lệnh kiểm tra và phục hồi phù hợp; object không còn được tham chiếu có thể bị garbage collection dọn.
 - Bốn trụ cột chính bao gồm: Object Database, References, HEAD pointer và Index binary file.

@@ -24,13 +24,13 @@
 ## 📖 Định nghĩa
 Sự kiện (Event) là hoạt động trong repository có thể kích hoạt workflow. Khóa `on` liệt kê các sự kiện như `push`, `pull_request`, `workflow_dispatch` và `schedule`. Bộ lọc nhánh/đường dẫn áp dụng tùy theo loại sự kiện; `schedule` dùng UTC và chạy theo lịch đã cấu hình trên nhánh mặc định.
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Nếu không cấu hình sự kiện và bộ lọc phù hợp, workflow có thể chạy nhiều hơn cần thiết. Bộ lọc giúp kiểm soát nhánh hoặc tệp thay đổi; khi dùng required checks, hãy cẩn thận vì workflow bị bỏ qua do filter có thể để check ở trạng thái pending.
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy hình dung chiếc chuông cửa thông minh. Bạn có thể cài đặt chuông reo khi khách bấm nút trực tiếp (`workflow_dispatch`), hoặc khi cảm biến phát hiện có khách đứng trước cửa (`push` vào nhánh `main`). Bạn cũng có thể thiết lập bộ lọc thông minh: nếu chỉ là một chú mèo đi ngang qua (`docs/`), chiếc chuông tự động bỏ qua không reo để tránh làm phiền.
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```mermaid
 flowchart TD
     Trigger[Sự kiện phát sinh] --> BranchCheck{Có khớp nhánh main?}
@@ -40,10 +40,10 @@ flowchart TD
     PathCheck -- Có --> Start[Kích hoạt Workflow CI chạy ngay]
 ```
 
-## 🏢 Ví dụ thực tế
-Ví dụ giả định: workflow chạy khi `push` vào `main` hoặc `staging` và bỏ qua nếu mọi tệp thay đổi đều nằm trong `docs/`. Nếu cùng một commit sửa cả `docs/` lẫn mã nguồn, workflow vẫn chạy. Workflow bảo mật chỉ chạy nếu sự kiện và bộ lọc của nó khớp.
+## 🌎 Ví dụ thực tế
+Trong môi trường phát triển dự án thực tế: workflow chạy khi `push` vào `main` hoặc `staging` và bỏ qua nếu mọi tệp thay đổi đều nằm trong `docs/`. Nếu cùng một commit sửa cả `docs/` lẫn mã nguồn, workflow vẫn chạy. Workflow bảo mật chỉ chạy nếu sự kiện và bộ lọc của nó khớp.
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 # Kích hoạt thủ công workflow từ terminal bằng GitHub CLI
 gh workflow run ci.yml
@@ -65,8 +65,8 @@ gh run list
 - Lịch `schedule` dùng UTC; giờ chạy có thể bị trễ khi GitHub tải cao và không nên dùng làm đồng hồ chạy chính xác.
 - Quên khai báo `workflow_dispatch` khiến việc kiểm thử thủ công workflow gặp nhiều khó khăn.
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
+## 🧪 Lab
+Hãy mở terminal và cùng tôi thực hành từng bước dưới đây để làm chủ kỹ năng:
 
 1. Khởi tạo một tệp workflow với thuộc tính `on` hỗ trợ cả `push` và `workflow_dispatch`:
    ```yaml
@@ -87,21 +87,21 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
 3. Khi có repo GitHub và quyền truy cập, đẩy tệp lên nhánh phù hợp để quan sát run; nếu không, kiểm tra điều kiện bằng ví dụ YAML.
 4. Với workflow đã có trên nhánh mặc định và `workflow_dispatch`, người có quyền có thể dùng **Run workflow**; CLI cũng cần xác thực.
 
-## 💡 Hint & mẹo
+## 💡 Hint
 - `schedule` dùng UTC; chuyển giờ Việt Nam sang UTC bằng cách trừ 7 tiếng, đồng thời nhớ rằng thời điểm thực tế có thể trễ.
 - Bạn có thể thêm trường `inputs` cho `workflow_dispatch` để người dùng nhập thông số tùy chỉnh khi bấm nút chạy.
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Workflow không bị kích hoạt khi chỉ có thay đổi trong các tệp markdown.
 - Khi workflow có trên nhánh mặc định, khai báo `workflow_dispatch` và người học có quyền truy cập, có thể chạy thủ công từ GitHub.
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy hoàn thành bài trắc nghiệm bên dưới để kiểm tra mức độ nắm vững các sự kiện và bộ lọc kích hoạt trong GitHub Actions.
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Thiết kế biểu thức cron trong thuộc tính `schedule` để workflow tự động sao lưu dữ liệu vào lúc 3 giờ sáng mỗi ngày từ thứ Hai đến thứ Sáu theo giờ Việt Nam.
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - Thuộc tính `on` định nghĩa các sự kiện kích hoạt workflow như `push`, `pull_request`, `workflow_dispatch`.
 - Dùng `branches`, `paths` hoặc `paths-ignore` để kiểm soát phạm vi chạy; kiểm tra ảnh hưởng tới required checks.
 - `workflow_dispatch` mang lại sự linh hoạt tối đa khi cần kích hoạt hoặc kiểm thử quy trình thủ công.

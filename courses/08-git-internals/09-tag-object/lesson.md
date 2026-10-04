@@ -34,17 +34,17 @@ Lightweight tag là ref trỏ trực tiếp tới object; annotated tag tạo th
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Annotated tag phù hợp khi cần lưu thông điệp và thông tin tagger cho một mốc phát hành; có thể ký tag để người nhận kiểm tra chữ ký. Tag object không tự đảm bảo tag ref sẽ không bị đổi/xóa, và chữ ký chỉ có ý nghĩa khi người xác minh tin cậy đúng khóa ký.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy so sánh lightweight tag với một nhãn đánh dấu đơn giản, còn annotated tag như một thẻ phát hành có mô tả người tạo và thông điệp. Nếu ký annotated tag, chữ ký cho phép kiểm tra object đã ký và khóa ký; tag vẫn có thể bị xóa hoặc di chuyển nếu người dùng có quyền thay đổi refs.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 So sánh Lightweight Tag vs Annotated Tag:
 1. Lightweight Tag: (Không tạo đối tượng trong objects/)
@@ -62,12 +62,12 @@ So sánh Lightweight Tag vs Annotated Tag:
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Nhóm phát hành tạo tag bằng `git tag -a v2.0.0 -m "Release v2.0.0"`. `git cat-file -t v2.0.0` cho biết ref trỏ tới object loại `tag`; `git cat-file -p v2.0.0` hiển thị object đích, tagger và message. Nếu cần xác minh chữ ký, tag phải được ký trước đó và kiểm tra bằng `git tag -v v2.0.0`.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 # Tạo Annotated Tag có message (chưa ký)
 git tag -a v1.0.0 -m "Release version 1.0.0"
@@ -100,8 +100,8 @@ git cat-file -p v1.0.0
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
+## 🧪 Lab
+Hãy mở terminal và cùng tôi thực hành từng bước dưới đây để làm chủ kỹ năng:
 
 1. Trong repository thực hành, tạo lightweight tag `internals-demo-light` trỏ tới HEAD.
 2. Tạo annotated tag `internals-demo-annotated` bằng `git tag -a internals-demo-annotated -m "Demo tag object" HEAD`.
@@ -110,28 +110,28 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Annotated tag thường phù hợp cho mốc phát hành cần message/tagger. Dùng `-s` nếu cần ký và đã cấu hình khóa cùng backend ký; sau đó xác minh bằng `git tag -v`.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Lệnh `git cat-file -t v1.0.0` hiển thị chính xác chữ `tag`.
 - `git cat-file -p internals-demo-annotated` hiển thị object đích, tagger và message; lệnh `git tag -v` chỉ có ý nghĩa với tag đã ký.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Cùng làm bài kiểm tra về bản chất của đối tượng Tag trong Git trong phần trắc nghiệm bên dưới.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Tạo và kiểm tra một signed annotated tag bằng `git tag -s` và `git tag -v`. Nêu điều kiện cần để người nhận tin cậy chữ ký.
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - Lightweight Tag chỉ là một con trỏ văn bản đơn giản trỏ trực tiếp tới một commit.
 - Annotated Tag tạo ra một đối tượng Tag độc lập trong Object Database với đầy đủ metadata và thông điệp.
 - Annotated tag thường hữu ích cho release; ký tag là lựa chọn riêng cần khóa tin cậy.

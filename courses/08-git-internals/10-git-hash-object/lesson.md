@@ -34,17 +34,17 @@
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Lệnh `git hash-object` là viên gạch đầu tiên giúp bạn phá vỡ ảo tưởng rằng Git là một công cụ ma thuật thần bí khó hiểu. Bằng cách tự tay đưa một chuỗi văn bản vào cơ sở dữ liệu đối tượng mà không cần thông qua Staging Area hay tạo commit, bạn trực tiếp chứng kiến cách Git mã hóa và nén dữ liệu ở tầng vật lý, xây dựng nền tảng tư duy vững chắc để tự tay lắp ráp cây thư mục Merkle Tree và tạo commit thủ công hoàn toàn độc lập.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy tưởng tượng máy nhận byte dữ liệu, gắn nhãn cho biết loại và kích thước, rồi tính ID từ cả nhãn lẫn nội dung. Khi dùng `-w`, Git ghi object; nếu repo SHA-1, ID thường có 40 ký tự, còn repo SHA-256 có 64.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Quy trình vận hành của lệnh git hash-object -w:
  Payload bytes ──► [Header: "blob <byte-count>\0" + payload]
@@ -58,12 +58,12 @@ Quy trình vận hành của lệnh git hash-object -w:
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Trong repository SHA-1, chạy `echo "Hello World" | git hash-object -w --stdin` trong Bash để hash nội dung `Hello World` kèm newline sẽ in `557db03de997c86a4a028e1ebd3a1ceb225be238`. Khi loose, object có thể nằm dưới `objects/55/`; dùng `git cat-file -p <object-id>` để kiểm tra. Lệnh không stage nội dung và object không được tham chiếu có thể bị thu gom về sau.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 # Băm và ghi trực tiếp từ chuỗi ký tự terminal
 echo "Hello Internals" | git hash-object -w --stdin
@@ -91,8 +91,8 @@ git hash-object myfile.txt
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
+## 🧪 Lab
+Hãy mở terminal và cùng tôi thực hành từng bước dưới đây để làm chủ kỹ năng:
 
 1. Trong repository thực hành, tạo `blob-demo.txt` với nội dung không nhạy cảm.
 2. Chạy `git hash-object -w blob-demo.txt` và lưu object ID được in ra (độ dài tùy hash format).
@@ -101,28 +101,28 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > `-w` viết tắt của “write”. Không có `-w`, lệnh chỉ tính object ID và không ghi object mới.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - `git cat-file -t <object-id>` trả về `blob` và `git cat-file -p <object-id>` in nội dung đã hash.
 - `git hash-object` không cập nhật Staging Area; cần `git add` riêng nếu muốn đưa file vào index.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy kiểm tra kỹ năng sử dụng lệnh plumbing git hash-object qua các câu hỏi trong phần trắc nghiệm bên dưới.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Vì sao `git hash-object -t tree file.txt` không tự biến file văn bản thành Tree hợp lệ? Nêu lệnh phù hợp để tạo tree từ index và commit từ tree.
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - `git hash-object` tính object ID theo chuẩn header và hash format của repository.
 - Thêm cờ `-w` để ghi đối tượng nén zlib vào thư mục `.git/objects/`.
 - Cờ `--stdin` cho phép đọc dữ liệu trực tiếp từ đường ống pipe của terminal.

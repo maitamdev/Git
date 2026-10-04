@@ -34,17 +34,17 @@
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Khi lập trình, bạn thường xuyên lỡ commit quá sớm khi thiếu file hoặc ghi sai thông điệp. Lệnh `git reset --soft HEAD~1` là giải pháp hoàn hảo: nó rút lại commit vừa tạo tức thì mà không làm mất dòng code nào, đưa toàn bộ mã nguồn trở lại Staging để bạn thoải mái bổ sung file hoặc viết lại message chuẩn xác.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy hình dung bạn đóng gói một kiện hàng. Bạn đã xếp đồ vào thùng (Working Tree), dán nhãn niêm phong (Staging) và bưu tá đóng dấu gửi (Commit). Khi nhận ra quên bỏ thiệp mừng vào thùng, bạn yêu cầu bưu tá hủy dấu vừa đóng (`--soft`). Kiện hàng vẫn dán nhãn nguyên vẹn, bạn chỉ việc kẹp thêm thiệp rồi bảo bưu tá đóng dấu lại.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Cơ chế hoạt động của git reset --soft HEAD~1:
 Trước khi reset:
@@ -60,12 +60,12 @@ Working Tree:     Không đổi
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Lập trình viên Quang vừa gõ `git commit -m "feat: user profile"` thì nhận ra quên cập nhật README.md. Thay vì tạo commit vá víu làm rối lịch sử, Quang gõ `git reset --soft HEAD~1`. Nhánh lùi lại 1 commit, các file tính năng vẫn nằm trong Staging màu xanh. Quang sửa README, gõ `git add README.md` và commit lại một lần duy nhất hoàn chỉnh.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 git reset --soft HEAD~1
 git reset --soft <commit-hash>
@@ -90,8 +90,8 @@ git commit -m "<thông-điệp-mới>"
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác reset --soft và kiểm tra trạng thái staged trên terminal.
+## 🧪 Lab
+Cùng tôi thực hành bóc tách commit bằng cờ --soft để thấy rõ các tệp vẫn được giữ nguyên trong Staging Area:
 1. Trong kho thử nghiệm riêng, tạo `note.txt` có nội dung `ban dau`, rồi chạy `git add note.txt` và `git commit -m "base"`.
 2. Đổi nội dung thành `ban cap nhat`, stage và commit bằng thông điệp `thu nghiem`.
 3. Chạy `git reset --soft HEAD~1`, rồi `git status`. Thay đổi do commit `thu nghiem` tạo ra nằm trong Staging Area.
@@ -99,28 +99,28 @@ Bài học này là bài tự kiểm tra: bạn thao tác reset --soft và kiể
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Nếu chỉ cần sửa commit gần nhất, `git commit --amend` thường trực tiếp hơn. Dùng reset khi muốn đưa một hay nhiều commit về Staging để sắp xếp lại.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Lệnh `git status` hiển thị phần khác với commit mục tiêu trong mục "Changes to be committed" (khi kho sạch trước khi bắt đầu).
 - Nhánh hiện tại trỏ về commit cha, còn nội dung file vẫn giữ nguyên.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy làm bài kiểm tra trắc nghiệm dưới đây về câu lệnh git reset --soft.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Sử dụng `git reset --soft HEAD~3` để gom 3 commit nhỏ lẻ gần nhất thành đúng một commit duy nhất có thông điệp chuẩn mực.
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - `git reset --soft` chỉ dịch chuyển HEAD, bảo toàn trọn vẹn Staging Area và Working Directory.
 - Thay đổi từ commit bị rút lại sẽ nằm ở trạng thái staged sẵn sàng cho commit mới.
 - Là công cụ tuyệt vời để sửa thông điệp commit hoặc bổ sung tệp còn thiếu mà không gây rác lịch sử.

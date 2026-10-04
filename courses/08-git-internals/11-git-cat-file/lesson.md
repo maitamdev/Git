@@ -34,17 +34,17 @@
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Khi cần tìm hiểu một commit chứa gì, `git cat-file` cho phép đọc object mà không chuyển nhánh hay sửa working tree. Bạn có thể xem commit trỏ tới tree nào, tree chứa entry gì, hoặc blob có nội dung nào. Một số lệnh khác như `git show` cũng trình bày dữ liệu lịch sử ở dạng thân thiện hơn.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy tưởng tượng các đối tượng trong `.git/objects/` như những viên thuốc con nhộng được niêm phong kín. `git cat-file` chính là chiếc máy quét y tế: cờ `-t` giống như máy quét nhiệt cho biết đây là viên thuốc loại gì (blob, tree hay commit); cờ `-s` là chiếc cân điện tử siêu nhỏ đo khối lượng viên thuốc; và cờ `-p` là chiếc máy soi laser mở nắp con nhộng để bạn nhìn thấy toàn bộ các hạt vi chất bên trong.
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Ba chế độ kiểm tra của git cat-file:
 Đối tượng: <object-id>
@@ -56,12 +56,12 @@ Ba chế độ kiểm tra của git cat-file:
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Một kỹ sư nhận được thông báo lỗi từ đồng nghiệp rằng commit mới nhất bị mất một tệp tin cấu hình quan trọng. Thay vì chuyển nhánh hay reset lung tung làm xáo trộn code, kỹ sư mở terminal và chạy lệnh `git cat-file -p HEAD`. Nhìn vào dòng đầu tiên, kỹ sư thấy mã băm Tree là `e2a4b6`. Kỹ sư tiếp tục chạy `git cat-file -p e2a4b6` để kiểm tra danh mục cây thư mục gốc. Kết quả cho thấy tệp tin cấu hình `config.json` hoàn toàn không có mặt trong danh sách bản ghi của Tree. Kỹ sư kết luận ngay lập tức rằng đồng nghiệp đã quên gõ lệnh `git add` trước khi commit. Việc chẩn đoán diễn ra trong 10 giây mà không cần mở bất kỳ tệp nào trên đĩa.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 # Xem nội dung định dạng đẹp của đối tượng
 git cat-file -p 'HEAD^{tree}'
@@ -93,8 +93,8 @@ git cat-file -p HEAD^{tree}
 
 ---
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hướng dẫn và đối chiếu theo các bước bên dưới.
+## 🧪 Lab
+Hãy mở terminal và cùng tôi thực hành từng bước dưới đây để làm chủ kỹ năng:
 
 1. **Bước 1**: Chạy `git rev-parse HEAD` để xem object ID của commit hiện tại.
 2. **Bước 2**: Chạy `git cat-file -t HEAD`; kết quả phải là `commit`.
@@ -104,28 +104,28 @@ Bài học này là bài tự kiểm tra: bạn thao tác cấu hình theo hư�
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Bạn có thể truyền trực tiếp con trỏ `HEAD` hoặc tên nhánh vào lệnh `git cat-file` thay vì phải copy-paste mã băm thủ công, ví dụ: `git cat-file -p main` hoặc `git cat-file -p HEAD`.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Thao tác thành công chuỗi truy vết: từ Commit -> sang Tree -> sang Blob bằng lệnh `git cat-file -p`.
 - Hiểu và đối chiếu được nội dung in ra từ lệnh với các file thực tế trong working directory.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy kiểm tra khả năng giải mã đối tượng bằng git cat-file qua các câu hỏi trong phần trắc nghiệm bên dưới.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Làm thế nào để sử dụng `git cat-file --batch-check` kết hợp với lệnh shell để quét và thống kê top 5 đối tượng tốn nhiều dung lượng nhất trong kho lưu trữ?
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - `git cat-file` là công cụ kiểm tra object trong Git Object Store, bất kể chúng được lưu loose hay packed.
 - Cờ `-p` in nội dung định dạng đẹp, `-t` in loại đối tượng, `-s` in kích thước byte.
 - Hỗ trợ truyền mã băm rút gọn (prefix hash) hoặc các con trỏ tham chiếu như `HEAD`.

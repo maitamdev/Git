@@ -34,17 +34,17 @@ Rebase Conflict là tình trạng Git tạm dừng áp dụng commit khi phát h
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Hiểu rõ cơ chế tạm dừng của Rebase giúp bạn tự tin xử lý xung đột mà không hoảng sợ. Bạn biết cách sửa lỗi dứt điểm từng bước, và luôn có chiếc phao cứu sinh `git rebase --abort` để quay về điểm an toàn bất cứ khi nào.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy tưởng tượng bạn đang tua lại cuốn băng sửa chữa căn nhà. Đến phân cảnh sơn tường, bạn thấy người khác đã đập tường xây thành cửa sổ. Băng tạm dừng lại. Bạn bước vào chọn giữ cửa sổ hay sơn lại, dán nhãn đã xong (`git add`), rồi bấm Play tiếp tục (`git rebase --continue`).
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Máy trạng thái xử lý Rebase Conflict:
 [Chạy git rebase main] ──► Phát hiện Conflict tại commit C_i
@@ -64,12 +64,12 @@ Máy trạng thái xử lý Rebase Conflict:
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Kỹ sư Khoa rebase nhánh `feat/api` lên `main` và gặp conflict ở file `server.js` do khác cổng kết nối. Khoa mở file, chọn cổng 8080, xóa ký hiệu conflict rồi lưu lại. Sau đó Khoa gõ `git add server.js` và `git rebase --continue`. Git tiếp tục chạy mượt mà đến commit cuối cùng.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 git status
 git add <tên-tệp-đã-sửa>
@@ -96,7 +96,7 @@ git rebase --skip
 
 ---
 
-## 🧪 Lab thực hành
+## 🧪 Lab
 Làm trong kho thử nghiệm riêng, và bắt đầu từ Working Tree sạch.
 1. Trên `main`, tạo `app.js` có dòng `mode=base`, stage và commit.
 2. Chạy `git switch -c conflict-demo`, đổi dòng thành `mode=feature`, rồi commit.
@@ -106,28 +106,28 @@ Làm trong kho thử nghiệm riêng, và bắt đầu từ Working Tree sạch.
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Trong quy trình rebase thông thường, sau khi sửa và stage conflict, chạy `git rebase --continue` để Git tiếp tục phát lại commit.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Sau khi sửa conflict và stage file, `git rebase --continue` hoàn tất việc phát lại commit.
 - `git rebase --abort` hủy phiên đang chạy và đưa nhánh về điểm bắt đầu; kiểm tra lại `git status` sau đó.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy làm bài kiểm tra trắc nghiệm dưới đây về xử lý xung đột trong Git Rebase.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Giải thích tại sao tính năng Git `rerere` (Reuse Recorded Resolution) lại đặc biệt hữu ích khi làm việc với các chuỗi rebase dài thường xuyên bị xung đột lặp lại.
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - Rebase áp dụng từng commit một, nên conflict có thể xuất hiện nhiều lần liên tiếp.
 - Quy trình chuẩn: Sửa conflict -> `git add <file>` -> `git rebase --continue`.
 - `git rebase --abort` là phao cứu sinh đáng tin cậy để đưa mọi thứ về trạng thái an toàn.

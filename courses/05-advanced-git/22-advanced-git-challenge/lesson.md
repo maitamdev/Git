@@ -34,17 +34,17 @@
 
 ---
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Bạn sẽ thực hành từng kỹ năng trên một repo có thể bỏ đi, xem Git thay đổi ref và file ra sao, rồi đối chiếu kết quả bằng `git status`, `git log` và `git show`.
 
 ---
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy hình dung bạn là bác sĩ phẫu thuật trưởng trong phòng cấp cứu. Kho mã nguồn gặp sự cố: một chi đứt rời cần nối lại (cứu commit bằng reflog), vết thương cần cắt lọc gọt giũa (rebase squash), chất độc cần xét nghiệm tìm nguồn (bisect) và cấp giấy xuất viện hoàn hảo (Annotated Tag).
 
 ---
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```text
 Kịch bản 4 chặng của Advanced Git Challenge:
 [Chặng 1: Reflog Rescue]      ──► Hồi sinh commit bị mất do reset hard
@@ -61,12 +61,12 @@ Kịch bản 4 chặng của Advanced Git Challenge:
 
 ---
 
-## 🏢 Ví dụ thực tế
+## 🌎 Ví dụ thực tế
 Kỹ sư nhận ca sự cố: nhánh `feature` bị reset hard mất code. Kỹ sư mở `git reflog` hồi sinh nhánh, dùng `git rebase -i` gộp commit nháp thành 2 commit chuẩn mực, chạy `git bisect` qua 4 bước nhị phân tìm ra commit lỗi ngầm, rồi gắn tag `v2.0.0` xuất sắc hoàn thành thử thách.
 
 ---
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 git reflog
 git branch rescue-branch <commit-hash>
@@ -95,7 +95,7 @@ git tag -a v2.0.0 -m "<thông-điệp-phát-hành>"
 
 ---
 
-## 🧪 Lab thực hành
+## 🧪 Lab
 Chạy bốn phần theo thứ tự trong một repo thử nghiệm mới bằng Git thật. Không dùng repo dự án đang làm.
 
 **A. Cứu commit**
@@ -118,29 +118,29 @@ Chạy bốn phần theo thứ tự trong một repo thử nghiệm mới bằng
 
 ---
 
-## 💡 Hint & mẹo
+## 💡 Hint
 > Trước khi thử: chạy `git status`, dùng repo riêng, ghi lại hash trước thao tác viết lại lịch sử và kiểm tra lại file sau mỗi chặng.
 
 ---
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Tạo được nhánh `rescue` trỏ đúng commit đã reset và mở lại file đã commit.
 - Hoàn thành một thao tác interactive rebase, tìm được commit lỗi bằng bisect và tạo/xem được annotated tag.
 - Sau mỗi phần, nêu được thay đổi nào có thể khôi phục và điều kiện nào có thể làm thao tác thất bại.
 
 ---
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy làm bài kiểm tra trắc nghiệm tổng kết toàn diện Level 5: Advanced Git.
 
 ---
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Kết hợp Git Hooks và Worktree để tự động chạy kiểm thử đơn vị trong một worktree ngầm mỗi khi bạn chuẩn bị commit mã nguồn.
 
 ---
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - Reflog giúp tìm commit còn được ghi nhận; nó không thay thế sao lưu.
 - Rebase viết lại commit; bisect tìm mốc lỗi; annotated tag lưu nhãn cùng metadata.
 - Tự tin bước tiếp sang Level 6: Team Workflows & Collaboration.

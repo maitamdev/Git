@@ -25,13 +25,13 @@
 ## 📖 Định nghĩa
 Branch protection rules là các chính sách tùy chọn áp dụng cho nhánh trên GitHub. Quản trị viên chọn riêng điều kiện cần dùng, chẳng hạn yêu cầu PR, số lượt duyệt, status checks, giải quyết hội thoại hoặc lịch sử tuyến tính. Nếu không bật một điều kiện thì không thể giả định điều kiện đó đang được yêu cầu; quyền bypass cũng ảnh hưởng việc thực thi.
 
-## 💡 Tại sao cần
+## 🤔 Tại sao cần?
 Nhóm có thể dùng quy tắc để biến một số bước đã thống nhất thành điều kiện kỹ thuật trước khi merge. Chọn vừa đủ để kiểm soát rủi ro; yêu cầu quá nhiều hoặc status check không ổn định có thể làm chậm cả nhóm.
 
-## 🧠 Mental Model
+## 🧠 Mental Model (Mô hình tư duy)
 Hãy tưởng tượng quy trình an ninh sân bay đa tầng trước khi hành khách lên máy bay. Bạn phải xuất trình vé hợp lệ do nhân viên xác nhận (`Require approvals`), hành lý qua máy quét tự động không có vật cấm (`Status checks pass`), và giải quyết xong mọi thắc mắc ở cổng soi chiếu (`Conversations resolved`).
 
-## 📊 Sơ đồ minh họa
+## 🖼 Sơ đồ
 ```mermaid
 flowchart TD
     PR[Pull Request mới] --> C1{Đủ lượt Approve?}
@@ -43,10 +43,10 @@ flowchart TD
     C3 -- Hoàn tất --> Open[Không còn điều kiện chặn trong sơ đồ này]
 ```
 
-## 🏢 Ví dụ thực tế
-Ví dụ giả định: một nhóm bật yêu cầu hai lượt duyệt và chọn status check bảo mật cho `main`. PR sẽ còn điều kiện chặn khi thiếu một trong hai kết quả. Điều này chỉ xác nhận các điều kiện đã cấu hình đạt, không tự bảo đảm phần mềm không có lỗi hay tự triển khai ra production.
+## 🌎 Ví dụ thực tế
+Trong môi trường phát triển dự án thực tế: một nhóm bật yêu cầu hai lượt duyệt và chọn status check bảo mật cho `main`. PR sẽ còn điều kiện chặn khi thiếu một trong hai kết quả. Điều này chỉ xác nhận các điều kiện đã cấu hình đạt, không tự bảo đảm phần mềm không có lỗi hay tự triển khai ra production.
 
-## 💻 Command & Cú pháp
+## 💻 Command
 ```bash
 # Các lệnh gh cần GitHub CLI đã cài, đăng nhập và repository phù hợp
 gh pr checks
@@ -68,29 +68,29 @@ git log --oneline --show-signature
 - Quên tích chọn tự động hủy phê duyệt cũ khi có commit mới khiến code sửa đổi không được kiểm tra lại.
 - Thiết lập status checks với những bài test không ổn định khiến Pull Request bị chặn vô lý.
 
-## 🧪 Lab thực hành
-Bài học này là bài tự kiểm tra: bạn thao tác cấu hình trực tiếp trên giao diện GitHub Repository Settings và đối chiếu theo hướng dẫn bên dưới.
+## 🧪 Lab
+Hãy cùng tôi truy cập giao diện cấu hình GitHub để kích hoạt các luật bảo vệ nhánh cốt lõi:
 
 1. Dùng repository thử nghiệm mà bạn có quyền quản trị; vào **Settings → Branches** (tên nút có thể thay đổi theo giao diện).
 2. Tạo quy tắc chỉ khớp `main`; bật **Require a pull request before merging** và đặt một lượt duyệt nếu giao diện cho phép.
 3. Quan sát các tùy chọn khác, nhưng chỉ bật chúng nếu repo có quy trình đáp ứng được (ví dụ status check phải tồn tại trước khi chọn).
 4. Lưu quy tắc rồi tạo PR thử nghiệm; ghi lại điều kiện còn thiếu. Một số tùy chọn có thể phụ thuộc quyền, loại repository hoặc cấu hình CI.
 
-## 💡 Hint & mẹo
+## 💡 Hint
 - Cân nhắc hủy lượt duyệt cũ khi có commit mới; quyết định này phụ thuộc mức rủi ro và cách nhóm review.
 - Xem mục bypass/exemptions trong rule để biết chính xác tài khoản nào được phép bỏ qua điều kiện.
 
-## ✅ Validation & Kết quả mong đợi
+## ✅ Validation
 - Nêu được các điều kiện thực tế đã bật cho nhánh thử nghiệm.
 - Tạo PR minh họa được ít nhất một điều kiện chưa đạt và quan sát trạng thái mà GitHub hiển thị.
 
-## ❓ Quiz nhanh
+## ❓ Quiz
 Hãy làm bài trắc nghiệm bên dưới để kiểm tra mức độ thấu hiểu của bạn về các quy tắc Branch Protection Rules chuyên sâu.
 
-## 🚀 Thử thách nâng cao
+## 🔥 Challenge
 Hãy tìm hiểu thêm về tính năng Rulesets mới trên GitHub và so sánh ưu điểm của Rulesets so với Branch Protection Rules truyền thống khi quản lý nhiều nhánh cùng lúc.
 
-## 📝 Tổng kết
+## 📚 Tổng kết
 - Mỗi branch protection rule chỉ thực thi các điều kiện đã bật và áp dụng cho pattern khớp.
 - Status checks có thể đến từ các dịch vụ tích hợp khác nhau; cấu hình nhầm check có thể chặn PR.
 - Linear history chặn merge commit; chữ ký giúp xác minh nguồn gốc commit khi cấu hình xác minh phù hợp.
