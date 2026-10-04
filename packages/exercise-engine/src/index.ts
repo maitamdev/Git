@@ -4,7 +4,6 @@ export * from './runner';
 export * from './scoring';
 export * from './progress/progress-repository';
 export * from './progress/conflict-resolver';
-export * from './progress/server-progress-repository';
 export * from './completion/completion-engine';
 export * from './prerequisites/prerequisite-engine';
 export * from './quiz/quiz-engine';

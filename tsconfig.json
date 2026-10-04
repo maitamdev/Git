@@ -11,16 +11,11 @@
       "@git-academy/github-simulator": ["packages/github-simulator/src"],
       "@git-academy/actions-simulator": ["packages/actions-simulator/src"],
       "@git-academy/git-internals": ["packages/git-internals/src"],
-      "@git-academy/auth": ["packages/auth/src"],
-      "@git-academy/gradebook": ["packages/gradebook/src"],
       "@git-academy/git-visualizer": ["apps/git-visualizer/src"]
     },
     "noEmit": true
   },
   "include": [
     "tests/**/*"
-  ],
-  "exclude": [
-    "tests/e2e/**/*"
   ]
 }

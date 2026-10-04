@@ -24,7 +24,3 @@ The install/build commands include the frontend's workspace dependencies from th
 5. Open a different browser or device only if you want to verify the documented limitation: progress does not sync.
 
 Do not treat a successful local build or Git push as proof of deployment. Verify the deployment status and public URL in the Vercel dashboard after the push.
-
-## Optional backend features
-
-The repository also contains API, teacher, classroom and gradebook code. They are separate from the anonymous course path and are not required to publish self-study lessons. Do not add `VITE_API_URL` or authentication secrets for the course-only deployment unless you intentionally deploy and test those backend features.

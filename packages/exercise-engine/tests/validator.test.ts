@@ -3,18 +3,31 @@ import { Scenario, GitState } from '@git-academy/shared';
 import { GoalValidator } from '../src/validator';
 import { ScenarioRunner } from '../src/runner';
 
+type ScenarioInput = Pick<Scenario, 'id' | 'title' | 'goal'> & Partial<Scenario>;
+
+const makeScenario = (input: ScenarioInput): Scenario => ({
+  initialState: {},
+  hints: [],
+  success: { message: 'Hoàn thành!', xp: 100 },
+  ...input,
+});
+
 describe('GoalValidator Comprehensive Tests', () => {
   const validator = new GoalValidator();
 
   const createBaseState = (): GitState => ({
     repositoryInitialized: true,
     currentBranch: 'main',
-    head: { type: 'branch', target: 'main' },
+    head: { type: 'branch', ref: 'main' },
     branches: [{ name: 'main', commitHash: 'c1' }],
     tags: [],
+    remotes: [],
+    reflog: [],
+    stash: [],
     commits: [
       {
         hash: 'c1',
+        shortHash: 'c1',
         message: 'feat: init',
         parents: [],
         tree: { 'readme.md': '# Welcome' },
@@ -27,12 +40,11 @@ describe('GoalValidator Comprehensive Tests', () => {
   });
 
   it('1. should validate repository initialized requirement', () => {
-    const scenario: Scenario = {
+    const scenario = makeScenario({
       id: 's1',
       title: 'Init check',
-      initialState: {},
       goal: {},
-    };
+    });
     const uninitState: GitState = {
       ...createBaseState(),
       repositoryInitialized: false,
@@ -43,25 +55,25 @@ describe('GoalValidator Comprehensive Tests', () => {
   });
 
   it('2. should pass repository initialized when true', () => {
-    const scenario: Scenario = { id: 's2', title: 'Init check', initialState: {}, goal: {} };
+    const scenario = makeScenario({ id: 's2', title: 'Init check', goal: {} });
     const res = validator.validate(scenario, createBaseState());
     expect(res.passed).toBe(true);
     expect(res.checklist.find((c) => c.id === 'repo-init')?.passed).toBe(true);
   });
 
   it('3. should validate exact commit count goal', () => {
-    const scenario: Scenario = {
+    const scenario = makeScenario({
       id: 's3',
       title: 'Commit count check',
-      initialState: {},
       goal: { commits: { count: 2 } },
-    };
+    });
     const state = createBaseState(); // has 1 commit
     expect(validator.validate(scenario, state).passed).toBe(false);
 
     // Add 2nd commit
     state.commits.push({
       hash: 'c2',
+      shortHash: 'c2',
       message: 'feat: add page',
       parents: ['c1'],
       tree: {},
@@ -72,42 +84,38 @@ describe('GoalValidator Comprehensive Tests', () => {
   });
 
   it('4. should validate minCount commit goal', () => {
-    const scenario: Scenario = {
+    const scenario = makeScenario({
       id: 's4',
       title: 'Commit minCount',
-      initialState: {},
       goal: { commits: { minCount: 1 } },
-    };
+    });
     const state = createBaseState();
     expect(validator.validate(scenario, state).passed).toBe(true);
   });
 
   it('5. should validate latest commit message exact match', () => {
-    const scenario: Scenario = {
+    const scenario = makeScenario({
       id: 's5',
       title: 'Message match',
-      initialState: {},
       goal: { latestCommit: { message: 'feat: init' } },
-    };
+    });
     const state = createBaseState();
     expect(validator.validate(scenario, state).passed).toBe(true);
 
-    const wrongScenario: Scenario = {
+    const wrongScenario = makeScenario({
       id: 's5b',
       title: 'Wrong message',
-      initialState: {},
       goal: { latestCommit: { message: 'feat: something else' } },
-    };
+    });
     expect(validator.validate(wrongScenario, state).passed).toBe(false);
   });
 
   it('6. should validate latest commit message pattern regex', () => {
-    const scenario: Scenario = {
+    const scenario = makeScenario({
       id: 's6',
       title: 'Pattern match',
-      initialState: {},
       goal: { latestCommit: { messagePattern: '^(feat|fix):\\s.+' } },
-    };
+    });
     const state = createBaseState();
     expect(validator.validate(scenario, state).passed).toBe(true);
 
@@ -116,12 +124,11 @@ describe('GoalValidator Comprehensive Tests', () => {
   });
 
   it('7. should validate clean staging area', () => {
-    const scenario: Scenario = {
+    const scenario = makeScenario({
       id: 's7',
       title: 'Clean staging',
-      initialState: {},
       goal: { stagingArea: { clean: true } },
-    };
+    });
     const state = createBaseState();
     expect(validator.validate(scenario, state).passed).toBe(true);
 
@@ -130,12 +137,11 @@ describe('GoalValidator Comprehensive Tests', () => {
   });
 
   it('8. should validate required staged files', () => {
-    const scenario: Scenario = {
+    const scenario = makeScenario({
       id: 's8',
       title: 'Staged files',
-      initialState: {},
       goal: { stagingArea: { stagedFiles: ['app.ts', 'style.css'] } },
-    };
+    });
     const state = createBaseState();
     expect(validator.validate(scenario, state).passed).toBe(false);
 
@@ -147,12 +153,11 @@ describe('GoalValidator Comprehensive Tests', () => {
   });
 
   it('9. should validate clean working tree', () => {
-    const scenario: Scenario = {
+    const scenario = makeScenario({
       id: 's9',
       title: 'Clean working tree',
-      initialState: {},
       goal: { workingTree: { clean: true } },
-    };
+    });
     const state = createBaseState();
     state.workingTree = [{ path: 'readme.md', content: '# Welcome', status: 'unmodified' }];
     expect(validator.validate(scenario, state).passed).toBe(true);
@@ -162,16 +167,15 @@ describe('GoalValidator Comprehensive Tests', () => {
   });
 
   it('10. should validate required files in working tree with contentIncludes', () => {
-    const scenario: Scenario = {
+    const scenario = makeScenario({
       id: 's10',
       title: 'Required file content',
-      initialState: {},
       goal: {
         workingTree: {
           requiredFiles: [{ path: 'index.html', contentIncludes: '<h1>Hello</h1>' }],
         },
       },
-    };
+    });
     const state = createBaseState();
     expect(validator.validate(scenario, state).passed).toBe(false);
 
@@ -180,12 +184,11 @@ describe('GoalValidator Comprehensive Tests', () => {
   });
 
   it('11. should validate required branches existence', () => {
-    const scenario: Scenario = {
+    const scenario = makeScenario({
       id: 's11',
       title: 'Branches requirement',
-      initialState: {},
-      goal: { branches: { required: ['main', 'feature/login'] } },
-    };
+      goal: { branches: { exists: ['main', 'feature/login'] } },
+    });
     const state = createBaseState();
     expect(validator.validate(scenario, state).passed).toBe(false);
 
@@ -194,12 +197,11 @@ describe('GoalValidator Comprehensive Tests', () => {
   });
 
   it('12. should validate current active branch', () => {
-    const scenario: Scenario = {
+    const scenario = makeScenario({
       id: 's12',
       title: 'Active branch check',
-      initialState: {},
       goal: { branches: { current: 'dev' } },
-    };
+    });
     const state = createBaseState();
     expect(validator.validate(scenario, state).passed).toBe(false);
 
@@ -208,30 +210,28 @@ describe('GoalValidator Comprehensive Tests', () => {
   });
 
   it('13. should validate HEAD pointsTo requirement', () => {
-    const scenario: Scenario = {
+    const scenario = makeScenario({
       id: 's13',
       title: 'HEAD target',
-      initialState: {},
       goal: { head: { pointsTo: 'feature/auth' } },
-    };
+    });
     const state = createBaseState();
     expect(validator.validate(scenario, state).passed).toBe(false);
 
-    state.head = { type: 'branch', target: 'feature/auth' };
+    state.head = { type: 'branch', ref: 'feature/auth' };
     expect(validator.validate(scenario, state).passed).toBe(true);
   });
 
   it('14. should validate multi-goal scenario passing only when all goals pass', () => {
-    const scenario: Scenario = {
+    const scenario = makeScenario({
       id: 's14',
       title: 'Combined goals',
-      initialState: {},
       goal: {
         commits: { minCount: 1 },
         stagingArea: { clean: true },
         branches: { current: 'main' },
       },
-    };
+    });
     const state = createBaseState();
     expect(validator.validate(scenario, state).passed).toBe(true);
 
@@ -241,13 +241,12 @@ describe('GoalValidator Comprehensive Tests', () => {
   });
 
   it('15. should calculate earned XP on scenario success', () => {
-    const scenario: Scenario = {
+    const scenario = makeScenario({
       id: 's15',
       title: 'XP calculation',
-      initialState: {},
       goal: { commits: { minCount: 1 } },
-      success: { xp: 150 },
-    };
+      success: { message: 'Hoàn thành!', xp: 150 },
+    });
     const state = createBaseState();
     const res = validator.validate(scenario, state);
     expect(res.passed).toBe(true);
@@ -255,13 +254,12 @@ describe('GoalValidator Comprehensive Tests', () => {
   });
 
   it('16. should report 0 earned XP when validation fails', () => {
-    const scenario: Scenario = {
+    const scenario = makeScenario({
       id: 's16',
       title: 'Fail XP',
-      initialState: {},
       goal: { commits: { minCount: 5 } },
-      success: { xp: 200 },
-    };
+      success: { message: 'Hoàn thành!', xp: 200 },
+    });
     const state = createBaseState();
     const res = validator.validate(scenario, state);
     expect(res.passed).toBe(false);
@@ -269,12 +267,11 @@ describe('GoalValidator Comprehensive Tests', () => {
   });
 
   it('17. should provide actionable feedback for missing commits', () => {
-    const scenario: Scenario = {
+    const scenario = makeScenario({
       id: 's17',
       title: 'Feedback check',
-      initialState: {},
       goal: { commits: { count: 3 } },
-    };
+    });
     const state = createBaseState();
     const res = validator.validate(scenario, state);
     expect(res.feedback.length).toBeGreaterThan(0);
@@ -282,7 +279,7 @@ describe('GoalValidator Comprehensive Tests', () => {
   });
 
   it('18. should execute ScenarioRunner and track validation lifecycle', () => {
-    const scenario: Scenario = {
+    const scenario = makeScenario({
       id: 's18',
       title: 'Runner lifecycle',
       initialState: {
@@ -293,8 +290,8 @@ describe('GoalValidator Comprehensive Tests', () => {
         commits: { minCount: 1 },
         stagingArea: { clean: true },
       },
-      success: { xp: 75 },
-    };
+      success: { message: 'Hoàn thành!', xp: 75 },
+    });
     const runner = new ScenarioRunner(scenario);
     expect(runner.validate().passed).toBe(false);
 
@@ -307,7 +304,7 @@ describe('GoalValidator Comprehensive Tests', () => {
   });
 
   it('19. should reset ScenarioRunner and restore initial files', () => {
-    const scenario: Scenario = {
+    const scenario = makeScenario({
       id: 's19',
       title: 'Reset lifecycle',
       initialState: {
@@ -315,7 +312,7 @@ describe('GoalValidator Comprehensive Tests', () => {
         files: [{ path: 'base.txt', content: 'initial content' }],
       },
       goal: { commits: { minCount: 1 } },
-    };
+    });
     const runner = new ScenarioRunner(scenario);
     runner.execute('git add base.txt');
     runner.execute('git commit -m "commit"');
@@ -328,12 +325,12 @@ describe('GoalValidator Comprehensive Tests', () => {
   });
 
   it('20. should record command log history in ScenarioRunner', () => {
-    const scenario: Scenario = {
+    const scenario = makeScenario({
       id: 's20',
       title: 'Log history',
       initialState: { repositoryInitialized: true },
       goal: {},
-    };
+    });
     const runner = new ScenarioRunner(scenario);
     runner.execute('git status');
     runner.execute('touch file.txt');

@@ -200,10 +200,10 @@ export class GoalValidator {
     }
 
     // 7. Validate HEAD
-    if ((goal as any).head) {
-      const headGoal = (goal as any).head;
+    if (goal.head) {
+      const headGoal = goal.head;
       if (headGoal.pointsTo) {
-        const headTarget = (state.head as any).ref || (state.head as any).target || state.currentBranch;
+        const headTarget = state.head.ref || state.currentBranch;
         const passed = headTarget === headGoal.pointsTo || state.currentBranch === headGoal.pointsTo;
         checklist.push({
           id: 'head-target',

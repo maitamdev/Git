@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import type { CourseLesson, CourseManifest, CourseProgress, GoalCheckItem, QuizQuestion, Scenario, User } from '@git-academy/shared';
+import type { CourseLesson, CourseManifest, CourseProgress, GoalCheckItem, QuizQuestion, Scenario } from '@git-academy/shared';
 import { BuiltinCourseRepository, LessonCompletionEngine, PrerequisiteEngine, QuizEngine, ScenarioRunner } from '@git-academy/exercise-engine';
 import { buildLessonSlides, requiredLabsFor, type LearningSlide } from '../learning/lesson-flow';
 import { validateGuidedLab } from '../learning/lab-validation';
@@ -140,10 +140,10 @@ function fileStatusLabel(status: string): string {
   return labels[status] || status;
 }
 
-interface GuidedCourseProps { user?: User }
+/** Progress is stored only in this browser's localStorage — no account needed. */
+const currentUserId = 'local_learner';
 
-export const GuidedCourse: React.FC<GuidedCourseProps> = ({ user }) => {
-  const currentUserId = user?.id || 'local_learner';
+export const GuidedCourse: React.FC = () => {
   const [manifest, setManifest] = useState<CourseManifest | null>(null);
   const [progress, setProgress] = useState<CourseProgress>(() => loadLocalProgress(currentUserId));
   const [saveStatus, setSaveStatus] = useState<'saved' | 'saving'>('saved');
@@ -181,7 +181,7 @@ export const GuidedCourse: React.FC<GuidedCourseProps> = ({ user }) => {
 
   useEffect(() => {
     saveLocalProgress(progress, currentUserId);
-  }, [progress, currentUserId]);
+  }, [progress]);
 
   useEffect(() => { window.scrollTo({ top: 0 }); }, [screen, stageIndex]);
 
@@ -413,9 +413,10 @@ export const GuidedCourse: React.FC<GuidedCourseProps> = ({ user }) => {
       <button className="guided-brand" onClick={() => { setScreen('map'); window.location.hash = '#/course'; }} aria-label="Về bản đồ khóa học"><span className="guided-brand-mark">⑂</span><span>Git <b>Academy</b></span></button>
       <span className="guided-header-center">{screen === 'map' ? 'Hành trình học Git' : screen === 'level' ? `Level ${levelIndex + 1} · ${levelNames[levelIndex]}` : lesson ? displayLessonTitle(lesson.id, lesson.metadata.title) : ''}</span>
       <div className="guided-header-right">
+        <a className="guided-studio-link" id="open-studio-link" href="#/studio" title="Mở Git Studio: terminal, đồ thị commit, GitHub & CI/CD mô phỏng">🧪 Studio</a>
         <span
           className="guided-sync-badge saved"
-          title="Tiến độ được lưu tự động trong trình duyệt này. Xóa dữ liệu trình duyệt hoặc đổi thiết bị sẽ không mang theo tiến độ."
+          title="Tiến độ được lưu tự động trong trình duyệt này (không cần đăng nhập)."
         >
           {saveStatus === 'saving' ? '↻ Đang lưu...' : '💾 Đã lưu trên máy'}
         </span>

@@ -5,31 +5,21 @@ import path from 'node:path';
 describe('Pre-Go-Live Audit: Role Switcher Production Stripping (#7)', () => {
   const headerPath = path.resolve(__dirname, '../../apps/playground/src/components/Header.tsx');
 
-  it('verifies Header component enforces strict production isolation of role switcher', () => {
+  it('verifies Header no longer ships any mock role switcher (roles come from the server session)', () => {
     expect(fs.existsSync(headerPath)).toBe(true);
     const content = fs.readFileSync(headerPath, 'utf8');
 
-    // 1. Verify environment guard definitions
-    expect(content).toContain("process.env?.NODE_ENV === 'production'");
-    expect(content).toContain('(import.meta as any).env?.PROD === true');
-    expect(content).toContain('const isDev = !isProduction;');
+    // The client-side role switcher was removed entirely: roles are issued by
+    // the API (/api/auth/me) and cannot be changed from the browser.
+    expect(content).not.toContain('dev-role-switcher');
+    expect(content).not.toContain('onSwitchUserRole');
+    expect(content).not.toContain('CHỌN VAI TRÒ MÔ PHỎNG');
+    expect(content).not.toContain('Vũ Quốc Khang');
+    expect(content).not.toContain('Cô Nguyễn Thị Lan');
 
-    // 2. Verify dev-role-switcher is guarded by isDev
-    expect(content).toContain('{isDev && currentUser && onSwitchUserRole && (');
-    expect(content).toContain('className="dev-role-switcher"');
-
-    // 3. Verify production read-only user badge is rendered when !isDev
-    expect(content).toContain('{!isDev && currentUser && (');
-    expect(content).toContain('className="user-profile-badge"');
-
-    // 4. Verify mock options (CHỌN VAI TRÒ MÔ PHỎNG, Vũ Quốc Khang, Cô Nguyễn Thị Lan) are inside isDev block
-    const isDevIndex = content.indexOf('{isDev && currentUser && onSwitchUserRole && (');
-    const mockRoleHeaderIndex = content.indexOf('CHỌN VAI TRÒ MÔ PHỎNG (LMS DEMO)');
-    const notDevIndex = content.indexOf('{!isDev && currentUser && (');
-
-    expect(isDevIndex).toBeGreaterThan(0);
-    expect(mockRoleHeaderIndex).toBeGreaterThan(isDevIndex);
-    expect(mockRoleHeaderIndex).toBeLessThan(notDevIndex);
+    // No accounts at all: anyone can learn, progress lives in the visitor's browser.
+    expect(content).not.toContain('accountSlot');
+    expect(content).not.toContain('currentUser');
   });
 
   it('verifies that in production mode isDev evaluates strictly to false', () => {

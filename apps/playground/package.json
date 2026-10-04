@@ -10,18 +10,13 @@
   },
   "dependencies": {
     "@git-academy/actions-simulator": "workspace:*",
-    "@git-academy/auth": "workspace:*",
     "@git-academy/exercise-engine": "workspace:*",
     "@git-academy/git-engine": "workspace:*",
     "@git-academy/git-internals": "workspace:*",
     "@git-academy/git-scenarios": "workspace:*",
     "@git-academy/git-visualizer": "workspace:*",
     "@git-academy/github-simulator": "workspace:*",
-    "@git-academy/api": "workspace:*",
-    "@git-academy/gradebook": "workspace:*",
     "@git-academy/shared": "workspace:*",
-    "bcryptjs": "^3.0.3",
-    "pg": "^8.23.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },

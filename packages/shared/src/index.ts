@@ -3,7 +3,6 @@ export * from './types/events.js';
 export * from './types/scenario.js';
 export * from './types/quiz.js';
 export * from './types/lesson.js';
-export * from './types/lms.js';
 export * from './errors/index.js';
 export * from './constants/index.js';
 export * from './utils/hash.js';

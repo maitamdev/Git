@@ -1,8 +1,8 @@
-import React, { useRef, useState } from 'react';
-import type { User } from '@git-academy/shared';
+import React, { useRef } from 'react';
 
 export type StudioViewMode = 'graph' | 'three-stage' | 'internals' | 'actions';
-export type AppRoute = 'learn' | 'author' | 'course-health' | 'dashboard' | 'teacher' | 'class-dashboard';
+/** 'course' = guided learning path, 'learn' = free-form Git Studio. */
+export type AppRoute = 'course' | 'learn' | 'author' | 'course-health';
 
 interface HeaderProps {
   xp: number;
@@ -21,9 +21,6 @@ interface HeaderProps {
   isThreeStageActive?: boolean;
   currentRoute?: AppRoute;
   onNavigateRoute?: (route: AppRoute) => void;
-  currentUser?: User | null;
-  onSwitchUserRole?: (role: 'student' | 'teacher' | 'admin') => void;
-  onLogout?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -41,16 +38,8 @@ export const Header: React.FC<HeaderProps> = ({
   onImportProgress,
   currentRoute = 'learn',
   onNavigateRoute,
-  currentUser,
-  onSwitchUserRole,
-  onLogout,
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [showRoleDropdown, setShowRoleDropdown] = useState(false);
-  const isProduction =
-    (typeof process !== 'undefined' && process.env?.NODE_ENV === 'production') ||
-    (typeof import.meta !== 'undefined' && (import.meta as any).env?.PROD === true);
-  const isDev = !isProduction;
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -75,7 +64,7 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="brand-section">
         <div
           className="brand-logo"
-          onClick={() => onNavigateRoute?.('learn')}
+          onClick={() => onNavigateRoute?.('course')}
           style={{ cursor: 'pointer' }}
           title="Trang chủ Git Academy"
         >
@@ -84,7 +73,7 @@ export const Header: React.FC<HeaderProps> = ({
         <div>
           <div
             className="brand-title"
-            onClick={() => onNavigateRoute?.('learn')}
+            onClick={() => onNavigateRoute?.('course')}
             style={{ cursor: 'pointer' }}
           >
             GIT ACADEMY VIETNAM
@@ -96,7 +85,7 @@ export const Header: React.FC<HeaderProps> = ({
         <span className="brand-badge">PRO v2.0</span>
       </div>
 
-      {/* Top LMS Mode Navigation */}
+      {/* Top navigation: guided path <-> free-form studio */}
       {onNavigateRoute && (
         <div
           style={{
@@ -108,78 +97,34 @@ export const Header: React.FC<HeaderProps> = ({
             gap: '3px',
           }}
         >
-          <button
-            onClick={() => onNavigateRoute('learn')}
-            style={{
-              background: currentRoute === 'learn' ? '#0284c7' : 'transparent',
-              color: currentRoute === 'learn' ? '#fff' : '#94a3b8',
-              border: 'none',
-              borderRadius: '6px',
-              padding: '5px 12px',
-              fontSize: '0.8rem',
-              fontWeight: currentRoute === 'learn' ? 600 : 500,
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '5px',
-              transition: 'all 0.15s ease',
-            }}
-            title="Khu vực thực hành tương tác Git & GitHub"
-          >
-            <span>🎓</span>
-            <span>Học tập</span>
-          </button>
-
-          <button
-            onClick={() => onNavigateRoute('dashboard')}
-            style={{
-              background: currentRoute === 'dashboard' ? '#0284c7' : 'transparent',
-              color: currentRoute === 'dashboard' ? '#fff' : '#94a3b8',
-              border: 'none',
-              borderRadius: '6px',
-              padding: '5px 12px',
-              fontSize: '0.8rem',
-              fontWeight: currentRoute === 'dashboard' ? 600 : 500,
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '5px',
-              transition: 'all 0.15s ease',
-            }}
-            title="Bảng điều khiển cá nhân của sinh viên"
-          >
-            <span>📊</span>
-            <span>Dashboard SV</span>
-          </button>
-
-          <button
-            onClick={() => onNavigateRoute('teacher')}
-            style={{
-              background:
-                currentRoute === 'teacher' || currentRoute === 'class-dashboard'
-                  ? '#0d9488'
-                  : 'transparent',
-              color:
-                currentRoute === 'teacher' || currentRoute === 'class-dashboard'
-                  ? '#fff'
-                  : '#94a3b8',
-              border: 'none',
-              borderRadius: '6px',
-              padding: '5px 12px',
-              fontSize: '0.8rem',
-              fontWeight:
-                currentRoute === 'teacher' || currentRoute === 'class-dashboard' ? 600 : 500,
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '5px',
-              transition: 'all 0.15s ease',
-            }}
-            title="Cổng LMS quản lý lớp học dành cho giảng viên"
-          >
-            <span>👩‍🏫</span>
-            <span>LMS Giảng viên</span>
-          </button>
+          {([
+            { route: 'course', icon: '🧭', label: 'Lộ trình học', title: 'Quay lại lộ trình học Git từng bước' },
+            { route: 'learn', icon: '🧪', label: 'Studio', title: 'Khu vực thực hành tương tác Git & GitHub' },
+          ] as const).map((item) => (
+            <button
+              key={item.route}
+              id={`nav-${item.route}`}
+              onClick={() => onNavigateRoute(item.route)}
+              style={{
+                background: currentRoute === item.route ? '#0284c7' : 'transparent',
+                color: currentRoute === item.route ? '#fff' : '#94a3b8',
+                border: 'none',
+                borderRadius: '6px',
+                padding: '5px 12px',
+                fontSize: '0.8rem',
+                fontWeight: currentRoute === item.route ? 600 : 500,
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '5px',
+                transition: 'all 0.15s ease',
+              }}
+              title={item.title}
+            >
+              <span>{item.icon}</span>
+              <span>{item.label}</span>
+            </button>
+          ))}
         </div>
       )}
 
@@ -404,315 +349,6 @@ export const Header: React.FC<HeaderProps> = ({
             <span>🔄</span>
             <span>Reset Lab</span>
           </button>
-        )}
-
-        {/* In production: Clean real user indicator with logout button */}
-        {currentUser && !isDev && (
-          <div
-            className="user-profile-badge"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              background: '#0f172a',
-              border: '1px solid #1e293b',
-              borderRadius: '8px',
-              padding: '4px 10px',
-              color: '#f8fafc',
-              fontSize: '0.82rem',
-            }}
-          >
-            <span
-              style={{
-                width: '8px',
-                height: '8px',
-                borderRadius: '50%',
-                background:
-                  currentUser.role === 'teacher'
-                    ? '#10b981'
-                    : currentUser.role === 'admin'
-                    ? '#ef4444'
-                    : '#38bdf8',
-              }}
-            />
-            <span style={{ fontWeight: 600 }}>{currentUser.displayName}</span>
-            <span
-              style={{
-                fontSize: '0.72rem',
-                padding: '2px 6px',
-                borderRadius: '4px',
-                background:
-                  currentUser.role === 'teacher'
-                    ? 'rgba(16, 185, 129, 0.2)'
-                    : currentUser.role === 'admin'
-                    ? 'rgba(239, 68, 68, 0.2)'
-                    : 'rgba(56, 189, 248, 0.2)',
-                color:
-                  currentUser.role === 'teacher'
-                    ? '#34d399'
-                    : currentUser.role === 'admin'
-                    ? '#f87171'
-                    : '#38bdf8',
-              }}
-            >
-              {currentUser.role === 'teacher'
-                ? 'Giảng viên'
-                : currentUser.role === 'admin'
-                ? 'Admin'
-                : 'Sinh viên'}
-            </span>
-            {onLogout && (
-              <button
-                onClick={onLogout}
-                style={{
-                  background: 'transparent',
-                  border: 'none',
-                  color: '#94a3b8',
-                  fontSize: '0.75rem',
-                  cursor: 'pointer',
-                  marginLeft: '4px',
-                  padding: '2px 4px',
-                }}
-                title="Đăng xuất"
-              >
-                (Thoát)
-              </button>
-            )}
-          </div>
-        )}
-
-        {/* User Role Switcher Dropdown (DEV ONLY - STRICTLY STRIPPED / HIDDEN IN PRODUCTION) */}
-        {isDev && currentUser && onSwitchUserRole && (
-          <div className="dev-role-switcher" style={{ position: 'relative' }}>
-            <button
-              onClick={() => setShowRoleDropdown(!showRoleDropdown)}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                background: '#1e293b',
-                border: '1px solid #334155',
-                borderRadius: '8px',
-                padding: '4px 10px',
-                color: '#f8fafc',
-                cursor: 'pointer',
-                fontSize: '0.82rem',
-              }}
-              title="Đổi vai trò người dùng (Chỉ hiển thị trong môi trường DEV)"
-            >
-              <span
-                style={{
-                  width: '8px',
-                  height: '8px',
-                  borderRadius: '50%',
-                  background:
-                    currentUser.role === 'teacher'
-                      ? '#10b981'
-                      : currentUser.role === 'admin'
-                      ? '#ef4444'
-                      : '#38bdf8',
-                }}
-              />
-              <span style={{ fontWeight: 600 }}>{currentUser.displayName}</span>
-              <span
-                style={{
-                  fontSize: '0.72rem',
-                  padding: '2px 6px',
-                  borderRadius: '4px',
-                  background:
-                    currentUser.role === 'teacher'
-                      ? 'rgba(16, 185, 129, 0.2)'
-                      : currentUser.role === 'admin'
-                      ? 'rgba(239, 68, 68, 0.2)'
-                      : 'rgba(56, 189, 248, 0.2)',
-                  color:
-                    currentUser.role === 'teacher'
-                      ? '#34d399'
-                      : currentUser.role === 'admin'
-                      ? '#f87171'
-                      : '#38bdf8',
-                }}
-              >
-                {currentUser.role === 'teacher'
-                  ? 'Giảng viên'
-                  : currentUser.role === 'admin'
-                  ? 'Admin'
-                  : 'Sinh viên'}
-              </span>
-              <span style={{ fontSize: '0.65rem', color: '#94a3b8' }}>▼</span>
-            </button>
-
-            {showRoleDropdown && (
-              <div
-                style={{
-                  position: 'absolute',
-                  top: '100%',
-                  right: 0,
-                  marginTop: '6px',
-                  background: '#0f172a',
-                  border: '1px solid #334155',
-                  borderRadius: '8px',
-                  boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.6)',
-                  width: '240px',
-                  zIndex: 9999,
-                  overflow: 'hidden',
-                }}
-              >
-                <div
-                  style={{
-                    padding: '8px 12px',
-                    fontSize: '0.72rem',
-                    color: '#64748b',
-                    borderBottom: '1px solid #1e293b',
-                    fontWeight: 600,
-                  }}
-                >
-                  CHỌN VAI TRÒ MÔ PHỎNG (LMS DEMO)
-                </div>
-                <button
-                  onClick={() => {
-                    onSwitchUserRole('student');
-                    setShowRoleDropdown(false);
-                  }}
-                  style={{
-                    width: '100%',
-                    padding: '10px 12px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '10px',
-                    background:
-                      currentUser.role === 'student' ? 'rgba(56, 189, 248, 0.1)' : 'transparent',
-                    border: 'none',
-                    borderBottom: '1px solid #1e293b',
-                    color: '#f8fafc',
-                    textAlign: 'left',
-                    cursor: 'pointer',
-                  }}
-                >
-                  <span style={{ fontSize: '1.2rem' }}>🎓</span>
-                  <div>
-                    <div style={{ fontWeight: 600, fontSize: '0.85rem' }}>Vũ Quốc Khang</div>
-                    <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>
-                      Sinh viên • Lớp GIT-K48-A
-                    </div>
-                  </div>
-                </button>
-                <button
-                  onClick={() => {
-                    onSwitchUserRole('teacher');
-                    setShowRoleDropdown(false);
-                  }}
-                  style={{
-                    width: '100%',
-                    padding: '10px 12px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '10px',
-                    background:
-                      currentUser.role === 'teacher' ? 'rgba(16, 185, 129, 0.1)' : 'transparent',
-                    border: 'none',
-                    borderBottom: '1px solid #1e293b',
-                    color: '#f8fafc',
-                    textAlign: 'left',
-                    cursor: 'pointer',
-                  }}
-                >
-                  <span style={{ fontSize: '1.2rem' }}>👩‍🏫</span>
-                  <div>
-                    <div style={{ fontWeight: 600, fontSize: '0.85rem' }}>Cô Nguyễn Thị Lan</div>
-                    <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>
-                      Giảng viên Bộ môn CNTT
-                    </div>
-                  </div>
-                </button>
-                <button
-                  onClick={() => {
-                    onSwitchUserRole('admin');
-                    setShowRoleDropdown(false);
-                  }}
-                  style={{
-                    width: '100%',
-                    padding: '10px 12px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '10px',
-                    background:
-                      currentUser.role === 'admin' ? 'rgba(239, 68, 68, 0.1)' : 'transparent',
-                    border: 'none',
-                    color: '#f8fafc',
-                    textAlign: 'left',
-                    cursor: 'pointer',
-                  }}
-                >
-                  <span style={{ fontSize: '1.2rem' }}>🛡️</span>
-                  <div>
-                    <div style={{ fontWeight: 600, fontSize: '0.85rem' }}>Quản Trị Viên</div>
-                    <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>
-                      Hệ thống Git Academy
-                    </div>
-                  </div>
-                </button>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Production Read-Only User Profile Badge (Switcher is strictly stripped) */}
-        {!isDev && currentUser && (
-          <div
-            className="user-profile-badge"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              background: '#1e293b',
-              border: '1px solid #334155',
-              borderRadius: '8px',
-              padding: '4px 10px',
-              color: '#f8fafc',
-              fontSize: '0.82rem',
-            }}
-          >
-            <span
-              style={{
-                width: '8px',
-                height: '8px',
-                borderRadius: '50%',
-                background:
-                  currentUser.role === 'teacher'
-                    ? '#10b981'
-                    : currentUser.role === 'admin'
-                    ? '#ef4444'
-                    : '#38bdf8',
-              }}
-            />
-            <span style={{ fontWeight: 600 }}>{currentUser.displayName}</span>
-            <span
-              style={{
-                fontSize: '0.72rem',
-                padding: '2px 6px',
-                borderRadius: '4px',
-                background:
-                  currentUser.role === 'teacher'
-                    ? 'rgba(16, 185, 129, 0.2)'
-                    : currentUser.role === 'admin'
-                    ? 'rgba(239, 68, 68, 0.2)'
-                    : 'rgba(56, 189, 248, 0.2)',
-                color:
-                  currentUser.role === 'teacher'
-                    ? '#34d399'
-                    : currentUser.role === 'admin'
-                    ? '#f87171'
-                    : '#38bdf8',
-              }}
-            >
-              {currentUser.role === 'teacher'
-                ? 'Giảng viên'
-                : currentUser.role === 'admin'
-                ? 'Admin'
-                : 'Sinh viên'}
-            </span>
-          </div>
         )}
       </div>
     </header>

@@ -4,7 +4,18 @@
     "jsx": "react-jsx",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "moduleResolution": "bundler",
-    "noEmit": true
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "@git-academy/shared": ["../../packages/shared/src"],
+      "@git-academy/git-engine": ["../../packages/git-engine/src"],
+      "@git-academy/git-scenarios": ["../../packages/git-scenarios/src"],
+      "@git-academy/exercise-engine": ["../../packages/exercise-engine/src"],
+      "@git-academy/github-simulator": ["../../packages/github-simulator/src"],
+      "@git-academy/actions-simulator": ["../../packages/actions-simulator/src"],
+      "@git-academy/git-internals": ["../../packages/git-internals/src"],
+      "@git-academy/git-visualizer": ["../../apps/git-visualizer/src"]
+    }
   },
   "include": ["src/**/*"]
 }

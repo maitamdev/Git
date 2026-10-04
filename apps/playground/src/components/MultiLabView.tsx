@@ -174,7 +174,7 @@ export const MultiLabView: React.FC<MultiLabViewProps> = ({
                 🎉 Chúc mừng! Bạn đã hoàn thành bài Lab này!
               </div>
               <div style={{ color: '#a7f3d0', fontSize: '0.78rem' }}>
-                +{currentScenario.success?.xp || 50} XP đã được cộng vào tài khoản của bạn.
+                +{currentScenario.success?.xp || 50} XP đã được cộng vào tiến độ của bạn.
               </div>
             </div>
           </div>

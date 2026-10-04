@@ -6,14 +6,13 @@
   "packageManager": "pnpm@11.21.0",
   "scripts": {
     "dev": "pnpm --filter playground dev",
-    "dev:api": "pnpm --filter @git-academy/api dev",
     "dev:web": "pnpm --filter playground dev",
     "build": "pnpm -r build",
+    "build:vercel": "pnpm --filter playground build",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "eslint . --ext .ts,.tsx",
-    "docker:up": "docker compose up -d",
-    "docker:down": "docker compose down",
     "generate:courses": "tsx scripts/generate-courses.ts",
     "validate:courses": "tsx scripts/validate-courses.ts",
     "validate:content": "tsx scripts/validate-content.ts",
@@ -21,16 +20,10 @@
     "audit:curriculum": "tsx scripts/audit-curriculum.ts",
     "audit:content": "tsx scripts/audit-content.ts",
     "lesson:new": "tsx scripts/lesson-new.ts",
-    "scenario:new": "tsx scripts/scenario-new.ts",
-    "export:scorm": "tsx scripts/export-scorm.ts",
-    "bootstrap:admin": "tsx scripts/bootstrap-admin.ts",
-    "seed:pilot": "tsx scripts/seed-pilot.ts",
-    "db:migrate": "tsx scripts/db-migrate.ts",
-    "verify:production-env": "tsx scripts/verify-production-env.ts"
+    "scenario:new": "tsx scripts/scenario-new.ts"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
-    "@types/pg": "^8.23.1",
     "@typescript-eslint/eslint-plugin": "^8.18.0",
     "@typescript-eslint/parser": "^8.18.0",
     "eslint": "^9.16.0",
@@ -39,8 +32,5 @@
     "vitest": "^2.1.8",
     "yaml": "^2.7.0",
     "zod": "^4.6.5"
-  },
-  "dependencies": {
-    "pg": "^8.23.0"
   }
 }

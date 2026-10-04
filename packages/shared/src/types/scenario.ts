@@ -47,6 +47,10 @@ export interface ScenarioGoalBranch {
   exists?: string[];
 }
 
+export interface ScenarioGoalHead {
+  pointsTo?: string;
+}
+
 export interface ScenarioGoal {
   commits?: ScenarioGoalCommit;
   latestCommit?: {
@@ -56,6 +60,7 @@ export interface ScenarioGoal {
   workingTree?: ScenarioGoalFilesystem;
   stagingArea?: ScenarioGoalStaging;
   branches?: ScenarioGoalBranch;
+  head?: ScenarioGoalHead;
 }
 
 export interface ScenarioSuccess {

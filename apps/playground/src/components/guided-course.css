@@ -22,3 +22,4 @@
 .guided-practice-check strong{display:block;color:#11685f;margin-bottom:5px}
 .guided-practice-check p{margin:0}
 .guided-practice>small{color:#74869a;font-size:13px;line-height:1.4}
+.guided-studio-link{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:99px;font-size:12px;font-weight:700;white-space:nowrap;color:#c7d2fe;background:linear-gradient(135deg,rgba(99,102,241,.18),rgba(56,189,248,.14));border:1px solid rgba(129,140,248,.45);text-decoration:none;transition:transform .15s ease,box-shadow .2s ease,border-color .2s ease}.guided-studio-link:hover{transform:translateY(-1px);border-color:#818cf8;box-shadow:0 6px 18px rgba(99,102,241,.28);color:#fff}.guided-studio-link:focus-visible{outline:2px solid #818cf8;outline-offset:2px}

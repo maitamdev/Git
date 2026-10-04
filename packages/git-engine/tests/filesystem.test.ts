@@ -1,5 +1,6 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { VirtualFileSystem } from '../src/filesystem/virtual-filesystem';
+import type { FileState } from '@git-academy/shared';
 
 describe('VirtualFileSystem Comprehensive Tests', () => {
   it('1. should write, read, and check file existence', () => {
@@ -159,7 +160,7 @@ const greeting = "Hello";
     fs.writeFile('tracked.txt', 'original');
     fs.writeFile('untracked.txt', 'new');
 
-    const staging = [{ path: 'tracked.txt', content: 'original' }];
+    const staging: FileState[] = [{ path: 'tracked.txt', content: 'original', status: 'added', staged: true }];
     const head = { 'tracked.txt': 'original' };
 
     const computed = fs.computeFileStates(staging, head);

@@ -128,7 +128,7 @@ describe('Team Workflow & GitHub Collaboration Simulator (Parts F, G, H, I)', ()
       expect(fetchRes.success).toBe(true);
 
       const state = student.getState();
-      expect(state.remoteTrackingBranches['origin/feature/header']).toBeDefined();
+      expect(state.remoteTrackingBranches?.['origin/feature/header']).toBeDefined();
     });
   });
 
@@ -546,6 +546,7 @@ describe('Team Workflow & GitHub Collaboration Simulator (Parts F, G, H, I)', ()
       const pr = sim.createPullRequest({
         title: 'Multi file changes',
         description: 'Modified file1, deleted file3, added file4',
+        author: 'student',
         sourceRepository: 'school/multi-file-pr',
         sourceBranch: 'feature/multi',
         targetRepository: 'school/multi-file-pr',
@@ -578,6 +579,7 @@ describe('Team Workflow & GitHub Collaboration Simulator (Parts F, G, H, I)', ()
       const pr = sim.createPullRequest({
         title: 'Closed PR',
         description: 'desc',
+        author: 'student',
         sourceRepository: 'school/already-closed',
         sourceBranch: 'main',
         targetRepository: 'school/already-closed',
